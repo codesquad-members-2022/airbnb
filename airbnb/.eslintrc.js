@@ -11,11 +11,11 @@ module.exports = {
     sourceType: 'module',
   },
   parser: '@typescript-eslint/parser',
-  plugins: ['react', '@typescript-eslint'],
+  plugins: ['react', '@typescript-eslint', 'prettier'],
   extends: [
     'airbnb',
+    'prettier',
     'plugin:react/recommended',
-    'plugin:prettier/recommended',
     'plugin:import/errors',
     'plugin:import/warnings',
   ],
@@ -34,6 +34,7 @@ module.exports = {
     'prettier/prettier': [
       'error',
       {
+        // 궁금한점 -> 여기에 프리티어 규칙 적용해도 될까요?
         endOfLine: 'auto',
       },
     ],

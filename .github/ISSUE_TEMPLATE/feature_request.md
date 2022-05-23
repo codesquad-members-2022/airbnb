@@ -1,8 +1,8 @@
 ---
 name: Tracking issue
 about: Use this template for tracking new features.
-title: "[DATE]: [FEATURE NAME]"
-labels: tracking issue, needs triage
+title: "[05-23] 구글 맵 API 추가"
+labels: "\U0001F36D 기능 추가할거에요"
 assignees: jwu-ice, lv0314
 
 ---

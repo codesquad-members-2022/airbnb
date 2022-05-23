@@ -1,0 +1,70 @@
+@font-face {
+  font-family: 'airbnb';
+  src: url('fonts/airbnb.ttf?f45y0s') format('truetype'),
+    url('fonts/airbnb.woff?f45y0s') format('woff'),
+    url('fonts/airbnb.svg?f45y0s#airbnb') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+i {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'airbnb', serif !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ic-reset:before {
+  content: '\e900';
+}
+.ic-search:before {
+  content: '\e90f';
+}
+.ic-logo:before {
+  content: '\e910';
+}
+.ic-menu:before {
+  content: '\e903';
+}
+.ic-user:before {
+  content: '\e904';
+}
+.ic-star:before {
+  content: '\e905';
+}
+.ic-prev:before {
+  content: '\e906';
+}
+.ic-next:before {
+  content: '\e907';
+}
+.ic-breakpoint:before {
+  content: '\e908';
+}
+.ic-plus:before {
+  content: '\e909';
+}
+.ic-minus:before {
+  content: '\e90a';
+}
+.ic-check:before {
+  content: '\e90b';
+}
+.ic-zoomin:before {
+  content: '\e90c';
+}
+.ic-zoomout:before {
+  content: '\e90d';
+}
+.ic-like:before {
+  content: '\e90e';
+}

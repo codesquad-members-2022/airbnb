@@ -28,9 +28,9 @@ module.exports = {
   rules: {
     'react/jsx-uses-react': 'error',
     'react/jsx-uses-vars': 'error',
-    'import/prefer-default-export': 0,
-    'linebreak-style': 'off',
     'react/react-in-jsx-scope': 'off',
+    'import/prefer-default-export': 'off',
+    'linebreak-style': 'off',
     '@typescript-eslint/no-var-requires': 'off',
     'react/jsx-filename-extension': [
       2,
@@ -43,5 +43,12 @@ module.exports = {
         endOfLine: 'auto',
       },
     ],
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        paths: ['src', '.ts', '.tsx', '.native.js'],
+      },
+    },
   },
 };

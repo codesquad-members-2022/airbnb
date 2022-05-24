@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "extends": "./tsconfig.paths.json",
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -27,6 +26,8 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+
+  "include": ["src", ".eslintrc.js", "craco.config.js"],
+  "exclude": ["node_modules", "dist"],
+  "extends": "./tsconfig.paths.json"
 }

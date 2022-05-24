@@ -2,7 +2,11 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      //"@store":["src/store"]
+      "@hooks/*": ["src/hooks/*"],
+      "@pages/*": ["src/pages/*"],
+      "@services/*": ["src/services/*"],
+      "@utils/*": ["src/utils/*"],
+      "@screens/*": ["src/screens/*"]
     }
   }
 }

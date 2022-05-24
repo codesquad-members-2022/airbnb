@@ -3,18 +3,23 @@ module.exports = {
     browser: true,
     es2021: true,
   },
+  parser: '@typescript-eslint/parser',
   parserOptions: {
+    tsconfigRootDir: __dirname,
     ecmaFeatures: {
       jsx: true,
     },
     ecmaVersion: 'latest',
     sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.eslint.json'],
   },
-  parser: '@typescript-eslint/parser',
-  plugins: ['react', '@typescript-eslint', 'prettier'],
+  plugins: ['react', '@typescript-eslint'],
   extends: [
     'airbnb',
-    'prettier',
+    'airbnb/hooks',
+    'airbnb-typescript',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
     'plugin:react/recommended',
     'plugin:import/errors',
     'plugin:import/warnings',
@@ -26,6 +31,7 @@ module.exports = {
     'import/prefer-default-export': 0,
     'linebreak-style': 'off',
     'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
     'react/jsx-filename-extension': [
       2,
       { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
@@ -34,7 +40,6 @@ module.exports = {
     'prettier/prettier': [
       'error',
       {
-        // 궁금한점 -> 여기에 프리티어 규칙 적용해도 될까요?
         endOfLine: 'auto',
       },
     ],

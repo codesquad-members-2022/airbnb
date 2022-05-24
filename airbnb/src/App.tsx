@@ -1,9 +1,7 @@
+import React from 'react';
+
 function App() {
-  return (
-    <>
-      <div>hi</div>
-    </>
-  );
+  return <h1>하이</h1>;
 }
 
 export default App;

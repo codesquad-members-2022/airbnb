@@ -15,13 +15,14 @@ export const ButtonWrapper = styled.div`
   cursor: pointer;
   padding: 12px;
   border-radius: 30px;
-  transition: all 300ms;
   margin: 4px;
+  transition: background 200ms;
 
   &:hover {
     background-color: ${({ theme }) => theme.color.gray5};
-    transform: scale(1.08) rotate(0.3deg);
   }
+
+  ${mixin.scaleButtonTransition()};
 `;
 
 export const Button = styled.button.attrs({ type: 'button' })`
@@ -44,6 +45,10 @@ export const Description = styled.div`
 
 export const SearchButtonLayer = styled.div`
   margin: 0 16px 0 8px;
+
+  button {
+    ${mixin.scaleButtonTransition()};
+  }
 `;
 
 export const ResetButton = styled.button`

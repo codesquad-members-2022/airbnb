@@ -21,7 +21,21 @@ export const mixin = {
     }
 
     &:active {
-      opacity: 0.7;
+      opacity: 0.6;
+    }
+  `,
+
+  scaleButtonTransition: () => `
+    transition: opacity 200ms, transform 200ms;
+    
+    &:hover {
+      transform: scale(1.12);
+      opacity: 0.8;
+    }
+  
+    &:active {
+      transform: scale(1.05);
+      opacity: 0.6;
     }
   `,
 };

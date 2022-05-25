@@ -31,10 +31,9 @@ const Button = styled.button.attrs(() => ({ type: 'button' }))`
   padding: 8px;
   border-radius: 30px;
   background-color: ${({ theme }) => theme.color.primary};
+  font-size: 24px;
   font-weight: bold;
   color: ${({ theme }) => theme.color.white};
-  font-size: 24px;
-  ${mixin.defaultButtonTransition()};
 
   span {
     margin-left: 8px;

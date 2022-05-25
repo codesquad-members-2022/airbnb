@@ -17,6 +17,8 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.5;
     height: 100%;
     font-family: "Noto Sans KR", sans-serif;
+    color: ${({ theme }) => theme.color.grey1};
+    font-size: ${({ theme }) => theme.fontSize.medium};
   }
   html,
   h1,

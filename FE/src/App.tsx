@@ -1,12 +1,14 @@
 import React from 'react';
 
-import Button from '@components/Button';
+import { BrowserRouter } from 'react-router-dom';
+
+import Header, { HEADER_TYPE } from '@components/Header';
 
 function App() {
   return (
-    <div className='App'>
-      <Button />
-    </div>
+    <BrowserRouter>
+      <Header headerType={HEADER_TYPE.MAIN} />
+    </BrowserRouter>
   );
 }
 

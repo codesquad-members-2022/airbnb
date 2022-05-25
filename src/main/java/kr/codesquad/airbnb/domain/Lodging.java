@@ -1,12 +1,7 @@
 package kr.codesquad.airbnb.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+
 import lombok.Getter;
 
 @Entity
@@ -17,18 +12,27 @@ public class Lodging {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @Column(name = "lodging_name")
+    private String Name;
     private String address;
     private Double rating;
     private int review;
-    private Condition condition;
+
+    @Enumerated(EnumType.STRING)
+    private Conditions conditions;
+
+    @Enumerated(EnumType.STRING)
     private PropertyType propertyType;
     private int maxGuest;
     private int bedroomCount;
     private int bedCount;
     private int bathroomCount;
+
+    @Column(name = "l_description")
     private String description;
     private Long price;
+
+    @Column(name = "room_type")
     private String type;
     private String hostName;
     private double latitude;
@@ -36,6 +40,6 @@ public class Lodging {
     private String mainImageUrl;
 
     @JoinColumn
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     private Region region;
 }

@@ -1,10 +1,9 @@
 package kr.codesquad.airbnb.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 import lombok.Getter;
+
 
 @Entity
 @Getter
@@ -14,7 +13,9 @@ public class Region {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "region_name")
     private String name;
 
+    @Column(name = "region_description")
     private String description;
 }

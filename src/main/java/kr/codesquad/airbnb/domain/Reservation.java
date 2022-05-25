@@ -19,7 +19,7 @@ public class Reservation {
 
     @JoinColumn
     @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
+    private Members members;
 
     @JoinColumn
     @ManyToOne(fetch = FetchType.LAZY)

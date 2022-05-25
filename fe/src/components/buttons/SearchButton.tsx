@@ -16,16 +16,24 @@ function SearchButton({ children }: Props) {
   );
 }
 
+function SmallSearchButton({ children }: Props) {
+  return (
+    <SmallButton>
+      <I.Search />
+      {children && <span>{children}</span>}
+    </SmallButton>
+  );
+}
+
 const Button = styled.button.attrs(() => ({ type: 'button' }))`
   ${mixin.flexbox({ jc: 'center', ai: 'center' })};
   cursor: pointer;
   padding: 8px;
-  height: 40px;
   border-radius: 30px;
   background-color: ${({ theme }) => theme.color.primary};
-  font-size: ${({ theme }) => theme.fontSize.lg};
   font-weight: bold;
   color: ${({ theme }) => theme.color.white};
+  font-size: 24px;
   ${mixin.defaultButtonTransition()};
 
   span {
@@ -34,4 +42,8 @@ const Button = styled.button.attrs(() => ({ type: 'button' }))`
   }
 `;
 
-export default SearchButton;
+const SmallButton = styled(Button)`
+  font-size: ${({ theme }) => theme.fontSize.md};
+`;
+
+export { SearchButton, SmallSearchButton };

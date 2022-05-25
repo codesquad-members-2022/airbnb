@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Common = styled.i`
-  font-size: 24px;
+  font-size: inherit;
 `;
 
 export const Logo = styled.i.attrs({ className: 'ic-logo' })`

@@ -46,6 +46,7 @@ export const InActiveContent = styled.div`
 
 export const ContentContainer = styled.div`
   margin-left: 24px;
+  cursor: pointer;
 `;
 export const ContentHeader = styled.header`
   font-weight: 700;

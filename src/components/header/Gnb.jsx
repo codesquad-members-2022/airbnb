@@ -20,6 +20,7 @@ const GnbItem = styled.span`
     font-size: 1rem;
     cursor: pointer;
     line-height: 23px;
+    white-space: nowrap;
     &:hover {
         font-weight: 700;
         text-decoration-line: underline;

@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-import Cylindrical from "../../cylindrical";
+import Cylindrical from "../../../cylindrical";
 import PriceBox from "./PriceBox";
 import GuestBox from "./GuestBox";
 import DateBox from "./DateBox";
-import Boundary from "../Boundary";
+import Boundary from "../../Boundary";
 
 const SearchBar = () => {
     const cylindricalStyle = {
@@ -34,7 +34,7 @@ const SearchBar = () => {
 const SearchBarBox = styled(Cylindrical)`
     ${({theme}) => theme.layout.flexLayoutMixin("row", "flex-start", "center")}
     position: absolute;
-    top: 20%;
+    top: 170px;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: ${({theme}) => theme.color.white};

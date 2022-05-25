@@ -1,7 +1,16 @@
-import React from 'react';
+import { ThemeProvider } from '@mui/material/styles';
+import { Home } from './Pages/Home';
+import { theme, GlobalStyle } from './styles';
 
 function App() {
-  return <h1>하이</h1>;
+  return (
+    <>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <Home />
+      </ThemeProvider>
+    </>
+  );
 }
 
 export default App;

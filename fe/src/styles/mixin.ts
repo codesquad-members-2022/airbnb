@@ -6,6 +6,13 @@ export const mixin = {
     align-items: ${ai};
   `,
 
+  inlineFlexbox: ({ dir = 'row', jc = '', ai = '' }) => `
+    display: inline-flex;
+    flex-direction: ${dir};
+    justify-content: ${jc};
+    align-items: ${ai};
+  `,
+
   defaultButtonTransition: () => `
     transition: opacity 300ms;
 

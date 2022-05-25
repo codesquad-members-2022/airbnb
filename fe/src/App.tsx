@@ -1,7 +1,14 @@
+import GlobalStyle from "Common/globalStyle";
+import Home from "Pages/Home/Home";
 import React from "react";
 
 function App() {
-  return <div className="App"></div>;
+  return (
+    <div className="App">
+      <GlobalStyle />
+      <Home />
+    </div>
+  );
 }
 
 export default App;

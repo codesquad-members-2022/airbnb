@@ -28,7 +28,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @ExtendWith({RestDocumentationExtension.class})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
-class AccommodationControllerIntegrationTest {
+class AccommodationIntegrationTest {
 
     @LocalServerPort
     int port;

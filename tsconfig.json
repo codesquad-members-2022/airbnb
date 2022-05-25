@@ -13,7 +13,10 @@
     "baseUrl": ".",
     "outDir": "./dist",
     "paths": {
-      "@components/*": ["src/components/*"]
+      "@components/*": ["src/components/*"],
+      "@pages/*": ["src/pages/*"],
+      "@common/*": ["src/common/*"],
+      "@constants/*": ["src/constants/*"]
     }
   },
   "include": ["src"],

@@ -1,0 +1,29 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+= Airbnb API
+
+== 메인 히어로 이미지 조회
+
+=== Request
+include::{snippets}/get-hero-image/http-request.adoc[]
+
+=== Response
+include::{snippets}/get-hero-image/http-response.adoc[]
+
+== 인기 여행지 조회
+
+=== Request
+include::{snippets}/get-popular-destination/http-request.adoc[]
+
+=== Response
+include::{snippets}/get-popular-destination/http-response.adoc[]
+
+== 숙소 지역 검색
+
+=== Request
+include::{snippets}/get-search-country/http-request.adoc[]
+
+=== Response
+include::{snippets}/get-search-country/http-response.adoc[]

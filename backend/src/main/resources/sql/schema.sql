@@ -13,17 +13,6 @@ CREATE TABLE member
     is_super_host BOOL COMMENT '멤버가 슈퍼 호스트인지 여부'
 );
 
-DROP TABLE IF EXISTS wish;
-
-CREATE TABLE wish
-(
-    wish_id   INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'wish 테이블의 기본 키',
-    member_id INT NOT NULL COMMENT 'member 테이블의 기본 키',
-    room_id   INT NOT NULL COMMENT 'room 테이블의 기본 키',
-    FOREIGN KEY (member_id) REFERENCES member (member_id),
-    FOREIGN KEY (room_id) REFERENCES room (room_id)
-);
-
 DROP TABLE IF EXISTS district;
 
 CREATE TABLE district
@@ -135,6 +124,17 @@ CREATE TABLE tag_room
     tag_room_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'tag_room 테이블의 기본 키',
     tag_id      INT NOT NULL COMMENT 'tag 테이블의 외래 키',
     room_id     INT NOT NULL COMMENT 'room 테이블의 외래 키'
+);
+
+DROP TABLE IF EXISTS wish;
+
+CREATE TABLE wish
+(
+    wish_id   INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'wish 테이블의 기본 키',
+    member_id INT NOT NULL COMMENT 'member 테이블의 기본 키',
+    room_id   INT NOT NULL COMMENT 'room 테이블의 기본 키',
+    FOREIGN KEY (member_id) REFERENCES member (member_id),
+    FOREIGN KEY (room_id) REFERENCES room (room_id)
 );
 
 SET FOREIGN_KEY_CHECKS = 1;

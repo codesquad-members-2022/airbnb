@@ -29,4 +29,5 @@ public class Reservation {
     private LocalDateTime checkOut;
     private Long price;
     private int guests;
+    private boolean canceled;
 }

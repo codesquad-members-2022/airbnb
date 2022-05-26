@@ -28,11 +28,11 @@ public class Lodging {
     private int bedCount;
     private int bathroomCount;
 
-    @Column(name = "l_description")
+    @Column(name = "lodging_description")
     private String description;
     private Long price;
 
-    @Column(name = "room_type")
+    @Column(name = "property_type")
     private String type;
     private String hostName;
     private double latitude;
@@ -40,6 +40,6 @@ public class Lodging {
     private String mainImageUrl;
 
     @JoinColumn
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Region region;
 }

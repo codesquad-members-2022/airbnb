@@ -1,6 +1,8 @@
-import React, {useState} from "react";
+import React from "react";
 import styled from "styled-components";
-import Cylindrical from "../../cylindrical";
+import Cylindrical from "../../../cylindrical";
+import {ReactComponent as CrossIcon} from "../../../assets/crossIcon.svg";
+import {ReactComponent as SearchIcon} from "../../../assets/searchIcon.svg";
 
 // eslint-disable-next-line react/prop-types
 const CylindricalBox = ({title, placeHolder, style, partId, clickedPart, setClickedPart, hasSearchButton}) => {
@@ -25,24 +27,18 @@ const CylindricalBox = ({title, placeHolder, style, partId, clickedPart, setClic
             </TextBox>
             {isClicked && (
                 <Icon>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    <CrossIcon />
                 </Icon>
             )}
             {hasSearchButton &&
                 (isClicked ? (
                     <CylindricalSearchButton style={cylindricalSearchButtonStyle}>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
+                        <SearchIcon />
                         <span>검색</span>
                     </CylindricalSearchButton>
                 ) : (
                     <CircleSearchButton>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
+                        <SearchIcon />
                     </CircleSearchButton>
                 ))}
         </CylindricalButton>
@@ -54,6 +50,7 @@ const CylindricalButton = styled(Cylindrical)`
     box-sizing: border-box;
     padding: 0 20px 0 30px;
     cursor: pointer;
+    white-space: nowrap;
     box-shadow: ${({isClicked}) => (isClicked ? "0px 10px 20px rgba(0, 0, 0, 0.2)" : "")};
     &:hover {
         background-color: ${({isClicked}) => (isClicked ? "#fff" : "rgba(0, 0, 0, 0.1)")};
@@ -92,7 +89,7 @@ const Icon = styled.div`
     }
 `;
 
-const CircleSearchButton = styled.div`
+export const CircleSearchButton = styled.div`
     ${({theme}) => theme.layout.flexLayoutMixin("", "center", "center")}
     background-color: ${({theme}) => theme.color.pointColorRed};
     color: ${({theme}) => theme.color.white};

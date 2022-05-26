@@ -26,15 +26,15 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-        
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
       working-directory: ./backend
-    
+
     - name: Build with Gradle
       run: ./gradlew bootJar
       working-directory: ./backend
-        
+
     - name: Build and Push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v5.6
       with:
@@ -43,7 +43,7 @@ jobs:
         dockerfile: ./backend/Dockerfile
         username: ${{ secrets.DOCKERHUB_ID }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
-	
+
     - name: Deploy
       uses: appleboy/ssh-action@master
       with:

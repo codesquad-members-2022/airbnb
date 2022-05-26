@@ -18,4 +18,6 @@ public class Region {
 
     @Column(name = "region_description")
     private String description;
+
+    private String imageUrl;
 }

@@ -32,6 +32,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'linebreak-style': 'off',
     '@typescript-eslint/no-var-requires': 'off',
+    'react/jsx-no-constructed-context-values': 'off',
     'react/jsx-filename-extension': [
       2,
       { extensions: ['.js', '.jsx', '.ts', '.tsx'] },

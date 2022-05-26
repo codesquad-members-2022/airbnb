@@ -2,7 +2,6 @@ import React from "react";
 import CylindricalBox from "./CylindricalBox";
 import styled from "styled-components";
 
-// eslint-disable-next-line react/prop-types
 const PriceBox = ({clickedPart, setClickedPart, size}) => {
     const cylindricalStyle = {
         width: "256px",

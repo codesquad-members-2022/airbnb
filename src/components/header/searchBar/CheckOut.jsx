@@ -1,7 +1,6 @@
 import React from "react";
 import CylindricalBox from "./CylindricalBox";
 
-// eslint-disable-next-line react/prop-types
 const CheckOut = ({clickedPart, setClickedPart}) => {
     const cylindricalStyle = {
         width: "152px",

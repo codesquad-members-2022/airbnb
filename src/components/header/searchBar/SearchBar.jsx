@@ -6,7 +6,6 @@ import GuestBox from "./GuestBox";
 import DateBox from "./DateBox";
 import Boundary from "../../Boundary";
 
-// eslint-disable-next-line react/prop-types
 const SearchBar = ({size}) => {
     const getCylindricalStyle = () => {
         switch (size) {

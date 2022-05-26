@@ -4,7 +4,6 @@ import Cylindrical from "../../../cylindrical";
 import {ReactComponent as CrossIcon} from "../../../assets/crossIcon.svg";
 import {ReactComponent as SearchIcon} from "../../../assets/searchIcon.svg";
 
-// eslint-disable-next-line react/prop-types
 const CylindricalBox = ({title, placeHolder, style, partId, clickedPart, setClickedPart, hasSearchButton}) => {
     const isClicked = partId === clickedPart;
     const cylindricalSearchButtonStyle = {

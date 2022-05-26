@@ -3,7 +3,6 @@ import styled from "styled-components";
 import CylindricalBox, {CircleSearchButton} from "./CylindricalBox";
 import {ReactComponent as SearchIcon} from "../../../assets/searchIcon.svg";
 
-// eslint-disable-next-line react/prop-types
 const GuestBox = ({clickedPart, setClickedPart, size}) => {
     const cylindricalStyle = {
         width: "298px",

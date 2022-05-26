@@ -14,10 +14,10 @@ const GuestBox = ({clickedPart, setClickedPart, size}) => {
         case "big": {
             return (
                 <CylindricalBox
-                    title={"인원"}
-                    placeHolder={"게스트 추가"}
+                    title="인원"
+                    placeHolder="게스트 추가"
                     style={guestBoxStyle}
-                    partId={"GuestBox"}
+                    partId="GuestBox"
                     clickedPart={clickedPart}
                     setClickedPart={setClickedPart}
                     hasSearchButton={true}

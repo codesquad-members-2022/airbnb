@@ -16,6 +16,9 @@ const GlobalStyle = createGlobalStyle`
     span{
       display: block;
     }
+    ul,li{
+      list-style: none;
+    }
 `;
 
 export default GlobalStyle;

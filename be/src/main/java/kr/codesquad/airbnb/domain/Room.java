@@ -34,8 +34,5 @@ public class Room {
     private Location location;
 
     @OneToMany(mappedBy = "room")
-    private List<RoomDiscount> roomDiscounts = new ArrayList<>();
-
-    @OneToMany(mappedBy = "room")
-    private List<RoomTax> roomTaxes = new ArrayList<>();
+    private List<RoomDiscountTax> roomDiscountTaxes = new ArrayList<>();
 }

@@ -32,9 +32,8 @@ jobs:
       working-directory: ./backend
     
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
-      with:
-        arguments: build
+      run: ./gradlew bootJar
+      working-directory: ./backend
         
     - name: Build and Push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v5.6
@@ -44,4 +43,3 @@ jobs:
         dockerfile: ./backend/Dockerfile
         username: ${{ secrets.DOCKERHUB_ID }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
-

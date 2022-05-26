@@ -32,8 +32,7 @@ public class Lodging {
     private String description;
     private Long price;
 
-    @Column(name = "property_type")
-    private String type;
+    private String placeType;
     private String hostName;
     private double latitude;
     private double longitude;

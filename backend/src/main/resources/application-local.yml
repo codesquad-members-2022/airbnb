@@ -1,9 +1,9 @@
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/testdb
-    username: root
-    password: test
+    url: jdbc:mysql://3.34.113.208:3306/cherrybnb
+    username: cherry
+    password: Test1test!
 
   sql:
     init:

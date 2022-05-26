@@ -6,8 +6,8 @@ import GuestBox from "./GuestBox";
 import DateBox from "./DateBox";
 import Boundary from "../../Boundary";
 
-// eslint-disable-next-line react/prop-types
 const SearchBar = ({size}) => {
+    const [clickedPart, setClickedPart] = useState(null);
     const getCylindricalStyle = () => {
         switch (size) {
             case "big": {
@@ -51,12 +51,11 @@ const SearchBar = ({size}) => {
         }
     };
 
-    const cylindricalStyle = getCylindricalStyle();
+    const searchBoxStyle = getCylindricalStyle();
     const boundaryCondition = getBoundaryCondition();
-    const [clickedPart, setClickedPart] = useState(null);
 
     return (
-        <SearchBarBox style={cylindricalStyle}>
+        <SearchBarBox style={searchBoxStyle}>
             <DateBox clickedPart={clickedPart} setClickedPart={setClickedPart} size={size} />
             <Boundary condition={boundaryCondition} />
             <PriceBox clickedPart={clickedPart} setClickedPart={setClickedPart} size={size} />

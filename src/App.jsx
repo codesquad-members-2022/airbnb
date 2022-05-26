@@ -8,7 +8,7 @@ const App = () => {
     return (
         <ThemeProvider theme={theme}>
             <Header />
-            <SearchBar size={"small"} />
+            <SearchBar size={"big"} />
         </ThemeProvider>
     );
 };

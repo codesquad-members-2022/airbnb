@@ -4,7 +4,6 @@ import Cylindrical from "../../../cylindrical";
 import {ReactComponent as CrossIcon} from "../../../assets/crossIcon.svg";
 import {ReactComponent as SearchIcon} from "../../../assets/searchIcon.svg";
 
-// eslint-disable-next-line react/prop-types
 const CylindricalBox = ({title, placeHolder, style, partId, clickedPart, setClickedPart, hasSearchButton}) => {
     const isClicked = partId === clickedPart;
     const cylindricalSearchButtonStyle = {
@@ -51,9 +50,9 @@ const CylindricalButton = styled(Cylindrical)`
     padding: 0 20px 0 30px;
     cursor: pointer;
     white-space: nowrap;
-    box-shadow: ${({isClicked}) => (isClicked ? "0px 10px 20px rgba(0, 0, 0, 0.2)" : "")};
+    box-shadow: ${({theme, isClicked}) => (isClicked ? `0px 10px 20px ${theme.transparentColor.gray2}` : "")};
     &:hover {
-        background-color: ${({isClicked}) => (isClicked ? "#fff" : "rgba(0, 0, 0, 0.1)")};
+        background-color: ${({theme, isClicked}) => (isClicked ? theme.color.white : theme.transparentColor.gray2)};
     }
 `;
 
@@ -96,9 +95,6 @@ export const CircleSearchButton = styled.div`
     border-radius: 999px;
     width: 40px;
     height: 40px;
-    &:hover {
-        background-color: rgb(175, 21, 42);
-    }
     svg {
         width: 25px;
         height: 25px;
@@ -110,9 +106,6 @@ const CylindricalSearchButton = styled(Cylindrical)`
     background-color: ${({theme}) => theme.color.pointColorRed};
     color: ${({theme}) => theme.color.white};
     padding: 0 10px;
-    &:hover {
-        background-color: rgb(175, 21, 42);
-    }
     svg {
         width: 25px;
         height: 25px;

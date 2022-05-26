@@ -3,7 +3,6 @@ import CheckIn from "./CheckIn";
 import CheckOut from "./CheckOut";
 import styled from "styled-components";
 
-// eslint-disable-next-line react/prop-types
 const DateBox = ({clickedPart, setClickedPart, size}) => {
     switch (size) {
         case "big": {

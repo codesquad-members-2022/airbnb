@@ -16,7 +16,7 @@ const Header = () => {
 };
 
 const Background = styled.div`
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: ${({theme}) => theme.transparentColor.gray1};
     height: 640px;
     user-select: none;
 `;

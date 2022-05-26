@@ -2,9 +2,8 @@ import React from "react";
 import CylindricalBox from "./CylindricalBox";
 import styled from "styled-components";
 
-// eslint-disable-next-line react/prop-types
 const PriceBox = ({clickedPart, setClickedPart, size}) => {
-    const cylindricalStyle = {
+    const priceBoxStyle = {
         width: "256px",
         height: "76px",
         border: "",
@@ -16,7 +15,7 @@ const PriceBox = ({clickedPart, setClickedPart, size}) => {
                 <CylindricalBox
                     title={"요금"}
                     placeHolder={"금액대 설정"}
-                    style={cylindricalStyle}
+                    style={priceBoxStyle}
                     partId={"PriceBox"}
                     clickedPart={clickedPart}
                     setClickedPart={setClickedPart}

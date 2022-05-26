@@ -1,3 +1,4 @@
+import CalendarModal from "Components/CalendarModal/CalendarModal";
 import Gnb from "Components/Gnb/Gnb";
 import SearchBar from "Components/SearchBar/SearchBar";
 import React from "react";
@@ -7,7 +8,15 @@ interface BoxProps {
   children: React.ReactNode; // 👈️ type children
 }
 
+const getThisMonthDate = () => {
+  const date = new Date();
+  const [, month, , year] = String(date).split(" ");
+  return { year, month };
+};
+
 export default function Home() {
+  const { year, month } = getThisMonthDate();
+
   return (
     <>
       <BackgroundImg url="/img/banner.png">
@@ -15,6 +24,7 @@ export default function Home() {
           <Header>
             <Gnb />
             <SearchBar />
+            <CalendarModal year={Number(year)} month={month} width="916px" backgroundColor="#fff" />
           </Header>
         </HomeContainer>
       </BackgroundImg>

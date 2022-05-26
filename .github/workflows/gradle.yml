@@ -45,11 +45,11 @@ jobs:
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
 	
     - name: Deploy
-        uses: appleboy/ssh-action@master
-        with:
+      uses: appleboy/ssh-action@master
+      with:
           host: ${{ secrets.EC2_PUBLIC_IP }}
           username: ec2-user
-          key: ${{ secrets.PRIVATE_KEY }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
           envs: GITHUB_SHA
           script: |
             docker pull cherrybnb/cherrybnb:be-deploy-${GITHUB_SHA::7}

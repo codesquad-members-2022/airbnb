@@ -2,7 +2,7 @@ import React from "react";
 import {ThemeProvider} from "styled-components";
 import theme from "./theme";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import Home from "./pages/home";
+import Home from "./pages/Home";
 import Search from "./pages/Search";
 
 const App = () => {

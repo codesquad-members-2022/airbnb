@@ -2,13 +2,18 @@ import React from "react";
 import Gnb from "./Gnb";
 import styled from "styled-components";
 import LoginButton from "./LoginButton";
+import SearchBar from "./searchBar/SearchBar";
+import {useLocation} from "react-router-dom";
 
 const Header = () => {
+    const location = useLocation();
+    const path = location?.pathname.slice(1);
+
     return (
         <Background>
             <HeaderBox>
                 <Logo>LOGO</Logo>
-                <Gnb />
+                {path === "search" ? <SearchBar size="small" /> : <Gnb />}
                 <LoginButton />
             </HeaderBox>
         </Background>

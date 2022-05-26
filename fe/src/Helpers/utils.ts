@@ -1,15 +1,15 @@
-interface FlexBoxPropertyType {
+interface flexBoxPropertyType {
   justify?: string;
   align?: string;
   direction?: string;
   wrap?: string;
 }
 
-export interface FlexBoxType extends FlexBoxPropertyType {
+export interface flexBoxType extends flexBoxPropertyType {
   flex: boolean;
 }
 
-export function applyFlex({ flex, justify, align, direction, wrap }: FlexBoxType) {
+export function applyFlex({ flex, justify, align, direction, wrap }: flexBoxType) {
   return (
     flex &&
     `${getFlexTemplate({ justify, align, direction, wrap })}
@@ -17,7 +17,7 @@ export function applyFlex({ flex, justify, align, direction, wrap }: FlexBoxType
   );
 }
 
-function getFlexTemplate({ justify, align, direction, wrap }: FlexBoxPropertyType) {
+function getFlexTemplate({ justify, align, direction, wrap }: flexBoxPropertyType) {
   justify = justify || "start";
   align = align || "stretch";
   direction = direction || "row";

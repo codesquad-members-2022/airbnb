@@ -5,7 +5,6 @@ const CheckIn = ({clickedPart, setClickedPart}) => {
     const checkInStyle = {
         width: "152px",
         height: "76px",
-        border: "",
     };
 
     return (

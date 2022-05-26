@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 const Cylindrical = styled.div`
-    width: ${({width}) => width};
-    height: ${({height}) => height};
-    border: ${({border}) => border};
+    width: ${({style}) => style.width};
+    height: ${({style}) => style.height};
+    border: ${({style}) => style.border};
     border-radius: 999px;
 `;
 

@@ -5,6 +5,9 @@ import PriceBox from "./PriceBox";
 import GuestBox from "./GuestBox";
 import DateBox from "./DateBox";
 import Boundary from "../../Boundary";
+import CalendarModal from "../modal/CalendarModal";
+import PriceModal from "../modal/PriceModal";
+import GuestModal from "../modal/GuestModal";
 
 const SearchBar = ({size}) => {
     const [clickedPart, setClickedPart] = useState(null);
@@ -61,6 +64,9 @@ const SearchBar = ({size}) => {
             <PriceBox clickedPart={clickedPart} setClickedPart={setClickedPart} size={size} />
             <Boundary condition={boundaryCondition} />
             <GuestBox clickedPart={clickedPart} setClickedPart={setClickedPart} size={size} />
+            <CalendarModal isClicked={clickedPart === "CheckIn" || clickedPart === "CheckOut"} />
+            <PriceModal isClicked={clickedPart === "PriceBox"} />
+            <GuestModal isClicked={clickedPart === "GuestBox"} />
         </SearchBarBox>
     );
 };

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Cylindrical from "../../../cylindrical";
 import {ReactComponent as CrossIcon} from "../../../assets/crossIcon.svg";
 import {ReactComponent as SearchIcon} from "../../../assets/searchIcon.svg";
+import {Link} from "react-router-dom";
 
 const CylindricalBox = ({title, placeHolder, style, partId, clickedPart, setClickedPart, hasSearchButton}) => {
     const isClicked = partId === clickedPart;
@@ -31,10 +32,12 @@ const CylindricalBox = ({title, placeHolder, style, partId, clickedPart, setClic
             )}
             {hasSearchButton &&
                 (isClicked ? (
-                    <CylindricalSearchButton style={cylindricalSearchButtonStyle}>
-                        <SearchIcon />
-                        <span>검색</span>
-                    </CylindricalSearchButton>
+                    <Link to="/search">
+                        <CylindricalSearchButton style={cylindricalSearchButtonStyle}>
+                            <SearchIcon />
+                            <span>검색</span>
+                        </CylindricalSearchButton>
+                    </Link>
                 ) : (
                     <CircleSearchButton>
                         <SearchIcon />

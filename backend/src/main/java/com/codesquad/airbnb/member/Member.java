@@ -1,4 +1,4 @@
-package com.codesquad.airbnb.member.entity;
+package com.codesquad.airbnb.member;
 
 import com.codesquad.airbnb.room.entity.Room;
 import java.util.List;
@@ -25,13 +25,16 @@ public class Member {
     private Integer id;
 
     private String name;
-    private String profileImage;
-    private Boolean isSuperhost;
+    private String imagePath;
+    private Boolean isSuperHost;
 
     @Enumerated(value = EnumType.STRING)
     private MemberRole role;
 
     @OneToMany(mappedBy = "host")
     private List<Room> hostRooms;
+
+    @OneToMany(mappedBy = "member")
+    private List<Wish> wishRefs;
 
 }

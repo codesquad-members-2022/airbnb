@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RoomOption {
 
+    private Boolean kitchen;
     private Boolean hairDryer;
     private Boolean wirelessInternet;
     private Boolean airConditioner;

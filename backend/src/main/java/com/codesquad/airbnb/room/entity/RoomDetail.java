@@ -1,9 +1,9 @@
 package com.codesquad.airbnb.room.entity;
 
-import com.codesquad.airbnb.room.entity.embeddable.NumberCell;
-import com.codesquad.airbnb.room.entity.embeddable.NumberGroup;
+import com.codesquad.airbnb.room.entity.embeddable.GuestGroup;
+import com.codesquad.airbnb.room.entity.embeddable.RoomGroup;
 import com.codesquad.airbnb.room.entity.embeddable.RoomOption;
-import java.time.LocalTime;
+import com.codesquad.airbnb.room.entity.embeddable.StayTime;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -18,21 +18,21 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RoomInfo {
+public class RoomDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "room_info_id")
+    @Column(name = "room_detail_id")
     private Integer id;
 
-    private LocalTime checkinTime;
-    private LocalTime checkoutTime;
+    @Embedded
+    private GuestGroup guestGroup;
 
     @Embedded
-    private NumberGroup numberGroup;
+    private RoomGroup roomGroup;
 
     @Embedded
-    private NumberCell numberCell;
+    private StayTime stayTime;
 
     @Embedded
     private RoomOption option;

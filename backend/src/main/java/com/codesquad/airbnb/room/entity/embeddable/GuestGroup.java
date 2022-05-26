@@ -6,9 +6,11 @@ import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class NumberCell {
 
-    private Integer numberBed;
-    private Integer numberBathroom;
+public class GuestGroup {
+
+    private Integer numberAdult;
+    private Integer numberChild;
+    private Integer numberInfant;
 
 }

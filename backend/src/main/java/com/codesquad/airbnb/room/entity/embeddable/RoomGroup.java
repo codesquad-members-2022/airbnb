@@ -6,10 +6,11 @@ import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class RoomGroup {
 
-public class NumberGroup {
-
-    private Integer numberGuest;
-    private Integer numberInfant;
+    private Integer numberTotalRoom;
+    private Integer numberBedroom;
+    private Integer numberBathroom;
+    private Integer numberBed;
 
 }

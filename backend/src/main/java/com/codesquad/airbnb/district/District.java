@@ -1,8 +1,9 @@
-package com.codesquad.airbnb.district.entity;
+package com.codesquad.airbnb.district;
 
-import com.codesquad.airbnb.room.entity.Room;
+import com.codesquad.airbnb.room.entity.embeddable.Lookup;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,7 +21,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class District {
 
-    enum DistrictType {GU, CITY, COUNTRY}
+    // 행정구역 상 국가/1계층/2계층/3계층 구분
+    enum DistrictType {COUNTRY, PRIMARY, SECONDARY, TERTIARY}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +30,14 @@ public class District {
     private Integer id;
 
     private String name;
+    private String imagePath;
+    private String address;
 
     @Enumerated(value = EnumType.STRING)
     private DistrictType type;
+
+    @Embedded
+    private Lookup lookup;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
@@ -38,8 +45,5 @@ public class District {
 
     @OneToMany(mappedBy = "parent")
     private List<District> children;
-
-    @OneToMany(mappedBy = "district")
-    private List<Room> rooms;
 
 }

@@ -56,4 +56,3 @@ jobs:
           docker tag cherrybnb/cherrybnb:be-deploy-${GITHUB_SHA::7} cherrybnb:be-deploy-${GITHUB_SHA::7}
           docker stop server
           docker run -d --rm --name server -p 8080:8080 cherrybnb:be-deploy-${GITHUB_SHA::7}
-

@@ -11,7 +11,7 @@ interface calenderType {
 }
 
 export default function CalenderModal({ year, month, width, height, backgroundColor }: calenderType) {
-  const checkIn = { year: 2022, month: 5, day: 26 };
+  const checkIn = { year: 2022, month: 5, day: 27 };
   const checkOut = { year: 2022, month: 6, day: 4 };
 
   const thisMonthNumber = MONTH_DICTIONARY.indexOf(month);
@@ -26,8 +26,20 @@ export default function CalenderModal({ year, month, width, height, backgroundCo
       height={height}
       backgroundColor={backgroundColor}
     >
-      <Calendar year={year} month={thisMonthNumber} checkIn={checkIn} checkOut={checkOut} />
-      <Calendar year={nextMonthYear} month={nextMonthNumber} checkIn={checkIn} checkOut={checkOut} />
+      <Calendar
+        year={year}
+        month={thisMonthNumber}
+        checkIn={checkIn}
+        checkOut={checkOut}
+        button={{ prev: true }}
+      />
+      <Calendar
+        year={nextMonthYear}
+        month={nextMonthNumber}
+        checkIn={checkIn}
+        checkOut={checkOut}
+        button={{ next: true }}
+      />
     </CalenderContainer>
   );
 }

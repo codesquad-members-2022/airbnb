@@ -1,10 +1,39 @@
-import { DAY_OF_WEEK_DATA } from "Helpers/constant";
-import { ActiveDay, Day, MonthDataArea, Monthly, StyledCheckInOut, YearMonthArea } from "./Calendar.styled";
+import { DAY_OF_WEEK_DATA, MONTH_DICTIONARY } from "Helpers/constant";
+import { getTodayDate } from "Helpers/utils";
+import {
+  ActiveDay,
+  Button,
+  Day,
+  InActiveDay,
+  MonthDataArea,
+  Monthly,
+  StyledCheckInOut,
+  YearMonthArea,
+} from "./Calendar.styled";
+
+interface buttonType {
+  prev?: boolean;
+  next?: boolean;
+}
 
 interface checkInOutType {
   year: number;
   month: number;
   day: number;
+}
+
+interface todayType {
+  year: number;
+  month: number;
+  day: number;
+}
+
+interface calendarType {
+  year: number;
+  month: number;
+  checkIn: checkInOutType;
+  checkOut: checkInOutType;
+  button: buttonType;
 }
 
 interface monthComponentType {
@@ -20,22 +49,21 @@ interface dayComponentType {
   day: number;
   checkIn: checkInOutType;
   checkOut: checkInOutType;
+  today: todayType;
 }
 
-interface calendarType {
-  year: number;
-  month: number;
-  checkIn: checkInOutType;
-  checkOut: checkInOutType;
-}
-
-export default function Calendar({ year, month, checkIn, checkOut }: calendarType) {
+export default function Calendar({ year, month, checkIn, checkOut, button }: calendarType) {
   const dayOfWeekComponent = DAY_OF_WEEK_DATA.map((day, idx) => <Day key={createKey(day, idx)}>{day}</Day>);
   const monthComponent = getMonthComponent({ year, month, checkIn, checkOut });
 
   return (
     <Monthly>
-      <YearMonthArea flex={true} justify="center">{`${year}년 ${month}월`}</YearMonthArea>
+      <YearMonthArea flex={true} justify="center">
+        {button.prev ? <Button type="prev">{"<"}</Button> : ""}
+        {`${year}년 ${month}월`}
+        {button.next ? <Button type="next">{">"}</Button> : ""}
+      </YearMonthArea>
+
       <MonthDataArea>
         {dayOfWeekComponent}
         {monthComponent}
@@ -45,6 +73,10 @@ export default function Calendar({ year, month, checkIn, checkOut }: calendarTyp
 }
 
 const getMonthComponent = ({ year, month, checkIn, checkOut }: monthComponentType) => {
+  const { year: toDayYear, month: toDayMonth, day: toDay } = getTodayDate();
+  const toDayMonthNumber = MONTH_DICTIONARY.indexOf(toDayMonth);
+  const today = { year: Number(toDayYear), month: toDayMonthNumber, day: Number(toDay) };
+
   const firstDayDateNumber = calculateDayOfWeekDate(year, month);
   const monthLastDay = getMonthEndDay(year, month);
   const monthData = new Array(firstDayDateNumber).fill(null);
@@ -54,7 +86,7 @@ const getMonthComponent = ({ year, month, checkIn, checkOut }: monthComponentTyp
   return monthData.map((day, idx) => {
     return (
       <Day key={createKey(day, idx)}>
-        {day ? createDayComponent({ year, month, day, checkIn, checkOut }) : ""}
+        {day ? createDayComponent({ year, month, day, checkIn, checkOut, today }) : ""}
       </Day>
     );
   });
@@ -69,7 +101,14 @@ const createKey = (data: string, idx: number) => {
   return `${data}-${idx}`;
 };
 
-const createDayComponent = ({ year, month, day, checkIn, checkOut }: dayComponentType) => {
+const createDayComponent = ({ year, month, day, checkIn, checkOut, today }: dayComponentType) => {
+  if (
+    year < today.year ||
+    (year === today.year && month < today.month) ||
+    (year === today.year && month === today.month && day < today.day)
+  ) {
+    return <InActiveDay>{day}</InActiveDay>;
+  }
   if (year === checkIn.year && month === checkIn.month && day === checkIn.day) {
     return (
       <ActiveDay radius="30px 0 0 30px">

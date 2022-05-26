@@ -5,7 +5,13 @@ interface activeDayType {
   radius?: string;
 }
 
-export const Monthly = styled.div``;
+interface buttonType {
+  type: string;
+}
+
+export const Monthly = styled.div`
+  position: relative;
+`;
 
 export const YearMonthArea = styled.div`
   ${({ flex, justify }: flexBoxType) => applyFlex({ flex, justify })};
@@ -45,4 +51,14 @@ export const ActiveDay = styled.div`
   width: 100%;
   height: 100%;
   background: #f5f5f7;
+`;
+
+export const InActiveDay = styled.div`
+  color: #bdbdbd;
+`;
+
+export const Button = styled.div`
+  ${({ type }: buttonType) =>
+    type && type === "prev" ? `position:absolute; left:10px; ` : `position:absolute;right:10px;`};
+  cursor: pointer;
 `;

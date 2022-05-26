@@ -2,7 +2,7 @@ import React from "react";
 import CylindricalBox from "./CylindricalBox";
 import styled from "styled-components";
 
-const PriceBox = ({clickedPart, setClickedPart, size}) => {
+const PriceBox = ({size}) => {
     const priceBoxStyle = {
         width: "256px",
         height: "76px",
@@ -17,8 +17,6 @@ const PriceBox = ({clickedPart, setClickedPart, size}) => {
                     placeHolder="금액대 설정"
                     style={priceBoxStyle}
                     partId="PriceBox"
-                    clickedPart={clickedPart}
-                    setClickedPart={setClickedPart}
                 />
             );
         }

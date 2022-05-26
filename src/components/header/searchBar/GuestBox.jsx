@@ -3,7 +3,7 @@ import styled from "styled-components";
 import CylindricalBox, {CircleSearchButton} from "./CylindricalBox";
 import {ReactComponent as SearchIcon} from "../../../assets/searchIcon.svg";
 
-const GuestBox = ({clickedPart, setClickedPart, size}) => {
+const GuestBox = ({size}) => {
     const guestBoxStyle = {
         width: "298px",
         height: "76px",
@@ -18,8 +18,6 @@ const GuestBox = ({clickedPart, setClickedPart, size}) => {
                     placeHolder="게스트 추가"
                     style={guestBoxStyle}
                     partId="GuestBox"
-                    clickedPart={clickedPart}
-                    setClickedPart={setClickedPart}
                     hasSearchButton={true}
                 />
             );

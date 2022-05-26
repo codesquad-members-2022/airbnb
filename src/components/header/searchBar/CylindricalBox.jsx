@@ -4,8 +4,10 @@ import Cylindrical from "../../../cylindrical";
 import {ReactComponent as CrossIcon} from "../../../assets/crossIcon.svg";
 import {ReactComponent as SearchIcon} from "../../../assets/searchIcon.svg";
 import {Link} from "react-router-dom";
+import {useClickedPartContext} from "../../../ClickedPartProvider";
 
-const CylindricalBox = ({title, placeHolder, style, partId, clickedPart, setClickedPart, hasSearchButton}) => {
+const CylindricalBox = ({title, placeHolder, style, partId, hasSearchButton}) => {
+    const {clickedPart, setClickedPart} = useClickedPartContext();
     const isClicked = partId === clickedPart;
     const cylindricalSearchButtonStyle = {
         width: "60px",

@@ -3,13 +3,13 @@ import CheckIn from "./CheckIn";
 import CheckOut from "./CheckOut";
 import styled from "styled-components";
 
-const DateBox = ({clickedPart, setClickedPart, size}) => {
+const DateBox = ({size}) => {
     switch (size) {
         case "big": {
             return (
                 <>
-                    <CheckIn clickedPart={clickedPart} setClickedPart={setClickedPart} />
-                    <CheckOut clickedPart={clickedPart} setClickedPart={setClickedPart} />
+                    <CheckIn />
+                    <CheckOut />
                 </>
             );
         }

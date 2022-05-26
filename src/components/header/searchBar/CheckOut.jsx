@@ -1,7 +1,9 @@
 import React from "react";
+import { useClickedPartContext } from "../../../ClickedPartProvider";
 import CylindricalBox from "./CylindricalBox";
 
-const CheckOut = ({clickedPart, setClickedPart}) => {
+const CheckOut = () => {
+    const {clickedPart, setClickedPart} = useClickedPartContext();
     const checkOutStyle = {
         width: "152px",
         height: "76px",

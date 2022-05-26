@@ -1,4 +1,4 @@
-import customStyled from '../../custom-styled-component/customStyled';
+import customStyled from '@/custom-styled-component/customStyled';
 import styled from 'styled-components';
 
 function MenuTabs() {

@@ -1,4 +1,4 @@
-import customStyled from '../../custom-styled-component/customStyled';
+import customStyled from '@/custom-styled-component/customStyled';
 
 function MainBanner() {
   return (

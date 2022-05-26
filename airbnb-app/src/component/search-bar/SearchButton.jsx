@@ -15,14 +15,13 @@ const SubmitButton = styled.button`
   align-items: center;
   justify-content: center;
   padding: ${({ padding }) => padding};
-  margin-left: 10px;
+  margin-left: auto;
   background-color: ${({ theme }) => theme.color.primary};
   border-radius: ${({ theme }) => theme.borderRadius.radius1};
 `;
 
 const ButtonText = styled.span`
   display: ${({ display }) => display};
-  margin-left: 8px;
   color: ${({ theme }) => theme.color.white};
   font-size: ${({ theme }) => theme.fontSize.xlarge};
   font-weight: ${({ theme }) => theme.fontWeight.bold};

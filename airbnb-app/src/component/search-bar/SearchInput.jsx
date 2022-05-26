@@ -11,7 +11,12 @@ function SearchInput({ label, placeholder, isLastElement, isCurrentInput, isFocu
   };
 
   return (
-    <Container bgColor={isCurrentInput ? 'white' : null} tabIndex="0" onFocus={() => handleFocus(label)}>
+    <Container
+      bgColor={isCurrentInput ? 'white' : null}
+      isLastElement={isLastElement}
+      tabIndex="0"
+      onFocus={() => handleFocus(label)}
+    >
       <div>
         <Label>{label}</Label>
         <Input type="text" placeholder={placeholder} readOnly />
@@ -46,6 +51,10 @@ const Container = styled.div`
   position: relative;
   display: inline-flex;
   align-items: center;
+  ${({ isLastElement }) => {
+    return isLastElement ? `width: 280px;` : `width: 180px;`;
+  }}
+  height: 37px;
   padding: 20px 30px;
   border-radius: ${({ theme }) => theme.borderRadius.radius1};
   background-color: ${({ theme, bgColor }) => theme.color[bgColor]};

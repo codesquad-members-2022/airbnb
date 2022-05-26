@@ -1,7 +1,7 @@
-import customStyled from '../../custom-styled-component/customStyled';
-import Logo from './Logo';
-import MenuTabs from './MenuTabs';
-import AccountMenu from './AccountMenu';
+import customStyled from '@/custom-styled-component/customStyled';
+import Logo from '@component/gnb/Logo';
+import MenuTabs from '@component/gnb/MenuTabs';
+import AccountMenu from '@component/gnb/AccountMenu';
 
 function GNB() {
   return (

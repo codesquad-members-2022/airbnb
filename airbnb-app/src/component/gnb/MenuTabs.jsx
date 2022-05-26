@@ -1,3 +1,4 @@
+import customStyled from '../../custom-styled-component/customStyled';
 import styled from 'styled-components';
 
 function MenuTabs() {
@@ -5,14 +6,14 @@ function MenuTabs() {
 
   return (
     <StyledContainer>
-      {menuList.map(menu => (
-        <StyledTab>{menu}</StyledTab>
+      {menuList.map((menu, key) => (
+        <StyledTab key={key}>{menu}</StyledTab>
       ))}
     </StyledContainer>
   );
 }
 
-const StyledContainer = styled.ul`
+const StyledContainer = customStyled.ul`
   display: flex;
   gap: 24px;
 `;
@@ -23,6 +24,11 @@ const StyledTab = styled.li`
   font-size: ${({ theme }) => theme.fontSize.large};
   font-weight: ${({ theme }) => theme.fontWeight.regular};
   color: ${({ theme }) => theme.color.grey1};
+  cursor: pointer;
+  &:hover {
+    color: ${({ theme }) => theme.color.grey3};
+    text-decoration: underline;
+  }
 `;
 
 export default MenuTabs;

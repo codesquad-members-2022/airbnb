@@ -1,19 +1,54 @@
-import { Input, Box } from '@material-ui/core';
-import customStyled from '../../custom-styled-component/customStyled';
+import styled from 'styled-components';
 import ResetButton from './ResetButton';
+import SearchButton from './SearchButton';
+import { useState } from 'react';
 
-function SearchInput({ label, placeholder }) {
+function SearchInput({ label, placeholder, isLastElement, isCurrentInput, isFocus, setCurrentInput }) {
+  const [isFilled, setIsFilled] = useState(false);
+
+  const handleFocus = label => {
+    setCurrentInput(label);
+  };
+
   return (
-    <Box>
-      <Label>{label}</Label>
-      <Input disableUnderline={true} placeholder={placeholder}></Input>
-      <ResetButton></ResetButton>
-    </Box>
+    <Container bgColor={isCurrentInput ? 'white' : null} tabIndex="0" onFocus={() => handleFocus(label)}>
+      <div>
+        <Label>{label}</Label>
+        <Input type="text" placeholder={placeholder} readOnly />
+      </div>
+      <ResetButton visibility={isFilled ? 'visible' : 'hidden'} />
+      {isLastElement ? null : <Line />}
+      {isLastElement ? <SearchButton isFocus={isFocus} /> : null}
+    </Container>
   );
 }
 
-const Label = customStyled.div`
-  color: ${({ theme }) => theme.color.black};
+const Label = styled.div`
+  font-size: ${({ theme }) => theme.fontSize.small};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  line-height: 17px;
+`;
+
+const Input = styled.input`
+  font-size: ${({ theme }) => theme.fontSize.large};
+  font-weight: ${({ theme }) => theme.fontWeight.regular};
+  line-height: 20px;
+`;
+
+const Line = styled.span`
+  position: absolute;
+  right: 0;
+  height: 44px;
+  border-left: 1px solid ${({ theme }) => theme.color.grey5};
+`;
+
+const Container = styled.div`
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 20px 30px;
+  border-radius: ${({ theme }) => theme.borderRadius.radius1};
+  background-color: ${({ theme, bgColor }) => theme.color[bgColor]};
 `;
 
 export default SearchInput;

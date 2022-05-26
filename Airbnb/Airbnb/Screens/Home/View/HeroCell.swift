@@ -10,9 +10,9 @@ import UIKit
 final class HeroCell: UICollectionViewCell {
     static let id = "HeroCell"
 
-    var cellViewModel: Any? {
+    var cellViewModel: HeroCellViewModel? {
          didSet {
-             guard let heroCellVM = cellViewModel as? HeroCellViewModel else {return}
+             guard let heroCellVM = cellViewModel else {return}
              title.text = heroCellVM.title
              content.text = heroCellVM.content
              badge.setTitle(heroCellVM.badge, for: .normal)
@@ -22,7 +22,6 @@ final class HeroCell: UICollectionViewCell {
 
     private var title: UILabel = {
         let label = UILabel()
-        label.text = "슬기로운\n자연생활"
         label.numberOfLines = 0
         label.font = .largeRegular
         label.setContentHuggingPriority(.defaultHigh, for: .vertical)
@@ -31,7 +30,6 @@ final class HeroCell: UICollectionViewCell {
 
     private var content: UILabel = {
         let label = UILabel()
-        label.text = "에어비엔비가 엄선한\n위시리스트를 만나보세요."
         label.numberOfLines = 0
         label.font = .smallRegular
         return label
@@ -39,7 +37,6 @@ final class HeroCell: UICollectionViewCell {
 
     private var badge: UIButton = {
         let button = UIButton()
-        button.setTitle("여행 아이디어 얻기", for: .normal)
         button.backgroundColor = .gray1
         button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -50,8 +47,6 @@ final class HeroCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        let image = UIImage(named: "HeroImage")
-        imageView.image = image
         return imageView
     }()
 

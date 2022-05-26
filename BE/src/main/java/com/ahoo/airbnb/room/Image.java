@@ -7,11 +7,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Address {
+public class Image {
 
-    private String country;
-    private String city;
-    private String state;
-    private String street;
-    private String detailAddress;
+    private int sequence;
+    private String imageUrl;
 }

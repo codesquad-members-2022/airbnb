@@ -6,8 +6,9 @@ target 'Cherrybnb' do
   use_frameworks!
 
   # Pods for Cherrybnb
-  pod 'SwiftLint'
+ 
   pod 'Swinject'
+  pod 'SwiftLint'
 
   target 'CherrybnbTests' do
     inherit! :search_paths

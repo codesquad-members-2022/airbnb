@@ -8,6 +8,8 @@ const color = {
   gray1: '#333333',
   primary: '#E84C60',
   secondary: '#118917',
+  resetForeground: '#ffc7d8',
+  resetBackground: '#fd073b',
 };
 
 const fontSize = {

@@ -1,4 +1,4 @@
-import GlobalStyle from "Common/globalStyle";
+import GlobalStyle from "Helpers/globalStyle";
 import Home from "Pages/Home/Home";
 import React from "react";
 

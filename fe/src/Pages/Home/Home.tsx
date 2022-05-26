@@ -1,5 +1,7 @@
+import CalendarModal from "Components/CalendarModal/CalendarModal";
 import Gnb from "Components/Gnb/Gnb";
 import SearchBar from "Components/SearchBar/SearchBar";
+import { getTodayDate } from "Helpers/utils";
 import React from "react";
 import { BackgroundImg, HomeContainer } from "./Home.styled";
 
@@ -8,6 +10,8 @@ interface BoxProps {
 }
 
 export default function Home() {
+  const { year, month } = getTodayDate();
+
   return (
     <>
       <BackgroundImg url="/img/banner.png">
@@ -15,6 +19,7 @@ export default function Home() {
           <Header>
             <Gnb />
             <SearchBar />
+            <CalendarModal year={Number(year)} month={month} width="916px" backgroundColor="#fff" />
           </Header>
         </HomeContainer>
       </BackgroundImg>

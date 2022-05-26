@@ -32,7 +32,7 @@ const CylindricalBox = ({title, placeHolder, style, partId, clickedPart, setClic
             )}
             {hasSearchButton &&
                 (isClicked ? (
-                    <Link to="/search">
+                    <Link to="/search" style={{textDecoration: "none"}}>
                         <CylindricalSearchButton style={cylindricalSearchButtonStyle}>
                             <SearchIcon />
                             <span>검색</span>

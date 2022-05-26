@@ -1,7 +1,7 @@
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://3.34.113.208:3306/cherrybnb
+    url: jdbc:mysql://10.1.11.159:3306/cherrybnb
     username: cherry
     password: Test1test!
 

@@ -1,3 +1,5 @@
+import { MONTH_DICTIONARY } from "./constant";
+
 interface flexBoxPropertyType {
   justify?: string;
   align?: string;
@@ -34,5 +36,6 @@ function getFlexTemplate({ justify, align, direction, wrap }: flexBoxPropertyTyp
 export function getTodayDate() {
   const date = new Date();
   const [dayOfWeek, month, day, year] = String(date).split(" ");
-  return { year, month, day, dayOfWeek };
+
+  return { year: Number(year), month: MONTH_DICTIONARY.indexOf(month), day: Number(day), dayOfWeek };
 }

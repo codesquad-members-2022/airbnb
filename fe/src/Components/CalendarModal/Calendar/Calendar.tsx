@@ -1,4 +1,4 @@
-import { DAY_OF_WEEK_DATA, MONTH_DICTIONARY } from "Helpers/constant";
+import { DAY_OF_WEEK_DATA } from "Helpers/constant";
 import { getTodayDate } from "Helpers/utils";
 import {
   ActiveDay,
@@ -34,6 +34,8 @@ interface calendarType {
   checkIn: checkInOutType;
   checkOut: checkInOutType;
   button: buttonType;
+  handlePrevButton?: () => void;
+  handleNextButton?: () => void;
 }
 
 interface monthComponentType {
@@ -52,16 +54,36 @@ interface dayComponentType {
   today: todayType;
 }
 
-export default function Calendar({ year, month, checkIn, checkOut, button }: calendarType) {
+export default function Calendar({
+  year,
+  month,
+  checkIn,
+  checkOut,
+  button,
+  handlePrevButton,
+  handleNextButton,
+}: calendarType) {
   const dayOfWeekComponent = DAY_OF_WEEK_DATA.map((day, idx) => <Day key={createKey(day, idx)}>{day}</Day>);
   const monthComponent = getMonthComponent({ year, month, checkIn, checkOut });
 
   return (
     <Monthly>
       <YearMonthArea flex={true} justify="center">
-        {button.prev ? <Button type="prev">{"<"}</Button> : ""}
+        {button.prev ? (
+          <Button type="prev" onClick={handlePrevButton}>
+            {"<"}
+          </Button>
+        ) : (
+          ""
+        )}
         {`${year}년 ${month}월`}
-        {button.next ? <Button type="next">{">"}</Button> : ""}
+        {button.next ? (
+          <Button type="next" onClick={handleNextButton}>
+            {">"}
+          </Button>
+        ) : (
+          ""
+        )}
       </YearMonthArea>
 
       <MonthDataArea>
@@ -73,9 +95,7 @@ export default function Calendar({ year, month, checkIn, checkOut, button }: cal
 }
 
 const getMonthComponent = ({ year, month, checkIn, checkOut }: monthComponentType) => {
-  const { year: toDayYear, month: toDayMonth, day: toDay } = getTodayDate();
-  const toDayMonthNumber = MONTH_DICTIONARY.indexOf(toDayMonth);
-  const today = { year: Number(toDayYear), month: toDayMonthNumber, day: Number(toDay) };
+  const today = getTodayDate();
 
   const firstDayDateNumber = calculateDayOfWeekDate(year, month);
   const monthLastDay = getMonthEndDay(year, month);

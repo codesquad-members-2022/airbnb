@@ -57,11 +57,11 @@ const SearchBar = ({size}) => {
 
     return (
         <SearchBarBox style={cylindricalStyle}>
-            <DateBox clickedPart={clickedPart} setClickedPart={setClickedPart} />
+            <DateBox clickedPart={clickedPart} setClickedPart={setClickedPart} size={size} />
             <Boundary condition={boundaryCondition} />
-            <PriceBox clickedPart={clickedPart} setClickedPart={setClickedPart} />
+            <PriceBox clickedPart={clickedPart} setClickedPart={setClickedPart} size={size} />
             <Boundary condition={boundaryCondition} />
-            <GuestBox clickedPart={clickedPart} setClickedPart={setClickedPart} />
+            <GuestBox clickedPart={clickedPart} setClickedPart={setClickedPart} size={size} />
         </SearchBarBox>
     );
 };

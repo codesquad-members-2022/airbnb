@@ -50,6 +50,7 @@ const CylindricalButton = styled(Cylindrical)`
     box-sizing: border-box;
     padding: 0 20px 0 30px;
     cursor: pointer;
+    white-space: nowrap;
     box-shadow: ${({isClicked}) => (isClicked ? "0px 10px 20px rgba(0, 0, 0, 0.2)" : "")};
     &:hover {
         background-color: ${({isClicked}) => (isClicked ? "#fff" : "rgba(0, 0, 0, 0.1)")};
@@ -88,7 +89,7 @@ const Icon = styled.div`
     }
 `;
 
-const CircleSearchButton = styled.div`
+export const CircleSearchButton = styled.div`
     ${({theme}) => theme.layout.flexLayoutMixin("", "center", "center")}
     background-color: ${({theme}) => theme.color.pointColorRed};
     color: ${({theme}) => theme.color.white};

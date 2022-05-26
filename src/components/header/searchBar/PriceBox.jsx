@@ -3,7 +3,7 @@ import CylindricalBox from "./CylindricalBox";
 import styled from "styled-components";
 
 const PriceBox = ({clickedPart, setClickedPart, size}) => {
-    const cylindricalStyle = {
+    const priceBoxStyle = {
         width: "256px",
         height: "76px",
         border: "",
@@ -15,7 +15,7 @@ const PriceBox = ({clickedPart, setClickedPart, size}) => {
                 <CylindricalBox
                     title={"요금"}
                     placeHolder={"금액대 설정"}
-                    style={cylindricalStyle}
+                    style={priceBoxStyle}
                     partId={"PriceBox"}
                     clickedPart={clickedPart}
                     setClickedPart={setClickedPart}

@@ -5,7 +5,7 @@ import {ReactComponent as MenuIcon} from "../../assets/menuIcon.svg";
 import {ReactComponent as UserIcon} from "../../assets/userIcon.svg";
 
 const LoginButton = () => {
-    const cylindricalStyle = {
+    const loginButtonStyle = {
         width: "76px",
         height: "40px",
         border: "1px solid #BDBDBD",
@@ -13,7 +13,7 @@ const LoginButton = () => {
     };
 
     return (
-        <LoginButtonBox style={cylindricalStyle}>
+        <LoginButtonBox style={loginButtonStyle}>
             <IconBox>
                 <MenuIcon />
             </IconBox>

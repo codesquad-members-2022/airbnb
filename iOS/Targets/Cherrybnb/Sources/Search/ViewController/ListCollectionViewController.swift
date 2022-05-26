@@ -17,6 +17,7 @@ class ListCollectionViewController: UIViewController {
         setCollectionView()
         setLayout()
         self.navigationItem.title = "숙소찾기"
+        self.navigationItem.searchController = UISearchController(searchResultsController: nil)
     }
     
     private func setCollectionView(){
@@ -34,10 +35,10 @@ class ListCollectionViewController: UIViewController {
     
     private func setLayout(){
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        collectionView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 30).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
 }
 

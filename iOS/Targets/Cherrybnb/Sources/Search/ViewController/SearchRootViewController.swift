@@ -11,9 +11,9 @@ import CoreLocation
 
 class SearchRootViewController: UIViewController {
 
+    @IBOutlet var searchBar: UISearchBar!
+    
     var nextViewController: ListCollectionViewController?
-
-    private var searchBar = UISearchBar()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +28,6 @@ class SearchRootViewController: UIViewController {
     private func configureNavBar() {
         searchBar.delegate = self
         searchBar.placeholder = "어디로 여행가세요?"
-        self.navigationItem.titleView = searchBar
     }
 
     private func askPermission() {

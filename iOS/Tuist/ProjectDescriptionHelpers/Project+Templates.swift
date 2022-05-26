@@ -55,7 +55,7 @@ extension Project {
             product: .unitTests,
             bundleId: "io.tuist.\(name)Tests",
             deploymentTarget: .iOS(targetVersion: "13.0", devices: .iphone),
-            infoPlist: .default,
+            infoPlist: .extendingDefault(with: infoPlist),
             sources: ["Targets/\(name)/Tests/**"]
 //            dependencies: [
 //                .target(name: "\(name)")]

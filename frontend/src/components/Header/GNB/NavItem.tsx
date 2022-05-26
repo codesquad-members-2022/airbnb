@@ -1,9 +1,5 @@
 import { Button } from "@mui/material";
 
-interface NavItemProps {
-  item: string;
-}
-
 const NavItem = ({ item }: NavItemProps): JSX.Element => {
   return (
     <Button
@@ -20,3 +16,7 @@ const NavItem = ({ item }: NavItemProps): JSX.Element => {
 };
 
 export default NavItem;
+
+interface NavItemProps {
+  item: string;
+}

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-interface Test {
+interface SearchBarItem {
   width: number;
 }
 
@@ -15,7 +15,7 @@ export const searchBarWrapper = styled.div`
   padding: 16px;
 `;
 
-export const searchBarItem = styled.div<Test>`
+export const searchBarItem = styled.div<SearchBarItem>`
   margin: 0 24px;
   width: ${({ width }) => width}px;
 `;

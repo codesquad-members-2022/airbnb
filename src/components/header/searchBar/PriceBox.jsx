@@ -13,10 +13,10 @@ const PriceBox = ({clickedPart, setClickedPart, size}) => {
         case "big": {
             return (
                 <CylindricalBox
-                    title={"요금"}
-                    placeHolder={"금액대 설정"}
+                    title="요금"
+                    placeHolder="금액대 설정"
                     style={priceBoxStyle}
-                    partId={"PriceBox"}
+                    partId="PriceBox"
                     clickedPart={clickedPart}
                     setClickedPart={setClickedPart}
                 />

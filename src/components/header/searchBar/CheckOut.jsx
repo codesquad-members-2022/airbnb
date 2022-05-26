@@ -10,10 +10,10 @@ const CheckOut = ({clickedPart, setClickedPart}) => {
 
     return (
         <CylindricalBox
-            title={"체크아웃"}
-            placeHolder={"날짜 입력"}
+            title="체크아웃"
+            placeHolder="날짜 입력"
             style={checkOutStyle}
-            partId={"CheckOut"}
+            partId="CheckOut"
             clickedPart={clickedPart}
             setClickedPart={setClickedPart}
         />

@@ -9,10 +9,10 @@ const CheckIn = ({clickedPart, setClickedPart}) => {
 
     return (
         <CylindricalBox
-            title={"체크인"}
-            placeHolder={"날짜 입력"}
+            title="체크인"
+            placeHolder="날짜 입력"
             style={checkInStyle}
-            partId={"CheckIn"}
+            partId="CheckIn"
             clickedPart={clickedPart}
             setClickedPart={setClickedPart}
         />

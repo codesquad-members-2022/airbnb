@@ -11,10 +11,12 @@ final class HomeViewController: UIViewController {
 
     private var searchBar: UISearchBar!
     private var homeCollectionView: UICollectionView!
+    private var homeViewModel = HomeViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDisplay()
+        homeViewModel.loadAllCategories()
     }
 
     private func configureDisplay() {
@@ -64,13 +66,8 @@ extension HomeViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        } else if section == 1 {
-            return 10
-        } else {
-            return 4
-        }
+        guard let categoryType = CategoryType.init(rawValue: section) else {return 0}
+        return homeViewModel.getCount(for: categoryType)
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

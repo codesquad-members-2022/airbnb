@@ -27,7 +27,7 @@ final class HeroCell: UICollectionViewCell {
         return label
     }()
 
-    private var button: UIButton = {
+    private var badge: UIButton = {
         let button = UIButton()
         button.setTitle("여행 아이디어 얻기", for: .normal)
         button.backgroundColor = .gray1
@@ -63,7 +63,7 @@ final class HeroCell: UICollectionViewCell {
     private func configureDisplay() {
         contentView.addSubview(imageView)
         contentView.addSubview(stackView)
-        contentView.addSubview(button)
+        contentView.addSubview(badge)
     }
 
     private func configureConstraints() {
@@ -75,10 +75,10 @@ final class HeroCell: UICollectionViewCell {
             stackView.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 24),
             stackView.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -105),
             stackView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 16),
-            button.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
-            button.widthAnchor.constraint(equalToConstant: 165),
-            button.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            button.heightAnchor.constraint(equalToConstant: 36)
+            badge.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
+            badge.widthAnchor.constraint(equalToConstant: 165),
+            badge.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            badge.heightAnchor.constraint(equalToConstant: 36)
         ])
     }
 

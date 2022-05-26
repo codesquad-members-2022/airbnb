@@ -1,6 +1,7 @@
 import CalendarModal from "Components/CalendarModal/CalendarModal";
 import Gnb from "Components/Gnb/Gnb";
 import SearchBar from "Components/SearchBar/SearchBar";
+import { getTodayDate } from "Helpers/utils";
 import React from "react";
 import { BackgroundImg, HomeContainer } from "./Home.styled";
 
@@ -8,14 +9,8 @@ interface BoxProps {
   children: React.ReactNode; // 👈️ type children
 }
 
-const getThisMonthDate = () => {
-  const date = new Date();
-  const [, month, , year] = String(date).split(" ");
-  return { year, month };
-};
-
 export default function Home() {
-  const { year, month } = getThisMonthDate();
+  const { year, month } = getTodayDate();
 
   return (
     <>

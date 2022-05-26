@@ -30,3 +30,9 @@ function getFlexTemplate({ justify, align, direction, wrap }: flexBoxPropertyTyp
     flex-wrap:${wrap}
   `;
 }
+
+export function getTodayDate() {
+  const date = new Date();
+  const [dayOfWeek, month, day, year] = String(date).split(" ");
+  return { year, month, day, dayOfWeek };
+}

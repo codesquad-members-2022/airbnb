@@ -11,6 +11,14 @@ final class RandomSiteCell: UICollectionViewCell {
 
     static let id = "RandomSiteCell"
 
+    var cellViewModel: Any? {
+         didSet {
+             guard let randomSiteCellVM = cellViewModel as? RandomSiteCellViewModel else {return}
+             content.text = randomSiteCellVM.content
+             imageView.image = UIImage(named: "\(randomSiteCellVM.image)")
+         }
+     }
+
     private var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill

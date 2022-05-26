@@ -10,11 +10,11 @@ struct CityCellViewModel {
 
     let name: String
     let image: String
-    let travelTime: String
+    let travelToTime: String
 
     init(model: City) {
         self.name = model.name
         self.image = model.image
-        self.travelTime = "차로" + model.castedTravelTime.description + "거리"
+        self.travelToTime = "차로" + model.castedTravelTime.description + "거리"
     }
 }

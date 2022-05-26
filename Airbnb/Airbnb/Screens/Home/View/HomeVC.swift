@@ -72,31 +72,35 @@ extension HomeViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        if indexPath.section == 0 {
+        guard let categoryType = CategoryType.init(rawValue: indexPath.section) else {return UICollectionViewCell()}
+
+        switch categoryType {
+        case .hero:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HeroCell.id, for: indexPath) as? HeroCell else {return UICollectionViewCell()}
+            cell.cellViewModel = homeViewModel.heroVM[indexPath.item]
             return cell
-        } else if indexPath.section == 1 {
+        case .city:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CityCell.id, for: indexPath) as? CityCell else {return UICollectionViewCell()}
+            cell.cellViewModel = homeViewModel.cityVM[indexPath.item]
             return cell
-        } else {
+
+        case .randomSite:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RandomSiteCell.id, for: indexPath) as? RandomSiteCell else {return UICollectionViewCell()}
+            cell.cellViewModel = homeViewModel.randomSiteVM[indexPath.item]
             return cell
         }
-
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.id, for: indexPath) as? SectionHeader else {
-            return UICollectionReusableView()
-        }
-
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind:UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.id, for: indexPath) as? SectionHeader else {return UICollectionReusableView()}
+        
         if indexPath.section == 1 {
             header.configureCell(title: "가까운 여행지 둘러보기")
 
         } else if indexPath.section == 2 {
             header.configureCell(title: "어디에서나, 여행은\n살아보는거야!")
         }
+        
         return header
     }
 

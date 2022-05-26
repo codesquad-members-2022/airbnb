@@ -11,11 +11,20 @@ final class CityCell: UICollectionViewCell {
 
     static let id = "CityCell"
 
+    var cellViewModel: Any? {
+         didSet {
+             guard let cityCellVM = cellViewModel as? CityCellViewModel else {return}
+             cityName.text = cityCellVM.name
+             timeToTravel.text = cityCellVM.travelToTime
+             imageView.image = UIImage(named: "\(cityCellVM.image)")
+         }
+     }
+
     private var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
-        let image = UIImage(named: "서울")
-        imageView.image = image
+//        let image = UIImage(named: "서울")
+//        imageView.image = image
         imageView.layer.cornerRadius = 10
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -23,21 +32,21 @@ final class CityCell: UICollectionViewCell {
 
     private var cityName: UILabel = {
         let label  = UILabel()
-        label.text = "서울"
+//        label.text = "서울"
         label.font = .smallBold
         return label
     }()
 
-    private var distance: UILabel = {
+    private var timeToTravel: UILabel = {
         let label = UILabel()
-        label.text = "차로 30분 거리"
+//        label.text = "차로 30분 거리"
         label.font = .smallRegular
         label.textColor = .gray3
         return label
     }()
 
     private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [cityName, distance])
+        let stackView = UIStackView(arrangedSubviews: [cityName, timeToTravel])
         stackView.axis = .vertical
         stackView.spacing = 4
         stackView.distribution = .fill

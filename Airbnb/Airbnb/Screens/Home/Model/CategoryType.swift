@@ -6,7 +6,7 @@
 //
 
 import Foundation
-enum CategoryType: Int, CaseIterable {
+enum CategoryType: Int {
     case hero
     case city
     case randomSite

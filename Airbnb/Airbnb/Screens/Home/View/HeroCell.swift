@@ -10,6 +10,16 @@ import UIKit
 final class HeroCell: UICollectionViewCell {
     static let id = "HeroCell"
 
+    var cellViewModel: Any? {
+         didSet {
+             guard let heroCellVM = cellViewModel as? HeroCellViewModel else {return}
+             title.text = heroCellVM.title
+             content.text = heroCellVM.content
+             badge.setTitle(heroCellVM.badge, for: .normal)
+             imageView.image = UIImage(named: "\(heroCellVM.image)")
+         }
+     }
+
     private var title: UILabel = {
         let label = UILabel()
         label.text = "슬기로운\n자연생활"

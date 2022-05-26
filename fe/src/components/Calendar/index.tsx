@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import * as I from '@/styles/icons';
@@ -7,10 +7,16 @@ import MonthTable from './MonthTable';
 import theme from './theme';
 
 function Calendar() {
+  const [dummy, setDummy] = useState([
+    { year: 2022, month: 1 },
+    { year: 2022, month: 2 },
+  ]);
+
   return (
     <S.CalendarLayer>
-      <MonthTable year={2021} month={12} />
-      <MonthTable year={2022} month={1} />
+      {dummy.map(({ year, month }) => (
+        <MonthTable key={`${year}${month}`} year={year} month={month} />
+      ))}
       <I.Prev />
       <I.Next />
     </S.CalendarLayer>

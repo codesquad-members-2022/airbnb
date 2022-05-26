@@ -22,9 +22,15 @@ const color = {
     pointColorGreen: "#118917",
 };
 
+const transparentColor = {
+    gray1: "rgba(0, 0, 0, 0.05)",
+    gray2: "rgba(0, 0, 0, 0.15)",
+};
+
 const theme = {
     layout,
     color,
+    transparentColor,
 };
 
 export default theme;

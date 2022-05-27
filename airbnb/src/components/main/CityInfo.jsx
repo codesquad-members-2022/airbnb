@@ -7,9 +7,9 @@ function CityInfo({ title, data }) {
   return (
     <>
       <MainTitle title={title} />
-      <Ul>
+      <CityContainer>
         {data.map(({ id, img, name, content }) => (
-          <Li key={id}>
+          <CityItem key={id}>
             <CityImgSection>
               <img src={img} alt={name} />
             </CityImgSection>
@@ -17,21 +17,22 @@ function CityInfo({ title, data }) {
               <Content>{name}</Content>
               <Content>{content}</Content>
             </CityTextSection>
-          </Li>
+          </CityItem>
         ))}
-      </Ul>
+      </CityContainer>
     </>
   );
 }
 
-const Ul = styled.ul`
+const CityContainer = styled.ul`
   ${flexBetween};
   width: 100%;
   flex-flow: row wrap;
 `;
 
-const Li = styled.li`
+const CityItem = styled.li`
   width: 25%;
+  cursor: pointer;
 `;
 
 const CityImgSection = styled.div`

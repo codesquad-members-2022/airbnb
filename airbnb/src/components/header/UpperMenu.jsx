@@ -1,15 +1,15 @@
 import { Flex, Spacer } from '@chakra-ui/react';
 import styled from 'styled-components';
 
+const MenuData = ['숙소', '체험', '온라인 체험'];
+
 function UpperMenu() {
   return (
     <Menu>
-      <Flex>
-        <UpperMenuContent>숙소</UpperMenuContent>
-        <Spacer />
-        <UpperMenuContent>체험</UpperMenuContent>
-        <Spacer />
-        <UpperMenuContent>온라인 체험</UpperMenuContent>
+      <Flex justify="space-between">
+        {MenuData.map((data, idx) => (
+          <UpperMenuContent key={idx}>{data}</UpperMenuContent>
+        ))}
       </Flex>
     </Menu>
   );

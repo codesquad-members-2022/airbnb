@@ -10,11 +10,11 @@ function SearchBar() {
   return (
     <Center>
       <SearchContainer>
-        <Flex>
+        <Flex justify="space-between">
           <CheckOut />
-          <Spacer />
+          {/* <Spacer /> */}
           <Price />
-          <Spacer />
+          {/* <Spacer /> */}
           <Personnel />
           <SearchIcon style={{ margin: '22px' }} />
         </Flex>

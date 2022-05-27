@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 function CalendarDates(props) {
-  const { lastDate, firstDate, elm, idx } = props;
+  const { lastDate, firstDate, date, idx } = props;
 
   return (
     <>
       <Form>
         <DateNum idx={idx} lastDate={lastDate} firstDate={firstDate}>
-          {elm}일
+          {date}일
         </DateNum>
       </Form>
     </>
@@ -17,7 +17,7 @@ function CalendarDates(props) {
 
 const Form = styled.li`
   position: relative;
-  width: calc(95% / 7);
+  width: calc(94% / 7);
   height: 60px;
   text-align: right;
   border: 1px solid ${({ theme }) => theme.colors.gray1};

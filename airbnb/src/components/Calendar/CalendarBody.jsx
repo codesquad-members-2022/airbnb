@@ -10,14 +10,14 @@ function CalendarBody(props) {
 
   return (
     <Form>
-      {totalDate.map((elm, idx) => {
+      {totalDate.map((date, idx) => {
         return (
           <CalendarDates
-            key={idx}
+            key={date}
             idx={idx}
             lastDate={lastDate}
             firstDate={firstDate}
-            elm={elm}
+            date={date}
           ></CalendarDates>
         );
       })}

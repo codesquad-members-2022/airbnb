@@ -7,16 +7,50 @@
 //
 
 import UIKit
+import MapKit
 
 class ListCollectionViewController: UIViewController {
     
     private var collectionView: UICollectionView!
+    private var searchCompleter = MKLocalSearchCompleter()
+    private var searchResultData = [MKLocalSearchCompletion]()
+    private var isSearching = false
+    private var recommendationData = [Place]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        requestRecommand()
         setCollectionView()
         setLayout()
+        connectSearchBar()
+        
+        searchCompleter.delegate = self
+        
+    }
+    
+    private func requestRecommand(){
+        let location = Location.makeRandomInKR()
+        let recommendSuccessStubRequest = DefaultRecommendator(httpService: ResponseSuccessStub())
+        recommendSuccessStubRequest.recommend(for: location) { place in
+            guard let place = place else {
+                return
+            }
+            self.recommendationData += place
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+    }
+    
+    private func connectSearchBar(){
         self.navigationItem.title = "숙소찾기"
+        self.navigationItem.searchController = UISearchController(searchResultsController: nil)
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        self.navigationController?.hidesBarsOnSwipe = false
+        self.navigationItem.searchController?.searchBar.delegate = self
+        
+        navigationItem.searchController?.isActive = true
+        navigationItem.searchController?.searchBar.becomeFirstResponder()
     }
     
     private func setCollectionView(){
@@ -30,25 +64,37 @@ class ListCollectionViewController: UIViewController {
         collectionView.dataSource = self
         
         collectionView.register(PlaceCell.self, forCellWithReuseIdentifier: PlaceCell.cellId)
+        collectionView.register(LocationCell.self, forCellWithReuseIdentifier: LocationCell.cellId)
     }
     
     private func setLayout(){
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        collectionView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
 }
 
 extension ListCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        if isSearching{
+            return searchResultData.count
+        }
+        return recommendationData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        if isSearching {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LocationCell.cellId, for: indexPath) as? LocationCell else { return UICollectionViewCell() }
+            let data = searchResultData[indexPath.item]
+            cell.setLocationData(data.title)
+            return cell
+        }
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceCell.cellId, for: indexPath) as? PlaceCell else { return UICollectionViewCell() }
+        let data = recommendationData[indexPath.item]
+        cell.setPlaceCell(data)
         return cell
     }
     
@@ -57,4 +103,27 @@ extension ListCollectionViewController: UICollectionViewDelegate, UICollectionVi
         return size
     }
     
+}
+
+extension ListCollectionViewController: UISearchBarDelegate{
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            isSearching = false
+            searchResultData.removeAll()
+            collectionView.reloadData()
+        }
+        else {
+            isSearching = true
+            searchCompleter.queryFragment = searchText
+        }
+    }
+}
+
+
+extension ListCollectionViewController: MKLocalSearchCompleterDelegate {
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        searchResultData = searchCompleter.results
+        collectionView.reloadData()
+    }
 }

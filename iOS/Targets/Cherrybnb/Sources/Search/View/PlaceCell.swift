@@ -69,4 +69,11 @@ class PlaceCell: UICollectionViewCell {
         distanceLabel.heightAnchor.constraint(equalToConstant: 22).isActive = true
         distanceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
     }
+    
+    func setPlaceCell(_ place: Place){
+        nameLabel.text = place.name
+        distanceLabel.text = "차로 \(place.estimatedTime) 분 거리"
+    }
+    
+    
 }

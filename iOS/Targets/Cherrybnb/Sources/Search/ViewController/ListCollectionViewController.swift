@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 class ListCollectionViewController: UIViewController {
-    
+
     private var collectionView: UICollectionView!
     private var searchCompleter = MKLocalSearchCompleter()
     private var searchResultData = [MKLocalSearchCompletion]()
@@ -52,22 +52,22 @@ class ListCollectionViewController: UIViewController {
         navigationItem.searchController?.isActive = true
         navigationItem.searchController?.searchBar.becomeFirstResponder()
     }
-    
-    private func setCollectionView(){
+
+    private func setCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: layout)
-        
+
         self.view.addSubview(collectionView)
-        
+
         collectionView.delegate = self
         collectionView.dataSource = self
-        
+
         collectionView.register(PlaceCell.self, forCellWithReuseIdentifier: PlaceCell.cellId)
         collectionView.register(LocationCell.self, forCellWithReuseIdentifier: LocationCell.cellId)
     }
-    
-    private func setLayout(){
+
+    private func setLayout() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
@@ -83,7 +83,7 @@ extension ListCollectionViewController: UICollectionViewDelegate, UICollectionVi
         }
         return recommendationData.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if isSearching {
@@ -97,12 +97,12 @@ extension ListCollectionViewController: UICollectionViewDelegate, UICollectionVi
         cell.setPlaceCell(data)
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = CGSize(width: self.collectionView.frame.width, height: 64)
         return size
     }
-    
+
 }
 
 extension ListCollectionViewController: UISearchBarDelegate{

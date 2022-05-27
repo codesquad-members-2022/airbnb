@@ -18,13 +18,13 @@ class SearchRootViewController: UIViewController {
         super.viewDidLoad()
         configureNavBar()
         askPermission()
-        
+
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
     }
-    
+
     private func configureNavBar() {
         searchBar.delegate = self
         searchBar.placeholder = "어디로 여행가세요?"
@@ -42,7 +42,7 @@ class SearchRootViewController: UIViewController {
 extension SearchRootViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     }
- 
+
 }
 
 extension SearchRootViewController: UISearchBarDelegate {

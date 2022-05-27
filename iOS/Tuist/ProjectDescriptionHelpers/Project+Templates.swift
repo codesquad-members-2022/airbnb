@@ -13,12 +13,10 @@ extension Project {
         return Project(name: name,
                        organizationName: "Codesquad",
                        targets: targets)
-        
+
     }
 
     // MARK: - Private
-
-    
 
     /// Helper function to create the application target and the unit test target.
     private static func makeAppTargets(name: String, platform: Platform ) -> [Target] {
@@ -30,11 +28,8 @@ extension Project {
             "UILaunchStoryboardName": "LaunchScreen",
             "Privacy - Location Always and When In Use Usage Description": "사용자의 위치 정보 필요",
             "Privacy - Location When In Use Usage Description": "사용자의 위치 정보 필요"
-            
+
             ]
-        
-       
-        
 
         let mainTarget = Target(
             name: name,

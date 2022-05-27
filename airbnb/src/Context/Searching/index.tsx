@@ -1,8 +1,8 @@
 import React, { useReducer, Dispatch } from 'react';
 
 const calendarInitialState: CalenderState = {
-  startDate: new Date(),
-  endDate: new Date(),
+  startDate: 0,
+  endDate: 0,
 };
 
 const priceInitialState: PriceState = {
@@ -18,11 +18,8 @@ const customersInitialState: CustomerState = {
 };
 
 // TODO: <SearchingContextState | null> 은 해결했는데 구조분해 할당을 못해서 다시 바꿈 해결방법 요망
-export const SearchingContext = React.createContext<SearchingContextState>({
-  price: priceInitialState,
-  customers: customersInitialState,
-  calendar: calendarInitialState,
-});
+export const SearchingContext =
+  React.createContext<SearchingContextState | null>(null);
 
 export const setSerachingContext =
   React.createContext<SearchContextDispatch | null>(null);
@@ -116,8 +113,8 @@ interface SearchContextDispatch {
 }
 // TODO: 작명 직접적인 State 쓰지말것 State는 상태에만 작명 사용하자
 export interface CalenderState {
-  startDate: null | Date;
-  endDate: null | Date;
+  startDate: null | number;
+  endDate: null | number;
 }
 
 export interface PriceState {
@@ -134,8 +131,8 @@ export interface CustomerState {
 
 // TODO: type을 interface로 바꾸려면?
 type CalenderAction =
-  | { type: 'SET_START_DATE'; date: Date }
-  | { type: 'SET_END_DATE'; date: Date }
+  | { type: 'SET_START_DATE'; date: number }
+  | { type: 'SET_END_DATE'; date: number }
   | { type: 'RESET' };
 
 type PriceAction =

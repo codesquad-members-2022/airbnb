@@ -1,5 +1,5 @@
 import { createKey } from "Helpers/utils";
-import Calendar from "./Calendar/Month";
+import Month from "./Calendar/Month";
 import { CalendarContainer } from "./Calendar.styled";
 import { dateType, eventType } from "Helpers/interface";
 
@@ -37,7 +37,7 @@ const getNextMonthInfo = ({ prevMonth, prevYear }: monthInfoType) => {
   return { nextMonth, nextMonthYear };
 };
 
-export default function CalendarModal({
+export default function Calendar({
   calendarShowCount,
   columnCount,
   calendarModalStyle,
@@ -52,7 +52,7 @@ export default function CalendarModal({
   const displayCalendarLength = calendarShowCount || 2;
 
   const firstCalendar = (
-    <Calendar
+    <Month
       year={year}
       month={month}
       checkIn={checkIn}
@@ -74,7 +74,7 @@ export default function CalendarModal({
       (!columnCount && idx === FIRST_IDX)
     ) {
       return (
-        <Calendar
+        <Month
           key={createKey(month + year, idx)}
           year={nextMonthYear}
           month={nextMonth}
@@ -88,7 +88,7 @@ export default function CalendarModal({
     }
 
     return (
-      <Calendar
+      <Month
         key={createKey(month + year, idx)}
         year={nextMonthYear}
         month={nextMonth}

@@ -1,4 +1,4 @@
-import CalendarModal from "Components/Calendar/Calendar";
+import Calendar from "Components/Calendar/Calendar";
 import Gnb from "Components/Gnb/Gnb";
 import SearchBar from "Components/SearchBar/SearchBar";
 import { getTodayDate } from "Helpers/utils";
@@ -87,7 +87,7 @@ export default function Home() {
             <Gnb />
             <SearchBar />
             {isOpen && (
-              <CalendarModal
+              <Calendar
                 calendarShowCount={calendarShowCount}
                 columnCount={2}
                 calendarModalStyle={calendarModalStyle}

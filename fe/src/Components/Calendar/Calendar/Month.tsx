@@ -50,7 +50,7 @@ interface dayComponentType extends calendarTypeSkeleton {
   handleClickDate?: (event: eventType) => void;
 }
 
-export default function Calendar({
+export default function Month({
   year,
   month,
   checkIn,

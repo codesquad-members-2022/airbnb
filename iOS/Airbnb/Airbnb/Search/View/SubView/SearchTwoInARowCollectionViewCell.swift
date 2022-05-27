@@ -7,41 +7,33 @@
 
 import UIKit
 
-class SearchTwoInARowCollectionViewCell: SearchCellCommonType {
+class SearchTwoInARowCollectionViewCell: UICollectionViewCell, SearchCellCommonType {
     
-    private var mainView: UIView = {
-        let view = UIView()
-        return view
-    }()
+    private var mainView = UIView()
     
-    private var mainImageView: UIImageView = {
-        let imageView = UIImageView()
-        return imageView
-    }()
+    private var mainImageView = UIImageView()
     
-    private var titleLabel: UILabel = {
-        let label = UILabel()
-        return label
-    }()
+    private var titleLabel = UILabel()
     
-    private var subTitleLabel: UILabel = {
-        let label = UILabel()
-        return label
-    }()
+    private var subTitleLabel = UILabel()
     
-    override func setData(model: SearchViewModel) {
+    func setData(model: SearchViewModel) {
         mainImageView.image = UIImage(data: model.imageData)
         titleLabel.text = model.titleLabel
         subTitleLabel.text = model.subTitleLabel
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        layout()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        layout()
+    }
+    
+    private func layout() {
         contentView.addSubview(mainView)
         
         mainView.snp.makeConstraints { make in
@@ -77,9 +69,5 @@ class SearchTwoInARowCollectionViewCell: SearchCellCommonType {
         mainImageView.backgroundColor = .white
         
         contentView.backgroundColor = UIColor.init(displayP3Red: CGFloat.random(in: 0.0...1.0), green: CGFloat.random(in: 0.0...1.0), blue: CGFloat.random(in: 0.0...1.0), alpha: 1)
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
     }
 }

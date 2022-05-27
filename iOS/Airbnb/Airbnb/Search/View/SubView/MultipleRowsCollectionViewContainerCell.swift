@@ -10,10 +10,6 @@ import SnapKit
 
 class MultipleRowsCollectionViewContainerCell: UICollectionViewCell {
     
-    static var reuseIdentifier: String {
-        String(describing: Self.self)
-    }
-    
     private var multipleRowCollectionViewController: MultipleRowsCollectionViewController?
     
     override func awakeFromNib() {
@@ -36,9 +32,12 @@ class MultipleRowsCollectionViewContainerCell: UICollectionViewCell {
             cellWidth: cellWidth,
             rowCount: rowCount)
         
-        contentView.subviews.forEach({ $0.removeFromSuperview() })
-        contentView.addSubview(multipleRowCollectionViewController!.collectionView)
+        guard let collectionViewController = multipleRowCollectionViewController else {
+            return
+        }
         
+        contentView.subviews.forEach({ $0.removeFromSuperview() })
+        contentView.addSubview(collectionViewController.collectionView)
         layout()
     }
     

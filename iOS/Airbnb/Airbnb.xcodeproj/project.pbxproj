@@ -15,6 +15,7 @@
 		005AF791283B775300546D5B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005AF790283B775300546D5B /* SceneDelegate.swift */; };
 		005AF798283B775300546D5B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 005AF797283B775300546D5B /* Assets.xcassets */; };
 		005AF7A6283B775300546D5B /* AirbnbTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005AF7A5283B775300546D5B /* AirbnbTests.swift */; };
+		008A2062283F4E220095F7BC /* BackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008A2061283F4E220095F7BC /* BackgroundViewController.swift */; };
 		00A85F35283B872800EA32E0 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A85F34283B872800EA32E0 /* SearchModel.swift */; };
 		00A85F38283B873F00EA32E0 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A85F37283B873F00EA32E0 /* SearchViewController.swift */; };
 		00A85F3C283B876A00EA32E0 /* WishListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A85F3B283B876A00EA32E0 /* WishListViewController.swift */; };
@@ -74,6 +75,7 @@
 		005AF7A1283B775300546D5B /* AirbnbTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirbnbTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		005AF7A5283B775300546D5B /* AirbnbTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirbnbTests.swift; sourceTree = "<group>"; };
 		005AF7AB283B775300546D5B /* AirbnbUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirbnbUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		008A2061283F4E220095F7BC /* BackgroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewController.swift; sourceTree = "<group>"; };
 		00A85F34283B872800EA32E0 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		00A85F37283B873F00EA32E0 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		00A85F3B283B876A00EA32E0 /* WishListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListViewController.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				00A85F36283B872E00EA32E0 /* View */,
 				00A85F33283B871900EA32E0 /* Model */,
 				1B807DCD283F540500D6815F /* DTO */,
+				008A2061283F4E220095F7BC /* BackgroundViewController.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 				00A85F35283B872800EA32E0 /* SearchModel.swift in Sources */,
 				00A85F3C283B876A00EA32E0 /* WishListViewController.swift in Sources */,
 				00A85F41283B87A300EA32E0 /* MyInfoViewController.swift in Sources */,
+				008A2062283F4E220095F7BC /* BackgroundViewController.swift in Sources */,
 				00230CF1283BB77500802765 /* TabBarViewController.swift in Sources */,
 				1B69F369283CD506001A2860 /* MultipleRowsCollectionViewController.swift in Sources */,
 				00330A9D283BF91A009014AF /* LocationViewController.swift in Sources */,

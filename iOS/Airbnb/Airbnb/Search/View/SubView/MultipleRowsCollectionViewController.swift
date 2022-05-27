@@ -7,8 +7,6 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
-
 class MultipleRowsCollectionViewController: UICollectionViewController {
     
     enum Section {
@@ -69,6 +67,8 @@ class MultipleRowsCollectionViewController: UICollectionViewController {
         
         self.init(collectionViewLayout: layout)
         collectionView.register(cellType, forCellWithReuseIdentifier: cellType.reuseIdentifier)
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
         
         self.unitCellType = cellType
         self.customLayout = layout

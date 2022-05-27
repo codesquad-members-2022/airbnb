@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class SearchViewController: UIViewController {
+class SearchViewController: BackgroundViewController, CommonViewControllerProtocol {
     
     enum Section {
         case searchMainBody
@@ -56,10 +56,13 @@ class SearchViewController: UIViewController {
     
     private var searchCollectionViewDataSource: (UICollectionView) -> UICollectionViewDiffableDataSource<Section, [SearchViewModel]> = { collectionView in
         UICollectionViewDiffableDataSource<Section, [SearchViewModel]>(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
+            
+            guard indexPath.item <= 3 else { return nil }
+            
             var cell: UICollectionViewCell?
             
-            if indexPath.item == 0 || indexPath.item == 2 {
-                
+            switch indexPath.item {
+            case 0, 2:
                 cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: SearchTitleCollectionViewCell.reuseIdentifier,
                     for: indexPath)
@@ -68,8 +71,7 @@ class SearchViewController: UIViewController {
                     (cell as? SearchTitleCollectionViewCell)?.setData(model: model)
                 }
                 
-            } else if indexPath.item == 1 {
-                
+            case 1:
                 cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: MultipleRowsCollectionViewContainerCell.reuseIdentifier,
                     for: indexPath)
@@ -80,10 +82,11 @@ class SearchViewController: UIViewController {
                         items: itemIdentifier,
                         cellWidth: collectionView.frame.width * 2/3,
                         rowCount: 2)
+            default:
+                cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: MultipleRowsCollectionViewContainerCell.reuseIdentifier,
+                    for: indexPath)
                 
-            } else if indexPath.item == 3 {
-                
-                cell = collectionView.dequeueReusableCell(withReuseIdentifier: MultipleRowsCollectionViewContainerCell.reuseIdentifier, for: indexPath)
                 (cell as? MultipleRowsCollectionViewContainerCell)?
                     .applyAttributes(
                         cellType: SearchOneInARowCollectionViewCell.self,
@@ -104,6 +107,7 @@ class SearchViewController: UIViewController {
         var oneRowItems = [SearchViewModel]()
         var twoRowItems = [SearchViewModel]()
         
+        // 임시 코드입니다.
         for i in 0 ..< 18 {
             
             let model = SearchViewModel(imageData: Data(), titleLabel: "\(i)", subTitleLabel: "\(i)\(i)")
@@ -149,19 +153,23 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         layout()
         attribute()
+        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
-    private func attribute() {
-        view.backgroundColor = .white
-        setUpSearchController()
-        navAppearance()
+    // MARK: - 객체간 통신을 담당할 메서드
+    func bind() {
     }
     
-    private func layout() {
+    func attribute() {
+        setUpSearchController()
+        super.setUpNavigationAppearance()
+    }
+    
+    func layout() {
         view.addSubview(searchMainCollectionView)
 
         searchMainCollectionView.snp.makeConstraints { make in
@@ -188,15 +196,5 @@ extension SearchViewController: UISearchBarDelegate {
     private func setUpSearchController() {
         self.navigationItem.titleView = searchBar
         searchBar.delegate = self
-    }
-}
-
-extension SearchViewController {
-    private func navAppearance() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .yellow
-        navigationItem.standardAppearance = appearance
-        navigationItem.scrollEdgeAppearance = appearance
     }
 }

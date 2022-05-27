@@ -7,13 +7,14 @@
 
 import UIKit
 
-class LocationViewController: UIViewController {
+class LocationViewController: BackgroundViewController, CommonViewControllerProtocol {
 
     private let searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         let searchBar = searchController.searchBar
         searchBar.placeholder = "어디로 여행가세요?"
         searchBar.searchTextField.clearButtonMode = .never
+        searchBar.searchTextField.returnKeyType = .go
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.automaticallyShowsCancelButton = false
         return searchController
@@ -27,43 +28,50 @@ class LocationViewController: UIViewController {
         return barButton
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        navAppearance()
-        setUpSearchController()
+    func attribute() {
+        
+    }
+    
+    func layout() {
+        
+    }
+    
+    func bind() {
+        
     }
     
     private func setUpSearchController() {
         self.navigationItem.searchController = searchController
         searchController.searchBar.delegate = self
     }
-}
-
-
-extension LocationViewController {
-    private func navAppearance() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .yellow
-        navigationItem.standardAppearance = appearance
-        navigationItem.scrollEdgeAppearance = appearance
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        super.setUpNavigationAppearance()
+        setUpSearchController()
     }
+    
 }
 
-extension LocationViewController: UISearchBarDelegate {
+extension LocationViewController: UISearchBarDelegate, UITextFieldDelegate {
     
     @objc func clearSearchField(_ sender: Any) {
         searchController.searchBar.text = nil
-        searchController.resignFirstResponder()
         self.navigationItem.rightBarButtonItem = nil
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        searchController.searchBar.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchController.searchBar.resignFirstResponder()
+        return true
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if !searchText.isEmpty {
-            self.navigationItem.rightBarButtonItem = removeButton
-        } else {
-            self.navigationItem.rightBarButtonItem = nil
-        }
+        !searchText.isEmpty
+        ? (navigationItem.rightBarButtonItem = removeButton)
+        : (navigationItem.rightBarButtonItem = nil)
     }
 }

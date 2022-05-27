@@ -27,7 +27,7 @@ function CalendarBody(props) {
 const Form = styled.div`
   display: flex;
   flex-flow: row wrap;
-  width: 430px;
-  margin-left: 10px;
+  width: 400px;
+  margin: 0 15px;
 `;
 export default CalendarBody;

@@ -1,3 +1,4 @@
+import { theme } from '@chakra-ui/react';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -20,24 +21,24 @@ const Form = styled.li`
   width: calc(95% / 7);
   height: 60px;
   text-align: right;
-  border: 1px solid #3d246d;
+  border: 1px solid ${({ theme }) => theme.colors.gray1};
 
   :nth-child(7n + 1) {
-    color: red;
+    color: ${({ theme }) => theme.colors.red};
   }
 
   :nth-child(7n) {
-    color: blue;
+    color: ${({ theme }) => theme.colors.blue};
   }
 `;
 
 const DateNum = styled.div`
-  ${(props) => props.idx < props.lastDate && `color: #969696;`};
+  cursor: pointer;
 
-  ${(props) =>
-    props.firstDate > 0 &&
-    props.idx > props.firstDate - 1 &&
-    `color: #969696;`};
+  ${({ idx, lastDate }) => idx < lastDate && `color: #BDBDBD;`};
+
+  ${({ idx, firstDate }) =>
+    firstDate > 0 && idx > firstDate - 1 && `color: #BDBDBD;`};
 `;
 
 export default CalendarDates;

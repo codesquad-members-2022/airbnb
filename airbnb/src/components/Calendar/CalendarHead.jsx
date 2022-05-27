@@ -4,16 +4,24 @@ import styled from 'styled-components';
 const DAY = ['일', '월', '화', '수', '목', '금', '토'];
 
 function CalendarHead(props) {
-  const { year, month, setMonth } = props;
+  const { year, month, setMonth, position } = props;
 
   return (
     <Form>
       <Nav>
-        <Btn onClick={() => setMonth(month - 1)}>&lt;</Btn>
+        {position === 'leftBtn' && (
+          <Btn onClick={() => setMonth(month - 1)} position={position}>
+            &lt;
+          </Btn>
+        )}
         <Year>
           {year}년 {month}월
         </Year>
-        <Btn onClick={() => setMonth(month + 1)}>&gt;</Btn>
+        {position === 'rightBtn' && (
+          <Btn onClick={() => setMonth(month + 1)} position={position}>
+            &gt;
+          </Btn>
+        )}
       </Nav>
       <Days>
         {DAY.map((day) => {
@@ -27,46 +35,56 @@ function CalendarHead(props) {
 const Form = styled.section`
   display: flex;
   flex-direction: column;
-  width: 430px;
+  position: relative;
+  width: 400px;
+  margin-left: 10px;
 `;
 
-const Nav = styled.section`
+const Nav = styled.nav`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0.7vw;
+  margin: 10px;
 `;
 
 const Year = styled.div`
-  font-size: 2rem;
+  font-size: ${({ theme }) => theme.fontSizes.xl};
   font-weight: bold;
 `;
 
 const Days = styled.div`
   display: flex;
-  margin-bottom: 0.5vw;
+  margin-bottom: 10px;
 `;
 
 const Day = styled.li`
   width: calc(95% / 7);
   text-align: right;
   margin-left: 40px;
+
   :nth-child(7n + 1) {
-    color: red;
+    color: ${({ theme }) => theme.colors.red};
   }
 
   :nth-child(7n) {
-    color: blue;
+    color: ${({ theme }) => theme.colors.blue};
   }
 `;
 
-const Btn = styled.li`
-  padding: 0.2vw 0.2vw 0.1vw;
+const Btn = styled.button`
+  position: absolute;
+  top: 10px;
+  padding: 5px;
   border: 0.5px solid #e4e3e6;
   border-radius: 5px;
-  text-align: center;
-  font-size: 0.78rem;
+  width: 10%;
   cursor: pointer;
+
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+
+  left: ${({ position }) => (position === 'leftBtn' ? 10 : '')}px;
+
+  right: ${({ position }) => (position === 'rightBtn' ? 10 : '')}px;
 `;
 
 export default CalendarHead;

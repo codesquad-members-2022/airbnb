@@ -5,8 +5,8 @@ function Content({ data }) {
   return (
     <FooterContent>
       <FooterContentTitle>{data.title}</FooterContentTitle>
-      {data.info.map((el, idx) => (
-        <FooterContentText key={idx}>{el}</FooterContentText>
+      {data.info.map(({ id, content }) => (
+        <FooterContentText key={id}>{content}</FooterContentText>
       ))}
     </FooterContent>
   );

@@ -5,8 +5,8 @@ import { companyInfoData } from '../../assets/data/footerData.js';
 function CompanyInfo() {
   return (
     <Info>
-      {companyInfoData.map((list, idx) => (
-        <span key={idx}>{list}</span>
+      {companyInfoData.map(({ id, content }) => (
+        <span key={id}>{content}</span>
       ))}
     </Info>
   );

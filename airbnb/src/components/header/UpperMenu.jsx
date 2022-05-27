@@ -1,9 +1,9 @@
 import { Flex, Spacer } from '@chakra-ui/react';
 import styled from 'styled-components';
 
-function UpperMenu(props) {
+function UpperMenu() {
   return (
-    <Div>
+    <Menu>
       <Flex>
         <UpperMenuContent>숙소</UpperMenuContent>
         <Spacer />
@@ -11,11 +11,11 @@ function UpperMenu(props) {
         <Spacer />
         <UpperMenuContent>온라인 체험</UpperMenuContent>
       </Flex>
-    </Div>
+    </Menu>
   );
 }
 
-const Div = styled.div`
+const Menu = styled.div`
   width: 15%;
 `;
 

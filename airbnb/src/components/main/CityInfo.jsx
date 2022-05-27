@@ -3,20 +3,20 @@ import { flexBetween } from 'style/mixins';
 
 import MainTitle from './MainTitle';
 
-function GroupOne({ title, data }) {
+function CityInfo({ title, data }) {
   return (
     <>
       <MainTitle title={title} />
       <Ul>
         {data.map(({ id, img, name, content }) => (
           <Li key={id}>
-            <Box1>
+            <CityImgSection>
               <img src={img} alt={name} />
-            </Box1>
-            <Box2>
+            </CityImgSection>
+            <CityTextSection>
               <Content>{name}</Content>
               <Content>{content}</Content>
-            </Box2>
+            </CityTextSection>
           </Li>
         ))}
       </Ul>
@@ -34,7 +34,7 @@ const Li = styled.li`
   width: 25%;
 `;
 
-const Box1 = styled.div`
+const CityImgSection = styled.div`
   width: 150px;
   height: 200px;
   float: left;
@@ -45,7 +45,8 @@ const Box1 = styled.div`
     height: 150px;
   }
 `;
-const Box2 = styled.div`
+
+const CityTextSection = styled.div`
   width: 200px;
   height: 150px;
   float: left;
@@ -56,4 +57,4 @@ const Content = styled.span`
   font-size: ${({ theme }) => theme.fontSizes.xl};
   margin-top: 30px;
 `;
-export default GroupOne;
+export default CityInfo;

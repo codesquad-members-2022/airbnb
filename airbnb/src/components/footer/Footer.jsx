@@ -19,7 +19,7 @@ function Footer() {
   );
 }
 
-const FooterDiv = styled.div`
+const FooterDiv = styled.footer`
   ${flexColumn}
   justify-content: space-between;
   margin-top: 50px;

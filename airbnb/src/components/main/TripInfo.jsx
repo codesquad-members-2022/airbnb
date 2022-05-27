@@ -4,17 +4,17 @@ import styled from 'styled-components';
 
 import MainTitle from './MainTitle';
 
-function GroupTwo({ title, data }) {
+function TripInfo({ title, data }) {
   return (
     <>
       <MainTitle title={title} />
       <Flex>
         {data.map(({ id, img, name, content }) => (
           <Fragment key={id}>
-            <Div>
+            <TripItem>
               <img src={img} alt={name} />
               <span>{content}</span>
-            </Div>
+            </TripItem>
             <Spacer />
           </Fragment>
         ))}
@@ -23,7 +23,7 @@ function GroupTwo({ title, data }) {
   );
 }
 
-const Div = styled.div`
+const TripItem = styled.div`
   img {
     width: 350px;
   }
@@ -33,4 +33,4 @@ const Div = styled.div`
   }
 `;
 
-export default GroupTwo;
+export default TripInfo;

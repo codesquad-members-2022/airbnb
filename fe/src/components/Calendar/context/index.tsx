@@ -1,14 +1,12 @@
 import React, { useContext, createContext, useState } from 'react';
 
-interface PickedDate {
+export interface PickedDate {
   year: number;
   month: number;
   day: number;
-  rowIdx: number;
-  cellIdx: number;
 }
 
-type PickedDates = {
+export type PickedDates = {
   firstPick: PickedDate | null;
   secondPick: PickedDate | null;
 };

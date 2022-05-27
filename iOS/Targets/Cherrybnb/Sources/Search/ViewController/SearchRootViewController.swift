@@ -18,6 +18,7 @@ class SearchRootViewController: UIViewController {
         super.viewDidLoad()
         configureNavBar()
         askPermission()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

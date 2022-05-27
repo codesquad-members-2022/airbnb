@@ -17,6 +17,7 @@ function Temp() {
       <BigSearchBar />
       <Separator />
 
+      <h3>Date Picker</h3>
       <DatePickerProvider>
         <Calendar />
       </DatePickerProvider>

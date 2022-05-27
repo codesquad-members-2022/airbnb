@@ -1,6 +1,4 @@
-import { useContext } from 'react';
 import Box from '@mui/material/Box';
-import { SearchingContext } from '../Context/Searching';
 import { GNB } from '../Component/GNB';
 import { SearchBar } from '../Component/SearchBar';
 import { Schedule } from '../Component/Schedule/Schedule';
@@ -8,7 +6,6 @@ import { Schedule } from '../Component/Schedule/Schedule';
 export function Home() {
   // 문제점 null 일경우에 null. price, null.customers 는 불가능해서 에러
   // 구조분해 할당을 어떻게 해야할까?
-  const { price, customers, calendar } = useContext(SearchingContext);
 
   return (
     <Box

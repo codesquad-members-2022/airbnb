@@ -1,60 +1,62 @@
 import React, { useContext, createContext, useState } from 'react';
 
-export interface PickedDate {
+export interface PickedDateUnit {
   year: number;
   month: number;
-  day: number;
+  day: number | false;
 }
 
-export type PickedDates = {
-  firstPick: PickedDate | null;
-  secondPick: PickedDate | null;
+export type PickedDateUnits = {
+  firstPickedDateUnit: PickedDateUnit | null;
+  secondPickedDateUnit: PickedDateUnit | null;
 };
-type PickedDatesDispatch = React.Dispatch<React.SetStateAction<PickedDates>>;
+type PickedDatesDispatch = React.Dispatch<React.SetStateAction<PickedDateUnits>>;
 
-const PickedDatesContext = createContext<PickedDates | null>(null);
-const PickedDatesDispatchContext = createContext<PickedDatesDispatch | null>(null);
+const PickedDateUnitsContext = createContext<PickedDateUnits | null>(null);
+const PickedDateUnitsDispatchContext = createContext<PickedDatesDispatch | null>(null);
 
 export function DatePickerProvider({ children }: { children: React.ReactNode }) {
-  const [pickedDates, setPickedDates] = useState<PickedDates>({
-    firstPick: null,
-    secondPick: null,
+  const [pickedDateUnits, setPickedDateUnits] = useState<PickedDateUnits>({
+    firstPickedDateUnit: null,
+    secondPickedDateUnit: null,
   });
 
   return (
-    <PickedDatesDispatchContext.Provider value={setPickedDates}>
-      <PickedDatesContext.Provider value={pickedDates}>{children}</PickedDatesContext.Provider>
-    </PickedDatesDispatchContext.Provider>
+    <PickedDateUnitsDispatchContext.Provider value={setPickedDateUnits}>
+      <PickedDateUnitsContext.Provider value={pickedDateUnits}>
+        {children}
+      </PickedDateUnitsContext.Provider>
+    </PickedDateUnitsDispatchContext.Provider>
   );
 }
 
-export const useDatePick = (): [PickedDates, PickedDatesDispatch] => {
-  const pickedDates = useContext(PickedDatesContext);
-  const setPickedDates = useContext(PickedDatesDispatchContext);
+export const useDatePick = (): [PickedDateUnits, PickedDatesDispatch] => {
+  const pickedDateUnits = useContext(PickedDateUnitsContext);
+  const setPickedDateUnits = useContext(PickedDateUnitsDispatchContext);
 
-  if (!pickedDates || !setPickedDates) {
+  if (!pickedDateUnits || !setPickedDateUnits) {
     throw new Error('DatePick Error');
   }
 
-  return [pickedDates, setPickedDates];
+  return [pickedDateUnits, setPickedDateUnits];
 };
 
 export const useDatePickGetter = () => {
-  const pickedDates = useContext(PickedDatesContext);
+  const pickedDateUnits = useContext(PickedDateUnitsContext);
 
-  if (!pickedDates) {
+  if (!pickedDateUnits) {
     throw new Error('DatePickGetter Error');
   }
 
-  return pickedDates;
+  return pickedDateUnits;
 };
 
 export const useDatePickSetter = () => {
-  const setPickedDates = useContext(PickedDatesDispatchContext);
+  const setPickedDateUnits = useContext(PickedDateUnitsDispatchContext);
 
-  if (!setPickedDates) {
+  if (!setPickedDateUnits) {
     throw new Error('DatePickSetter Error');
   }
 
-  return setPickedDates;
+  return setPickedDateUnits;
 };

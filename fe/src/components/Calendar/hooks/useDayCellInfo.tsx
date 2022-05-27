@@ -1,13 +1,10 @@
 import { isEqual } from 'date-fns';
+import { useMemo } from 'react';
 
-import { PickedDate, PickedDates, useDatePick } from '@/components/Calendar/context';
+import { PickedDateUnit, PickedDateUnits, useDatePick } from '@/components/Calendar/context';
 
 interface CheckIsSelected {
-  (pickedDate: PickedDate | null, date: PickedDate): boolean;
-}
-
-interface CheckIsBetweenPickedDates {
-  (pickedDates: PickedDates, date: PickedDate): boolean;
+  (pickedDate: PickedDateUnit | null, date: PickedDateUnit): boolean;
 }
 
 const checkIsSelected: CheckIsSelected = (pickedDate, { year, month, day }) => {
@@ -21,25 +18,29 @@ const checkIsSelected: CheckIsSelected = (pickedDate, { year, month, day }) => {
   return compareDate.getTime() === currentDate.getTime();
 };
 
-const checkIsBetweenPickedDates: CheckIsBetweenPickedDates = (
-  { firstPick, secondPick },
-  { year, month, day },
-) => {
-  if (!firstPick || !secondPick) {
+/* util */
+
+const dateUnitToDateObj = (dateUnit) => {
+  if (!dateUnit) {
+    return null;
+  }
+  const { year, month, day } = dateUnit;
+
+  return new Date(year, month - 1, day);
+};
+
+const isEqualDate = (date1, date2) => {
+  if (!date1 || !date2) {
     return false;
   }
 
-  const { year: fYear, month: fMonth, day: fDay } = firstPick;
-  const { year: sYear, month: sMonth, day: sDay } = secondPick;
-  const firstPickDate = new Date(fYear, fMonth - 1, fDay);
-  const currentDate = new Date(year, month - 1, day);
-  const secondPickDate = new Date(sYear, sMonth - 1, sDay);
-
-  return firstPickDate <= currentDate && currentDate <= secondPickDate;
+  return isEqual(date1, date2);
 };
 
+/* **** */
+
 interface UseDayCellInfo {
-  (date: PickedDate): {
+  (date: PickedDateUnit): {
     isSelected: boolean;
     isBetweenPickedDates: boolean;
     isFirstPickDate: boolean;
@@ -49,12 +50,29 @@ interface UseDayCellInfo {
 }
 
 export const useDayCellInfo: UseDayCellInfo = ({ year, month, day }) => {
-  const [pickedDates, setPickedDates] = useDatePick();
-  const { firstPick, secondPick } = pickedDates;
+  if (!day) {
+    return {
+      isSelected: false,
+      isBetweenPickedDates: false,
+      isFirstPickDate: false,
+      isSecondPickDate: false,
+      onClickDayCell: () => {},
+    };
+  }
+
+  const [pickedDateUnits, setPickedDateUnits] = useDatePick();
+  const { firstPickedDateUnit, secondPickedDateUnit } = pickedDateUnits;
+
+  const firstPickedDate = dateUnitToDateObj(firstPickedDateUnit);
+  const secondPickedDate = dateUnitToDateObj(secondPickedDateUnit);
+  const currentCellDate = dateUnitToDateObj({ year, month, day });
+
   const isSelected =
-    checkIsSelected(firstPick, { year, month, day }) ||
-    checkIsSelected(secondPick, { year, month, day });
-  const isBetweenPickedDates = checkIsBetweenPickedDates(pickedDates, { year, month, day });
+    isEqualDate(firstPickedDate, currentCellDate) || isEqualDate(secondPickedDate, currentCellDate);
+
+  const isBetweenPickedDates =
+    firstPickedDate <= currentCellDate && currentCellDate <= secondPickedDate;
+
   const isFirstPickDate = false;
   const isSecondPickDate = false;
 
@@ -65,46 +83,44 @@ export const useDayCellInfo: UseDayCellInfo = ({ year, month, day }) => {
     // NOTE: 선택된 셀을 다시 클릭한 경우 null로
     // NOTE: firstPick을 다시 클릭하면 secondPick이 firstPick이 된다.
 
-    if (typeof day !== 'number') {
-      return;
-    }
+    const curPickedDateUnit = { year, month, day };
 
-    const newPickedDates = { year, month, day };
-
-    if (firstPick === null) {
-      setPickedDates({
-        ...pickedDates,
-        firstPick: newPickedDates,
+    if (firstPickedDateUnit === null) {
+      setPickedDateUnits({
+        ...pickedDateUnits,
+        firstPickedDateUnit: curPickedDateUnit,
       });
       return;
     }
 
-    if (secondPick === null) {
-      if (firstPick.year > year || firstPick.month > month || firstPick.day > day) {
-        setPickedDates((prevPickedDates) => ({
-          firstPick: newPickedDates,
-          secondPick: prevPickedDates.firstPick,
+    if (secondPickedDateUnit === null) {
+      if (firstPickedDate > currentCellDate) {
+        setPickedDateUnits((prevPickedDateUnits) => ({
+          firstPickedDateUnit: curPickedDateUnit,
+          secondPickedDateUnit: prevPickedDateUnits.firstPickedDateUnit,
         }));
         return;
       }
 
-      setPickedDates({
-        ...pickedDates,
-        secondPick: newPickedDates,
+      setPickedDateUnits({
+        ...pickedDateUnits,
+        secondPickedDateUnit: curPickedDateUnit,
       });
       return;
     }
 
-    if (checkIsSelected(secondPick, { year, month, day })) {
-      setPickedDates({ ...pickedDates, secondPick: null });
+    if (isEqualDate(currentCellDate, secondPickedDate)) {
+      setPickedDateUnits({ ...pickedDateUnits, secondPickedDateUnit: null });
       return;
     }
 
-    if (checkIsSelected(firstPick, { year, month, day })) {
+    if (isEqualDate(firstPickedDate, currentCellDate)) {
       // NOTE: firstPick을 다시 클릭하면 secondPick이 firstPick이 된다.
-      setPickedDates((prevPickedDates) => ({
-        firstPick: prevPickedDates.secondPick ? pickedDates.secondPick : null,
-        secondPick: null,
+      setPickedDateUnits((prevPickedDateUnits) => ({
+        firstPickedDateUnit: prevPickedDateUnits.secondPickedDateUnit
+          ? pickedDateUnits.secondPickedDateUnit
+          : null,
+        secondPickedDateUnit: null,
       }));
     }
   };

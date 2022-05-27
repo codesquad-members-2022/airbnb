@@ -1,25 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, createContext } from 'react';
 import styled from 'styled-components';
 
 import * as I from '@/styles/icons';
 
 import MonthTable from './MonthTable';
 import theme from './theme';
+import { getNextYearAndMonth, getPrevYearAndMonth, getThisYearAndThisMonth } from './utils';
 
-function Calendar() {
-  const [dummy, setDummy] = useState([
-    { year: 2022, month: 1 },
-    { year: 2022, month: 2 },
+export const DisablePreviousDaysContext = createContext<boolean>(false);
+
+interface Props {
+  disablePreviousDays: boolean;
+}
+
+function Calendar({ disablePreviousDays = false }: Props) {
+  const [thisYear, thisMonth] = getThisYearAndThisMonth();
+  const [monthTableData, setMonthTableData] = useState([
+    { year: thisYear, month: thisMonth + 1 },
+    { year: thisYear, month: thisMonth + 2 },
   ]);
 
+  const onClickNextButton = () => {
+    setMonthTableData(([, { year: prevRightDisplayYear, month: prevRightDisplayMonth }]) => {
+      const [nextRightDisplayYear, nextRightDisplayMonth] = getNextYearAndMonth(
+        prevRightDisplayYear,
+        prevRightDisplayMonth,
+      );
+      return [
+        { year: prevRightDisplayYear, month: prevRightDisplayMonth },
+        { year: nextRightDisplayYear, month: nextRightDisplayMonth },
+      ];
+    });
+  };
+
+  const onClickPrevButton = () => {
+    setMonthTableData(([{ year: prevLeftDisplayYear, month: prevLeftDisplayMonth }]) => {
+      const [nextLeftDisplayYear, nextLeftDisplayMonth] = getPrevYearAndMonth(
+        prevLeftDisplayYear,
+        prevLeftDisplayMonth,
+      );
+      return [
+        { year: nextLeftDisplayYear, month: nextLeftDisplayMonth },
+        { year: prevLeftDisplayYear, month: prevLeftDisplayMonth },
+      ];
+    });
+  };
+
   return (
-    <S.CalendarLayer>
-      {dummy.map(({ year, month }) => (
-        <MonthTable key={`${year}${month}`} year={year} month={month} />
-      ))}
-      <I.Prev />
-      <I.Next />
-    </S.CalendarLayer>
+    <DisablePreviousDaysContext.Provider value={disablePreviousDays}>
+      <S.CalendarLayer>
+        {monthTableData.map(({ year, month }) => (
+          <MonthTable key={`${year}${month}`} year={year} month={month} />
+        ))}
+        <I.Prev onClick={onClickPrevButton} />
+        <I.Next onClick={onClickNextButton} />
+      </S.CalendarLayer>
+    </DisablePreviousDaysContext.Provider>
   );
 }
 

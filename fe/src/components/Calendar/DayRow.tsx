@@ -1,19 +1,17 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 import DayCell from './DayCell';
 
 interface Props {
-  dayList: Array<boolean | number>;
-  year: number;
-  month: number;
+  dayList: Array<number | false>;
 }
 
-function DayRow({ dayList, year, month }: Props) {
+function DayRow({ dayList }: Props) {
   return (
     <S.Row>
       {dayList.map((day, cellIdx) => (
-        <DayCell key={String(cellIdx)} year={year} month={month} day={day} />
+        <DayCell key={String(cellIdx)} day={day} />
       ))}
     </S.Row>
   );
@@ -23,4 +21,4 @@ const S = {
   Row: styled.tr``,
 };
 
-export default DayRow;
+export default memo(DayRow);

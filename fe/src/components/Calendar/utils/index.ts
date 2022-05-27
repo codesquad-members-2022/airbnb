@@ -1,6 +1,6 @@
-import { endOfMonth, getDay, startOfMonth, getDate } from 'date-fns';
+import { endOfMonth, getDay, startOfMonth, getDate, getYear, getMonth } from 'date-fns';
 
-type MonthTableRowType = Array<number | boolean>;
+type MonthTableRowType = Array<number | false>;
 
 const getRangeArray = (start: number, end: number): number[] => {
   return Array(end - start + 1)
@@ -43,4 +43,31 @@ export const getMonthData: IGetMonthData = (year, month) => {
   const targetArray = spaceArray.concat(daysArray);
 
   return splitArray(targetArray, 7); // 1d -> 2d
+};
+
+export const getNextYearAndMonth = (year: number, month: number): [number, number] => {
+  const firstMonth = 1;
+  const lastMonth = 12;
+
+  if (month === lastMonth) {
+    return [year + 1, firstMonth];
+  }
+
+  return [year, month + 1];
+};
+
+export const getPrevYearAndMonth = (year: number, month: number): [number, number] => {
+  const firstMonth = 1;
+  const lastMonth = 12;
+
+  if (month === firstMonth) {
+    return [year - 1, lastMonth];
+  }
+
+  return [year, month - 1];
+};
+
+export const getThisYearAndThisMonth = () => {
+  const today = new Date();
+  return [getYear(today), getMonth(today)];
 };

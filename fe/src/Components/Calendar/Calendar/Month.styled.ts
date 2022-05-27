@@ -16,7 +16,7 @@ export const Monthly = styled.div`
 export const YearMonthArea = styled.div`
   ${({ flex, justify }: flexBoxType) => applyFlex({ flex, justify })};
   width: 90%;
-  height: 10%;
+  height: 40px;
   margin-bottom: 40px;
   font-weight: 700;
   font-size: 24px;

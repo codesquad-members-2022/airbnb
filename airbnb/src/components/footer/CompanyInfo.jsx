@@ -15,6 +15,7 @@ const Info = styled.div`
   margin-top: 100px;
   margin-bottom: 30px;
   span {
+    cursor: pointer;
     display: inline;
     padding: 30px;
   }

@@ -24,6 +24,7 @@ function TripInfo({ title, data }) {
 }
 
 const TripItem = styled.div`
+  cursor: pointer;
   img {
     width: 350px;
   }

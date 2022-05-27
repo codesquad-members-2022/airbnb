@@ -1,4 +1,4 @@
-import { Flex, Spacer } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import styled from 'styled-components';
 
 const MenuData = ['숙소', '체험', '온라인 체험'];
@@ -20,7 +20,7 @@ const Menu = styled.div`
 `;
 
 const UpperMenuContent = styled.p`
-  background-color: ${({ theme }) => theme.colors.clearwhite};
+  background-color: ${({ theme }) => theme.colors.clearWhite};
   cursor: pointer;
   font-size: ${({ theme }) => theme.fontSizes.xs};
   font-weight: 600;

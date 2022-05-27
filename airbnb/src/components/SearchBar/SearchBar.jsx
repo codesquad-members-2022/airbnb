@@ -1,24 +1,33 @@
+import React, { useCallback, useState } from 'react';
 import { Center, Flex, Spacer } from '@chakra-ui/react';
 import styled from 'styled-components';
 
-import CheckOut from './CheckOut';
+import CheckInOut from './CheckInOut';
 import Personnel from './Personnel';
 import Price from './Price';
+import Modal from 'components/Calendar/CalendarModal';
 import { ReactComponent as SearchIcon } from 'assets/svg/searchBtn.svg';
 
 function SearchBar() {
+  const [isOpenModal, setOpenModal] = useState(false);
+
+  const onClickToggleModal = useCallback(() => {
+    setOpenModal(!isOpenModal);
+  }, [isOpenModal]);
+
   return (
     <Center>
       <SearchContainer>
-        <Flex justify="space-between">
-          <CheckOut />
-          {/* <Spacer /> */}
+        <Flex>
+          <CheckInOut onClick={onClickToggleModal} />
+          <Spacer />
           <Price />
-          {/* <Spacer /> */}
+          <Spacer />
           <Personnel />
           <SearchIcon style={{ margin: '22px' }} />
         </Flex>
       </SearchContainer>
+      {isOpenModal && <Modal />}
     </Center>
   );
 }

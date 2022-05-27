@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Btn, ContentBox, BarTitle, BarContent } from './SearchBar_styled.jsx';
 
 function Personnel() {

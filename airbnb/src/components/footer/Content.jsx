@@ -22,10 +22,12 @@ const FooterContent = styled.div`
 const FooterContentTitle = styled.p`
   font-weight: bold;
   margin: 10px;
+  cursor: pointer;
 `;
 
 const FooterContentText = styled.p`
   margin: 10px;
+  cursor: pointer;
 `;
 
 export default Content;

@@ -32,7 +32,6 @@ const CityContainer = styled.ul`
 
 const CityItem = styled.li`
   width: 25%;
-  cursor: pointer;
 `;
 
 const CityImgSection = styled.div`
@@ -44,6 +43,7 @@ const CityImgSection = styled.div`
   img {
     width: 150px;
     height: 150px;
+    cursor: pointer;
   }
 `;
 

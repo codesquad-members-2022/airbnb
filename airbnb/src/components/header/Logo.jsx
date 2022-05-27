@@ -5,7 +5,7 @@ function Logo() {
 }
 
 const StyledLogo = styled.div`
-  background-color: ${({ theme }) => theme.colors.clearwhite};
+  background-color: ${({ theme }) => theme.colors.clearWhite};
   font-size: 40px;
   font-weight: 700;
   cursor: pointer;

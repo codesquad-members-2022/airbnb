@@ -4,15 +4,16 @@ import styled from 'styled-components';
 import DayCell from './DayCell';
 
 interface Props {
-  row: Array<boolean | number>;
-  rowIdx: number;
+  dayList: Array<boolean | number>;
+  year: number;
+  month: number;
 }
 
-function DayRow({ row, rowIdx }: Props) {
+function DayRow({ dayList, year, month }: Props) {
   return (
     <S.Row>
-      {row.map((cell, cellIdx) => (
-        <DayCell key={String(cellIdx)} cell={cell} cellIdx={cellIdx} />
+      {dayList.map((day, cellIdx) => (
+        <DayCell key={String(cellIdx)} year={year} month={month} day={day} />
       ))}
     </S.Row>
   );

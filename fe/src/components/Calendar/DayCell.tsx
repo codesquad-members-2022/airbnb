@@ -4,17 +4,22 @@ import styled from 'styled-components';
 import { mixin } from '@/styles/mixin';
 
 import { useDayCell } from './hooks/useDayCell';
+import { YearMonthContext } from './MonthTable';
 import theme from './theme';
 
 import { DisablePreviousDaysContext } from './index';
 
 interface Props {
+  day: number | false;
+}
+
+interface CheckIsPreviousDayInput {
   year: number;
   month: number;
   day: number | false;
 }
 
-const checkIsPreviousDay = ({ year, month, day }: Props) => {
+const checkIsPreviousDay = ({ year, month, day }: CheckIsPreviousDayInput) => {
   if (!day) {
     return true;
   }
@@ -25,7 +30,8 @@ const checkIsPreviousDay = ({ year, month, day }: Props) => {
   return today > currentCellDate;
 };
 
-function DayCell({ year, month, day }: Props) {
+function DayCell({ day }: Props) {
+  const [year, month] = useContext(YearMonthContext);
   const {
     isSelected,
     isBetweenPickedDates,

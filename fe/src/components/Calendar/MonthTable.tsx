@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, createContext, useMemo } from 'react';
 import styled from 'styled-components';
 
 import Days from './Days';
@@ -10,22 +10,27 @@ interface Props {
   month: number;
 }
 
+export const YearMonthContext = createContext<number[]>([0, 0]);
+
 function MonthTable({ year, month }: Props) {
   const days = getMonthData(year, month);
   console.log(year, month);
+  const value = useMemo(() => [year, month], [year, month]);
 
   return (
-    <S.MonthTableLayer>
-      <S.Header>
-        <S.YearMonth>
-          {year}년 {month}월
-        </S.YearMonth>
-      </S.Header>
-      <S.Table>
-        <Weekday />
-        <Days days={days} year={year} month={month} />
-      </S.Table>
-    </S.MonthTableLayer>
+    <YearMonthContext.Provider value={value}>
+      <S.MonthTableLayer>
+        <S.Header>
+          <S.YearMonth>
+            {year}년 {month}월
+          </S.YearMonth>
+        </S.Header>
+        <S.Table>
+          <Weekday />
+          <Days days={days} />
+        </S.Table>
+      </S.MonthTableLayer>
+    </YearMonthContext.Provider>
   );
 }
 

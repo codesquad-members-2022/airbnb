@@ -5,15 +5,13 @@ import DayRow from './DayRow';
 
 interface Props {
   days: Array<Array<number | false>>;
-  year: number;
-  month: number;
 }
 
-function Days({ days, year, month }: Props) {
+function Days({ days }: Props) {
   return (
     <S.Tbody>
       {days.map((dayList, rowIdx) => (
-        <DayRow key={String(rowIdx)} dayList={dayList} year={year} month={month} />
+        <DayRow key={String(rowIdx)} dayList={dayList} />
       ))}
     </S.Tbody>
   );

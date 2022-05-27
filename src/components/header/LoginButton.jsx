@@ -1,19 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import Cylindrical from "../../cylindrical";
 import {ReactComponent as MenuIcon} from "../../assets/menuIcon.svg";
 import {ReactComponent as UserIcon} from "../../assets/userIcon.svg";
 
 const LoginButton = () => {
-    const loginButtonStyle = {
-        width: "76px",
-        height: "40px",
-        border: "1px solid #BDBDBD",
-        backgroundColor: "white",
-    };
-
     return (
-        <LoginButtonBox style={loginButtonStyle}>
+        <LoginButtonBox>
             <IconBox>
                 <MenuIcon />
             </IconBox>
@@ -24,11 +16,16 @@ const LoginButton = () => {
     );
 };
 
-const LoginButtonBox = styled(Cylindrical)`
+const LoginButtonBox = styled.div`
     ${({theme}) => theme.layout.flexLayoutMixin("row", "center", "center")}
+    width: 76px;
+    height: 40px;
+    border: 1px solid ${({theme}) => theme.color.gray4};
+    background-color: ${({theme}) => theme.color.white};
     gap: 10px;
     padding: 0px 0px 0px 4px;
     cursor: pointer;
+    border-radius: 999px;
     &:hover {
         box-shadow: 0px 2px 2px ${({theme}) => theme.transparentColor.gray2};
         transition: 0.3s;

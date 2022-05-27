@@ -6,7 +6,7 @@ const Home = () => {
     return (
         <>
             <Header />
-            <SearchBar size="big" />;
+            <SearchBar />;
         </>
     );
 };

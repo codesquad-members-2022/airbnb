@@ -2,7 +2,7 @@ import React from "react";
 import Gnb from "./Gnb";
 import styled from "styled-components";
 import LoginButton from "./LoginButton";
-import SearchBar from "./searchBar/SearchBar";
+import MiniSearchBar from "./searchBar/MiniSearchBar";
 import {useLocation} from "react-router-dom";
 
 const Header = () => {
@@ -13,7 +13,7 @@ const Header = () => {
         <Background>
             <HeaderBox>
                 <Logo>LOGO</Logo>
-                {path === "search" ? <SearchBar size="small" /> : <Gnb />}
+                {path === "search" ? <MiniSearchBar /> : <Gnb />}
                 <LoginButton />
             </HeaderBox>
         </Background>

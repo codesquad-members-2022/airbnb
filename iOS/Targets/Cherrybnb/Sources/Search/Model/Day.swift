@@ -13,11 +13,34 @@ struct Day {
     let date: Date
     
     // Calendar에 보여지는 숫자
-    let number: String
+    var number: String {
+        dateFormatter.string(from: date)
+    }
     
     // Calendar에서 선택되었는지 여부
     let isSelected: Bool
     
     // 현재 이전 날짜인지 여부
     let isPast: Bool
+    
+    let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d"
+        return dateFormatter
+    }()
+}
+
+struct Month {
+    let date: Date
+    
+    var title: String {
+        dateFormatter.string(from: date)
+    }
+    
+    let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy년 MM월"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        return dateFormatter
+    }()
 }

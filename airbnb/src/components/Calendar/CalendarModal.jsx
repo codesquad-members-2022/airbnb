@@ -41,11 +41,13 @@ function Modal() {
     }
 
     //현재날짜
-    let TODAY_ARR = [];
+    let CURRENTDATE_ARR = [];
 
-    TODAY_ARR = [...Array(ThisLastDate + 1).keys()].slice(1);
-
-    return PREVIOUSDATE_ARR.concat(TODAY_ARR, NEXTDATE_ARR);
+    CURRENTDATE_ARR = [...Array(ThisLastDate + 1).keys()].slice(1);
+    console.log(PREVIOUSDATE_ARR);
+    console.log(NEXTDATE_ARR);
+    console.log(CURRENTDATE_ARR);
+    return PREVIOUSDATE_ARR.concat(CURRENTDATE_ARR, NEXTDATE_ARR);
   };
 
   useEffect(() => {

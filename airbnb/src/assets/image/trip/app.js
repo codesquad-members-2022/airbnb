@@ -1,6 +1,6 @@
-import Dog from './Dog.png';
-import House from './House.png';
-import Nature from './Nature.png';
-import Water from './Water.png';
+import Dog from './Dog.WebP';
+import House from './House.WebP';
+import Nature from './Nature.WebP';
+import Water from './Water.WebP';
 
 export { Dog, House, Nature, Water };

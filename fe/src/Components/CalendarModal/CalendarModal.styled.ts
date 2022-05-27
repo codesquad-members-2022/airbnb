@@ -1,22 +1,19 @@
-import { applyFlex, flexBoxType } from "Helpers/utils";
 import styled from "styled-components";
 
-interface calenderContainerType extends flexBoxType {
-  width?: string;
-  height?: string;
-  backgroundColor?: string;
+interface calendarContainerType {
+  columnCount?: number;
+  calendarModalStyle?: string;
 }
 
-export const CalenderContainer = styled.div`
-  ${({ flex, justify }: calenderContainerType) => applyFlex({ flex, justify })};
-  background-color: #352536;
-  width: 912px;
-  ${({ width }: calenderContainerType) => `width:${width}`};
-  ${({ height }: calenderContainerType) => `height:${height}`};
-  ${({ backgroundColor }: calenderContainerType) => `background-color:${backgroundColor}`};
+export const CalendarContainer = styled.div<calendarContainerType>`
+  display: grid;
+  ${({ columnCount }) => {
+    return `grid-template-columns: repeat(${columnCount || 2}, 1fr)`;
+  }};
 
-  margin-left: 262px;
-  margin-top: 40px;
-  padding: 88px;
-  border-radius: 40px;
+  grid-template-rows: repeat(1, 1fr);
+  grid-auto-rows: 1fr;
+  ${({ calendarModalStyle }) => {
+    return calendarModalStyle ? calendarModalStyle : "";
+  }};
 `;

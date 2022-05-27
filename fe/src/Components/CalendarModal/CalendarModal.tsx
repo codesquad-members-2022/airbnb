@@ -1,73 +1,109 @@
-import { getTodayDate } from "Helpers/utils";
-import { useState } from "react";
+import { createKey } from "Helpers/utils";
 import Calendar from "./Calendar/Calendar";
-import { CalenderContainer } from "./CalendarModal.styled";
+import { CalendarContainer } from "./CalendarModal.styled";
+import { dateType, eventType } from "Helpers/interface";
 
-interface calenderType {
-  year?: number;
-  month?: number;
-  width?: string;
-  height?: string;
-  backgroundColor?: string;
+interface calendarDateType {
+  year: number;
+  month: number;
+  day?: number;
 }
 
-const { year: initYear, month: initMonth } = getTodayDate();
+interface calendarType {
+  calendarShowCount?: number;
+  columnCount?: number;
+  calendarModalStyle?: string;
+  checkIn?: dateType;
+  checkOut?: dateType;
+  calendarData: calendarDateType;
+  handlePrevButton?: () => void;
+  handleNextButton?: () => void;
+  handleClickDate?: (event: eventType) => void;
+}
 
-export default function CalendarModal({ width, height, backgroundColor }: calenderType) {
-  const checkIn = { year: 2022, month: 5, day: 27 };
-  const checkOut = { year: 2022, month: 6, day: 4 };
+interface monthInfoType {
+  prevMonth: number;
+  prevYear: number;
+}
 
-  const [calendarData, setCalendarData] = useState({ year: initYear, month: initMonth });
+const DECEMBER = 12;
+const JANUARY = 1;
+const COLUMN_COUNT_IDX_OFFSET = 2;
+const FIRST_IDX = 0;
+
+const getNextMonthInfo = ({ prevMonth, prevYear }: monthInfoType) => {
+  const nextMonth = prevMonth === DECEMBER ? JANUARY : prevMonth + 1;
+  const nextMonthYear = nextMonth === JANUARY ? prevYear + 1 : prevYear;
+  return { nextMonth, nextMonthYear };
+};
+
+export default function CalendarModal({
+  calendarShowCount,
+  columnCount,
+  calendarModalStyle,
+  checkIn,
+  checkOut,
+  calendarData,
+  handlePrevButton,
+  handleNextButton,
+  handleClickDate,
+}: calendarType) {
   const { year, month } = calendarData;
+  const displayCalendarLength = calendarShowCount || 2;
 
-  const nextMonth = month === 12 ? 1 : month + 1;
-  const nextMonthYear = nextMonth === 1 ? year + 1 : year;
-  const displayCalendarLength = 2;
+  const firstCalendar = (
+    <Calendar
+      year={year}
+      month={month}
+      checkIn={checkIn}
+      checkOut={checkOut}
+      button={{ prev: true }}
+      handlePrevButton={handlePrevButton}
+      handleClickDate={handleClickDate}
+    />
+  );
 
-  const handlePrevButton = () => {
-    const newCalendarData = { year: calendarData.year, month: 0 };
-    newCalendarData.month = calendarData.month - displayCalendarLength;
-    if (newCalendarData.month < 0) {
-      newCalendarData.month = 12 - -newCalendarData.month;
-      newCalendarData.year--;
+  const monthInfo = new Array(displayCalendarLength - 1).fill({ month, year });
+  const nextCalendar = monthInfo.map(({ month, year }, idx) => {
+    const { nextMonth, nextMonthYear } = getNextMonthInfo({ prevMonth: month, prevYear: year });
+    const idxOffset = 1;
+    monthInfo[idx + idxOffset] = { month: nextMonth, year: nextMonthYear };
+
+    if (
+      (columnCount && columnCount - COLUMN_COUNT_IDX_OFFSET === idx) ||
+      (!columnCount && idx === FIRST_IDX)
+    ) {
+      return (
+        <Calendar
+          key={createKey(month + year, idx)}
+          year={nextMonthYear}
+          month={nextMonth}
+          checkIn={checkIn}
+          checkOut={checkOut}
+          button={{ next: true }}
+          handleNextButton={handleNextButton}
+          handleClickDate={handleClickDate}
+        />
+      );
     }
-    setCalendarData(newCalendarData);
-  };
 
-  const handleNextButton = () => {
-    const newCalendarData = { year: calendarData.year, month: 0 };
-    newCalendarData.month = calendarData.month + displayCalendarLength;
-    if (newCalendarData.month > 12) {
-      newCalendarData.month -= 12;
-      newCalendarData.year++;
-    }
-    setCalendarData(newCalendarData);
-  };
-
-  return (
-    <CalenderContainer
-      flex={true}
-      justify="space-between"
-      width={width}
-      height={height}
-      backgroundColor={backgroundColor}
-    >
+    return (
       <Calendar
-        year={year}
-        month={month}
-        checkIn={checkIn}
-        checkOut={checkOut}
-        button={{ prev: true }}
-        handlePrevButton={handlePrevButton}
-      />
-      <Calendar
+        key={createKey(month + year, idx)}
         year={nextMonthYear}
         month={nextMonth}
         checkIn={checkIn}
         checkOut={checkOut}
-        button={{ next: true }}
-        handleNextButton={handleNextButton}
+        button={{}}
+        handleClickDate={handleClickDate}
       />
-    </CalenderContainer>
+    );
+  });
+
+  return (
+    <CalendarContainer columnCount={columnCount} calendarModalStyle={calendarModalStyle}>
+      {firstCalendar}
+      {nextCalendar}
+    </CalendarContainer>
   );
 }

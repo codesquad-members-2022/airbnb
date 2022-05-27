@@ -12,8 +12,8 @@ interface Props {
 function Days({ days, year, month }: Props) {
   return (
     <S.Tbody>
-      {days.map((row, rowIdx) => (
-        <DayRow key={String(rowIdx)} row={row} rowIdx={rowIdx} year={year} month={month} />
+      {days.map((dayList, rowIdx) => (
+        <DayRow key={String(rowIdx)} dayList={dayList} rowIdx={rowIdx} year={year} month={month} />
       ))}
     </S.Tbody>
   );

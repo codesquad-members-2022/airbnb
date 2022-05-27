@@ -23,7 +23,7 @@ function MonthTable({ year, month }: Props) {
       </S.Header>
       <S.Table>
         <Weekday />
-        <Days days={days} year={year} month={month}/>
+        <Days days={days} year={year} month={month} />
       </S.Table>
     </S.MonthTableLayer>
   );

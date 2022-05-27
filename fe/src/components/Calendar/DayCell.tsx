@@ -6,14 +6,14 @@ import { useDatePick } from '@/components/Calendar/context';
 import theme from './theme';
 
 interface Props {
-  cell: number | boolean;
   rowIdx: number;
   cellIdx: number;
   year: number;
   month: number;
+  day: number | boolean;
 }
 
-function DayCell({ cell, rowIdx, cellIdx, year, month }: Props) {
+function DayCell({ rowIdx, cellIdx, year, month, day }: Props) {
   const [pickedDates, setPickedDates] = useDatePick();
   const { firstPick, secondPick } = pickedDates;
 
@@ -35,7 +35,7 @@ function DayCell({ cell, rowIdx, cellIdx, year, month }: Props) {
     }
   };
 
-  return <S.CellLayer>{cell && <S.Cell onClick={onClickDayCell}>{cell}</S.Cell>}</S.CellLayer>;
+  return <S.CellLayer>{day && <S.Cell onClick={onClickDayCell}>{day}</S.Cell>}</S.CellLayer>;
 }
 
 const S = {

@@ -4,7 +4,8 @@ import Box from "@mui/material/Box";
 import MENUS from "mockData/menus";
 
 import GNB from "./GNB/GNB";
-import { indexHeaderStyle, HeaderContainer } from "./Header.styled";
+import { indexHeaderStyle, HeaderContainer } from "./Header.style";
+import SearchBar from "./SearchBar/SearchBar";
 import UserMenu from "./UserMenu/UserMenu";
 
 const LogoArea = () => {
@@ -40,7 +41,7 @@ const Header = () => {
           />
           <UserMenu />
         </Grid>
-        {/* TODO: SearchBar */}
+        <SearchBar />
       </HeaderContainer>
     </Box>
   );

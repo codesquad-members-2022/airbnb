@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 
-const NavItem = ({ item }: NavItemProps): JSX.Element => {
+const NavItem = ({ item }: { item: string }): JSX.Element => {
   return (
     <Button
       variant="text"
@@ -16,7 +16,3 @@ const NavItem = ({ item }: NavItemProps): JSX.Element => {
 };
 
 export default NavItem;
-
-interface NavItemProps {
-  item: string;
-}

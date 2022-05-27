@@ -4,7 +4,6 @@ import NavItem from "./NavItem";
 
 const GNB = ({ menuData, ...MUIGridProps }: GNBProps): JSX.Element => {
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <Grid {...MUIGridProps}>
       <ButtonGroup component="nav" aria-label="메인 메뉴">
         {menuData.map(({ id, name }) => (
@@ -16,7 +15,6 @@ const GNB = ({ menuData, ...MUIGridProps }: GNBProps): JSX.Element => {
 };
 
 export default GNB;
-
 interface GNBProps extends GridProps {
   menuData: {
     id: number;

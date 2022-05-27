@@ -9,7 +9,7 @@ import {
   UserMenuContainer,
   userMenuButtonStyle,
   menuIconStyle,
-} from "./UserMenu.styled";
+} from "./UserMenu.style";
 
 const UserMenu = () => {
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);

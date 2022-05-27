@@ -44,6 +44,29 @@ const theme = createTheme({
       width: `32px`,
       height: `32px`,
     },
+    searchBar: {
+      closeButton: {
+        width: "20px",
+        height: "20px",
+        icon: {
+          width: "13px",
+          height: "13px",
+        },
+      },
+      searchButton: {
+        width: "40px",
+        height: "40px",
+        icon: {
+          width: "2rem",
+          height: "2rem",
+        },
+      },
+      fullSize: {
+        maxWidth: `916px`,
+        height: `76px`,
+        padding: `16px 16px 16px 40px !important`,
+      },
+    },
   },
   style: {
     circularBorder: `border-radius: 50%;`,
@@ -80,11 +103,12 @@ const theme = createTheme({
           fontSize: "1rem",
           backgroundColor: "inherit",
           minWidth: "0",
+          color: "inherit",
 
           "&:hover": {
-            backgroundColor: "inherit",
             fontWeight: "700",
             textDecoration: "underline",
+            backgroundColor: "unset",
           },
 
           // 버튼 내부 icon
@@ -140,6 +164,29 @@ declare module "@mui/material/styles" {
         width: string;
         height: string;
       };
+      searchBar: {
+        closeButton: {
+          width: string;
+          height: string;
+          icon: {
+            width: string;
+            height: string;
+          };
+        };
+        searchButton: {
+          width: string;
+          height: string;
+          icon: {
+            width: string;
+            height: string;
+          };
+        };
+        fullSize: {
+          maxWidth: string;
+          height: string;
+          padding: string;
+        };
+      };
     };
     style: {
       alignCenter: {
@@ -160,13 +207,36 @@ declare module "@mui/material/styles" {
         width?: string;
         height?: string;
       };
+      searchBar?: {
+        closeButton?: {
+          width?: string;
+          height?: string;
+          icon?: {
+            width?: string;
+            height?: string;
+          };
+        };
+        searchButton?: {
+          width?: string;
+          height?: string;
+          icon?: {
+            width?: string;
+            height?: string;
+          };
+        };
+        fullSize?: {
+          maxWidth?: string;
+          height?: string;
+          padding?: string;
+        };
+      };
     };
     style?: {
       alignCenter?: {
         flex?: string;
         margin?: string;
       };
-      circularBorder: string;
+      circularBorder?: string;
     };
     whiteSpace?: {
       inner?: string;
@@ -183,14 +253,14 @@ declare module "@mui/material/styles" {
     grey6: Palette["primary"];
   }
   interface PaletteOptions {
-    black: PaletteOptions["primary"];
-    white: PaletteOptions["primary"];
-    grey1: PaletteOptions["primary"];
-    grey2: PaletteOptions["primary"];
-    grey3: PaletteOptions["primary"];
-    grey4: PaletteOptions["primary"];
-    grey5: PaletteOptions["primary"];
-    grey6: PaletteOptions["primary"];
+    black?: PaletteOptions["primary"];
+    white?: PaletteOptions["primary"];
+    grey1?: PaletteOptions["primary"];
+    grey2?: PaletteOptions["primary"];
+    grey3?: PaletteOptions["primary"];
+    grey4?: PaletteOptions["primary"];
+    grey5?: PaletteOptions["primary"];
+    grey6?: PaletteOptions["primary"];
   }
 }
 
@@ -198,6 +268,7 @@ declare module "@mui/material/Button" {
   interface ButtonPropsColorOverrides {
     black: true;
     white: true;
+    grey4: true;
   }
 }
 

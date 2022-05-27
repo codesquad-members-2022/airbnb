@@ -1,6 +1,22 @@
 import { Container, ContainerProps, Avatar } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
+const UserMenuContainer = styled(Container)<ContainerProps>(
+  ({ theme: { palette, style } }) => `
+  ${style.alignCenter.flex}
+  background-color: ${palette.white.main};
+  width: 76px;
+  height: 40px;
+  border-radius: calc(76px / 2);
+  border: 1px solid ${palette.grey4.main};
+  position: relative;
+
+  &:hover{
+    background-color: ${palette.grey5.main};
+  }
+`
+);
+
 const userMenuButtonStyle = {
   padding: 0,
   border: 0,
@@ -20,18 +36,6 @@ const menuIconStyle = {
     size.userMenuButton.width,
 };
 
-const UserMenuContainer = styled(Container)<ContainerProps>(
-  ({ theme: { palette, style } }) => `
-  ${style.alignCenter.flex}
-  background-color: ${palette.white.main};
-  width: 76px;
-  height: 40px;
-  border-radius: calc(76px / 2);
-  border: 1px solid ${palette.grey4.main};
-  position: relative;
-`
-);
-
 const UserAvatar = styled(Avatar)(
   ({ theme: { palette, size } }) => `
   background-color: ${palette.grey3.main};
@@ -39,7 +43,6 @@ const UserAvatar = styled(Avatar)(
   height: ${size.userMenuButton.height};
   position: absolute;
   right: 0;
-}
   );`
 );
 

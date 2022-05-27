@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 import DayCell from './DayCell';
@@ -23,4 +23,4 @@ const S = {
   Row: styled.tr``,
 };
 
-export default DayRow;
+export default memo(DayRow);

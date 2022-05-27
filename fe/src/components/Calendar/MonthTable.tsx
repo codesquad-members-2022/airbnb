@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 import Days from './Days';
@@ -12,7 +12,7 @@ interface Props {
 
 function MonthTable({ year, month }: Props) {
   const days = getMonthData(year, month);
-  console.log(days);
+  console.log(year, month);
 
   return (
     <S.MonthTableLayer>
@@ -52,4 +52,4 @@ const S = {
   `,
 };
 
-export default MonthTable;
+export default memo(MonthTable);

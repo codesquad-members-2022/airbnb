@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 import DayRow from './DayRow';
@@ -23,4 +23,4 @@ const S = {
   Tbody: styled.tbody``,
 };
 
-export default Days;
+export default memo(Days);

@@ -11,11 +11,18 @@ final class CityCell: UICollectionViewCell {
 
     static let id = "CityCell"
 
+    var cellViewModel: CityCellViewModel? {
+         didSet {
+             guard let cityCellVM = cellViewModel else {return}
+             cityName.text = cityCellVM.name
+             timeToTravel.text = cityCellVM.travelToTime
+             imageView.image = UIImage(named: "\(cityCellVM.image)")
+         }
+     }
+
     private var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
-        let image = UIImage(named: "서울")
-        imageView.image = image
         imageView.layer.cornerRadius = 10
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -23,21 +30,19 @@ final class CityCell: UICollectionViewCell {
 
     private var cityName: UILabel = {
         let label  = UILabel()
-        label.text = "서울"
         label.font = .smallBold
         return label
     }()
 
-    private var distance: UILabel = {
+    private var timeToTravel: UILabel = {
         let label = UILabel()
-        label.text = "차로 30분 거리"
         label.font = .smallRegular
         label.textColor = .gray3
         return label
     }()
 
     private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [cityName, distance])
+        let stackView = UIStackView(arrangedSubviews: [cityName, timeToTravel])
         stackView.axis = .vertical
         stackView.spacing = 4
         stackView.distribution = .fill
@@ -60,8 +65,8 @@ final class CityCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -179),
-            imageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, constant: -10),
+            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -contentView.frame.width/1.4),
+            imageView.heightAnchor.constraint(equalTo: contentView.heightAnchor),
             stackView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 16),
             stackView.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
         ])

@@ -1,6 +1,6 @@
 import { createKey } from "Helpers/utils";
-import Calendar from "./Calendar/Calendar";
-import { CalendarContainer } from "./CalendarModal.styled";
+import Calendar from "./Calendar/Month";
+import { CalendarContainer } from "./Calendar.styled";
 import { dateType, eventType } from "Helpers/interface";
 
 interface calendarDateType {

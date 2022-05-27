@@ -1,4 +1,4 @@
-import CalendarModal from "Components/CalendarModal/CalendarModal";
+import CalendarModal from "Components/CalendarModal/Calendar";
 import Gnb from "Components/Gnb/Gnb";
 import SearchBar from "Components/SearchBar/SearchBar";
 import { getTodayDate } from "Helpers/utils";

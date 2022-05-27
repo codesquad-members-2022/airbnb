@@ -10,7 +10,7 @@ import {
   Monthly,
   StyledCheckInOut,
   YearMonthArea,
-} from "./Calendar.styled";
+} from "./Month.styled";
 
 interface buttonType {
   prev?: boolean;

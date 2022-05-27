@@ -17,8 +17,22 @@ function Calendar() {
       {dummy.map(({ year, month }) => (
         <MonthTable key={`${year}${month}`} year={year} month={month} />
       ))}
-      <I.Prev />
-      <I.Next />
+      <I.Prev
+        onClick={() => {
+          setDummy((prevDummy) => [
+            { year: prevDummy[0].year, month: prevDummy[0].month - 1 },
+            { year: prevDummy[1].year, month: prevDummy[1].month - 1 },
+          ]);
+        }}
+      />
+      <I.Next
+        onClick={() => {
+          setDummy((prevDummy) => [
+            { year: prevDummy[0].year, month: prevDummy[0].month + 1 },
+            { year: prevDummy[1].year, month: prevDummy[1].month + 1 },
+          ]);
+        }}
+      />
     </S.CalendarLayer>
   );
 }

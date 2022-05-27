@@ -29,6 +29,9 @@
 		1B27E237283CA5A900FCB990 /* SearchCellCommonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B27E236283CA5A900FCB990 /* SearchCellCommonType.swift */; };
 		1B69F369283CD506001A2860 /* MultipleRowsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B69F368283CD506001A2860 /* MultipleRowsCollectionViewController.swift */; };
 		1B69F36B283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B69F36A283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift */; };
+		1B807DCB283F529A00D6815F /* SearchCalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B807DCA283F529A00D6815F /* SearchCalendarModel.swift */; };
+		1B90ED34283F547600E45FE8 /* SearchDayDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B90ED33283F547600E45FE8 /* SearchDayDTO.swift */; };
+		1B90ED36283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B90ED35283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +89,9 @@
 		1B27E236283CA5A900FCB990 /* SearchCellCommonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCellCommonType.swift; sourceTree = "<group>"; };
 		1B69F368283CD506001A2860 /* MultipleRowsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleRowsCollectionViewController.swift; sourceTree = "<group>"; };
 		1B69F36A283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleRowsCollectionViewContainerCell.swift; sourceTree = "<group>"; };
+		1B807DCA283F529A00D6815F /* SearchCalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCalendarModel.swift; sourceTree = "<group>"; };
+		1B90ED33283F547600E45FE8 /* SearchDayDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDayDTO.swift; sourceTree = "<group>"; };
+		1B90ED35283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirbnbCalendarModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				005AF7A5283B775300546D5B /* AirbnbTests.swift */,
+				1B90ED35283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift */,
 			);
 			path = AirbnbTests;
 			sourceTree = "<group>";
@@ -178,6 +185,7 @@
 			children = (
 				00A85F36283B872E00EA32E0 /* View */,
 				00A85F33283B871900EA32E0 /* Model */,
+				1B807DCD283F540500D6815F /* DTO */,
 				008A2061283F4E220095F7BC /* BackgroundViewController.swift */,
 			);
 			path = Search;
@@ -207,6 +215,7 @@
 			children = (
 				00A85F34283B872800EA32E0 /* SearchModel.swift */,
 				1B27E234283CA44400FCB990 /* SearchViewModel.swift */,
+				1B807DCA283F529A00D6815F /* SearchCalendarModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -271,6 +280,14 @@
 				1B69F36A283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift */,
 			);
 			path = SubView;
+			sourceTree = "<group>";
+		};
+		1B807DCD283F540500D6815F /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				1B90ED33283F547600E45FE8 /* SearchDayDTO.swift */,
+			);
+			path = DTO;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -412,6 +429,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00A85F3E283B877700EA32E0 /* WishModel.swift in Sources */,
+				1B807DCB283F529A00D6815F /* SearchCalendarModel.swift in Sources */,
 				1B27E233283CA14900FCB990 /* SearchOneInARowCollectionViewCell.swift in Sources */,
 				1B27E231283CA14200FCB990 /* SearchTwoInARowCollectionViewCell.swift in Sources */,
 				00A85F35283B872800EA32E0 /* SearchModel.swift in Sources */,
@@ -428,6 +446,7 @@
 				1B27E237283CA5A900FCB990 /* SearchCellCommonType.swift in Sources */,
 				00A85F38283B873F00EA32E0 /* SearchViewController.swift in Sources */,
 				005AF791283B775300546D5B /* SceneDelegate.swift in Sources */,
+				1B90ED34283F547600E45FE8 /* SearchDayDTO.swift in Sources */,
 				00A85F44283B87B900EA32E0 /* MyInfoModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -437,6 +456,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				005AF7A6283B775300546D5B /* AirbnbTests.swift in Sources */,
+				1B90ED36283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

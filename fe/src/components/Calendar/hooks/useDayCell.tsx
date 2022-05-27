@@ -1,35 +1,29 @@
 import { isEqual } from 'date-fns';
 import { useMemo } from 'react';
 
-import { PickedDateUnit, PickedDateUnits, useDatePick } from '@/components/Calendar/context';
-
-interface CheckIsSelected {
-  (pickedDate: PickedDateUnit | null, date: PickedDateUnit): boolean;
-}
-
-const checkIsSelected: CheckIsSelected = (pickedDate, { year, month, day }) => {
-  if (pickedDate === null) {
-    return false;
-  }
-
-  const { year: pYear, month: pMonth, day: pDay } = pickedDate;
-  const compareDate = new Date(pYear, pMonth - 1, pDay);
-  const currentDate = new Date(year, month - 1, day);
-  return compareDate.getTime() === currentDate.getTime();
-};
+import { PickedDateUnit, useDatePick } from '@/components/Calendar/context';
 
 /* util */
 
-const dateUnitToDateObj = (dateUnit) => {
+const dateUnitToDateObj = (dateUnit: PickedDateUnit | null): Date | false => {
   if (!dateUnit) {
-    return null;
+    return false;
   }
+
   const { year, month, day } = dateUnit;
+
+  if (!day) {
+    return false;
+  }
 
   return new Date(year, month - 1, day);
 };
 
-const isEqualDate = (date1, date2) => {
+interface IsEqualDate {
+  (date1: Date | null | false, date2: Date | null | false): boolean;
+}
+
+const isEqualDate: IsEqualDate = (date1, date2) => {
   if (!date1 || !date2) {
     return false;
   }
@@ -39,23 +33,23 @@ const isEqualDate = (date1, date2) => {
 
 /* **** */
 
-interface UseDayCellInfo {
+interface UseDayCell {
   (date: PickedDateUnit): {
     isSelected: boolean;
     isBetweenPickedDates: boolean;
-    isFirstPickDate: boolean;
-    isSecondPickDate: boolean;
+    isFirstPickedDate: boolean;
+    isSecondPickedDate: boolean;
     onClickDayCell: () => void;
   };
 }
 
-export const useDayCellInfo: UseDayCellInfo = ({ year, month, day }) => {
+export const useDayCell: UseDayCell = ({ year, month, day }) => {
   if (!day) {
     return {
       isSelected: false,
       isBetweenPickedDates: false,
-      isFirstPickDate: false,
-      isSecondPickDate: false,
+      isFirstPickedDate: false,
+      isSecondPickedDate: false,
       onClickDayCell: () => {},
     };
   }
@@ -73,8 +67,8 @@ export const useDayCellInfo: UseDayCellInfo = ({ year, month, day }) => {
   const isBetweenPickedDates =
     firstPickedDate <= currentCellDate && currentCellDate <= secondPickedDate;
 
-  const isFirstPickDate = false;
-  const isSecondPickDate = false;
+  const isFirstPickedDate = isEqualDate(currentCellDate, firstPickedDate);
+  const isSecondPickedDate = isEqualDate(currentCellDate, secondPickedDate);
 
   const onClickDayCell = () => {
     // NOTE: 아무것도 선택되지 않은 경우 -> firstPick 업데이트
@@ -125,5 +119,11 @@ export const useDayCellInfo: UseDayCellInfo = ({ year, month, day }) => {
     }
   };
 
-  return { isSelected, isBetweenPickedDates, isFirstPickDate, isSecondPickDate, onClickDayCell };
+  return {
+    isSelected,
+    isBetweenPickedDates,
+    isFirstPickedDate,
+    isSecondPickedDate,
+    onClickDayCell,
+  };
 };

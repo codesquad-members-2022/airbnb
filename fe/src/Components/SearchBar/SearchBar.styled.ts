@@ -13,7 +13,7 @@ export const Container = styled.div`
 `;
 
 export const DateArea = styled.div`
-  ${({ flex, justify, align }: flexBoxType) => applyFlex({ flex, justify, align })};
+  ${({ flex, align }: flexBoxType) => applyFlex({ flex, align })};
   width: 361px;
   border-right: 1px solid #e0e0e0;
 `;
@@ -45,6 +45,7 @@ export const InActiveContent = styled.div`
 `;
 
 export const ContentContainer = styled.div`
+  width: 112px;
   margin-left: 24px;
   cursor: pointer;
 `;

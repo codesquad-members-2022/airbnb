@@ -12,30 +12,52 @@ import cancelButton from "Asset/cancelButton.svg";
 import searchButton from "Asset/searchButton.svg";
 import activeSearchButton from "Asset/activeSearchButton.svg";
 import { Img } from "Components/Common/styled";
+import { useCalendar } from "Hook/useCalendar";
 
 export default function SearchBar() {
+  const [calendar, dispatchCalendar] = useCalendar();
+  const { checkIn, checkOut } = calendar;
+
+  const handleClickCheckInOut = () => {
+    dispatchCalendar({
+      type: "OPEN",
+    });
+  };
+
+  const handleResetCalendar = () => {
+    dispatchCalendar({
+      type: "RESET",
+    });
+  };
+
   return (
     <Container flex={true} justify="space-between">
       <DateArea flex={true} justify="space-between" align="center">
-        <ContentContainer>
+        <ContentContainer onClick={handleClickCheckInOut}>
           <ContentHeader>체크인</ContentHeader>
-          {/* 체크인 상태 값이 입력되면 Active, 없으면 InActive */}
-          {false ? (
-            <ActiveContent>날짜입력해주기</ActiveContent>
+          {checkIn.day > 0 ? (
+            <ActiveContent>{`${checkIn.month}월 ${checkIn.day}일`}</ActiveContent>
           ) : (
             <InActiveContent>날짜입력</InActiveContent>
           )}
         </ContentContainer>
-        <ContentContainer>
+        <ContentContainer onClick={handleClickCheckInOut}>
           <ContentHeader>체크아웃</ContentHeader>
-          {/* 체크아웃 상태 값이 입력되면 Active, 없으면 InActive */}
-          {false ? (
-            <ActiveContent>날짜입력해주기</ActiveContent>
+          {checkOut.day > 0 ? (
+            <ActiveContent>{`${checkOut.month}월 ${checkOut.day}일`}</ActiveContent>
           ) : (
             <InActiveContent>날짜입력</InActiveContent>
           )}
         </ContentContainer>
-        <Img src={cancelButton} width="20px" height="20px" margin="0 33px 0 0" />
+        {checkIn.day > 0 && checkOut.day > 0 && (
+          <Img
+            src={cancelButton}
+            width="20px"
+            height="20px"
+            margin="0 33px 0 0"
+            onClick={handleResetCalendar}
+          />
+        )}
       </DateArea>
       <PriceArea flex={true} justify="space-between" align="center">
         <ContentContainer>

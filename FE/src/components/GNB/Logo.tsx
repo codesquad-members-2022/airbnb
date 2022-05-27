@@ -1,4 +1,4 @@
-import * as S from '@components/Header/Header.style';
+import * as S from '@components/GNB/GNB.style';
 
 const Logo = () => {
   return (

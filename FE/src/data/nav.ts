@@ -1,4 +1,4 @@
-const nav = [
+export const nav = [
   {
     id: 1,
     title: '숙소',
@@ -16,6 +16,8 @@ const nav = [
   },
 ];
 
-const NavTypes = typeof nav;
-
-export { nav, NavTypes };
+export type NavTypes = {
+  id: number;
+  title: string;
+  path: string;
+};

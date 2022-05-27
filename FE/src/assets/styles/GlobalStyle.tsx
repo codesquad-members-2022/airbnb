@@ -13,7 +13,6 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     margin: 0;
-    font-size: 16px;
     line-height: 1.5;
     height: 100%;
     font-family: "Noto Sans KR", sans-serif;

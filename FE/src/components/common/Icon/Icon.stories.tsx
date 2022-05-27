@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import Icon, { IconTypes, ICON_NAME } from '@components/common/Icon';
+import Icon, { IconTypes, ICON_NAME, ICON_SIZE } from '@components/common/Icon';
 
 export default {
   title: 'Common/Icon',
@@ -10,6 +10,20 @@ export default {
   args: {
     iconName: ICON_NAME.MENU,
     iconSize: 'MEDIUM',
+  },
+  argTypes: {
+    iconName: {
+      control: {
+        type: 'radio',
+      },
+      options: [ICON_NAME.MENU, ICON_NAME.USER, ICON_NAME.SEARCH],
+    },
+    iconSize: {
+      control: {
+        type: 'radio',
+      },
+      options: [ICON_SIZE.MEDIUM, ICON_SIZE.LARGE],
+    },
   },
 } as ComponentMeta<typeof Icon>;
 

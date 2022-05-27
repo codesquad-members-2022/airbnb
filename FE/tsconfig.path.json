@@ -6,6 +6,7 @@
       "@lib/*": ["lib/*"],
       "@pages/*": ["pages/*"],
       "@data": ["data"],
+      "@data/*": ["data/*"],
       "@router": ["router"],
       "@constants": ["constants"],
       "@context/*": ["context/*"],

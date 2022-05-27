@@ -5,34 +5,48 @@ import * as I from '@/styles/icons';
 
 import MonthTable from './MonthTable';
 import theme from './theme';
+import { getNextYearAndMonth, getPrevYearAndMonth, getThisYearAndThisMonth } from './utils';
 
-function Calendar() {
-  const [dummy, setDummy] = useState([
-    { year: 2022, month: 1 },
-    { year: 2022, month: 2 },
+function Calendar({ disabled = true }) {
+  const [thisYear, thisMonth] = getThisYearAndThisMonth();
+  const [monthTableData, setMonthTableData] = useState([
+    { year: thisYear, month: thisMonth + 1 },
+    { year: thisYear, month: thisMonth + 2 },
   ]);
+
+  const onClickNextButton = () => {
+    setMonthTableData(([, { year: prevRightDisplayYear, month: prevRightDisplayMonth }]) => {
+      const [nextRightDisplayYear, nextRightDisplayMonth] = getNextYearAndMonth(
+        prevRightDisplayYear,
+        prevRightDisplayMonth,
+      );
+      return [
+        { year: prevRightDisplayYear, month: prevRightDisplayMonth },
+        { year: nextRightDisplayYear, month: nextRightDisplayMonth },
+      ];
+    });
+  };
+
+  const onClickPrevButton = () => {
+    setMonthTableData(([{ year: prevLeftDisplayYear, month: prevLeftDisplayMonth }]) => {
+      const [nextLeftDisplayYear, nextLeftDisplayMonth] = getPrevYearAndMonth(
+        prevLeftDisplayYear,
+        prevLeftDisplayMonth,
+      );
+      return [
+        { year: nextLeftDisplayYear, month: nextLeftDisplayMonth },
+        { year: prevLeftDisplayYear, month: prevLeftDisplayMonth },
+      ];
+    });
+  };
 
   return (
     <S.CalendarLayer>
-      {dummy.map(({ year, month }) => (
+      {monthTableData.map(({ year, month }) => (
         <MonthTable key={`${year}${month}`} year={year} month={month} />
       ))}
-      <I.Prev
-        onClick={() => {
-          setDummy((prevDummy) => [
-            { year: prevDummy[0].year, month: prevDummy[0].month - 1 },
-            { year: prevDummy[1].year, month: prevDummy[1].month - 1 },
-          ]);
-        }}
-      />
-      <I.Next
-        onClick={() => {
-          setDummy((prevDummy) => [
-            { year: prevDummy[0].year, month: prevDummy[0].month + 1 },
-            { year: prevDummy[1].year, month: prevDummy[1].month + 1 },
-          ]);
-        }}
-      />
+      <I.Prev onClick={onClickPrevButton} />
+      <I.Next onClick={onClickNextButton} />
     </S.CalendarLayer>
   );
 }

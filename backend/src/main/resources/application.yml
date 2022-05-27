@@ -3,6 +3,9 @@ spring:
   profiles:
     active: ${profile}
 
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     hibernate:
       ddl-auto: validate

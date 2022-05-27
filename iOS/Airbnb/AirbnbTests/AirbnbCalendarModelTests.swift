@@ -60,8 +60,6 @@ class AirbnbCalendarModelTests: XCTestCase {
             
             currentYearMonth = comparingYearMonth
         }
-        
-        debugPrint("Count Result")
     }
 
     func test_generateDays_performance() throws {

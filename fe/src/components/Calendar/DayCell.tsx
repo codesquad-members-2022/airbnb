@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import styled from 'styled-components';
 
 import { mixin } from '@/styles/mixin';
@@ -6,12 +6,24 @@ import { mixin } from '@/styles/mixin';
 import { useDayCell } from './hooks/useDayCell';
 import theme from './theme';
 
+import { DisablePreviousDaysContext } from './index';
+
 interface Props {
   year: number;
   month: number;
   day: number | false;
 }
 
+const checkIsPreviousDay = ({ year, month, day }: Props) => {
+  if (!day) {
+    return true;
+  }
+
+  const currentCellDate = new Date(year, month - 1, day);
+  const today = new Date();
+
+  return today > currentCellDate;
+};
 
 function DayCell({ year, month, day }: Props) {
   const {
@@ -21,7 +33,8 @@ function DayCell({ year, month, day }: Props) {
     isSecondPickedDate,
     onClickDayCell,
   } = useDayCell({ year, month, day });
-  const isDisabled = true;
+  const isPreviousDaysDisabled = useContext(DisablePreviousDaysContext);
+  const isPreviousDay = checkIsPreviousDay({ year, month, day });
 
   return (
     <S.CellLayer
@@ -30,7 +43,11 @@ function DayCell({ year, month, day }: Props) {
       isSecondPickedDate={isSecondPickedDate}
     >
       {day && (
-        <S.Cell onClick={onClickDayCell} isSelected={isSelected} isDisabled={isDisabled}>
+        <S.Cell
+          onClick={onClickDayCell}
+          isSelected={isSelected}
+          disabled={isPreviousDaysDisabled && isPreviousDay}
+        >
           {day}
         </S.Cell>
       )}
@@ -80,7 +97,7 @@ const S = {
     `};
   `,
 
-  Cell: styled.div<{ isSelected: boolean; isDisabled: boolean }>`
+  Cell: styled.div<{ isSelected: boolean; disabled: boolean }>`
     ${mixin.flexbox({ ai: 'center', jc: 'center' })};
     height: 100%;
     border: 1px solid transparent;
@@ -93,8 +110,8 @@ const S = {
     }
 
     // NOTE: isDisabled === true
-    ${({ isDisabled }) =>
-      isDisabled &&
+    ${({ disabled }) =>
+      disabled &&
       `
        pointer-events: none;
        color: ${theme.color.gray4};

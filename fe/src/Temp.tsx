@@ -4,7 +4,7 @@ import Calendar from '@/components/Calendar';
 import BigSearchBar from '@/components/SearchBar/BigSearchBar';
 import SmallSearchBar from '@/components/SearchBar/SmallSearchBar';
 
-import { DatePickerProvider } from './components/Calendar/context';
+import { DatePickerProvider } from './components/Calendar/context/PickedDateUnits';
 
 function Temp() {
   return (
@@ -19,7 +19,7 @@ function Temp() {
 
       <h3>Date Picker</h3>
       <DatePickerProvider>
-        <Calendar />
+        <Calendar disablePreviousDays />
       </DatePickerProvider>
       <Separator />
     </div>

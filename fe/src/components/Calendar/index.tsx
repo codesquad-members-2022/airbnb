@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, createContext } from 'react';
 import styled from 'styled-components';
 
 import * as I from '@/styles/icons';
@@ -7,7 +7,13 @@ import MonthTable from './MonthTable';
 import theme from './theme';
 import { getNextYearAndMonth, getPrevYearAndMonth, getThisYearAndThisMonth } from './utils';
 
-function Calendar({ disabled = true }) {
+export const DisablePreviousDaysContext = createContext<boolean>(false);
+
+interface Props {
+  disablePreviousDays: boolean;
+}
+
+function Calendar({ disablePreviousDays = false }: Props) {
   const [thisYear, thisMonth] = getThisYearAndThisMonth();
   const [monthTableData, setMonthTableData] = useState([
     { year: thisYear, month: thisMonth + 1 },
@@ -41,13 +47,15 @@ function Calendar({ disabled = true }) {
   };
 
   return (
-    <S.CalendarLayer>
-      {monthTableData.map(({ year, month }) => (
-        <MonthTable key={`${year}${month}`} year={year} month={month} />
-      ))}
-      <I.Prev onClick={onClickPrevButton} />
-      <I.Next onClick={onClickNextButton} />
-    </S.CalendarLayer>
+    <DisablePreviousDaysContext.Provider value={disablePreviousDays}>
+      <S.CalendarLayer>
+        {monthTableData.map(({ year, month }) => (
+          <MonthTable key={`${year}${month}`} year={year} month={month} />
+        ))}
+        <I.Prev onClick={onClickPrevButton} />
+        <I.Next onClick={onClickNextButton} />
+      </S.CalendarLayer>
+    </DisablePreviousDaysContext.Provider>
   );
 }
 

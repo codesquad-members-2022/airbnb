@@ -52,7 +52,7 @@ jobs:
         key: ${{ secrets.EC2_PRIVATE_KEY }}
         envs: GITHUB_SHA
         script: |
-          docker pull cherrybnb/cherrybnb:be-deploy-B-${GITHUB_SHA::7}
-          docker tag cherrybnb/cherrybnb:be-deploy-B-${GITHUB_SHA::7} cherrybnb:be-deploy-B-${GITHUB_SHA::7}
+          docker pull cherrybnb/cherrybnb:be-deploy-b-${GITHUB_SHA::7}
+          docker tag cherrybnb/cherrybnb:be-deploy-b-${GITHUB_SHA::7} cherrybnb:be-deploy-b-${GITHUB_SHA::7}
           docker stop server
-          docker run -d --rm --name server -p 80:8080 cherrybnb:be-deploy-B-${GITHUB_SHA::7}
+          docker run -d --rm --name server -p 80:8080 cherrybnb:be-deploy-b-${GITHUB_SHA::7}

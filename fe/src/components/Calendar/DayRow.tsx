@@ -5,23 +5,15 @@ import DayCell from './DayCell';
 
 interface Props {
   dayList: Array<boolean | number>;
-  rowIdx: number;
   year: number;
   month: number;
 }
 
-function DayRow({ dayList, rowIdx, year, month }: Props) {
+function DayRow({ dayList, year, month }: Props) {
   return (
     <S.Row>
       {dayList.map((day, cellIdx) => (
-        <DayCell
-          key={String(cellIdx)}
-          day={day}
-          rowIdx={rowIdx}
-          cellIdx={cellIdx}
-          year={year}
-          month={month}
-        />
+        <DayCell key={String(cellIdx)} year={year} month={month} day={day} />
       ))}
     </S.Row>
   );

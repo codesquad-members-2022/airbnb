@@ -13,7 +13,7 @@ function Days({ days, year, month }: Props) {
   return (
     <S.Tbody>
       {days.map((dayList, rowIdx) => (
-        <DayRow key={String(rowIdx)} dayList={dayList} rowIdx={rowIdx} year={year} month={month} />
+        <DayRow key={String(rowIdx)} dayList={dayList} year={year} month={month} />
       ))}
     </S.Tbody>
   );

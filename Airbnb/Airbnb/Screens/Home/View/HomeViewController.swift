@@ -7,15 +7,16 @@
 
 import UIKit
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController, UISearchBarDelegate {
 
-    private var searchBar: UISearchBar!
+    private var searchController: UISearchController!
     private var homeCollectionView: UICollectionView!
     private var homeViewModel = HomeViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDisplay()
+        configureConstraints()
         homeViewModel.loadAllCategories()
     }
 
@@ -35,9 +36,16 @@ final class HomeViewController: UIViewController {
     }
 
     private func setSearchBar() {
-        searchBar = UISearchBar()
+        let searchBar = UISearchBar()
         searchBar.placeholder = "어디로 여행가세요?"
+        searchBar.delegate = self
         navigationItem.titleView = searchBar
+    }
+
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        let searchController = SearchViewController()
+        navigationController?.pushViewController(searchController, animated: true)
+        searchBar.resignFirstResponder()
     }
 
     private func setCollectionView() {
@@ -50,6 +58,9 @@ final class HomeViewController: UIViewController {
         homeCollectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.id)
         homeCollectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(homeCollectionView)
+    }
+
+    private func configureConstraints() {
         NSLayoutConstraint.activate([
             homeCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
             homeCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),

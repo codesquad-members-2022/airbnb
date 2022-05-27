@@ -65,8 +65,8 @@ final class CityCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -179),
-            imageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, constant: -10),
+            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -contentView.frame.width/1.4),
+            imageView.heightAnchor.constraint(equalTo: contentView.heightAnchor),
             stackView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 16),
             stackView.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
         ])

@@ -29,21 +29,21 @@
          loadRandomSiteVM()
      }
 
-     private mutating func loadHeroVM() {
+     mutating func loadHeroVM() {
          for model in heroData {
              let heroCellVM = HeroCellViewModel(model: model)
              heroVM.append(heroCellVM)
          }
      }
 
-     private mutating func loadCityVM() {
+     mutating func loadCityVM() {
          for model in cityData {
              let cityCellVM = CityCellViewModel(model: model)
              cityVM.append(cityCellVM)
          }
      }
 
-     private mutating func loadRandomSiteVM() {
+     mutating func loadRandomSiteVM() {
          for model in randomSiteData {
              let randomSiteCellVM = RandomSiteCellViewModel(model: model)
              randomSiteVM.append(randomSiteCellVM)

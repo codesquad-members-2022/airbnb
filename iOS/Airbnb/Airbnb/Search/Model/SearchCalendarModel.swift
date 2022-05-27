@@ -9,7 +9,7 @@ import Foundation
 
 class SearchCalendarModel {
     
-    private var localCalendar: Calendar = {
+    private(set) var localCalendar: Calendar = {
         var calendar = Calendar(identifier: .gregorian)
         calendar.locale = Locale(identifier: "ko_kr")
         return calendar

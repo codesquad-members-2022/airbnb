@@ -30,14 +30,13 @@ class LocationCell: UICollectionViewCell {
     
     func setImageView(){
         self.contentView.addSubview(imageView)
-        imageView.image = UIImage(named: "Place_thumb_1")
+        imageView.image = UIImage(systemName: "mappin.and.ellipse")
         imageView.layer.cornerRadius = 10
     }
     
     func setNameLabel(){
         self.contentView.addSubview(titleLabel)
         titleLabel.font = .systemFont(ofSize: 17)
-        titleLabel.text = "양재동, 서초구, 서울특별시"
     }
     
     
@@ -59,8 +58,4 @@ class LocationCell: UICollectionViewCell {
     func setLocationData(_ title: String){
         titleLabel.text = title
     }
-    
-    
-    
-    
 }

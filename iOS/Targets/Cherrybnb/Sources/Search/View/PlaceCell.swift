@@ -72,8 +72,7 @@ class PlaceCell: UICollectionViewCell {
     
     func setPlaceCell(_ place: Place){
         nameLabel.text = place.name
-        distanceLabel.text = "차로 \(place.estimatedTime)분 거리"
-        
+        distanceLabel.text = "차로 \(place.estimatedTime) 분 거리"
     }
     
     

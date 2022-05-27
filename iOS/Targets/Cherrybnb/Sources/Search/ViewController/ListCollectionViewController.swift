@@ -13,19 +13,19 @@ class ListCollectionViewController: UIViewController {
     
     private var collectionView: UICollectionView!
     private var searchCompleter = MKLocalSearchCompleter()
-    private var searchResult = [MKLocalSearchCompletion]()
-    var isSearching = false
-    var RecommendationData = [Place]()
-    var searchResultData: [MKLocalSearchCompletion]?
+    private var searchResultData = [MKLocalSearchCompletion]()
+    private var isSearching = false
+    private var recommendationData = [Place]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        requestRecommand()
         setCollectionView()
         setLayout()
         connectSearchBar()
         
         searchCompleter.delegate = self
-        requestRecommand()
+        
     }
     
     private func requestRecommand(){
@@ -35,7 +35,10 @@ class ListCollectionViewController: UIViewController {
             guard let place = place else {
                 return
             }
-            self.RecommendationData += place
+            self.recommendationData += place
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
         }
     }
     
@@ -61,6 +64,7 @@ class ListCollectionViewController: UIViewController {
         collectionView.dataSource = self
         
         collectionView.register(PlaceCell.self, forCellWithReuseIdentifier: PlaceCell.cellId)
+        collectionView.register(LocationCell.self, forCellWithReuseIdentifier: LocationCell.cellId)
     }
     
     private func setLayout(){
@@ -74,13 +78,22 @@ class ListCollectionViewController: UIViewController {
 
 extension ListCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return RecommendationData.count
+        if isSearching{
+            return searchResultData.count
+        }
+        return recommendationData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        if isSearching {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LocationCell.cellId, for: indexPath) as? LocationCell else { return UICollectionViewCell() }
+            let data = searchResultData[indexPath.item]
+            cell.setLocationData(data.title)
+            return cell
+        }
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceCell.cellId, for: indexPath) as? PlaceCell else { return UICollectionViewCell() }
-        let data = RecommendationData[indexPath.item]
+        let data = recommendationData[indexPath.item]
         cell.setPlaceCell(data)
         return cell
     }
@@ -95,14 +108,22 @@ extension ListCollectionViewController: UICollectionViewDelegate, UICollectionVi
 extension ListCollectionViewController: UISearchBarDelegate{
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchCompleter.queryFragment = searchText
+        if searchText == "" {
+            isSearching = false
+            searchResultData.removeAll()
+            collectionView.reloadData()
+        }
+        else {
+            isSearching = true
+            searchCompleter.queryFragment = searchText
+        }
     }
 }
 
 
 extension ListCollectionViewController: MKLocalSearchCompleterDelegate {
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-        searchResult = searchCompleter.results
-        
+        searchResultData = searchCompleter.results
+        collectionView.reloadData()
     }
 }

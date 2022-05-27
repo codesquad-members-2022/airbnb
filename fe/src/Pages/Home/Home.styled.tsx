@@ -22,3 +22,7 @@ export const HomeContainer = styled.div`
   }};
   margin: 0 auto;
 `;
+
+export const NearbyTravel = styled.div``;
+
+export const WhereverTravel = styled.div``;

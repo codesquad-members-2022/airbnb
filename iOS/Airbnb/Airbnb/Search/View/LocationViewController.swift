@@ -14,12 +14,6 @@ class LocationViewController: BackgroundViewController, CommonViewControllerProt
         "서울", "광주", "의정부시", "수원시", "대구", "울산", "대전", "부천시"
     ]
     
-//    private let popularSite: UILabel = {
-//        let label = UILabel()
-//        label.text = "근처의 인기 여행지"
-//        return label
-//    }()
-    
     private let searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         let searchBar = searchController.searchBar
@@ -65,8 +59,6 @@ class LocationViewController: BackgroundViewController, CommonViewControllerProt
             $0.top.bottom.equalTo(view)
             $0.leading.equalTo(view).offset(sideMargin)
             $0.trailing.equalTo(view).inset(sideMargin)
-//            $0.leading.equalTo(view)
-//            $0.trailing.equalTo(view)
         }
     }
     

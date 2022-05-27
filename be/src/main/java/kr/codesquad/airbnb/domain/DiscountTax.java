@@ -11,7 +11,7 @@ import java.util.List;
 public class DiscountTax {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "discount_tax_id")
     private Long id;
 

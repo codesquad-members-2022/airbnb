@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import DayRow from './DayRow';
 
 interface Props {
-  days: Array<Array<number | boolean>>;
+  days: Array<Array<number | false>>;
   year: number;
   month: number;
 }

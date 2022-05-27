@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import DayCell from './DayCell';
 
 interface Props {
-  dayList: Array<boolean | number>;
+  dayList: Array<false | number>;
   year: number;
   month: number;
 }

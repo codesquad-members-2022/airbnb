@@ -12,6 +12,7 @@ interface Props {
   day: number | false;
 }
 
+
 function DayCell({ year, month, day }: Props) {
   const {
     isSelected,
@@ -20,6 +21,7 @@ function DayCell({ year, month, day }: Props) {
     isSecondPickedDate,
     onClickDayCell,
   } = useDayCell({ year, month, day });
+  const isDisabled = true;
 
   return (
     <S.CellLayer
@@ -28,7 +30,7 @@ function DayCell({ year, month, day }: Props) {
       isSecondPickedDate={isSecondPickedDate}
     >
       {day && (
-        <S.Cell onClick={onClickDayCell} isSelected={isSelected}>
+        <S.Cell onClick={onClickDayCell} isSelected={isSelected} isDisabled={isDisabled}>
           {day}
         </S.Cell>
       )}
@@ -78,7 +80,7 @@ const S = {
     `};
   `,
 
-  Cell: styled.div<{ isSelected: boolean }>`
+  Cell: styled.div<{ isSelected: boolean; isDisabled: boolean }>`
     ${mixin.flexbox({ ai: 'center', jc: 'center' })};
     height: 100%;
     border: 1px solid transparent;
@@ -89,6 +91,15 @@ const S = {
     &:hover {
       border-color: ${theme.color.gray1};
     }
+
+    // NOTE: isDisabled === true
+    ${({ isDisabled }) =>
+      isDisabled &&
+      `
+       pointer-events: none;
+       color: ${theme.color.gray4};
+    `}
+    //
 
     // NOTE: 클릭시
     ${({ isSelected }) =>

@@ -129,10 +129,11 @@ const inspectCheckInOutDay = ({ year, month, day, checkTarget }: dateCheckType) 
 
 const inspectActiveCondition = ({ year, month, day, checkIn, checkOut }: checkInOutType) => {
   const afterCheckIn =
-    year >= checkIn.year && ((month === checkIn.month && day >= checkIn.day) || month > checkIn.month);
+    year > checkIn.year ||
+    (year === checkIn.year && ((month === checkIn.month && day >= checkIn.day) || month > checkIn.month));
   const beforeCheckOut =
-    year <= checkOut.year && ((month === checkOut.month && day <= checkOut.day) || month < checkOut.month);
-
+    year < checkOut.year ||
+    (year === checkOut.year && ((month === checkOut.month && day <= checkOut.day) || month < checkOut.month));
   return afterCheckIn && beforeCheckOut;
 };
 

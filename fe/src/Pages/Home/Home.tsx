@@ -69,7 +69,7 @@ export default function Home() {
       return;
     }
 
-    if (compareCheckInDay({ year, month, day, checkIn })) {
+    if (isFasterThanCheckIn({ year, month, day, checkIn })) {
       runDispatchCalendar({ type: "SET_CHECK_IN", year, month, day });
       return;
     }
@@ -111,7 +111,7 @@ export default function Home() {
   );
 }
 
-const compareCheckInDay = ({ year, day, month, checkIn }: compareCheckInType) => {
+const isFasterThanCheckIn = ({ year, day, month, checkIn }: compareCheckInType) => {
   [year, day, month] = [year, day, month].map(Number);
   if (year < checkIn.year) {
     return true;

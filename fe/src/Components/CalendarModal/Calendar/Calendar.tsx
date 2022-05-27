@@ -1,5 +1,6 @@
 import { DAY_OF_WEEK_DATA } from "Helpers/constant";
-import { getTodayDate } from "Helpers/utils";
+import { createKey, getTodayDate } from "Helpers/utils";
+import { dateType, eventType } from "Helpers/interface";
 import {
   ActiveDay,
   Button,
@@ -16,42 +17,37 @@ interface buttonType {
   next?: boolean;
 }
 
-interface checkInOutType {
-  year: number;
-  month: number;
-  day: number;
+interface checkInOutType extends dateType {
+  checkIn: dateType;
+  checkOut: dateType;
 }
 
-interface todayType {
-  year: number;
-  month: number;
-  day: number;
+interface dateCheckType extends dateType {
+  checkTarget: dateType;
 }
 
-interface calendarType {
+interface calendarTypeSkeleton {
   year: number;
   month: number;
-  checkIn: checkInOutType;
-  checkOut: checkInOutType;
+  checkIn?: dateType;
+  checkOut?: dateType;
+}
+
+interface calendarType extends calendarTypeSkeleton {
   button: buttonType;
   handlePrevButton?: () => void;
   handleNextButton?: () => void;
+  handleClickDate?: (event: eventType) => void;
 }
 
-interface monthComponentType {
-  year: number;
-  month: number;
-  checkIn: checkInOutType;
-  checkOut: checkInOutType;
+interface monthComponentType extends calendarTypeSkeleton {
+  handleClickDate?: (event: eventType) => void;
 }
 
-interface dayComponentType {
-  year: number;
-  month: number;
+interface dayComponentType extends calendarTypeSkeleton {
   day: number;
-  checkIn: checkInOutType;
-  checkOut: checkInOutType;
-  today: todayType;
+  today: dateType;
+  handleClickDate?: (event: eventType) => void;
 }
 
 export default function Calendar({
@@ -62,27 +58,24 @@ export default function Calendar({
   button,
   handlePrevButton,
   handleNextButton,
+  handleClickDate,
 }: calendarType) {
   const dayOfWeekComponent = DAY_OF_WEEK_DATA.map((day, idx) => <Day key={createKey(day, idx)}>{day}</Day>);
-  const monthComponent = getMonthComponent({ year, month, checkIn, checkOut });
+  const monthComponent = getMonthComponent({ year, month, checkIn, checkOut, handleClickDate });
 
   return (
     <Monthly>
       <YearMonthArea flex={true} justify="center">
-        {button.prev ? (
+        {button.prev && (
           <Button type="prev" onClick={handlePrevButton}>
             {"<"}
           </Button>
-        ) : (
-          ""
         )}
         {`${year}년 ${month}월`}
-        {button.next ? (
+        {button.next && (
           <Button type="next" onClick={handleNextButton}>
             {">"}
           </Button>
-        ) : (
-          ""
         )}
       </YearMonthArea>
 
@@ -94,7 +87,7 @@ export default function Calendar({
   );
 }
 
-const getMonthComponent = ({ year, month, checkIn, checkOut }: monthComponentType) => {
+const getMonthComponent = ({ year, month, checkIn, checkOut, handleClickDate }: monthComponentType) => {
   const today = getTodayDate();
 
   const firstDayDateNumber = calculateDayOfWeekDate(year, month);
@@ -106,7 +99,7 @@ const getMonthComponent = ({ year, month, checkIn, checkOut }: monthComponentTyp
   return monthData.map((day, idx) => {
     return (
       <Day key={createKey(day, idx)}>
-        {day ? createDayComponent({ year, month, day, checkIn, checkOut, today }) : ""}
+        {day && createDayComponent({ year, month, day, checkIn, checkOut, today, handleClickDate })}
       </Day>
     );
   });
@@ -117,41 +110,81 @@ const calculateDayOfWeekDate = (year: number, month: number, day: number = 1) =>
   return dayOfWeek;
 };
 
-const createKey = (data: string, idx: number) => {
-  return `${data}-${idx}`;
+const inspectInActiveCondition = ({ year, month, day, checkTarget }: dateCheckType) => {
+  if (year < checkTarget.year) {
+    return true;
+  }
+  if (year === checkTarget.year && month < checkTarget.month) {
+    return true;
+  }
+  if (year === checkTarget.year && month === checkTarget.month && day < checkTarget.day) {
+    return true;
+  }
+  return false;
 };
 
-const createDayComponent = ({ year, month, day, checkIn, checkOut, today }: dayComponentType) => {
-  if (
-    year < today.year ||
-    (year === today.year && month < today.month) ||
-    (year === today.year && month === today.month && day < today.day)
-  ) {
+const inspectCheckInOutDay = ({ year, month, day, checkTarget }: dateCheckType) => {
+  return year === checkTarget.year && month === checkTarget.month && day === checkTarget.day;
+};
+
+const inspectActiveCondition = ({ year, month, day, checkIn, checkOut }: checkInOutType) => {
+  const afterCheckIn =
+    year >= checkIn.year && ((month === checkIn.month && day >= checkIn.day) || month > checkIn.month);
+  const beforeCheckOut =
+    year <= checkOut.year && ((month === checkOut.month && day <= checkOut.day) || month < checkOut.month);
+
+  return afterCheckIn && beforeCheckOut;
+};
+
+const createDayComponent = ({
+  year,
+  month,
+  day,
+  checkIn,
+  checkOut,
+  today,
+  handleClickDate,
+}: dayComponentType) => {
+  if (!checkIn || !checkOut) {
+    return day;
+  }
+
+  if (inspectInActiveCondition({ year, month, day, checkTarget: today })) {
     return <InActiveDay>{day}</InActiveDay>;
   }
-  if (year === checkIn.year && month === checkIn.month && day === checkIn.day) {
+
+  if (inspectCheckInOutDay({ year, month, day, checkTarget: checkIn })) {
     return (
-      <ActiveDay radius="30px 0 0 30px">
-        <StyledCheckInOut>{day}</StyledCheckInOut>
+      <ActiveDay radius="30px 0 0 30px" onClick={handleClickDate}>
+        <StyledCheckInOut data-year={year} data-month={month} data-day={day}>
+          {day}
+        </StyledCheckInOut>
       </ActiveDay>
     );
   }
-  if (year === checkOut.year && month === checkOut.month && day === checkOut.day) {
+  if (inspectCheckInOutDay({ year, month, day, checkTarget: checkOut })) {
     return (
-      <ActiveDay radius="0 30px 30px 0">
-        <StyledCheckInOut>{day}</StyledCheckInOut>
+      <ActiveDay radius="0 30px 30px 0" onClick={handleClickDate}>
+        <StyledCheckInOut data-year={year} data-month={month} data-day={day}>
+          {day}
+        </StyledCheckInOut>
       </ActiveDay>
     );
   }
 
-  const firstCondition =
-    year >= checkIn.year && ((month === checkIn.month && day >= checkIn.day) || month > checkIn.month);
-  const secCondition =
-    year <= checkOut.year && ((month === checkOut.month && day <= checkOut.day) || month < checkOut.month);
-  if (firstCondition && secCondition) {
-    return <ActiveDay>{day}</ActiveDay>;
+  if (inspectActiveCondition({ year, month, day, checkIn, checkOut })) {
+    return (
+      <ActiveDay data-year={year} data-month={month} data-day={day} onClick={handleClickDate}>
+        {day}
+      </ActiveDay>
+    );
   }
-  return day;
+
+  return (
+    <Day data-test="??" data-year={year} data-month={month} data-day={day} onClick={handleClickDate}>
+      {day}
+    </Day>
+  );
 };
 
 const getMonthEndDay = (year: number, month: number) => {

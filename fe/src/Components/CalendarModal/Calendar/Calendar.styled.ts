@@ -15,7 +15,8 @@ export const Monthly = styled.div`
 
 export const YearMonthArea = styled.div`
   ${({ flex, justify }: flexBoxType) => applyFlex({ flex, justify })};
-  width: 336px;
+  width: 90%;
+  height: 10%;
   margin-bottom: 40px;
   font-weight: 700;
   font-size: 24px;
@@ -23,7 +24,8 @@ export const YearMonthArea = styled.div`
 
 export const MonthDataArea = styled.div`
   display: grid;
-  width: 336px;
+  width: 90%;
+  height: 90%;
   grid-template-rows: repeat(5, 48px);
   grid-template-columns: repeat(7, 1fr);
   grid-auto-rows: 48px;

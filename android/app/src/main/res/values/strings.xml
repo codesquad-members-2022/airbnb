@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">Airbnb</string>
-    <string name="where_to_go">어디로 여행하세요?</string>
-    <string name="near_trip_string">근처의 인기 여행지</string>
-    <string name="where_do_you_want_to_travel">어디로 여행하세요?</string>
-    <string name="my_reservation">내 예약</string>
-    <string name="wish_list">위시리스트</string>
-    <string name="search">검색</string>
-</resources>

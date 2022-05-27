@@ -45,8 +45,6 @@ extension Project {
             infoPlist: .extendingDefault(with: infoPlist),
             sources: ["Targets/\(name)/Sources/**"],
             resources: ["Targets/\(name)/Resources/**"]
-           
-//            dependencies: [.external(name: "SwiftLint")]
         )
 
         let testTarget = Target(
@@ -56,9 +54,9 @@ extension Project {
             bundleId: "io.tuist.\(name)Tests",
             deploymentTarget: .iOS(targetVersion: "13.0", devices: .iphone),
             infoPlist: .extendingDefault(with: infoPlist),
-            sources: ["Targets/\(name)/Tests/**"]
-//            dependencies: [
-//                .target(name: "\(name)")]
+            sources: ["Targets/\(name)/Tests/**"],
+            dependencies: [
+                .target(name: "\(name)")]
         )
         return [mainTarget, testTarget]
     }

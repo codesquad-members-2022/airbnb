@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { theme } from '@common/theme';
 import Layout from '@components/Layout';
 import color from '@constants/color';
+import { HeaderProvider } from '@contexts/HeaderProvider';
 import MainPage from '@pages/MainPage';
 
 function MyGlobalStyles() {
@@ -20,6 +21,13 @@ function MyGlobalStyles() {
           listStyle: 'none',
           paddingLeft: 0,
         },
+        button: {
+          margin: 0,
+          padding: 0,
+          border: 'none',
+          backgroundColor: 'transparent',
+          cursor: 'pointer',
+        },
       }}
     />
   );
@@ -31,13 +39,15 @@ export default function App() {
       <CssBaseline />
       <MyGlobalStyles />
       <ThemeProvider theme={theme}>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<MainPage />} />
-            </Route>
-          </Routes>
-        </Router>
+        <HeaderProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<MainPage />} />
+              </Route>
+            </Routes>
+          </Router>
+        </HeaderProvider>
       </ThemeProvider>
     </div>
   );

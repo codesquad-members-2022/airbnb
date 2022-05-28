@@ -67,6 +67,7 @@ const UserMenu = () => {
             vertical: "top",
             horizontal: "right",
           }}
+          sx={{ zIndex: 1600 }}
         >
           <MenuItem onClick={handleClose}>로그인</MenuItem>
         </Menu>

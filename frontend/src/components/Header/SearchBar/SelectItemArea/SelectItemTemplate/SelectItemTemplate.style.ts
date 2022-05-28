@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Theme } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 import { SelectItemTemplateProps } from "@types";
@@ -9,4 +9,8 @@ const GridItem = styled(Grid)<SelectItemTemplateProps>(
 `
 );
 
-export default GridItem;
+const modalStyle = {
+  padding: ({ whiteSpace }: Theme) => whiteSpace.searchBarPadding,
+};
+
+export { GridItem, modalStyle };

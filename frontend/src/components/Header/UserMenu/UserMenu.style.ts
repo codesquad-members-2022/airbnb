@@ -32,15 +32,18 @@ const userMenuButtonStyle = {
 const menuIconStyle = {
   color: ({ palette }: { palette: { grey3: { main: string } } }) =>
     palette.grey3.main,
-  marginRight: ({ size }: { size: { userMenuButton: { width: string } } }) =>
-    size.userMenuButton.width,
+  marginRight: ({
+    elementSize,
+  }: {
+    elementSize: { userMenuButton: { width: string } };
+  }) => elementSize.userMenuButton.width,
 };
 
 const UserAvatar = styled(Avatar)(
-  ({ theme: { palette, size } }) => `
+  ({ theme: { palette, elementSize } }) => `
   background-color: ${palette.grey3.main};
-  width: ${size.userMenuButton.width};
-  height: ${size.userMenuButton.height};
+  width: ${elementSize.userMenuButton.width};
+  height: ${elementSize.userMenuButton.height};
   position: absolute;
   right: 0;
   );`

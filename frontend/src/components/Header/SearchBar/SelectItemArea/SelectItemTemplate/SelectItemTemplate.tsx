@@ -1,6 +1,8 @@
+import { Box, Popover, PopoverProps } from "@mui/material";
+
 import { SelectItemTemplateProps } from "@types";
 
-import GridItem from "./SelectItemTemplate.style";
+import { GridItem, modalStyle } from "./SelectItemTemplate.style";
 
 const SelectItemTemplate = ({
   divide,
@@ -13,4 +15,20 @@ const SelectItemTemplate = ({
   );
 };
 
-export default SelectItemTemplate;
+const ModalTemplate = ({ ...props }: PopoverProps): JSX.Element => {
+  return (
+    <Popover
+      open={props.open}
+      anchorEl={props.anchorEl}
+      onClose={props.onClose}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "left",
+      }}
+    >
+      <Box sx={modalStyle}>{props.children}</Box>
+    </Popover>
+  );
+};
+
+export { SelectItemTemplate, ModalTemplate };

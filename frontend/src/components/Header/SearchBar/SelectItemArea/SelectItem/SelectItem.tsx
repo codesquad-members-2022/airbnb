@@ -1,16 +1,20 @@
-import { useState } from "react";
+import {
+  Button,
+  Grid,
+  GridSize,
+  PopoverProps,
+  Typography,
+} from "@mui/material";
 
-import { Button, GridSize, Popover, Typography } from "@mui/material";
+import { SelectItemTemplateProps } from "@types";
 
-import SelectItemTemplate from "../SelectItemTemplate/SelectItemTemplate";
-import styles from "./SelectItem.style";
+import {
+  ModalTemplate,
+  SelectItemTemplate,
+} from "../SelectItemTemplate/SelectItemTemplate";
+import itemStyles from "./SelectItem.style";
 
 const SelectItem = ({ ...props }: SelectItemDataProps): JSX.Element => {
-  // TODO: 현재 Popover가 열렸는지 확인하는 Boolean으로 버튼 보이기 / 숨기기 (close)
-
-  // TODO: 체크인, 체크아웃 영역 SelecItem 어디를 click하더라도 하나의 popOver가 열려야 함.
-  // 👉 popOver를 props로 넘기는 형태로 변경 가능하지 않을까...🤔
-
   const {
     gridStyle: { xs, pl = undefined },
     buttonId,
@@ -18,17 +22,13 @@ const SelectItem = ({ ...props }: SelectItemDataProps): JSX.Element => {
     title,
     desc,
     modalAnchorStyle,
+    open,
+    handleClick,
+    handleClose,
+    anchorEl,
     children,
+    createNewPopup,
   } = props;
-
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   return (
     <SelectItemTemplate xs={xs} pl={pl}>
@@ -39,26 +39,43 @@ const SelectItem = ({ ...props }: SelectItemDataProps): JSX.Element => {
         aria-label={buttonAreaLabel}
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
-        sx={styles.button}
+        sx={itemStyles.button}
       >
-        <Typography sx={styles.title}>{title}</Typography>
-        <Typography sx={styles.desc}>{desc}</Typography>
+        <Typography sx={itemStyles.title}>{title}</Typography>
+        <Typography sx={itemStyles.desc}>{desc}</Typography>
       </Button>
-      <Popover
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={modalAnchorStyle}
-      >
-        {children}
-      </Popover>
+      {(createNewPopup && (
+        <ModalTemplate
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={modalAnchorStyle}
+        >
+          {children}
+        </ModalTemplate>
+      )) ||
+        children}
     </SelectItemTemplate>
   );
 };
 
+export const WhiteSpaceCloseButtonSize = ({
+  divide,
+  xs = 1,
+}: SelectItemTemplateProps): JSX.Element => {
+  const styles =
+    (divide && {
+      borderRight: ({ palette }: { palette: { grey5: { main: string } } }) =>
+        `1px solid ${palette.grey5.main}`,
+    }) ||
+    {};
+
+  return <Grid item sx={styles} xs={xs} />;
+};
+
 export default SelectItem;
 
-interface SelectItemDataProps {
+interface SelectItemDataProps extends PopoverProps {
   gridStyle: {
     xs: boolean | GridSize | undefined;
     pl?: number | undefined;
@@ -67,9 +84,12 @@ interface SelectItemDataProps {
   buttonAreaLabel: string;
   title: string;
   desc: string;
-  modalAnchorStyle: {
+  modalAnchorStyle?: {
     horizontal: "center" | "left" | "right" | number;
     vertical: "bottom" | "center" | "top" | number;
   };
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  handleClick?: (event: React.MouseEvent<HTMLElement>) => void;
+  handleClose?: () => void;
+  createNewPopup?: boolean;
 }

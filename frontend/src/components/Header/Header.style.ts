@@ -14,8 +14,8 @@ const indexHeaderStyle = {
 };
 
 const HeaderContainer = styled(Container)<ContainerProps>(
-  ({ theme: { size, style, whiteSpace } }) => `
-  height: ${size.navBarHeight};
+  ({ theme: { elementSize, style, whiteSpace } }) => `
+  height: ${elementSize.navBarHeight};
   margin: ${style.alignCenter.margin};
   padding: 0 ${whiteSpace.inner} !important;
 `

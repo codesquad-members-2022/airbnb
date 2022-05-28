@@ -37,7 +37,7 @@ const theme = createTheme({
       main: "#F5F5F7",
     },
   },
-  size: {
+  elementSize: {
     fullSize: "100%",
     navBarHeight: "100px",
     userMenuButton: {
@@ -61,6 +61,10 @@ const theme = createTheme({
           height: "2rem",
         },
       },
+      focusedButton: {
+        width: "90px",
+        height: "40px",
+      },
       fullSize: {
         maxWidth: `916px`,
         height: `76px`,
@@ -81,6 +85,7 @@ const theme = createTheme({
   },
   whiteSpace: {
     inner: "80px",
+    searchBarPadding: "64px",
   },
   components: {
     MuiCssBaseline: {
@@ -156,8 +161,8 @@ const theme = createTheme({
 });
 
 declare module "@mui/material/styles" {
-  interface Theme {
-    size: {
+  export interface Theme {
+    elementSize: {
       fullSize: string;
       navBarHeight: string;
       userMenuButton: {
@@ -181,6 +186,10 @@ declare module "@mui/material/styles" {
             height: string;
           };
         };
+        focusedButton: {
+          width: string;
+          height: string;
+        };
         fullSize: {
           maxWidth: string;
           height: string;
@@ -197,10 +206,11 @@ declare module "@mui/material/styles" {
     };
     whiteSpace: {
       inner: string;
+      searchBarPadding: string;
     };
   }
-  interface ThemeOptions {
-    size?: {
+  export interface ThemeOptions {
+    elementSize?: {
       fullSize?: string;
       navBarHeight?: string;
       userMenuButton?: {
@@ -224,6 +234,10 @@ declare module "@mui/material/styles" {
             height?: string;
           };
         };
+        focusedButton?: {
+          width?: string;
+          height?: string;
+        };
         fullSize?: {
           maxWidth?: string;
           height?: string;
@@ -240,6 +254,7 @@ declare module "@mui/material/styles" {
     };
     whiteSpace?: {
       inner?: string;
+      searchBarPadding?: string;
     };
   }
   interface Palette {

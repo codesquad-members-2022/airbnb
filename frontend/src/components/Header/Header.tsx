@@ -28,7 +28,7 @@ const Header = () => {
           container
           spacing={2}
           columns={12}
-          sx={{ height: ({ size }) => size.fullSize }}
+          sx={{ height: ({ elementSize }) => elementSize.fullSize }}
         >
           <LogoArea />
           <GNB

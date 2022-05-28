@@ -7,14 +7,17 @@
 
 import UIKit
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController, UISearchBarDelegate {
 
-    private var searchBar: UISearchBar!
+    private var searchController: UISearchController!
     private var homeCollectionView: UICollectionView!
+    private var homeViewModel = HomeViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDisplay()
+        configureConstraints()
+        homeViewModel.loadAllCategories()
     }
 
     private func configureDisplay() {
@@ -33,9 +36,16 @@ final class HomeViewController: UIViewController {
     }
 
     private func setSearchBar() {
-        searchBar = UISearchBar()
+        let searchBar = UISearchBar()
         searchBar.placeholder = "어디로 여행가세요?"
+        searchBar.delegate = self
         navigationItem.titleView = searchBar
+    }
+
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        let searchController = SearchViewController()
+        navigationController?.pushViewController(searchController, animated: true)
+        searchBar.resignFirstResponder()
     }
 
     private func setCollectionView() {
@@ -48,6 +58,9 @@ final class HomeViewController: UIViewController {
         homeCollectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.id)
         homeCollectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(homeCollectionView)
+    }
+
+    private func configureConstraints() {
         NSLayoutConstraint.activate([
             homeCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
             homeCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -64,35 +77,33 @@ extension HomeViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        } else if section == 1 {
-            return 10
-        } else {
-            return 4
-        }
+        guard let categoryType = CategoryType.init(rawValue: section) else {return 0}
+        return homeViewModel.getCount(for: categoryType)
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        if indexPath.section == 0 {
+        guard let categoryType = CategoryType.init(rawValue: indexPath.section) else {return UICollectionViewCell()}
+
+        switch categoryType {
+        case .hero:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HeroCell.id, for: indexPath) as? HeroCell else {return UICollectionViewCell()}
+            cell.cellViewModel = homeViewModel.heroVM[indexPath.item]
             return cell
-        } else if indexPath.section == 1 {
+        case .city:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CityCell.id, for: indexPath) as? CityCell else {return UICollectionViewCell()}
+            cell.cellViewModel = homeViewModel.cityVM[indexPath.item]
             return cell
-        } else {
+
+        case .randomSite:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RandomSiteCell.id, for: indexPath) as? RandomSiteCell else {return UICollectionViewCell()}
+            cell.cellViewModel = homeViewModel.randomSiteVM[indexPath.item]
             return cell
         }
-
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.id, for: indexPath) as? SectionHeader else {
-            return UICollectionReusableView()
-        }
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.id, for: indexPath) as? SectionHeader else {return UICollectionReusableView()}
 
         if indexPath.section == 1 {
             header.configureCell(title: "가까운 여행지 둘러보기")
@@ -100,6 +111,7 @@ extension HomeViewController: UICollectionViewDataSource {
         } else if indexPath.section == 2 {
             header.configureCell(title: "어디에서나, 여행은\n살아보는거야!")
         }
+
         return header
     }
 

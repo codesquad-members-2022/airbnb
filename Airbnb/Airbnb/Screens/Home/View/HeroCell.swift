@@ -10,9 +10,18 @@ import UIKit
 final class HeroCell: UICollectionViewCell {
     static let id = "HeroCell"
 
+    var cellViewModel: HeroCellViewModel? {
+         didSet {
+             guard let heroCellVM = cellViewModel else {return}
+             title.text = heroCellVM.title
+             content.text = heroCellVM.content
+             badge.setTitle(heroCellVM.badge, for: .normal)
+             imageView.image = UIImage(named: "\(heroCellVM.image)")
+         }
+     }
+
     private var title: UILabel = {
         let label = UILabel()
-        label.text = "슬기로운\n자연생활"
         label.numberOfLines = 0
         label.font = .largeRegular
         label.setContentHuggingPriority(.defaultHigh, for: .vertical)
@@ -21,15 +30,13 @@ final class HeroCell: UICollectionViewCell {
 
     private var content: UILabel = {
         let label = UILabel()
-        label.text = "에어비엔비가 엄선한\n위시리스트를 만나보세요."
         label.numberOfLines = 0
         label.font = .smallRegular
         return label
     }()
 
-    private var button: UIButton = {
+    private var badge: UIButton = {
         let button = UIButton()
-        button.setTitle("여행 아이디어 얻기", for: .normal)
         button.backgroundColor = .gray1
         button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -40,8 +47,6 @@ final class HeroCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        let image = UIImage(named: "HeroImage")
-        imageView.image = image
         return imageView
     }()
 
@@ -63,7 +68,7 @@ final class HeroCell: UICollectionViewCell {
     private func configureDisplay() {
         contentView.addSubview(imageView)
         contentView.addSubview(stackView)
-        contentView.addSubview(button)
+        contentView.addSubview(badge)
     }
 
     private func configureConstraints() {
@@ -75,10 +80,10 @@ final class HeroCell: UICollectionViewCell {
             stackView.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 24),
             stackView.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -105),
             stackView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 16),
-            button.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
-            button.widthAnchor.constraint(equalToConstant: 165),
-            button.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            button.heightAnchor.constraint(equalToConstant: 36)
+            badge.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
+            badge.widthAnchor.constraint(equalToConstant: 165),
+            badge.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            badge.heightAnchor.constraint(equalToConstant: 36)
         ])
     }
 

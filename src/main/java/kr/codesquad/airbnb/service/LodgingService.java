@@ -19,9 +19,7 @@ public class LodgingService {
     private final ImageRepository imageRepository;
 
     public LodgingResponseDto getLodging(Long id) {
-        Lodging lodging = lodgingRepository.findById(id).get();
-        List<Images> allByLodgingId = imageRepository.findAllByLodgingId(id);
-        LodgingResponseDto lodgingResponseDto = new LodgingResponseDto(lodging, allByLodgingId);
-        return lodgingResponseDto;
+        return new LodgingResponseDto(lodgingRepository.findById(id).orElseThrow(),
+            imageRepository.findAllByLodgingId(id));
     }
 }

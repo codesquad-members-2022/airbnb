@@ -54,5 +54,4 @@ jobs:
         script: |
           docker pull cherrybnb/cherrybnb:be-deploy-b-${GITHUB_SHA::7}
           docker tag cherrybnb/cherrybnb:be-deploy-b-${GITHUB_SHA::7} cherrybnb:be-deploy-b-${GITHUB_SHA::7}
-          docker stop cherry-server
-          docker run -d --name cherry-server -p 80:8080 -e DATABASE_USERNAME=$DATABASE_USERNAME -e DATABASE_PASSWORD=$DATABASE_PASSWORD -e DATABASE_URL=$DATABASE_URL cherrybnb:be-deploy-b-${GITHUB_SHA::7}
+          docker run -d --restart=always --name cherry-server -p 80:8080 -e DATABASE_USERNAME=$DATABASE_USERNAME -e DATABASE_PASSWORD=$DATABASE_PASSWORD -e DATABASE_URL=$DATABASE_URL cherrybnb:be-deploy-b-${GITHUB_SHA::7}

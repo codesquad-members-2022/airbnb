@@ -17,12 +17,16 @@ const customersInitialState: CustomerState = {
   smallChildCount: 0,
 };
 
-// TODO: <SearchingContextState | null> 은 해결했는데 구조분해 할당을 못해서 다시 바꿈 해결방법 요망
-export const SearchingContext =
-  React.createContext<SearchingContextState | null>(null);
+export const SearchingContext = React.createContext<SearchingContextState>({
+  calendar: calendarInitialState,
+  price: priceInitialState,
+  customers: customersInitialState,
+});
 
-export const setSerachingContext =
-  React.createContext<SearchContextDispatch | null>(null);
+// TODO: Dispatch 함수 해결해야할것
+export const setSerachingContext = React.createContext<SearchContextDispatch>(
+  () => {},
+);
 
 const calenderReducer = (
   state: CalenderState,
@@ -113,8 +117,8 @@ interface SearchContextDispatch {
 }
 // TODO: 작명 직접적인 State 쓰지말것 State는 상태에만 작명 사용하자
 export interface CalenderState {
-  startDate: null | number;
-  endDate: null | number;
+  startDate: number;
+  endDate: number;
 }
 
 export interface PriceState {

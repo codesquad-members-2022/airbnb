@@ -13,13 +13,16 @@ public class Lodging {
     private Long id;
 
     @Column(name = "lodging_name")
-    private String Name;
-    private String address;
+    private String name;
+
+    @JoinColumn
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Address address;
     private Double rating;
     private int review;
 
     @Enumerated(EnumType.STRING)
-    private Conditions conditions;
+    private PlaceType placeType;
 
     @Enumerated(EnumType.STRING)
     private PropertyType propertyType;
@@ -32,8 +35,8 @@ public class Lodging {
     private String description;
     private Long price;
 
-    private String placeType;
     private String hostName;
+    private String hostImage;
     private double latitude;
     private double longitude;
     private String mainImageUrl;

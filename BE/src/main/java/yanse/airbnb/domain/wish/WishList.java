@@ -10,18 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import yanse.airbnb.domain.hotel.Room;
 import yanse.airbnb.domain.member.Member;
+import yanse.airbnb.domain.room.Room;
 
-@Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+
 @Entity
 public class WishList {
 
@@ -29,7 +21,8 @@ public class WishList {
 	@Column(name = "wishlist_id")
 	private Long id;
 
-	@OneToOne(mappedBy = "wishList", fetch = LAZY)
+	@ManyToOne(fetch = LAZY)
+	@JoinColumn(name = "member_id")
 	private Member member;
 
 	@ManyToOne(fetch = LAZY)

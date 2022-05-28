@@ -1,4 +1,4 @@
-package yanse.airbnb.domain.hotel;
+package yanse.airbnb.domain.room;
 
 import javax.persistence.Embeddable;
 

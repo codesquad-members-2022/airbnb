@@ -4,24 +4,17 @@ import static javax.persistence.FetchType.LAZY;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import yanse.airbnb.domain.hotel.Room;
 import yanse.airbnb.domain.member.Member;
+import yanse.airbnb.domain.room.Room;
 
-@Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+
 @Entity
 public class Reservation {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,15 +29,18 @@ public class Reservation {
 	@JoinColumn(name = "room_id")
 	private Room room;
 
-	@Column(updatable = false)
-	private int reservationPeople;
+	private int adultCount;
 
-	@Column(updatable = false)
+	private int childCount;
+
+	private int infantCount;
+
 	private int reservationPrice;
 
-	@Column(updatable = false)
-	private LocalDateTime checkInTime;
-	
-	@Column(updatable = false)
-	private LocalDateTime checkOutTime;
+	@Embedded
+	private DetailFee discountPolicy;
+
+	private LocalDateTime checkInDateTime;
+
+	private LocalDateTime checkOutDateTime;
 }

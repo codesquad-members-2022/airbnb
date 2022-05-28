@@ -1,4 +1,4 @@
-import * as S from '@components/Header/Header.style';
+import * as S from '@components/GNB/GNB.style';
 import Icon, { ICON_NAME, ICON_SIZE } from '@components/common/Icon';
 
 const MyPageButton = () => {

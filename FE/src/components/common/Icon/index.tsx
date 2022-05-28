@@ -6,10 +6,12 @@ import * as S from '@components/common/Icon/Icon.style';
 export const ICON_NAME: { [key: string]: string } = {
   MENU: 'Menu',
   USER: 'User',
+  SEARCH: 'Search',
 };
 
 export const ICON_SIZE: { [key: string]: string } = {
   MEDIUM: 'MEDIUM',
+  LARGE: 'LARGE',
 };
 
 export type IconTypes = {

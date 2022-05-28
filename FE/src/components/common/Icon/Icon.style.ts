@@ -12,6 +12,12 @@ const sizeStyles = css<StyledIconProps>`
     css`
       width: 1rem;
     `}
+
+  ${({ size }) =>
+    size === ICON_SIZE.LARGE &&
+    css`
+      width: 1.5rem;
+    `}
 `;
 
 const Icon = styled.img`

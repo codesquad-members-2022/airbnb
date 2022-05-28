@@ -2,12 +2,18 @@ import React from 'react';
 
 import { BrowserRouter } from 'react-router-dom';
 
-import Header, { HEADER_TYPE } from '@components/Header';
+import Footer from '@components/Footer';
+import GNB, { GNB_TYPE } from '@components/GNB';
+import Header from '@components/Header';
+import MainContent from '@components/MainContent';
 
 function App() {
   return (
     <BrowserRouter>
-      <Header headerType={HEADER_TYPE.MAIN} />
+      <GNB gnbType={GNB_TYPE.MAIN} />
+      <Header />
+      <MainContent />
+      <Footer />
     </BrowserRouter>
   );
 }

@@ -1,17 +1,19 @@
 import React from "react";
-import Gnb from "./Gnb";
 import styled from "styled-components";
-import LoginButton from "./LoginButton";
+import LoginButton from "../components/header/LoginButton";
+import SearchBar from "../components/header/searchBar/SearchBar";
 
-const Header = () => {
+const Search = () => {
     return (
-        <Background>
-            <HeaderBox>
-                <Logo>LOGO</Logo>
-                <Gnb />
-                <LoginButton />
-            </HeaderBox>
-        </Background>
+        <>
+            <Background>
+                <HeaderBox>
+                    <Logo>LOGO</Logo>
+                    <SearchBar size="small" />
+                    <LoginButton />
+                </HeaderBox>
+            </Background>
+        </>
     );
 };
 
@@ -34,4 +36,4 @@ const Logo = styled.h1`
     line-height: 46px;
 `;
 
-export default Header;
+export default Search;

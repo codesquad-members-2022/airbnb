@@ -4,14 +4,14 @@ import lombok.Getter;
 
 import javax.persistence.*;
 
-//숙소 엔티티와 편의시설 엔티티의 다대다 연결을 위한 엔티티
+//숙소 엔티티와 할인&세금 엔티티의 다대다 연결을 위한 엔티티
 @Entity
 @Getter
-public class RoomAmenity {
+public class RoomDiscountTax {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "room_amenity_id")
+    @Column(name = "room_discount_tax_id")
     private Long id;
 
     @ManyToOne
@@ -19,6 +19,6 @@ public class RoomAmenity {
     private Room room;
 
     @ManyToOne
-    @JoinColumn(name = "amenity_id")
-    private Amenity amenity;
+    @JoinColumn(name = "discount_tax_id")
+    private DiscountTax discountTax;
 }

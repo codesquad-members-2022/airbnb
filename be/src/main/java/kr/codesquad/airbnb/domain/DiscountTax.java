@@ -8,15 +8,16 @@ import java.util.List;
 
 @Entity
 @Getter
-public class Member {
+public class DiscountTax {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
+    @Column(name = "discount_tax_id")
     private Long id;
 
     private String name;
+    private Integer rate;
 
-    @OneToMany(mappedBy = "member")
-    private List<Booking> bookings = new ArrayList<>();
+    @OneToMany(mappedBy = "discountTax")
+    private List<RoomDiscountTax> roomDiscountTax = new ArrayList<>();
 }

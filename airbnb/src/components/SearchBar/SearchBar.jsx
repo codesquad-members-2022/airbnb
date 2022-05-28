@@ -6,6 +6,8 @@ import Personnel from './Personnel';
 import Price from './Price';
 import { ReactComponent as SearchIcon } from 'assets/svg/searchBtn.svg';
 
+import PriceRangeModal from 'components/PriceRange/PriceRange';
+
 function SearchBar() {
   return (
     <Center>
@@ -18,6 +20,7 @@ function SearchBar() {
           <Personnel />
           <SearchIcon style={{ margin: '22px' }} />
         </Flex>
+        <PriceRangeModal />
       </SearchContainer>
     </Center>
   );

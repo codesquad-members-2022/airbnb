@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Logo from './Logo';
 import UpperMenu from './UpperMenu';
 import UserInfo from './UserInfo';
+import PriceRangeModal from 'components/PriceRange/PriceRange';
 
 function Header() {
   return (

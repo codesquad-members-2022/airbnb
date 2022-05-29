@@ -26,6 +26,16 @@ module.exports = {
   ],
 
   rules: {
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
     'react/jsx-uses-react': 'error',
     'react/jsx-uses-vars': 'error',
     'react/react-in-jsx-scope': 'off',
@@ -47,9 +57,7 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
-      node: {
-        paths: ['src', '.ts', '.tsx', '.native.js'],
-      },
+      typescript: {},
     },
   },
 };

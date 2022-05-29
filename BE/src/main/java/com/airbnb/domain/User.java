@@ -25,7 +25,7 @@ public class User {
     private List<WishList> wishLists = new ArrayList<>();
 
     @OneToMany(mappedBy = "host")
-    private List<House> hostedHouse;
+    private List<House> houses = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -51,7 +51,7 @@ public class User {
         return wishLists;
     }
 
-    public List<House> getHostedHouse() {
-        return hostedHouse;
+    public List<House> getHouses() {
+        return houses;
     }
 }

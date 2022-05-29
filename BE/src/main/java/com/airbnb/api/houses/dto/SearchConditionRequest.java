@@ -9,8 +9,8 @@ public class SearchConditionRequest {
 
     private Double longitude;
     private Double latitude;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDateTime startLocalDateTime;
+    private LocalDateTime endLocalDateTime;
     private Integer minFee;
     private Integer maxFee;
     private int numberOfGuests;
@@ -35,20 +35,20 @@ public class SearchConditionRequest {
         return GeometryUtils.toPoint(longitude, latitude);
     }
 
-    public LocalDateTime getStartDate() {
-        return startDate;
+    public LocalDateTime getStartLocalDateTime() {
+        return startLocalDateTime;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
+    public void setStartLocalDateTime(LocalDateTime startLocalDateTime) {
+        this.startLocalDateTime = startLocalDateTime;
     }
 
-    public LocalDateTime getEndDate() {
-        return endDate;
+    public LocalDateTime getEndLocalDateTime() {
+        return endLocalDateTime;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate;
+    public void setEndLocalDateTime(LocalDateTime endLocalDateTime) {
+        this.endLocalDateTime = endLocalDateTime;
     }
 
     public Integer getMinFee() {

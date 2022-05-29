@@ -1,17 +1,17 @@
 import styled from "styled-components";
 
-interface imgType {
+interface ImgType {
   width: string;
   height: string;
   margin?: string;
 }
 
 export const Img = styled.img`
-  ${({ width, height }: imgType) => {
+  ${({ width, height }: ImgType) => {
     return `width:${width}; height:${height}`;
   }};
   margin-left: 4px;
-  ${(props: imgType) => {
+  ${(props: ImgType) => {
     if (!props.margin) {
       return;
     }

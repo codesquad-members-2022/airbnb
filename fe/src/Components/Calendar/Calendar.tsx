@@ -1,27 +1,27 @@
 import { createKey } from "Helpers/utils";
-import Month from "./Calendar/Month";
+import Month from "./Month/Month";
 import { CalendarContainer } from "./Calendar.styled";
-import { dateType, eventType } from "Helpers/interface";
+import { DateType, EventType } from "Helpers/interface";
 
-interface calendarDateType {
+interface CalendarDateType {
   year: number;
   month: number;
   day?: number;
 }
 
-interface calendarType {
+interface CalendarType {
   calendarShowCount?: number;
   columnCount?: number;
   calendarModalStyle?: string;
-  checkIn?: dateType;
-  checkOut?: dateType;
-  calendarData: calendarDateType;
+  checkIn?: DateType;
+  checkOut?: DateType;
+  calendarData: CalendarDateType;
   handlePrevButton?: () => void;
   handleNextButton?: () => void;
-  handleClickDate?: (event: eventType) => void;
+  handleClickDate?: (event: EventType) => void;
 }
 
-interface monthInfoType {
+interface MonthInfoType {
   prevMonth: number;
   prevYear: number;
 }
@@ -31,7 +31,7 @@ const JANUARY = 1;
 const COLUMN_COUNT_IDX_OFFSET = 2;
 const FIRST_IDX = 0;
 
-const getNextMonthInfo = ({ prevMonth, prevYear }: monthInfoType) => {
+const getNextMonthInfo = ({ prevMonth, prevYear }: MonthInfoType) => {
   const nextMonth = prevMonth === DECEMBER ? JANUARY : prevMonth + 1;
   const nextMonthYear = nextMonth === JANUARY ? prevYear + 1 : prevYear;
   return { nextMonth, nextMonthYear };
@@ -47,7 +47,7 @@ export default function Calendar({
   handlePrevButton,
   handleNextButton,
   handleClickDate,
-}: calendarType) {
+}: CalendarType) {
   const { year, month } = calendarData;
   const displayCalendarLength = calendarShowCount || 2;
 

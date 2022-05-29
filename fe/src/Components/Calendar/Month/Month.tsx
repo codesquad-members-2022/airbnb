@@ -1,6 +1,6 @@
 import { DAY_OF_WEEK_DATA } from "Helpers/constant";
 import { createKey, getTodayDate } from "Helpers/utils";
-import { dateType, eventType } from "Helpers/interface";
+import { DateType, EventType } from "Helpers/interface";
 import {
   ActiveDay,
   Button,
@@ -12,42 +12,42 @@ import {
   YearMonthArea,
 } from "./Month.styled";
 
-interface buttonType {
+interface ButtonType {
   prev?: boolean;
   next?: boolean;
 }
 
-interface checkInOutType extends dateType {
-  checkIn: dateType;
-  checkOut: dateType;
+interface CheckInOutType extends DateType {
+  checkIn: DateType;
+  checkOut: DateType;
 }
 
-interface dateCheckType extends dateType {
-  checkTarget: dateType;
+interface DateCheckType extends DateType {
+  checkTarget: DateType;
 }
 
-interface calendarTypeSkeleton {
+interface CalendarTypeSkeleton {
   year: number;
   month: number;
-  checkIn?: dateType;
-  checkOut?: dateType;
+  checkIn?: DateType;
+  checkOut?: DateType;
 }
 
-interface calendarType extends calendarTypeSkeleton {
-  button: buttonType;
+interface CalendarType extends CalendarTypeSkeleton {
+  button: ButtonType;
   handlePrevButton?: () => void;
   handleNextButton?: () => void;
-  handleClickDate?: (event: eventType) => void;
+  handleClickDate?: (event: EventType) => void;
 }
 
-interface monthComponentType extends calendarTypeSkeleton {
-  handleClickDate?: (event: eventType) => void;
+interface MonthComponentType extends CalendarTypeSkeleton {
+  handleClickDate?: (event: EventType) => void;
 }
 
-interface dayComponentType extends calendarTypeSkeleton {
+interface DayComponentType extends CalendarTypeSkeleton {
   day: number;
-  today: dateType;
-  handleClickDate?: (event: eventType) => void;
+  today: DateType;
+  handleClickDate?: (event: EventType) => void;
 }
 
 export default function Month({
@@ -59,7 +59,7 @@ export default function Month({
   handlePrevButton,
   handleNextButton,
   handleClickDate,
-}: calendarType) {
+}: CalendarType) {
   const dayOfWeekComponent = DAY_OF_WEEK_DATA.map((day, idx) => <Day key={createKey(day, idx)}>{day}</Day>);
   const monthComponent = getMonthComponent({ year, month, checkIn, checkOut, handleClickDate });
 
@@ -87,7 +87,7 @@ export default function Month({
   );
 }
 
-const getMonthComponent = ({ year, month, checkIn, checkOut, handleClickDate }: monthComponentType) => {
+const getMonthComponent = ({ year, month, checkIn, checkOut, handleClickDate }: MonthComponentType) => {
   const today = getTodayDate();
 
   const firstDayDateNumber = calculateDayOfWeekDate(year, month);
@@ -110,7 +110,7 @@ const calculateDayOfWeekDate = (year: number, month: number, day: number = 1) =>
   return dayOfWeek;
 };
 
-const inspectInActiveCondition = ({ year, month, day, checkTarget }: dateCheckType) => {
+const inspectInActiveCondition = ({ year, month, day, checkTarget }: DateCheckType) => {
   if (year < checkTarget.year) {
     return true;
   }
@@ -123,11 +123,11 @@ const inspectInActiveCondition = ({ year, month, day, checkTarget }: dateCheckTy
   return false;
 };
 
-const inspectCheckInOutDay = ({ year, month, day, checkTarget }: dateCheckType) => {
+const inspectCheckInOutDay = ({ year, month, day, checkTarget }: DateCheckType) => {
   return year === checkTarget.year && month === checkTarget.month && day === checkTarget.day;
 };
 
-const inspectActiveCondition = ({ year, month, day, checkIn, checkOut }: checkInOutType) => {
+const inspectActiveCondition = ({ year, month, day, checkIn, checkOut }: CheckInOutType) => {
   const afterCheckIn =
     year > checkIn.year ||
     (year === checkIn.year && ((month === checkIn.month && day >= checkIn.day) || month > checkIn.month));
@@ -145,7 +145,7 @@ const createDayComponent = ({
   checkOut,
   today,
   handleClickDate,
-}: dayComponentType) => {
+}: DayComponentType) => {
   if (!checkIn || !checkOut) {
     return day;
   }

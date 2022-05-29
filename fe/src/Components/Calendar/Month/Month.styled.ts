@@ -1,11 +1,11 @@
-import { applyFlex, flexBoxType } from "Helpers/utils";
+import { applyFlex, FlexBoxType } from "Helpers/utils";
 import styled from "styled-components";
 
-interface activeDayType {
+interface ActiveDayType {
   radius?: string;
 }
 
-interface buttonType {
+interface ButtonType {
   type: string;
 }
 
@@ -14,7 +14,7 @@ export const Monthly = styled.div`
 `;
 
 export const YearMonthArea = styled.div`
-  ${({ flex, justify }: flexBoxType) => applyFlex({ flex, justify })};
+  ${({ flex, justify }: FlexBoxType) => applyFlex({ flex, justify })};
   width: 90%;
   height: 40px;
   margin-bottom: 40px;
@@ -49,7 +49,7 @@ export const StyledCheckInOut = styled.div`
 
 export const ActiveDay = styled.div`
   ${() => applyFlex({ flex: true, justify: "center", align: "center" })};
-  ${({ radius }: activeDayType) => `border-radius:${radius}`};
+  ${({ radius }: ActiveDayType) => `border-radius:${radius}`};
   width: 100%;
   height: 100%;
   background: #f5f5f7;
@@ -60,7 +60,7 @@ export const InActiveDay = styled.div`
 `;
 
 export const Button = styled.div`
-  ${({ type }: buttonType) =>
+  ${({ type }: ButtonType) =>
     type && type === "prev" ? `position:absolute; left:10px; ` : `position:absolute;right:10px;`};
   cursor: pointer;
 `;

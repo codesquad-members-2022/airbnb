@@ -5,13 +5,13 @@ import { getTodayDate } from "Helpers/utils";
 import { useCalendar } from "Hook/useCalendar";
 import { useState } from "react";
 import { BackgroundImg, HomeContainer, NearbyTravel, WhereverTravel } from "./Home.styled";
-import { dateType, eventType } from "Helpers/interface";
+import { DateType, EventType } from "Helpers/interface";
 
-interface compareCheckInType extends dateType {
-  checkIn: dateType;
+interface compareCheckInType extends DateType {
+  checkIn: DateType;
 }
 
-interface dispatchType extends dateType {
+interface dispatchType extends DateType {
   type: string;
 }
 
@@ -61,7 +61,7 @@ export default function Home() {
     setCalendarData(newCalendarData);
   };
 
-  const handleClickDate = ({ target }: eventType) => {
+  const handleClickDate = ({ target }: EventType) => {
     const { year, month, day } = target.dataset;
 
     if (checkIn.day === 0) {

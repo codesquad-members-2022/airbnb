@@ -1,9 +1,9 @@
-export interface dateType {
+export interface DateType {
   year: number;
   month: number;
   day: number;
 }
 
-export interface eventType {
+export interface EventType {
   target: any;
 }

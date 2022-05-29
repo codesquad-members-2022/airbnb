@@ -1,22 +1,22 @@
 import styled from "styled-components";
 
-interface homeType {
+interface HomeType {
   width: string;
   height: string;
 }
 
-interface backgroundType {
+interface BackgroundType {
   url: string;
 }
 
 export const BackgroundImg = styled.div`
-  ${({ url }: backgroundType) => {
+  ${({ url }: BackgroundType) => {
     return `background: url(${url}); background-size:cover; background-position:bottom`;
   }};
 `;
 
 export const HomeContainer = styled.div`
-  ${({ width, height }: homeType) => {
+  ${({ width, height }: HomeType) => {
     return `
     width:${width}; height:${height}`;
   }};

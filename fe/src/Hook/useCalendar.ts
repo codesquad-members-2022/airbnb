@@ -1,7 +1,7 @@
 import { CalendarContext, DispatchCalendarContext } from "Context/CalendarProvider";
 import { useContext, useReducer } from "react";
 
-interface actionType {
+interface ActionType {
   type: string;
   year?: number;
   month?: number;
@@ -22,7 +22,7 @@ const initialState = {
   },
 };
 
-const reducer = (state: object, action: actionType) => {
+const reducer = (state: object, action: ActionType) => {
   switch (action.type) {
     case "OPEN":
       return {

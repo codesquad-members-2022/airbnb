@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-interface calendarContainerType {
+interface CalendarContainerType {
   columnCount?: number;
   calendarModalStyle?: string;
 }
 
-export const CalendarContainer = styled.div<calendarContainerType>`
+export const CalendarContainer = styled.div<CalendarContainerType>`
   display: grid;
   ${({ columnCount }) => {
     return `grid-template-columns: repeat(${columnCount || 2}, 1fr)`;

@@ -1,6 +1,5 @@
 package com.airbnb.utils;
 
-import com.airbnb.domain.Location;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
@@ -12,8 +11,7 @@ public class GeometryUtils {
         try {
             return (Point) new WKTReader().read(pointWKT);
         } catch (ParseException e) {
-            e.printStackTrace();
+            throw new IllegalStateException("Point 변환과정에서 예외가 발생하였습니다.");
         }
-        return null;
     }
 }

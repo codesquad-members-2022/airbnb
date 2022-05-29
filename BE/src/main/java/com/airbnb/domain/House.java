@@ -32,9 +32,6 @@ public class House {
     @OneToMany(mappedBy = "house")
     private List<HouseDiscountPolicy> houseDiscountPolicies = new ArrayList<>();
 
-    @OneToMany(mappedBy = "house")
-    private List<WishList> wishLists = new ArrayList<>();
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "user_id", name = "host_id")
     private User host;

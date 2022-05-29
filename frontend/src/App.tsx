@@ -7,8 +7,8 @@ import theme from "styles/theme";
 const App = (): JSX.Element => {
   return (
     <div className="App">
-      <CssBaseline />
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Header />
       </ThemeProvider>
     </div>

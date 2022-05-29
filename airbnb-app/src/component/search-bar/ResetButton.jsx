@@ -1,12 +1,20 @@
-import IconButton from '@material-ui/core/IconButton';
-import ClearIcon from '@material-ui/icons/Clear';
+import ClearIcon from '@mui/icons-material/Clear';
+import styled from 'styled-components';
 
-function ResetButton() {
+function ResetButton({ visibility = 'hidden' }) {
   return (
-    <IconButton>
-      <ClearIcon />
+    <IconButton visibility={visibility}>
+      <ClearIcon fontSize="small" />
     </IconButton>
   );
 }
+
+const IconButton = styled.button`
+  visibility: ${({ visibility }) => visibility};
+  width: 20px;
+  height: 20px;
+  background-color: ${({ theme }) => theme.color.grey6};
+  border-radius: ${({ theme }) => theme.borderRadius.radius1};
+`;
 
 export default ResetButton;

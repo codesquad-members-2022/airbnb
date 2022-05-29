@@ -12,7 +12,7 @@ const SEARCH_INPUT_TEXT = {
     placeholder: '금액대 설정',
   },
   PERSONNEL: {
-    label: '체크인',
+    label: '인원',
     placeholder: '게스트 추가',
   },
 };

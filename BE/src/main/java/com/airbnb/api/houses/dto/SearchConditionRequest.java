@@ -5,6 +5,8 @@ import org.locationtech.jts.geom.Point;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.criteria.CriteriaBuilder;
+
 public class SearchConditionRequest {
 
     private Double longitude;
@@ -14,6 +16,13 @@ public class SearchConditionRequest {
     private Integer minFee;
     private Integer maxFee;
     private int numberOfGuests;
+
+    public SearchConditionRequest(Double longitude, Double latitude, Integer minFee, Integer maxFee) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.minFee = minFee;
+        this.maxFee = maxFee;
+    }
 
     public Double getLongitude() {
         return longitude;

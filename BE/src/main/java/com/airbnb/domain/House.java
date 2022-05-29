@@ -36,11 +36,12 @@ public class House {
     @JoinColumn(referencedColumnName = "user_id", name = "host_id")
     private User host;
 
-    public House(String name, int price, DetailInfo detailInfo, Point point) {
+    public House(String name, int price, DetailInfo detailInfo, Point point, User host) {
         this.name = name;
         this.price = price;
         this.detailInfo = detailInfo;
         this.point = point;
+        this.host = host;
     }
 
     public House() {

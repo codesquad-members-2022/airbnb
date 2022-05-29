@@ -27,6 +27,15 @@ public class User {
     @OneToMany(mappedBy = "host")
     private List<House> houses = new ArrayList<>();
 
+    public User(String name, String email, Role role) {
+        this.name = name;
+        this.email = email;
+        this.role = role;
+    }
+
+    public User() {
+    }
+
     public String getName() {
         return name;
     }

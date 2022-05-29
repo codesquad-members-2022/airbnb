@@ -1,5 +1,6 @@
 -- drop all tables if exists
-SET FOREIGN_KEY_CHECKS = 0;
+SET
+FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS wish;
 DROP TABLE IF EXISTS reservation;
 DROP TABLE IF EXISTS room_review;
@@ -8,7 +9,8 @@ DROP TABLE IF EXISTS room_image;
 DROP TABLE IF EXISTS charge_policy;
 DROP TABLE IF EXISTS room;
 DROP TABLE IF EXISTS member;
-SET FOREIGN_KEY_CHECKS = 1;
+SET
+FOREIGN_KEY_CHECKS = 1;
 
 -- member Table Create SQL
 CREATE TABLE member
@@ -34,8 +36,8 @@ CREATE TABLE room
     `host_id`        BIGINT         NOT NULL COMMENT '호스트 ID',
     `title`          VARCHAR(100)   NOT NULL COMMENT '숙소 이름',
     `description`    VARCHAR(10000) NOT NULL COMMENT '숙소 설명',
-    `latitude`       DECIMAL(9, 6) NULL COMMENT '위도',
-    `longitude`      DECIMAL(9, 6) NULL COMMENT '경도',
+    `latitude`       DECIMAL(9, 6)  NOT NULL COMMENT '위도',
+    `longitude`      DECIMAL(9, 6)  NOT NULL COMMENT '경도',
     `country`        VARCHAR(50) NULL COMMENT '나라',
     `city`           VARCHAR(50) NULL COMMENT '도시',
     `state`          VARCHAR(50) NULL COMMENT '시/도',

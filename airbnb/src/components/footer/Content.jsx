@@ -5,8 +5,8 @@ function Content({ data }) {
   return (
     <FooterContent>
       <FooterContentTitle>{data.title}</FooterContentTitle>
-      {data.info.map((el, idx) => (
-        <FooterContentText key={idx}>{el}</FooterContentText>
+      {data.info.map(({ id, content }) => (
+        <FooterContentText key={id}>{content}</FooterContentText>
       ))}
     </FooterContent>
   );
@@ -22,10 +22,12 @@ const FooterContent = styled.div`
 const FooterContentTitle = styled.p`
   font-weight: bold;
   margin: 10px;
+  cursor: pointer;
 `;
 
 const FooterContentText = styled.p`
   margin: 10px;
+  cursor: pointer;
 `;
 
 export default Content;

@@ -3,10 +3,14 @@ import { styled } from "@mui/material/styles";
 
 import { SearchBarButtonProps } from "@types";
 
-const RoundButton = styled(IconButton)<SearchBarButtonProps>((props) => {
+const RoundButton = styled(IconButton, {
+  shouldForwardProp: (prop) => prop !== "icon" && prop !== "isFocused",
+  name: "MyThemeComponent",
+  slot: "Root",
+})<SearchBarButtonProps>((props) => {
   const {
     icon,
-    isfocused,
+    isFocused,
     theme: { palette, elementSize },
   } = props;
 
@@ -27,16 +31,17 @@ const RoundButton = styled(IconButton)<SearchBarButtonProps>((props) => {
     border-radius: ${
       parseInt(elementSize.searchBar.focusedButton.height, 10) / 2
     }px;
-    color: ${palette.white.main};
     white-space: nowrap;
     overflow: hidden;
     `;
+
   return `
-    ${isfocused === "true" ? focusedButtonStyle : buttonSize};
+    ${isFocused ? focusedButtonStyle : buttonSize};
     transition: all ease-out 0.2s 0s;
     font-family: "Noto Sans KR", "sans-serif";
     font-size: 18px;
     font-weight: 700;
+    color: ${palette.white.main};
     background-color: ${palette[bgColor].main};
     margin-right: ${isCloseIcon && elementSize.searchBar.closeButton.width};
 

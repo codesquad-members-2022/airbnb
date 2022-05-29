@@ -1,3 +1,5 @@
+import { Theme } from "@mui/material";
+
 const selectItemStyles = {
   button: {
     flexDirection: "column",
@@ -11,12 +13,10 @@ const selectItemStyles = {
     },
   },
   title: {
-    color: ({ palette }: { palette: { black: { main: string } } }) =>
-      palette.black.main,
+    color: ({ palette }: Theme) => palette.black.main,
   },
   desc: {
-    color: ({ palette }: { palette: { grey2: { main: string } } }) =>
-      palette.grey2.main,
+    color: ({ palette }: Theme) => palette.grey2.main,
     fontSize: "16px",
   },
 };

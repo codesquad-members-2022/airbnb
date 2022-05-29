@@ -1,4 +1,4 @@
-import { Container, ContainerProps, Avatar } from "@mui/material";
+import { Container, ContainerProps, Avatar, Theme } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const UserMenuContainer = styled(Container)<ContainerProps>(
@@ -30,8 +30,7 @@ const userMenuButtonStyle = {
 };
 
 const menuIconStyle = {
-  color: ({ palette }: { palette: { grey3: { main: string } } }) =>
-    palette.grey3.main,
+  color: ({ palette }: Theme) => palette.grey3.main,
   marginRight: ({
     elementSize,
   }: {

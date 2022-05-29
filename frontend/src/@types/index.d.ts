@@ -1,7 +1,7 @@
 import { GridProps, GridSize, IconButtonProps } from "@mui/material";
 
 export interface SelectItemTemplateProps extends GridProps {
-  divide?: string | boolean;
+  divide?: boolean;
 }
 
 export interface SearchBarContainerProps {
@@ -17,8 +17,7 @@ export interface SelectItemProps {
 
 export interface SearchBarButtonProps extends IconButtonProps {
   icon: "close" | "search";
-  isFocused?: boolean | undefined | string;
-  isfocused?: boolean | undefined | string;
+  isFocused?: boolean | undefined;
 }
 
 interface ButtonAreaProps extends SearchBarButtonProps {

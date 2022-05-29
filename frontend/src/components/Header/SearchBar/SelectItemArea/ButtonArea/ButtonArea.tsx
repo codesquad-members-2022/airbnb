@@ -21,7 +21,7 @@ const ButtonArea = ({
 }: ButtonAreaProps): JSX.Element => {
   return (
     <SelectItemTemplate
-      divide={divide?.toString()}
+      divide={divide}
       container
       xs={xs}
       justifyContent="center"
@@ -30,7 +30,7 @@ const ButtonArea = ({
     >
       <RoundButton
         icon={icon}
-        isfocused={isFocused?.toString()}
+        isFocused={isFocused}
         sx={{
           zIndex: 1500,
         }}

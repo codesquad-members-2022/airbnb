@@ -6,7 +6,7 @@
 - [x] SearchConditionRequest에 date 변수명 변경하기
 - [x] SearchController 메서드 이름 HouseController로 변경하기
 - [x] House에서 wishList 역참조 뺴기
-- [ ] Location 지우기
+- [x] Location 지우기
 - [ ] migration 쿼리에 대해 알아보기
 - [ ] User 의 hostedHouse를 houses 로 변경하기
 - [ ] JPA에서 추가 모듈로 공간데이터를 사용하는 기능은 제공 사용

@@ -62,12 +62,6 @@ const reducer = (state: object, action: ActionType) => {
   }
 };
 
-export function useCalendarReducer() {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  return [state, dispatch];
-}
+export const useCalendarReducer = () => useReducer(reducer, initialState);
 
-export function useCalendar() {
-  const [state, dispatch] = [useContext(CalendarContext), useContext(DispatchCalendarContext)];
-  return [state, dispatch];
-}
+export const useCalendar = () => [useContext(CalendarContext), useContext(DispatchCalendarContext)];

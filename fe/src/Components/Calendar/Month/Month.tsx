@@ -106,8 +106,7 @@ const getMonthComponent = ({ year, month, checkIn, checkOut, handleClickDate }: 
 };
 
 const calculateDayOfWeekDate = (year: number, month: number, day: number = 1) => {
-  const dayOfWeek = new Date(year, --month, day).getDay();
-  return dayOfWeek;
+  return new Date(year, --month, day).getDay();
 };
 
 const inspectInActiveCondition = ({ year, month, day, checkTarget }: DateCheckType) => {

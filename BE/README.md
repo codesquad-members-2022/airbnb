@@ -1,7 +1,7 @@
 # 2차 PR todo list
 
 - [ ] Native 쿼리에 대한 사용 의문?
-- [ ] select 절 * 를 직접 명시로 변경
+- [x] select 절 * 를 직접 명시로 변경
 - [x] ItemResponse에 setter 고민
 - [x] SearchConditionRequest에 date 변수명 변경하기
 - [x] SearchController 메서드 이름 HouseController로 변경하기

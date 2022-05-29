@@ -35,11 +35,10 @@ public class HouseCustomRepositoryImpl implements HouseCustomRepository {
         double baseLongitude = position.getY();
         double distance = 1000; // m 단위
 
-        // TODO : *를 필드 명으로 변경해주기
         Query query = em.createNativeQuery("" +
-                "SELECT * \n" +
-                "FROM house AS h \n" +
-                "WHERE (ST_Distance_Sphere(h.point, point(?1, ?2)) < ?3) AND h.price >= ?4 AND h.price <= ?5"
+                        "SELECT h.house_id, h.comment_count, h.max_number, h.rate, h.room_introduction, h.type, h.name, h.point, h.price, h.host_id  \n" +
+                        "FROM house AS h \n" +
+                        "WHERE (ST_Distance_Sphere(h.point, point(?1, ?2)) < ?3) AND h.price >= ?4 AND h.price <= ?5"
         , House.class);
 
         query.setParameter(1, baseLatitude);

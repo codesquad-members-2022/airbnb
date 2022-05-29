@@ -4,7 +4,7 @@
 - [ ] select 절 * 를 직접 명시로 변경
 - [x] ItemResponse에 setter 고민
 - [x] SearchConditionRequest에 date 변수명 변경하기
-- [ ] SearchController 메서드 이름 HouseController로 변경하기
+- [x] SearchController 메서드 이름 HouseController로 변경하기
 - [ ] House에서 wishList 역참조 뺴기
 - [ ] Location 지우기
 - [ ] migration 쿼리에 대해 알아보기

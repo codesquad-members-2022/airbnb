@@ -16,11 +16,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/houses")
-public class SearchController {
+public class HouseController {
 
     private final HouseService houseService;
 
-    public SearchController(HouseService houseService) {
+    public HouseController(HouseService houseService) {
         this.houseService = houseService;
     }
 

@@ -25,20 +25,13 @@ public class HouseController {
     }
 
     @GetMapping
-    public List<House> findHouse(@RequestBody SearchConditionRequest request, Pageable pageable) {
-        List<House> byCondition = houseService.findByCondition(
-                request.getPoint(),
-                request.getMinFee(),
-                request.getMaxFee()
-        );
-
+    public List<HouseDetailResponse> findHouse(@RequestBody SearchConditionRequest request) {
         // TODO HATEAOS 적용
-        return byCondition;
+        return houseService.findByCondition(request);
     }
 
     @GetMapping("/{id}")
     public HouseDetailResponse findHouseInformation(@PathVariable Long id) {
-        House findHouse = houseService.findHouseInformation(id);
-        return new HouseDetailResponse(findHouse);
+        return houseService.findHouseInformation(id);
     }
 }

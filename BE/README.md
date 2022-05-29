@@ -11,7 +11,7 @@
 - [x] User 의 hostedHouse를 houses 로 변경하기
 - [ ] JPA에서 추가 모듈로 공간데이터를 사용하는 기능은 제공 사용
 - [X] Service에 transaction 달기
-- [ ] HouseController 에서 사용하는 Service계층에서 dto반환하기
+- [X] HouseController 에서 사용하는 Service계층에서 dto반환하기
 - [ ] GeometryUtils Point 변환 함수의 예외처리
 - [ ] MySQL56InnoDBSpatialDialect ver8.0 으로 변경
 - [ ] Service 계층 slice test 변경

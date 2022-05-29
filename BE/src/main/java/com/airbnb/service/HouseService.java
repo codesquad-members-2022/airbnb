@@ -1,12 +1,16 @@
 package com.airbnb.service;
 
+import com.airbnb.api.houses.dto.HouseDetailResponse;
+import com.airbnb.api.houses.dto.SearchConditionRequest;
 import com.airbnb.domain.House;
 import com.airbnb.repository.HouseRepository;
+
 import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class HouseService {
@@ -18,8 +22,14 @@ public class HouseService {
     }
 
     @Transactional(readOnly = true)
-    public List<House> findByCondition(Point point, Integer minFee, Integer maxFee) {
-        return houseRepository.searchByCondition(point, minFee, maxFee);
+    public List<HouseDetailResponse> findByCondition(SearchConditionRequest request) {
+        List<House> houseList = houseRepository.searchByCondition(request.getPoint(), request.getMinFee(),
+            request.getMaxFee());
+
+        return houseList
+            .stream()
+            .map(HouseDetailResponse::new)
+            .collect(Collectors.toList());
     }
 
     @Transactional
@@ -28,8 +38,10 @@ public class HouseService {
     }
 
     @Transactional(readOnly = true)
-    public House findHouseInformation(Long id) {
-        return houseRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("찾을 수 없는 숙소 정보입니다."));
+    public HouseDetailResponse findHouseInformation(Long id) {
+        House house = houseRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("찾을 수 없는 숙소 정보입니다."));
+
+        return new HouseDetailResponse(house);
     }
 }

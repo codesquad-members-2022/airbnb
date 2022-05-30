@@ -42,8 +42,9 @@ class TagServiceTest {
 
         // then
         then(tagResponses.size()).isEqualTo(2);
-        then(tagResponses.get(0).getName()).isEqualTo("자연생활을 만끽할 수 있는 숙소");
-        then(tagResponses.get(1).getName()).isEqualTo("독특한 공간");
+        then(tagResponses)
+            .extracting("name")
+            .containsExactly("자연생활을 만끽할 수 있는 숙소", "독특한 공간");
     }
 
     @Test
@@ -63,10 +64,9 @@ class TagServiceTest {
 
         // then
         then(tagResponses.size()).isEqualTo(4);
-        then(tagResponses.get(0).getName()).isEqualTo("반려동물 동반 가능");
-        then(tagResponses.get(1).getName()).isEqualTo("집 전체");
-        then(tagResponses.get(2).getName()).isEqualTo("독특한 공간");
-        then(tagResponses.get(3).getName()).isEqualTo("자연생활을 만끽할 수 있는 숙소");
+        then(tagResponses)
+            .extracting("name")
+            .containsExactly("반려동물 동반 가능", "집 전체", "독특한 공간", "자연생활을 만끽할 수 있는 숙소");
     }
 
 }

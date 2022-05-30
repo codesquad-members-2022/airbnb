@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import SEARCH_INPUT_TEXT from '../../constants/searchBarText';
+import SEARCH_INPUT_TEXT from '../../../constants/searchBarText';
 import SearchInput from './SearchInput';
 import { useState, Fragment } from 'react';
 

@@ -1,7 +1,7 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import styled from 'styled-components';
 import { useContext } from 'react';
-import { CalenderDateContext } from '@component/calender/CalenderDateProvider';
+import { CalenderDateContext } from '@/component/header/calender/CalenderDateProvider';
 
 function PrevButton() {
   const { curDate, setCurDate } = useContext(CalenderDateContext);

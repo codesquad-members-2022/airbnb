@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useContext } from 'react';
-import { CalenderDateContext } from '@component/calender/CalenderDateProvider';
+import { CalenderDateContext } from '@/component/header/calender/CalenderDateProvider';
 
 function DateBox({ year, month, date }) {
   const { mode, setMode, checkInDate, setCheckInDate, checkOutDate, setCheckOutDate } = useContext(CalenderDateContext);

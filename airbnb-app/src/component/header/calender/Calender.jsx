@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { useContext } from 'react';
-import { CalenderDateContext } from '@component/calender/CalenderDateProvider';
-import CalenderPage from '@component/calender/CalenderPage';
-import PrevButton from '@component/calender/PrevButton';
-import NextButton from '@component/calender/NextButton';
+import { CalenderDateContext } from '@/component/header/calender/CalenderDateProvider';
+import CalenderPage from '@/component/header/calender/CalenderPage';
+import PrevButton from '@/component/header/calender/PrevButton';
+import NextButton from '@/component/header/calender/NextButton';
 
 function Calender({ page = 1 }) {
   const { curDate } = useContext(CalenderDateContext);

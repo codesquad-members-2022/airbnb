@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import Canvas from './Canvas';
+import myBarchart from './Canvas';
 
 function PriceRangeModal() {
   return (
     <PriceRangeContainer>
-      <Canvas />
+      <myBarchart />
     </PriceRangeContainer>
   );
 }

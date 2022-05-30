@@ -10,38 +10,34 @@ import Foundation
 
 extension CalendarPicker {
     struct Month {
-        let numberOfDays: Int
+        var numberOfNonEmptyDays: Int
         let firstDay: Date
         let firstDayWeekday: Int
         let days: [Day]
-
-        init(basedate: Date, on calendar: Calendar) throws {
-            guard let numberOfDaysInMonth = calendar.getNumberOfDaysInMonth(for: basedate),
-                  let firstDayOfMonth = calendar.getFirstDayOfMonth(for: basedate) else {
+        
+        init(basedate: Date) throws {
+            guard let numberOfDaysInMonth = CalendarPicker.KRCalendar.getNumberOfDaysInMonth(for: basedate),
+                  let firstDayOfMonth = CalendarPicker.KRCalendar.getFirstDayOfMonth(for: basedate) else {
                 throw CalendarPickerError.metadataGeneration
             }
 
-            self.numberOfDays = numberOfDaysInMonth
+            let firstDayWeekday = CalendarPicker.KRCalendar.getWeekDay(of: firstDayOfMonth)
+
+            self.numberOfNonEmptyDays = numberOfDaysInMonth
             self.firstDay = firstDayOfMonth
-            self.firstDayWeekday = calendar.getWeekDay(of: firstDayOfMonth)
-
-            self.days = Month.createDays(for: basedate, numberOfDays: numberOfDaysInMonth, firstDayWeekDay: firstDayWeekday)
-        }
-
-        static func createDays(for basedate: Date, numberOfDays: Int, firstDayWeekDay: Int) -> [Day] {
-            let calendar = CalendarPicker.calendar
-
-            let emptyDays = (1..<firstDayWeekDay).map { _ in
+            self.firstDayWeekday = firstDayWeekday
+            
+            let emptyDays = (1..<firstDayWeekday).map { _ in
                 return Day(date: nil, isSelected: false, isPast: nil)
             }
 
-            let days: [Day] = (0..<numberOfDays).map { offset in
-                let date = calendar.getNextDay(for: basedate, offset: offset) ?? basedate
-                let isPast = date < Date()
+            let days: [Day] = (0..<numberOfNonEmptyDays).map { offset in
+                let date = CalendarPicker.KRCalendar.getNextDay(for: firstDayOfMonth, offset: offset) ?? firstDayOfMonth
+                let isPast = date < basedate
                 return Day(date: date, isSelected: false, isPast: isPast)
             }
 
-            return emptyDays + days
+            self.days = emptyDays + days
         }
     }
 

@@ -40,7 +40,7 @@ class CalendarPickerViewCell: UICollectionViewCell {
         setLayout()
     }
 
-    var day: CalendarPicker.Day?
+    private var day: CalendarPicker.Day?
 
     func setDay(_ day: CalendarPicker.Day) {
         self.day = day
@@ -55,7 +55,7 @@ class CalendarPickerViewCell: UICollectionViewCell {
         }
     }
 
-    func strikethrough(_ string: String) -> NSAttributedString {
+    private func strikethrough(_ string: String) -> NSAttributedString {
         let attributes: [NSAttributedString.Key: Any] = [.strikethroughStyle: NSUnderlineStyle.single.rawValue, .strikethroughColor: UIColor.systemGray, .foregroundColor: UIColor.systemGray]
 
         return NSAttributedString(string: string, attributes: attributes)
@@ -79,6 +79,7 @@ class CalendarPickerViewCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         day = nil
-        numberLabel.text = ""
+        numberLabel.text = nil
+        numberLabel.attributedText = nil
     }
 }

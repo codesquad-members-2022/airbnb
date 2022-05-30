@@ -23,6 +23,9 @@ class CalendarPickerViewController: UIViewController {
         collectionView.register(CalendarPickerViewCell.self, forCellWithReuseIdentifier: CalendarPickerViewCell.reuseIdentifier)
         collectionView.register(CalendarPickerViewSectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CalendarPickerViewSectionHeader.reuseIdentifier)
 
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
         collectionView.isScrollEnabled = true
         return collectionView
     }()
@@ -33,7 +36,7 @@ class CalendarPickerViewController: UIViewController {
     var didSelectDataRange: ((Range<Date>) -> Void)?
 
     init(basedate: Date, numOfMonths: Int, didDateSelect: ((Date) -> Void)?, didDataRangeSelect: ((Range<Date>) -> Void)?) throws {
-        self.calendarPicker = try CalendarPicker(baseDate: basedate, numOfMonths: numOfMonths)
+        self.calendarPicker = try CalendarPicker(basedate: basedate, numOfMonths: numOfMonths)
 
         self.didSelectDate = didDateSelect
         self.didSelectDataRange = didDataRangeSelect
@@ -46,11 +49,12 @@ class CalendarPickerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(collectionView)
-
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        setSubviews()
         setLayout()
+    }
+    
+    private func setSubviews() {
+        view.addSubview(collectionView)
     }
 
     private func setLayout() {
@@ -103,4 +107,5 @@ extension CalendarPickerViewController: UICollectionViewDataSource {
 }
 
 extension CalendarPickerViewController: UICollectionViewDelegate {
+    // TODO: HANDLING SELECTION
 }

@@ -14,7 +14,6 @@ class CalendarPickerViewSectionHeader: UICollectionReusableView {
     private lazy var headerLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.textColor = .label
         return label
@@ -51,7 +50,7 @@ class CalendarPickerViewSectionHeader: UICollectionReusableView {
 
     private func setLayout() {
         NSLayoutConstraint.activate([
-            headerLabel.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
+            headerLabel.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor, constant: 8),
             headerLabel.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor),
             headerLabel.topAnchor.constraint(equalTo: self.layoutMarginsGuide.topAnchor),
             headerLabel.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor)

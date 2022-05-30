@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
-import { GNB } from '@/Component/GNB';
-import { SearchBar } from '@/Component/SearchBar';
-import { Schedule } from '@/Component/Schedule/Schedule';
+import { GNB } from '@/Components/GNB';
+import { SearchBar } from '@/Components/SearchBar';
+import { Schedule } from '@/Components/Schedule/Schedule';
 
 export function Home() {
   // 문제점 null 일경우에 null. price, null.customers 는 불가능해서 에러

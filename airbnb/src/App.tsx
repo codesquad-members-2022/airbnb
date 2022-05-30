@@ -1,6 +1,6 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { Home } from '@/Pages/Home';
-import { SearchingProvider } from '@/Context/Searching';
+import { SearchingProvider } from '@/Contexts/Searching';
 import { theme, GlobalStyle } from '@/styles';
 
 function App() {

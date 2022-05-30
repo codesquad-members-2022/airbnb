@@ -11,7 +11,7 @@ import UIKit
 class CalendarDateCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: CalendarDateCollectionViewCell.self)
 
-    lazy var selectionBackgroundView: UIView = {
+    private lazy var selectionBackgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
@@ -28,23 +28,23 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    var day: Day? {
-        didSet {
-            guard let day = day else { return }
-            numberLabel.text = day.number
-        }
-    }
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(numberLabel)
+    }
+    
+    var day: Day?
+    
+    func setDay(_ day: Day) {
+        self.day = day
+        numberLabel.text = day.number
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setLayout() {
+    private func setLayout() {
         NSLayoutConstraint.activate([
             numberLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             numberLabel.centerXAnchor.constraint(equalTo: centerXAnchor)

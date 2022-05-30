@@ -2,6 +2,7 @@ package com.ahoo.airbnb.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -44,11 +45,12 @@ public class Room extends BaseEntity {
     private int charge;
     private int reviewCount;
     private double averageRate;
+    private boolean isDeleted;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @Column(insertable = false, updatable = false)
     private List<RoomImage> images = new ArrayList<>();
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<RoomChargePolicy> roomChargePolicies = new ArrayList<>();
 }

@@ -31,6 +31,10 @@
 		1B27E237283CA5A900FCB990 /* SearchCellCommonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B27E236283CA5A900FCB990 /* SearchCellCommonType.swift */; };
 		1B69F369283CD506001A2860 /* MultipleRowsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B69F368283CD506001A2860 /* MultipleRowsCollectionViewController.swift */; };
 		1B69F36B283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B69F36A283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift */; };
+		1B7EB7F32844E5A70078D4A9 /* NetworkServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7EB7F22844E5A70078D4A9 /* NetworkServices.swift */; };
+		1B7EB7F52844E5B10078D4A9 /* NetworkCommonComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7EB7F42844E5B10078D4A9 /* NetworkCommonComponents.swift */; };
+		1B7EB7FD2844F1290078D4A9 /* SearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7EB7FC2844F1290078D4A9 /* SearchUseCase.swift */; };
+		1B7EB7FF2844FB800078D4A9 /* AirbnbSearchUseCaseResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7EB7FE2844FB800078D4A9 /* AirbnbSearchUseCaseResponseTests.swift */; };
 		1B807DCB283F529A00D6815F /* SearchCalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B807DCA283F529A00D6815F /* SearchCalendarModel.swift */; };
 		1B90ED34283F547600E45FE8 /* SearchDayDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B90ED33283F547600E45FE8 /* SearchDayDTO.swift */; };
 		1B90ED36283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B90ED35283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift */; };
@@ -93,6 +97,10 @@
 		1B27E236283CA5A900FCB990 /* SearchCellCommonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCellCommonType.swift; sourceTree = "<group>"; };
 		1B69F368283CD506001A2860 /* MultipleRowsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleRowsCollectionViewController.swift; sourceTree = "<group>"; };
 		1B69F36A283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleRowsCollectionViewContainerCell.swift; sourceTree = "<group>"; };
+		1B7EB7F22844E5A70078D4A9 /* NetworkServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServices.swift; sourceTree = "<group>"; };
+		1B7EB7F42844E5B10078D4A9 /* NetworkCommonComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCommonComponents.swift; sourceTree = "<group>"; };
+		1B7EB7FC2844F1290078D4A9 /* SearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUseCase.swift; sourceTree = "<group>"; };
+		1B7EB7FE2844FB800078D4A9 /* AirbnbSearchUseCaseResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirbnbSearchUseCaseResponseTests.swift; sourceTree = "<group>"; };
 		1B807DCA283F529A00D6815F /* SearchCalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCalendarModel.swift; sourceTree = "<group>"; };
 		1B90ED33283F547600E45FE8 /* SearchDayDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDayDTO.swift; sourceTree = "<group>"; };
 		1B90ED35283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirbnbCalendarModelTests.swift; sourceTree = "<group>"; };
@@ -156,6 +164,7 @@
 		005AF78D283B775300546D5B /* Airbnb */ = {
 			isa = PBXGroup;
 			children = (
+				1B7EB7F12844E5990078D4A9 /* Network */,
 				00A85F32283B870700EA32E0 /* MyInfo */,
 				00A85F31283B86FC00EA32E0 /* WishList */,
 				005AF7C2283B843700546D5B /* Search */,
@@ -170,6 +179,7 @@
 			children = (
 				005AF7A5283B775300546D5B /* AirbnbTests.swift */,
 				1B90ED35283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift */,
+				1B7EB7FE2844FB800078D4A9 /* AirbnbSearchUseCaseResponseTests.swift */,
 			);
 			path = AirbnbTests;
 			sourceTree = "<group>";
@@ -286,6 +296,16 @@
 				008A20A5283FE3960095F7BC /* HeaderReusableView.swift */,
 			);
 			path = SubView;
+			sourceTree = "<group>";
+		};
+		1B7EB7F12844E5990078D4A9 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				1B7EB7F22844E5A70078D4A9 /* NetworkServices.swift */,
+				1B7EB7F42844E5B10078D4A9 /* NetworkCommonComponents.swift */,
+				1B7EB7FC2844F1290078D4A9 /* SearchUseCase.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		1B807DCD283F540500D6815F /* DTO */ = {
@@ -443,18 +463,21 @@
 				00A85F41283B87A300EA32E0 /* MyInfoViewController.swift in Sources */,
 				008A2064283F62910095F7BC /* LocationCollectionViewCell.swift in Sources */,
 				008A2062283F4E220095F7BC /* BackgroundViewController.swift in Sources */,
+				1B7EB7F52844E5B10078D4A9 /* NetworkCommonComponents.swift in Sources */,
 				00230CF1283BB77500802765 /* TabBarViewController.swift in Sources */,
 				1B69F369283CD506001A2860 /* MultipleRowsCollectionViewController.swift in Sources */,
 				00330A9D283BF91A009014AF /* LocationViewController.swift in Sources */,
 				1B27E235283CA44400FCB990 /* SearchViewModel.swift in Sources */,
 				1B69F36B283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift in Sources */,
 				1B27E22F283CA12D00FCB990 /* SearchTitleCollectionViewCell.swift in Sources */,
+				1B7EB7FD2844F1290078D4A9 /* SearchUseCase.swift in Sources */,
 				005AF78F283B775300546D5B /* AppDelegate.swift in Sources */,
 				008A20A6283FE3960095F7BC /* HeaderReusableView.swift in Sources */,
 				1B27E237283CA5A900FCB990 /* SearchCellCommonType.swift in Sources */,
 				00A85F38283B873F00EA32E0 /* SearchViewController.swift in Sources */,
 				005AF791283B775300546D5B /* SceneDelegate.swift in Sources */,
 				1B90ED34283F547600E45FE8 /* SearchDayDTO.swift in Sources */,
+				1B7EB7F32844E5A70078D4A9 /* NetworkServices.swift in Sources */,
 				00A85F44283B87B900EA32E0 /* MyInfoModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -465,6 +488,7 @@
 			files = (
 				005AF7A6283B775300546D5B /* AirbnbTests.swift in Sources */,
 				1B90ED36283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift in Sources */,
+				1B7EB7FF2844FB800078D4A9 /* AirbnbSearchUseCaseResponseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

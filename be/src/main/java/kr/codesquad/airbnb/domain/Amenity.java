@@ -3,6 +3,7 @@ package kr.codesquad.airbnb.domain;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,5 +18,5 @@ public class Amenity {
     private String name;
 
     @OneToMany(mappedBy = "amenity")
-    private List<RoomAmenity> roomAmenities;
+    private List<RoomAmenity> roomAmenities = new ArrayList<>();
 }

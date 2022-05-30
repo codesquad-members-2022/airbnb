@@ -1,16 +1,12 @@
 package com.team14.cherrybnb.room.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ReviewSummary {
 
-    private Long reviewCount;
+    private final Long reviewCount;
+    private final Double averageRating;
 
-    private Double averageRating;
 
 }

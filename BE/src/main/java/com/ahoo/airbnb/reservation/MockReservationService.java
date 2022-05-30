@@ -1,5 +1,6 @@
 package com.ahoo.airbnb.reservation;
 
+import com.ahoo.airbnb.entity.Address;
 import com.ahoo.airbnb.member.MemberResponse;
 import com.ahoo.airbnb.reservation.dtos.ChargesResponse;
 import com.ahoo.airbnb.reservation.dtos.ReservationRequest;
@@ -7,7 +8,6 @@ import com.ahoo.airbnb.reservation.dtos.ReservationResponse;
 import com.ahoo.airbnb.reservation.dtos.ReservationsResponse;
 import com.ahoo.airbnb.reservation.dtos.RoomChargeRequest;
 import com.ahoo.airbnb.reservation.dtos.RoomChargeResponse;
-import com.ahoo.airbnb.room.Address;
 import org.springframework.stereotype.Service;
 
 @Service

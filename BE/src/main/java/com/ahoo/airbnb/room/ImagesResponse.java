@@ -5,11 +5,11 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class Images {
+public class ImagesResponse {
 
-    private List<Image> images;
+    private List<ImageResponse> images;
 
-    public Images(List<Image> images) {
+    public ImagesResponse(List<ImageResponse> images) {
         this.images = images;
     }
 }

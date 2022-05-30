@@ -1,7 +1,7 @@
 package com.ahoo.airbnb.reservation.dtos;
 
+import com.ahoo.airbnb.entity.Address;
 import com.ahoo.airbnb.member.MemberResponse;
-import com.ahoo.airbnb.room.Address;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -9,3 +9,10 @@ spring:
     init:
       mode: always
       schema-locations: classpath:sql/schema.sql
+      data-locations: classpath:sql/data.sql
+
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true

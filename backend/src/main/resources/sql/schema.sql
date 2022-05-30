@@ -113,7 +113,9 @@ DROP TABLE IF EXISTS tag;
 CREATE TABLE tag
 (
     tag_id     INT          NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'tag 테이블의 기본 키',
+    name       VARCHAR(39)  NOT NULL COMMENT '태그의 이름',
     image_path VARCHAR(255) NOT NULL COMMENT '태그의 이미지 파일 경로',
+    display    BOOL COMMENT '태그 표시 여부',
     sequence   INT COMMENT '태그의 순서'
 );
 

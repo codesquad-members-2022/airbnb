@@ -9,3 +9,5 @@ export default function Personnel({ search, addSearch }: SectionProps) {
 
   return <SearchSection title={title} value={guest || defaultValue} />;
 }
+
+Personnel.displayName = 'personnel';

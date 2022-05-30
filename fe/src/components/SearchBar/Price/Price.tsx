@@ -9,3 +9,5 @@ export default function Price({ search, addSearch }: SectionProps) {
 
   return <SearchSection title={title} value={price} />;
 }
+
+Price.displayName = 'price';

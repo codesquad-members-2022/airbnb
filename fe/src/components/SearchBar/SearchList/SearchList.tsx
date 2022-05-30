@@ -10,13 +10,15 @@ const StyledLi = styled.li`
   }
 `;
 
-// component type
-export default function SearchList({ Element }: { Element: any }): React.ReactElement {
+type KeyType = 'period' | 'price' | 'personnel';
+
+export default function SearchList({ Element }: { Element: React.ComponentType<any> }): React.ReactElement {
   const search = useSearch();
   const addSearch = useAddSearch();
 
-  const key = Element.name.toLowerCase();
+  const key: KeyType = Element.displayName as KeyType;
   const searchList = search[key];
+
   const hasValue = () => Object.values(searchList.value).filter((e) => e !== 0).length > 0;
 
   return (

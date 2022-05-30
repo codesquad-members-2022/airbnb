@@ -14,3 +14,5 @@ export default function Period({ search, addSearch }: SectionProps) {
     </>
   );
 }
+
+Period.displayName = 'period';

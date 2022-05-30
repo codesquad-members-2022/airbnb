@@ -6,9 +6,10 @@ const sizeStyles = css<{ size: string }>`
   ${({ size, theme }) =>
     size === SEARCH_BAR_SIZE.SMALL &&
     css`
-      width: 410px;
+      width: fit-content;
       height: 48px;
       border-radius: 30px;
+      padding: 16px 8px;
 
       ${SearchButton} {
         width: 32px;
@@ -20,6 +21,7 @@ const sizeStyles = css<{ size: string }>`
       }
 
       ${PeriodArea}, ${PriceArea}, ${PersonnelArea} {
+        width: fit-content;
         padding: 0 16px;
       }
     `}
@@ -30,6 +32,7 @@ const sizeStyles = css<{ size: string }>`
       width: 916px;
       height: 76px;
       border-radius: 60px;
+      padding: 16px;
 
       ${SearchButton} {
         width: 40px;
@@ -64,9 +67,9 @@ const areaStyles = css`
 
 export const Container = styled.header<{ size: string }>`
   display: flex;
+  align-items: center;
   background-color: ${({ theme }) => theme.color.white};
   border: 1px solid ${({ theme }) => theme.color.grey4};
-  padding: 16px;
   cursor: pointer;
 
   /* 크기 */

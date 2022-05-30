@@ -9,7 +9,6 @@ interface PriceAreaTypes {
   price: PriceTypes;
 }
 
-// TODO: 작은 사이즈일 때 레이아웃 수정 필요
 const PriceArea = ({ size, price }: PriceAreaTypes) => {
   const { min, max } = price;
   const isPriceExist = min !== defaultPrice.min || max !== defaultPrice.max;
@@ -20,15 +19,21 @@ const PriceArea = ({ size, price }: PriceAreaTypes) => {
 
   return (
     <S.PriceArea>
-      <S.ContentContainer>
-        <S.Label>요금</S.Label>
+      {size === SEARCH_BAR_SIZE.LARGE ? (
+        <>
+          <S.ContentContainer>
+            <S.Label>요금</S.Label>
+            <S.Content isContentExist={isPriceExist}>{priceContent}</S.Content>
+          </S.ContentContainer>
+          {isPriceExist && (
+            <S.CloseButton>
+              <Icon iconName={ICON_NAME.CLOSE_BTN} iconSize={ICON_SIZE.LARGE} />
+            </S.CloseButton>
+          )}
+        </>
+      ) : (
         <S.Content isContentExist={isPriceExist}>{priceContent}</S.Content>
-      </S.ContentContainer>
-      { size === SEARCH_BAR_SIZE.LARGE && isPriceExist && (
-        <S.CloseButton>
-          <Icon iconName={ICON_NAME.CLOSE_BTN} iconSize={ICON_SIZE.LARGE} />
-        </S.CloseButton>
-      ) }
+      )}
     </S.PriceArea>
   );
 };

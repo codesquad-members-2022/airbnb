@@ -8,7 +8,6 @@ interface PeriodAreaTypes {
   period: PeriodTypes;
 }
 
-// TODO: 작은 사이즈일 때 레이아웃 수정 필요
 const PeriodArea = ({ size, period }: PeriodAreaTypes) => {
   const { checkIn, checkOut } = period;
 
@@ -18,21 +17,31 @@ const PeriodArea = ({ size, period }: PeriodAreaTypes) => {
   const checkInContent = checkIn || NO_CONTENT[AREA_TYPE.PERIOD];
   const checkOutContent = checkOut || NO_CONTENT[AREA_TYPE.PERIOD];
 
+  const periodContent = isCheckInExist && isCheckOutExist
+    ? `${checkIn} ~ ${checkOut}`
+    : NO_CONTENT[AREA_TYPE.PERIOD];
+
   return (
     <S.PeriodArea>
-      <S.ContentContainer>
-        <S.Label>체크인</S.Label>
-        <S.Content isContentExist={isCheckInExist}>{checkInContent}</S.Content>
-      </S.ContentContainer>
-      <S.ContentContainer>
-        <S.Label>체크아웃</S.Label>
-        <S.Content isContentExist={isCheckOutExist}>{checkOutContent}</S.Content>
-      </S.ContentContainer>
-      { size === SEARCH_BAR_SIZE.LARGE && isCheckInExist && isCheckOutExist && (
-        <S.CloseButton>
-          <Icon iconName={ICON_NAME.CLOSE_BTN} iconSize={ICON_SIZE.LARGE} />
-        </S.CloseButton>
-      ) }
+      {size === SEARCH_BAR_SIZE.LARGE ? (
+        <>
+          <S.ContentContainer>
+            <S.Label>체크인</S.Label>
+            <S.Content isContentExist={isCheckInExist}>{checkInContent}</S.Content>
+          </S.ContentContainer>
+          <S.ContentContainer>
+            <S.Label>체크아웃</S.Label>
+            <S.Content isContentExist={isCheckOutExist}>{checkOutContent}</S.Content>
+          </S.ContentContainer>
+          {isCheckInExist && isCheckOutExist && (
+            <S.CloseButton>
+              <Icon iconName={ICON_NAME.CLOSE_BTN} iconSize={ICON_SIZE.LARGE} />
+            </S.CloseButton>
+          )}
+        </>
+      ) : (
+        <S.Content isContentExist={isCheckInExist && isCheckOutExist}>{periodContent}</S.Content>
+      )}
     </S.PeriodArea>
   );
 };

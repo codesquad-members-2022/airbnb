@@ -18,13 +18,6 @@ class CalendarPickerViewCell: UICollectionViewCell {
     }()
     
     
-    let monthFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy년 MM월"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        return dateFormatter
-    }()
-    
     private lazy var selectionBackgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -64,7 +57,6 @@ class CalendarPickerViewCell: UICollectionViewCell {
     }
 
     private func setLayout() {
-        contentView.addSubview(numberLabel)
         NSLayoutConstraint.activate([
             numberLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             numberLabel.centerXAnchor.constraint(equalTo: centerXAnchor)

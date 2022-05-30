@@ -138,8 +138,7 @@ extension SearchViewController: MKLocalSearchCompleterDelegate {
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         var cities = [City]()
         completer.results.forEach({
-            let model = City(name: $0.title, image: "defaultCity", travelTime: nil)
-            cities.append(model)
+            cities.append(City(name: $0.title, image: "defaultCity", travelTime: nil))
         })
         citySearchViewModel.update(models: cities)
     }

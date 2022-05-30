@@ -30,28 +30,18 @@
      }
 
      func loadHeroVM() {
-         for model in heroData {
-             let heroCellVM = HeroCellViewModel(model: model)
-             heroVM.append(heroCellVM)
-         }
+         heroData.forEach({heroVM.append(HeroCellViewModel(model: $0))})
      }
 
      func loadCityVM() {
-         for model in cityData {
-             let cityCellVM = CityCellViewModel(model: model)
-             cityVM.append(cityCellVM)
-         }
+         cityData.forEach({cityVM.append(CityCellViewModel(model: $0))})
      }
 
      func loadRandomSiteVM() {
-         for model in randomSiteData {
-             let randomSiteCellVM = RandomSiteCellViewModel(model: model)
-             randomSiteVM.append(randomSiteCellVM)
-         }
+         randomSiteData.forEach({randomSiteVM.append(RandomSiteCellViewModel(model: $0))})
      }
 
      func getCount(for type: CategoryType) -> Int {
-         guard let count = dataCounter[type] else {return 0}
-         return count
+         return dataCounter[type] == nil ? 0 : dataCounter[type]!
      }
 }

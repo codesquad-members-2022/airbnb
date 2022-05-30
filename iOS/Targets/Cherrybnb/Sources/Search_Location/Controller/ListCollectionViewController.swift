@@ -35,7 +35,7 @@ class ListCollectionViewController: UIViewController {
             guard let place = place else {
                 return
             }
-            self.recommendationData += place
+            self.recommendationData = place
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }

@@ -8,8 +8,8 @@
 
 import UIKit
 
-class CalendarDateCollectionViewCell: UICollectionViewCell {
-    static let reuseIdentifier = String(describing: CalendarDateCollectionViewCell.self)
+class CalendarPickerViewCell: UICollectionViewCell {
+    static let reuseIdentifier = String(describing: CalendarPickerViewCell.self)
 
     private lazy var selectionBackgroundView: UIView = {
         let view = UIView()
@@ -30,7 +30,8 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(numberLabel)
+        setSubviews()
+        setLayout()
     }
     
     var day: Day?
@@ -43,8 +44,13 @@ class CalendarDateCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    private func setSubviews() {
+        contentView.addSubview(numberLabel)
+    }
 
     private func setLayout() {
+        contentView.addSubview(numberLabel)
         NSLayoutConstraint.activate([
             numberLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             numberLabel.centerXAnchor.constraint(equalTo: centerXAnchor)

@@ -9,49 +9,49 @@
 import UIKit
 
 class LocationCell: UICollectionViewCell {
-    private var imageView = UIImageView()
-    private var titleLabel = UILabel()
-    static let cellId = "LocationCell"
-
+    static let reuseIdentifier = String(describing: LocationCell.self)
+    
+    lazy var imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(systemName: "mappin.and.ellipse")
+        imageView.layer.cornerRadius = 10
+        return imageView
+    }()
+    
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 17)
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setComponents()
+        contentView.addSubview(imageView)
+        contentView.addSubview(titleLabel)
         setLayout()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-
-    func setComponents() {
-        setImageView()
-        setNameLabel()
-    }
-
-    func setImageView() {
-        self.contentView.addSubview(imageView)
-        imageView.image = UIImage(systemName: "mappin.and.ellipse")
-        imageView.layer.cornerRadius = 10
-    }
-
-    func setNameLabel() {
-        self.contentView.addSubview(titleLabel)
-        titleLabel.font = .systemFont(ofSize: 17)
-    }
-
-    func setLayout() {
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        imageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 64).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 64).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 16).isActive = true
-        titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        titleLabel.heightAnchor.constraint(equalToConstant: 22).isActive = true
+        
+    func setLayout(){
+        NSLayoutConstraint.activate([
+            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: 64),
+            imageView.heightAnchor.constraint(equalToConstant: 64),
+            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+    
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 16),
+            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            titleLabel.heightAnchor.constraint(equalToConstant: 22)
+        ])
     }
 
     func setLocationData(_ title: String) {

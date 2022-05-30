@@ -9,14 +9,40 @@
 import UIKit
 
 class PlaceCell: UICollectionViewCell {
-    private var imageView = UIImageView()
-    private var nameLabel = UILabel()
-    private var distanceLabel = UILabel()
-    static let cellId = "placeCell"
+    
+    static let reuseIdentifier = String(describing: PlaceCell.self)
+    
+    lazy var imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "Place_thumb_1")
+        imageView.layer.cornerRadius = 10
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    lazy var nameLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 17)
+        label.text = "서울"
+        return label
+    }()
+    
+    lazy var distanceLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 17)
+        label.textColor = .systemGray
+        label.text = "차로 30분 거리"
+        return label
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setComponents()
+        contentView.addSubview(imageView)
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(distanceLabel)
         setLayout()
     }
 
@@ -24,50 +50,28 @@ class PlaceCell: UICollectionViewCell {
         super.init(coder: coder)
     }
 
-    func setComponents() {
-        setImageView()
-        setNameLabel()
-        setDistanceLabel()
-    }
-
-    func setImageView() {
-        self.contentView.addSubview(imageView)
-        imageView.image = UIImage(named: "Place_thumb_1")
-        imageView.layer.cornerRadius = 10
-    }
-
-    func setNameLabel() {
-        self.contentView.addSubview(nameLabel)
-        nameLabel.font = .systemFont(ofSize: 17)
-        nameLabel.text = "서울"
-    }
-
-    func setDistanceLabel() {
-        self.contentView.addSubview(distanceLabel)
-        distanceLabel.font = .systemFont(ofSize: 17)
-        distanceLabel.textColor = .systemGray
-        distanceLabel.text = "차로 30분 거리"
-    }
-
     func setLayout() {
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        imageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 64).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 64).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        NSLayoutConstraint.activate([
+        imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+        imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+        imageView.widthAnchor.constraint(equalToConstant: 64),
+        imageView.heightAnchor.constraint(equalToConstant: 64),
+        imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+        nameLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 16),
+        nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+        nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+        nameLabel.heightAnchor.constraint(equalToConstant: 22)
+        ])
 
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 16).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8).isActive = true
-        nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        nameLabel.heightAnchor.constraint(equalToConstant: 22).isActive = true
-
-        distanceLabel.translatesAutoresizingMaskIntoConstraints = false
-        distanceLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor).isActive = true
-        distanceLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4).isActive = true
-        distanceLabel.heightAnchor.constraint(equalToConstant: 22).isActive = true
-        distanceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
+        NSLayoutConstraint.activate([
+        distanceLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+        distanceLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4),
+        distanceLabel.heightAnchor.constraint(equalToConstant: 22),
+        distanceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+        ])
     }
 
     func setPlaceCell(_ place: Place) {

@@ -63,8 +63,8 @@ class ListCollectionViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
 
-        collectionView.register(PlaceCell.self, forCellWithReuseIdentifier: PlaceCell.cellId)
-        collectionView.register(LocationCell.self, forCellWithReuseIdentifier: LocationCell.cellId)
+        collectionView.register(PlaceCell.self, forCellWithReuseIdentifier: PlaceCell.reuseIdentifier)
+        collectionView.register(LocationCell.self, forCellWithReuseIdentifier: LocationCell.reuseIdentifier)
     }
 
     private func setLayout() {
@@ -87,12 +87,12 @@ extension ListCollectionViewController: UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         if isSearching {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LocationCell.cellId, for: indexPath) as? LocationCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LocationCell.reuseIdentifier, for: indexPath) as? LocationCell else { return UICollectionViewCell() }
             let data = searchResultData[indexPath.item]
             cell.setLocationData(data.title)
             return cell
         }
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceCell.cellId, for: indexPath) as? PlaceCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceCell.reuseIdentifier, for: indexPath) as? PlaceCell else { return UICollectionViewCell() }
         let data = recommendationData[indexPath.item]
         cell.setPlaceCell(data)
         return cell

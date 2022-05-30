@@ -1,13 +1,13 @@
-INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('정후팍', '1234@gmail.com', '1234', 'H', '');
-INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('우진팍', '5678@gmail.com', '1234', 'H', '');
-INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('정후팍', '1234@gmail.com', '1234', 'G', '');
-INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('우진팍', '1234@gmail.com', '1234', 'H', '');
-INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('정후팍', '1234@gmail.com', '1234', 'G', '');
-INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('우진팍', '1234@gmail.com', '1234', 'H', '');
-INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('정후팍', '1234@gmail.com', '1234', 'H', '');
-INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('우진팍', '1234@gmail.com', '1234', 'G', '');
-INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('정후팍', '1234@gmail.com', '1234', 'G', '');
-INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('우진팍', '1234@gmail.com', '1234', 'G', '');
+INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('정후팍', '1234@gmail.com', '1234', 'HOST', '');
+INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('우진팍', '5678@gmail.com', '1234', 'HOST', '');
+INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('정후팍', '1234@gmail.com', '1234', 'GUEST', '');
+INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('우진팍', '1234@gmail.com', '1234', 'HOST', '');
+INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('정후팍', '1234@gmail.com', '1234', 'GUEST', '');
+INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('우진팍', '1234@gmail.com', '1234', 'HOST', '');
+INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('정후팍', '1234@gmail.com', '1234', 'HOST', '');
+INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('우진팍', '1234@gmail.com', '1234', 'GUEST', '');
+INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('정후팍', '1234@gmail.com', '1234', 'GUEST', '');
+INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('우진팍', '1234@gmail.com', '1234', 'GUEST', '');
 
 INSERT INTO room (id, host_id, title, description, country, city, state, street, detail_address, room_type, max_capacity, bedroom_count, bed_count, bathroom_count, latitude, longitude, charge, review_count,average_rate) VALUES (1, 1, '호스텔 서울 R - 욕실이 있는 싱글룸', 'description example', ' 한국', ' 서울', '종로구', '', 'detail_address example', '개인실', 0, 0, 1, 1.0, 37.57691, 127.02279, 44896, 106, 4.04);
 INSERT INTO room (id, host_id, title, description, country, city, state, street, detail_address, room_type, max_capacity, bedroom_count, bed_count, bathroom_count, latitude, longitude, charge, review_count,average_rate) VALUES (2, 2, 'Double room with a bathroom (hostel seoul R)', 'description example', ' 한국', ' 서울', '종로구', '', 'detail_address example', '개인실', 0, 0, 1, 1.0, 37.57678, 127.0232, 89367, 149, 2.63);

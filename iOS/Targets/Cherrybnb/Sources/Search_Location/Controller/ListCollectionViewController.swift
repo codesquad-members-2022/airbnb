@@ -16,19 +16,19 @@ class ListCollectionViewController: UIViewController {
     private var searchResultData = [MKLocalSearchCompletion]()
     private var isSearching = false
     private var recommendationData = [Place]()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         requestRecommand()
         setCollectionView()
         setLayout()
         connectSearchBar()
-        
+
         searchCompleter.delegate = self
-        
+
     }
-    
-    private func requestRecommand(){
+
+    private func requestRecommand() {
         let location = Location.makeRandomInKR()
         let recommendSuccessStubRequest = DefaultRecommendator(httpService: ResponseSuccessStub())
         recommendSuccessStubRequest.recommend(for: location) { place in
@@ -41,14 +41,14 @@ class ListCollectionViewController: UIViewController {
             }
         }
     }
-    
-    private func connectSearchBar(){
+
+    private func connectSearchBar() {
         self.navigationItem.title = "숙소찾기"
         self.navigationItem.searchController = UISearchController(searchResultsController: nil)
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationController?.hidesBarsOnSwipe = false
         self.navigationItem.searchController?.searchBar.delegate = self
-        
+
         navigationItem.searchController?.isActive = true
         navigationItem.searchController?.searchBar.becomeFirstResponder()
     }
@@ -78,14 +78,14 @@ class ListCollectionViewController: UIViewController {
 
 extension ListCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if isSearching{
+        if isSearching {
             return searchResultData.count
         }
         return recommendationData.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+
         if isSearching {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LocationCell.cellId, for: indexPath) as? LocationCell else { return UICollectionViewCell() }
             let data = searchResultData[indexPath.item]
@@ -105,21 +105,19 @@ extension ListCollectionViewController: UICollectionViewDelegate, UICollectionVi
 
 }
 
-extension ListCollectionViewController: UISearchBarDelegate{
-    
+extension ListCollectionViewController: UISearchBarDelegate {
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
             isSearching = false
             searchResultData.removeAll()
             collectionView.reloadData()
-        }
-        else {
+        } else {
             isSearching = true
             searchCompleter.queryFragment = searchText
         }
     }
 }
-
 
 extension ListCollectionViewController: MKLocalSearchCompleterDelegate {
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {

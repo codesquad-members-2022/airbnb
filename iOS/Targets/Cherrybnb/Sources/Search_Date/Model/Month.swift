@@ -14,46 +14,45 @@ extension CalendarPicker {
         let firstDay: Date
         let firstDayWeekday: Int
         let days: [Day]
-        
+
         init(basedate: Date, on calendar: Calendar) throws {
             guard let numberOfDaysInMonth = calendar.getNumberOfDaysInMonth(for: basedate),
                   let firstDayOfMonth = calendar.getFirstDayOfMonth(for: basedate) else {
                 throw CalendarPickerError.metadataGeneration
             }
-            
+
             self.numberOfDays = numberOfDaysInMonth
             self.firstDay = firstDayOfMonth
             self.firstDayWeekday = calendar.getWeekDay(of: firstDayOfMonth)
-            
+
             self.days = Month.createDays(for: basedate, numberOfDays: numberOfDaysInMonth, firstDayWeekDay: firstDayWeekday)
         }
-        
-        static func createDays(for basedate: Date, numberOfDays: Int, firstDayWeekDay: Int)-> [Day] {
+
+        static func createDays(for basedate: Date, numberOfDays: Int, firstDayWeekDay: Int) -> [Day] {
             let calendar = CalendarPicker.calendar
 
             let emptyDays = (1..<firstDayWeekDay).map { _ in
                 return Day(date: nil, isSelected: false, isPast: nil)
             }
-            
+
             let days: [Day] = (0..<numberOfDays).map { offset in
                 let date = calendar.getNextDay(for: basedate, offset: offset) ?? basedate
                 let isPast = date < Date()
                 return Day(date: date, isSelected: false, isPast: isPast)
             }
-            
+
             return emptyDays + days
         }
     }
-    
+
     struct Day {
         // Day가 나타내는 시점(일)
         let date: Date?
-        
+
         // Calendar에서 선택되었는지 여부
         let isSelected: Bool?
-        
+
         // 현재 이전 날짜인지 여부
         let isPast: Bool?
     }
 }
-

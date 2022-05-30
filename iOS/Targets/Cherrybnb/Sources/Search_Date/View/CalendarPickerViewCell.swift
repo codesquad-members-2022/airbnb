@@ -10,13 +10,13 @@ import UIKit
 
 class CalendarPickerViewCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: CalendarPickerViewCell.self)
-    
+
     private let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d"
         return dateFormatter
     }()
-    
+
     private lazy var selectionBackgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -39,33 +39,33 @@ class CalendarPickerViewCell: UICollectionViewCell {
         setSubviews()
         setLayout()
     }
-    
+
     var day: CalendarPicker.Day?
-    
+
     func setDay(_ day: CalendarPicker.Day) {
         self.day = day
         guard let date = day.date, let isPast = day.isPast else { return }
-        
+
         let dateString = dateFormatter.string(from: date)
-        
+
         if isPast {
             numberLabel.attributedText = strikethrough(dateString)
         } else {
             numberLabel.text = dateString
         }
     }
-    
+
     func strikethrough(_ string: String) -> NSAttributedString {
         let attributes: [NSAttributedString.Key: Any] = [.strikethroughStyle: NSUnderlineStyle.single.rawValue, .strikethroughColor: UIColor.systemGray, .foregroundColor: UIColor.systemGray]
-        
+
         return NSAttributedString(string: string, attributes: attributes)
-        
+
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setSubviews() {
         contentView.addSubview(numberLabel)
     }
@@ -76,7 +76,7 @@ class CalendarPickerViewCell: UICollectionViewCell {
             numberLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
-    
+
     override func prepareForReuse() {
         day = nil
         numberLabel.text = ""

@@ -10,8 +10,7 @@ import UIKit
 
 class CalendarPickerViewSectionHeader: UICollectionReusableView {
     static let reuseIdentifier = String(describing: CalendarPickerViewSectionHeader.self)
-    
-    
+
     private lazy var headerLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -20,25 +19,23 @@ class CalendarPickerViewSectionHeader: UICollectionReusableView {
         label.textColor = .label
         return label
     }()
-    
-    
+
     private let monthFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy년 MM월"
         dateFormatter.locale = Locale(identifier: "ko_KR")
         return dateFormatter
     }()
-    
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .systemYellow
         setSubviews()
         setLayout()
     }
-    
+
     private var month: CalendarPicker.Month?
-    
+
     func setMonth(_ month: CalendarPicker.Month) {
         self.month = month
         headerLabel.text = monthFormatter.string(from: month.firstDay)
@@ -47,7 +44,7 @@ class CalendarPickerViewSectionHeader: UICollectionReusableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setSubviews() {
         self.addSubview(headerLabel)
     }
@@ -57,7 +54,7 @@ class CalendarPickerViewSectionHeader: UICollectionReusableView {
             headerLabel.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
             headerLabel.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor),
             headerLabel.topAnchor.constraint(equalTo: self.layoutMarginsGuide.topAnchor),
-            headerLabel.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor),
+            headerLabel.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor)
         ])
     }
 }

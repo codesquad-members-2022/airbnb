@@ -13,7 +13,7 @@ class SearchRootViewController: UIViewController {
 
     @IBOutlet var searchBar: UISearchBar!
     var nextViewController: ListCollectionViewController?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavBar()
@@ -53,5 +53,3 @@ extension SearchRootViewController: UISearchBarDelegate {
         self.searchBar.endEditing(true)
     }
 }
-
-

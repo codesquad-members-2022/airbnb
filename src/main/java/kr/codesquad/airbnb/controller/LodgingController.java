@@ -13,7 +13,7 @@ public class LodgingController {
 
     private final LodgingService lodgingService;
 
-    @GetMapping("/lodging/{id}")
+    @GetMapping("/lodgings/{id}")
     public LodgingResponseDto getLodging(@PathVariable Long id) {
         return lodgingService.getLodging(id);
     }

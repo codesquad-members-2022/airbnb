@@ -1,6 +1,9 @@
 package kr.codesquad.airbnb.domain;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,6 +11,8 @@ import java.util.List;
 
 @Entity
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Room {
 
     @Id
@@ -16,7 +21,7 @@ public class Room {
     private Long id;
 
     @OneToMany(mappedBy = "room")
-    private List<Booking> bookings = new ArrayList<>();
+    private final List<Booking> bookings = new ArrayList<>();
 
     private String name;
     private String image;
@@ -28,11 +33,11 @@ public class Room {
     private Double bathroom;
 
     @OneToMany(mappedBy = "room")
-    private List<RoomAmenity> roomAmenities = new ArrayList<>();
+    private final List<RoomAmenity> roomAmenities = new ArrayList<>();
 
     @Embedded
     private Location location;
 
     @OneToMany(mappedBy = "room")
-    private List<RoomDiscountTax> roomDiscountTaxes = new ArrayList<>();
+    private final List<RoomDiscountTax> roomDiscountTaxes = new ArrayList<>();
 }

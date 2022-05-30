@@ -37,7 +37,7 @@ class LocationCell: UICollectionViewCell {
         super.init(coder: coder)
     }
         
-    func setLayout(){
+    private func setLayout(){
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),

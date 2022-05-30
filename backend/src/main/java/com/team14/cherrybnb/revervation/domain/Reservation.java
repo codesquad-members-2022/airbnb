@@ -27,7 +27,8 @@ public class Reservation {
 
     private BigDecimal totalPrice;
 
-    private boolean deleteYn;
+    @Enumerated(EnumType.STRING)
+    private ReservationState state;
 
     @OneToMany(mappedBy = "reservation")
     private List<ReservationRoom> reservationRooms;

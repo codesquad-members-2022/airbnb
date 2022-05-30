@@ -51,6 +51,7 @@ CREATE TABLE room
     `charge`         INT            NOT NULL COMMENT '기본요금(1박당)',
     `review_count`   INT NULL COMMENT '리뷰수',
     `average_rate`   DECIMAL(3, 2) NULL COMMENT '평균 별점',
+    `is_deleted`     BOOLEAN        NOT NULL DEFAULT FALSE COMMENT '삭제여부',
     `created_at`     TIMESTAMP      NOT NULL DEFAULT NOW() COMMENT '생성일시',
     `updated_at`     TIMESTAMP      NOT NULL DEFAULT NOW() COMMENT '수정일시',
     PRIMARY KEY (id)
@@ -58,9 +59,9 @@ CREATE TABLE room
 
 ALTER TABLE room COMMENT '숙소';
 
-ALTER TABLE room
-    ADD CONSTRAINT FK_room_host_id_member_id FOREIGN KEY (host_id)
-        REFERENCES member (id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+# ALTER TABLE room
+#     ADD CONSTRAINT FK_room_host_id_member_id FOREIGN KEY (host_id)
+#         REFERENCES member (id) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 
 -- charge_policy Table Create SQL

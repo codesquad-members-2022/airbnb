@@ -17,9 +17,7 @@ public class MainController {
 
     @GetMapping("/main/event")
     public EventResponseDto getEvent() {
-        EventResponseDto event = mainService.getEvent();
-        System.out.println("event = " + event);
-        return event;
+        return mainService.getEvent();
     }
 
     @GetMapping("/main/nearby")

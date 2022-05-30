@@ -1,20 +1,21 @@
+import { useLocation } from 'react-router-dom';
+
 import * as S from '@components/GNB/GNB.style';
 import Logo from '@components/GNB/Logo';
 import MyPageButton from '@components/GNB/MyPageButton';
 import Navigation from '@components/GNB/Navigation';
 
-export const GNB_TYPE: { [key: string]: string } = {
+export const GNB_TYPE = {
   MAIN: 'Main',
-  DETAIL: 'Detail',
+  RESULT: 'Result',
 };
 
-export interface GNBTypes {
-  gnbType: string;
-}
+const GNB = () => {
+  const { pathname } = useLocation();
+  const currentPath = pathname === '/' ? GNB_TYPE.MAIN : GNB_TYPE.RESULT;
 
-const GNB = ({ gnbType }: GNBTypes) => {
   return (
-    <S.Container>
+    <S.Container currentPath={currentPath}>
       <S.Wrapper>
         <Logo />
         <Navigation />

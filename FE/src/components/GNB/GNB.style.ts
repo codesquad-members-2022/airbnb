@@ -1,12 +1,22 @@
 import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+import { GNB_TYPE } from '@components/GNB/index';
+
+export const Container = styled.div<{ currentPath: string }>`
   position: absolute;
   top: 0;
-  left: 50%;
+  width: 100%;
+  min-width: 1280px;
   height: 94px;
-  transform: translateX(-50%);
+
+  ${({ currentPath }) =>
+    currentPath === GNB_TYPE.RESULT &&
+    css`
+      background: #ffffff;
+      box-shadow: 0 0 4px rgba(204, 204, 204, 0.5), 0 2px 4px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(4px);
+    `}
 `;
 
 export const Wrapper = styled.div`

@@ -6,15 +6,20 @@
 //
 
 import Foundation
+
 struct CityCellViewModel {
 
     let name: String
     let image: String
-    let travelToTime: String
+    private let castedTravelTime: String?
+    var travelToTime: String? {
+        guard let travelTime = castedTravelTime else {return nil}
+        return "차로 " + travelTime + " 거리"
+    }
 
     init(model: City) {
         self.name = model.name
         self.image = model.image
-        self.travelToTime = "차로 " + model.castedTravelTime.description + " 거리"
+        self.castedTravelTime = model.castedTravelTime?.description ?? nil
     }
 }

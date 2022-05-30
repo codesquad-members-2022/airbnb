@@ -7,7 +7,7 @@
 
  import Foundation
 
- struct HomeViewModel {
+ final class HomeViewModel {
 
      var heroVM = [HeroCellViewModel]()
      var cityVM = [CityCellViewModel]()
@@ -23,27 +23,27 @@
           .randomSite: randomSiteVM.count]
      }
 
-     mutating func loadAllCategories() {
+     func loadAllCategories() {
          loadHeroVM()
          loadCityVM()
          loadRandomSiteVM()
      }
 
-     mutating func loadHeroVM() {
+     func loadHeroVM() {
          for model in heroData {
              let heroCellVM = HeroCellViewModel(model: model)
              heroVM.append(heroCellVM)
          }
      }
 
-     mutating func loadCityVM() {
+     func loadCityVM() {
          for model in cityData {
              let cityCellVM = CityCellViewModel(model: model)
              cityVM.append(cityCellVM)
          }
      }
 
-     mutating func loadRandomSiteVM() {
+     func loadRandomSiteVM() {
          for model in randomSiteData {
              let randomSiteCellVM = RandomSiteCellViewModel(model: model)
              randomSiteVM.append(randomSiteCellVM)

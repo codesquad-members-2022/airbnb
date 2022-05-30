@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 struct RandomSite {
     let image: String
     let content: String

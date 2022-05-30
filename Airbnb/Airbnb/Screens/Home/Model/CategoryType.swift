@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 enum CategoryType: Int {
     case hero
     case city

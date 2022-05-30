@@ -6,11 +6,12 @@
 //
 
 import Foundation
+
 struct City {
     let name: String
     let image: String
-    let travelTime: String
-    var castedTravelTime: Time {
-        return Time(Decimal(string: travelTime) ?? 0.0)
+    let travelTime: String?
+    var castedTravelTime: Time? {
+        return Time(travelTime)
     }
 }

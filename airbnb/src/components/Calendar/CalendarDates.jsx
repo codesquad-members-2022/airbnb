@@ -1,21 +1,21 @@
-import React from 'react';
 import styled from 'styled-components';
 
-function CalendarDates(props) {
-  const { lastDate, firstDate, date, idx } = props;
-
+function CalendarDates({ lastDate, firstDate, date, idx }) {
   return (
-    <>
-      <Form>
-        <DateNum idx={idx} lastDate={lastDate} firstDate={firstDate}>
-          {date}일
-        </DateNum>
-      </Form>
-    </>
+    <DateList>
+      <DateNum
+        idx={idx}
+        lastDate={lastDate}
+        firstDate={firstDate}
+        active={idx > firstDate - 1 || idx < lastDate}
+      >
+        {date}일
+      </DateNum>
+    </DateList>
   );
 }
 
-const Form = styled.li`
+const DateList = styled.li`
   position: relative;
   width: calc(94% / 7);
   height: 60px;
@@ -33,11 +33,7 @@ const Form = styled.li`
 
 const DateNum = styled.div`
   cursor: pointer;
-
-  ${({ idx, lastDate }) => idx < lastDate && `color: #BDBDBD;`};
-
-  ${({ idx, firstDate }) =>
-    firstDate > 0 && idx > firstDate - 1 && `color: #BDBDBD;`};
+  ${({ active }) => active && `color: #BDBDBD;`};
 `;
 
 export default CalendarDates;

@@ -1,5 +1,5 @@
-import { flexColumn } from 'style/mixins';
 import styled from 'styled-components';
+import { flexColumn } from 'style/mixins';
 
 function Content({ data }) {
   return (
@@ -19,15 +19,15 @@ const FooterContent = styled.div`
   width: 25%;
 `;
 
-const FooterContentTitle = styled.p`
+const FooterContentTitle = styled.button`
+  text-align: left;
   font-weight: bold;
   margin: 10px;
-  cursor: pointer;
 `;
 
-const FooterContentText = styled.p`
+const FooterContentText = styled.button`
+  text-align: left;
   margin: 10px;
-  cursor: pointer;
 `;
 
 export default Content;

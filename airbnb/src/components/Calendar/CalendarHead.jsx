@@ -1,38 +1,53 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const DAY = ['일', '월', '화', '수', '목', '금', '토'];
 
-function CalendarHead(props) {
-  const { year, month, setMonth, position } = props;
+function CalendarHead({ year, month, setYear, setMonth, position }) {
+  function handleLeftBit() {
+    if (month - 1 === 0) {
+      setYear(year - 1);
+      setMonth(12 - 1);
+      return;
+    }
+    setMonth(month - 1);
+  }
+
+  function handleRightBtn() {
+    if (month + 1 > 12) {
+      setYear(year + 1);
+      setMonth(1);
+      return;
+    }
+    setMonth(month + 1);
+  }
 
   return (
-    <Form>
-      <Nav>
+    <DayHeader>
+      <HeaderInfo>
         {position === 'leftBtn' && (
-          <Btn onClick={() => setMonth(month - 1)} position={position}>
+          <ArrowBtn onClick={handleLeftBit} position={position}>
             &lt;
-          </Btn>
+          </ArrowBtn>
         )}
         <Year>
           {year}년 {month}월
         </Year>
         {position === 'rightBtn' && (
-          <Btn onClick={() => setMonth(month + 1)} position={position}>
+          <ArrowBtn onClick={handleRightBtn} position={position}>
             &gt;
-          </Btn>
+          </ArrowBtn>
         )}
-      </Nav>
+      </HeaderInfo>
       <Days>
         {DAY.map((day) => {
           return <Day key={day}>{day}</Day>;
         })}
       </Days>
-    </Form>
+    </DayHeader>
   );
 }
 
-const Form = styled.section`
+const DayHeader = styled.section`
   display: flex;
   flex-direction: column;
   position: relative;
@@ -40,7 +55,7 @@ const Form = styled.section`
   margin-left: 10px;
 `;
 
-const Nav = styled.nav`
+const HeaderInfo = styled.nav`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,7 +67,7 @@ const Year = styled.div`
   font-weight: bold;
 `;
 
-const Days = styled.div`
+const Days = styled.ul`
   display: flex;
   margin-bottom: 10px;
 `;
@@ -71,7 +86,7 @@ const Day = styled.li`
   }
 `;
 
-const Btn = styled.button`
+const ArrowBtn = styled.button`
   position: absolute;
   top: 10px;
   padding: 5px;

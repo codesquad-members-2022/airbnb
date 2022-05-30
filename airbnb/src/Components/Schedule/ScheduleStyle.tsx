@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const ScheduleWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
   height: 512px;
   width: 916px;
   border-radius: 40px;
@@ -33,14 +34,23 @@ export const WeekDay = styled.ul`
 
 export const WeekDate = styled.ul`
   display: flex;
+  margin-top: 4px;
 
   li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: #bdbdbd;
     height: 48px;
     width: 48px;
     font-size: 12px;
     font-weight: 400;
     line-height: 17px;
-    text-align: center;
   }
+`;
+
+export const Date = styled.div`
+  font-size: 16px;
+  line-height: 23px;
+  margin-bottom: 24px;
 `;

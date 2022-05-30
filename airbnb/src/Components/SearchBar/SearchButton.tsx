@@ -24,7 +24,7 @@ export function SearchButton() {
     >
       <SearchIcon
         color="White"
-        xs={{ marginLeft: '11px', marginRight: '13px' }}
+        // xs={{ marginLeft: '11px', marginRight: '13px' }}
       />
       {isSearch && <S.SearchFonts>검색</S.SearchFonts>}
     </Button>

@@ -3,6 +3,7 @@ package com.team14.cherrybnb.room.domain;
 import com.team14.cherrybnb.auth.domain.Member;
 import com.team14.cherrybnb.common.domain.Address;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +20,8 @@ public class Room {
     @Column(name = "room_id")
     private Long id;
 
+    private String name;
+
     @Embedded
     private RoomInfo roomInfo;
 
@@ -27,7 +30,7 @@ public class Room {
     @Embedded
     private RoomPriceCondition roomPriceCondition;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -37,4 +40,13 @@ public class Room {
 
     @OneToMany(mappedBy = "room")
     private List<RoomImage> roomImages;
+
+    public Room(String name, RoomInfo roomInfo, String description,
+                RoomPriceCondition roomPriceCondition, Address address) {
+        this.name = name;
+        this.roomInfo = roomInfo;
+        this.description = description;
+        this.roomPriceCondition = roomPriceCondition;
+        this.address = address;
+    }
 }

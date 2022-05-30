@@ -3,10 +3,14 @@ package com.team14.cherrybnb.dummy;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.team14.cherrybnb.common.domain.Address;
+import com.team14.cherrybnb.room.domain.Room;
+import com.team14.cherrybnb.room.domain.RoomInfo;
+import com.team14.cherrybnb.room.domain.RoomPriceCondition;
+import com.team14.cherrybnb.room.domain.RoomRepository;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.io.WKTReader;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -21,10 +25,16 @@ import javax.annotation.PostConstruct;
 @Service
 public class DummyDataService {
 
-    @PostConstruct
-    void requestDummyData() throws ParseException, JsonProcessingException {
+    private final RoomRepository roomRepository;
 
-        String url = "http://openapi.seoul.go.kr:8088/454b52746e79687331303668466a544a/json/LOCALDATA_031101/1/2/";
+    public DummyDataService(RoomRepository roomRepository) {
+        this.roomRepository = roomRepository;
+    }
+
+    @PostConstruct
+    private void requestDummyData() throws JsonProcessingException, org.locationtech.jts.io.ParseException {
+
+        String url = "http://openapi.seoul.go.kr:8088/454b52746e79687331303668466a544a/json/LOCALDATA_031101/1/1000/";
 
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
@@ -36,13 +46,32 @@ public class DummyDataService {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(body);
         JsonNode localdata_031101 = jsonNode.get("LOCALDATA_031101");
-        System.out.println(localdata_031101);
         JsonNode row = localdata_031101.get("row");
-        System.out.println(row);
         for (JsonNode node : row) {
-            if(node.get("RDNWHLADDR").asBoolean()) {
-                System.out.println(node.get("RDNWHLADDR"));
+
+            String address = node.get("RDNWHLADDR").asText();
+            String name =node.get("BPLCNM").asText();
+            double x = node.get("X").asDouble();
+            double y = node.get("Y").asDouble();
+
+
+            String coordinate = String.format("POINT (%f %f)", x, y);
+            Geometry geometry = new WKTReader().read(coordinate);
+            Point point = (Point) geometry;
+            String[] splited = address.split(" ");
+            if(splited.length < 4) {
+                continue;
             }
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 3; i <splited.length ; i++) {
+                stringBuilder.append(splited[i]).append(" ");
+            }
+
+            String zipcode = stringBuilder.substring(0, stringBuilder.lastIndexOf(" "));
+            Address location = new Address(address, splited[0], splited[1], splited[2], zipcode, point);
+            Room dummyRoom = new Room(name, new RoomInfo(), "dummy room", new RoomPriceCondition(), location);
+
+            roomRepository.save(dummyRoom);
         }
 
 

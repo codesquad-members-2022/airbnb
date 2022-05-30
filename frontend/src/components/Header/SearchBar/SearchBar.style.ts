@@ -1,8 +1,6 @@
 import { Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-import { SearchBarContainerProps } from "@types";
-
 const SearchBarContainer = styled(Container, {
   shouldForwardProp: (prop) => prop !== "currentPage",
   name: "MyThemeComponent",
@@ -22,3 +20,7 @@ const SearchBarContainer = styled(Container, {
 );
 
 export default SearchBarContainer;
+
+export interface SearchBarContainerProps {
+  currentPage?: string;
+}

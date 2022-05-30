@@ -99,6 +99,10 @@ const theme = createTheme({
           textDecoration: "none",
           color: "inherit",
         },
+
+        button: {
+          fontFamily: ["Noto Sans KR", "sans-serif"].join(","),
+        },
       },
     },
     MuiButton: {

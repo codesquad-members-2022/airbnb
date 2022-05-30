@@ -1,7 +1,5 @@
-import { Grid, Theme } from "@mui/material";
+import { Grid, GridProps, Theme } from "@mui/material";
 import { styled } from "@mui/material/styles";
-
-import { SelectItemTemplateProps } from "@types";
 
 const GridItem = styled(Grid, {
   shouldForwardProp: (prop) => prop !== "divide",
@@ -18,3 +16,7 @@ const modalStyle = {
 };
 
 export { GridItem, modalStyle };
+
+export interface SelectItemTemplateProps extends GridProps {
+  divide?: boolean;
+}

@@ -22,7 +22,7 @@ public class DistrictController {
      * @param latitude  사용자 현재 위치의 위도
      * @return 행정구역 응답 객체의 리스트
      */
-    @GetMapping
+    @GetMapping("/nearby")
     public List<DistrictResponse> getPopularDistricts(
         @RequestParam("longitude") Double longitude,
         @RequestParam("latitude") Double latitude) {

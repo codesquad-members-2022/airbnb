@@ -57,12 +57,28 @@ public class DistrictRepository {
         }
     }
 
+    /**
+     * District 거리 조회 시 반환된 결과를 행정구역 응답 객체 리스트로 변환
+     *
+     * @param result 데이터베이스 조회 시 행정구역 레코드 출력 결과
+     * @return 행정 구역 응답 객체 리스트
+     */
     private DistrictResponse rowMapper(Object[] result) {
         return new DistrictResponse(
             (String) result[0],
             (String) result[1],
-            // km 단위로 변환
-            ((Double) result[2]) / 1000);
+            toMinutes((Double) result[2])
+        );
+    }
+
+    /**
+     * 차량 평균 속도 60km 기반 이동 시간 분 단위로 변환
+     *
+     * @param distance 미터 단위 이동 거리
+     * @return 차량 이동 시 분 단위 이동 시간
+     */
+    private int toMinutes(Double distance) {
+        return (int) Math.ceil(distance / 1000);
     }
 
 }

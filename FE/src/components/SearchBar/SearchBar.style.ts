@@ -26,21 +26,39 @@ const sizeStyles = css<{ size: string }>`
       }
     `}
 
-  ${({ size }) =>
+  ${({ size, theme }) =>
     size === SEARCH_BAR_SIZE.LARGE &&
     css`
       width: 916px;
       height: 76px;
       border-radius: 60px;
-      padding: 16px;
 
       ${SearchButton} {
+        position: absolute;
+        top: 50%;
+        right: 16px;
         width: 40px;
         height: 40px;
+        transform: translateY(-50%);
       }
 
       ${PeriodArea}, ${PriceArea}, ${PersonnelArea} {
-        padding: 0 24px;
+        height: 100%;
+        padding: 16px 24px;
+        border-radius: 60px;
+
+        &:hover {
+          background-color: ${theme.color.grey5};
+
+          &::before,
+          & + div::before {
+            display: none;
+          }
+        }
+      }
+
+      ${PeriodArea} {
+        padding-left: 40px;
       }
     `}
 }
@@ -48,24 +66,24 @@ const sizeStyles = css<{ size: string }>`
 
 const areaStyles = css`
   position: relative;
-  top: 2px;
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 12px;
   width: 296px;
 
-  &:not(:last-of-type)::after {
+  &:not(:first-of-type)::before {
     content: '';
     position: absolute;
-    right: 0;
+    left: 0;
     display: block;
     width: 1px;
-    height: 90%;
+    height: 60%;
     background-color: ${({ theme }) => theme.color.grey5};
   }
 `;
 
 export const Container = styled.header<{ size: string }>`
+  position: relative;
   display: flex;
   align-items: center;
   background-color: ${({ theme }) => theme.color.white};
@@ -94,6 +112,13 @@ export const Content = styled.p<{ isContentExist: boolean }>`
   white-space: nowrap;
 `;
 
+export const CloseButton = styled.button`
+  position: relative;
+  top: -2px;
+  width: 24px;
+  height: 24px;
+`;
+
 export const PeriodArea = styled.div`
   ${areaStyles};
 
@@ -107,32 +132,33 @@ export const PeriodArea = styled.div`
 export const PriceArea = styled.div`
   ${areaStyles};
 
-  width: 256px;
+  width: 280px;
+
+  &:hover {
+  }
 
   ${ContentContainer} {
-    min-width: 160px;
+    min-width: 185px;
+  }
+
+  ${CloseButton} {
+    margin-left: auto;
   }
 `;
 
 export const PersonnelArea = styled.div`
   ${areaStyles};
+  flex-grow: 1;
   width: 192px;
 
   ${ContentContainer} {
     width: 96px;
   }
-  
+
   ${Content} {
     overflow: hidden;
     text-overflow: ellipsis;
   }
-`;
-
-export const CloseButton = styled.button`
-  position: relative;
-  top: -2px;
-  width: 24px;
-  height: 24px;
 `;
 
 export const SearchButton = styled.button<{ isContentWillShow: boolean }>`

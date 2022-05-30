@@ -33,9 +33,11 @@ function DateBox({ year, month, date }) {
 
   return (
     <StyledBackground checkState={checkState}>
-      <StyledDate checkState={checkState} onClick={handleClick}>
-        {date === 0 ? `` : date}
-      </StyledDate>
+      {!date ? null : (
+        <StyledDate checkState={checkState} onClick={handleClick}>
+          {date}
+        </StyledDate>
+      )}
     </StyledBackground>
   );
 }

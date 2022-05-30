@@ -19,7 +19,7 @@ function DatesOfMonth({ date }) {
 
 function getDateArray({ firstDay, lastDate }) {
   // 이전달 빈칸
-  const blanks = Array(firstDay).fill(0);
+  const blanks = Array(firstDay).fill(null);
   const dates = Array.from({ length: lastDate }, (_, idx) => idx + 1);
 
   return [...blanks, ...dates];

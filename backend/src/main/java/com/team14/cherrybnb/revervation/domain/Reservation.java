@@ -26,7 +26,8 @@ public class Reservation {
 
     private BigDecimal totalPrice;
 
-    private boolean deleteYn;
+    @Enumerated(EnumType.STRING)
+    private ReservationState state;
 
     @ManyToOne
     @JoinColumn(name = "room_id")

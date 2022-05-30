@@ -21,6 +21,9 @@ public class Member {
 
     private String email;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     private String oauthAccessToken;
 
     private String oauthRefreshToken;

@@ -1,19 +1,21 @@
 import React from 'react';
 
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Footer from '@components/Footer';
-import GNB, { GNB_TYPE } from '@components/GNB';
-import Header from '@components/Header';
-import MainContent from '@components/MainContent';
+import GNB from '@components/GNB';
+import Main from '@pages/Main';
+import NotFound from '@pages/NotFound';
+import SearchResult from '@pages/SearchResult';
 
 function App() {
   return (
     <BrowserRouter>
-      <GNB gnbType={GNB_TYPE.MAIN} />
-      <Header />
-      <MainContent />
-      <Footer />
+      <GNB />
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/result" element={<SearchResult />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </BrowserRouter>
   );
 }

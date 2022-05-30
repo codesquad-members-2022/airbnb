@@ -1,3 +1,9 @@
+export interface NavTypes {
+  id: number;
+  title: string;
+  path: string;
+}
+
 export const nav = [
   {
     id: 1,
@@ -15,9 +21,3 @@ export const nav = [
     path: '/',
   },
 ];
-
-export type NavTypes = {
-  id: number;
-  title: string;
-  path: string;
-};

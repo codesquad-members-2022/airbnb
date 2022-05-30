@@ -1,6 +1,6 @@
 import { Bucheon, Daegu, Daejeon, Gwangju, Seoul, Suwon, Uijeongbu, Ulsan } from '@assets/images';
 
-export type CityTypes = {
+export interface CityTypes {
   id: number;
   name: string;
   description: string;

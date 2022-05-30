@@ -1,14 +1,15 @@
-export type TripTypes = {
+export interface TripTypes {
   id: number;
   title: string;
   image: string;
-};
+}
 
 export const tripData: TripTypes[] = [
   {
     id: 1,
     title: '자연생활을 만끽할 수 있는 숙소',
-    image: 'https://a.travel-assets.com/findyours-php/viewfinder/images/res70/84000/84621-Paris.jpg',
+    image:
+      'https://a.travel-assets.com/findyours-php/viewfinder/images/res70/84000/84621-Paris.jpg',
   },
   {
     id: 2,

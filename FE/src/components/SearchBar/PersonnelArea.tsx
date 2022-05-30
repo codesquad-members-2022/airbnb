@@ -2,10 +2,10 @@ import * as S from '@components/SearchBar/SearchBar.style';
 import { AREA_TYPE, NO_CONTENT } from '@components/SearchBar/constants';
 import { PersonnelTypes, defaultPersonnel } from '@data';
 
-type PersonnelAreaTypes = {
+interface PersonnelAreaTypes {
   size: string;
   personnel: PersonnelTypes;
-};
+}
 
 const getPriceContent = (personnel: PersonnelTypes) => {
   return Object.entries(personnel)

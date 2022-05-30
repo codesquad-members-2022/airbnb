@@ -14,10 +14,10 @@ export const ICON_SIZE: { [key: string]: string } = {
   LARGE: 'LARGE',
 };
 
-export type IconTypes = {
+export interface IconTypes {
   iconName: string;
   iconSize: string;
-};
+}
 
 const Icon = ({ iconName, iconSize }: IconTypes) => {
   return <S.Icon src={Icons[iconName]} size={iconSize} />;

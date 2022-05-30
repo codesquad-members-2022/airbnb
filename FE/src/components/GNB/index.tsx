@@ -8,9 +8,9 @@ export const GNB_TYPE: { [key: string]: string } = {
   DETAIL: 'Detail',
 };
 
-export type GNBTypes = {
+export interface GNBTypes {
   gnbType: string;
-};
+}
 
 const GNB = ({ gnbType }: GNBTypes) => {
   return (

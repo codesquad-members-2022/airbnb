@@ -3,10 +3,10 @@ import { AREA_TYPE, NO_CONTENT } from '@components/SearchBar/constants';
 import { PriceTypes, defaultPrice } from '@data';
 import { formatPrice } from '@lib/utils';
 
-type PriceAreaTypes = {
+interface PriceAreaTypes {
   size: string;
   price: PriceTypes;
-};
+}
 
 // TODO: 작은 사이즈일 때 레이아웃 수정 필요
 const PriceArea = ({ price }: PriceAreaTypes) => {

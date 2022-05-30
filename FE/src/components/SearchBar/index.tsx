@@ -8,9 +8,9 @@ import SearchButton from '@components/SearchBar/SearchButton';
 import { SEARCH_BAR_SIZE } from '@components/SearchBar/constants';
 import { searchBarData } from '@data';
 
-export type SearchBarTypes = {
+export interface SearchBarTypes {
   size?: string;
-};
+}
 
 const SearchBar = ({ size = SEARCH_BAR_SIZE.LARGE }: SearchBarTypes) => {
   const [isActive, setIsActive] = useState(false);

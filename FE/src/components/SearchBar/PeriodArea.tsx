@@ -2,10 +2,10 @@ import * as S from '@components/SearchBar/SearchBar.style';
 import { AREA_TYPE, NO_CONTENT } from '@components/SearchBar/constants';
 import { PeriodTypes, defaultPeriod } from '@data';
 
-type PeriodAreaTypes = {
+interface PeriodAreaTypes {
   size: string;
   period: PeriodTypes;
-};
+}
 
 // TODO: 작은 사이즈일 때 레이아웃 수정 필요
 const PeriodArea = ({ period }: PeriodAreaTypes) => {

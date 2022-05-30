@@ -1,9 +1,9 @@
 import * as S from '@components/Footer/Footer.style';
-import { FooterContentType } from '@components/Footer/constants';
+import { FooterContentTypes } from '@data';
 
-type ContentTypes = {
-  data: FooterContentType;
-};
+interface ContentTypes {
+  data: FooterContentTypes;
+}
 
 const Content = ({ data }: ContentTypes) => {
   return (

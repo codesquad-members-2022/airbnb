@@ -37,9 +37,4 @@ public class Room {
 
     @OneToMany(mappedBy = "room")
     private List<RoomImage> roomImages;
-
-    private String thumbnail;
-
-    @OneToMany(mappedBy = "room")
-    private List<Reservation> reservations;
 }

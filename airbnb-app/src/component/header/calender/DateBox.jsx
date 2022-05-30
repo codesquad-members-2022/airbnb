@@ -1,41 +1,32 @@
 import styled from 'styled-components';
 import { useContext } from 'react';
 import { CalenderDateContext } from '@/component/header/calender/CalenderDateProvider';
+import { CALENDER_MODE, DATE_CHECK_STATE } from '@/constants/calenderText';
 
 function DateBox({ year, month, date }) {
-  const { mode, setMode, checkInDate, setCheckInDate, checkOutDate, setCheckOutDate } = useContext(CalenderDateContext);
+  const { mode, setMode, setCheckInInfo, setCheckOutInfo, checkInTime, checkOutTime } = useContext(CalenderDateContext);
 
-  const current = new Date(`${year}-${month}-${date}`);
-  const checkIn =
-    checkInDate === null ? new Date(0) : new Date(`${checkInDate.year}-${checkInDate.month}-${checkInDate.date}`);
-  const checkOut =
-    checkOutDate === null ? new Date(0) : new Date(`${checkOutDate.year}-${checkOutDate.month}-${checkOutDate.date}`);
+  const currentTime = new Date(`${year}-${month}-${date}`).getTime();
 
-  const checkState = getCheckStateOfCurrent();
+  const checkState = getCheckStateOfCurrent({ currentTime, checkInTime, checkOutTime });
 
-  function getCheckStateOfCurrent() {
-    if (current.getTime() === checkIn.getTime()) return 'checkIn';
-    if (current.getTime() === checkOut.getTime()) return 'checkOut';
-    if (current > checkIn && current < checkOut) return 'between';
-    return false;
-  }
   function handleClick() {
     // 검색바에서 체크인을 누른 경우 - 체크인을 바꾼다. 체크아웃 날짜와 비교
-    if (mode === 'checkIn') {
-      if (checkInDate && checkOutDate && current > checkOut) {
-        setCheckOutDate(null);
+    if (mode === CALENDER_MODE.CHECKIN) {
+      if (checkInTime && checkOutTime && currentTime > checkOutTime) {
+        setCheckOutInfo(null);
       }
-      setCheckInDate({ year, month, date });
-      setMode('checkOut');
+      setCheckInInfo({ year, month, date });
+      setMode(CALENDER_MODE.CHECKOUT);
       return;
       // 검색바에서 체크아웃을 누른 경우 -  체크아웃을 바꾼다. 체크인 날짜와 비교
-    } else if (mode === 'checkOut') {
-      if (checkInDate && checkOutDate && checkIn > current) {
-        setCheckOutDate(null);
-        setCheckInDate({ year, month, date });
+    } else if (mode === CALENDER_MODE.CHECKOUT) {
+      if (checkInTime && checkOutTime && checkInTime > currentTime) {
+        setCheckOutInfo(null);
+        setCheckInInfo({ year, month, date });
         return;
       }
-      setCheckOutDate({ year, month, date });
+      setCheckOutInfo({ year, month, date });
       return;
     }
   }
@@ -49,13 +40,20 @@ function DateBox({ year, month, date }) {
   );
 }
 
+function getCheckStateOfCurrent({ currentTime, checkInTime, checkOutTime }) {
+  if (currentTime === checkInTime) return DATE_CHECK_STATE.CHECKIN;
+  if (currentTime === checkOutTime) return DATE_CHECK_STATE.CHECKOUT;
+  if (currentTime > checkInTime && currentTime < checkOutTime) return DATE_CHECK_STATE.BETWEEN;
+  return false;
+}
+
 const StyledBackground = styled.div`
   ${({ checkState }) => {
-    if (checkState === 'checkIn') {
+    if (checkState === DATE_CHECK_STATE.CHECKIN) {
       return `background: linear-gradient(90deg, #fff 50%, #F5F5F7 50%)`;
-    } else if (checkState === 'checkOut') {
+    } else if (checkState === DATE_CHECK_STATE.CHECKOUT) {
       return `background: linear-gradient(90deg, #F5F5F7 50%, #fff 50%)`;
-    } else if (checkState === 'between') {
+    } else if (checkState === DATE_CHECK_STATE.BETWEEN) {
       return `background-color: #F5F5F7`;
     }
   }}
@@ -74,10 +72,10 @@ const StyledDate = styled.div`
   cursor: pointer;
   border: 1px solid white;
   ${({ checkState }) => {
-    if (checkState === 'checkIn' || checkState === 'checkOut') {
+    if (checkState === DATE_CHECK_STATE.CHECKIN || checkState === DATE_CHECK_STATE.CHECKOUT) {
       return `background-color: black; color:white; font-weight:600;`;
     }
-    if (checkState === 'between') {
+    if (checkState === DATE_CHECK_STATE.BETWEEN) {
       return `border: 1px solid #F5F5F7;`;
     }
   }}

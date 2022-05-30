@@ -6,15 +6,7 @@ function DatesOfMonth({ date }) {
   const month = date.month;
   const firstDay = new Date(year, month - 1, 1).getDay();
   const lastDate = new Date(year, month - 1, 0).getDate();
-  const dateArray = getDateArray();
-
-  function getDateArray() {
-    // 이전달 빈칸
-    const blanks = Array(firstDay).fill(0);
-    const dates = Array.from({ length: lastDate }, (_, idx) => idx + 1);
-
-    return [...blanks, ...dates];
-  }
+  const dateArray = getDateArray({ firstDay, lastDate });
 
   return (
     <StyledDatesWrapper>
@@ -23,6 +15,14 @@ function DatesOfMonth({ date }) {
       ))}
     </StyledDatesWrapper>
   );
+}
+
+function getDateArray({ firstDay, lastDate }) {
+  // 이전달 빈칸
+  const blanks = Array(firstDay).fill(0);
+  const dates = Array.from({ length: lastDate }, (_, idx) => idx + 1);
+
+  return [...blanks, ...dates];
 }
 
 const StyledDatesWrapper = styled.div`

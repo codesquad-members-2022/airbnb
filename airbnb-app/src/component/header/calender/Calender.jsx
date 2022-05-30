@@ -8,18 +8,7 @@ import NextButton from '@/component/header/calender/NextButton';
 function Calender({ page = 1 }) {
   const { curDate } = useContext(CalenderDateContext);
 
-  const displayPageArray = getDisplayPageArray(curDate);
-
-  function getDisplayPageArray(curDate) {
-    const displayPageArray = [curDate];
-    for (let i = 1; i < page; i++) {
-      const prevYear = displayPageArray[i - 1].year;
-      const prevMonth = displayPageArray[i - 1].month;
-      const newDate = prevMonth === 12 ? { year: prevYear + 1, month: 1 } : { year: prevYear, month: prevMonth + 1 };
-      displayPageArray.push(newDate);
-    }
-    return displayPageArray;
-  }
+  const displayPageArray = getDisplayPageArray({ curDate, page });
 
   return (
     <StyledContainer page={page}>
@@ -34,11 +23,22 @@ function Calender({ page = 1 }) {
   );
 }
 
+function getDisplayPageArray({ curDate, page }) {
+  const displayPageArray = [curDate];
+  for (let i = 1; i < page; i++) {
+    const prevYear = displayPageArray[i - 1].year;
+    const prevMonth = displayPageArray[i - 1].month;
+    const newDate = prevMonth === 12 ? { year: prevYear + 1, month: 1 } : { year: prevYear, month: prevMonth + 1 };
+    displayPageArray.push(newDate);
+  }
+  return displayPageArray;
+}
+
 const StyledContainer = styled.div`
   position: relative;
   background-color: white;
   border-radius: 40px;
-  box-shadow: 0px 4px 10px rgba(51, 51, 51, 0.1), 0px 0px 4px rgba(51, 51, 51, 0.05);
+  box-shadow: 0 4px 10px rgba(51, 51, 51, 0.1), 0 0 4px rgba(51, 51, 51, 0.05);
   ${({ page }) =>
     `width: ${page === 1 ? 370 : 828}px;
     height: ${382 * Math.ceil(page / 2)}px;

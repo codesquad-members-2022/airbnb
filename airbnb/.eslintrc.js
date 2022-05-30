@@ -3,6 +3,16 @@ module.exports = {
     browser: true,
     es2021: true,
   },
+  settings: {
+    'import/parsers': '@typescript-eslint/parser',
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        moduleDirectory: ['node_modules', '@types'],
+      },
+      typescript: {},
+    },
+  },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     tsconfigRootDir: __dirname,
@@ -13,6 +23,7 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
   },
+  ignorePatterns: ['mockServiceWorker.js'],
   plugins: ['react', '@typescript-eslint'],
   extends: [
     'airbnb',
@@ -31,6 +42,7 @@ module.exports = {
     'import/no-unresolved': 'off',
     'react/jsx-no-constructed-context-values': 'off',
     'import/extensions': 'off',
+    'import/namespace': 'off',
     '@typescript-eslint/no-var-requires': 'off',
     'react/jsx-filename-extension': [
       2,
@@ -43,14 +55,5 @@ module.exports = {
         endOfLine: 'auto',
       },
     ],
-  },
-  settings: {
-    'import/resolver': {
-      node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        moduleDirectory: ['node_modules', '@types'],
-      },
-      typescript: {},
-    },
   },
 };

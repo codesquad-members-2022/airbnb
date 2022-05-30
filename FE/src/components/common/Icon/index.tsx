@@ -7,6 +7,7 @@ export const ICON_NAME: { [key: string]: string } = {
   MENU: 'Menu',
   USER: 'User',
   SEARCH: 'Search',
+  CLOSE_BTN: 'CloseBtn'
 };
 
 export const ICON_SIZE: { [key: string]: string } = {

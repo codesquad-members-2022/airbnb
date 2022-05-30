@@ -45,7 +45,9 @@ const sizeStyles = css<{ size: string }>`
 
 const areaStyles = css`
   position: relative;
+  top: 2px;
   display: flex;
+  align-items: center;
   gap: 24px;
   width: 296px;
 
@@ -76,6 +78,19 @@ export const ContentContainer = styled.div`
   flex-direction: column;
 `;
 
+export const Label = styled.span`
+  color: ${({ theme }) => theme.color.black};
+  font-size: ${({ theme }) => theme.fontSize.xSmall};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  margin-bottom: 4px;
+`;
+
+export const Content = styled.p<{ isContentExist: boolean }>`
+  ${({ isContentExist, theme }) => !isContentExist && `color: ${theme.color.grey3}`};
+  word-break: keep-all;
+  white-space: nowrap;
+`;
+
 export const PeriodArea = styled.div`
   ${areaStyles};
 
@@ -103,21 +118,18 @@ export const PersonnelArea = styled.div`
   ${ContentContainer} {
     width: 96px;
   }
+  
+  ${Content} {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
-export const Label = styled.span`
-  color: ${({ theme }) => theme.color.black};
-  font-size: ${({ theme }) => theme.fontSize.xSmall};
-  font-weight: ${({ theme }) => theme.fontWeight.bold};
-  margin-bottom: 4px;
-`;
-
-export const Content = styled.p<{ isContentExist: boolean }>`
-  ${({ isContentExist, theme }) => !isContentExist && `color: ${theme.color.grey3}`};
-  word-break: keep-all;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+export const CloseButton = styled.button`
+  position: relative;
+  top: -2px;
+  width: 24px;
+  height: 24px;
 `;
 
 export const SearchButton = styled.button<{ isContentWillShow: boolean }>`

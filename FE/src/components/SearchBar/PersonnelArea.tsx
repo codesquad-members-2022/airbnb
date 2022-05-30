@@ -1,5 +1,6 @@
 import * as S from '@components/SearchBar/SearchBar.style';
-import { AREA_TYPE, NO_CONTENT } from '@components/SearchBar/constants';
+import { AREA_TYPE, NO_CONTENT, SEARCH_BAR_SIZE } from '@components/SearchBar/constants';
+import Icon, { ICON_NAME, ICON_SIZE } from '@components/common/Icon';
 import { PersonnelTypes, defaultPersonnel } from '@data';
 
 interface PersonnelAreaTypes {
@@ -17,7 +18,7 @@ const getPriceContent = (personnel: PersonnelTypes) => {
 };
 
 // TODO: 작은 사이즈일 때 레이아웃 수정 필요
-const PersonnelArea = ({ personnel }: PersonnelAreaTypes) => {
+const PersonnelArea = ({ size, personnel }: PersonnelAreaTypes) => {
   const { guest, kid } = personnel;
   const isPersonnelExist = guest !== defaultPersonnel.guest || kid !== defaultPersonnel.kid;
 
@@ -31,6 +32,11 @@ const PersonnelArea = ({ personnel }: PersonnelAreaTypes) => {
         <S.Label>인원</S.Label>
         <S.Content isContentExist={isPersonnelExist}>{priceContent}</S.Content>
       </S.ContentContainer>
+      { size === SEARCH_BAR_SIZE.LARGE && isPersonnelExist && (
+        <S.CloseButton>
+          <Icon iconName={ICON_NAME.CLOSE_BTN} iconSize={ICON_SIZE.LARGE} />
+        </S.CloseButton>
+      ) }
     </S.PersonnelArea>
   );
 };

@@ -17,14 +17,15 @@ DROP TABLE IF EXISTS district;
 
 CREATE TABLE district
 (
-    district_id         INT          NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'district 테이블의 기본 키',
-    parent_id           INT COMMENT '상위 district 엔티티의 기본 키',
-    name                VARCHAR(39)  NOT NULL COMMENT '행정 구역의 이름',
-    image_path          VARCHAR(255) NOT NULL COMMENT '행정 구역의 이미지 파일 경로',
-    address             VARCHAR(255) NOT NULL COMMENT '행정 구역의 주소',
-    type                VARCHAR(10)  NOT NULL COMMENT '행정 구역의 구분 (COUNTRY/PRIMARY/SECONDARY/TERTIARY)',
-    review_score_lookup DOUBLE COMMENT '숙소의 리뷰 평균 점수 집계',
-    review_count_lookup DOUBLE COMMENT '숙소의 리뷰 개수 집계',
+    district_id  INT          NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'district 테이블의 기본 키',
+    parent_id    INT COMMENT '상위 district 엔티티의 기본 키',
+    name         VARCHAR(39)  NOT NULL COMMENT '행정 구역의 이름',
+    image_path   VARCHAR(255) NOT NULL COMMENT '행정 구역의 이미지 파일 경로',
+    address      VARCHAR(255) NOT NULL COMMENT '행정 구역의 주소',
+    type         VARCHAR(10)  NOT NULL COMMENT '행정 구역의 구분 (COUNTRY/PRIMARY/SECONDARY/TERTIARY)',
+    point        GEOMETRY     NOT NULL COMMENT '행정 구역의 위도와 경도',
+    review_score DOUBLE COMMENT '숙소의 리뷰 평균 점수 집계',
+    review_count INT COMMENT '숙소의 리뷰 개수 집계',
     FOREIGN KEY (parent_id) REFERENCES district (district_id)
 );
 
@@ -33,18 +34,17 @@ DROP TABLE IF EXISTS room;
 
 CREATE TABLE room
 (
-    room_id             INT          NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'room 테이블의 기본 키',
-    district_id         INT          NOT NULL COMMENT 'district 테이블의 외래 키',
-    host_id             INT          NOT NULL COMMENT 'member 테이블의 외래 키',
-    name                VARCHAR(255) NOT NULL COMMENT '숙소의 이름',
-    description         VARCHAR(1000) COMMENT '숙소에 대한 소개',
-    type                VARCHAR(255) COMMENT '숙소의 종류',
-    longitude           DOUBLE       NOT NULL COMMENT '좌표계에서 숙소의 경도',
-    latitude            DOUBLE       NOT NULL COMMENT '좌표계에서 숙소의 위도',
-    lodging_charge      DOUBLE       NOT NULL COMMENT '숙소의 숙박 요금',
-    cleaning_charge     DOUBLE       NOT NULL COMMENT '숙소의 청소 요금',
-    review_score_lookup DOUBLE COMMENT '숙소의 리뷰 평균 점수 집계',
-    review_count_lookup DOUBLE COMMENT '숙소의 리뷰 개수 집계',
+    room_id         INT          NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'room 테이블의 기본 키',
+    district_id     INT          NOT NULL COMMENT 'district 테이블의 외래 키',
+    host_id         INT          NOT NULL COMMENT 'member 테이블의 외래 키',
+    name            VARCHAR(255) NOT NULL COMMENT '숙소의 이름',
+    description     VARCHAR(1000) COMMENT '숙소에 대한 소개',
+    type            VARCHAR(255) COMMENT '숙소의 종류',
+    point           GEOMETRY     NOT NULL COMMENT '행정 구역의 위도와 경도',
+    lodging_charge  DOUBLE       NOT NULL COMMENT '숙소의 숙박 요금',
+    cleaning_charge DOUBLE       NOT NULL COMMENT '숙소의 청소 요금',
+    review_score    DOUBLE COMMENT '숙소의 리뷰 평균 점수 집계',
+    review_count    INT COMMENT '숙소의 리뷰 개수 집계',
     FOREIGN KEY (district_id) REFERENCES district (district_id),
     FOREIGN KEY (host_id) REFERENCES member (member_id)
 );

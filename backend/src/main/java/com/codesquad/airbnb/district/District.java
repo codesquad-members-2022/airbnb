@@ -1,6 +1,7 @@
 package com.codesquad.airbnb.district;
 
-import com.codesquad.airbnb.room.entity.embeddable.Lookup;
+import com.codesquad.airbnb.room.entity.embeddable.Location;
+import com.codesquad.airbnb.room.entity.embeddable.ReviewTotal;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -15,10 +16,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.locationtech.jts.geom.Point;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(of = {"name", "imagePath", "address", "type"})
 public class District {
 
     // 행정구역 상 국가/1계층/2계층/3계층 구분
@@ -30,14 +36,16 @@ public class District {
     private Integer id;
 
     private String name;
-    private String imagePath;
     private String address;
+    private String imagePath;
 
     @Enumerated(value = EnumType.STRING)
     private DistrictType type;
 
+    private Point point;
+
     @Embedded
-    private Lookup lookup;
+    private ReviewTotal review;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
@@ -46,4 +54,22 @@ public class District {
     @OneToMany(mappedBy = "parent")
     private List<District> children;
 
+
+    public District(String name, String address, String imagePath, DistrictType type) {
+        this(name, imagePath, address, type, null, null);
+    }
+
+    public District(String name, String address, String imagePath, DistrictType type,
+        Location location, ReviewTotal review) {
+        this.name = name;
+        this.imagePath = imagePath;
+        this.address = address;
+        this.type = type;
+        this.point = location != null ? location.toPoint() : null;
+        this.review = review;
+    }
+
+    public Location getLocation() {
+        return new Location(point.getX(), point.getY());
+    }
 }

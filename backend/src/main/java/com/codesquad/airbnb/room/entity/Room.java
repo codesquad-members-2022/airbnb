@@ -4,8 +4,7 @@ import com.codesquad.airbnb.district.District;
 import com.codesquad.airbnb.member.Member;
 import com.codesquad.airbnb.reservation.Reservation;
 import com.codesquad.airbnb.room.entity.embeddable.Charge;
-import com.codesquad.airbnb.room.entity.embeddable.Location;
-import com.codesquad.airbnb.room.entity.embeddable.Lookup;
+import com.codesquad.airbnb.room.entity.embeddable.ReviewTotal;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -22,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.locationtech.jts.geom.Point;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -36,18 +36,16 @@ public class Room {
 
     private String name;
     private String description;
+    private Point point;
 
     @Enumerated(value = EnumType.STRING)
     private RoomType type;
 
     @Embedded
-    private Location location;
-
-    @Embedded
     private Charge charge;
 
     @Embedded
-    private Lookup lookup;
+    private ReviewTotal review;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "district_id")

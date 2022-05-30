@@ -11,12 +11,11 @@ import UIKit
 class CalendarPickerViewCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: CalendarPickerViewCell.self)
     
-    let dateFormatter: DateFormatter = {
+    private let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d"
         return dateFormatter
     }()
-    
     
     private lazy var selectionBackgroundView: UIView = {
         let view = UIView()
@@ -45,7 +44,22 @@ class CalendarPickerViewCell: UICollectionViewCell {
     
     func setDay(_ day: CalendarPicker.Day) {
         self.day = day
-        numberLabel.text = dateFormatter.string(from: day.date)
+        guard let date = day.date, let isPast = day.isPast else { return }
+        
+        let dateString = dateFormatter.string(from: date)
+        
+        if isPast {
+            numberLabel.attributedText = strikethrough(dateString)
+        } else {
+            numberLabel.text = dateString
+        }
+    }
+    
+    func strikethrough(_ string: String) -> NSAttributedString {
+        let attributes: [NSAttributedString.Key: Any] = [.strikethroughStyle: NSUnderlineStyle.single.rawValue, .strikethroughColor: UIColor.systemGray, .foregroundColor: UIColor.systemGray]
+        
+        return NSAttributedString(string: string, attributes: attributes)
+        
     }
 
     required init?(coder: NSCoder) {
@@ -61,5 +75,10 @@ class CalendarPickerViewCell: UICollectionViewCell {
             numberLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             numberLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
+    }
+    
+    override func prepareForReuse() {
+        day = nil
+        numberLabel.text = ""
     }
 }

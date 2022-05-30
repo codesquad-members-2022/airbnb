@@ -12,7 +12,7 @@ class CalendarPickerViewController: UIViewController {
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.headerReferenceSize = CGSize(width: 300, height: 50)
+        layout.headerReferenceSize = CGSize(width: 400, height: 50)
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         

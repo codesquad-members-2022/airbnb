@@ -17,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 @DataJpaTest
 @Import(TagService.class)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
+@DisplayName("TagService 통합 테스트")
 class TagServiceTest {
 
     @Autowired

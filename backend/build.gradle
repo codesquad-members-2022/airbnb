@@ -35,6 +35,8 @@ dependencies {
 
     /* Hibernate Spatial */
     implementation 'org.hibernate:hibernate-spatial:5.6.8.Final'
+
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 }
 
 test {

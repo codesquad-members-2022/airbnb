@@ -1,11 +1,5 @@
 import React, { useContext, createContext, useReducer, Dispatch } from 'react';
 
-interface SearchType {
-  period: object;
-  price: object;
-  personnel: object;
-}
-
 interface PeriodType {
   checkIn: number;
   checkOut: number;
@@ -22,19 +16,31 @@ interface PersonnelType {
   child: number;
 }
 
+interface SearchPropsType {
+  title: string | string[];
+  defaultValue: string;
+  value: PeriodType | PriceType | PersonnelType;
+}
+
+interface SearchType {
+  period: SearchPropsType;
+  price: SearchPropsType;
+  personnel: SearchPropsType;
+}
+
 type ActionType =
   | {
-      type: 'SET_PERIOD';
-      value: PeriodType;
-    }
+    type: 'SET_PERIOD';
+    value: PeriodType;
+  }
   | {
-      type: 'SET_PRICE';
-      value: PriceType;
-    }
+    type: 'SET_PRICE';
+    value: PriceType;
+  }
   | {
-      type: 'SET_PERSONNEL';
-      value: PersonnelType;
-    };
+    type: 'SET_PERSONNEL';
+    value: PersonnelType;
+  };
 
 function searchReducer(searches: SearchType, action: ActionType): SearchType {
   const { type, value } = action;
@@ -43,19 +49,24 @@ function searchReducer(searches: SearchType, action: ActionType): SearchType {
       return {
         ...searches,
         period: {
-          checkIn: value.checkIn,
-          checkOut: value.checkOut,
+          ...searches.period,
+          value: {
+            checkIn: value.checkIn,
+            checkOut: value.checkOut,
+          }
         },
       };
     case 'SET_PRICE':
       return {
         ...searches,
-        price: { minPrice: value.minPrice, maxPrice: value.maxPrice },
+        price: { ...searches.price, value: { minPrice: value.minPrice, maxPrice: value.maxPrice } },
       };
     case 'SET_PERSONNEL':
       return {
         ...searches,
-        personnel: { adult: value.adult, teenager: value.teenager, child: value.child },
+        personnel: {
+          ...searches.personnel, value: { adult: value.adult, teenager: value.teenager, child: value.child },
+        }
       };
     default:
       throw new Error('Unhandled action');

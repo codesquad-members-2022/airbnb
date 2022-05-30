@@ -1,13 +1,17 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
+import { CalendarContext } from 'contexts/CalendarProvider';
 
-function CalendarDates({ lastDate, firstDate, date, idx }) {
+function CalendarDates({ lastDate, firstDate, idx, year, month, date }) {
+  const { handelClickEvent } = useContext(CalendarContext);
+
   return (
     <DateList>
       <DateNum
-        idx={idx}
         lastDate={lastDate}
         firstDate={firstDate}
         active={idx > firstDate - 1 || idx < lastDate}
+        onClick={() => handelClickEvent(year, month, date)}
       >
         {date}일
       </DateNum>
@@ -31,8 +35,10 @@ const DateList = styled.li`
   }
 `;
 
-const DateNum = styled.div`
-  cursor: pointer;
+const DateNum = styled.button`
+  font-size: ${({ theme }) => theme.fontSizes.m};
+  font-weight: 500;
+  color: inherit;
   ${({ active }) => active && `color: #BDBDBD;`};
 `;
 

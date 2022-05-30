@@ -4,9 +4,9 @@ import styled from 'styled-components';
 
 import CalendarBody from './CalendarBody';
 import CalendarHead from './CalendarHead';
-import { changeDate } from 'utility/date';
+import { makeDate } from 'utility/dateUtil';
 
-function Modal() {
+function CalendarModal() {
   const DATE = new Date();
   const YEAR = DATE.getFullYear();
   const MONTH = DATE.getMonth() + 1;
@@ -17,8 +17,8 @@ function Modal() {
   const [lastTotalDate, setLastTotalDate] = useState([]);
 
   useEffect(() => {
-    setEarlyTotalDate(changeDate(year, month));
-    setLastTotalDate(changeDate(year, month + 1));
+    setEarlyTotalDate(makeDate(year, month));
+    setLastTotalDate(makeDate(year, month + 1));
   }, [month]);
 
   return (
@@ -32,7 +32,7 @@ function Modal() {
             setMonth={setMonth}
             position={'leftBtn'}
           />
-          <CalendarBody totalDate={earlyTotalDate} />
+          <CalendarBody totalDate={earlyTotalDate} year={year} month={month} />
         </EarlyMonth>
 
         <LateMonth>
@@ -43,7 +43,11 @@ function Modal() {
             setMonth={setMonth}
             position={'rightBtn'}
           />
-          <CalendarBody totalDate={lastTotalDate} />
+          <CalendarBody
+            totalDate={lastTotalDate}
+            year={year}
+            month={month + 1}
+          />
         </LateMonth>
       </Flex>
     </ModalContainer>
@@ -68,4 +72,4 @@ const LateMonth = styled.div`
   float: left;
 `;
 
-export default Modal;
+export default CalendarModal;

@@ -5,30 +5,33 @@ import styled from 'styled-components';
 import CheckInOut from './CheckInOut';
 import Personnel from './Personnel';
 import Price from './Price';
-import Modal from 'components/Calendar/CalendarModal';
+import CalendarModal from 'components/Calendar/CalendarModal';
+import CalendarProvider from 'contexts/CalendarProvider';
 import { ReactComponent as SearchIcon } from 'assets/svg/searchBtn.svg';
 
 function SearchBar() {
-  const [isOpenModal, setOpenModal] = useState(false);
+  const [isOpenCalendarModal, setOpenCalendarModal] = useState(false);
 
   const onClickToggleModal = useCallback(() => {
-    setOpenModal(!isOpenModal);
-  }, [isOpenModal]);
+    setOpenCalendarModal(!isOpenCalendarModal);
+  }, [isOpenCalendarModal]);
 
   return (
-    <Center>
-      <SearchContainer>
-        <Flex>
-          <CheckInOut onClick={onClickToggleModal} />
-          <Spacer />
-          <Price />
-          <Spacer />
-          <Personnel />
-          <SearchIcon style={{ margin: '22px' }} />
-        </Flex>
-      </SearchContainer>
-      {isOpenModal && <Modal />}
-    </Center>
+    <CalendarProvider>
+      <Center>
+        <SearchContainer>
+          <Flex>
+            <CheckInOut onClick={onClickToggleModal} />
+            <Spacer />
+            <Price />
+            <Spacer />
+            <Personnel />
+            <SearchIcon style={{ margin: '22px' }} />
+          </Flex>
+        </SearchContainer>
+        {isOpenCalendarModal && <CalendarModal />}
+      </Center>
+    </CalendarProvider>
   );
 }
 

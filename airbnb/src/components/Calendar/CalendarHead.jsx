@@ -9,7 +9,7 @@ function CalendarHead({ year, month, setYear, setMonth, position }) {
       setMonth(12 - 1);
       return;
     }
-    setMonth(month - 1);
+    setMonth(month - 2);
   }
 
   function handleRightBtn() {
@@ -52,7 +52,6 @@ const DayHeader = styled.section`
   flex-direction: column;
   position: relative;
   width: 400px;
-  margin-left: 10px;
 `;
 
 const HeaderInfo = styled.nav`
@@ -70,12 +69,14 @@ const Year = styled.div`
 const Days = styled.ul`
   display: flex;
   margin-bottom: 10px;
+  font-size: ${({ theme }) => theme.fontSizes.l};
+  font-weight: 500;
 `;
 
 const Day = styled.li`
   width: calc(95% / 7);
-  text-align: right;
-  margin-left: 40px;
+  text-align: center;
+  margin-left: 25px;
 
   :nth-child(7n + 1) {
     color: ${({ theme }) => theme.colors.red};

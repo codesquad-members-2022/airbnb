@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import CalendarDates from './CalendarDates';
 
-function CalendarBody({ totalDate }) {
+function CalendarBody({ totalDate, year, month }) {
   const lastDate = totalDate.indexOf(1);
   const firstDate = totalDate.indexOf(1, 7);
 
@@ -11,10 +11,12 @@ function CalendarBody({ totalDate }) {
       {totalDate.map((date, idx) => {
         return (
           <CalendarDates
-            key={`${date}${idx}`}
-            idx={idx}
+            key={`${month}-${date}-${idx}`}
             lastDate={lastDate}
             firstDate={firstDate}
+            idx={idx}
+            year={year}
+            month={month}
             date={date}
           />
         );

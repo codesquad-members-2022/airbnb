@@ -20,7 +20,7 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating {
         super.viewDidLoad()
         configureDisplay()
         configureConstraints()
-        bindViewModel()
+        configureViewModel()
         configureSearchCompleter()
     }
 
@@ -42,7 +42,15 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating {
         searchCompleter?.region = searchRegion
     }
 
-    private func bindViewModel() {
+    private func configureViewModel() {
+        citySearchViewModel.reset()
+
+        citySearchViewModel.headerVM.bind { _ in
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+
         citySearchViewModel.cityVM.bind { _ in
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
@@ -87,7 +95,7 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else {return}
         if text.isEmpty {
-            citySearchViewModel.update(models: citySearchViewModel.data)
+            citySearchViewModel.reset()
             return
         }
         searchCompleter?.queryFragment = text
@@ -108,7 +116,7 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.id, for: indexPath) as? SectionHeader else {return UICollectionReusableView()}
-        header.configureCell(title: "근처의 인기 여행지")
+        header.viewModel = citySearchViewModel.headerVM.value
         return header
     }
 

@@ -11,7 +11,7 @@ module.exports = {
     },
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.eslint.json'],
+    project: './tsconfig.json',
   },
   plugins: ['react', '@typescript-eslint'],
   extends: [
@@ -26,23 +26,12 @@ module.exports = {
   ],
 
   rules: {
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
-      },
-    ],
-    'react/jsx-uses-react': 'error',
-    'react/jsx-uses-vars': 'error',
     'react/react-in-jsx-scope': 'off',
     'import/prefer-default-export': 'off',
-    'linebreak-style': 'off',
-    '@typescript-eslint/no-var-requires': 'off',
+    'import/no-unresolved': 'off',
     'react/jsx-no-constructed-context-values': 'off',
+    'import/extensions': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
     'react/jsx-filename-extension': [
       2,
       { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
@@ -57,6 +46,10 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        moduleDirectory: ['node_modules', '@types'],
+      },
       typescript: {},
     },
   },

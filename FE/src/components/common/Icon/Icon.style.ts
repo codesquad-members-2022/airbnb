@@ -20,8 +20,6 @@ const sizeStyles = css<StyledIconProps>`
     `}
 `;
 
-const Icon = styled.img`
+export const Icon = styled.img`
   ${sizeStyles}
 `;
-
-export { Icon };

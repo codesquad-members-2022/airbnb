@@ -16,7 +16,7 @@ const SearchBar = ({ size = SEARCH_BAR_SIZE.LARGE }: SearchBarTypes) => {
   const [isActive, setIsActive] = useState(false);
   const { period, price, personnel } = searchBarData;
 
-  const toggleIsActive = () => setIsActive(isActive => !isActive);
+  const toggleIsActive = () => setIsActive((isActive) => !isActive);
 
   return (
     <S.Container size={size} onClick={toggleIsActive}>

@@ -18,17 +18,21 @@ class CalendarPickerViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.isScrollEnabled = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(CalendarPickerViewCell.self, forCellWithReuseIdentifier: CalendarPickerViewCell.reuseIdentifier)
+        collectionView.isScrollEnabled = true
         return collectionView
     }()
     
-    let calendarPresenter = CalendarPresenter()
+    let calendarPicker: CalendarPicker
 
-    private let didDateSelect: ((Date) -> Void)?
-    private let didDataRangeSelect: ((Range<Date>) -> Void)?
+    var didSelectDate: ((Date) -> Void)?
+    var didSelectDataRange: ((Range<Date>) -> Void)?
 
-    init(didDateSelect: ((Date) -> Void)?, didDataRangeSelect: ((Range<Date>) -> Void)?) {
-        self.didDateSelect = didDateSelect
-        self.didDataRangeSelect = didDataRangeSelect
+    init(basedate: Date, numOfMonths: Int, didDateSelect: ((Date) -> Void)?, didDataRangeSelect: ((Range<Date>) -> Void)?) throws {
+        self.calendarPicker = try CalendarPicker(baseDate: basedate, numOfMonths: numOfMonths)
+        
+        self.didSelectDate = didDateSelect
+        self.didSelectDataRange = didDataRangeSelect
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -39,7 +43,7 @@ class CalendarPickerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(collectionView)
-        collectionView.register(CalendarPickerViewCell.self, forCellWithReuseIdentifier: CalendarPickerViewCell.reuseIdentifier)
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         setLayout()
@@ -56,14 +60,20 @@ class CalendarPickerViewController: UIViewController {
 }
 
 extension CalendarPickerViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return calendarPicker.monthCount
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return calendarPresenter.dayCount ?? 0
+        return calendarPicker.dayCount(monthSection: section)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalendarPickerViewCell.reuseIdentifier, for: indexPath) as? CalendarPickerViewCell, let day = calendarPresenter[indexPath.item] else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalendarPickerViewCell.reuseIdentifier, for: indexPath) as? CalendarPickerViewCell else {
             return UICollectionViewCell()
         }
+        
+        let day = calendarPicker.getDay(monthSection: indexPath.section, dayItem: indexPath.item)
         
         cell.setDay(day)
         

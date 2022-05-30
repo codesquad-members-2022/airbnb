@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let storyboard = UIStoryboard(name: "Main", bundle: .main)
 //        let viewController = storyboard.instantiateInitialViewController()
         
-        let viewController = CalendarPickerViewController(didDateSelect: nil, didDataRangeSelect: nil)
+        let viewController = try? CalendarPickerViewController(basedate: .init(), numOfMonths: 10, didDateSelect: nil, didDataRangeSelect: nil)
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
 

@@ -10,7 +10,21 @@ import UIKit
 
 class CalendarPickerViewCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: CalendarPickerViewCell.self)
-
+    
+    let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d"
+        return dateFormatter
+    }()
+    
+    
+    let monthFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy년 MM월"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        return dateFormatter
+    }()
+    
     private lazy var selectionBackgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -34,11 +48,11 @@ class CalendarPickerViewCell: UICollectionViewCell {
         setLayout()
     }
     
-    var day: Day?
+    var day: CalendarPicker.Day?
     
-    func setDay(_ day: Day) {
+    func setDay(_ day: CalendarPicker.Day) {
         self.day = day
-        numberLabel.text = day.number
+        numberLabel.text = dateFormatter.string(from: day.date)
     }
 
     required init?(coder: NSCoder) {

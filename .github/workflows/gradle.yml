@@ -1,0 +1,58 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
+
+name: Java CI with Gradle
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      working-directory: ./backend
+
+    - name: Build with Gradle
+      run: ./gradlew bootJar
+      working-directory: ./backend
+
+    - name: Build and Push Docker Image
+      uses: mr-smithers-excellent/docker-build-push@v5.6
+      with:
+        image: cherrybnb/cherrybnb
+        registry: docker.io
+        dockerfile: ./backend/Dockerfile
+        username: ${{ secrets.DOCKERHUB_ID }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    - name: Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_PUBLIC_IP }}
+        username: ubuntu
+        key: ${{ secrets.EC2_PRIVATE_KEY }}
+        envs: GITHUB_SHA
+        script: |
+          docker pull cherrybnb/cherrybnb:be-deploy-b-${GITHUB_SHA::7}
+          docker tag cherrybnb/cherrybnb:be-deploy-b-${GITHUB_SHA::7} cherrybnb:be-deploy-b-${GITHUB_SHA::7}
+          docker stop cherry-server
+          docker run -d --rm --name cherry-server -p 80:8080 -e DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} -e DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} -e DATABASE_URL=${{secrets.DATABASE_URL}} cherrybnb:be-deploy-b-${GITHUB_SHA::7}

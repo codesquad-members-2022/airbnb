@@ -1,5 +1,9 @@
 package com.team14.cherrybnb.dummy;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -18,7 +22,7 @@ import javax.annotation.PostConstruct;
 public class DummyDataService {
 
     @PostConstruct
-    void requestDummyData() throws ParseException {
+    void requestDummyData() throws ParseException, JsonProcessingException {
 
         String url = "http://openapi.seoul.go.kr:8088/454b52746e79687331303668466a544a/json/LOCALDATA_031101/1/2/";
 
@@ -28,10 +32,19 @@ public class DummyDataService {
         ResponseEntity<String> response = new RestTemplate()
                 .exchange(url, HttpMethod.GET, new HttpEntity<>(headers), String.class);
 
-        JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) jsonParser.parse(response.getBody());
-        JSONObject LOCALDATA_031101 = (JSONObject) jsonObject.get("LOCALDATA_031101");
+        String body = response.getBody();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(body);
+        JsonNode localdata_031101 = jsonNode.get("LOCALDATA_031101");
+        System.out.println(localdata_031101);
+        JsonNode row = localdata_031101.get("row");
+        System.out.println(row);
+        for (JsonNode node : row) {
+            if(node.get("RDNWHLADDR").asBoolean()) {
+                System.out.println(node.get("RDNWHLADDR"));
+            }
+        }
 
-        System.out.println(LOCALDATA_031101);
+
     }
 }

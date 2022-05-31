@@ -10,24 +10,34 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import yanse.airbnb.domain.reservation.Reservation;
-import yanse.airbnb.domain.wish.WishList;
-
+import yanse.airbnb.domain.wish.Wish;
+@Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Member {
+public class Members {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "member_id")
+	@Column(name = "members_id")
 	private Long id;
 
-	private String name;
+	private String membersName;
 
 	private String email;
 
-	@OneToMany(mappedBy = "member", cascade = ALL)
-	private List<WishList> wishList = new ArrayList<>();
+	private String membersImage;
 
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "members", cascade = ALL)
+	private List<Wish> wishList = new ArrayList<>();
+
+	@OneToMany(mappedBy = "members", cascade = ALL)
 	private List<Reservation> reservationList = new ArrayList<>();
 
 }

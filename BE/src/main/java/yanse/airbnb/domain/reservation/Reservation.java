@@ -11,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import yanse.airbnb.domain.member.Member;
+import yanse.airbnb.domain.member.Members;
 import yanse.airbnb.domain.room.Room;
 
 
@@ -22,8 +22,8 @@ public class Reservation {
 	private Long id;
 
 	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "member_id")
-	private Member member;
+	@JoinColumn(name = "members_id")
+	private Members members;
 
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "room_id")
@@ -38,7 +38,7 @@ public class Reservation {
 	private int reservationPrice;
 
 	@Embedded
-	private DetailFee discountPolicy;
+	private DetailFee detailFee;
 
 	private LocalDateTime checkInDateTime;
 

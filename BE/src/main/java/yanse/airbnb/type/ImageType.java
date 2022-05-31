@@ -1,4 +1,4 @@
-package yanse.airbnb.domain.main;
+package yanse.airbnb.type;
 
 
 import lombok.RequiredArgsConstructor;
@@ -6,9 +6,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ImageType {
 
-	MAIN("메인"),
-	AROUND("가까운 여행지"),
-	RECOMMENDATION("추천 여행지");
+	hero("메인"),
+	around("가까운 여행지"),
+	recommendation("추천 여행지");
 
 	private final String value;
+
 }

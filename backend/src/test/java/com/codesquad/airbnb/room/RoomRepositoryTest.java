@@ -35,7 +35,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles("test")
@@ -50,17 +49,9 @@ class RoomRepositoryTest {
     @Autowired
     RoomService roomService;
 
-    // test fixture
-    District district;
-    Member host;
-    Member guest;
-    Room room;
-    RoomDetail roomDetail;
-    Reservation reservation;
-
     @BeforeEach
     public void setUp() {
-        district = new District(
+        District district = new District(
             "서울특별시",
             "서울특별시",
             "https://bit.ly/3PKgIBo",
@@ -68,19 +59,22 @@ class RoomRepositoryTest {
             new Location(126.9896, 37.5499),
             new ReviewStat(4.5, 50)
         );
-        host = new Member(
+
+        Member host = new Member(
             "Miller",
             "https://avatars.githubusercontent.com/u/50660684?v=4",
             false,
             MemberRole.USER
         );
-        guest = new Member(
+
+        Member guest = new Member(
             "BB-choi",
             "https://avatars.githubusercontent.com/u/78826879?v=4",
             false,
             MemberRole.USER
         );
-        room = new Room(
+
+        Room room = new Room(
             district,
             host,
             "Spacious and Comfortable cozy house #4",
@@ -91,14 +85,16 @@ class RoomRepositoryTest {
             new RoomCharge(71466.0, 25996.0),
             new ReviewStat(4.8, 127)
         );
-        roomDetail = new RoomDetail(
+
+        RoomDetail roomDetail = new RoomDetail(
             room,
             new GuestGroup(2, 1, 0),
             new RoomGroup(2, 1, 1, 1),
             new RoomOption(true, true, true, true),
             new StayTime(LocalTime.of(17, 0, 0), LocalTime.of(12, 0, 0))
         );
-        reservation = new Reservation(
+
+        Reservation reservation = new Reservation(
             room,
             guest,
             67007.0,
@@ -135,9 +131,7 @@ class RoomRepositoryTest {
         then(rooms.size()).isEqualTo(1);
     }
 
-
     @Test
-    @Rollback(false)
     @DisplayName("요청한 날짜의 숙소에 이미 예약이 되어있는 경우 검색에서 제외한다")
     public void roomSearchWitPeriodTest() {
         // when

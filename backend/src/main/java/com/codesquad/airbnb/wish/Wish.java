@@ -1,5 +1,6 @@
-package com.codesquad.airbnb.member;
+package com.codesquad.airbnb.wish;
 
+import com.codesquad.airbnb.member.Member;
 import com.codesquad.airbnb.room.entity.Room;
 import javax.persistence.Column;
 import javax.persistence.Entity;

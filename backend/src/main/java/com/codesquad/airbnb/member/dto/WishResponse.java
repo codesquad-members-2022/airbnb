@@ -1,7 +1,7 @@
 package com.codesquad.airbnb.member.dto;
 
-import com.codesquad.airbnb.member.Wish;
 import com.codesquad.airbnb.room.entity.Room;
+import com.codesquad.airbnb.wish.Wish;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package com.codesquad.airbnb.member;
+package com.codesquad.airbnb.wish;
 
 import static com.codesquad.airbnb.member.QMember.member;
 import static com.codesquad.airbnb.member.QWish.wish;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class WishRepository {
+public class WishRepositoryCustomImpl implements WishRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
@@ -21,6 +21,7 @@ public class WishRepository {
             .fetchJoin()
             .join(wish.member, member)
             .fetchJoin()
+            .where(member.id.eq(memberId))
             .fetch();
     }
 

@@ -1,4 +1,4 @@
-package com.codesquad.airbnb.member;
+package com.codesquad.airbnb.wish;
 
 import com.codesquad.airbnb.member.dto.WishResponse;
 import java.util.List;

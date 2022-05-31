@@ -40,12 +40,6 @@ export default function SearchBar({ calendarRef, headCountRef }: SearchBarType) 
     dispatch({ type: "OPEN" });
   };
 
-  const handleResetCalendar = () => {
-    dispatchCalendar({
-      type: "RESET",
-    });
-  };
-
   const handleReset = (dispatch: any) => {
     dispatch({ type: "RESET" });
   };

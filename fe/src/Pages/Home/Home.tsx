@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <>
-      <BackgroundImg url="/img/banner.png">
+      <BackgroundImg url={`${process.env.PUBLIC_URL}/img/banner.png`}>
         <HomeContainer width="1440px" height="640px">
           <div>
             <Gnb />

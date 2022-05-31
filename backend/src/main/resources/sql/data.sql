@@ -55,5 +55,5 @@ VALUES (1, 'https://bit.ly/39ZouHy', 1);
 
 -- rservation
 INSERT INTO reservation (guest_id, room_id, total_charge, number_adult, number_child, number_infant,
-                         checkin_date, checkout_date, checkin_time, checkout_time)
-VALUES (2, 1, 67007, 2, 1, 0, '2021-05-30', '2021-05-31', '17:00:00', '12:00:00');
+                         checkin_date_time, checkout_date_time)
+VALUES (2, 1, 67007, 2, 1, 0, '2021-05-30 17:00:00', '2021-05-31 12:00:00');

@@ -99,17 +99,15 @@ DROP TABLE IF EXISTS reservation;
 
 CREATE TABLE reservation
 (
-    reservation_id INT    NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'reservation 테이블의 기본 키',
-    guest_id       INT    NOT NULL COMMENT 'member 테이블의 외래 키',
-    room_id        INT    NOT NULL COMMENT 'room 테이블의 외래 키',
-    number_adult   INT    NOT NULL COMMENT '예약 시 성인 인원',
-    number_child   INT    NOT NULL COMMENT '예약 시 어린이 인원',
-    number_infant  INT    NOT NULL COMMENT '예약 시 영유아 인원',
-    checkin_date   DATE   NOT NULL COMMENT '숙박 시작 날짜',
-    checkin_time   TIME   NOT NULL COMMENT '숙박 시작 시간',
-    checkout_date  DATE   NOT NULL COMMENT '숙박 종료 날짜',
-    checkout_time  TIME   NOT NULL COMMENT '숙박 종료 시간',
-    total_charge   DOUBLE NOT NULL COMMENT '예약 시 총 금액'
+    reservation_id     INT      NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'reservation 테이블의 기본 키',
+    guest_id           INT      NOT NULL COMMENT 'member 테이블의 외래 키',
+    room_id            INT      NOT NULL COMMENT 'room 테이블의 외래 키',
+    number_adult       INT      NOT NULL COMMENT '예약 시 성인 인원',
+    number_child       INT      NOT NULL COMMENT '예약 시 어린이 인원',
+    number_infant      INT      NOT NULL COMMENT '예약 시 영유아 인원',
+    checkin_date_time  DATETIME NOT NULL COMMENT '숙박 시작 날짜와 시간',
+    checkout_date_time DATETIME NOT NULL COMMENT '숙박 종료 날짜와 시간',
+    total_charge       DOUBLE   NOT NULL COMMENT '예약 시 총 금액'
 );
 
 DROP TABLE IF EXISTS tag;

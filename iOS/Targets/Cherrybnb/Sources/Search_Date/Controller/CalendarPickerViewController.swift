@@ -43,7 +43,6 @@ class CalendarPickerViewController: UIViewController {
         self.didSelectDate = didDateSelect
         self.didSelectDataRange = didDataRangeSelect
         super.init(nibName: nil, bundle: nil)
-
     }
 
     required init?(coder: NSCoder) {
@@ -52,6 +51,8 @@ class CalendarPickerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         setSubviews()
         setLayout()
     }

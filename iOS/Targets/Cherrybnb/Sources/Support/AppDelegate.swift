@@ -10,10 +10,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-//        let storyboard = UIStoryboard(name: "Main", bundle: .main)
-//        let viewController = storyboard.instantiateInitialViewController()
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        let viewController = storyboard.instantiateInitialViewController()
 
-        let viewController = CalendarPickerViewController(baseDate: Date(), numOfMonths: 12)
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
 

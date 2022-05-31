@@ -26,11 +26,11 @@ class CalendarPickerSpec: QuickSpec {
             }
 
             context("아무것도 하지 않으면") {
-                it("기준일이 속한 월과 첫번째 월이 서로 같아야 한다") {
+                it("기준일이 속한 월(의 첫째날)과 첫번째 월(의 첫째날)은 서로 같아야 한다") {
                     let firstMonth = calendarPicker.getMonth(monthSection: 0)
-                    let monthOfTestDate = Calendar.current.getFirstDayOfMonth(for: testDate)
-
-                    expect(firstMonth.firstDay).to(equal(monthOfTestDate))
+                    let firstDayOfTestDate = Calendar.current.getFirstDayOfMonth(for: testDate)
+                    
+                    expect(firstMonth.firstDay).to(equal(firstDayOfTestDate))
                 }
 
                 it("첫번째 월에서 기준일 시작 시각 이전의 날짜는 모두 '지난 날짜'로 표시돼야 한다") {
@@ -51,9 +51,9 @@ class CalendarPickerSpec: QuickSpec {
                     let futureDays = firstMonth.days.filter { day in
                         return day.date >= Calendar.current.startOfDay(for: testDate)
                     }
-
+                    
                     for futureDay in futureDays {
-                        expect(futureDay.isPast).to(equal(false))
+                        expect(futureDay.isPast).to(beFalse())
                     }
                 }
 

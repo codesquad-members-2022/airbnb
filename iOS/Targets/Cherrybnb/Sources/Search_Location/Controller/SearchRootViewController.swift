@@ -12,7 +12,7 @@ import CoreLocation
 class SearchRootViewController: UIViewController {
 
     @IBOutlet var searchBar: UISearchBar!
-    var nextViewController: ListCollectionViewController?
+    var nextViewController: SearchLocationViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +47,7 @@ extension SearchRootViewController: CLLocationManagerDelegate {
 
 extension SearchRootViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        nextViewController = ListCollectionViewController()
+        nextViewController = SearchLocationViewController()
         self.navigationController?.pushViewController(nextViewController ?? UIViewController(), animated: true)
         nextViewController?.tabBarController?.tabBar.isHidden = true
         self.searchBar.endEditing(true)

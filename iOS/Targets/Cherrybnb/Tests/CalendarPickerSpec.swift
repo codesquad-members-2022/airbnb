@@ -16,11 +16,8 @@ class CalendarPickerSpec: QuickSpec {
         describe("특정 시각을 기준으로 캘린더 피커를 생성한 상태에서") {
             var testDate: Date!
             var calendarPicker: CalendarPicker!
-            var calendar: Calendar!
 
             beforeEach {
-                calendar = Calendar(identifier: .gregorian)
-
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "YY,M,d-HH:mm:ss"
                 testDate = dateFormatter.date(from: "22,05,15-07:00:00")
@@ -31,7 +28,7 @@ class CalendarPickerSpec: QuickSpec {
             context("아무것도 하지 않으면") {
                 it("기준일이 속한 월과 첫번째 월이 서로 같아야 한다") {
                     let firstMonth = calendarPicker.getMonth(monthSection: 0)
-                    let monthOfTestDate =  calendar.getFirstDayOfMonth(for: testDate)
+                    let monthOfTestDate = CalendarPicker.KRCalendar.getFirstDayOfMonth(for: testDate)
 
                     expect(firstMonth.firstDay).to(equal(monthOfTestDate))
                 }
@@ -65,7 +62,7 @@ class CalendarPickerSpec: QuickSpec {
 
                     for (i, day) in firstMonth.days.enumerated() {
                         let indexRemainder = i % 7
-                        let weekday = calendar.getWeekDay(of: day.date)
+                        let weekday = CalendarPicker.KRCalendar.getWeekDay(of: day.date)
 
                         expect(indexRemainder).to(equal(weekday-1))
                     }

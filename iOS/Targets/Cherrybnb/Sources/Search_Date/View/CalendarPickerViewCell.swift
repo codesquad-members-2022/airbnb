@@ -10,13 +10,13 @@ import UIKit
 
 class CalendarPickerViewCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: CalendarPickerViewCell.self)
-
+    
     private let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d"
         return dateFormatter
     }()
-
+    
     private lazy var selectionBackgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -24,7 +24,7 @@ class CalendarPickerViewCell: UICollectionViewCell {
         view.backgroundColor = .black
         return view
     }()
-
+    
     private lazy var numberLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -33,51 +33,60 @@ class CalendarPickerViewCell: UICollectionViewCell {
         label.textColor = .label
         return label
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setSubviews()
         setLayout()
     }
-
+    
     private var day: CalendarPicker.Day?
-
+    
     func setDay(_ day: CalendarPicker.Day) {
         self.day = day
         
         guard !day.isHidden else { return }
-
+        
         let dateString = dateFormatter.string(from: day.date)
-
-        if day.isPast {
-            numberLabel.attributedText = strikethrough(dateString)
-        } else {
-            numberLabel.text = dateString
-        }
+        
+        numberLabel.attributedText = day.isPast ? strikethrough(dateString) : normal(dateString)
     }
-
+    
     private func strikethrough(_ string: String) -> NSAttributedString {
-        let attributes: [NSAttributedString.Key: Any] = [.strikethroughStyle: NSUnderlineStyle.single.rawValue, .strikethroughColor: UIColor.systemGray, .foregroundColor: UIColor.systemGray]
-
+        let attributes: [NSAttributedString.Key: Any] = [
+            .strikethroughStyle: NSUnderlineStyle.single.rawValue,
+            .strikethroughColor: UIColor.systemGray,
+            .foregroundColor: UIColor.systemGray]
+        
         return NSAttributedString(string: string, attributes: attributes)
-
+        
     }
-
+    
+    private func normal(_ string: String) -> NSAttributedString {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .medium),
+            .strikethroughStyle: "nil",
+            .foregroundColor: UIColor.black]
+        
+        return NSAttributedString(string: string, attributes: attributes)
+        
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func setSubviews() {
         contentView.addSubview(numberLabel)
     }
-
+    
     private func setLayout() {
         NSLayoutConstraint.activate([
             numberLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             numberLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
-
+    
     override func prepareForReuse() {
         day = nil
         numberLabel.text = nil

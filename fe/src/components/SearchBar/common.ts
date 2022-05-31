@@ -35,12 +35,12 @@ export interface IPriceButton {
 
 export interface IGuestsButton {
   adults?: number | 0;
-  children?: number | 0;
+  child?: number | 0;
   infants?: number | 0;
 }
 
-export const guestsToString = ({ adults = 0, children = 0, infants = 0 }: IGuestsButton) => {
-  const GUEST = `게스트 ${adults + children}명`;
+export const guestsToString = ({ adults = 0, child = 0, infants = 0 }: IGuestsButton) => {
+  const GUEST = `게스트 ${adults + child}명`;
   if (infants === 0) {
     return [GUEST];
   }

@@ -8,20 +8,22 @@ interface InfoButtonProps {
   width?: number;
   header: string;
   description: string | string[];
-  descriptionSeparator?: string;
+  sep?: string;
+  accent?: boolean;
 }
 
 export function InfoButton({
   width = 130,
   header,
   description,
-  descriptionSeparator = ' ',
+  sep = ' ',
+  accent = false,
 }: InfoButtonProps) {
   return (
-    <S.Button width={width}>
+    <S.Button width={width} accent={accent}>
       <S.Header>{header}</S.Header>
       <S.Description>
-        {Array.isArray(description) ? description.join(descriptionSeparator) : description}
+        {Array.isArray(description) ? description.join(sep) : description}
       </S.Description>
     </S.Button>
   );

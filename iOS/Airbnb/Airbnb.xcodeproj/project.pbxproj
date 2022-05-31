@@ -26,6 +26,7 @@
 		00A85F3E283B877700EA32E0 /* WishModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A85F3D283B877700EA32E0 /* WishModel.swift */; };
 		00A85F41283B87A300EA32E0 /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A85F40283B87A300EA32E0 /* MyInfoViewController.swift */; };
 		00A85F44283B87B900EA32E0 /* MyInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A85F43283B87B900EA32E0 /* MyInfoModel.swift */; };
+		00F1345A2845F20A0087A83C /* CalendarViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F134592845F20A0087A83C /* CalendarViewCell.swift */; };
 		1B27E22F283CA12D00FCB990 /* SearchTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B27E22E283CA12D00FCB990 /* SearchTitleCollectionViewCell.swift */; };
 		1B27E231283CA14200FCB990 /* SearchTwoInARowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B27E230283CA14200FCB990 /* SearchTwoInARowCollectionViewCell.swift */; };
 		1B27E233283CA14900FCB990 /* SearchOneInARowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B27E232283CA14900FCB990 /* SearchOneInARowCollectionViewCell.swift */; };
@@ -98,6 +99,7 @@
 		00A85F3D283B877700EA32E0 /* WishModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishModel.swift; sourceTree = "<group>"; };
 		00A85F40283B87A300EA32E0 /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 		00A85F43283B87B900EA32E0 /* MyInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoModel.swift; sourceTree = "<group>"; };
+		00F134592845F20A0087A83C /* CalendarViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewCell.swift; sourceTree = "<group>"; };
 		1B27E22E283CA12D00FCB990 /* SearchTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		1B27E230283CA14200FCB990 /* SearchTwoInARowCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTwoInARowCollectionViewCell.swift; sourceTree = "<group>"; };
 		1B27E232283CA14900FCB990 /* SearchOneInARowCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOneInARowCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				0029729B2844B4DF0033437E /* CalendarViewController.swift */,
+				00F134592845F20A0087A83C /* CalendarViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -527,6 +530,7 @@
 				1BF0618828459A210043FF2F /* Reservations.swift in Sources */,
 				008A20A6283FE3960095F7BC /* HeaderReusableView.swift in Sources */,
 				1B27E237283CA5A900FCB990 /* SearchCellCommonType.swift in Sources */,
+				00F1345A2845F20A0087A83C /* CalendarViewCell.swift in Sources */,
 				00A85F38283B873F00EA32E0 /* SearchViewController.swift in Sources */,
 				005AF791283B775300546D5B /* SceneDelegate.swift in Sources */,
 				1BF0618E2845CFBE0043FF2F /* ColumnGraphView.swift in Sources */,

@@ -43,9 +43,9 @@ class LocationViewController: BackgroundViewController, CommonViewControllerProt
     
     func attribute() {
         setUpDelegates()
+        navigationController?.isToolbarHidden = true
         navigationItem.searchController = searchController
         navigationItem.title = "숙소 찾기"
-        super.setUpNavigationAppearance()
         view.backgroundColor = .systemBackground
     }
     
@@ -74,6 +74,11 @@ class LocationViewController: BackgroundViewController, CommonViewControllerProt
         attribute()
         layout()
         bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        attribute()
     }
     
 }
@@ -141,9 +146,12 @@ extension LocationViewController: UICollectionViewDelegateFlowLayout, UICollecti
         guard let cell = collectionView.cellForItem(at: indexPath) as? LocationCollectionViewCell else {
             return
         }
+        let backButton = UIBarButtonItem(title: "뒤로", style: .plain,
+                                         target: self, action: nil)
+        backButton.tintColor = .gray
+        self.navigationItem.backBarButtonItem = backButton
         reservationModel.location = cell.cityName.text
         let nextVC = CalendarViewController(reservationModel: reservationModel)
-        self.navigationController?.isToolbarHidden = false
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     

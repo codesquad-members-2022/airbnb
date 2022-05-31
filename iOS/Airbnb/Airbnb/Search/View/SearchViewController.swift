@@ -166,7 +166,6 @@ class SearchViewController: BackgroundViewController, CommonViewControllerProtoc
     
     func attribute() {
         setUpSearchController()
-        super.setUpNavigationAppearance()
     }
     
     func layout() {

@@ -23,4 +23,8 @@ public class GuestGroup {
         return numberAdult == null && numberChild == null && numberInfant == null;
     }
 
+    public int getNumberGuest() {
+        return numberAdult + numberChild + numberInfant;
+    }
+
 }

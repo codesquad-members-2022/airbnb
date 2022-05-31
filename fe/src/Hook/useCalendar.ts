@@ -9,7 +9,7 @@ interface ActionType {
 }
 
 const initialState = {
-  isOpen: false,
+  isCalendarOpen: false,
   checkIn: {
     year: 0,
     month: 0,
@@ -27,12 +27,12 @@ const reducer = (state: object, action: ActionType) => {
     case "OPEN":
       return {
         ...state,
-        isOpen: true,
+        isCalendarOpen: true,
       };
     case "CLOSE":
       return {
         ...state,
-        isOpen: false,
+        isCalendarOpen: false,
       };
     case "SET_CHECK_IN":
       return {
@@ -55,7 +55,7 @@ const reducer = (state: object, action: ActionType) => {
     case "RESET":
       return {
         ...initialState,
-        isOpen: true,
+        isCalendarOpen: true,
       };
     default:
       return state;

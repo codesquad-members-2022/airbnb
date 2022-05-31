@@ -45,7 +45,7 @@ public class ReservationController {
     )
     @PostMapping("/{roomId}/totalCharge")
     public ResponseEntity<RoomChargeResponse> totalChargeOf(
-        @PathVariable long roomId,
+        @PathVariable Long roomId,
         @RequestBody RoomChargeRequest roomChargeRequest) {
         log.info("roomChargeRequest={}", roomChargeRequest);
         RoomChargeResponse responseBody = reservationService.calculateTotalChargeOf(roomId,

@@ -22,7 +22,7 @@ public class ChargePolicy {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "name")
-    private ChargePolicyType chargePolicy;
+    private ChargePolicyType chargePolicyType;
 
     private boolean isActive;
 }

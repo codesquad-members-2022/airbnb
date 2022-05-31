@@ -1,6 +1,5 @@
-import styled from 'styled-components';
-import Barchart from './Canvas';
-// const myCanvas = canvasRef.current;
+import BarChart from './Canvas';
+
 const sampleData = [
   { price: 10000, number: 100 },
   { price: 20000, number: 20 },
@@ -11,24 +10,16 @@ const sampleData = [
 
 function PriceRangeModal() {
   return (
-    <PriceRangeContainer>
-      <Barchart
+    <>
+      <BarChart
         color="#808080"
         data={sampleData}
         height="300px"
         width="300px"
         padding="20px"
       />
-    </PriceRangeContainer>
+    </>
   );
 }
-
-const PriceRangeContainer = styled.div`
-  background: ${({ theme }) => theme.colors.white};
-  width: 300px;
-  height: 200px;
-  padding: 30px;
-  border-radius: 64px;
-`;
 
 export default PriceRangeModal;

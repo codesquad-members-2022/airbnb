@@ -4,13 +4,16 @@ import styled from 'styled-components';
 
 import CheckInOut from './CheckInOut';
 import Personnel from './Personnel';
-import Price from './Price';
+import PriceRange from './PriceRange';
 import CalendarModal from 'components/Calendar/CalendarModal';
 import CalendarProvider from 'contexts/CalendarProvider';
 import { ReactComponent as SearchIcon } from 'assets/svg/searchBtn.svg';
-import Modal from 'components/Modal/Modal';
-import { calendarModalStyle } from 'components/Modal/ModalStyle';
 
+import Modal from 'components/Modal/Modal';
+import {
+  calendarModalStyle,
+  priceRangeModalStyle,
+} from 'components/Modal/ModalStyle';
 import PriceRangeModal from 'components/PriceRange/PriceRange';
 
 function SearchBar() {
@@ -24,8 +27,12 @@ function SearchBar() {
             <CalendarModal />
           </CalendarModalContainer>
         );
-      case 'PRICE':
-        return;
+      case 'PRICE_RANGE':
+        return (
+          <PriceRangeContainer>
+            <PriceRangeModal />
+          </PriceRangeContainer>
+        );
       case 'TOTAL_GUESTS':
         return;
       default:
@@ -50,7 +57,7 @@ function SearchBar() {
           <Flex justify="space-between">
             <CheckInOut onClick={handleClickSearchBarBtn} title={'체크인'} />
             <CheckInOut onClick={handleClickSearchBarBtn} title={'체크아웃'} />
-            <Price onClick={handleClickSearchBarBtn} />
+            <PriceRange onClick={handleClickSearchBarBtn} />
             <Personnel onClick={handleClickSearchBarBtn} />
             <SearchIcon style={{ margin: '22px' }} />
           </Flex>
@@ -73,5 +80,9 @@ const SearchContainer = styled.div`
 
 const CalendarModalContainer = styled(Modal)`
   ${calendarModalStyle}
+`;
+
+const PriceRangeContainer = styled(Modal)`
+  ${priceRangeModalStyle}
 `;
 export default SearchBar;

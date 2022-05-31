@@ -3,6 +3,7 @@ package com.codesquad.airbnb.room;
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.Location;
 import com.codesquad.airbnb.common.embeddable.StayPeriod;
+import com.codesquad.airbnb.room.dto.RoomDetailResponse;
 import com.codesquad.airbnb.room.dto.RoomSearCondition;
 import com.codesquad.airbnb.room.dto.RoomSearCondition.PriceRange;
 import com.codesquad.airbnb.room.dto.RoomSearCondition.Radius;
@@ -12,6 +13,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,4 +50,10 @@ public class RoomController {
             )
         );
     }
+
+    @GetMapping("/{id}")
+    public RoomDetailResponse showRoom(@PathVariable(name = "id") Integer roomId) {
+        return roomService.findRoom(roomId);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.codesquad.airbnb.room;
 
+import com.codesquad.airbnb.room.dto.RoomDetailResponse;
 import com.codesquad.airbnb.room.dto.RoomSearCondition;
 import com.codesquad.airbnb.room.dto.RoomSearchResponse;
 import com.codesquad.airbnb.room.entity.Room;
@@ -17,8 +18,13 @@ public class RoomService {
     public List<RoomSearchResponse> searchRooms(RoomSearCondition condition) {
         List<Room> rooms = roomRepository.searchWithCondition(condition);
         return rooms.stream()
-            .map(RoomSearchResponse::new)
+            .map(RoomSearchResponse::from)
             .collect(Collectors.toList());
+    }
+
+    public RoomDetailResponse findRoom(Integer roomId) {
+        Room room = roomRepository.findById(roomId);
+        return RoomDetailResponse.from(room);
     }
 
 }

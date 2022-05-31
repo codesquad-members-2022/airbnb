@@ -1,3 +1,4 @@
+-- tag
 INSERT INTO tag (name, image_path, display, sequence)
 VALUES ('자연생활을 만끽할 수 있는 숙소', 'https://bit.ly/3LKC2DF', TRUE, 1);
 INSERT INTO tag (name, image_path, display, sequence)
@@ -7,6 +8,7 @@ VALUES ('집 전체', 'https://bit.ly/3agOhuJ', TRUE, 3);
 INSERT INTO tag (name, image_path, display, sequence)
 VALUES ('반려동물 동반 가능', 'https://bit.ly/3sYUWjL', TRUE, 4);
 
+-- district
 INSERT INTO district (name, image_path, address, type, point, review_score, review_count)
 VALUES ('서울특별시', 'https://bit.ly/3PKgIBo', '서울특별시', 'PRIMARY',
         ST_GEOMFROMTEXT('POINT(126.9896 37.5499)'), 3.5, 50);
@@ -37,6 +39,7 @@ VALUES ('Miller', 'https://avatars.githubusercontent.com/u/50660684?v=4', 'USER'
 INSERT INTO member (name, image_path, role, is_super_host)
 VALUES ('BB-choi', 'https://avatars.githubusercontent.com/u/78826879?v=4', 'USER', false);
 
+-- room
 INSERT INTO room (district_id, host_id, name, description, image_path, type, longitude, latitude,
                   lodging_charge, cleaning_charge, review_score, review_count)
 VALUES (1, 1, 'Spacious and Comfortable cozy house #4', '강남역 5번 출구에서 도보로 이동가능합니다.',
@@ -47,7 +50,10 @@ INSERT INTO room_detail (room_id, number_adult, number_child, number_infant, num
                          kitchen, hair_dryer, wireless_internet, air_conditioner)
 VALUES (1, 2, 1, 0, 2, 1, 1, 1, '17:00:00', '12:00:00', true, true, true, true);
 
+INSERT INTO room_image (room_id, path, sequence)
+VALUES (1, 'https://bit.ly/39ZouHy', 1);
+
+-- rservation
 INSERT INTO reservation (guest_id, room_id, total_charge, number_adult, number_child, number_infant,
                          checkin_date, checkout_date, checkin_time, checkout_time)
 VALUES (2, 1, 67007, 2, 1, 0, '2021-05-30', '2021-05-31', '17:00:00', '12:00:00');
-

@@ -8,7 +8,15 @@
 import UIKit
 
 final class SectionHeader: UICollectionReusableView {
+
     static let id = "SectionHeader"
+
+    var viewModel: SearchHeaderViewModel? {
+        didSet {
+            guard let headerVM = viewModel else {return}
+            self.title.text = headerVM.title
+        }
+    }
 
     private var title: UILabel = {
         let label  = UILabel()

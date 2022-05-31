@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 extension UIColor {
     static let gray1 = UIColor(named: "Gray1")
     static let gray2 = UIColor(named: "Gray2")

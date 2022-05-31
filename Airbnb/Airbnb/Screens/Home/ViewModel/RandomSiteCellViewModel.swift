@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 struct RandomSiteCellViewModel {
 
     let image: String

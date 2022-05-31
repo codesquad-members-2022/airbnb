@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 struct Hero {
     let title: String
     let content: String

@@ -49,8 +49,9 @@ final class HomeViewController: UIViewController, UISearchBarDelegate {
     }
 
     private func setCollectionView() {
-        let flowLayout = FlowLayout.makeCompositionalLayout()
-        homeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        let layoutProvider = HomeLayout()
+        let layout = FlowLayout.makeCompositionalLayout(layoutProvider)
+        homeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         homeCollectionView.dataSource = self
         homeCollectionView.register(HeroCell.self, forCellWithReuseIdentifier: HeroCell.id)
         homeCollectionView.register(CityCell.self, forCellWithReuseIdentifier: CityCell.id)

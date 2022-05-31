@@ -44,19 +44,29 @@ class CalendarPickerViewCell: UICollectionViewCell {
 
     func setDay(_ day: CalendarPicker.Day) {
         self.day = day
-        guard let date = day.date, let isPast = day.isPast else { return }
 
-        let dateString = dateFormatter.string(from: date)
+        guard !day.isHidden else { return }
 
-        if isPast {
-            numberLabel.attributedText = strikethrough(dateString)
-        } else {
-            numberLabel.text = dateString
-        }
+        let dateString = dateFormatter.string(from: day.date)
+
+        numberLabel.attributedText = day.isPast ? strikethrough(dateString) : normal(dateString)
     }
 
     private func strikethrough(_ string: String) -> NSAttributedString {
-        let attributes: [NSAttributedString.Key: Any] = [.strikethroughStyle: NSUnderlineStyle.single.rawValue, .strikethroughColor: UIColor.systemGray, .foregroundColor: UIColor.systemGray]
+        let attributes: [NSAttributedString.Key: Any] = [
+            .strikethroughStyle: NSUnderlineStyle.single.rawValue,
+            .strikethroughColor: UIColor.systemGray,
+            .foregroundColor: UIColor.systemGray]
+
+        return NSAttributedString(string: string, attributes: attributes)
+
+    }
+
+    private func normal(_ string: String) -> NSAttributedString {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .medium),
+            .strikethroughStyle: "nil",
+            .foregroundColor: UIColor.black]
 
         return NSAttributedString(string: string, attributes: attributes)
 

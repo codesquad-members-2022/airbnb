@@ -10,7 +10,7 @@ import UIKit
 
 class LocationCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: LocationCell.self)
-    
+
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -18,14 +18,14 @@ class LocationCell: UICollectionViewCell {
         imageView.layer.cornerRadius = 10
         return imageView
     }()
-    
+
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 17)
         return label
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(imageView)
@@ -36,8 +36,8 @@ class LocationCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-        
-    private func setLayout(){
+
+    private func setLayout() {
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -45,7 +45,7 @@ class LocationCell: UICollectionViewCell {
             imageView.heightAnchor.constraint(equalToConstant: 64),
             imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-    
+
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 16),
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),

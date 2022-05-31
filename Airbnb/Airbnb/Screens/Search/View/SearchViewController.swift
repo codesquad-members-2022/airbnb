@@ -133,6 +133,28 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     }
 }
 
+extension SearchViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let completerResults = completerResults else {return}
+        let selectedRegion = completerResults[indexPath.item]
+        let searchRequest = MKLocalSearch.Request(completion: selectedRegion)
+        let search = MKLocalSearch(request: searchRequest)
+
+        search.start { (response, error) in
+            guard error == nil else {return}
+            guard let placeMark = response?.mapItems[0].placemark, let title = placeMark.title else {return}
+
+            // TODO: Location 정보를 nextVC 에 넘겨주어야함.
+            let location = Location(name: title, latitude: placeMark.coordinate.latitude, longitude: placeMark.coordinate.longitude)
+            let nextVC = FilterViewController()
+            self.navigationController?.pushViewController(nextVC, animated: true)
+        }
+
+    }
+
+}
+
 extension SearchViewController: MKLocalSearchCompleterDelegate {
 
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
@@ -141,5 +163,6 @@ extension SearchViewController: MKLocalSearchCompleterDelegate {
             cities.append(City(name: $0.title, image: "defaultCity", travelTime: nil))
         })
         citySearchViewModel.update(models: cities)
+        completerResults = completer.results
     }
 }

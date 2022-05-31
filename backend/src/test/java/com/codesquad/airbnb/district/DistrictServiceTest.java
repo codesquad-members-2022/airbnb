@@ -3,8 +3,8 @@ package com.codesquad.airbnb.district;
 import static org.assertj.core.api.BDDAssertions.then;
 
 import com.codesquad.airbnb.district.District.DistrictType;
-import com.codesquad.airbnb.room.entity.embeddable.Location;
-import com.codesquad.airbnb.room.entity.embeddable.ReviewTotal;
+import com.codesquad.airbnb.domain.Location;
+import com.codesquad.airbnb.domain.ReviewTotal;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +32,6 @@ class DistrictServiceTest {
 
     @Test
     @Transactional
-    @Rollback(false)
     @DisplayName("사용자 주변의 인기있는 행정구역 목록을 조회한다")
     public void districtsTest() {
         // given

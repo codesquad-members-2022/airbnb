@@ -1,7 +1,7 @@
 package com.codesquad.airbnb.district;
 
-import com.codesquad.airbnb.room.entity.embeddable.Location;
-import com.codesquad.airbnb.room.entity.embeddable.ReviewTotal;
+import com.codesquad.airbnb.domain.Location;
+import com.codesquad.airbnb.domain.ReviewTotal;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -28,7 +28,7 @@ import org.locationtech.jts.geom.Point;
 public class District {
 
     // 행정구역 상 국가/1계층/2계층/3계층 구분
-    enum DistrictType {COUNTRY, PRIMARY, SECONDARY, TERTIARY}
+    public enum DistrictType {COUNTRY, PRIMARY, SECONDARY, TERTIARY}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

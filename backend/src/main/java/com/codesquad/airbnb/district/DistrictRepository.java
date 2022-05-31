@@ -1,7 +1,7 @@
 package com.codesquad.airbnb.district;
 
-import com.codesquad.airbnb.room.entity.embeddable.Location;
-import com.codesquad.airbnb.room.entity.embeddable.ReviewTotal;
+import com.codesquad.airbnb.domain.Location;
+import com.codesquad.airbnb.domain.ReviewTotal;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import java.util.stream.Collectors;

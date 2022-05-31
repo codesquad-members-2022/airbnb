@@ -186,8 +186,10 @@ extension SearchViewController: UISearchBarDelegate {
                                          target: self, action: nil)
         backButton.tintColor = .gray
         self.navigationItem.backBarButtonItem = backButton
-        
-        navigationController?.pushViewController(LocationViewController(), animated: false)
+    
+        let locationViewController = LocationViewController()
+        locationViewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(locationViewController, animated: false)
     }
     
     private func setUpSearchController() {

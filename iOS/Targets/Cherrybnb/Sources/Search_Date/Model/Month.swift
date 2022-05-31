@@ -14,26 +14,23 @@ extension CalendarPicker {
         let firstDay: Date
         let firstDayWeekday: Int
         let days: [Day]
-        
-        init(basedate: Date) throws {
-            guard let numberOfDaysInMonth = CalendarPicker.KRCalendar.getNumberOfDaysInMonth(for: basedate),
-                  let firstDayOfMonth = CalendarPicker.KRCalendar.getFirstDayOfMonth(for: basedate) else {
-                throw CalendarPickerError.metadataGeneration
-            }
 
+        init(baseDate: Date) {
+            let numberOfDaysInMonth = CalendarPicker.KRCalendar.getNumberOfDaysInMonth(for: baseDate)
+            let firstDayOfMonth = CalendarPicker.KRCalendar.getFirstDayOfMonth(for: baseDate)
             let firstDayWeekday = CalendarPicker.KRCalendar.getWeekDay(of: firstDayOfMonth)
 
             self.numberOfNonEmptyDays = numberOfDaysInMonth
             self.firstDay = firstDayOfMonth
             self.firstDayWeekday = firstDayWeekday
-            
+
             let emptyDays = (1..<firstDayWeekday).map { _ in
                 return Day(date: nil, isSelected: false, isPast: nil)
             }
 
             let days: [Day] = (0..<numberOfNonEmptyDays).map { offset in
                 let date = CalendarPicker.KRCalendar.getNextDay(for: firstDayOfMonth, offset: offset) ?? firstDayOfMonth
-                let isPast = date < basedate
+                let isPast = date < baseDate
                 return Day(date: date, isSelected: false, isPast: isPast)
             }
 

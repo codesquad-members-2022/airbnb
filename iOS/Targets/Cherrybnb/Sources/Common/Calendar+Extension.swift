@@ -9,21 +9,24 @@
 import Foundation
 
 extension Calendar {
-    func getNumberOfDaysInMonth(for basedate: Date) -> Int? {
-        return range(of: .day, in: .month, for: basedate)?.count
+    func getNumberOfDaysInMonth(for baseDate: Date) -> Int {
+        // month가 day보다 더 큰 component이므로 range()에서 nil이 return 되지 않음을 확신할 수 있음.
+        return range(of: .day, in: .month, for: baseDate)?.count ?? 0
     }
 
-    func getFirstDayOfMonth(for basedate: Date) -> Date? {
-        return date(from: dateComponents([.year, .month], from: basedate))
+    func getFirstDayOfMonth(for baseDate: Date) -> Date {
+        // baseDateComponents는 반드시 존재하는 일자의 구성 요소이므로 nil이 return 되지 않음을 확신할 수 있음.
+        let baseDateComponents = dateComponents([.year, .month], from: baseDate)
+        return date(from: baseDateComponents) ?? baseDate
     }
 
-    func getNextMonth(for basedate: Date, offset: Int) -> Date? {
-        
-        return date(byAdding: .month, value: offset, to: basedate)
+    func getFirstDayOfMonthAfter(for baseDate: Date, offsetBy: Int) -> Date {
+        // 첫번째 날짜의 다음 달은 반드시 존재하므로 nil이 return 되지 않음을 확신할 수 있음.
+        return date(byAdding: .month, value: offsetBy, to: getFirstDayOfMonth(for: baseDate)) ?? baseDate
     }
 
-    func getNextDay(for basedate: Date, offset: Int) -> Date? {
-        return date(byAdding: .day, value: offset, to: basedate)
+    func getNextDay(for baseDate: Date, offset: Int) -> Date? {
+        return date(byAdding: .day, value: offset, to: baseDate)
     }
 
     func getWeekDay(of date: Date) -> Int {

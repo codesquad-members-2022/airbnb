@@ -9,9 +9,9 @@
 import UIKit
 
 class PlaceCell: UICollectionViewCell {
-    
+
     static let reuseIdentifier = String(describing: PlaceCell.self)
-    
+
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -20,7 +20,7 @@ class PlaceCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
+
     lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -28,7 +28,7 @@ class PlaceCell: UICollectionViewCell {
         label.text = "서울"
         return label
     }()
-    
+
     lazy var distanceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -58,7 +58,7 @@ class PlaceCell: UICollectionViewCell {
         imageView.heightAnchor.constraint(equalToConstant: 64),
         imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-        
+
         NSLayoutConstraint.activate([
         nameLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 16),
         nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),

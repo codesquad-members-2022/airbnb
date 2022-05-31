@@ -69,9 +69,16 @@ class SearchUseCase: NetworkCommonComponents {
             return
         }
         
+        let header = HTTPHeader.init(name: "content-type", value: "application/json")
+//    connection: keep-alive
+//     content-type: application/json
+//     date: Tue,31 May 2022 00:42:49 GMT
+//     keep-alive: timeout=60
+//     transfer-encoding: chunked
         AF.request(
             url,
-            method: .get
+            method: .get,
+            headers: [header]
         ).commonRequestComplete(completionHandler)
     }
     

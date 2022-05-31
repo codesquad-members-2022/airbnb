@@ -26,7 +26,7 @@ class NetworkServices {
     /// 예약관련
     /// GET : 파라미터 없음. 예약리스트 출력함
     /// POST : roomId, checkInDate, checkOutDate, headcount, totalCharge. 예약하기
-    let reservations = "/reservations"
+    let reservations = "\(api)/reservations"
     
     /// 숙소 예약 요금 계산(1)
     /// POST : checkInDate, checkOutDate, headcount

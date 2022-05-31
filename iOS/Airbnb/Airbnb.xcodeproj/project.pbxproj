@@ -38,6 +38,7 @@
 		1B807DCB283F529A00D6815F /* SearchCalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B807DCA283F529A00D6815F /* SearchCalendarModel.swift */; };
 		1B90ED34283F547600E45FE8 /* SearchDayDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B90ED33283F547600E45FE8 /* SearchDayDTO.swift */; };
 		1B90ED36283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B90ED35283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift */; };
+		1BF0618828459A210043FF2F /* Reservations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0618728459A210043FF2F /* Reservations.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +105,7 @@
 		1B807DCA283F529A00D6815F /* SearchCalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCalendarModel.swift; sourceTree = "<group>"; };
 		1B90ED33283F547600E45FE8 /* SearchDayDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDayDTO.swift; sourceTree = "<group>"; };
 		1B90ED35283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirbnbCalendarModelTests.swift; sourceTree = "<group>"; };
+		1BF0618728459A210043FF2F /* Reservations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reservations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -312,6 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				1B90ED33283F547600E45FE8 /* SearchDayDTO.swift */,
+				1BF0618728459A210043FF2F /* Reservations.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -472,6 +475,7 @@
 				1B27E22F283CA12D00FCB990 /* SearchTitleCollectionViewCell.swift in Sources */,
 				1B7EB7FD2844F1290078D4A9 /* SearchUseCase.swift in Sources */,
 				005AF78F283B775300546D5B /* AppDelegate.swift in Sources */,
+				1BF0618828459A210043FF2F /* Reservations.swift in Sources */,
 				008A20A6283FE3960095F7BC /* HeaderReusableView.swift in Sources */,
 				1B27E237283CA5A900FCB990 /* SearchCellCommonType.swift in Sources */,
 				00A85F38283B873F00EA32E0 /* SearchViewController.swift in Sources */,

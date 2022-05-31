@@ -30,5 +30,7 @@ export const InActiveDay = styled.div`
 
 export const DayArea = styled.div`
   ${() => applyFlex({ flex: true, justify: "center", align: "center" })};
+  width: 100%;
+  height: 100%;
   cursor: pointer;
 `;

@@ -4,17 +4,32 @@ import SEARCH_INPUT_TEXT from '@/constants/searchBarText';
 import { SearchBarContext } from '@component/header/search-bar/SearchBarProvider';
 import SearchInput from '@/component/header/search-bar/SearchInput';
 import SearchInputModal from './SearchInputModal';
+import { CalenderDateContext } from '@component/header/calender/CalenderDateProvider';
 
 const searchInputText = Object.entries(SEARCH_INPUT_TEXT);
 
 function SearchBar() {
   const { isFocus, resetFocusState } = useContext(SearchBarContext);
+  const { checkInValue, checkOutValue } = useContext(CalenderDateContext);
+
+  const values = {
+    체크인: checkInValue,
+    체크아웃: checkOutValue,
+    요금: `~`,
+    인원: `게스트 명, 유아 명`,
+  };
 
   return (
     <>
       <Form method="POST" bgColor={isFocus ? 'grey6' : 'white'} onBlur={resetFocusState}>
         {searchInputText.map(([key, { label, placeholder }], index) => (
-          <SearchInput key={key} label={label} placeholder={placeholder} isLastElement={isLastElement(index)} />
+          <SearchInput
+            key={key}
+            label={label}
+            placeholder={placeholder}
+            value={values[label]}
+            isLastElement={isLastElement(index)}
+          />
         ))}
       </Form>
       <SearchInputModal />

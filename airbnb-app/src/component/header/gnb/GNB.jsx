@@ -14,8 +14,8 @@ function GNB() {
 }
 
 const StyledContainer = customStyled.div`
-  width: 1280px;
-  margin: 24px 80px;
+  max-width: 1280px;
+  margin: 24px auto;
   display: flex;
   align-items: center;
   justify-content: space-between;

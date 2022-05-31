@@ -1,32 +1,36 @@
+import { useState, useContext } from 'react';
 import styled from 'styled-components';
-import ResetButton from './ResetButton';
-import SearchButton from './SearchButton';
-import { useState } from 'react';
+import ResetButton from '@/component/header/search-bar/ResetButton';
+import SearchButton from '@/component/header/search-bar/SearchButton';
+import { SearchBarContext } from '@component/header/search-bar/SearchBarProvider';
 
-function SearchInput({ label, placeholder, isLastElement, isCurrentInput, isFocus, setCurrentInput }) {
-  const [isFilled, setIsFilled] = useState(false);
+function SearchInput({ label, placeholder, isLastElement }) {
+  const { isFocus, updateFocusState, currentInput } = useContext(SearchBarContext);
 
-  const handleFocus = label => {
-    setCurrentInput(label);
-  };
+  const [isFilled, setIsFilled] = useState(true);
 
   return (
-    <Container
-      bgColor={isCurrentInput ? 'white' : null}
-      isLastElement={isLastElement}
-      tabIndex="0"
-      onFocus={() => handleFocus(label)}
-    >
+    <Container bgColor={currentInput === label ? 'white' : null} tabIndex="0" onFocus={() => updateFocusState(label)}>
       <div>
         <Label>{label}</Label>
-        <Input type="text" placeholder={placeholder} readOnly />
+        <Input type="text" placeholder={placeholder} value={'값넣기'} readOnly />
       </div>
-      <ResetButton visibility={isFilled ? 'visible' : 'hidden'} />
-      {isLastElement ? null : <Line />}
-      {isLastElement ? <SearchButton isFocus={isFocus} /> : null}
+      <ResetButton display={isFilled ? 'block' : 'none'} />
+      {isLastElement ? <SearchButton open={isFocus} /> : <Line />}
     </Container>
   );
 }
+
+const Container = styled.div`
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: calc(100% / 4);
+  padding: 20px 30px;
+  border-radius: ${({ theme }) => theme.borderRadius.radius1};
+  background-color: ${({ theme, bgColor }) => theme.color[bgColor]};
+`;
 
 const Label = styled.div`
   font-size: ${({ theme }) => theme.fontSize.small};
@@ -35,6 +39,7 @@ const Label = styled.div`
 `;
 
 const Input = styled.input`
+  width: 100%;
   font-size: ${({ theme }) => theme.fontSize.large};
   font-weight: ${({ theme }) => theme.fontWeight.regular};
   line-height: 20px;
@@ -45,19 +50,6 @@ const Line = styled.span`
   right: 0;
   height: 44px;
   border-left: 1px solid ${({ theme }) => theme.color.grey5};
-`;
-
-const Container = styled.div`
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  ${({ isLastElement }) => {
-    return isLastElement ? `width: 280px;` : `width: 180px;`;
-  }}
-  height: 37px;
-  padding: 20px 30px;
-  border-radius: ${({ theme }) => theme.borderRadius.radius1};
-  background-color: ${({ theme, bgColor }) => theme.color[bgColor]};
 `;
 
 export default SearchInput;

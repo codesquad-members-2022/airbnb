@@ -1,41 +1,5 @@
 import { useRef, useEffect } from 'react';
 import styled from 'styled-components';
-// const myCanvas = canvasRef.current;
-
-// const useCanvas = (callback) => {
-//   const canvasRef = useRef(null);
-
-//   (useEffect = () => {
-//     const canvas = canvasRef.current;
-//     const ctx = canvas.getContext('2d');
-//     callback([canvas, ctx]);
-//   }),
-//     [];
-// };
-
-// function drawLine(ctx, startX, startY, endX, endY, color) {
-//   ctx.save();
-//   ctx.strokeStyle = color;
-//   ctx.beginPath();
-//   ctx.moveTo(startX, startY);
-//   ctx.lineTo(endX, endY);
-//   ctx.stroke();
-//   ctx.restore();
-// }
-
-// function drawBar(
-//   ctx,
-//   upperLeftCornerX,
-//   upperLeftCornerY,
-//   width,
-//   height,
-//   color,
-// ) {
-//   ctx.save();
-//   ctx.fillStyle = color;
-//   ctx.fillRect(upperLeftCornerX, upperLeftCornerY, width, height);
-//   ctx.restore();
-// }
 
 function Barchart(props) {
   const canvasRef = useRef(null);
@@ -45,19 +9,21 @@ function Barchart(props) {
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
+    console.log('bi');
 
     for (let i = 0; i < data.length; i++) {
       console.log(data[i]);
 
-      const upperLeftCornerX = 0;
-      const upperLeftCornerY = data[i].number;
+      const upperLeftCornerX = i * 20;
+      const upperLeftCornerY = 0;
       const height = data[i].number;
-      const width = data.length;
+      console.log(height);
+      const width = 20;
 
-      ctx.save();
+      // ctx.save();
       ctx.fillStyle = { color };
       ctx.fillRect(upperLeftCornerX, upperLeftCornerY, width, height);
-      ctx.restore();
+      // ctx.restore();
     }
   }, []);
 

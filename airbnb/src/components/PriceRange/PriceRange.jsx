@@ -6,7 +6,7 @@ const sampleData = [
   { price: 20000, number: 20 },
   { price: 30000, number: 5 },
   { price: 40000, number: 20 },
-  { price: 50000, number: 5 },
+  { price: 50000, number: 10 },
 ];
 
 function PriceRangeModal() {

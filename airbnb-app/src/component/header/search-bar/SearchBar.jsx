@@ -10,7 +10,7 @@ const searchInputText = Object.entries(SEARCH_INPUT_TEXT);
 
 function SearchBar() {
   const { isFocus, resetFocusState } = useContext(SearchBarContext);
-  const { checkInValue, checkOutValue } = useContext(CalenderDateContext);
+  const { checkInValue, checkOutValue, resetCurDate } = useContext(CalenderDateContext);
 
   const values = {
     체크인: checkInValue,
@@ -19,9 +19,14 @@ function SearchBar() {
     인원: `게스트 명, 유아 명`,
   };
 
+  function handleBlur() {
+    resetFocusState();
+    resetCurDate();
+  }
+
   return (
     <>
-      <Form method="POST" bgColor={isFocus ? 'grey6' : 'white'} onBlur={resetFocusState}>
+      <Form method="POST" bgColor={isFocus ? 'grey6' : 'white'} onBlur={handleBlur}>
         {searchInputText.map(([key, { label, placeholder }], index) => (
           <SearchInput
             key={key}

@@ -9,7 +9,7 @@ function SearchButton() {
   const { focusModal } = useContext(ModalContext);
 
   return (
-    <SearchButtonContainer aria-label="결과 찾기 버튼">
+    <SearchButtonContainer href="/result" aria-label="결과 찾기 버튼">
       <StyledSearchIcon />
       {focusModal !== '' && <span>검색</span>}
     </SearchButtonContainer>

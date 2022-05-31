@@ -47,7 +47,6 @@ export const CommonContainer = styled.div<ContainerType>`
     background: ${({ theme }) => theme.colors.grey6};
   }
 
-  /* props로 넘겨받도록 수정 */
   ${({ focusModal, id, isClicked }) =>
     focusModal === id &&
     isClicked &&
@@ -75,9 +74,13 @@ export const SelectedOption = styled.span`
   text-align: left;
   color: ${({ theme }) => theme.colors.grey2};
   ${({ theme }) => theme.fontStyles.normal16px};
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
-export const SearchButton = styled.button`
+export const SearchButton = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;

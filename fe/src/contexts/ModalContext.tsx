@@ -3,10 +3,8 @@ import { createContext, Dispatch, ReactNode, useState } from 'react';
 type ModalInfo = {
   focusModal: string;
   setFocusModal?: Dispatch<React.SetStateAction<string>>;
-  clickModalFocus?: (id: string) => void;
-  closeModal?: () => void;
   isClicked: boolean;
-  checkClicked?: (id: string) => void;
+  setClicked?: Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const ModalContext = createContext<ModalInfo>({
@@ -18,24 +16,10 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   const [focusModal, setFocusModal] = useState<string>('');
   const [isClicked, setClicked] = useState<boolean>(false);
 
-  const clickModalFocus = (id: string) => {
-    if (focusModal === id) {
-      setFocusModal('');
-      setClicked(false);
-    } else {
-      setFocusModal(id);
-      setClicked(true);
-    }
-  };
-
-  const closeModal = () => {
-    setFocusModal('');
-  };
-
   return (
     <ModalContext.Provider
       // eslint-disable-next-line react/jsx-no-constructed-context-values
-      value={{ focusModal, setFocusModal, clickModalFocus, closeModal, isClicked }}
+      value={{ focusModal, setFocusModal, isClicked, setClicked }}
     >
       {children}
     </ModalContext.Provider>

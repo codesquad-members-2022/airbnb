@@ -22,7 +22,7 @@ function PersonnelModal() {
     return (
       <>
         <PersonnelModalWrap key={info.id} info={info} />
-        {index !== PERSONNEL_INFO.length - 1 && <StyledDevider key={info.id * 8} />}
+        {index !== PERSONNEL_INFO.length - 1 && <StyledDevider key={info.id} />}
       </>
     );
   });

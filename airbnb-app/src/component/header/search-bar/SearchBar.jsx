@@ -38,6 +38,7 @@ function SearchBar() {
 }
 
 const Form = styled.form`
+  display: flex;
   margin: 30px auto 0;
   max-width: 1070px;
   border: 1px solid ${({ theme }) => theme.color.grey4};

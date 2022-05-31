@@ -7,13 +7,15 @@ import { SearchBarContext } from '@component/header/search-bar/SearchBarProvider
 function SearchInput({ label, placeholder, value, isLastElement }) {
   const { isFocus, updateFocusState, currentInput } = useContext(SearchBarContext);
 
+  const isCurrentInput = currentInput === label;
+
   return (
-    <Container bgColor={currentInput === label ? 'white' : null} tabIndex="0" onFocus={() => updateFocusState(label)}>
+    <Container flexGrow={isLastElement ? 2 : 1} bgColor={currentInput === label ? 'white' : null} tabIndex="0" onFocus={() => updateFocusState(label)}>
       <div>
         <Label>{label}</Label>
         <Input type="text" placeholder={placeholder} value={value} readOnly />
       </div>
-      <ResetButton display={value && isFocus ? 'block' : 'none'} />
+      <ResetButton display={value && isCurrentInput ? 'block' : 'none'} />
       {isLastElement ? <SearchButton open={isFocus} /> : <Line />}
     </Container>
   );
@@ -24,7 +26,7 @@ const Container = styled.div`
   position: relative;
   display: inline-flex;
   align-items: center;
-  width: calc(100% / 4);
+  flex-grow: ${({ flexGrow }) => flexGrow};
   padding: 20px 30px;
   border-radius: ${({ theme }) => theme.borderRadius.radius1};
   background-color: ${({ theme, bgColor }) => theme.color[bgColor]};

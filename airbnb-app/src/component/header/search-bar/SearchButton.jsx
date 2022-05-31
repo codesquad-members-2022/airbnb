@@ -14,7 +14,7 @@ const SubmitButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 5px;
+  margin-left: auto;
   padding: ${({ padding }) => padding};
   background-color: ${({ theme }) => theme.color.primary};
   border-radius: ${({ theme }) => theme.borderRadius.radius1};

@@ -1,6 +1,6 @@
 package com.ahoo.airbnb.entity;
 
-import com.ahoo.airbnb.reservation.ChargePolicyType;
+import com.ahoo.airbnb.reservation.chargepolicy.ChargePolicyType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

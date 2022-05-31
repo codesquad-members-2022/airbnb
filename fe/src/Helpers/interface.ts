@@ -7,3 +7,11 @@ export interface DateType {
 export interface EventType {
   target: any;
 }
+
+export interface FlexType {
+  flex: boolean;
+  justify?: string;
+  align?: string;
+  direction?: string;
+  wrap?: string;
+}

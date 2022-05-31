@@ -47,7 +47,6 @@ class LocationViewController: BackgroundViewController, CommonViewControllerProt
         navigationItem.title = "숙소 찾기"
         super.setUpNavigationAppearance()
         view.backgroundColor = .systemBackground
-        self.navigationController?.isToolbarHidden = false
     }
     
     func layout() {
@@ -144,6 +143,7 @@ extension LocationViewController: UICollectionViewDelegateFlowLayout, UICollecti
         }
         reservationModel.location = cell.cityName.text
         let nextVC = CalendarViewController(reservationModel: reservationModel)
+        self.navigationController?.isToolbarHidden = false
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     

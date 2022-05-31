@@ -1,34 +1,61 @@
 import React, { useCallback, useState } from 'react';
-import { Center, Flex, Spacer } from '@chakra-ui/react';
+import { Center, Flex } from '@chakra-ui/react';
 import styled from 'styled-components';
 
 import CheckInOut from './CheckInOut';
 import Personnel from './Personnel';
 import Price from './Price';
-import Modal from 'components/Calendar/CalendarModal';
+import CalendarModal from 'components/Calendar/CalendarModal';
+import CalendarProvider from 'contexts/CalendarProvider';
 import { ReactComponent as SearchIcon } from 'assets/svg/searchBtn.svg';
+import Modal from 'components/Modal/Modal';
+import { calendarModalStyle } from 'components/Modal/ModalStyle';
 
 function SearchBar() {
-  const [isOpenModal, setOpenModal] = useState(false);
+  const [selectedContent, setSelectedContent] = useState(null);
 
-  const onClickToggleModal = useCallback(() => {
-    setOpenModal(!isOpenModal);
-  }, [isOpenModal]);
+  const renderModal = useCallback(() => {
+    switch (selectedContent) {
+      case 'CHECK_IN_OUT':
+        return (
+          <CalendarModalContainer>
+            <CalendarModal />
+          </CalendarModalContainer>
+        );
+      case 'PRICE':
+        return;
+      case 'TOTAL_GUESTS':
+        return;
+      default:
+        return;
+    }
+  }, [selectedContent]);
+
+  const handleClickSearchBarBtn = useCallback(
+    (contentType) => {
+      if (selectedContent === contentType) setSelectedContent(null);
+      else {
+        setSelectedContent(contentType);
+      }
+    },
+    [selectedContent],
+  );
 
   return (
-    <Center>
-      <SearchContainer>
-        <Flex>
-          <CheckInOut onClick={onClickToggleModal} />
-          <Spacer />
-          <Price />
-          <Spacer />
-          <Personnel />
-          <SearchIcon style={{ margin: '22px' }} />
-        </Flex>
-      </SearchContainer>
-      {isOpenModal && <Modal />}
-    </Center>
+    <CalendarProvider>
+      <Center>
+        <SearchContainer>
+          <Flex justify="space-between">
+            <CheckInOut onClick={handleClickSearchBarBtn} title={'체크인'} />
+            <CheckInOut onClick={handleClickSearchBarBtn} title={'체크아웃'} />
+            <Price onClick={handleClickSearchBarBtn} />
+            <Personnel onClick={handleClickSearchBarBtn} />
+            <SearchIcon style={{ margin: '22px' }} />
+          </Flex>
+        </SearchContainer>
+        {selectedContent && renderModal()}
+      </Center>
+    </CalendarProvider>
   );
 }
 
@@ -42,4 +69,7 @@ const SearchContainer = styled.div`
   border-radius: 20px;
 `;
 
+const CalendarModalContainer = styled(Modal)`
+  ${calendarModalStyle}
+`;
 export default SearchBar;

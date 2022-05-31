@@ -46,7 +46,8 @@ function SearchBar() {
       <Center>
         <SearchContainer>
           <Flex justify="space-between">
-            <CheckInOut onClick={handleClickSearchBarBtn} />
+            <CheckInOut onClick={handleClickSearchBarBtn} title={'체크인'} />
+            <CheckInOut onClick={handleClickSearchBarBtn} title={'체크아웃'} />
             <Price onClick={handleClickSearchBarBtn} />
             <Personnel onClick={handleClickSearchBarBtn} />
             <SearchIcon style={{ margin: '22px' }} />

@@ -4,6 +4,7 @@ import {
   GridItem,
   modalStyle,
   SelectItemTemplateProps,
+  modalAnchorDefaultStyle,
 } from "./SelectItemTemplate.style";
 
 const SelectItemTemplate = ({
@@ -17,15 +18,21 @@ const SelectItemTemplate = ({
   );
 };
 
-const ModalTemplate = ({ ...props }: PopoverProps): JSX.Element => {
+const ModalTemplate = ({
+  open,
+  anchorEl,
+  onClose,
+  anchorOrigin = modalAnchorDefaultStyle,
+  children,
+}: PopoverProps): JSX.Element => {
   return (
     <Popover
-      open={props.open}
-      anchorEl={props.anchorEl}
-      onClose={props.onClose}
-      anchorOrigin={props.anchorOrigin}
+      open={open}
+      anchorEl={anchorEl}
+      onClose={onClose}
+      anchorOrigin={anchorOrigin}
     >
-      <Box sx={modalStyle}>{props.children}</Box>
+      <Box sx={modalStyle}>{children}</Box>
     </Popover>
   );
 };

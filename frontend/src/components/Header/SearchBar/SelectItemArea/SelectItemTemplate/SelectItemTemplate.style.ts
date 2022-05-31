@@ -1,5 +1,7 @@
-import { Grid, GridProps, Theme } from "@mui/material";
+import { Grid, GridProps, PopoverOrigin, Theme } from "@mui/material";
 import { styled } from "@mui/material/styles";
+
+import theme from "styles/theme";
 
 const GridItem = styled(Grid, {
   shouldForwardProp: (prop) => prop !== "divide",
@@ -15,7 +17,12 @@ const modalStyle = {
   padding: ({ whiteSpace }: Theme) => whiteSpace.searchBarPadding,
 };
 
-export { GridItem, modalStyle };
+const modalAnchorDefaultStyle: PopoverOrigin = {
+  vertical: theme.elementSize.searchBar.height,
+  horizontal: "left",
+};
+
+export { GridItem, modalStyle, modalAnchorDefaultStyle };
 
 export interface SelectItemTemplateProps extends GridProps {
   divide?: boolean;

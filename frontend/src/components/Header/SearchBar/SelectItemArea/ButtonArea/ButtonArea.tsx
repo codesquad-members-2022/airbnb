@@ -29,9 +29,6 @@ const ButtonArea = ({
       <RoundButton
         icon={icon}
         isFocused={isFocused}
-        sx={{
-          zIndex: 1500,
-        }}
         onClick={onClick}
         aria-label={ariaLabel}
       >

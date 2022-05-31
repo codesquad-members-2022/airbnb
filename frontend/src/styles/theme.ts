@@ -45,6 +45,7 @@ const theme = createTheme({
       height: `32px`,
     },
     searchBar: {
+      height: 60,
       closeButton: {
         width: "20px",
         height: "20px",
@@ -174,6 +175,7 @@ declare module "@mui/material/styles" {
         height: string;
       };
       searchBar: {
+        height: number;
         closeButton: {
           width: string;
           height: string;
@@ -222,6 +224,7 @@ declare module "@mui/material/styles" {
         height?: string;
       };
       searchBar?: {
+        height?: number;
         closeButton?: {
           width?: string;
           height?: string;

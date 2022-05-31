@@ -8,6 +8,8 @@ import SelectItemAreaWrapper from "./SelectItemArea.style";
 // TODO:
 // 스크린리더가 읽을 수 있도록 - tab으로 탐색가능하도록
 
+// sx={{ zIndex: 1600 }}
+
 const SelectItemArea = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<AnchorEl>(null);
 

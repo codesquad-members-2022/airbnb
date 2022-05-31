@@ -1,5 +1,5 @@
-import GroupOne from './GroupOne';
-import GroupTwo from './GroupTwo';
+import CityInfo from './CityInfo';
+import TripInfo from './TripInfo';
 import { cityData } from 'assets/data/cityData';
 import { tripData } from 'assets/data/tripData';
 
@@ -11,8 +11,8 @@ const title = {
 function Main() {
   return (
     <main>
-      <GroupOne title={title.cityTitle} data={cityData} />
-      <GroupTwo title={title.tripTitle} data={tripData} />
+      <CityInfo title={title.cityTitle} data={cityData} />
+      <TripInfo title={title.tripTitle} data={tripData} />
     </main>
   );
 }

@@ -1,26 +1,26 @@
-import { Flex, Spacer } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import styled from 'styled-components';
 
-function UpperMenu(props) {
+const MenuData = ['숙소', '체험', '온라인 체험'];
+
+function UpperMenu() {
   return (
-    <Div>
-      <Flex>
-        <UpperMenuContent>숙소</UpperMenuContent>
-        <Spacer />
-        <UpperMenuContent>체험</UpperMenuContent>
-        <Spacer />
-        <UpperMenuContent>온라인 체험</UpperMenuContent>
+    <Menu>
+      <Flex justify="space-between">
+        {MenuData.map((data, idx) => (
+          <UpperMenuContent key={idx}>{data}</UpperMenuContent>
+        ))}
       </Flex>
-    </Div>
+    </Menu>
   );
 }
 
-const Div = styled.div`
+const Menu = styled.div`
   width: 15%;
 `;
 
 const UpperMenuContent = styled.p`
-  background-color: ${({ theme }) => theme.colors.clearwhite};
+  background-color: ${({ theme }) => theme.colors.clearWhite};
   cursor: pointer;
   font-size: ${({ theme }) => theme.fontSizes.xs};
   font-weight: 600;

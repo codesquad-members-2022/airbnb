@@ -1,12 +1,12 @@
-import { flexColumn } from 'style/mixins';
 import styled from 'styled-components';
+import { flexColumn } from 'style/mixins';
 
 function Content({ data }) {
   return (
     <FooterContent>
       <FooterContentTitle>{data.title}</FooterContentTitle>
-      {data.info.map((el, idx) => (
-        <FooterContentText key={idx}>{el}</FooterContentText>
+      {data.info.map(({ id, content }) => (
+        <FooterContentText key={id}>{content}</FooterContentText>
       ))}
     </FooterContent>
   );
@@ -19,12 +19,14 @@ const FooterContent = styled.div`
   width: 25%;
 `;
 
-const FooterContentTitle = styled.p`
+const FooterContentTitle = styled.button`
+  text-align: left;
   font-weight: bold;
   margin: 10px;
 `;
 
-const FooterContentText = styled.p`
+const FooterContentText = styled.button`
+  text-align: left;
   margin: 10px;
 `;
 

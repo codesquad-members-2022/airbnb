@@ -43,6 +43,7 @@
 		1BF0618828459A210043FF2F /* Reservations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0618728459A210043FF2F /* Reservations.swift */; };
 		1BF0618C2845CF8D0043FF2F /* PriceGraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0618B2845CF8D0043FF2F /* PriceGraphViewController.swift */; };
 		1BF0618E2845CFBE0043FF2F /* ColumnGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0618D2845CFBE0043FF2F /* ColumnGraphView.swift */; };
+		1BF061902845F31E0043FF2F /* CommonColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0618F2845F31E0043FF2F /* CommonColors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +115,7 @@
 		1BF0618728459A210043FF2F /* Reservations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reservations.swift; sourceTree = "<group>"; };
 		1BF0618B2845CF8D0043FF2F /* PriceGraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceGraphViewController.swift; sourceTree = "<group>"; };
 		1BF0618D2845CFBE0043FF2F /* ColumnGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnGraphView.swift; sourceTree = "<group>"; };
+		1BF0618F2845F31E0043FF2F /* CommonColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonColors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +218,7 @@
 				005AF78E283B775300546D5B /* AppDelegate.swift */,
 				005AF790283B775300546D5B /* SceneDelegate.swift */,
 				005AF797283B775300546D5B /* Assets.xcassets */,
+				1BF0618F2845F31E0043FF2F /* CommonColors.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 				005AF791283B775300546D5B /* SceneDelegate.swift in Sources */,
 				1BF0618E2845CFBE0043FF2F /* ColumnGraphView.swift in Sources */,
 				1B90ED34283F547600E45FE8 /* SearchDayDTO.swift in Sources */,
+				1BF061902845F31E0043FF2F /* CommonColors.swift in Sources */,
 				1BF0618C2845CF8D0043FF2F /* PriceGraphViewController.swift in Sources */,
 				1B7EB7F32844E5A70078D4A9 /* NetworkServices.swift in Sources */,
 				00A85F44283B87B900EA32E0 /* MyInfoModel.swift in Sources */,

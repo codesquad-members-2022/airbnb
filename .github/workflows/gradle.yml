@@ -38,6 +38,7 @@ jobs:
     - name: Build and Push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v5.6
       with:
+        image: cherrybnb/cherrybnb
         tags: cherrybnb/cherrybnb:latest
         registry: docker.io
         dockerfile: ./backend/Dockerfile

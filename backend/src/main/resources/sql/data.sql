@@ -53,7 +53,11 @@ VALUES (1, 2, 1, 0, 2, 1, 1, 1, '17:00:00', '12:00:00', true, true, true, true);
 INSERT INTO room_image (room_id, path, sequence)
 VALUES (1, 'https://bit.ly/39ZouHy', 1);
 
--- rservation
+-- reservation
 INSERT INTO reservation (guest_id, room_id, total_charge, number_adult, number_child, number_infant,
                          checkin_date_time, checkout_date_time)
 VALUES (2, 1, 67007, 2, 1, 0, '2021-05-30 17:00:00', '2021-05-31 12:00:00');
+
+-- wishlist
+INSERT INTO wish (member_id, room_id)
+VALUES (2, 1)

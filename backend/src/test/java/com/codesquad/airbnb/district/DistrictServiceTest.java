@@ -4,6 +4,7 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 import com.codesquad.airbnb.common.embeddable.Location;
 import com.codesquad.airbnb.common.embeddable.ReviewStat;
+import com.codesquad.airbnb.config.TestConfig;
 import com.codesquad.airbnb.district.District.DistrictType;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -11,17 +12,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 @ActiveProfiles("test")
-@SpringBootTest
-@Transactional
-@AutoConfigureTestEntityManager
+@DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
+@Import({TestConfig.class, DistrictService.class, DistrictRepository.class})
 @DisplayName("DistrictService 통합 테스트")
 class DistrictServiceTest {
 

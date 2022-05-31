@@ -41,6 +41,8 @@
 		1B90ED34283F547600E45FE8 /* SearchDayDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B90ED33283F547600E45FE8 /* SearchDayDTO.swift */; };
 		1B90ED36283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B90ED35283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift */; };
 		1BF0618828459A210043FF2F /* Reservations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0618728459A210043FF2F /* Reservations.swift */; };
+		1BF0618C2845CF8D0043FF2F /* PriceGraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0618B2845CF8D0043FF2F /* PriceGraphViewController.swift */; };
+		1BF0618E2845CFBE0043FF2F /* ColumnGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF0618D2845CFBE0043FF2F /* ColumnGraphView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +112,8 @@
 		1B90ED33283F547600E45FE8 /* SearchDayDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDayDTO.swift; sourceTree = "<group>"; };
 		1B90ED35283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirbnbCalendarModelTests.swift; sourceTree = "<group>"; };
 		1BF0618728459A210043FF2F /* Reservations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reservations.swift; sourceTree = "<group>"; };
+		1BF0618B2845CF8D0043FF2F /* PriceGraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceGraphViewController.swift; sourceTree = "<group>"; };
+		1BF0618D2845CFBE0043FF2F /* ColumnGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnGraphView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +223,7 @@
 		005AF7C2283B843700546D5B /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				1BF061892845CF310043FF2F /* Graph */,
 				002972972844B45C0033437E /* Calendar */,
 				00A85F36283B872E00EA32E0 /* View */,
 				00A85F33283B871900EA32E0 /* Model */,
@@ -339,6 +344,23 @@
 				1BF0618728459A210043FF2F /* Reservations.swift */,
 			);
 			path = DTO;
+			sourceTree = "<group>";
+		};
+		1BF061892845CF310043FF2F /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				1BF0618A2845CF3E0043FF2F /* View */,
+			);
+			path = Graph;
+			sourceTree = "<group>";
+		};
+		1BF0618A2845CF3E0043FF2F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1BF0618B2845CF8D0043FF2F /* PriceGraphViewController.swift */,
+				1BF0618D2845CFBE0043FF2F /* ColumnGraphView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -504,7 +526,9 @@
 				1B27E237283CA5A900FCB990 /* SearchCellCommonType.swift in Sources */,
 				00A85F38283B873F00EA32E0 /* SearchViewController.swift in Sources */,
 				005AF791283B775300546D5B /* SceneDelegate.swift in Sources */,
+				1BF0618E2845CFBE0043FF2F /* ColumnGraphView.swift in Sources */,
 				1B90ED34283F547600E45FE8 /* SearchDayDTO.swift in Sources */,
+				1BF0618C2845CF8D0043FF2F /* PriceGraphViewController.swift in Sources */,
 				1B7EB7F32844E5A70078D4A9 /* NetworkServices.swift in Sources */,
 				00A85F44283B87B900EA32E0 /* MyInfoModel.swift in Sources */,
 			);

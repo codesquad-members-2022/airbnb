@@ -54,7 +54,7 @@ class CalendarViewController: UIViewController, CommonViewControllerProtocol {
     
     @objc func pushNextVC() {
         //TODO: - graphic 관련한 뷰컨트롤러로 변경
-        let nextVC = UIViewController()
+        let nextVC = PriceGraphViewController()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }

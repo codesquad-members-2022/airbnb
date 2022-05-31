@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { CalendarContext } from 'contexts/CalendarProvider';
 
@@ -11,7 +11,9 @@ function CalendarDates({ lastDate, firstDate, idx, year, month, date }) {
         lastDate={lastDate}
         firstDate={firstDate}
         active={idx > firstDate - 1 || idx < lastDate}
-        onClick={() => handelClickEvent(year, month, date)}
+        onClick={() => {
+          handelClickEvent(year, month, date);
+        }}
       >
         {date}일
       </DateNum>
@@ -36,10 +38,12 @@ const DateList = styled.li`
 `;
 
 const DateNum = styled.button`
+  width: 100%;
+  text-align: right;
   font-size: ${({ theme }) => theme.fontSizes.m};
   font-weight: 500;
   color: inherit;
   ${({ active }) => active && `color: #BDBDBD;`};
 `;
 
-export default CalendarDates;
+export default React.memo(CalendarDates);

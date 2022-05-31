@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Flex } from '@chakra-ui/react';
 import styled from 'styled-components';
 
@@ -22,47 +22,31 @@ function CalendarModal() {
   }, [month]);
 
   return (
-    <ModalContainer>
-      <Flex justify="space-between">
-        <EarlyMonth>
-          <CalendarHead
-            year={year}
-            month={month}
-            setYear={setYear}
-            setMonth={setMonth}
-            position={'leftBtn'}
-          />
-          <CalendarBody totalDate={earlyTotalDate} year={year} month={month} />
-        </EarlyMonth>
+    <Flex justify="space-between">
+      <EarlyMonth>
+        <CalendarHead
+          year={year}
+          month={month}
+          setYear={setYear}
+          setMonth={setMonth}
+          position={'leftBtn'}
+        />
+        <CalendarBody totalDate={earlyTotalDate} year={year} month={month} />
+      </EarlyMonth>
 
-        <LateMonth>
-          <CalendarHead
-            year={year}
-            month={month + 1}
-            setYear={setYear}
-            setMonth={setMonth}
-            position={'rightBtn'}
-          />
-          <CalendarBody
-            totalDate={lastTotalDate}
-            year={year}
-            month={month + 1}
-          />
-        </LateMonth>
-      </Flex>
-    </ModalContainer>
+      <LateMonth>
+        <CalendarHead
+          year={year}
+          month={month + 1}
+          setYear={setYear}
+          setMonth={setMonth}
+          position={'rightBtn'}
+        />
+        <CalendarBody totalDate={lastTotalDate} year={year} month={month + 1} />
+      </LateMonth>
+    </Flex>
   );
 }
-
-const ModalContainer = styled.div`
-  position: absolute;
-  background-color: ${({ theme }) => theme.colors.white};
-  border-radius: 30px;
-  width: 870px;
-  height: 499px;
-  top: 190px;
-  z-index: 10;
-`;
 
 const EarlyMonth = styled.div`
   float: right;
@@ -72,4 +56,4 @@ const LateMonth = styled.div`
   float: left;
 `;
 
-export default CalendarModal;
+export default React.memo(CalendarModal);

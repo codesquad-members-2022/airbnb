@@ -8,7 +8,7 @@ function CheckInOut({ onClick }) {
 
   return (
     <>
-      <Btn onClick={onClick}>
+      <Btn onClick={() => onClick('CHECK_IN_OUT')}>
         <ContentBox>
           <BarTitle>체크인</BarTitle>
           <BarContent>
@@ -16,7 +16,7 @@ function CheckInOut({ onClick }) {
           </BarContent>
         </ContentBox>
       </Btn>
-      <Btn onClick={onClick}>
+      <Btn onClick={() => onClick('CHECK_IN_OUT')}>
         <ContentBox>
           <BarTitle>체크아웃</BarTitle>
           <BarContent>

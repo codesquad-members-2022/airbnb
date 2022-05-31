@@ -12,5 +12,6 @@
     <color name="airbnb_Primary">#E84C60</color>
     <color name="airbnb_Grey1">#333333</color>
     <color name="airbnb_Grey3">#828282</color>
+    <color name="airbnb_offWhite">#F5F5F7</color>
 
 </resources>

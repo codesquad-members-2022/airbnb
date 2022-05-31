@@ -63,6 +63,8 @@
     "import/extensions": "off",
     "import/prefer-default-export": "off",
     "no-use-before-define": "off",
-    "no-shadow": "off"
+    "no-shadow": "off",
+    "prefer-promise-reject-errors": "off",
+    "react/require-default-props": "off"
   }
 }

@@ -6,24 +6,61 @@
 //
 
 import UIKit
+import MapKit
 
 final class SearchViewController: UIViewController, UISearchResultsUpdating {
 
-    private var homeViewModel = HomeViewModel()
+    private var citySearchViewModel = SearchViewModel()
     private var collectionView: UICollectionView!
+    private var searchCompleter: MKLocalSearchCompleter?
+    private var searchRegion: MKCoordinateRegion = MKCoordinateRegion(MKMapRect.world)
+    private var completerResults: [MKLocalSearchCompletion]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "숙소 찾기"
-        view.backgroundColor = .white
         configureDisplay()
         configureConstraints()
-        homeViewModel.loadCityVM()
+        configureViewModel()
+        configureSearchCompleter()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        searchCompleter = nil
     }
 
     private func configureDisplay() {
+        setViewController()
         setSearchController()
         setCollectionView()
+    }
+
+    private func configureSearchCompleter() {
+        searchCompleter = MKLocalSearchCompleter()
+        searchCompleter?.delegate = self
+        searchCompleter?.resultTypes = .address
+        searchCompleter?.region = searchRegion
+    }
+
+    private func configureViewModel() {
+        citySearchViewModel.reset()
+
+        citySearchViewModel.headerVM.bind { _ in
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+
+        citySearchViewModel.cityVM.bind { _ in
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+    }
+
+    private func setViewController() {
+        title = "숙소 찾기"
+        view.backgroundColor = .white
     }
 
     private func setSearchController() {
@@ -47,7 +84,6 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating {
     }
 
     private func configureConstraints() {
-
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -58,25 +94,29 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else {return}
-        print(text)
+        if text.isEmpty {
+            citySearchViewModel.reset()
+            return
+        }
+        searchCompleter?.queryFragment = text
     }
 }
 
 extension SearchViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return homeViewModel.getCount(for: .city)
+        citySearchViewModel.cityVM.value.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CityCell.id, for: indexPath) as? CityCell else {return UICollectionViewCell()}
-        cell.cellViewModel = homeViewModel.cityVM[indexPath.item]
+        cell.cellViewModel = citySearchViewModel.cityVM.value[indexPath.item]
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.id, for: indexPath) as? SectionHeader else {return UICollectionReusableView()}
-        header.configureCell(title: "근처의 인기 여행지")
+        header.viewModel = citySearchViewModel.headerVM.value
         return header
     }
 
@@ -90,5 +130,39 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: -100, bottom: 0, right: 0)
+    }
+}
+
+extension SearchViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let completerResults = completerResults else {return}
+        let selectedRegion = completerResults[indexPath.item]
+        let searchRequest = MKLocalSearch.Request(completion: selectedRegion)
+        let search = MKLocalSearch(request: searchRequest)
+
+        search.start { (response, error) in
+            guard error == nil else {return}
+            guard let placeMark = response?.mapItems[0].placemark, let title = placeMark.title else {return}
+
+            // TODO: Location 정보를 nextVC 에 넘겨주어야함.
+            let location = Location(name: title, latitude: placeMark.coordinate.latitude, longitude: placeMark.coordinate.longitude)
+            let nextVC = FilterViewController()
+            self.navigationController?.pushViewController(nextVC, animated: true)
+        }
+
+    }
+
+}
+
+extension SearchViewController: MKLocalSearchCompleterDelegate {
+
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        var cities = [City]()
+        completer.results.forEach({
+            cities.append(City(name: $0.title, image: "defaultCity", travelTime: nil))
+        })
+        citySearchViewModel.update(models: cities)
+        completerResults = completer.results
     }
 }

@@ -6,26 +6,37 @@
 //
 
 import Foundation
+
 struct Time {
 
-    let value: Decimal
-    let unit: String
+    private(set) var value: Decimal
     private var formatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 2
         formatter.minimumFractionDigits = 0
         return formatter
     }
+
     var description: String {
-        guard let castedValue = formatter.string(from: NSDecimalNumber(decimal: value)) else {return ""}
-        return castedValue + unit
+        let timeComponent = castTime(value: self.value)
+        guard let castedValue = formatter.string(from: NSDecimalNumber(decimal: timeComponent.value)) else {return ""}
+        return castedValue + timeComponent.unit
     }
 
-    init (_ minutes: Decimal) {
-        let hours = minutes/60
-        let value = hours < 1 ? minutes : hours
-        let unit = hours < 1 ? "분" : "시간"
-        self.value = value
-        self.unit = unit
+    init(_ minutes: Decimal) {
+        self.value = minutes
     }
+
+    init?(_ minutes: String?) {
+        guard let minutes = minutes else {return nil}
+        self.init(Decimal(string: minutes) ?? 0.0)
+    }
+
+    private func castTime(value: Decimal) -> (value: Decimal, unit: String) {
+        let hours = value/60
+        let value = hours < 1 ? value : hours
+        let unit = hours < 1 ? "분" : "시간"
+        return (value, unit)
+    }
+
 }

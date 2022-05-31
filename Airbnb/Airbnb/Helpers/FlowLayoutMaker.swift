@@ -7,13 +7,38 @@
 
 import UIKit
 
-enum SectionMaker: Int {
+enum HomeSection: Int {
     case banner
     case localSite
     case randomSite
+}
 
-    var section: NSCollectionLayoutSection {
-        switch self {
+enum FilterSection: Int {
+    case container
+    case filterForm
+}
+
+protocol LayoutProvidable {
+    func createSection(at: Int) -> NSCollectionLayoutSection?
+}
+
+struct FlowLayout {
+
+    static func makeCompositionalLayout (_ provider: LayoutProvidable) -> UICollectionViewCompositionalLayout {
+        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            guard let section = provider.createSection(at: sectionIndex) else {return nil}
+            return section
+        }
+        return layout
+    }
+}
+
+struct HomeLayout: LayoutProvidable {
+
+    func createSection(at: Int) -> NSCollectionLayoutSection? {
+        let section = HomeSection.init(rawValue: at)
+
+        switch section {
         case .banner:
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                           heightDimension: .fractionalHeight(1.0))
@@ -49,17 +74,41 @@ enum SectionMaker: Int {
             section.contentInsets.leading = 10
             section.orthogonalScrollingBehavior = .groupPaging
             return section
+
+        case .none:
+            return nil
         }
     }
 }
 
-enum FlowLayout {
+ struct FilterLayout: LayoutProvidable {
+    func createSection(at: Int) -> NSCollectionLayoutSection? {
+        let section = FilterSection.init(rawValue: at)
+        switch section {
 
-    static func makeCompositionalLayout () -> UICollectionViewCompositionalLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            guard let sectionMaker = SectionMaker.init(rawValue: sectionIndex) else {return nil}
-            return sectionMaker.section
+        case .container:
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                          heightDimension: .fractionalHeight(1.0))
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                   heightDimension: .fractionalHeight(0.6))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            let section = NSCollectionLayoutSection(group: group)
+            return section
+
+        case .filterForm:
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                  heightDimension: .fractionalHeight(1.0))
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                   heightDimension: .fractionalHeight(0.07))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            let section = NSCollectionLayoutSection(group: group)
+            return section
+
+        case .none:
+            return nil
         }
-        return layout
+
     }
-}
+ }

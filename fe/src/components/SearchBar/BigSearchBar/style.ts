@@ -24,14 +24,6 @@ export const ButtonWrapper = styled.div`
   ${mixin.scaleButtonTransition()};
 `;
 
-export const Button = styled.button.attrs({ type: 'button' })<{ width: number }>`
-  cursor: pointer;
-  padding: 0 0 0 8px;
-  background-color: transparent;
-  text-align: left;
-  width: ${({ width }) => width}px;
-`;
-
 export const Header = styled.header`
   font-size: ${({ theme }) => theme.fontSize.xs};
   font-weight: bold;
@@ -48,8 +40,27 @@ export const Description = styled.div`
   overflow: hidden;
 `;
 
-export const SearchButtonLayer = styled.div`
+export const Button = styled.button.attrs({ type: 'button' })<{ width: number; accent: boolean }>`
+  cursor: pointer;
+  padding: 0 0 0 8px;
+  background-color: transparent;
+  text-align: left;
+  width: ${({ width }) => width}px;
+
+  ${Header}, ${Description} {
+    color: ${({ theme, accent }) => accent && theme.color.black};
+  }
+`;
+
+export const SearchButtonLayer = styled.div<{ disabled?: boolean }>`
   margin: 0 16px 0 8px;
+
+  ${({ disabled }) =>
+    disabled &&
+    `
+    pointer-events: none;
+    opacity: 0.6;
+  `};
 
   button {
     ${mixin.scaleButtonTransition()};
@@ -77,7 +88,7 @@ export const SearchBarLayer = styled.div`
   ${mixin.inlineFlexbox({ ai: 'center' })};
   background-color: ${({ theme }) => theme.color.white};
   border: 1px solid ${({ theme }) => theme.color.gray4};
-  width: 930px;
+  width: 915px;
   min-height: 48px;
   border-radius: 30px;
   overflow: hidden;

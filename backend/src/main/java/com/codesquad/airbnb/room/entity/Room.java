@@ -1,10 +1,11 @@
 package com.codesquad.airbnb.room.entity;
 
 import com.codesquad.airbnb.district.District;
+import com.codesquad.airbnb.domain.Location;
+import com.codesquad.airbnb.domain.ReviewTotal;
+import com.codesquad.airbnb.domain.RoomCharge;
 import com.codesquad.airbnb.member.Member;
 import com.codesquad.airbnb.reservation.Reservation;
-import com.codesquad.airbnb.room.entity.embeddable.Charge;
-import com.codesquad.airbnb.room.entity.embeddable.ReviewTotal;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -20,14 +21,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.locationtech.jts.geom.Point;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Room {
 
-    enum RoomType {WHOLE_APARTMENT, WHOLE_RESIDENCE}
+    public enum RoomType {WHOLE_APARTMENT, WHOLE_RESIDENCE}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,13 +38,16 @@ public class Room {
 
     private String name;
     private String description;
-    private Point point;
+    private String imagePath;
 
     @Enumerated(value = EnumType.STRING)
     private RoomType type;
 
     @Embedded
-    private Charge charge;
+    private Location location;
+
+    @Embedded
+    private RoomCharge charge;
 
     @Embedded
     private ReviewTotal review;
@@ -56,7 +61,7 @@ public class Room {
     private Member host;
 
     @OneToOne(mappedBy = "room", fetch = FetchType.LAZY)
-    private RoomDetail info;
+    private RoomDetail detail;
 
     @OneToMany(mappedBy = "room")
     private List<Review> reviews;
@@ -67,4 +72,16 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private List<Reservation> reservations;
 
+    public Room(District district, Member host, String name, String description, String imagePath,
+        RoomType type, Location location, RoomCharge charge, ReviewTotal review) {
+        this.district = district;
+        this.host = host;
+        this.name = name;
+        this.description = description;
+        this.imagePath = imagePath;
+        this.type = type;
+        this.location = location;
+        this.charge = charge;
+        this.review = review;
+    }
 }

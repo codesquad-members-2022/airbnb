@@ -1,9 +1,9 @@
 package com.codesquad.airbnb.room.entity;
 
-import com.codesquad.airbnb.room.entity.embeddable.GuestGroup;
-import com.codesquad.airbnb.room.entity.embeddable.RoomGroup;
-import com.codesquad.airbnb.room.entity.embeddable.RoomOption;
-import com.codesquad.airbnb.room.entity.embeddable.StayTime;
+import com.codesquad.airbnb.domain.GuestGroup;
+import com.codesquad.airbnb.domain.RoomGroup;
+import com.codesquad.airbnb.domain.RoomOption;
+import com.codesquad.airbnb.domain.StayTime;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -14,8 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RoomDetail {
@@ -41,4 +43,12 @@ public class RoomDetail {
     @JoinColumn(name = "room_id")
     private Room room;
 
+    public RoomDetail(Room room, GuestGroup guestGroup, RoomGroup roomGroup, RoomOption option,
+        StayTime stayTime) {
+        this.room = room;
+        this.guestGroup = guestGroup;
+        this.roomGroup = roomGroup;
+        this.option = option;
+        this.stayTime = stayTime;
+    }
 }

@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
-    enum MemberRole {ADMIN, USER}
+    public enum MemberRole {ADMIN, USER}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,4 +37,10 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Wish> wishRefs;
 
+    public Member(String name, String imagePath, Boolean isSuperHost, MemberRole role) {
+        this.name = name;
+        this.imagePath = imagePath;
+        this.isSuperHost = isSuperHost;
+        this.role = role;
+    }
 }

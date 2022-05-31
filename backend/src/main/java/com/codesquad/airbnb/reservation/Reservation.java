@@ -1,8 +1,10 @@
 package com.codesquad.airbnb.reservation;
 
+import com.codesquad.airbnb.domain.GuestGroup;
+import com.codesquad.airbnb.domain.StayPeriod;
+import com.codesquad.airbnb.domain.StayTime;
 import com.codesquad.airbnb.member.Member;
 import com.codesquad.airbnb.room.entity.Room;
-import com.codesquad.airbnb.room.entity.embeddable.GuestGroup;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -27,10 +29,13 @@ public class Reservation {
     private Double totalCharge;
 
     @Embedded
+    private GuestGroup guestGroup;
+
+    @Embedded
     private StayPeriod stayPeriod;
 
     @Embedded
-    private GuestGroup guestGroup;
+    private StayTime stayTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "guest_id")
@@ -40,4 +45,13 @@ public class Reservation {
     @JoinColumn(name = "room_id")
     private Room room;
 
+    public Reservation(Room room, Member guest, Double totalCharge, GuestGroup guestGroup,
+        StayPeriod stayPeriod, StayTime stayTime) {
+        this.room = room;
+        this.guest = guest;
+        this.totalCharge = totalCharge;
+        this.guestGroup = guestGroup;
+        this.stayPeriod = stayPeriod;
+        this.stayTime = stayTime;
+    }
 }

@@ -46,4 +46,4 @@ const DateNum = styled.button`
   ${({ active }) => active && `color: #BDBDBD;`};
 `;
 
-export default React.memo(CalendarDates);
+export default CalendarDates;

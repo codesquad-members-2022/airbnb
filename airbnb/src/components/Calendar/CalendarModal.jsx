@@ -56,4 +56,4 @@ const LateMonth = styled.div`
   float: left;
 `;
 
-export default React.memo(CalendarModal);
+export default CalendarModal;

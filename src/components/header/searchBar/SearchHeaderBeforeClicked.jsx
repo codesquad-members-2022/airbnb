@@ -3,11 +3,15 @@ import LoginButton from "../LoginButton";
 import {HeaderBox, Logo} from "../Header";
 import MiniSearchBar from "./MiniSearchBar";
 
-const SearchHeaderBeforeClicked = ({clickedState, setClickedState}) => {
+const SearchHeaderBeforeClicked = ({clickedState, setClickedState, setClickedPart}) => {
     return (
         <HeaderBox>
             <Logo>LOGO</Logo>
-            <MiniSearchBar clickedState={clickedState} setClickedState={setClickedState} />
+            <MiniSearchBar
+                clickedState={clickedState}
+                setClickedState={setClickedState}
+                setClickedPart={setClickedPart}
+            />
             <LoginButton />
         </HeaderBox>
     );

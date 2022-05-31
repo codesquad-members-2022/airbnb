@@ -10,7 +10,8 @@
       "@router": ["router"],
       "@constants": ["constants"],
       "@context/*": ["context/*"],
-      "@assets/*": ["assets/*"]
+      "@assets/*": ["assets/*"],
+      "@mocks/*": ["mocks/*"]
     }
   },
   "include": ["src"]

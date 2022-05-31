@@ -39,7 +39,7 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v5.6
       with:
         image: cherrybnb/cherrybnb
-        tags: cherrybnb/cherrybnb:latest
+        tags: latest
         registry: docker.io
         dockerfile: ./backend/Dockerfile
         username: ${{ secrets.DOCKERHUB_ID }}

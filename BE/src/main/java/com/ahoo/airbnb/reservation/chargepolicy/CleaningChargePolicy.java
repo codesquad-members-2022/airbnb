@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public class CleaningChargePolicy implements ChargePolicy {
 
-    private static CleaningChargePolicy instance = new CleaningChargePolicy();
+    private static final CleaningChargePolicy instance = new CleaningChargePolicy();
 
     private CleaningChargePolicy() {
 

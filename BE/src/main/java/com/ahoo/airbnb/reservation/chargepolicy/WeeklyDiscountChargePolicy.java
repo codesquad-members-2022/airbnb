@@ -3,14 +3,13 @@ package com.ahoo.airbnb.reservation.chargepolicy;
 import com.ahoo.airbnb.entity.Room;
 import com.ahoo.airbnb.utils.DateUtils;
 import java.time.LocalDateTime;
-import java.time.Period;
 
 public class WeeklyDiscountChargePolicy implements ChargePolicy {
 
-    private static final int DAY_COUNT_OF_WEEK = 7;
-    private double calculateRatio = -0.04;
+    private static final WeeklyDiscountChargePolicy instance = new WeeklyDiscountChargePolicy();
 
-    private static WeeklyDiscountChargePolicy instance = new WeeklyDiscountChargePolicy();
+    private final int dayCountOfWeek = 7;
+    private final double calculateRatio = -0.04;
 
     private WeeklyDiscountChargePolicy() {
 
@@ -21,7 +20,7 @@ public class WeeklyDiscountChargePolicy implements ChargePolicy {
     }
 
     private int calculateWeekCount(LocalDateTime checkIn, LocalDateTime checkOut) {
-        return DateUtils.getBetweenDays(checkIn, checkOut) / DAY_COUNT_OF_WEEK;
+        return DateUtils.getBetweenDays(checkIn, checkOut) / dayCountOfWeek;
     }
 
     @Override

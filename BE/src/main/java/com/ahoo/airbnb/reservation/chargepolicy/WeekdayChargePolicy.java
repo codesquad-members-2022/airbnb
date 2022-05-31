@@ -7,9 +7,9 @@ import java.time.LocalDateTime;
 
 public class WeekdayChargePolicy implements ChargePolicy {
 
-    private double calculateRatio = 1;
+    private static final WeekdayChargePolicy instance = new WeekdayChargePolicy();
 
-    private static WeekdayChargePolicy instance = new WeekdayChargePolicy();
+    private final double calculateRatio = 1;
 
     private WeekdayChargePolicy() {
 
@@ -20,7 +20,8 @@ public class WeekdayChargePolicy implements ChargePolicy {
     }
 
     @Override
-    public double calculate(LocalDateTime checkIn, LocalDateTime checkOut, int headcount, Room room) {
+    public double calculate(LocalDateTime checkIn, LocalDateTime checkOut, int headcount,
+        Room room) {
         return room.getCharge() * DateUtils.getWeekdayCount(checkIn, checkOut) * calculateRatio;
     }
 }

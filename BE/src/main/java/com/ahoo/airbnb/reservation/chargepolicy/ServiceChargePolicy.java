@@ -5,8 +5,9 @@ import java.time.LocalDateTime;
 
 public class ServiceChargePolicy implements ChargePolicy{
 
-    private static final double calculateRatio = 0.05;
-    private static ServiceChargePolicy instance = new ServiceChargePolicy();
+    private static final ServiceChargePolicy instance = new ServiceChargePolicy();
+
+    private final double calculateRatio = 0.05;
 
     private ServiceChargePolicy() {
 

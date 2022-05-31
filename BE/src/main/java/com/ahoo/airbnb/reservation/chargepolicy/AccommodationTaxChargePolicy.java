@@ -5,8 +5,9 @@ import java.time.LocalDateTime;
 
 public class AccommodationTaxChargePolicy implements ChargePolicy {
 
-    private static final double calculateRatio = 0.005;
-    private static AccommodationTaxChargePolicy instance = new AccommodationTaxChargePolicy();
+    private static final AccommodationTaxChargePolicy instance = new AccommodationTaxChargePolicy();
+
+    private final double calculateRatio = 0.005;
 
     private AccommodationTaxChargePolicy() {
 

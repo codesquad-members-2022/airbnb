@@ -9,6 +9,8 @@ export default styled.div`
   margin-top: 32px;
   border-radius: 60px;
   background-color: #fff;
+  z-index: 1;
+  position: relative;
 
   span {
     display: none;

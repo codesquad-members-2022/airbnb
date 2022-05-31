@@ -20,7 +20,6 @@ const ModalBlock = styled.div<{ position: number }>`
   height: 300px;
   position: absolute;
   top: 200px;
-  left: ${({ position }) => position}px;
   border-radius: 60px;
   background: #fff;
 `;
@@ -32,19 +31,15 @@ export default function Modal({
 }: {
   children: React.ReactNode;
   shown: boolean;
-  onClose: () => void;
+  onClose: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }) {
+  const blockEvent = (event: React.MouseEvent<HTMLButtonElement>) => event.stopPropagation();
+
   return (
     <ModalPortal>
       {shown && (
         <BackGround role="button" tabIndex={0} className="ModalBackGround" onClick={onClose} onKeyDown={onClose}>
-          <ModalBlock
-            onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
-              event.stopPropagation();
-            }}
-          >
-            {children}
-          </ModalBlock>
+          <ModalBlock onClick={blockEvent}>{children}</ModalBlock>
         </BackGround>
       )}
     </ModalPortal>

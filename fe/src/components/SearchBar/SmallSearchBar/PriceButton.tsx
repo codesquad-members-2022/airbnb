@@ -4,10 +4,10 @@ import { IPriceButton as Props } from '../common';
 import { InfoButton } from './Button';
 
 const PREFIX = '₩';
-function PriceButton({ minPrice = 0, maxPrice = 0 }: Props) {
+function PriceButton({ minPrice, maxPrice }: Props) {
   let description: string | string[] = '금액대 입력';
 
-  if (minPrice > 0 || maxPrice > 0) {
+  if (minPrice !== null && maxPrice !== null) {
     description = [PREFIX + minPrice.toLocaleString(), PREFIX + maxPrice.toLocaleString()];
   }
 

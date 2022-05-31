@@ -5,10 +5,10 @@ import { InfoButton, ResetButton } from './Button';
 import * as S from './style';
 
 const PREFIX = '₩';
-function PriceButton({ minPrice = 0, maxPrice = 0 }: Props) {
+function PriceButton({ minPrice, maxPrice }: Props) {
   let description: string | string[] = '금액대 입력';
 
-  if (minPrice > 0 || maxPrice > 0) {
+  if (minPrice !== null && maxPrice !== null) {
     description = [PREFIX + minPrice.toLocaleString(), PREFIX + maxPrice.toLocaleString()];
   }
 
@@ -21,7 +21,7 @@ function PriceButton({ minPrice = 0, maxPrice = 0 }: Props) {
         sep=" ~ "
         accent={!!minPrice || !!maxPrice}
       />
-      <ResetButton />
+      {(minPrice || maxPrice) && <ResetButton />}
     </S.ButtonWrapper>
   );
 }

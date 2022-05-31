@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import * as I from '@/styles/icons';
 
@@ -12,6 +12,8 @@ interface InfoButtonProps {
   accent?: boolean;
 }
 
+const ButtonStyle = { flexGrow: 1 };
+
 export function InfoButton({
   width = 130,
   header,
@@ -19,8 +21,10 @@ export function InfoButton({
   sep = ' ',
   accent = false,
 }: InfoButtonProps) {
+  const style = useMemo(() => ButtonStyle, []);
+
   return (
-    <S.Button width={width} accent={accent}>
+    <S.Button width={width} accent={accent} style={style}>
       <S.Header>{header}</S.Header>
       <S.Description>
         {Array.isArray(description) ? description.join(sep) : description}

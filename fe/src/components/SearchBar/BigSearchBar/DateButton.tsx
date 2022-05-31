@@ -12,7 +12,7 @@ function DateButton({ checkIn, checkOut }: Props) {
     <S.ButtonWrapper>
       <InfoButton header="체크인" description={checkInDescription} accent={!!checkIn} />
       <InfoButton header="체크아웃" description={checkOutDescription} accent={!!checkOut} />
-      <ResetButton />
+      {(checkIn || checkOut) && <ResetButton />}
     </S.ButtonWrapper>
   );
 }

@@ -1,7 +1,7 @@
 package com.codesquad.airbnb.common.embeddable;
 
+import com.codesquad.airbnb.common.util.GeometryUtil;
 import com.codesquad.airbnb.room.dto.Direction;
-import com.codesquad.airbnb.util.GeometryUtil;
 import java.util.Objects;
 import javax.persistence.Access;
 import javax.persistence.AccessType;

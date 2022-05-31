@@ -1,5 +1,6 @@
-package com.codesquad.airbnb.domain;
+package com.codesquad.airbnb.common.embeddable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,11 +11,12 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RoomGroup {
+public class ReviewStat {
 
-    private Integer numberTotalRoom;
-    private Integer numberBedroom;
-    private Integer numberBathroom;
-    private Integer numberBed;
+    @Column(name = "review_score")
+    private Double score;
+
+    @Column(name = "review_count")
+    private Integer count;
 
 }

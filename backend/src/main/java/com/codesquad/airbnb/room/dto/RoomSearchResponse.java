@@ -1,13 +1,13 @@
 package com.codesquad.airbnb.room.dto;
 
-import com.codesquad.airbnb.domain.GuestGroup;
-import com.codesquad.airbnb.domain.Location;
-import com.codesquad.airbnb.domain.ReviewTotal;
-import com.codesquad.airbnb.domain.RoomGroup;
-import com.codesquad.airbnb.domain.RoomOption;
+import com.codesquad.airbnb.common.embeddable.GuestGroup;
+import com.codesquad.airbnb.common.embeddable.Location;
+import com.codesquad.airbnb.common.embeddable.ReviewStat;
 import com.codesquad.airbnb.room.entity.Room;
 import com.codesquad.airbnb.room.entity.Room.RoomType;
 import com.codesquad.airbnb.room.entity.RoomDetail;
+import com.codesquad.airbnb.room.entity.embeddable.RoomGroup;
+import com.codesquad.airbnb.room.entity.embeddable.RoomOption;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -37,7 +37,7 @@ public class RoomSearchResponse {
     public RoomSearchResponse(Room room) {
         RoomDetail detail = room.getDetail();
         Location location = room.getLocation();
-        ReviewTotal review = room.getReview();
+        ReviewStat review = room.getReview();
         GuestGroup guestGroup = detail.getGuestGroup();
         RoomGroup roomGroup = detail.getRoomGroup();
         RoomOption roomOption = detail.getOption();

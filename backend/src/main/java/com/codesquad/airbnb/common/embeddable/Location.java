@@ -1,6 +1,6 @@
-package com.codesquad.airbnb.domain;
+package com.codesquad.airbnb.common.embeddable;
 
-import com.codesquad.airbnb.domain.search.Direction;
+import com.codesquad.airbnb.room.dto.Direction;
 import com.codesquad.airbnb.util.GeometryUtil;
 import java.util.Objects;
 import javax.persistence.Access;

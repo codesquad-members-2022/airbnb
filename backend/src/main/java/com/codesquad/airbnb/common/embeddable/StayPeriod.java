@@ -1,5 +1,6 @@
-package com.codesquad.airbnb.domain;
+package com.codesquad.airbnb.common.embeddable;
 
+import java.time.LocalDate;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
@@ -13,14 +14,13 @@ import lombok.NoArgsConstructor;
 @Access(AccessType.FIELD)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class GuestGroup {
+public class StayPeriod {
 
-    private Integer numberAdult;
-    private Integer numberChild;
-    private Integer numberInfant;
+    private LocalDate checkinDate;
+    private LocalDate checkoutDate;
 
     public boolean isNull() {
-        return numberAdult == null && numberChild == null && numberInfant == null;
+        return checkinDate == null && checkoutDate == null;
     }
 
 }

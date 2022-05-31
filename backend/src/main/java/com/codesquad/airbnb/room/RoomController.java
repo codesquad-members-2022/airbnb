@@ -1,11 +1,11 @@
 package com.codesquad.airbnb.room;
 
-import com.codesquad.airbnb.domain.GuestGroup;
-import com.codesquad.airbnb.domain.Location;
-import com.codesquad.airbnb.domain.StayPeriod;
-import com.codesquad.airbnb.domain.search.PriceRange;
-import com.codesquad.airbnb.domain.search.Radius;
+import com.codesquad.airbnb.common.embeddable.GuestGroup;
+import com.codesquad.airbnb.common.embeddable.Location;
+import com.codesquad.airbnb.common.embeddable.StayPeriod;
 import com.codesquad.airbnb.room.dto.RoomSearCondition;
+import com.codesquad.airbnb.room.dto.RoomSearCondition.PriceRange;
+import com.codesquad.airbnb.room.dto.RoomSearCondition.Radius;
 import com.codesquad.airbnb.room.dto.RoomSearchResponse;
 import java.time.LocalDate;
 import java.util.List;

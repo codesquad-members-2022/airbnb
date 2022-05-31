@@ -1,7 +1,7 @@
 package com.codesquad.airbnb.district;
 
-import com.codesquad.airbnb.domain.Location;
-import com.codesquad.airbnb.domain.ReviewTotal;
+import com.codesquad.airbnb.common.embeddable.Location;
+import com.codesquad.airbnb.common.embeddable.ReviewStat;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -45,7 +45,7 @@ public class District {
     private Point point;
 
     @Embedded
-    private ReviewTotal review;
+    private ReviewStat review;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
@@ -60,7 +60,7 @@ public class District {
     }
 
     public District(String name, String address, String imagePath, DistrictType type,
-        Location location, ReviewTotal review) {
+        Location location, ReviewStat review) {
         this.name = name;
         this.imagePath = imagePath;
         this.address = address;

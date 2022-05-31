@@ -1,4 +1,4 @@
-package com.codesquad.airbnb.domain;
+package com.codesquad.airbnb.common.embeddable;
 
 import java.time.LocalTime;
 import javax.persistence.Embeddable;

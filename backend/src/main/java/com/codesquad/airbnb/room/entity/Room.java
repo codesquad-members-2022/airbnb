@@ -1,11 +1,11 @@
 package com.codesquad.airbnb.room.entity;
 
+import com.codesquad.airbnb.common.embeddable.Location;
+import com.codesquad.airbnb.common.embeddable.ReviewStat;
 import com.codesquad.airbnb.district.District;
-import com.codesquad.airbnb.domain.Location;
-import com.codesquad.airbnb.domain.ReviewTotal;
-import com.codesquad.airbnb.domain.RoomCharge;
 import com.codesquad.airbnb.member.Member;
 import com.codesquad.airbnb.reservation.Reservation;
+import com.codesquad.airbnb.room.entity.embeddable.RoomCharge;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -50,7 +50,7 @@ public class Room {
     private RoomCharge charge;
 
     @Embedded
-    private ReviewTotal review;
+    private ReviewStat review;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "district_id")
@@ -73,7 +73,7 @@ public class Room {
     private List<Reservation> reservations;
 
     public Room(District district, Member host, String name, String description, String imagePath,
-        RoomType type, Location location, RoomCharge charge, ReviewTotal review) {
+        RoomType type, Location location, RoomCharge charge, ReviewStat review) {
         this.district = district;
         this.host = host;
         this.name = name;

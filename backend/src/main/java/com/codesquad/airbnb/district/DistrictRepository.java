@@ -1,7 +1,7 @@
 package com.codesquad.airbnb.district;
 
-import com.codesquad.airbnb.domain.Location;
-import com.codesquad.airbnb.domain.ReviewTotal;
+import com.codesquad.airbnb.common.embeddable.Location;
+import com.codesquad.airbnb.common.embeddable.ReviewStat;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +29,7 @@ public class DistrictRepository {
      */
     @Transactional(readOnly = true)
     public List<DistrictResponse> getDistrictsWithLocation(Location location,
-        ReviewTotal threshold) {
+        ReviewStat threshold) {
         String sql = "SELECT name, image_path, ST_Distance_Sphere(:centre, point)"
             + " FROM district"
             + " WHERE review_score >= :review_score AND review_count >= :review_count";

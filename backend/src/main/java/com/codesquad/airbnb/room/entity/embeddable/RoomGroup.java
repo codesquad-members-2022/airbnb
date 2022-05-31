@@ -1,4 +1,4 @@
-package com.codesquad.airbnb.domain;
+package com.codesquad.airbnb.room.entity.embeddable;
 
 import javax.persistence.Embeddable;
 import lombok.AccessLevel;
@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RoomOption {
+public class RoomGroup {
 
-    private Boolean kitchen;
-    private Boolean hairDryer;
-    private Boolean wirelessInternet;
-    private Boolean airConditioner;
+    private Integer numberTotalRoom;
+    private Integer numberBedroom;
+    private Integer numberBathroom;
+    private Integer numberBed;
 
 }

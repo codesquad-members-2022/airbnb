@@ -1,8 +1,8 @@
 package com.codesquad.airbnb.reservation;
 
-import com.codesquad.airbnb.domain.GuestGroup;
-import com.codesquad.airbnb.domain.StayPeriod;
-import com.codesquad.airbnb.domain.StayTime;
+import com.codesquad.airbnb.common.embeddable.GuestGroup;
+import com.codesquad.airbnb.common.embeddable.StayPeriod;
+import com.codesquad.airbnb.common.embeddable.StayTime;
 import com.codesquad.airbnb.member.Member;
 import com.codesquad.airbnb.room.entity.Room;
 import javax.persistence.Column;

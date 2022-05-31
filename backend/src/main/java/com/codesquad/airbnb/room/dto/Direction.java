@@ -1,4 +1,4 @@
-package com.codesquad.airbnb.domain.search;
+package com.codesquad.airbnb.room.dto;
 
 import lombok.Getter;
 

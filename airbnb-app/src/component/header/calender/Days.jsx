@@ -24,8 +24,8 @@ const StyledDay = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  width: 48px;
-  height: 48px;
+  width: 50px;
+  height: 50px;
   font-weight: 400;
   font-size: 17px;
   line-height: 17px;

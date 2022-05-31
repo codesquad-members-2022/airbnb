@@ -16,22 +16,22 @@ extension CalendarPicker {
         let days: [Day]
 
         init(baseDate: Date) {
-            let numberOfDaysInMonth = CalendarPicker.KRCalendar.getNumberOfDaysInMonth(for: baseDate)
-            let firstDayOfMonth = CalendarPicker.KRCalendar.getFirstDayOfMonth(for: baseDate)
-            let firstDayWeekday = CalendarPicker.KRCalendar.getWeekDay(of: firstDayOfMonth)
+            let numberOfDaysInMonth = Calendar.current.getNumberOfDaysInMonth(for: baseDate)
+            let firstDayOfMonth = Calendar.current.getFirstDayOfMonth(for: baseDate)
+            let firstDayWeekday = Calendar.current.getWeekDay(of: firstDayOfMonth)
 
             self.numberOfDays = numberOfDaysInMonth
             self.firstDay = firstDayOfMonth
             self.firstDayWeekday = firstDayWeekday
 
             let daysOfLastMonth: [Day] = (1..<firstDayWeekday).reversed().map { offset in
-                let date = CalendarPicker.KRCalendar.getNextDay(for: firstDayOfMonth, offsetBy: -offset) ?? firstDayOfMonth
+                let date = Calendar.current.getNextDay(for: firstDayOfMonth, offsetBy: -offset) ?? firstDayOfMonth
                 return Day(date: date, isSelected: false, isPast: true, isHidden: true)
             }
 
             let days: [Day] = (0..<numberOfDays).map { offset in
-                let date = CalendarPicker.KRCalendar.getNextDay(for: firstDayOfMonth, offsetBy: offset) ?? firstDayOfMonth
-                let isPast = date < baseDate
+                let date = Calendar.current.getNextDay(for: firstDayOfMonth, offsetBy: offset) ?? firstDayOfMonth
+                let isPast = date <  Calendar.current.startOfDay(for: baseDate)
                 return Day(date: date, isSelected: false, isPast: isPast, isHidden: false)
             }
 

@@ -28,16 +28,16 @@ class CalendarPickerSpec: QuickSpec {
             context("아무것도 하지 않으면") {
                 it("기준일이 속한 월과 첫번째 월이 서로 같아야 한다") {
                     let firstMonth = calendarPicker.getMonth(monthSection: 0)
-                    let monthOfTestDate = CalendarPicker.KRCalendar.getFirstDayOfMonth(for: testDate)
+                    let monthOfTestDate = Calendar.current.getFirstDayOfMonth(for: testDate)
 
                     expect(firstMonth.firstDay).to(equal(monthOfTestDate))
                 }
 
-                it("첫번째 월에서 기준일 이전의 날짜는 모두 '지난 날짜'로 표시돼야 한다") {
+                it("첫번째 월에서 기준일 시작 시각 이전의 날짜는 모두 '지난 날짜'로 표시돼야 한다") {
                     let firstMonth = calendarPicker.getMonth(monthSection: 0)
 
                     let pastDays = firstMonth.days.filter { day in
-                        return day.date < testDate
+                        return day.date < Calendar.current.startOfDay(for: testDate)
                     }
 
                     for pastDay in pastDays {
@@ -45,11 +45,11 @@ class CalendarPickerSpec: QuickSpec {
                     }
                 }
 
-                it("첫번째 월에서 기준일 포함한 이후 날짜는 모두 '지나지 않은 날짜'로 표시돼야 한다") {
+                it("첫번째 월에서 기준일 시작 시각을 포함한 이후 날짜는 모두 '지나지 않은 날짜'로 표시돼야 한다") {
                     let firstMonth = calendarPicker.getMonth(monthSection: 0)
 
                     let futureDays = firstMonth.days.filter { day in
-                        return day.date >= testDate
+                        return day.date >= Calendar.current.startOfDay(for: testDate)
                     }
 
                     for futureDay in futureDays {
@@ -62,7 +62,7 @@ class CalendarPickerSpec: QuickSpec {
 
                     for (i, day) in firstMonth.days.enumerated() {
                         let indexRemainder = i % 7
-                        let weekday = CalendarPicker.KRCalendar.getWeekDay(of: day.date)
+                        let weekday = Calendar.current.getWeekDay(of: day.date)
 
                         expect(indexRemainder).to(equal(weekday-1))
                     }

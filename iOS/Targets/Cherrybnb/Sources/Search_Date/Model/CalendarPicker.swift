@@ -16,7 +16,7 @@ struct CalendarPicker {
         let firstMonth = Month(baseDate: baseDate)
 
         let afterMonths: [Month] = (1..<numOfMonths).map { offset in
-            let firstDayOfMonthAfter = CalendarPicker.KRCalendar.getFirstDayOfMonthAfter(for: baseDate, offsetBy: offset)
+            let firstDayOfMonthAfter = Calendar.current.getFirstDayOfMonthAfter(for: baseDate, offsetBy: offset)
             return Month(baseDate: firstDayOfMonthAfter)
         }
 

@@ -27,11 +27,24 @@ VALUES (1, '서울', '차로 30분 거리',
 INSERT INTO lodging (id, bathroom_count, bed_count, bedroom_count, place_type, lodging_description,
                      host_name, host_image, latitude, longitude, max_guest,
                      lodging_name, property_type, price, rating, review, address_id, region_id)
-    VALUE (1,1,2,3,'ENTIRE_PLACE','설명',
+    VALUES (1,1,2,3,'ENTIRE_PLACE','설명',
     '김길동','호스트이미지 url',100,100,3,
-    '좋은 숙소','HOUSE',1000,4.7,2,1,1);
+    '좋은 숙소','HOUSE',1000,4.7,2,1,1),
+           (2,2,2,2,'ENTIRE_PLACE','설명',
+            '김길동','호스트이미지 url2',100,100,3,
+            '안좋은 숙소','HOUSE',1000,4.7,2,1,1);
 
 INSERT INTO images (id, image_url, lodging_id, is_main_image)
 VALUES (1, '메인이미지1', 1, true),
        (2, '서브이미지1-1', 1, false),
        (3, '서브이미지1-2', 1, false);
+
+INSERT INTO members (id, email)
+VALUE (1, 'test@test.com');
+
+INSERT INTO wish (id, lodging_id, members_id)
+VALUE (1, 1, 1);
+
+INSERT INTO reservation(id, canceled, check_in, check_out, guests, price, lodging_id, members_id)
+VALUES (1,0,'2022-03-03', '2022-04-04', 2, 11, 1, 1),
+       (2,0,'2022-04-05', '2022-04-10',2,11,2,1);

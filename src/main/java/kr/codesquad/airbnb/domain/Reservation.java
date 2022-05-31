@@ -1,5 +1,6 @@
 package kr.codesquad.airbnb.domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,8 +26,8 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.LAZY)
     private Lodging lodging;
 
-    private LocalDateTime checkIn;
-    private LocalDateTime checkOut;
+    private LocalDate checkIn;
+    private LocalDate checkOut;
     private Long price;
     private int guests;
     private boolean canceled;

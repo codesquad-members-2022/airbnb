@@ -9,7 +9,7 @@ const Main = () => {
     <>
       <Header />
       <MainContent />
-      <Footer />;
+      <Footer />
     </>
 )
 };

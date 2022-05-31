@@ -55,7 +55,11 @@ export const NavItemLink = styled(NavLink)`
   }
 `;
 
-export const MyPageButton = styled.div`
+export const MyPageArea = styled.div`
+  position: relative;
+`;
+
+export const MyPageButton = styled.button`
   display: flex;
   justify-content: flex-end;
   align-items: center;

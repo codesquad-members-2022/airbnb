@@ -137,6 +137,7 @@ CREATE TABLE wish
     wish_id   INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'wish 테이블의 기본 키',
     member_id INT NOT NULL COMMENT 'member 테이블의 기본 키',
     room_id   INT NOT NULL COMMENT 'room 테이블의 기본 키',
+    deleted   BOOL DEFAULT FALSE COMMENT '삭제 여부',
     FOREIGN KEY (member_id) REFERENCES member (member_id),
     FOREIGN KEY (room_id) REFERENCES room (room_id)
 );

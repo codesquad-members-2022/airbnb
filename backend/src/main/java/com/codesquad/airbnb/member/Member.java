@@ -3,6 +3,7 @@ package com.codesquad.airbnb.member;
 import com.codesquad.airbnb.room.entity.Room;
 import com.codesquad.airbnb.wish.Wish;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -45,5 +46,9 @@ public class Member {
         this.imagePath = imagePath;
         this.isSuperHost = isSuperHost;
         this.role = role;
+    }
+
+    public boolean isEqualsId(Integer id) {
+        return Objects.equals(this.id, id);
     }
 }

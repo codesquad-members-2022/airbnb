@@ -24,6 +24,8 @@ public class Wish {
     @Column(name = "wish_id")
     private Integer id;
 
+    private Boolean deleted;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
@@ -32,4 +34,12 @@ public class Wish {
     @JoinColumn(name = "room_id")
     private Room room;
 
+    public Wish(Member member, Room room) {
+        this.member = member;
+        this.room = room;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
 }

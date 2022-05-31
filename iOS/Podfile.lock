@@ -1,0 +1,28 @@
+PODS:
+  - Nimble (10.0.0)
+  - Quick (5.0.1)
+  - SwiftLint (0.47.1)
+  - Swinject (2.8.1)
+
+DEPENDENCIES:
+  - Nimble
+  - Quick
+  - SwiftLint
+  - Swinject
+
+SPEC REPOS:
+  trunk:
+    - Nimble
+    - Quick
+    - SwiftLint
+    - Swinject
+
+SPEC CHECKSUMS:
+  Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
+  Quick: 749aa754fd1e7d984f2000fe051e18a3a9809179
+  SwiftLint: f80f1be7fa96d30e0aa68e58d45d4ea1ccaac519
+  Swinject: 97112918bd7e0785dc2df7036213f3c8cbba6586
+
+PODFILE CHECKSUM: fdc677cc489aa6e97539c19d8396e16e91c9030d
+
+COCOAPODS: 1.11.3

@@ -1,5 +1,8 @@
-import { v4 } from 'uuid';
-import * as S from './ScheduleStyle';
+import { useState } from 'react';
+import * as S from './Schedule.style';
+import { CalendarHeader } from './CalendarHeader';
+import { BaseWeekend } from './BaseWeekend';
+import { CalendarDate } from './CalendarDate';
 
 const WEEKDAY: string[] = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -17,6 +20,7 @@ const getMonthDate = (year: number, month: number) => {
     {
       length: Math.floor(addDate / WEEKDAY.length + 1),
     },
+
     (_, i) =>
       firstWeek.map(v => {
         const day = v + i * 7;
@@ -27,44 +31,33 @@ const getMonthDate = (year: number, month: number) => {
 };
 
 export function Schedule(): JSX.Element {
-  const testYear = 2022;
-  const tesyMonth = 1;
-  const testFullDate = getMonthDate(testYear, tesyMonth);
-  const testNextFullDate = getMonthDate(testYear, tesyMonth + 1);
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const testFullDate = getMonthDate(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+  );
+  const testNextFullDate = getMonthDate(
+    currentDate.getFullYear(),
+    currentDate.getMonth() + 1,
+  );
   return (
     <S.ScheduleWrapper>
       <S.Calendar>
-        <S.Date>
-          {testYear}년 {tesyMonth + 1}월
-        </S.Date>
-        <S.WeekDay>
-          {WEEKDAY.map(value => (
-            <li key={v4()}>{value}</li>
-          ))}
-        </S.WeekDay>
-
-        {testFullDate.map(week => (
-          <S.WeekDate key={v4()}>
-            {week.map(day => (
-              <li key={v4()}>{day}</li>
-            ))}
-          </S.WeekDate>
-        ))}
+        <CalendarHeader
+          year={currentDate.getFullYear()}
+          month={currentDate.getMonth() + 1}
+        />
+        <BaseWeekend weekend={WEEKDAY} />
+        <CalendarDate whloeDate={testFullDate} />
       </S.Calendar>
 
       <S.Calendar>
-        <S.WeekDay>
-          {WEEKDAY.map(value => (
-            <li key={v4()}>{value}</li>
-          ))}
-        </S.WeekDay>
-        {testNextFullDate.map(week => (
-          <S.WeekDate key={v4()}>
-            {week.map(day => (
-              <li key={v4()}>{day}</li>
-            ))}
-          </S.WeekDate>
-        ))}
+        <CalendarHeader
+          year={currentDate.getFullYear()}
+          month={currentDate.getMonth() + 1 + 1}
+        />
+        <BaseWeekend weekend={WEEKDAY} />
+        <CalendarDate whloeDate={testNextFullDate} />
       </S.Calendar>
     </S.ScheduleWrapper>
   );

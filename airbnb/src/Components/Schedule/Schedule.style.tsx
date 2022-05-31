@@ -32,6 +32,22 @@ export const WeekDay = styled.ul`
   }
 `;
 
+export const CalendarDay = styled.li`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #bdbdbd;
+  height: 48px;
+  width: 48px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 17px;
+  cursor: pointer;
+  &:hover {
+    color: black;
+  }
+`;
+
 export const WeekDate = styled.ul`
   display: flex;
   margin-top: 4px;

@@ -13,8 +13,13 @@ import searchButton from "Asset/searchButton.svg";
 import activeSearchButton from "Asset/activeSearchButton.svg";
 import { Img } from "Components/Common/styled";
 import { useCalendar } from "Hook/useCalendar";
+import { SEARCH_BAR_REF_IDX } from "Helpers/constant";
 
-export default function SearchBar() {
+interface SearchBarType {
+  calendarRef?: React.MutableRefObject<HTMLElement[] | null[]>;
+}
+
+export default function SearchBar({ calendarRef }: SearchBarType) {
   const [calendar, dispatchCalendar] = useCalendar();
   const { checkIn, checkOut } = calendar;
 
@@ -32,7 +37,12 @@ export default function SearchBar() {
 
   return (
     <Container flex={true} justify="space-between">
-      <DateArea flex={true} justify="space-between" align="center">
+      <DateArea
+        ref={(el) => calendarRef && (calendarRef.current[SEARCH_BAR_REF_IDX] = el)}
+        flex={true}
+        justify="space-between"
+        align="center"
+      >
         <ContentContainer onClick={handleClickCheckInOut}>
           <ContentHeader>체크인</ContentHeader>
           {checkIn.day > 0 ? (

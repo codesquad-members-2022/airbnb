@@ -3,9 +3,10 @@ import Gnb from "Components/Gnb/Gnb";
 import SearchBar from "Components/SearchBar/SearchBar";
 import { getTodayDate } from "Helpers/utils";
 import { useCalendar } from "Hook/useCalendar";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { BackgroundImg, HomeContainer, NearbyTravel, WhereverTravel } from "./Home.styled";
 import { DateType, EventType } from "Helpers/interface";
+import { useOutsideClick } from "Hook/useOutsideClick";
 
 interface compareCheckInType extends DateType {
   checkIn: DateType;
@@ -31,6 +32,7 @@ export default function Home() {
   const { checkIn, checkOut } = calendarState;
   const [calendarData, setCalendarData] = useState({ year: initYear, month: initMonth });
   const calendarShowCount = 2;
+  const calendarRef = useRef([]);
 
   const runDispatchCalendar = ({ year, month, day, type }: dispatchType) => {
     dispatchCalendar({
@@ -77,6 +79,14 @@ export default function Home() {
     runDispatchCalendar({ type: "SET_CHECK_OUT", year, month, day });
   };
 
+  const handleOutsideClick = () => {
+    dispatchCalendar({
+      type: "CLOSE",
+    });
+  };
+
+  useOutsideClick(calendarRef, handleOutsideClick);
+
   const { isOpen } = calendarState;
 
   return (
@@ -85,9 +95,10 @@ export default function Home() {
         <HomeContainer width="1440px" height="640px">
           <div>
             <Gnb />
-            <SearchBar />
+            <SearchBar calendarRef={calendarRef} />
             {isOpen && (
               <Calendar
+                calendarRef={calendarRef}
                 calendarShowCount={calendarShowCount}
                 columnCount={2}
                 calendarModalStyle={calendarModalStyle}

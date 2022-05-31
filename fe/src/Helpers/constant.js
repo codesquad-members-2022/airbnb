@@ -17,3 +17,6 @@ export const MONTH_DICTIONARY = [
 ];
 
 export const WEEK_TOTAL_DAY = 7;
+
+export const SEARCH_BAR_REF_IDX = 0;
+export const MODAL_REF_IDX = 1;

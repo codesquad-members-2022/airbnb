@@ -53,7 +53,7 @@ function searchReducer(searches: SearchType, action: ActionType): SearchType {
           value: {
             checkIn: value.checkIn,
             checkOut: value.checkOut,
-          }
+          },
         },
       };
     case 'SET_PRICE':
@@ -65,8 +65,9 @@ function searchReducer(searches: SearchType, action: ActionType): SearchType {
       return {
         ...searches,
         personnel: {
-          ...searches.personnel, value: { adult: value.adult, teenager: value.teenager, child: value.child },
-        }
+          ...searches.personnel,
+          value: { adult: value.adult, teenager: value.teenager, child: value.child },
+        },
       };
     default:
       throw new Error('Unhandled action');
@@ -124,6 +125,6 @@ export function useSearch() {
 
 export function useAddSearch() {
   const addSearch = useContext(AddSearchContext);
-  if (!addSearch) throw new Error('Cannot find SearchProvider');
+  if (!addSearch) throw new Error('Cannot find AddSearchProvider');
   return addSearch;
 }

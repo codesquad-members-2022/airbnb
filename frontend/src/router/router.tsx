@@ -40,11 +40,10 @@ const Link = ({
 
 const FIRST_INDEX = 0;
 const FIRST_SLASH_COUNT = 1;
-const SLASH = "/";
 
 const getCurrentPath = () => {
   return (
-    location.pathname.slice(FIRST_SLASH_COUNT).split(SLASH)[FIRST_INDEX] ||
+    location.pathname.slice(FIRST_SLASH_COUNT).split("/")[FIRST_INDEX] ||
     "index"
   );
 };

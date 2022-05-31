@@ -7,27 +7,28 @@ import ProjectDescription
 
 extension Project {
     /// Helper function to create the Project for this ExampleApp
-    public static func app(name: String, platform: Platform, additionalTargets: [String]) -> Project {
+    public static func app(name: String, platform: Platform) -> Project {
         var targets = makeAppTargets(name: name,
-                                     platform: platform,
-                                     dependencies: additionalTargets.map { TargetDependency.target(name: $0) })
+                                     platform: platform)
         return Project(name: name,
-                       organizationName: "Codesquad",                       
+                       organizationName: "Codesquad",
                        targets: targets)
+
     }
 
     // MARK: - Private
 
-    
-
     /// Helper function to create the application target and the unit test target.
-    private static func makeAppTargets(name: String, platform: Platform, dependencies: [TargetDependency]) -> [Target] {
+    private static func makeAppTargets(name: String, platform: Platform ) -> [Target] {
         let platform: Platform = platform
         let infoPlist: [String: InfoPlist.Value] = [
             "CFBundleShortVersionString": "1.0",
             "CFBundleVersion": "1",
             "UIMainStoryboardFile": "",
-            "UILaunchStoryboardName": "LaunchScreen"
+            "UILaunchStoryboardName": "LaunchScreen",
+            "Privacy - Location Always and When In Use Usage Description": "사용자의 위치 정보 필요",
+            "Privacy - Location When In Use Usage Description": "사용자의 위치 정보 필요"
+
             ]
 
         let mainTarget = Target(
@@ -38,8 +39,7 @@ extension Project {
             deploymentTarget: .iOS(targetVersion: "13.0", devices: .iphone),
             infoPlist: .extendingDefault(with: infoPlist),
             sources: ["Targets/\(name)/Sources/**"],
-            resources: ["Targets/\(name)/Resources/**"],
-            dependencies: dependencies
+            resources: ["Targets/\(name)/Resources/**"]
         )
 
         let testTarget = Target(
@@ -48,11 +48,11 @@ extension Project {
             product: .unitTests,
             bundleId: "io.tuist.\(name)Tests",
             deploymentTarget: .iOS(targetVersion: "13.0", devices: .iphone),
-            infoPlist: .default,
+            infoPlist: .extendingDefault(with: infoPlist),
             sources: ["Targets/\(name)/Tests/**"],
             dependencies: [
-                .target(name: "\(name)")
-        ])
+                .target(name: "\(name)")]
+        )
         return [mainTarget, testTarget]
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Of9-Dh-U9z">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Of9-Dh-U9z">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,46 +18,56 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Home_hero_2.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="sv1-qD-VkT">
-                                <rect key="frame" x="0.0" y="155.00000000000003" width="390" height="507.66666666666674"/>
+                                <rect key="frame" x="0.0" y="160.00000000000003" width="390" height="507.66666666666674"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="sv1-qD-VkT" secondAttribute="height" multiplier="375:488" id="TSm-Nl-gXc"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="체리비앤비와 함께" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zfx-ky-a0j">
-                                <rect key="frame" x="24" y="179" width="222" height="37"/>
+                                <rect key="frame" x="24" y="184" width="222" height="37"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="여행을 떠나보세요" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="it5-KY-Nyf">
-                                <rect key="frame" x="24" y="216" width="222" height="37"/>
+                                <rect key="frame" x="24" y="221" width="222" height="37"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nzc-Kq-jeK">
-                                <rect key="frame" x="24" y="269" width="129" height="31"/>
+                                <rect key="frame" x="24" y="274" width="129" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="여행 아이디어 얻기">
                                     <color key="baseBackgroundColor" red="1" green="0.47843137250000001" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </buttonConfiguration>
                             </button>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="9T5-6e-N7p">
+                                <rect key="frame" x="0.0" y="70" width="390" height="51"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Zfx-ky-a0j" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="24" id="2x0-A6-Xk3"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="sv1-qD-VkT" secondAttribute="trailing" id="3T0-zM-JHt"/>
-                            <constraint firstItem="sv1-qD-VkT" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="67" id="BKw-WE-A5I"/>
                             <constraint firstItem="it5-KY-Nyf" firstAttribute="top" secondItem="Zfx-ky-a0j" secondAttribute="bottom" id="DBQ-Sb-RuN"/>
+                            <constraint firstItem="9T5-6e-N7p" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="Gv2-jX-E1a"/>
                             <constraint firstItem="nzc-Kq-jeK" firstAttribute="top" secondItem="it5-KY-Nyf" secondAttribute="bottom" constant="16" id="LOb-Zb-AR1"/>
+                            <constraint firstItem="9T5-6e-N7p" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="bFy-3D-jFO"/>
                             <constraint firstItem="sv1-qD-VkT" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="bX6-HM-cPL"/>
                             <constraint firstItem="nzc-Kq-jeK" firstAttribute="leading" secondItem="Zfx-ky-a0j" secondAttribute="leading" id="hDS-Yx-iil"/>
+                            <constraint firstItem="9T5-6e-N7p" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" constant="70" id="lts-n8-vDs"/>
                             <constraint firstItem="Zfx-ky-a0j" firstAttribute="top" secondItem="sv1-qD-VkT" secondAttribute="top" constant="24" id="p5L-Iw-H66"/>
+                            <constraint firstItem="sv1-qD-VkT" firstAttribute="top" secondItem="9T5-6e-N7p" secondAttribute="bottom" constant="39" id="vMD-32-Cl5"/>
                             <constraint firstItem="it5-KY-Nyf" firstAttribute="leading" secondItem="Zfx-ky-a0j" secondAttribute="leading" id="xBz-9e-S3R"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="eCq-ff-zg7"/>
+                    <connections>
+                        <outlet property="searchBar" destination="9T5-6e-N7p" id="RDH-eP-woO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

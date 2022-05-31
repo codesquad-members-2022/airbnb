@@ -5,7 +5,7 @@ import { CALENDER_MODE, DATE_CHECK_STATE } from '@/constants/calenderText';
 import { SearchBarContext } from '@component/header/search-bar/SearchBarProvider';
 
 function DateBox({ year, month, date, lastDate, disabled }) {
-  const { mode, setMode, setCheckInInfo, setCheckOutInfo, checkInTime, checkOutTime } = useContext(CalenderDateContext);
+  const { setCheckInInfo, setCheckOutInfo, checkInTime, checkOutTime } = useContext(CalenderDateContext);
   const { updateFocusState, currentInput } = useContext(SearchBarContext);
 
   const currentTime = new Date(`${year}-${month}-${date}`).getTime();
@@ -14,7 +14,7 @@ function DateBox({ year, month, date, lastDate, disabled }) {
   function handleClick() {
     // 검색바에서 체크인을 누른 경우 - 체크인을 바꾼다. 체크아웃 날짜와 비교
     if (currentInput === CALENDER_MODE.CHECKIN) {
-      if (checkInTime && checkOutTime && currentTime > checkOutTime) {
+      if (currentTime > checkOutTime) {
         setCheckOutInfo(null);
       }
       setCheckInInfo({ year, month, date });
@@ -23,13 +23,14 @@ function DateBox({ year, month, date, lastDate, disabled }) {
       // 검색바에서 체크아웃을 누른 경우 -  체크아웃을 바꾼다. 체크인 날짜와 비교
     }
     if (currentInput === CALENDER_MODE.CHECKOUT) {
-      if (checkInTime && checkOutTime && checkInTime > currentTime) {
+      if (checkInTime > currentTime) {
         setCheckOutInfo(null);
         setCheckInInfo({ year, month, date });
         return;
       }
-      if (!checkInTime && checkOutTime) {
-        setCheckInInfo({ year, month, date });
+      if (!checkInTime) {
+        setCheckOutInfo({ year, month, date });
+        updateFocusState(CALENDER_MODE.CHECKIN);
         return;
       }
       setCheckOutInfo({ year, month, date });

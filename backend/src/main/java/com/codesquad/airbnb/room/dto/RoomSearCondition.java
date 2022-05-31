@@ -2,7 +2,7 @@ package com.codesquad.airbnb.room.dto;
 
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.Location;
-import com.codesquad.airbnb.common.embeddable.StayPeriod;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,7 +14,7 @@ public class RoomSearCondition {
     private Radius radius;
     private GuestGroup guestGroup;
     private PriceRange priceRange;
-    private StayPeriod stayPeriod;
+    private StayDate stayDate;
 
     @Getter
     @AllArgsConstructor
@@ -38,5 +38,18 @@ public class RoomSearCondition {
         public boolean isNull() {
             return horizontal == null && vertical == null;
         }
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class StayDate {
+
+        private LocalDate checkinDate;
+        private LocalDate checkoutDate;
+
+        public boolean isNull() {
+            return checkinDate == null && checkoutDate == null;
+        }
+
     }
 }

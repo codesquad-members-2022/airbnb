@@ -8,15 +8,17 @@ import static com.codesquad.airbnb.room.entity.QRoomImage.roomImage;
 
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.Location;
-import com.codesquad.airbnb.common.embeddable.StayPeriod;
 import com.codesquad.airbnb.room.dto.Direction;
 import com.codesquad.airbnb.room.dto.RoomSearCondition;
 import com.codesquad.airbnb.room.dto.RoomSearCondition.PriceRange;
 import com.codesquad.airbnb.room.dto.RoomSearCondition.Radius;
+import com.codesquad.airbnb.room.dto.RoomSearCondition.StayDate;
 import com.codesquad.airbnb.room.entity.Room;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -35,22 +37,24 @@ public class RoomRepository {
             .fetchJoin()
             .join(room.detail, roomDetail)
             .fetchJoin()
-            .distinct()
             .where(locationContained(condition.getLocation(), condition.getRadius()),
                 guestGroupGoe(condition.getGuestGroup()),
-                priceBetween(condition.getPriceRange()));
+                priceBetween(condition.getPriceRange()))
+            .distinct();
 
-        return checkReservation(query, condition.getStayPeriod()).fetch();
+        return checkReservation(query, condition.getStayDate()).fetch();
     }
 
-    private JPAQuery<Room> checkReservation(JPAQuery<Room> query, StayPeriod stayPeriod) {
-        if (stayPeriod.isNull()) {
+    private JPAQuery<Room> checkReservation(JPAQuery<Room> query, StayDate stayDate) {
+        if (stayDate.isNull()) {
             return query;
         }
 
         return query.leftJoin(room.reservations, reservation)
-            .on(reservation.stayPeriod.checkinDate.goe(stayPeriod.getCheckinDate())
-                .and(reservation.stayPeriod.checkoutDate.loe(stayPeriod.getCheckoutDate())))
+            .on(reservation.stayDateTime.checkinDateTime.goe(
+                    stayDate.getCheckinDate().atStartOfDay())
+                .and(reservation.stayDateTime.checkoutDateTime.loe(
+                    LocalDateTime.of(stayDate.getCheckoutDate(), LocalTime.MAX))))
             // sql_mode=only_full_group_by 에러 해결을 위해 roomDetail 의 id 도 GROUP BY 절에 포함
             .groupBy(room.id, roomDetail.id)
             .having(reservation.count().eq(0L));
@@ -100,8 +104,8 @@ public class RoomRepository {
             .fetchJoin()
             .leftJoin(room.detail, roomDetail)
             .fetchJoin()
-            .distinct()
             .where(room.id.eq(roomId))
+            .distinct()
             .fetchOne();
     }
 

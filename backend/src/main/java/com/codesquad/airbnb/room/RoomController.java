@@ -2,11 +2,11 @@ package com.codesquad.airbnb.room;
 
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.Location;
-import com.codesquad.airbnb.common.embeddable.StayPeriod;
 import com.codesquad.airbnb.room.dto.RoomDetailResponse;
 import com.codesquad.airbnb.room.dto.RoomSearCondition;
 import com.codesquad.airbnb.room.dto.RoomSearCondition.PriceRange;
 import com.codesquad.airbnb.room.dto.RoomSearCondition.Radius;
+import com.codesquad.airbnb.room.dto.RoomSearCondition.StayDate;
 import com.codesquad.airbnb.room.dto.RoomSearchResponse;
 import java.time.LocalDate;
 import java.util.List;
@@ -46,7 +46,7 @@ public class RoomController {
                 new Radius(horizontalRadius, verticalRadius),
                 new GuestGroup(numAdult, numChild, numInfant),
                 new PriceRange(minPrice, maxPrice),
-                new StayPeriod(checkInDate, checkOutDate)
+            new StayDate(checkInDate, checkOutDate)
             )
         );
     }

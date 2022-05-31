@@ -1,9 +1,8 @@
 package com.codesquad.airbnb.reservation;
 
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
-import com.codesquad.airbnb.common.embeddable.StayPeriod;
-import com.codesquad.airbnb.common.embeddable.StayTime;
 import com.codesquad.airbnb.member.Member;
+import com.codesquad.airbnb.reservation.embeddable.StayDateTime;
 import com.codesquad.airbnb.room.entity.Room;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -15,8 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reservation {
@@ -32,10 +33,7 @@ public class Reservation {
     private GuestGroup guestGroup;
 
     @Embedded
-    private StayPeriod stayPeriod;
-
-    @Embedded
-    private StayTime stayTime;
+    private StayDateTime stayDateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "guest_id")
@@ -46,12 +44,12 @@ public class Reservation {
     private Room room;
 
     public Reservation(Room room, Member guest, Double totalCharge, GuestGroup guestGroup,
-        StayPeriod stayPeriod, StayTime stayTime) {
+        StayDateTime stayDateTime) {
         this.room = room;
         this.guest = guest;
         this.totalCharge = totalCharge;
         this.guestGroup = guestGroup;
-        this.stayPeriod = stayPeriod;
-        this.stayTime = stayTime;
+        this.stayDateTime = stayDateTime;
     }
+
 }

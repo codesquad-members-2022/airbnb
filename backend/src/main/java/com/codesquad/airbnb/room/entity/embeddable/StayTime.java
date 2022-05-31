@@ -1,4 +1,4 @@
-package com.codesquad.airbnb.common.embeddable;
+package com.codesquad.airbnb.room.entity.embeddable;
 
 import java.time.LocalTime;
 import javax.persistence.Embeddable;

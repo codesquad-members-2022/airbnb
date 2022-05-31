@@ -1,6 +1,6 @@
-package com.codesquad.airbnb.common.embeddable;
+package com.codesquad.airbnb.reservation.embeddable;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
@@ -14,13 +14,9 @@ import lombok.NoArgsConstructor;
 @Access(AccessType.FIELD)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class StayPeriod {
+public class StayDateTime {
 
-    private LocalDate checkinDate;
-    private LocalDate checkoutDate;
-
-    public boolean isNull() {
-        return checkinDate == null && checkoutDate == null;
-    }
+    private LocalDateTime checkinDateTime;
+    private LocalDateTime checkoutDateTime;
 
 }

@@ -5,16 +5,16 @@ import static org.assertj.core.api.BDDAssertions.then;
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.Location;
 import com.codesquad.airbnb.common.embeddable.ReviewStat;
-import com.codesquad.airbnb.common.embeddable.StayPeriod;
-import com.codesquad.airbnb.common.embeddable.StayTime;
 import com.codesquad.airbnb.district.District;
 import com.codesquad.airbnb.district.District.DistrictType;
 import com.codesquad.airbnb.member.Member;
 import com.codesquad.airbnb.member.Member.MemberRole;
 import com.codesquad.airbnb.reservation.Reservation;
+import com.codesquad.airbnb.reservation.embeddable.StayDateTime;
 import com.codesquad.airbnb.room.dto.RoomSearCondition;
 import com.codesquad.airbnb.room.dto.RoomSearCondition.PriceRange;
 import com.codesquad.airbnb.room.dto.RoomSearCondition.Radius;
+import com.codesquad.airbnb.room.dto.RoomSearCondition.StayDate;
 import com.codesquad.airbnb.room.dto.RoomSearchResponse;
 import com.codesquad.airbnb.room.entity.Room;
 import com.codesquad.airbnb.room.entity.Room.RoomType;
@@ -22,7 +22,9 @@ import com.codesquad.airbnb.room.entity.RoomDetail;
 import com.codesquad.airbnb.room.entity.embeddable.RoomCharge;
 import com.codesquad.airbnb.room.entity.embeddable.RoomGroup;
 import com.codesquad.airbnb.room.entity.embeddable.RoomOption;
+import com.codesquad.airbnb.room.entity.embeddable.StayTime;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +36,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -104,8 +107,9 @@ class RoomRepositoryTest {
             guest,
             67007.0,
             new GuestGroup(2, 1, 0),
-            new StayPeriod(LocalDate.of(2022, 5, 30), LocalDate.of(2022, 5, 31)),
-            new StayTime(LocalTime.of(17, 0, 0), LocalTime.of(12, 0, 0))
+            new StayDateTime(
+                LocalDateTime.of(2022, 5, 30, 17, 0, 0),
+                LocalDateTime.of(2022, 5, 31, 12, 0, 0))
         );
 
         em.persist(district);
@@ -128,7 +132,7 @@ class RoomRepositoryTest {
             new Radius(1.0, 1.0),
             new GuestGroup(2, 1, 0),
             new PriceRange(60000, 80000),
-            new StayPeriod(null, null)
+            new StayDate(null, null)
         ));
 
         // then
@@ -137,6 +141,7 @@ class RoomRepositoryTest {
 
 
     @Test
+    @Rollback(false)
     @DisplayName("요청한 날짜의 숙소에 이미 예약이 되어있는 경우 검색에서 제외한다")
     public void roomSearchWitPeriodTest() {
         // when
@@ -145,7 +150,7 @@ class RoomRepositoryTest {
             new Radius(1.0, 1.0),
             new GuestGroup(2, 1, 0),
             new PriceRange(7000, 80000),
-            new StayPeriod(LocalDate.of(2022, 5, 30), LocalDate.of(2022, 5, 31))
+            new StayDate(LocalDate.of(2022, 5, 30), LocalDate.of(2022, 5, 31))
         ));
 
         // then

@@ -5,16 +5,16 @@ import styled from 'styled-components';
 import CheckInOut from './CheckInOut';
 import Personnel from './Personnel';
 import PriceRange from './PriceRange';
-import CalendarModal from 'components/Calendar/CalendarModal';
 import CalendarProvider from 'contexts/CalendarProvider';
-import { ReactComponent as SearchIcon } from 'assets/svg/searchBtn.svg';
 
 import Modal from 'components/Modal/Modal';
+import CalendarModal from 'components/Calendar/CalendarModal';
+import PriceRangeModal from 'components/PriceRange/PriceRange';
 import {
   calendarModalStyle,
   priceRangeModalStyle,
 } from 'components/Modal/ModalStyle';
-import PriceRangeModal from 'components/PriceRange/PriceRange';
+import { ReactComponent as SearchIcon } from 'assets/svg/searchBtn.svg';
 
 function SearchBar() {
   const [selectedContent, setSelectedContent] = useState(null);

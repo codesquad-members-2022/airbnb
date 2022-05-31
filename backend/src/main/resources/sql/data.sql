@@ -31,3 +31,23 @@ VALUES ('울산광역시', 'https://bit.ly/3GhhtOj', '울산광역시', 'PRIMARY
 INSERT INTO district (name, image_path, address, type, point, review_score, review_count)
 VALUES ('부천시', 'https://bit.ly/3sVZyay', '부천시,경기도', 'SECONDARY',
         ST_GEOMFROMTEXT('POINT(126.7826 37.5060)'), 3.5, 50);
+
+INSERT INTO member (name, image_path, role, is_super_host)
+VALUES ('Miller', 'https://avatars.githubusercontent.com/u/50660684?v=4', 'USER', false);
+INSERT INTO member (name, image_path, role, is_super_host)
+VALUES ('BB-choi', 'https://avatars.githubusercontent.com/u/78826879?v=4', 'USER', false);
+
+INSERT INTO room (district_id, host_id, name, description, image_path, type, longitude, latitude,
+                  lodging_charge, cleaning_charge, review_score, review_count)
+VALUES (1, 1, 'Spacious and Comfortable cozy house #4', '강남역 5번 출구에서 도보로 이동가능합니다.',
+        'https://bit.ly/39ZouHy', 'WHOLE_RESIDENCE', 127.0286, 37.4953, 71466, 25996, 4.8, 127);
+
+INSERT INTO room_detail (room_id, number_adult, number_child, number_infant, number_total_room,
+                         number_bedroom, number_bathroom, number_bed, checkin_time, checkout_time,
+                         kitchen, hair_dryer, wireless_internet, air_conditioner)
+VALUES (1, 2, 1, 0, 2, 1, 1, 1, '17:00:00', '12:00:00', true, true, true, true);
+
+INSERT INTO reservation (guest_id, room_id, total_charge, number_adult, number_child, number_infant,
+                         checkin_date, checkout_date, checkin_time, checkout_time)
+VALUES (2, 1, 67007, 2, 1, 0, '2021-05-30', '2021-05-31', '17:00:00', '12:00:00');
+

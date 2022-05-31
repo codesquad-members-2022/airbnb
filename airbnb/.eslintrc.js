@@ -4,7 +4,6 @@ module.exports = {
     es2021: true,
   },
   settings: {
-    'import/parsers': '@typescript-eslint/parser',
     'import/resolver': {
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
@@ -37,6 +36,9 @@ module.exports = {
   ],
 
   rules: {
+    'consistent-return': 'off',
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'global-require': 'off',
     'react/react-in-jsx-scope': 'off',
     'import/prefer-default-export': 'off',
     'import/no-unresolved': 'off',

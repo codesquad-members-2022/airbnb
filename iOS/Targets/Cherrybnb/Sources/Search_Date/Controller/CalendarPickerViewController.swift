@@ -35,7 +35,9 @@ class CalendarPickerViewController: UIViewController {
     var didSelectDate: ((Date) -> Void)?
     var didSelectDataRange: ((Range<Date>) -> Void)?
 
-    init(basedate: Date, numOfMonths: Int, didDateSelect: ((Date) -> Void)?, didDataRangeSelect: ((Range<Date>) -> Void)?) throws {
+    init(basedate: Date, numOfMonths: Int,
+         didDateSelect: ((Date) -> Void)? = nil,
+         didDataRangeSelect: ((Range<Date>) -> Void)? = nil) throws {
         self.calendarPicker = try CalendarPicker(basedate: basedate, numOfMonths: numOfMonths)
 
         self.didSelectDate = didDateSelect

@@ -17,6 +17,7 @@
 		005AF791283B775300546D5B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005AF790283B775300546D5B /* SceneDelegate.swift */; };
 		005AF798283B775300546D5B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 005AF797283B775300546D5B /* Assets.xcassets */; };
 		005AF7A6283B775300546D5B /* AirbnbTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005AF7A5283B775300546D5B /* AirbnbTests.swift */; };
+		00863C4D284609DD004E5954 /* CalendarHearderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00863C4C284609DD004E5954 /* CalendarHearderView.swift */; };
 		008A2062283F4E220095F7BC /* BackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008A2061283F4E220095F7BC /* BackgroundViewController.swift */; };
 		008A2064283F62910095F7BC /* LocationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008A2063283F62910095F7BC /* LocationCollectionViewCell.swift */; };
 		008A20A6283FE3960095F7BC /* HeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008A20A5283FE3960095F7BC /* HeaderReusableView.swift */; };
@@ -90,6 +91,7 @@
 		005AF7A1283B775300546D5B /* AirbnbTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirbnbTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		005AF7A5283B775300546D5B /* AirbnbTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirbnbTests.swift; sourceTree = "<group>"; };
 		005AF7AB283B775300546D5B /* AirbnbUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirbnbUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00863C4C284609DD004E5954 /* CalendarHearderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHearderView.swift; sourceTree = "<group>"; };
 		008A2061283F4E220095F7BC /* BackgroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewController.swift; sourceTree = "<group>"; };
 		008A2063283F62910095F7BC /* LocationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCollectionViewCell.swift; sourceTree = "<group>"; };
 		008A20A5283FE3960095F7BC /* HeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderReusableView.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 			children = (
 				0029729B2844B4DF0033437E /* CalendarViewController.swift */,
 				00F134592845F20A0087A83C /* CalendarViewCell.swift */,
+				00863C4C284609DD004E5954 /* CalendarHearderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -530,6 +533,7 @@
 				1BF0618828459A210043FF2F /* Reservations.swift in Sources */,
 				008A20A6283FE3960095F7BC /* HeaderReusableView.swift in Sources */,
 				1B27E237283CA5A900FCB990 /* SearchCellCommonType.swift in Sources */,
+				00863C4D284609DD004E5954 /* CalendarHearderView.swift in Sources */,
 				00F1345A2845F20A0087A83C /* CalendarViewCell.swift in Sources */,
 				00A85F38283B873F00EA32E0 /* SearchViewController.swift in Sources */,
 				005AF791283B775300546D5B /* SceneDelegate.swift in Sources */,

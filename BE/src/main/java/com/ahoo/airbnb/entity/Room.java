@@ -43,6 +43,7 @@ public class Room extends BaseEntity {
     private int bedCount;
     private int bathroomCount;
     private int charge;
+    private int cleaningCharge;
     private int reviewCount;
     private double averageRate;
     private boolean isDeleted;

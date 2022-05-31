@@ -1,11 +1,13 @@
 package com.team14.cherrybnb.room.ui;
 
+import com.team14.cherrybnb.room.dto.PricesResponse;
 import com.team14.cherrybnb.room.dto.RoomCardResponse;
 import com.team14.cherrybnb.room.dto.RoomDetailResponse;
 import com.team14.cherrybnb.room.dto.SearchCondition;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -54,6 +56,17 @@ public class RoomController {
     )
     @GetMapping("/wish")
     public Page<RoomCardResponse> getWishRooms(Pageable pageable) {
+        return null;
+    }
+
+    @ApiOperation(
+            value = "1박 숙박 가격대별 빈도값 조회",
+            notes = "1박 숙박 가격대별 빈도값들을 조회한다.",
+            produces = "application/json",
+            response = PricesResponse.class
+    )
+    @GetMapping("/prices")
+    public ResponseEntity<PricesResponse> getPrices() {
         return null;
     }
 }

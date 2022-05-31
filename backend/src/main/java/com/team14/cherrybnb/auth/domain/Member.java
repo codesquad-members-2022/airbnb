@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
@@ -21,6 +20,9 @@ public class Member {
     private String name;
 
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     private String oauthAccessToken;
 

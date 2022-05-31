@@ -1,5 +1,6 @@
 package com.team14.cherrybnb.revervation.domain;
 
+import com.team14.cherrybnb.room.domain.Room;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,10 +8,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reservation {
 
@@ -27,8 +26,10 @@ public class Reservation {
 
     private BigDecimal totalPrice;
 
-    private boolean deleteYn;
+    @Enumerated(EnumType.STRING)
+    private ReservationState state;
 
-    @OneToMany(mappedBy = "reservation")
-    private List<ReservationRoom> reservationRooms;
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private Room room;
 }

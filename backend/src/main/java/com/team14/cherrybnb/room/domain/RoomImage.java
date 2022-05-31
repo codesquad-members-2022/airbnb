@@ -18,8 +18,6 @@ public class RoomImage {
 
     private String imageUrl;
 
-    private int imageSeq;
-
     @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;

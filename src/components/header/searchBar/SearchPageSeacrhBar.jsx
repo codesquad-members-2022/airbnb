@@ -9,11 +9,11 @@ import PriceModal from "../modal/PriceModal";
 import GuestModal from "../modal/GuestModal";
 import {useClickedTabContext} from "../../../ClickedTabProvider";
 
-const SearchPageSearchBar = ({clickedState, setClickedState}) => {
+const SearchPageSearchBar = () => {
     const {clickedTab} = useClickedTabContext();
-    
+
     return (
-        <SearchPageSearchBarBox onClick={() => setClickedState(!clickedState)}>
+        <SearchPageSearchBarBox>
             <DateBox />
             <Boundary condition={boundaryCondition} />
             <PriceBox />
@@ -40,6 +40,7 @@ const SearchPageSearchBarBox = styled.div`
     background-color: ${({theme}) => theme.color.white};
     user-select: none;
     border-radius: 999px;
+    z-index: 1;
 `;
 
 const boundaryCondition = {

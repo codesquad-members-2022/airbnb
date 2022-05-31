@@ -4,24 +4,26 @@ import SearchHeaderBeforeClicked from "../components/header/searchBar/SearchHead
 import SearchHeaderAfterClicked from "../components/header/searchBar/SearchHeaderAfterClicked";
 import AccomodationHeader from "../components/main/searchMain/AccomodationHeader";
 import AccomodationList from "../components/main/searchMain/AccomodationList";
+import DimLayer from "../components/DimLayer";
 
 const Search = () => {
     const [isClicked, setClicked] = useState(false);
-    const [clickedPart, setClickedPart] = useState(null);
 
     return (
         <>
-            <SearchPage isClicked={isClicked}>
+            <SearchPage
+                isClicked={isClicked}
+                onClick={() => {
+                    setClicked(false);
+                }}
+            >
                 {isClicked ? (
                     <SearchHeaderAfterClicked clickedState={isClicked} setClickedState={setClicked} />
                 ) : (
-                    <SearchHeaderBeforeClicked
-                        clickedState={isClicked}
-                        setClickedState={setClicked}
-                        setClickedPart={setClickedPart}
-                    />
+                    <SearchHeaderBeforeClicked setClickedState={setClicked} />
                 )}
             </SearchPage>
+            {isClicked && <DimLayer closeModal={setClicked} />}
             <SearchMain>
                 <AccomodationBox>
                     <AccomodationHeader />
@@ -34,9 +36,11 @@ const Search = () => {
 };
 
 const SearchPage = styled.div`
+    width: 100%;
     height: ${({isClicked}) => (isClicked ? "190px" : "94px")};
+    background-color: ${({theme}) => theme.color.white};
     user-select: none;
-    box-shadow: 0px 0px 4px rgba(204, 204, 204, 0.5), 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border: 1px solid ${({theme}) => theme.color.gray4};
     transition: 0.3s;
 `;
 

@@ -8,7 +8,8 @@ import {useClickedTabContext} from "../../../ClickedTabProvider";
 const CylindricalBox = ({title, placeHolder, style, partId, hasSearchButton}) => {
     const {clickedTab, setClickedTab} = useClickedTabContext();
     const isClicked = partId === clickedTab;
-    const changeClickedTab = () => {
+    const changeClickedTab = (event) => {
+        event.stopPropagation();
         if (partId === clickedTab) {
             setClickedTab(null);
         } else {

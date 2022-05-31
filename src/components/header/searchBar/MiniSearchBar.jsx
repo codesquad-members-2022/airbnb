@@ -5,21 +5,22 @@ import {CircleSearchButton} from "../../header/searchBar/CylindricalBox";
 import {ReactComponent as SearchIcon} from "../../../assets/searchIcon.svg";
 import {useClickedTabContext} from "../../../ClickedTabProvider";
 
-const MiniSearchBar = ({clickedState, setClickedState, setClickedPart}) => {
+const MiniSearchBar = ({setClickedState}) => {
     const {setClickedTab} = useClickedTabContext();
-    const changeClickedPart = (partId, tabName) => {
-        setClickedPart(partId);
+    const changeClickedPart = (event, tabName) => {
+        event.stopPropagation();
+        setClickedState(true);
         setClickedTab(tabName);
     };
 
     return (
         <>
-            <MiniSearchBarBox onClick={() => setClickedState(!clickedState)}>
-                <MiniDateBox onClick={() => changeClickedPart("DateBox", "CheckIn")}>언제든 일주일</MiniDateBox>
+            <MiniSearchBarBox>
+                <MiniDateBox onClick={(e) => changeClickedPart(e, "CheckIn")}>언제든 일주일</MiniDateBox>
                 <Boundary condition={boundaryCondition} />
-                <MiniPriceBox onClick={() => changeClickedPart("PriceBox", "PriceBox")}>placeHolder</MiniPriceBox>
+                <MiniPriceBox onClick={(e) => changeClickedPart(e, "PriceBox")}>placeHolder</MiniPriceBox>
                 <Boundary condition={boundaryCondition} />
-                <MiniGuestBox onClick={() => changeClickedPart("GuestBox", "GuestBox")}>
+                <MiniGuestBox onClick={(e) => changeClickedPart(e, "GuestBox")}>
                     <span>게스트 추가</span>
                     <MiniCircleSearchButton>
                         <SearchIcon />

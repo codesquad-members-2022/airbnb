@@ -4,16 +4,12 @@ import LoginButton from "../LoginButton";
 import {HeaderBox, Logo} from "../Header";
 import SearchPageSearchBar from "./SearchPageSeacrhBar";
 
-const SearchHeaderAfterClicked = ({clickedState, setClickedState, clickedPart}) => {
+const SearchHeaderAfterClicked = ({clickedState, setClickedState}) => {
     return (
         <HeaderBox>
             <Logo>LOGO</Logo>
             <Gnb />
-            <SearchPageSearchBar
-                clickedclickedState={clickedState}
-                setClickedState={setClickedState}
-                clickedPart={clickedPart}
-            />
+            <SearchPageSearchBar clickedclickedState={clickedState} setClickedState={setClickedState} />
             <LoginButton />
         </HeaderBox>
     );

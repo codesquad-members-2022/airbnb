@@ -2,6 +2,7 @@ import { createKey } from "Helpers/utils";
 import Month from "./Month/Month";
 import { CalendarContainer } from "./Calendar.styled";
 import { DateType, EventType } from "Helpers/interface";
+import { MODAL_REF_IDX } from "Helpers/constant";
 
 interface CalendarDateType {
   year: number;
@@ -16,6 +17,7 @@ interface CalendarType {
   checkIn?: DateType;
   checkOut?: DateType;
   calendarData: CalendarDateType;
+  calendarRef?: React.MutableRefObject<HTMLElement[] | null[]>;
   handlePrevButton?: () => void;
   handleNextButton?: () => void;
   handleClickDate?: (event: EventType) => void;
@@ -47,6 +49,7 @@ export default function Calendar({
   handlePrevButton,
   handleNextButton,
   handleClickDate,
+  calendarRef,
 }: CalendarType) {
   const { year, month } = calendarData;
   const displayCalendarLength = calendarShowCount || 2;
@@ -101,7 +104,11 @@ export default function Calendar({
   });
 
   return (
-    <CalendarContainer columnCount={columnCount} calendarModalStyle={calendarModalStyle}>
+    <CalendarContainer
+      ref={(el) => calendarRef && (calendarRef.current[MODAL_REF_IDX] = el)}
+      columnCount={columnCount}
+      calendarModalStyle={calendarModalStyle}
+    >
       {firstCalendar}
       {nextCalendar}
     </CalendarContainer>

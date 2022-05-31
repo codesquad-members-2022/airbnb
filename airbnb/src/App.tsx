@@ -1,6 +1,5 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { Home } from '@/Pages/Home';
-import { SearchingProvider } from '@/Contexts/Searching';
 import { theme, GlobalStyle } from '@/styles';
 
 function App() {
@@ -8,9 +7,7 @@ function App() {
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <SearchingProvider>
-          <Home />
-        </SearchingProvider>
+        <Home />
       </ThemeProvider>
     </>
   );

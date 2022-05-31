@@ -1,8 +1,8 @@
 import * as TYPE from './types';
 
 export const calendarInitialState: TYPE.CalenderState = {
-  startDate: 0,
-  endDate: 0,
+  startDate: new Date(),
+  endDate: null,
 };
 
 export const priceInitialState: TYPE.PriceState = {
@@ -17,6 +17,7 @@ export const customersInitialState: TYPE.CustomerState = {
   smallChildCount: 0,
 };
 
+/* eslint-disable consistent-return */
 export const calenderReducer = (
   state: TYPE.CalenderState,
   action: TYPE.CalenderAction,
@@ -30,10 +31,7 @@ export const calenderReducer = (
 
     case 'RESET':
       return { ...calendarInitialState };
-
-    default:
-      // TODO: action.type 에러 never type에 action.type 형식 할당 불가능 에러 해결하기
-      throw new Error(`잘못된 달력 액션입니다. actionType: ${action}`);
+    // no default
   }
 };
 

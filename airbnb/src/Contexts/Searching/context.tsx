@@ -9,8 +9,13 @@ import {
 } from './reducer';
 import * as TYPE from './types';
 
-export const SearchingContext =
-  React.createContext<TYPE.SearchingContextState | null>(null);
+export const SearchingContext = React.createContext<TYPE.SearchingContextState>(
+  {
+    calendar: calendarInitialState,
+    price: priceInitialState,
+    customers: customersInitialState,
+  },
+);
 
 // TODO: Dispatch 함수 해결해야할것
 export const SearchingDispatchContext =

@@ -2,11 +2,13 @@ package com.team14.cherrybnb.common.domain;
 
 
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.locationtech.jts.geom.Point;
 
 import javax.persistence.*;
 
 @Entity
+@ToString
 @NoArgsConstructor
 public class Address {
 

@@ -31,7 +31,7 @@ public class DummyDataService {
         this.roomRepository = roomRepository;
     }
 
-    @PostConstruct
+//    @PostConstruct
     private void requestDummyData() throws JsonProcessingException, org.locationtech.jts.io.ParseException {
 
         String url = "http://openapi.seoul.go.kr:8088/454b52746e79687331303668466a544a/json/LOCALDATA_031101/1/1000/";
@@ -54,6 +54,7 @@ public class DummyDataService {
             double x = node.get("X").asDouble();
             double y = node.get("Y").asDouble();
 
+            System.out.println("@@@@@" + x + " " + y);
 
             String coordinate = String.format("POINT (%f %f)", x, y);
             Geometry geometry = new WKTReader().read(coordinate);
@@ -73,7 +74,5 @@ public class DummyDataService {
 
             roomRepository.save(dummyRoom);
         }
-
-
     }
 }

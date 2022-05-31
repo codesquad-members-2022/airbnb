@@ -20,8 +20,10 @@ public class ReservationService {
             .collect(Collectors.toList());
     }
 
-    public ReservationDetailResponse findReservation(int reservationId) {
-        Reservation reservation = reservationRepository.findById(reservationId);
+    public ReservationDetailResponse findReservation(int id) {
+        Reservation reservation = reservationRepository.findByIdWithRoom(id)
+            .orElseThrow(() -> new IllegalStateException("예약 정보가 존재하지 않습니다."));
+
         return ReservationDetailResponse.from(reservation);
     }
 }

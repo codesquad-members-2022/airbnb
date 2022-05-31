@@ -1,49 +1,26 @@
 package com.codesquad.airbnb.reservation;
 
-import static com.codesquad.airbnb.district.QDistrict.district;
-import static com.codesquad.airbnb.member.QMember.member;
-import static com.codesquad.airbnb.reservation.QReservation.reservation;
-import static com.codesquad.airbnb.room.entity.QRoom.room;
-import static com.codesquad.airbnb.room.entity.QRoomDetail.roomDetail;
-import static com.codesquad.airbnb.room.entity.QRoomImage.roomImage;
-
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-@Repository
-@RequiredArgsConstructor
-public class ReservationRepository {
+public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
 
-    private final JPAQueryFactory queryFactory;
+    @Query("select re from Reservation re"
+        + " join fetch re.room ro"
+        + " join fetch ro.district"
+        + " join fetch re.guest g"
+        + " where g.id = :memberId")
+    List<Reservation> findByMemberId(@Param("memberId") Integer memberId);
 
-    public List<Reservation> findByMemberId(Integer memberId) {
-        return queryFactory.selectFrom(reservation)
-            .join(reservation.room, room)
-            .fetchJoin()
-            .join(room.district, district)
-            .fetchJoin()
-            .join(reservation.guest, member)
-            .fetchJoin()
-            .where(member.id.eq(memberId))
-            .distinct()
-            .fetch();
-    }
-
-    public Reservation findById(Integer reservationId) {
-        return queryFactory.selectFrom(reservation)
-            .join(reservation.room, room)
-            .fetchJoin()
-            .join(room.detail, roomDetail)
-            .fetchJoin()
-            .join(room.district, district)
-            .fetchJoin()
-            .join(room.host, member)
-            .fetchJoin()
-            .join(room.images, roomImage)
-            .fetchJoin()
-            .fetchOne();
-    }
-
+    @Query("select re from Reservation re"
+        + " join fetch re.room ro"
+        + " join fetch ro.detail"
+        + " join fetch ro.district"
+        + " join fetch ro.host"
+        + " join fetch ro.images"
+        + " where re.id = :id")
+    Optional<Reservation> findByIdWithRoom(@Param("id") Integer id);
 }

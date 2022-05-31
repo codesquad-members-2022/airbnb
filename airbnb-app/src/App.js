@@ -2,18 +2,16 @@ import { CustomThemeProvider } from '@/custom-styled-component/CustomThemeProvid
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '@/common/globalStyle';
 import theme from '@/common/theme';
-import GNB from '@component/gnb/GNB';
-import SearchBar from '@component/search-bar/SearchBar';
 import MainBanner from '@component/main-banner/MainBanner';
+import Header from '@/component/header/Header';
 
 function App() {
   return (
     <CustomThemeProvider theme={theme}>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <GNB />
+        <Header />
         <MainBanner />
-        <SearchBar />
       </ThemeProvider>
     </CustomThemeProvider>
   );

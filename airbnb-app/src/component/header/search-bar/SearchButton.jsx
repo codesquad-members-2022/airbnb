@@ -1,11 +1,11 @@
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import styled from 'styled-components';
 
-function SearchButton({ isFocus = false }) {
+function SearchButton({ open = false }) {
   return (
-    <SubmitButton type="submit" padding={isFocus ? '8px 16px 8px 8px' : '8px'}>
+    <SubmitButton type="submit" padding={open ? '8px 16px 8px 8px' : '8px'}>
       <SearchRoundedIcon />
-      <ButtonText display={isFocus ? 'block' : 'none'}>검색</ButtonText>
+      <ButtonText display={open ? 'block' : 'none'}>검색</ButtonText>
     </SubmitButton>
   );
 }
@@ -14,8 +14,8 @@ const SubmitButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: ${({ padding }) => padding};
   margin-left: auto;
+  padding: ${({ padding }) => padding};
   background-color: ${({ theme }) => theme.color.primary};
   border-radius: ${({ theme }) => theme.borderRadius.radius1};
 `;

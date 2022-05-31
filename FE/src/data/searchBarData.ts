@@ -13,6 +13,12 @@ export interface PersonnelTypes {
   kid: number;
 }
 
+export interface SearchBarDataTypes {
+  period: PeriodTypes;
+  price: PriceTypes;
+  personnel: PersonnelTypes;
+}
+
 export const searchBarData = {
   period: {
     checkIn: '5월 27일',

@@ -1,6 +1,7 @@
 package com.team14.cherrybnb.room.domain;
 
 import com.team14.cherrybnb.room.dto.SearchCondition;
+import org.locationtech.jts.geom.Geometry;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,5 +22,9 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
             "join fetch r.address " +
             "where r.id = :roomId")
     Optional<Room> findById(Long roomId);
+
+    @Query("select r from Room r join fetch r.address a where within(a.cooridinate, :circle) = true")
+    List<Room> findRoomsWithinCircle(Geometry circle);
+
 
 }

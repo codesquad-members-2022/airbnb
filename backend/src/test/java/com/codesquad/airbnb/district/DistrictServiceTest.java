@@ -2,9 +2,9 @@ package com.codesquad.airbnb.district;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
+import com.codesquad.airbnb.common.embeddable.Location;
+import com.codesquad.airbnb.common.embeddable.ReviewStat;
 import com.codesquad.airbnb.district.District.DistrictType;
-import com.codesquad.airbnb.domain.Location;
-import com.codesquad.airbnb.domain.ReviewTotal;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @ActiveProfiles("test")
 @SpringBootTest
+@Transactional
 @AutoConfigureTestEntityManager
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @DisplayName("DistrictService 통합 테스트")
@@ -31,7 +32,6 @@ class DistrictServiceTest {
     DistrictService districtService;
 
     @Test
-    @Transactional
     @DisplayName("사용자 주변의 인기있는 행정구역 목록을 조회한다")
     public void districtsTest() {
         // given
@@ -41,7 +41,7 @@ class DistrictServiceTest {
             "https://bit.ly/3PKgIBo",
             DistrictType.PRIMARY,
             new Location(126.9896, 37.5499),
-            new ReviewTotal(4.5, 50)
+            new ReviewStat(4.5, 50)
         ));
         em.persist(new District(
             "대구광역시",
@@ -49,7 +49,7 @@ class DistrictServiceTest {
             "https://bit.ly/3GkiDs7",
             DistrictType.PRIMARY,
             new Location(128.5692, 35.8281),
-            new ReviewTotal(3.0, 50)
+            new ReviewStat(3.0, 50)
         ));
         em.persist(new District(
             "대전광역시",
@@ -57,7 +57,7 @@ class DistrictServiceTest {
             "https://bit.ly/3PHYdxG",
             DistrictType.PRIMARY,
             new Location(127.3974, 36.3370),
-            new ReviewTotal(4.5, 30)
+            new ReviewStat(4.5, 30)
         ));
         em.flush();
         em.clear();

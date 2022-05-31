@@ -2,26 +2,26 @@ package com.codesquad.airbnb.room;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
+import com.codesquad.airbnb.common.embeddable.GuestGroup;
+import com.codesquad.airbnb.common.embeddable.Location;
+import com.codesquad.airbnb.common.embeddable.ReviewStat;
+import com.codesquad.airbnb.common.embeddable.StayPeriod;
+import com.codesquad.airbnb.common.embeddable.StayTime;
 import com.codesquad.airbnb.district.District;
 import com.codesquad.airbnb.district.District.DistrictType;
-import com.codesquad.airbnb.domain.GuestGroup;
-import com.codesquad.airbnb.domain.Location;
-import com.codesquad.airbnb.domain.ReviewTotal;
-import com.codesquad.airbnb.domain.RoomCharge;
-import com.codesquad.airbnb.domain.RoomGroup;
-import com.codesquad.airbnb.domain.RoomOption;
-import com.codesquad.airbnb.domain.StayPeriod;
-import com.codesquad.airbnb.domain.StayTime;
-import com.codesquad.airbnb.domain.search.PriceRange;
-import com.codesquad.airbnb.domain.search.Radius;
 import com.codesquad.airbnb.member.Member;
 import com.codesquad.airbnb.member.Member.MemberRole;
 import com.codesquad.airbnb.reservation.Reservation;
 import com.codesquad.airbnb.room.dto.RoomSearCondition;
+import com.codesquad.airbnb.room.dto.RoomSearCondition.PriceRange;
+import com.codesquad.airbnb.room.dto.RoomSearCondition.Radius;
 import com.codesquad.airbnb.room.dto.RoomSearchResponse;
 import com.codesquad.airbnb.room.entity.Room;
 import com.codesquad.airbnb.room.entity.Room.RoomType;
 import com.codesquad.airbnb.room.entity.RoomDetail;
+import com.codesquad.airbnb.room.entity.embeddable.RoomCharge;
+import com.codesquad.airbnb.room.entity.embeddable.RoomGroup;
+import com.codesquad.airbnb.room.entity.embeddable.RoomOption;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -34,7 +34,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,7 +67,7 @@ class RoomRepositoryTest {
             "https://bit.ly/3PKgIBo",
             DistrictType.PRIMARY,
             new Location(126.9896, 37.5499),
-            new ReviewTotal(4.5, 50)
+            new ReviewStat(4.5, 50)
         );
         host = new Member(
             "Miller",
@@ -91,7 +90,7 @@ class RoomRepositoryTest {
             RoomType.WHOLE_RESIDENCE,
             new Location(127.0286, 37.4953),
             new RoomCharge(71466.0, 25996.0),
-            new ReviewTotal(4.8, 127)
+            new ReviewStat(4.8, 127)
         );
         roomDetail = new RoomDetail(
             room,
@@ -138,7 +137,6 @@ class RoomRepositoryTest {
 
 
     @Test
-    @Rollback(false)
     @DisplayName("요청한 날짜의 숙소에 이미 예약이 되어있는 경우 검색에서 제외한다")
     public void roomSearchWitPeriodTest() {
         // when

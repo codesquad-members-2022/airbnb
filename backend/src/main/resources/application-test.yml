@@ -1,17 +1,16 @@
 spring:
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb;MODE=MySQL;
-    username: SA
-    password:
-
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+    url: jdbc:mysql://localhost:3306/airbnb?&characterEncoding=UTF-8&serverTimeZone=Asia/Seoul
+    username: root
+    password: team-2
 
   sql:
     init:
       mode: always
       schema-locations: classpath:sql/schema.sql
+
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true

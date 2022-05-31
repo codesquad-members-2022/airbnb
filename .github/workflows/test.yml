@@ -1,8 +1,9 @@
-name: Build and Test for Continuous Integration
+name: Test for Continuous Integration
 
+# MySQL 종속 자료구조를 사용해 GitHub Actions 인스턴스 내 테스트 불가
 on:
   pull_request:
-    branches: [ backend-dev ]
+    branches: []
 
 permissions:
   contents: read
@@ -26,9 +27,6 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    
-    - name: Build with Gradle
-      run: ./gradlew clean build -x test
       
     - name: Test with Gradle
       run: SPRING_PROFILES_ACTIVE=[test] ./gradlew test

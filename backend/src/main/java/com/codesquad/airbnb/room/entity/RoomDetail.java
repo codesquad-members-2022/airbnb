@@ -1,9 +1,9 @@
 package com.codesquad.airbnb.room.entity;
 
-import com.codesquad.airbnb.room.entity.embeddable.NumberCell;
-import com.codesquad.airbnb.room.entity.embeddable.NumberGroup;
+import com.codesquad.airbnb.common.embeddable.GuestGroup;
+import com.codesquad.airbnb.room.entity.embeddable.RoomGroup;
 import com.codesquad.airbnb.room.entity.embeddable.RoomOption;
-import java.time.LocalTime;
+import com.codesquad.airbnb.room.entity.embeddable.StayTime;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -14,25 +14,27 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RoomInfo {
+public class RoomDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "room_info_id")
+    @Column(name = "room_detail_id")
     private Integer id;
 
-    private LocalTime checkinTime;
-    private LocalTime checkoutTime;
+    @Embedded
+    private GuestGroup guestGroup;
 
     @Embedded
-    private NumberGroup numberGroup;
+    private RoomGroup roomGroup;
 
     @Embedded
-    private NumberCell numberCell;
+    private StayTime stayTime;
 
     @Embedded
     private RoomOption option;
@@ -41,4 +43,12 @@ public class RoomInfo {
     @JoinColumn(name = "room_id")
     private Room room;
 
+    public RoomDetail(Room room, GuestGroup guestGroup, RoomGroup roomGroup, RoomOption option,
+        StayTime stayTime) {
+        this.room = room;
+        this.guestGroup = guestGroup;
+        this.roomGroup = roomGroup;
+        this.option = option;
+        this.stayTime = stayTime;
+    }
 }

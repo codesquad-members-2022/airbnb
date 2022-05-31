@@ -1,10 +1,7 @@
-package com.codesquad.airbnb.room.entity;
+package com.codesquad.airbnb.tag;
 
-import com.codesquad.airbnb.member.entity.Member;
-import com.codesquad.airbnb.room.entity.embeddable.NumberGroup;
-import java.time.LocalDateTime;
+import com.codesquad.airbnb.room.entity.Room;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,23 +14,16 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Reservation {
+public class TagRoom {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reservation_id")
+    @Column(name = "tag_room_id")
     private Integer id;
 
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
-    private Double charge;
-
-    @Embedded
-    private NumberGroup numberGroup;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "guest_id")
-    private Member guest;
+    @JoinColumn(name = "tag_id")
+    private Tag tag;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")

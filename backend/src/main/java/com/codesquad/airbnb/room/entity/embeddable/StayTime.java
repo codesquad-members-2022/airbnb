@@ -1,15 +1,17 @@
 package com.codesquad.airbnb.room.entity.embeddable;
 
+import java.time.LocalTime;
 import javax.persistence.Embeddable;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @Embeddable
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class StayTime {
 
-public class NumberGroup {
-
-    private Integer numberGuest;
-    private Integer numberInfant;
+    private LocalTime checkinTime;
+    private LocalTime checkoutTime;
 
 }

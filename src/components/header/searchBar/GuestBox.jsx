@@ -2,7 +2,6 @@ import React from "react";
 import CylindricalBox from "./CylindricalBox";
 
 const GuestBox = () => {
-
     return (
         <CylindricalBox
             title="인원"
@@ -16,7 +15,7 @@ const GuestBox = () => {
 
 const guestBoxStyle = {
     width: "298px",
-    height: "76px",
+    height: "100%",
     border: "",
 };
 

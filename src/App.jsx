@@ -4,19 +4,19 @@ import theme from "./theme";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
-import ClickedPartProvider from "./ClickedPartProvider";
+import ClickedTabProvider from "./ClickedTabProvider";
 
 const App = () => {
     return (
         <ThemeProvider theme={theme}>
-            <ClickedPartProvider>
+            <ClickedTabProvider>
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<Home />}></Route>
                         <Route path="/search" element={<Search />}></Route>
                     </Routes>
                 </BrowserRouter>
-            </ClickedPartProvider>
+            </ClickedTabProvider>
         </ThemeProvider>
     );
 };

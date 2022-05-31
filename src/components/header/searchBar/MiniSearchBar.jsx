@@ -4,30 +4,34 @@ import styled from "styled-components";
 import {CircleSearchButton} from "../../header/searchBar/CylindricalBox";
 import {ReactComponent as SearchIcon} from "../../../assets/searchIcon.svg";
 
-const MiniSearchBar = () => {
-
+const MiniSearchBar = ({clickedState, setClickedState}) => {
     return (
-        <MiniSearchBarBox>
-            <MiniDateBox>언제든 일주일</MiniDateBox>
-            <Boundary condition={boundaryCondition} />
-            <MiniPriceBox>placeHolder</MiniPriceBox>
-            <Boundary condition={boundaryCondition} />
-            <MiniGuestBox>
-                <span>게스트 추가</span>
-                <MiniCircleSearchButton>
-                    <SearchIcon />
-                </MiniCircleSearchButton>
-            </MiniGuestBox>
-        </MiniSearchBarBox>
+        <>
+            <MiniSearchBarBox onClick={() => setClickedState(!clickedState)}>
+                <MiniDateBox>언제든 일주일</MiniDateBox>
+                <Boundary condition={boundaryCondition} />
+                <MiniPriceBox>placeHolder</MiniPriceBox>
+                <Boundary condition={boundaryCondition} />
+                <MiniGuestBox>
+                    <span>게스트 추가</span>
+                    <MiniCircleSearchButton>
+                        <SearchIcon />
+                    </MiniCircleSearchButton>
+                </MiniGuestBox>
+            </MiniSearchBarBox>
+        </>
     );
 };
 
 const MiniSearchBarBox = styled.div`
     ${({theme}) => theme.layout.flexLayoutMixin("row", "space-between", "center")}
     background-color: ${({theme}) => theme.color.white};
+    position: absolute;
     top: 50px;
-    width: 410px;
+    left: 50%;
     height: 48px;
+    width: 410px;
+    transform: translate(-50%, -50%);
     border: 1px solid ${({theme}) => theme.color.gray4};
     border-radius: 999px;
 `;

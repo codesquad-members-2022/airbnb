@@ -1,25 +1,13 @@
 import React from "react";
-import {useClickedPartContext} from "../../../ClickedPartProvider";
 import CylindricalBox from "./CylindricalBox";
 
 const CheckOut = () => {
-    const {clickedPart, setClickedPart} = useClickedPartContext();
-
-    return (
-        <CylindricalBox
-            title="체크아웃"
-            placeHolder="날짜 입력"
-            style={checkOutStyle}
-            partId="CheckOut"
-            clickedPart={clickedPart}
-            setClickedPart={setClickedPart}
-        />
-    );
+    return <CylindricalBox title="체크아웃" placeHolder="날짜 입력" style={checkOutStyle} partId="CheckOut" />;
 };
 
 const checkOutStyle = {
-    width: "152px",
-    height: "76px",
+    width: "200px",
+    height: "100%",
     border: "",
 };
 

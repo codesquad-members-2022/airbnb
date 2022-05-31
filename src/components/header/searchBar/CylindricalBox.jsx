@@ -3,21 +3,21 @@ import styled from "styled-components";
 import {ReactComponent as CrossIcon} from "../../../assets/crossIcon.svg";
 import {ReactComponent as SearchIcon} from "../../../assets/searchIcon.svg";
 import {Link} from "react-router-dom";
-import {useClickedPartContext} from "../../../ClickedPartProvider";
+import {useClickedTabContext} from "../../../ClickedTabProvider";
 
 const CylindricalBox = ({title, placeHolder, style, partId, hasSearchButton}) => {
-    const {clickedPart, setClickedPart} = useClickedPartContext();
-    const isClicked = partId === clickedPart;
-    const changeClickedPart = () => {
-        if (partId === clickedPart) {
-            setClickedPart(null);
+    const {clickedTab, setClickedTab} = useClickedTabContext();
+    const isClicked = partId === clickedTab;
+    const changeClickedTab = () => {
+        if (partId === clickedTab) {
+            setClickedTab(null);
         } else {
-            setClickedPart(partId);
+            setClickedTab(partId);
         }
     };
 
     return (
-        <CylindricalButton isClicked={isClicked} style={style} onClick={changeClickedPart}>
+        <CylindricalButton isClicked={isClicked} style={style} onClick={changeClickedTab}>
             <TextBox>
                 <Title>{title}</Title>
                 <PlaceHolder>{placeHolder}</PlaceHolder>

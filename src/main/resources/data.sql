@@ -25,13 +25,13 @@ VALUES (1, '서울', '차로 30분 거리',
         'https://velog.velcdn.com/images/becolorful/post/79908da7-9ad5-4537-a030-56a75a3f84aa/image.png');
 
 INSERT INTO lodging (id, bathroom_count, bed_count, bedroom_count, place_type, lodging_description,
-                     host_name, host_image, latitude, longitude, main_image_url, max_guest,
+                     host_name, host_image, latitude, longitude, max_guest,
                      lodging_name, property_type, price, rating, review, address_id, region_id)
     VALUE (1,1,2,3,'ENTIRE_PLACE','설명',
-    '김길동','호스트이미지 url',100,100,'메인이미지',3,
+    '김길동','호스트이미지 url',100,100,3,
     '좋은 숙소','HOUSE',1000,4.7,2,1,1);
 
-INSERT INTO images (id, image_url, lodging_id)
-VALUES (1, '서브이미지1', 1),
-       (2, '서브이미지2', 1),
-       (3, '서브이미지3', 1);
+INSERT INTO images (id, image_url, lodging_id, is_main_image)
+VALUES (1, '메인이미지1', 1, true),
+       (2, '서브이미지1-1', 1, false),
+       (3, '서브이미지1-2', 1, false);

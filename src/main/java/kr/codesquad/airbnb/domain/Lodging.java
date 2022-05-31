@@ -39,7 +39,9 @@ public class Lodging {
     private String hostImage;
     private double latitude;
     private double longitude;
-    private String mainImageUrl;
+
+    @OneToMany(mappedBy = "lodging")
+    private List<Images> images;
 
     @JoinColumn
     @OneToOne(fetch = FetchType.LAZY)

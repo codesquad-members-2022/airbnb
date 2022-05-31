@@ -22,4 +22,6 @@ public class Images {
     private Lodging lodging;
 
     private String imageUrl;
+
+    private boolean isMainImage;
 }

@@ -2,7 +2,6 @@ package kr.codesquad.airbnb.dto;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import kr.codesquad.airbnb.domain.Images;
 import kr.codesquad.airbnb.domain.Lodging;
 import lombok.Getter;
@@ -30,9 +29,10 @@ public class LodgingResponseDto {
     private String propertyType;
     private String hostName;
     private String hostImageUrl;
-    private List<String> imageUrls;
+    private String mainImageUrl;
+    private List<String> subImageUrls;
 
-    public LodgingResponseDto(Lodging lodging, List<Images> images) {
+    public LodgingResponseDto(Lodging lodging) {
         this.id = lodging.getId();
         this.name = lodging.getName();
         this.country = lodging.getAddress().getCountry();
@@ -51,14 +51,19 @@ public class LodgingResponseDto {
         this.propertyType = lodging.getPropertyType().getName();
         this.hostName = lodging.getHostName();
         this.hostImageUrl = lodging.getHostImage();
-        this.imageUrls = initImages(lodging.getMainImageUrl(),images);
+        initImageUrl(lodging);
     }
 
-    private List<String> initImages(String mainImageUrl, List<Images> images) {
-        List<String> imageUrls = new ArrayList();
-        imageUrls.add(mainImageUrl);
-        imageUrls.addAll(images.stream().map(Images::getImageUrl)
-            .collect(Collectors.toList()));
-        return imageUrls;
+    private void initImageUrl(Lodging lodging) {
+        List<String> subImageUrls = new ArrayList<>();
+        for (Images image : lodging.getImages()) {
+            if (image.isMainImage() == true) {
+                this.mainImageUrl = image.getImageUrl();
+            } else {
+                subImageUrls.add(image.getImageUrl());
+            }
+        }
+        this.subImageUrls = subImageUrls;
     }
+
 }

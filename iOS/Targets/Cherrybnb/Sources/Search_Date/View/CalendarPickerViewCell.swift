@@ -44,11 +44,12 @@ class CalendarPickerViewCell: UICollectionViewCell {
 
     func setDay(_ day: CalendarPicker.Day) {
         self.day = day
-        guard let date = day.date, let isPast = day.isPast else { return }
+        
+        guard !day.isHidden else { return }
 
-        let dateString = dateFormatter.string(from: date)
+        let dateString = dateFormatter.string(from: day.date)
 
-        if isPast {
+        if day.isPast {
             numberLabel.attributedText = strikethrough(dateString)
         } else {
             numberLabel.text = dateString

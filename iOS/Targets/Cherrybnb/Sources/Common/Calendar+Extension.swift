@@ -25,8 +25,8 @@ extension Calendar {
         return date(byAdding: .month, value: offsetBy, to: getFirstDayOfMonth(for: baseDate)) ?? baseDate
     }
 
-    func getNextDay(for baseDate: Date, offset: Int) -> Date? {
-        return date(byAdding: .day, value: offset, to: baseDate)
+    func getNextDay(for baseDate: Date, offsetBy: Int) -> Date? {
+        return date(byAdding: .day, value: offsetBy, to: baseDate)
     }
 
     func getWeekDay(of date: Date) -> Int {

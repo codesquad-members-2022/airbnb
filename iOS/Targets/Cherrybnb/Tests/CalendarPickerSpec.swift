@@ -40,11 +40,7 @@ class CalendarPickerSpec: QuickSpec {
                     let firstMonth = calendarPicker.getMonth(monthSection: 0)
 
                     let pastDays = firstMonth.days.filter { day in
-                        if let day = day.date {
-                            return day < testDate
-                        } else {
-                            return false
-                        }
+                        return day.date < testDate
                     }
 
                     for pastDay in pastDays {
@@ -56,11 +52,7 @@ class CalendarPickerSpec: QuickSpec {
                     let firstMonth = calendarPicker.getMonth(monthSection: 0)
 
                     let futureDays = firstMonth.days.filter { day in
-                        if let day = day.date {
-                            return day >= testDate
-                        } else {
-                            return false
-                        }
+                        return day.date >= testDate
                     }
 
                     for futureDay in futureDays {
@@ -72,9 +64,8 @@ class CalendarPickerSpec: QuickSpec {
                     let firstMonth = calendarPicker.getMonth(monthSection: 0)
 
                     for (i, day) in firstMonth.days.enumerated() {
-                        guard let date = day.date else { return }
                         let indexRemainder = i % 7
-                        let weekday = calendar.getWeekDay(of: date)
+                        let weekday = calendar.getWeekDay(of: day.date)
 
                         expect(indexRemainder).to(equal(weekday-1))
                     }

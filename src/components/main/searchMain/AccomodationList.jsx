@@ -17,7 +17,7 @@ const AccomodationList = () => {
             id: "99",
         },
         {
-            img: "https://placeimg.com/330/200/any",
+            img: "https://placeimg.com/330/199/any",
             location: "서초구의 아파트 전체",
             relation: "Spacious and Comfortable cozy house #4",
             option1: "최대 인원 3명 ∙ 원룸 ∙ 침대 1개 ∙ 욕실 1개",
@@ -28,7 +28,7 @@ const AccomodationList = () => {
             id: "98",
         },
         {
-            img: "https://placeimg.com/330/200/any",
+            img: "https://placeimg.com/330/198/any",
             location: "서초구의 아파트 전체",
             relation: "Spacious and Comfortable cozy house #4",
             option1: "최대 인원 3명 ∙ 원룸 ∙ 침대 1개 ∙ 욕실 1개",
@@ -39,7 +39,7 @@ const AccomodationList = () => {
             id: "97",
         },
         {
-            img: "https://placeimg.com/330/200/any",
+            img: "https://placeimg.com/330/197/any",
             location: "서초구의 아파트 전체",
             relation: "Spacious and Comfortable cozy house #4",
             option1: "최대 인원 3명 ∙ 원룸 ∙ 침대 1개 ∙ 욕실 1개",

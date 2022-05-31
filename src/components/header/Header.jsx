@@ -21,12 +21,12 @@ const Background = styled.div`
     user-select: none;
 `;
 
-const HeaderBox = styled.header`
+export const HeaderBox = styled.header`
     ${({theme}) => theme.layout.flexLayoutMixin("row", "space-between", "center")}
     padding: 24px 80px;
 `;
 
-const Logo = styled.h1`
+export const Logo = styled.h1`
     color: ${({theme}) => theme.color.gray1};
     cursor: pointer;
     font-weight: 900;

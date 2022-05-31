@@ -8,38 +8,39 @@ import CalendarModal from "../modal/CalendarModal";
 import PriceModal from "../modal/PriceModal";
 import GuestModal from "../modal/GuestModal";
 import {useClickedTabContext} from "../../../ClickedTabProvider";
-import {size} from "../../../constants";
 
-const SearchBar = ({searchBarState}) => {
+const SearchPageSearchBar = () => {
     const {clickedTab} = useClickedTabContext();
 
     return (
-        <SearchBarBox searchBarState={searchBarState === size.MAXI}>
+        <SearchPageSearchBarBox>
             <DateBox />
             <Boundary condition={boundaryCondition} />
             <PriceBox />
             <Boundary condition={boundaryCondition} />
             <GuestBox />
-            <CalendarModal isClicked={clickedTab === "CheckIn" || clickedTab === "CheckOut"} />
+            <CalendarModal
+                isClicked={clickedTab === "DateBox" || clickedTab === "CheckIn" || clickedTab === "CheckOut"}
+            />
             <PriceModal isClicked={clickedTab === "PriceBox"} />
             <GuestModal isClicked={clickedTab === "GuestBox"} />
-        </SearchBarBox>
+        </SearchPageSearchBarBox>
     );
 };
 
-const SearchBarBox = styled.div`
+const SearchPageSearchBarBox = styled.div`
     ${({theme}) => theme.layout.flexLayoutMixin("row", "flex-start", "center")}
-    display: ${({searchBarState}) => (searchBarState ? "flex" : "none")};
     position: absolute;
-    width: 916px;
-    height: 76px;
-    border: 1px solid ${({theme}) => theme.color.gray4};
-    top: 170px;
+    top: 125px;
     left: 50%;
+    height: 76px;
+    width: 916px;
+    border: 1px solid ${({theme}) => theme.color.gray4};
     transform: translate(-50%, -50%);
     background-color: ${({theme}) => theme.color.white};
     user-select: none;
     border-radius: 999px;
+    z-index: 1;
 `;
 
 const boundaryCondition = {
@@ -49,4 +50,4 @@ const boundaryCondition = {
     backgroundColor: "#E0E0E0",
 };
 
-export default SearchBar;
+export default SearchPageSearchBar;

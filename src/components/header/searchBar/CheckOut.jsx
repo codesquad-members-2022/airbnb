@@ -1,23 +1,14 @@
 import React from "react";
 import CylindricalBox from "./CylindricalBox";
 
-const CheckOut = ({clickedPart, setClickedPart}) => {
-    const checkOutStyle = {
-        width: "152px",
-        height: "76px",
-        border: "",
-    };
+const CheckOut = () => {
+    return <CylindricalBox title="체크아웃" placeHolder="날짜 입력" style={checkOutStyle} partId="CheckOut" />;
+};
 
-    return (
-        <CylindricalBox
-            title="체크아웃"
-            placeHolder="날짜 입력"
-            style={checkOutStyle}
-            partId="CheckOut"
-            clickedPart={clickedPart}
-            setClickedPart={setClickedPart}
-        />
-    );
+const checkOutStyle = {
+    width: "200px",
+    height: "100%",
+    border: "",
 };
 
 export default CheckOut;

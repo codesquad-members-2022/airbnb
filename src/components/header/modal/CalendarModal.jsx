@@ -13,6 +13,7 @@ const CalendarModalBox = styled(Modal)`
     left: 50%;
     transform: translate(-50%, -50%);
     display: ${({isClicked}) => (isClicked ? "block" : "none")};
+    box-shadow: 0px 4px 10px rgba(51, 51, 51, 0.1);
 `;
 
 export default CalendarModal;

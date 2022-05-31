@@ -1,20 +1,29 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
-import LoginButton from "../components/header/LoginButton";
-import SearchBar from "../components/header/searchBar/SearchBar";
+import SearchHeaderBeforeClicked from "../components/header/searchBar/SearchHeaderBeforeClicked";
+import SearchHeaderAfterClicked from "../components/header/searchBar/SearchHeaderAfterClicked";
 import AccomodationHeader from "../components/main/searchMain/AccomodationHeader";
 import AccomodationList from "../components/main/searchMain/AccomodationList";
+import DimLayer from "../components/DimLayer";
 
 const Search = () => {
+    const [isClicked, setClicked] = useState(false);
+
     return (
         <>
-            <Background>
-                <HeaderBox>
-                    <Logo>LOGO</Logo>
-                    <SearchBar size="small" />
-                    <LoginButton />
-                </HeaderBox>
-            </Background>
+            <SearchPage
+                isClicked={isClicked}
+                onClick={() => {
+                    setClicked(false);
+                }}
+            >
+                {isClicked ? (
+                    <SearchHeaderAfterClicked clickedState={isClicked} setClickedState={setClicked} />
+                ) : (
+                    <SearchHeaderBeforeClicked setClickedState={setClicked} />
+                )}
+            </SearchPage>
+            {isClicked && <DimLayer closeModal={setClicked} />}
             <SearchMain>
                 <AccomodationBox>
                     <AccomodationHeader />
@@ -25,6 +34,15 @@ const Search = () => {
         </>
     );
 };
+
+const SearchPage = styled.div`
+    width: 100%;
+    height: ${({isClicked}) => (isClicked ? "190px" : "94px")};
+    background-color: ${({theme}) => theme.color.white};
+    user-select: none;
+    border: 1px solid ${({theme}) => theme.color.gray4};
+    transition: 0.3s;
+`;
 
 const SearchMain = styled.main`
     ${({theme}) => theme.layout.flexLayoutMixin()};
@@ -43,25 +61,6 @@ const AccomodationBox = styled.div`
 const MapBox = styled.div`
     width: 50%;
     background-color: green;
-`;
-
-const Background = styled.div`
-    background-color: ${({theme}) => theme.transparentColor.gray1};
-    height: 640px;
-    user-select: none;
-`;
-
-const HeaderBox = styled.header`
-    ${({theme}) => theme.layout.flexLayoutMixin("row", "space-between", "center")}
-    padding: 24px 80px;
-`;
-
-const Logo = styled.h1`
-    color: ${({theme}) => theme.color.gray1};
-    cursor: pointer;
-    font-weight: 900;
-    font-size: 32px;
-    line-height: 46px;
 `;
 
 export default Search;

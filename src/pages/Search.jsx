@@ -11,11 +11,7 @@ const Search = () => {
         <>
             <SearchPage isClicked={isClicked}>
                 {isClicked ? (
-                    <SearchHeaderAfterClicked
-                        clickedState={isClicked}
-                        setClickedState={setClicked}
-                        clickedPart={clickedPart}
-                    />
+                    <SearchHeaderAfterClicked clickedState={isClicked} setClickedState={setClicked} />
                 ) : (
                     <SearchHeaderBeforeClicked
                         clickedState={isClicked}

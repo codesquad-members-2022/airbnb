@@ -7,8 +7,11 @@ import Boundary from "../../Boundary";
 import CalendarModal from "../modal/CalendarModal";
 import PriceModal from "../modal/PriceModal";
 import GuestModal from "../modal/GuestModal";
+import {useClickedTabContext} from "../../../ClickedTabProvider";
 
-const SearchPageSearchBar = ({clickedState, setClickedState, clickedPart}) => {
+const SearchPageSearchBar = ({clickedState, setClickedState}) => {
+    const {clickedTab} = useClickedTabContext();
+    
     return (
         <SearchPageSearchBarBox onClick={() => setClickedState(!clickedState)}>
             <DateBox />
@@ -16,9 +19,11 @@ const SearchPageSearchBar = ({clickedState, setClickedState, clickedPart}) => {
             <PriceBox />
             <Boundary condition={boundaryCondition} />
             <GuestBox />
-            <CalendarModal isClicked={clickedPart === "DateBox"} />
-            <PriceModal isClicked={clickedPart === "PriceBox"} />
-            <GuestModal isClicked={clickedPart === "GuestBox"} />
+            <CalendarModal
+                isClicked={clickedTab === "DateBox" || clickedTab === "CheckIn" || clickedTab === "CheckOut"}
+            />
+            <PriceModal isClicked={clickedTab === "PriceBox"} />
+            <GuestModal isClicked={clickedTab === "GuestBox"} />
         </SearchPageSearchBarBox>
     );
 };

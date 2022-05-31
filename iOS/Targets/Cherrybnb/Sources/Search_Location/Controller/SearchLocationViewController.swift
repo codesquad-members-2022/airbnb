@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class ListCollectionViewController: UIViewController {
+class SearchLocationViewController: UIViewController {
 
     private var collectionView: UICollectionView!
     private var searchCompleter = MKLocalSearchCompleter()
@@ -40,6 +40,10 @@ class ListCollectionViewController: UIViewController {
                 self.collectionView.reloadData()
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        view.backgroundColor = .white
     }
 
     private func connectSearchBar() {
@@ -76,7 +80,7 @@ class ListCollectionViewController: UIViewController {
     }
 }
 
-extension ListCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension SearchLocationViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if isSearching {
             return searchResultData.count
@@ -102,10 +106,16 @@ extension ListCollectionViewController: UICollectionViewDelegate, UICollectionVi
         let size = CGSize(width: self.collectionView.frame.width, height: 64)
         return size
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let searchDateVC = SearchDateViewController()
+        // TODO: 선택된 Location 정보를 QueryParameter에 담아 주입해주기
+        navigationController?.pushViewController(searchDateVC, animated: true)
+    }
 
 }
 
-extension ListCollectionViewController: UISearchBarDelegate {
+extension SearchLocationViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
@@ -119,9 +129,10 @@ extension ListCollectionViewController: UISearchBarDelegate {
     }
 }
 
-extension ListCollectionViewController: MKLocalSearchCompleterDelegate {
+extension SearchLocationViewController: MKLocalSearchCompleterDelegate {
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         searchResultData = searchCompleter.results
         collectionView.reloadData()
     }
 }
+

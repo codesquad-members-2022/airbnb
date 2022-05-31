@@ -11,6 +11,8 @@ import { ReactComponent as SearchIcon } from 'assets/svg/searchBtn.svg';
 import Modal from 'components/Modal/Modal';
 import { calendarModalStyle } from 'components/Modal/ModalStyle';
 
+import PriceRangeModal from 'components/PriceRange/PriceRange';
+
 function SearchBar() {
   const [selectedContent, setSelectedContent] = useState(null);
 

@@ -70,11 +70,7 @@ class SearchUseCase: NetworkCommonComponents {
         }
         
         let header = HTTPHeader.init(name: "content-type", value: "application/json")
-//    connection: keep-alive
-//     content-type: application/json
-//     date: Tue,31 May 2022 00:42:49 GMT
-//     keep-alive: timeout=60
-//     transfer-encoding: chunked
+        
         AF.request(
             url,
             method: .get,
@@ -123,6 +119,7 @@ class SearchUseCase: NetworkCommonComponents {
         ).commonRequestComplete(completionHandler)
     }
     
+    // Test 를 위한 임시 구조체
     struct Destination: Codable {
         let destination: String
     }

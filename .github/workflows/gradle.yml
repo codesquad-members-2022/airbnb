@@ -39,21 +39,21 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v5.6
       with:
         image: cherrybnb/cherrybnb
-        tags: latest
+        tags: v1, latest
         registry: docker.io
         dockerfile: ./backend/Dockerfile
         username: ${{ secrets.DOCKERHUB_ID }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-    - name: Deploy
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.EC2_PUBLIC_IP }}
-        username: ubuntu
-        key: ${{ secrets.EC2_PRIVATE_KEY }}
-        envs: GITHUB_SHA
-        script: |
-          docker pull cherrybnb/cherrybnb:latest
-          docker tag cherrybnb/cherrybnb:latest cherrybnb:latest
-          docker stop cherry-server
-          docker run -d --rm --name cherry-server -p 80:8080 -e DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} -e DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} -e DATABASE_URL=${{secrets.DATABASE_URL}} cherrybnb:latest
+#     - name: Deploy
+#       uses: appleboy/ssh-action@master
+#       with:
+#         host: ${{ secrets.EC2_PUBLIC_IP }}
+#         username: ubuntu
+#         key: ${{ secrets.EC2_PRIVATE_KEY }}
+#         envs: GITHUB_SHA
+#         script: |
+#           docker pull cherrybnb/cherrybnb:latest
+#           docker tag cherrybnb/cherrybnb:latest cherrybnb:latest
+#           docker stop cherry-server
+#           docker run -d --rm --name cherry-server -p 80:8080 -e DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} -e DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} -e DATABASE_URL=${{secrets.DATABASE_URL}} cherrybnb:latest

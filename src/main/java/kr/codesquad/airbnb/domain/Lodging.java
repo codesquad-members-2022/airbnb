@@ -4,6 +4,9 @@ import javax.persistence.*;
 
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 public class Lodging {
@@ -44,6 +47,9 @@ public class Lodging {
     private List<Images> images;
 
     @JoinColumn
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Region region;
+
+    @OneToMany(mappedBy = "lodging")
+    private List<Reservation> reservationList = new ArrayList<>();
 }

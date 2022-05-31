@@ -47,8 +47,10 @@ export const createKey = (data: string, idx: number) => {
 
 export const composeProvider = (providers: any) => {
   return providers.reduce((Prev: any, Curr: any) => ({ children }: any) => {
-    <Prev>
-      <Curr>{children}</Curr>
-    </Prev>;
+    return (
+      <Prev>
+        <Curr>{children}</Curr>
+      </Prev>
+    );
   });
 };

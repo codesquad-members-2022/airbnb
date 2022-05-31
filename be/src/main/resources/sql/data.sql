@@ -2820,3 +2820,7 @@ insert into room_discount_tax(discount_tax_id, room_id) values (2, 300);
 insert into room_discount_tax(discount_tax_id, room_id) values (4, 300);
 insert into room_discount_tax(discount_tax_id, room_id) values (3, 300);
 insert into room_discount_tax(discount_tax_id, room_id) values (1, 300);
+
+---- 유저, 예약
+insert into member(name, created_at) values('member1', now());
+insert into booking(check_in, check_out, adults, children, infants, total_price, member_id, room_id, created_at) values('2022-05-20', '2022-05-31', 3, 0, 0, 179000, 1, 3, now());

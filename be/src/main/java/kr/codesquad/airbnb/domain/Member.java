@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,4 +25,6 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private final List<Booking> bookings = new ArrayList<>();
+
+    private LocalDateTime createdAt;
 }

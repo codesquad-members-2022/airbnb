@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -34,4 +35,5 @@ public class Booking {
     private Guest guest;
 
     private Integer totalPrice;
+    private LocalDateTime createdAt;
 }

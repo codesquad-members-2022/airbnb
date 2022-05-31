@@ -4,13 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team14.cherrybnb.common.domain.Address;
+import com.team14.cherrybnb.common.util.GeometryUtils;
 import com.team14.cherrybnb.room.domain.Room;
 import com.team14.cherrybnb.room.domain.RoomInfo;
 import com.team14.cherrybnb.room.domain.RoomPriceCondition;
 import com.team14.cherrybnb.room.domain.RoomRepository;
-import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Point;
-import org.locationtech.jts.io.WKTReader;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -27,11 +26,12 @@ public class DummyDataService {
 
     private final RoomRepository roomRepository;
 
+
     public DummyDataService(RoomRepository roomRepository) {
         this.roomRepository = roomRepository;
     }
 
-//    @PostConstruct
+
     private void requestDummyData() throws JsonProcessingException, org.locationtech.jts.io.ParseException {
 
         String url = "http://openapi.seoul.go.kr:8088/454b52746e79687331303668466a544a/json/LOCALDATA_031101/1/1000/";
@@ -54,11 +54,7 @@ public class DummyDataService {
             double x = node.get("X").asDouble();
             double y = node.get("Y").asDouble();
 
-            System.out.println("@@@@@" + x + " " + y);
-
-            String coordinate = String.format("POINT (%f %f)", x, y);
-            Geometry geometry = new WKTReader().read(coordinate);
-            Point point = (Point) geometry;
+            Point point = GeometryUtils.createPoint(x, y);
             String[] splited = address.split(" ");
             if(splited.length < 4) {
                 continue;

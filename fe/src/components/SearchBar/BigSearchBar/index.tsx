@@ -3,47 +3,40 @@ import React from 'react';
 import { SearchButton } from '@/components/buttons/SearchButton';
 import * as I from '@/styles/icons';
 
+import { InfoButton, ResetButton } from './Button';
 import * as S from './style';
 
 function BigSearchBar() {
   return (
     <S.SearchBarLayer>
       <S.ButtonWrapper>
-        <S.Button>
-          <S.Header>체크인</S.Header>
-          <S.Description>5월 20일</S.Description>
-        </S.Button>
-        <S.Button>
-          <S.Header>체크아웃</S.Header>
-          <S.Description>5월 30일</S.Description>
-        </S.Button>
-        <S.ResetButton>
-          <I.Reset />
-        </S.ResetButton>
+        <InfoButton header="체크인" description="5월 30일" />
+        <InfoButton header="체크아웃" description="5월 30일" />
+        <ResetButton />
       </S.ButtonWrapper>
 
       <S.Separator />
 
       <S.ButtonWrapper>
-        <S.Button>
-          <S.Header>요금</S.Header>
-          <S.Description>$100,000 ~ $1,000,000</S.Description>
-        </S.Button>
-        <S.ResetButton>
-          <I.Reset />
-        </S.ResetButton>
+        <InfoButton
+          width={200}
+          header="요금"
+          description={['$100,000', '$1,000,000']}
+          descriptionSeparator=" ~ "
+        />
+        <ResetButton />
       </S.ButtonWrapper>
 
       <S.Separator />
 
       <S.ButtonWrapper>
-        <S.Button>
-          <S.Header>인원</S.Header>
-          <S.Description>게스트 2명</S.Description>
-        </S.Button>
-        <S.ResetButton>
-          <I.Reset />
-        </S.ResetButton>
+        <InfoButton
+          width={110}
+          header="인원"
+          description={['게스트 3명', '유아 2명']}
+          descriptionSeparator=", "
+        />
+        <ResetButton />
       </S.ButtonWrapper>
 
       <S.SearchButtonLayer>

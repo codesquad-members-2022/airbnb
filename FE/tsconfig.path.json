@@ -9,6 +9,7 @@
       "@data/*": ["data/*"],
       "@router": ["router"],
       "@constants": ["constants"],
+      "@constants/*": ["constants/*"],
       "@context/*": ["context/*"],
       "@assets/*": ["assets/*"],
       "@mocks/*": ["mocks/*"]

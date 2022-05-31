@@ -1,6 +1,8 @@
 import { rest } from 'msw';
 
-const GET_MAIN = rest.get('/api/searchResult', (req, res, ctx) => {
+import { BASE_URL } from '@constants';
+
+const GET_SEARCH_BAR_DATA = rest.get(`${BASE_URL}/api/search-bar`, (req, res, ctx) => {
   return res(
     ctx.status(200),
     ctx.json({
@@ -20,4 +22,4 @@ const GET_MAIN = rest.get('/api/searchResult', (req, res, ctx) => {
   );
 });
 
-export const handlers = [GET_MAIN];
+export const handlers = [GET_SEARCH_BAR_DATA];

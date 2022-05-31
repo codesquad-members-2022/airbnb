@@ -5,16 +5,14 @@ import { ThemeProvider } from 'styled-components';
 
 import GlobalStyle from '@assets/styles/GlobalStyle';
 import { theme } from '@assets/styles/theme';
+import { worker } from '@mocks/browser';
 
 import App from './App';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) throw new Error('Failed to find the root element');
 
-if (process.env.NODE_ENV === 'development') {
-  const { worker } = require('@mocks/browser');
-  worker.start();
-}
+worker.start();
 
 const root = ReactDOM.createRoot(rootElement);
 root.render(

@@ -1,21 +1,27 @@
-type ValueType = {
-  checkIn: number;
-  checkOut: number;
-  minPrice: number;
-  maxPrice: number;
-  adult: number;
-  teenager: number;
-  child: number;
-};
+export interface PeriodType {
+  checkIn?: number;
+  checkOut?: number;
+}
 
-interface SearchType {
-  title: string & string[];
+export interface PriceType {
+  minPrice?: number;
+  maxPrice?: number;
+}
+
+export interface PersonnelType {
+  adult?: number;
+  teenager?: number;
+  child?: number;
+}
+
+export interface SearchPropsType {
+  title: string | string[];
   defaultValue: string;
-  value: ValueType;
+  value: PeriodType & PriceType & PersonnelType;
 }
 
 export interface SectionProps {
-  search: SearchType;
+  search: SearchPropsType;
   addSearch: object;
-  value: string;
+  value?: string;
 }

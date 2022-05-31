@@ -7,7 +7,5 @@ export default function Price({ search, addSearch }: SectionProps) {
   const { minPrice, maxPrice } = value;
   const price = minPrice || maxPrice ? `${minPrice}~${maxPrice}` : defaultValue;
 
-  return <SearchSection title={title} value={price} />;
+  return <SearchSection title={title as string} value={price} />;
 }
-
-Price.displayName = 'price';

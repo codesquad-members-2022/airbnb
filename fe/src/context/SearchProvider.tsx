@@ -1,26 +1,5 @@
 import React, { useContext, createContext, useReducer, Dispatch } from 'react';
-
-interface PeriodType {
-  checkIn: number;
-  checkOut: number;
-}
-
-interface PriceType {
-  minPrice: number;
-  maxPrice: number;
-}
-
-interface PersonnelType {
-  adult: number;
-  teenager: number;
-  child: number;
-}
-
-interface SearchPropsType {
-  title: string | string[];
-  defaultValue: string;
-  value: PeriodType | PriceType | PersonnelType;
-}
+import { PeriodType, PriceType, PersonnelType, SearchPropsType } from 'components/SearchBar/types';
 
 interface SearchType {
   period: SearchPropsType;
@@ -84,25 +63,25 @@ const initSearch = {
     title: ['체크인', '체크아웃'],
     defaultValue: '날짜입력',
     value: {
-      checkIn: 0,
-      checkOut: 0,
+      checkIn: undefined,
+      checkOut: undefined,
     },
   },
   price: {
     title: '요금',
     defaultValue: '금액대 설정',
     value: {
-      minPrice: 0,
-      maxPrice: 0,
+      minPrice: undefined,
+      maxPrice: undefined,
     },
   },
   personnel: {
     title: '인원',
     defaultValue: '게스트 추가',
     value: {
-      adult: 0,
-      teenager: 0,
-      child: 0,
+      adult: undefined,
+      teenager: undefined,
+      child: undefined,
     },
   },
 };

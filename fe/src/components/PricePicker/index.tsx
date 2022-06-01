@@ -1,18 +1,56 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
+import { pricesURL } from '@/apis/accommodation';
+import Chart from '@/components/Chart';
+import { useAccommodationDispatch, useAccommodation, parseAction } from '@/contexts/Accommodation';
+import { useFetch } from '@/hooks/useFetch/useFetch';
 
 import * as S from './style';
 
+interface IAccommodation {
+  price: number;
+  count: number;
+}
+
+const prefix = '₩';
+
 function PricePicker() {
+  const { data: accommodationData, isLoading } = useFetch<IAccommodation[]>(pricesURL);
+
+  const accommodationDispatch = useAccommodationDispatch();
+  const { maxPrice, minPrice, maxCount, averageNightlyPrice, chartData, canvasWidth } =
+    useAccommodation();
+  useEffect(() => {
+    if (!accommodationData) {
+      return;
+    }
+    accommodationDispatch(parseAction(accommodationData));
+  }, [accommodationData]);
+
   return (
     <S.PricePickerLayer>
       <S.Header>
         <S.Title>가격 범위</S.Title>
       </S.Header>
       <S.PriceInfo>
-        <S.Price>100,000 - 1,000,000</S.Price>
-        <S.Average>평균 1박 요금은 165,556 입니다.</S.Average>
+        {isLoading ? (
+          'Loading...'
+        ) : (
+          <>
+            <S.Price>
+              {`${prefix}${minPrice.toLocaleString()}`} - {`${prefix}${maxPrice.toLocaleString()}`}
+            </S.Price>
+            <S.Average>평균 1박 요금은 ${averageNightlyPrice.toLocaleString()} 입니다.</S.Average>
+          </>
+        )}
       </S.PriceInfo>
-      <S.ChartLayer>차트 그림</S.ChartLayer>
+      <S.ChartLayer>
+        {isLoading ? (
+          'Loading...'
+        ) : (
+          <Chart chartData={chartData} width={canvasWidth} height={maxCount} />
+        )}
+      </S.ChartLayer>
     </S.PricePickerLayer>
   );
 }

@@ -1,0 +1,86 @@
+package com.ahoo.airbnb.reservation;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.BDDMockito.given;
+
+import com.ahoo.airbnb.data.TestData;
+import com.ahoo.airbnb.exception.ExceptionMessage;
+import com.ahoo.airbnb.reservation.dtos.ChargesResponse;
+import com.ahoo.airbnb.reservation.dtos.RoomChargeRequest;
+import com.ahoo.airbnb.reservation.dtos.RoomChargeResponse;
+import com.ahoo.airbnb.room.RoomRepository;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.transaction.annotation.Transactional;
+
+@ExtendWith(MockitoExtension.class)
+@Transactional
+class ReservationServiceTest {
+
+    @Mock
+    RoomRepository roomRepository;
+
+    @InjectMocks
+    ReservationService reservationService;
+
+    @Test
+    @DisplayName("존재하는 roomId에 해당하는 숙소의 1박당 요금, 총 요금, 상세 요금 항목들을 계산하여 리턴한다.")
+    void calculateTotalChargeOfSuccessTest() {
+        // given
+        Long roomId = 1L;
+        RoomChargeRequest requestParam = new RoomChargeRequest(
+            "2022-02-02T10:15:30",
+            "2022-02-10T10:15:30",
+            1
+        );
+        RoomChargeResponse expected = RoomChargeResponse.of(
+            53347,
+            426778,
+            new ChargesResponse(Map.of(
+                "{1박당 평균 요금} * {숙박일수}", 386105,
+                "숙박세와 수수료", 224,
+                "4% 주 단위 요금 할인", -1795,
+                "서비스 수수료", 2244,
+                "청소비", 40000
+            ))
+        );
+        given(roomRepository.findById(roomId)).willReturn(Optional.ofNullable(TestData.room));
+        given(roomRepository.findActiveChargePolicyTypeById(roomId)).willReturn(TestData.chargePolicyTypes);
+
+        // when
+        RoomChargeResponse roomChargeResponse = reservationService.calculateTotalChargeOf(roomId, requestParam);
+
+        // then
+        assertThat(roomChargeResponse.getChargePerDay()).isEqualTo(expected.getChargePerDay());
+        assertThat(roomChargeResponse.getTotalCharge()).isEqualTo(expected.getTotalCharge());
+        assertThat(roomChargeResponse.getChargesResponse().getCharges()).containsAllEntriesOf(expected.getChargesResponse().getCharges());
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 roomId에 해당하는 숙소의 1박당 요금, 총 요금, 상세 요금 항목들을 계산하려고 시도하면 NoSuchElementException을 리턴한다.")
+    void calculateTotalChargeOfFailTest() {
+        // given
+        Long roomId = 8L;
+        RoomChargeRequest requestParam = new RoomChargeRequest(
+            "2022-02-02T10:15:30",
+            "2022-02-10T10:15:30",
+            1
+        );
+
+        given(roomRepository.findById(roomId)).willThrow(new NoSuchElementException(ExceptionMessage.NO_ROOM_ID));
+
+        // when
+        // then
+        assertThatThrownBy(() -> reservationService.calculateTotalChargeOf(roomId, requestParam))
+            .isInstanceOf(NoSuchElementException.class)
+            .hasMessage(ExceptionMessage.NO_ROOM_ID);
+    }
+}

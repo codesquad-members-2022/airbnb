@@ -8,10 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Entity
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 @Table(name = "room_charge_policy")
 public class RoomChargePolicy {
 
@@ -26,4 +30,8 @@ public class RoomChargePolicy {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "charge_policy_id")
     private ChargePolicy chargePolicy;
+
+    public void connectRoom(Room room) {
+        this.room = room;
+    }
 }

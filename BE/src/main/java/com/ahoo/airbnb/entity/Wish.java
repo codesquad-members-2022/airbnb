@@ -9,8 +9,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 
-@Entity
 @Getter
+@Entity
 @Table(name = "wish")
 public class Wish {
 

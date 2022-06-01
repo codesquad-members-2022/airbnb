@@ -14,10 +14,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Entity
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 @Table(name = "room")
 public class Room extends BaseEntity {
 
@@ -55,3 +59,5 @@ public class Room extends BaseEntity {
     @OneToMany(mappedBy = "room", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<RoomChargePolicy> roomChargePolicies = new ArrayList<>();
 }
+
+

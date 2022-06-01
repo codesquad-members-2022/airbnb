@@ -19,7 +19,6 @@ class LocationCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 6
-//        imageView.frame = CGRect(x: 0, y: 0, width: 64, height: 64)
         return imageView
     }()
     
@@ -66,5 +65,10 @@ class LocationCollectionViewCell: UICollectionViewCell {
             $0.leading.equalTo(cityImage.snp.trailing).offset(16)
             $0.centerY.equalToSuperview()
         }
+    }
+    
+    func updateInfomation(_ info: CityInformation) {
+        cityName.text = info.destination
+        spendingTime.text = (info as? PopularCityInfomation)?.distance
     }
 }

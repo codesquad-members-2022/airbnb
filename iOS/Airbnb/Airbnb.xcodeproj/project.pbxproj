@@ -18,6 +18,9 @@
 		005AF798283B775300546D5B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 005AF797283B775300546D5B /* Assets.xcassets */; };
 		005AF7A6283B775300546D5B /* AirbnbTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005AF7A5283B775300546D5B /* AirbnbTests.swift */; };
 		00863C4D284609DD004E5954 /* CalendarHearderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00863C4C284609DD004E5954 /* CalendarHearderView.swift */; };
+		00863C4F2847452F004E5954 /* CalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00863C4E2847452F004E5954 /* CalendarModel.swift */; };
+		00863C5128474614004E5954 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00863C5028474614004E5954 /* Day.swift */; };
+		00863C5328474792004E5954 /* MonthMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00863C5228474792004E5954 /* MonthMetadata.swift */; };
 		008A2062283F4E220095F7BC /* BackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008A2061283F4E220095F7BC /* BackgroundViewController.swift */; };
 		008A2064283F62910095F7BC /* LocationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008A2063283F62910095F7BC /* LocationCollectionViewCell.swift */; };
 		008A20A6283FE3960095F7BC /* HeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008A20A5283FE3960095F7BC /* HeaderReusableView.swift */; };
@@ -92,6 +95,9 @@
 		005AF7A5283B775300546D5B /* AirbnbTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirbnbTests.swift; sourceTree = "<group>"; };
 		005AF7AB283B775300546D5B /* AirbnbUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirbnbUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00863C4C284609DD004E5954 /* CalendarHearderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHearderView.swift; sourceTree = "<group>"; };
+		00863C4E2847452F004E5954 /* CalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarModel.swift; sourceTree = "<group>"; };
+		00863C5028474614004E5954 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
+		00863C5228474792004E5954 /* MonthMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthMetadata.swift; sourceTree = "<group>"; };
 		008A2061283F4E220095F7BC /* BackgroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewController.swift; sourceTree = "<group>"; };
 		008A2063283F62910095F7BC /* LocationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCollectionViewCell.swift; sourceTree = "<group>"; };
 		008A20A5283FE3960095F7BC /* HeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderReusableView.swift; sourceTree = "<group>"; };
@@ -268,6 +274,8 @@
 				0029729528445B8D0033437E /* LocationModel.swift */,
 				1B27E234283CA44400FCB990 /* SearchViewModel.swift */,
 				1B807DCA283F529A00D6815F /* SearchCalendarModel.swift */,
+				00863C4E2847452F004E5954 /* CalendarModel.swift */,
+				00863C5228474792004E5954 /* MonthMetadata.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -350,6 +358,7 @@
 			isa = PBXGroup;
 			children = (
 				1B90ED33283F547600E45FE8 /* SearchDayDTO.swift */,
+				00863C5028474614004E5954 /* Day.swift */,
 				1BF0618728459A210043FF2F /* Reservations.swift */,
 			);
 			path = DTO;
@@ -511,10 +520,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0029729C2844B4DF0033437E /* CalendarViewController.swift in Sources */,
+				00863C5328474792004E5954 /* MonthMetadata.swift in Sources */,
 				00A85F3E283B877700EA32E0 /* WishModel.swift in Sources */,
 				1B807DCB283F529A00D6815F /* SearchCalendarModel.swift in Sources */,
 				1B27E233283CA14900FCB990 /* SearchOneInARowCollectionViewCell.swift in Sources */,
 				0029729628445B8D0033437E /* LocationModel.swift in Sources */,
+				00863C4F2847452F004E5954 /* CalendarModel.swift in Sources */,
 				1B27E231283CA14200FCB990 /* SearchTwoInARowCollectionViewCell.swift in Sources */,
 				00A85F35283B872800EA32E0 /* ReservationModel.swift in Sources */,
 				00A85F3C283B876A00EA32E0 /* WishListViewController.swift in Sources */,
@@ -537,6 +548,7 @@
 				00F1345A2845F20A0087A83C /* CalendarViewCell.swift in Sources */,
 				00A85F38283B873F00EA32E0 /* SearchViewController.swift in Sources */,
 				005AF791283B775300546D5B /* SceneDelegate.swift in Sources */,
+				00863C5128474614004E5954 /* Day.swift in Sources */,
 				1BF0618E2845CFBE0043FF2F /* ColumnGraphView.swift in Sources */,
 				1B90ED34283F547600E45FE8 /* SearchDayDTO.swift in Sources */,
 				1BF061902845F31E0043FF2F /* CommonColors.swift in Sources */,

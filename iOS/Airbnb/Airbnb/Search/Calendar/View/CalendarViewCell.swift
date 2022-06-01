@@ -9,11 +9,11 @@ import UIKit
 
 class CalendarViewCell: UICollectionViewCell {
     
-    var day: SearchDayDTO? {
+    var day: Day? {
       didSet {
         guard let day = day else { return }
 
-        numberLabel.text = day.day
+        numberLabel.text = day.number
         accessibilityLabel = accessibilityDateFormatter.string(from: day.date)
         updateSelectionStatus()
       }
@@ -59,18 +59,12 @@ class CalendarViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
       super.layoutSubviews()
-      
-      // This allows for rotations and trait collection
-      // changes (e.g. entering split view on iPad) to update constraints correctly.
-      // Removing old constraints allows for new ones to be created
-      // regardless of the values of the old ones
+
       NSLayoutConstraint.deactivate(selectionBackgroundView.constraints)
 
-      // 1
       let size = traitCollection.horizontalSizeClass == .compact ?
         min(min(frame.width, frame.height) - 10, 60) : 45
 
-      // 2
       NSLayoutConstraint.activate([
         numberLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
         numberLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -91,18 +85,17 @@ class CalendarViewCell: UICollectionViewCell {
 
 // MARK: - Appearance
 private extension CalendarViewCell {
-  // 1
+  
   func updateSelectionStatus() {
     guard let day = day else { return }
 
     if day.isSelected {
       applySelectedStyle()
     } else {
-        applyDefaultStyle(isWithinDisplayedMonth: day.isOccupied)
+        applyDefaultStyle()
     }
   }
 
-  // 2
   var isSmallScreenSize: Bool {
     let isCompact = traitCollection.horizontalSizeClass == .compact
     let smallWidth = UIScreen.main.bounds.width <= 350
@@ -112,7 +105,6 @@ private extension CalendarViewCell {
     return isCompact && (smallWidth || widthGreaterThanHeight)
   }
 
-  // 3
   func applySelectedStyle() {
     accessibilityTraits.insert(.selected)
     accessibilityHint = nil
@@ -121,12 +113,11 @@ private extension CalendarViewCell {
     selectionBackgroundView.isHidden = isSmallScreenSize
   }
 
-  // 4
-  func applyDefaultStyle(isWithinDisplayedMonth: Bool) {
+  func applyDefaultStyle() {
     accessibilityTraits.remove(.selected)
     accessibilityHint = "Tap to select"
 
-    numberLabel.textColor = isWithinDisplayedMonth ? .label : .secondaryLabel
+    numberLabel.textColor = .label
     selectionBackgroundView.isHidden = true
   }
 }

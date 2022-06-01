@@ -40,8 +40,10 @@ class SearchLocationViewController: UIViewController {
         collectionView.dataSource = recommendationDataSource
     }
     
+    static let defaultNavTitle = "숙소찾기"
+    
     private func setSearchBar() {
-        self.navigationItem.title = "숙소찾기"
+        self.navigationItem.title = SearchLocationViewController.defaultNavTitle
         self.navigationItem.searchController = UISearchController(searchResultsController: nil)
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationController?.hidesBarsOnSwipe = false
@@ -54,7 +56,7 @@ class SearchLocationViewController: UIViewController {
     private func setCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
         self.view.addSubview(collectionView)
 
@@ -91,7 +93,7 @@ extension SearchLocationViewController: UICollectionViewDelegateFlowLayout {
 extension SearchLocationViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText == "" {
+        if searchText.isEmpty {
             collectionView.dataSource = recommendationDataSource
             collectionView.reloadData()
         } else {

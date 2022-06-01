@@ -14,7 +14,7 @@ class LocationCell: UICollectionViewCell {
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(systemName: "mappin.and.ellipse")
+        imageView.image = UIImage.searchLocationDefault
         imageView.layer.cornerRadius = 10
         return imageView
     }()
@@ -22,7 +22,7 @@ class LocationCell: UICollectionViewCell {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 17)
+        label.font = UIFont.cherrybnbBody
         return label
     }()
 

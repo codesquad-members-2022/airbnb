@@ -10,6 +10,8 @@ import UIKit
 
 class CalendarPickerViewController: UIViewController {
 
+    static let defaultNumberOfMonths = 12
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.headerReferenceSize = CGSize(width: 400, height: 50)

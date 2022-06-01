@@ -20,9 +20,9 @@ public class DistanceSearchService {
     @Value("${kakao.rest.api.key}")
     private String kakaoKey;
 
-    public DistanceInfo navi(double originX, double originY, double destinationX, double destionationY) throws JsonProcessingException {
+    public DistanceInfo navi(double originX, double originY, double destinationX, double destinationY) throws JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
-        String url = getUrl(originX, originY, destinationX, destionationY);
+        String url = getUrl(originX, originY, destinationX, destinationY);
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHeaders()), String.class);
 
         ObjectMapper objectMapper = new ObjectMapper();

@@ -9,7 +9,7 @@ INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('우
 INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('정후팍', '1234@gmail.com', '1234', 'GUEST', '');
 INSERT INTO member (name, email, password, type, profile_image_url) VALUES ('우진팍', '1234@gmail.com', '1234', 'GUEST', '');
 
-INSERT INTO room (id, host_id, title, description, country, city, state, street, detail_address, room_type, max_capacity, bedroom_count, bed_count, bathroom_count, latitude, longitude, charge, cleaning_charge, review_count,average_rate) VALUES (1, 1, '호스텔 서울 R - 욕실이 있는 싱글룸', 'description example', ' 한국', ' 서울', '종로구', '', 'detail_address example', '개인실', 0, 0, 1, 1.0, 37.57691, 127.02279, 44896, 5000, 106, 4.04);
+INSERT INTO room (id, host_id, title, description, country, city, state, street, detail_address, room_type, max_capacity, bedroom_count, bed_count, bathroom_count, latitude, longitude, charge, cleaning_charge, review_count,average_rate) VALUES (1, 1, '호스텔 서울 R - 욕실이 있는 싱글룸', 'description example', ' 한국', ' 서울', '종로구', '', 'detail_address example', '개인실', 5, 2, 2, 1.0, 37.57691, 127.02279, 44896, 5000, 106, 4.04);
 INSERT INTO room (id, host_id, title, description, country, city, state, street, detail_address, room_type, max_capacity, bedroom_count, bed_count, bathroom_count, latitude, longitude, charge, cleaning_charge, review_count,average_rate) VALUES (2, 2, 'Double room with a bathroom (hostel seoul R)', 'description example', ' 한국', ' 서울', '종로구', '', 'detail_address example', '개인실', 0, 0, 1, 1.0, 37.57678, 127.0232, 89367, 6000, 149, 2.63);
 INSERT INTO room (id, host_id, title, description, country, city, state, street, detail_address, room_type, max_capacity, bedroom_count, bed_count, bathroom_count, latitude, longitude, charge, cleaning_charge, review_count,average_rate) VALUES (4, 10, '익선동의 감성 숙소❤️넷플릭스 무료시청 가능^^!', 'description example', ' 한국', ' 서울', ' Jongno-gu', 'Waryong-dong', 'detail_address example', '개인실', 0, 0, 1, 1.0, 37.57536, 126.99019, 75170, 5000, 116, 4.37);
 INSERT INTO room (id, host_id, title, description, country, city, state, street, detail_address, room_type, max_capacity, bedroom_count, bed_count, bathroom_count, latitude, longitude, charge, cleaning_charge, review_count,average_rate) VALUES (31605255, 2, '우진이네 집', 'description example', ' 한국', ' 서울', '종로구', '', 'detail_address example', '집 전체', 0, 0, 1, 1.0, 37.57594, 127.01976, 68055, 10000, 51, 0.46);
@@ -263,7 +263,7 @@ INSERT INTO room_image (room_id, url, is_main_image, sequence) VALUES (31296991,
 INSERT INTO room_image (room_id, url, is_main_image, sequence) VALUES (31296991, 'https://a0.muscache.com/im/pictures/miso/Hosting-31296991/original/0c419cf9-e42c-4080-b8f1-d0c5b4aec809.jpeg?im_w=720', false, 5);
 INSERT INTO room_image (room_id, url, is_main_image, sequence) VALUES (31296991, 'https://a0.muscache.com/im/pictures/miso/Hosting-31296991/original/18171868-3e87-4f40-8696-994fde568fd4.jpeg?im_w=720', false, 6);
 
-INSERT INTO charge_policy (name, is_active) VALUES ('WEEKDAY', true);
+INSERT INTO charge_policy (name, is_active) VALUES ('ACCOMMODATION', true);
 INSERT INTO charge_policy (name, is_active) VALUES ('WEEKEND', false);
 INSERT INTO charge_policy (name, is_active) VALUES ('WEEKLY_DISCOUNT', true);
 INSERT INTO charge_policy (name, is_active) VALUES ('SERVICE', true);

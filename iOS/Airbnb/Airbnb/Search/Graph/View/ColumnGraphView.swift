@@ -5,7 +5,6 @@
 //  Created by 백상휘 on 2022/05/31.
 //
 
-import Foundation
 import UIKit
 
 class ColumnGraphView: UIView {
@@ -29,8 +28,7 @@ class ColumnGraphView: UIView {
         
         let graphHeight = rect.maxY
         let paddingSum: CGFloat = distribution.count == 0 ? 0 : CGFloat(distribution.count - 1) * columnInnerPadding
-        let columnWidthSum = rect.width - (columnLeadingPadding + columnTrailingPadding) - paddingSum
-        let columnWidth = columnWidthSum / CGFloat(distribution.count)
+        let columnWidth = (rect.width - paddingSum) / CGFloat(distribution.count)
         
         let path = UIBezierPath()
         path.lineWidth = 2
@@ -39,23 +37,20 @@ class ColumnGraphView: UIView {
         
         path.move(to: CGPoint(x: 0, y: rect.maxY))
         
-        var graphMovedXPosition = columnLeadingPadding
+        var graphMovedXPosition: CGFloat = 0
         
-        UIView.animate(withDuration: 0.8) {
-            for (x, y) in self.distribution.enumerated() {
-                
-                path.addLine(to: CGPoint(x: graphMovedXPosition, y: graphHeight * 1))
-                path.addLine(to: CGPoint(x: graphMovedXPosition, y: graphHeight * (1-y)))
-                
-                graphMovedXPosition += columnWidth
-                
-                path.addLine(to: CGPoint(x: graphMovedXPosition, y: graphHeight * (1-y)))
-                path.addLine(to: CGPoint(x: graphMovedXPosition, y: graphHeight * 1))
-                
-                if x != self.distribution.count - 1 {
-                    graphMovedXPosition += self.columnInnerPadding
-                    path.addLine(to: CGPoint(x: graphMovedXPosition, y: graphHeight))
-                }
+        for (x, y) in self.distribution.enumerated() {
+            path.addLine(to: CGPoint(x: graphMovedXPosition, y: graphHeight * 1))
+            path.addLine(to: CGPoint(x: graphMovedXPosition, y: graphHeight * (1-y)))
+            
+            graphMovedXPosition += columnWidth
+            
+            path.addLine(to: CGPoint(x: graphMovedXPosition, y: graphHeight * (1-y)))
+            path.addLine(to: CGPoint(x: graphMovedXPosition, y: graphHeight * 1))
+            
+            if x != self.distribution.count - 1 {
+                graphMovedXPosition += self.columnInnerPadding
+                path.addLine(to: CGPoint(x: graphMovedXPosition, y: graphHeight))
             }
         }
         

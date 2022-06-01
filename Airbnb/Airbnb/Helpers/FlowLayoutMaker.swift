@@ -19,14 +19,14 @@ enum FilterSection: Int {
 }
 
 protocol LayoutProvidable {
-    func createSection(at: Int) -> NSCollectionLayoutSection?
+    func createSection(at section: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection?
 }
 
 enum FlowLayout {
 
     static func makeCompositionalLayout (_ provider: LayoutProvidable) -> UICollectionViewCompositionalLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            guard let section = provider.createSection(at: sectionIndex) else {return nil}
+        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            guard let section = provider.createSection(at: sectionIndex, env: layoutEnvironment) else {return nil}
             return section
         }
         return layout
@@ -35,7 +35,7 @@ enum FlowLayout {
 
 struct HomeLayout: LayoutProvidable {
 
-    func createSection(at section: Int) -> NSCollectionLayoutSection? {
+    func createSection(at section: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
         let section = HomeSection.init(rawValue: section)
 
         switch section {
@@ -82,7 +82,7 @@ struct HomeLayout: LayoutProvidable {
 }
 
  struct FilterLayout: LayoutProvidable {
-    func createSection(at section: Int) -> NSCollectionLayoutSection? {
+     func createSection(at section: Int, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
         let section = FilterSection.init(rawValue: section)
         switch section {
 
@@ -90,20 +90,15 @@ struct HomeLayout: LayoutProvidable {
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                           heightDimension: .fractionalHeight(1.0))
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                   heightDimension: .fractionalHeight(0.6))
+                                                   heightDimension: .fractionalHeight(0.65))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
             let section = NSCollectionLayoutSection(group: group)
             return section
 
         case .filterForm:
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                  heightDimension: .fractionalHeight(1.0))
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                   heightDimension: .fractionalHeight(0.07))
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-            let section = NSCollectionLayoutSection(group: group)
+            let configuration = UICollectionLayoutListConfiguration(appearance: .plain)
+            let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: env)
             return section
 
         case .none:

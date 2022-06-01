@@ -31,6 +31,7 @@ final class FilterViewController: UIViewController {
         let layoutProvider = FilterLayout()
         let layout = FlowLayout.makeCompositionalLayout(layoutProvider)
         filterForm = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        filterForm.isScrollEnabled = false
         filterForm.dataSource = self
         filterForm.register(FilterListCell.self, forCellWithReuseIdentifier: FilterListCell.id)
         filterForm.register(ContainerCell.self, forCellWithReuseIdentifier: ContainerCell.id)
@@ -77,7 +78,7 @@ extension FilterViewController: UICollectionViewDataSource {
 
         case .filterForm:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterListCell.id, for: indexPath) as? FilterListCell else {return UICollectionViewListCell()}
-            cell.contentView.backgroundColor = .blue
+            cell.configure(title: "test", value: "dd")
             return cell
         }
 

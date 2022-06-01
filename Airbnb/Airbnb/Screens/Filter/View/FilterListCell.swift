@@ -49,8 +49,17 @@ final class FilterListCell: UICollectionViewListCell {
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            stackView.heightAnchor.constraint(equalToConstant: 44)
         ])
+    }
+
+    override func updateConfiguration(using state: UICellConfigurationState) {
+        automaticallyUpdatesBackgroundConfiguration = false
+    }
+
+    func configure (title: String, value: String) {
+        field.text = title
+        fieldValue.text = value
     }
 
     required init?(coder: NSCoder) {

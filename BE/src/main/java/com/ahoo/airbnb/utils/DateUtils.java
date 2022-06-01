@@ -62,11 +62,10 @@ public class DateUtils {
     }
 
     /**
-     * @param date ISO_LOCAL_DATE_TIME 포맷의 문자열(ex.2011-12-03T10:15:30+01:00)
+     * @param date ISO_LOCAL_DATE_TIME 포맷의 문자열(ex.2011-12-03T10:15:30)
      * @return
      */
     public static LocalDateTime stringToLocalDateTime(String date) {
         return LocalDateTime.parse(date, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
     }
-
 }

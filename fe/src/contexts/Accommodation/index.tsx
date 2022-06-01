@@ -15,7 +15,10 @@ interface AccommodationState {
   accommodationData: AccommodationInfo[];
   averageNightlyPrice: number;
   offset: number;
+  canvasWidth: number;
   maxCount: number;
+  maxPrice: number;
+  minPrice: number;
   chartData: Point[];
 }
 
@@ -29,7 +32,10 @@ const initialState: AccommodationState = {
   accommodationData: [],
   averageNightlyPrice: 0,
   offset: 0,
+  canvasWidth: 0,
   maxCount: 0,
+  maxPrice: 0,
+  minPrice: 0,
   chartData: [],
 };
 
@@ -45,14 +51,15 @@ const accommodationReducer = (state: AccommodationState, action: AccommodationAc
         return state;
       }
 
-      // NOTE: 정렬이 되어있지 정렬을 수행한다.
-      // fetchData.sort(({ price: price1 }, { price: price2 }) => {
-      //   return price1 - price2;
-      // });
+      // NOTE: 정렬이 되어있지 않으면 정렬을 수행한다.
+      fetchData.sort(({ price: price1 }, { price: price2 }) => {
+        return price1 - price2;
+      });
 
-      const { price: minPrice } = fetchData[0];
       const { length } = fetchData;
-      const offset = minPrice * scaleFactor;
+      const { price: minPrice } = fetchData[0];
+      const { price: maxPrice } = fetchData[length - 1];
+      const offset = minPrice;
 
       let maxCount = 0;
       const sumOfPrices = fetchData.reduce((acc, { price, count }) => {
@@ -65,17 +72,21 @@ const accommodationReducer = (state: AccommodationState, action: AccommodationAc
       const averageNightlyPrice = Math.round(sumOfPrices / length);
       const chartData = fetchData.map(({ count, price }) => {
         return {
-          x: price * scaleFactor - offset,
+          x: (price - offset) / scaleFactor,
           y: maxCount - count,
         };
       });
+      const canvasWidth = chartData[length - 1].x;
 
       return {
         ...state,
         accommodationData: fetchData,
         averageNightlyPrice,
         offset,
+        canvasWidth,
         maxCount,
+        minPrice,
+        maxPrice,
         chartData,
       };
     }
@@ -105,12 +116,12 @@ export function AccommodationProvider({ children }: { children: React.ReactNode 
 /* action creator */
 export const parseAction = (
   fetchData: AccommodationInfo[],
-): { type: string; payload: { fetchData: AccommodationInfo[] } } => ({
+): { type: 'PARSE'; payload: { fetchData: AccommodationInfo[] } } => ({
   type: 'PARSE',
   payload: { fetchData },
 });
 
-export const resetAction = (): { type: string } => ({
+export const resetAction = (): { type: 'RESET' } => ({
   type: 'RESET',
 });
 

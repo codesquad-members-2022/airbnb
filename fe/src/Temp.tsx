@@ -1,16 +1,15 @@
+import { DatePickerProvider, DatePicker } from '@bcad1591/react-date-picker';
 import React from 'react';
 
-import Calendar from '@/components/Calendar';
 import Chart from '@/components/Chart';
-import Gnb from '@/components/Gnb/Gnb';
+import Gnb from '@/components/Gnb';
 import BigSearchBar from '@/components/SearchBar/BigSearchBar';
 import SmallSearchBar from '@/components/SearchBar/SmallSearchBar';
-
-import { DatePickerProvider } from './components/Calendar/context/PickedDateUnits';
+import Header from '@/components/Header';
 
 function Temp() {
   return (
-    <div style={{ padding: 20, background: '#eee' }}>
+    <div style={{ padding: 20, background: '#eee', height: '200vh' }}>
       <h3>작은검색창</h3>
       <SmallSearchBar />
       <Separator />
@@ -21,8 +20,9 @@ function Temp() {
 
       <h3>Date Picker</h3>
       <DatePickerProvider>
-        <Calendar disablePreviousDays />
+        <DatePicker disablePreviousDays />
       </DatePickerProvider>
+
       <Separator />
 
       <h3>Range Slider & Chart</h3>
@@ -32,6 +32,10 @@ function Temp() {
       <Gnb>
         <SmallSearchBar />
       </Gnb>
+
+      <Separator />
+
+      <Header />
     </div>
   );
 }

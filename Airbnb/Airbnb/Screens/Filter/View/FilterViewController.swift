@@ -10,16 +10,28 @@ import UIKit
 final class FilterViewController: UIViewController {
 
     private var filterForm: UICollectionView!
+    private var filterViewModel: FilterViewModel?
+
+    init(filterViewModel: FilterViewModel) {
+        self.filterViewModel = filterViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDisplay()
         configureConstraints()
+
     }
 
     private func configureDisplay() {
         setViewController()
         setFilterForm()
+        setDataBinding()
     }
 
     private func setViewController() {
@@ -48,6 +60,33 @@ final class FilterViewController: UIViewController {
         ])
     }
 
+    private func setDataBinding() {
+        filterViewModel?.location.bind(listener: { [weak self] model in
+            guard let model = model else { return }
+            let viewModel = FilterListCellViewModel(model: model)
+            self?.filterViewModel?.update(type: .location, viewModel: viewModel)
+            self?.filterForm.reloadData()
+        })
+        filterViewModel?.period.bind(listener: { [weak self] model in
+            guard let model = model else { return }
+            let viewModel = FilterListCellViewModel(model: model)
+            self?.filterViewModel?.update(type: .period, viewModel: viewModel)
+            self?.filterForm.reloadData()
+        })
+        filterViewModel?.price.bind(listener: { [weak self] model in
+            guard let model = model else { return }
+            let viewModel = FilterListCellViewModel(model: model)
+            self?.filterViewModel?.update(type: .price, viewModel: viewModel)
+            self?.filterForm.reloadData()
+        })
+        filterViewModel?.occupants.bind(listener: { [weak self] model in
+            guard let model = model else { return }
+            let viewModel = FilterListCellViewModel(model: model)
+            self?.filterViewModel?.update(type: .occupants, viewModel: viewModel)
+            self?.filterForm.reloadData()
+        })
+    }
+
 }
 
 extension FilterViewController: UICollectionViewDataSource {
@@ -63,7 +102,7 @@ extension FilterViewController: UICollectionViewDataSource {
             return 1
 
         case .filterForm:
-            return 4
+            return filterViewModel?.listCellViewModel.count ?? 0
         }
     }
 
@@ -78,7 +117,7 @@ extension FilterViewController: UICollectionViewDataSource {
 
         case .filterForm:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterListCell.id, for: indexPath) as? FilterListCell else {return UICollectionViewListCell()}
-            cell.configure(title: "test", value: "dd")
+            cell.configure(filterViewModel?[indexPath])
             return cell
         }
 

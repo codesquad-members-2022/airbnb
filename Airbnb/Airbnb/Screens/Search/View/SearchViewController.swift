@@ -24,11 +24,6 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating {
         configureSearchCompleter()
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        searchCompleter = nil
-    }
-
     private func configureDisplay() {
         setViewController()
         setSearchController()
@@ -96,6 +91,7 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating {
         guard let text = searchController.searchBar.text else {return}
         if text.isEmpty {
             citySearchViewModel.reset()
+            completerResults = nil
             return
         }
         searchCompleter?.queryFragment = text
@@ -145,9 +141,11 @@ extension SearchViewController: UICollectionViewDelegate {
             guard error == nil else {return}
             guard let placeMark = response?.mapItems[0].placemark, let title = placeMark.title else {return}
 
-            // TODO: Location 정보를 nextVC 에 넘겨주어야함.
             let location = Location(name: title, latitude: placeMark.coordinate.latitude, longitude: placeMark.coordinate.longitude)
-            let nextVC = FilterViewController()
+            let filterViewModel = FilterViewModel()
+            filterViewModel.location.value = location
+            let nextVC = FilterViewController(filterViewModel: filterViewModel)
+
             self?.navigationController?.pushViewController(nextVC, animated: true)
         }
 

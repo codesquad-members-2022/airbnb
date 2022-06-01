@@ -13,15 +13,15 @@ final class FilterListCell: UICollectionViewListCell {
 
     private var field: UILabel = {
         let label = UILabel()
-        label.font = .mediumRegular
+        label.font = .smallRegular
         label.textAlignment = .left
         return label
     }()
 
     private var fieldValue: UILabel = {
         let label = UILabel()
-        label.font = .mediumRegular
-        label.textColor = .secondarySystemBackground
+        label.font = .smallRegular
+        label.textColor = .gray3
         label.textAlignment = .right
         return label
     }()
@@ -57,9 +57,10 @@ final class FilterListCell: UICollectionViewListCell {
         automaticallyUpdatesBackgroundConfiguration = false
     }
 
-    func configure (title: String, value: String) {
-        field.text = title
-        fieldValue.text = value
+    func configure(_ model: FilterListCellViewModel?) {
+        guard let model = model else {return}
+        field.text = model.fieldTitle
+        fieldValue.text = model.fieldValue
     }
 
     required init?(coder: NSCoder) {

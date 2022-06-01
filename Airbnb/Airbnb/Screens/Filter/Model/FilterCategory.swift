@@ -27,15 +27,36 @@ struct Occupants {
     let adult: Int
     let children: Int
     let infant: Int
+    var numberOfGuest: Int {
+        return adult + children + infant
+    }
 }
 
-struct FilterList {
-    let location: Location
-    let persiod: Period
-    let priceRange: PriceRange
-    let occupants: Occupants
-}
+struct FilterSelection {
+    let location: Location?
+    let period: Period?
+    let priceRange: PriceRange?
+    let occupants: Occupants?
+ }
 
-enum FilterFields {
-    static let fields = ["위치", "체크인/체크아웃", "요금", "인원"]
+enum FilterFields: Int, CaseIterable {
+    case location
+    case period
+    case price
+    case occupants
+
+    var description: String {
+        switch self {
+        case .location:
+            return "위치"
+        case .period:
+            return "체크인/체크아웃"
+        case .price:
+            return "요금"
+        case .occupants:
+            return "인원"
+
+        }
+    }
+
 }

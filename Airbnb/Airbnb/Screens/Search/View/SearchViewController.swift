@@ -45,15 +45,15 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating {
     private func configureViewModel() {
         citySearchViewModel.reset()
 
-        citySearchViewModel.headerVM.bind { _ in
+        citySearchViewModel.headerVM.bind {[weak self] _ in
             DispatchQueue.main.async {
-                self.collectionView.reloadData()
+                self?.collectionView.reloadData()
             }
         }
 
-        citySearchViewModel.cityVM.bind { _ in
+        citySearchViewModel.cityVM.bind {[weak self] _ in
             DispatchQueue.main.async {
-                self.collectionView.reloadData()
+                self?.collectionView.reloadData()
             }
         }
     }
@@ -80,10 +80,10 @@ final class SearchViewController: UIViewController, UISearchResultsUpdating {
         collectionView.delegate = self
         collectionView.register(CityCell.self, forCellWithReuseIdentifier: CityCell.id)
         collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.id)
-        view.addSubview(collectionView)
     }
 
     private func configureConstraints() {
+        view.addSubview(collectionView)
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -141,14 +141,14 @@ extension SearchViewController: UICollectionViewDelegate {
         let searchRequest = MKLocalSearch.Request(completion: selectedRegion)
         let search = MKLocalSearch(request: searchRequest)
 
-        search.start { (response, error) in
+        search.start { [weak self] (response, error) in
             guard error == nil else {return}
             guard let placeMark = response?.mapItems[0].placemark, let title = placeMark.title else {return}
 
             // TODO: Location 정보를 nextVC 에 넘겨주어야함.
             let location = Location(name: title, latitude: placeMark.coordinate.latitude, longitude: placeMark.coordinate.longitude)
             let nextVC = FilterViewController()
-            self.navigationController?.pushViewController(nextVC, animated: true)
+            self?.navigationController?.pushViewController(nextVC, animated: true)
         }
 
     }

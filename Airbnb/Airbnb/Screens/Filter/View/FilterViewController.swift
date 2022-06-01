@@ -9,7 +9,7 @@ import UIKit
 
 final class FilterViewController: UIViewController {
 
-    var filterForm: UICollectionView!
+    private var filterForm: UICollectionView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,11 +34,11 @@ final class FilterViewController: UIViewController {
         filterForm.dataSource = self
         filterForm.register(FilterListCell.self, forCellWithReuseIdentifier: FilterListCell.id)
         filterForm.register(ContainerCell.self, forCellWithReuseIdentifier: ContainerCell.id)
-        view.addSubview(filterForm)
         filterForm.translatesAutoresizingMaskIntoConstraints = false
     }
 
     private func configureConstraints() {
+        view.addSubview(filterForm)
         NSLayoutConstraint.activate([
             filterForm.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             filterForm.trailingAnchor.constraint(equalTo: view.trailingAnchor),

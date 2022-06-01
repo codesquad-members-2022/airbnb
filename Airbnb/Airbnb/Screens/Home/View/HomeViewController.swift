@@ -58,10 +58,10 @@ final class HomeViewController: UIViewController, UISearchBarDelegate {
         homeCollectionView.register(RandomSiteCell.self, forCellWithReuseIdentifier: RandomSiteCell.id)
         homeCollectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.id)
         homeCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(homeCollectionView)
     }
 
     private func configureConstraints() {
+        view.addSubview(homeCollectionView)
         NSLayoutConstraint.activate([
             homeCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
             homeCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),

@@ -11,14 +11,14 @@ final class FilterListCell: UICollectionViewListCell {
 
     static let id = "FilterFormCell"
 
-    var field: UILabel = {
+    private var field: UILabel = {
         let label = UILabel()
         label.font = .mediumRegular
         label.textAlignment = .left
         return label
     }()
 
-    var fieldValue: UILabel = {
+    private var fieldValue: UILabel = {
         let label = UILabel()
         label.font = .mediumRegular
         label.textColor = .secondarySystemBackground
@@ -26,7 +26,7 @@ final class FilterListCell: UICollectionViewListCell {
         return label
     }()
 
-    lazy var stackView: UIStackView = {
+    private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [field, fieldValue])
         stackView.distribution = .fillProportionally
         stackView.axis = .horizontal

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Btn, ContentBox, BarTitle, BarContent } from './SearchBar_styled.jsx';
 
-function Price() {
+function PriceRange({ onClick }) {
   return (
-    <Btn>
+    <Btn onClick={() => onClick('PRICE_RANGE')}>
       <ContentBox>
         <BarTitle>요금</BarTitle>
         <BarContent>금액대 설정</BarContent>
@@ -12,4 +12,4 @@ function Price() {
   );
 }
 
-export default Price;
+export default PriceRange;

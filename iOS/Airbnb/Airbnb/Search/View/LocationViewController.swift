@@ -30,7 +30,7 @@ class LocationViewController: BackgroundViewController, CommonViewControllerProt
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(LocationCollectionViewCell.self, forCellWithReuseIdentifier: LocationCollectionViewCell.reuseIdentifier)
         collectionView.register(HeaderReusableView.self,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderReusableView.ID)
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderReusableView.reuseIdentifier)
         return collectionView
     }()
     
@@ -134,7 +134,7 @@ extension LocationViewController: UICollectionViewDelegateFlowLayout, UICollecti
     UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            let headerView = nearbyLoactionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderReusableView.ID, for: indexPath)
+            let headerView = nearbyLoactionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderReusableView.reuseIdentifier, for: indexPath)
             return headerView
         default:
             assert(false, "header, footer, withReuseIdentifier 를 확인하세요.")

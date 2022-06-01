@@ -11,6 +11,7 @@ struct Day {
     let date: Date
     let number: String
     let isSelected: Bool
+    let isWithInDisplayedMonth: Bool
     var fadeState: FadeState = .none
 }
 

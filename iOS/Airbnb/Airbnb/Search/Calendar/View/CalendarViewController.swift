@@ -17,10 +17,9 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.isScrollEnabled = true
-        collectionView.isPagingEnabled = true
         collectionView.backgroundColor = .systemBackground
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
     
@@ -42,6 +41,7 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
     
     private func setUpCollectionViewDelegates() {
         collectionView.register(CalendarViewCell.self, forCellWithReuseIdentifier: CalendarViewCell.reuseIdentifier)
+        collectionView.register(CalendarHearderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CalendarHearderView.reuseIdentifier)
         collectionView.delegate = self
         collectionView.dataSource = self
     }
@@ -59,7 +59,7 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
         
         collectionView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.readableContentGuide)
-            $0.height.equalTo(view.snp.height).multipliedBy(0.6)
+            $0.height.equalTo(view.snp.height).multipliedBy(0.5)
         }
     }
     
@@ -86,25 +86,50 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
 
 extension CalendarViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return calendarModel.days.count
+        return calendarModel.month[section].result.count
     }
     
-//    func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        calendarModel.count
-//    }
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        calendarModel.month.count
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: CalendarViewCell.reuseIdentifier, for: indexPath) as? CalendarViewCell else {
-            return UICollectionViewCell()
-        }
-        let day = calendarModel.days[indexPath.row]
+        guard let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: CalendarViewCell.reuseIdentifier, for: indexPath) as? CalendarViewCell else { return UICollectionViewCell() }
+        let day = calendarModel.month[indexPath.section].result[indexPath.row]
         cell.day = day
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            guard
+                let headerView = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier:  CalendarHearderView.reuseIdentifier,
+                    for: indexPath) as? CalendarHearderView
+            else { return UICollectionReusableView() }
+            
+            let date = calendarModel.month[indexPath.section]
+                .result.last?.date
+            headerView.baseDate = date
+            return headerView
+        default:
+            return UICollectionReusableView()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let width: CGFloat = self.collectionView.frame.width
+        let height: CGFloat = 60
+        return CGSize(width: width, height: height)
     }
 }
 
 extension CalendarViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.collectionView.frame.width / 7, height: self.collectionView.frame.width / 7)
+        let width: Int = Int(self.collectionView.frame.width / 7)
+        let height: Int = 50
+        return CGSize(width: width, height: height)
     }
 }

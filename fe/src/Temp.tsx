@@ -1,7 +1,6 @@
 import { DatePickerProvider, DatePicker } from '@bcad1591/react-date-picker';
 import React from 'react';
 
-import Chart from '@/components/Chart';
 import Gnb from '@/components/Gnb';
 import Header from '@/components/Header';
 import PricePicker from '@/components/PricePicker';
@@ -24,10 +23,6 @@ function Temp() {
         <DatePicker disablePreviousDays />
       </DatePickerProvider>
 
-      <Separator />
-
-      <h3>Range Slider & Chart</h3>
-      <Chart />
       <Separator />
 
       <Gnb>

@@ -26,11 +26,9 @@ public class DummyDataService {
 
     private final RoomRepository roomRepository;
 
-
     public DummyDataService(RoomRepository roomRepository) {
         this.roomRepository = roomRepository;
     }
-
 
     private void requestDummyData() throws JsonProcessingException, org.locationtech.jts.io.ParseException {
 

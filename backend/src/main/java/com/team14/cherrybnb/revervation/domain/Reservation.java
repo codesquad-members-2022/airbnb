@@ -54,5 +54,4 @@ public class Reservation {
     public void cancel() {
         this.state = ReservationState.CANCEL;
     }
-
 }

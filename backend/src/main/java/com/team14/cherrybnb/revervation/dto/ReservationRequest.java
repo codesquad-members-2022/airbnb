@@ -28,5 +28,4 @@ public class ReservationRequest {
         return new Reservation(this.checkIn, this.checkOut, this.guestCount,
                 this.totalPrice, ReservationState.COMPLETE, room, member);
     }
-
 }

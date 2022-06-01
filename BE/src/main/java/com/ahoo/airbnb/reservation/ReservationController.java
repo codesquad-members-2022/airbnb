@@ -27,7 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ReservationController {
 
-    private final MockReservationService reservationService;
+    // TODO: 서비스 개발 완료 후 mockReservationService 제거하기
+    private final MockReservationService mockReservationService;
+    private final ReservationService reservationService;
 
     @Operation(summary = "숙소 요금 조회",
         description = "해당 숙소의 요금을 조회합니다.",
@@ -47,9 +49,9 @@ public class ReservationController {
     public ResponseEntity<RoomChargeResponse> totalChargeOf(
         @PathVariable Long roomId,
         @RequestBody RoomChargeRequest roomChargeRequest) {
+
         log.info("roomChargeRequest={}", roomChargeRequest);
-        RoomChargeResponse responseBody = reservationService.calculateTotalChargeOf(roomId,
-            roomChargeRequest);
+        RoomChargeResponse responseBody = reservationService.calculateTotalChargeOf(roomId, roomChargeRequest);
         return ResponseEntity.ok(responseBody);
     }
 
@@ -83,7 +85,7 @@ public class ReservationController {
     )
     @GetMapping
     public ResponseEntity<ReservationsResponse> reservations() {
-        ReservationsResponse responseBody = reservationService.reservations();
+        ReservationsResponse responseBody = mockReservationService.reservations();
         return ResponseEntity.ok(responseBody);
     }
 
@@ -103,7 +105,7 @@ public class ReservationController {
     )
     @GetMapping("/{reservationId}")
     public ResponseEntity<ReservationResponse> reservation(@PathVariable Long reservationId) {
-        ReservationResponse responseBody = reservationService.reservation(reservationId);
+        ReservationResponse responseBody = mockReservationService.reservation(reservationId);
         return ResponseEntity.ok(responseBody);
     }
 }

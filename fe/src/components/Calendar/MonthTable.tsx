@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import Days from './Days';
 import { getMonthData } from './utils';
-import Weekday from './Weekday';
+import WeekDay from './WeekDay';
 
 interface Props {
   year: number;
@@ -14,7 +14,6 @@ export const YearMonthContext = createContext<number[]>([0, 0]);
 
 function MonthTable({ year, month }: Props) {
   const days = getMonthData(year, month);
-  console.log(year, month);
   const value = useMemo(() => [year, month], [year, month]);
 
   return (
@@ -26,7 +25,7 @@ function MonthTable({ year, month }: Props) {
           </S.YearMonth>
         </S.Header>
         <S.Table>
-          <Weekday />
+          <WeekDay />
           <Days days={days} />
         </S.Table>
       </S.MonthTableLayer>

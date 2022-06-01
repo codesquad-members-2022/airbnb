@@ -21,6 +21,11 @@ class SearchLocationDataSource: NSObject, UICollectionViewDataSource {
         searchCompleter.delegate = self
     }
     
+    func getResult(of index: Int) -> MKLocalSearchCompletion? {
+        guard index < searchResultData.count else { return nil }
+        return searchResultData[index]
+    }
+    
     func setQueryFragment(_ queryFragement: String) {
         searchCompleter.queryFragment = queryFragement
     }

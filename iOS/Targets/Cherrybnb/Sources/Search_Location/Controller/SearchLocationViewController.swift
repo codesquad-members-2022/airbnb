@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class SearchLocationViewController: UIViewController {
 
@@ -77,7 +78,16 @@ class SearchLocationViewController: UIViewController {
 extension SearchLocationViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let searchDateVC = SearchDateViewController()
-        // TODO: 선택된 Location 정보를 QueryParameter에 담아 주입해주기
+        
+        guard let searchCompletion = searchLocationDataSource?.getResult(of: indexPath.item) else { return }
+        
+        let request = MKLocalSearch.Request(completion: searchCompletion)
+        let localSearch = MKLocalSearch(request: request)
+        localSearch.start { response, error in
+            guard error == nil else { return }
+            // TODO: Search 결과 갯수에 따라, 추가적으로 컬렉션 뷰에 띄우거나 혹은 바로 날짜 선택 화면으로 이동
+        }
+        
         navigationController?.pushViewController(searchDateVC, animated: true)
     }
 }

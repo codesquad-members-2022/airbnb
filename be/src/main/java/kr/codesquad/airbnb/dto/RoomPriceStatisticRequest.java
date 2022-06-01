@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Getter
 @Builder
-public class FilteredRoomRequest {
+public class RoomPriceStatisticRequest {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull

@@ -1,6 +1,6 @@
 package kr.codesquad.airbnb.service;
 
-import kr.codesquad.airbnb.dto.FilteredRoomRequest;
+import kr.codesquad.airbnb.dto.RoomPriceStatisticRequest;
 import kr.codesquad.airbnb.dto.RoomPriceStatistic;
 import kr.codesquad.airbnb.dto.RoomPriceStatisticDto;
 import kr.codesquad.airbnb.repository.RoomRepository;
@@ -13,8 +13,8 @@ public class RoomService {
 
     private final RoomRepository roomRepository;
 
-    public RoomPriceStatisticDto findStatisticOfRoomPrice(FilteredRoomRequest filteredRoomRequest) {
-        RoomPriceStatistic roomPriceStatistic = roomRepository.findStatisticOfRoomPrice(filteredRoomRequest.getCheckIn(), filteredRoomRequest.getCheckOut());
+    public RoomPriceStatisticDto findStatisticOfRoomPrice(RoomPriceStatisticRequest roomPriceStatisticRequest) {
+        RoomPriceStatistic roomPriceStatistic = roomRepository.findStatisticOfRoomPrice(roomPriceStatisticRequest.getCheckIn(), roomPriceStatisticRequest.getCheckOut());
 
         return new RoomPriceStatisticDto().of(roomPriceStatistic);
     }

@@ -1,6 +1,6 @@
 package kr.codesquad.airbnb.controller;
 
-import kr.codesquad.airbnb.dto.FilteredRoomRequest;
+import kr.codesquad.airbnb.dto.RoomPriceStatisticRequest;
 import kr.codesquad.airbnb.exception.CustomException;
 import kr.codesquad.airbnb.exception.ErrorCode;
 import kr.codesquad.airbnb.response.CommonResponse;
@@ -22,11 +22,11 @@ public class RoomController {
      */
     @ResponseBody
     @GetMapping("/rooms/statistic/price")
-    public CommonResponse viewRoomPriceStatistic(@ModelAttribute @Valid FilteredRoomRequest filteredRoomRequest) {
-        if (filteredRoomRequest.getCheckIn().isAfter(filteredRoomRequest.getCheckOut())) {
+    public CommonResponse viewRoomPriceStatistic(@ModelAttribute @Valid RoomPriceStatisticRequest roomPriceStatisticRequest) {
+        if (roomPriceStatisticRequest.getCheckIn().isAfter(roomPriceStatisticRequest.getCheckOut())) {
             throw new CustomException(ErrorCode.FORBIDDEN_CHECK_OUT_DATE_IS_BEFORE_CHECK_IN);
         }
 
-        return CommonResponse.okCommonResponse(roomService.findStatisticOfRoomPrice(filteredRoomRequest));
+        return CommonResponse.okCommonResponse(roomService.findStatisticOfRoomPrice(roomPriceStatisticRequest));
     }
 }

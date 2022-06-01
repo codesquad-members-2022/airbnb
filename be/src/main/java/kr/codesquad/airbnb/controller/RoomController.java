@@ -1,10 +1,14 @@
 package kr.codesquad.airbnb.controller;
 
 import kr.codesquad.airbnb.dto.FilteredRoomRequest;
+import kr.codesquad.airbnb.exception.CustomException;
+import kr.codesquad.airbnb.exception.ErrorCode;
 import kr.codesquad.airbnb.response.CommonResponse;
 import kr.codesquad.airbnb.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,7 +22,10 @@ public class RoomController {
      */
     @ResponseBody
     @GetMapping("/rooms/statistic/price")
-    public CommonResponse viewRoomPriceStatistic(@ModelAttribute FilteredRoomRequest filteredRoomRequest) {
+    public CommonResponse viewRoomPriceStatistic(@ModelAttribute @Valid FilteredRoomRequest filteredRoomRequest) {
+        if (filteredRoomRequest.getCheckIn().isAfter(filteredRoomRequest.getCheckOut())) {
+            throw new CustomException(ErrorCode.FORBIDDEN_CHECK_OUT_DATE_IS_BEFORE_CHECK_IN);
+        }
 
         return CommonResponse.okCommonResponse(roomService.findStatisticOfRoomPrice(filteredRoomRequest));
     }

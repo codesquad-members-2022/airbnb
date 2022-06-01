@@ -36,9 +36,6 @@ struct FilterList {
     let occupants: Occupants
 }
 
-enum FilterFields: String, CaseIterable {
-    case location = "위치"
-    case period = "체크인/체크아웃"
-    case priceRange = "요금"
-    case occupants = "인원"
+enum FilterFields {
+    static let fields = ["위치", "체크인/체크아웃", "요금", "인원"]
 }

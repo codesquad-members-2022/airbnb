@@ -22,7 +22,7 @@ protocol LayoutProvidable {
     func createSection(at: Int) -> NSCollectionLayoutSection?
 }
 
-struct FlowLayout {
+enum FlowLayout {
 
     static func makeCompositionalLayout (_ provider: LayoutProvidable) -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
@@ -35,8 +35,8 @@ struct FlowLayout {
 
 struct HomeLayout: LayoutProvidable {
 
-    func createSection(at: Int) -> NSCollectionLayoutSection? {
-        let section = HomeSection.init(rawValue: at)
+    func createSection(at section: Int) -> NSCollectionLayoutSection? {
+        let section = HomeSection.init(rawValue: section)
 
         switch section {
         case .banner:
@@ -82,8 +82,8 @@ struct HomeLayout: LayoutProvidable {
 }
 
  struct FilterLayout: LayoutProvidable {
-    func createSection(at: Int) -> NSCollectionLayoutSection? {
-        let section = FilterSection.init(rawValue: at)
+    func createSection(at section: Int) -> NSCollectionLayoutSection? {
+        let section = FilterSection.init(rawValue: section)
         switch section {
 
         case .container:

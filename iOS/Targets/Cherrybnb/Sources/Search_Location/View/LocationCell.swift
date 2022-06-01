@@ -42,7 +42,7 @@ class LocationCell: UICollectionViewCell {
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.widthAnchor.constraint(equalToConstant: 64),
-            imageView.heightAnchor.constraint(equalToConstant: 64),
+            imageView.heightAnchor.constraint(equalTo: contentView.heightAnchor),
             imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
 

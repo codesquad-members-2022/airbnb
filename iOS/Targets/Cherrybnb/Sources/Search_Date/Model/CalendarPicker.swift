@@ -12,11 +12,11 @@ struct CalendarPicker {
 
     private var months: [Month]
 
-    init(baseDate: Date, numOfMonths: Int) {
+    init(baseDate: Date, numOfMonths: Int, calendar: Calendar = Calendar.current) {
         let firstMonth = Month(baseDate: baseDate)
 
         let afterMonths: [Month] = (1..<numOfMonths).map { offset in
-            let firstDayOfMonthAfter = Calendar.current.getFirstDayOfMonthAfter(for: baseDate, offsetBy: offset)
+            let firstDayOfMonthAfter = calendar.getFirstDayOfMonthAfter(for: baseDate, offsetBy: offset)
             return Month(baseDate: firstDayOfMonthAfter)
         }
 

@@ -15,11 +15,4 @@ public class AirbnbApplication {
         SpringApplication.run(AirbnbApplication.class, args);
     }
 
-    @PersistenceContext
-    private EntityManager entityManager;
-    @Bean
-    public JPAQueryFactory jpaQueryFactory() {
-        return new JPAQueryFactory(entityManager);
-    }
-
 }

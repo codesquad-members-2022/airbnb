@@ -4,7 +4,7 @@ import kr.codesquad.airbnb.domain.Event;
 import lombok.Getter;
 
 @Getter
-public class EventResponseDto {
+public class EventResponse {
 
     private Long id;
     private String title;
@@ -12,7 +12,7 @@ public class EventResponseDto {
     private String buttonName;
     private String imageUrl;
 
-    public EventResponseDto(Event event) {
+    public EventResponse(Event event) {
         this.id = event.getId();
         this.title = event.getTitle();
         this.description = event.getDescription();

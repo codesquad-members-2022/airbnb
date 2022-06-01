@@ -2,7 +2,7 @@ package kr.codesquad.airbnb.service;
 
 import kr.codesquad.airbnb.dto.RegionResponse;
 import kr.codesquad.airbnb.repository.RegionRepository;
-import kr.codesquad.airbnb.dto.EventResponseDto;
+import kr.codesquad.airbnb.dto.EventResponse;
 import kr.codesquad.airbnb.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,11 +25,11 @@ public class MainService {
                 .collect(Collectors.toList());
     }
 
-    public EventResponseDto getEvent() {
-        EventResponseDto eventResponseDto = new EventResponseDto(
+    public EventResponse getEvent() {
+        EventResponse eventResponse = new EventResponse(
             eventRepository.findByMainEventIsTrue());
-        System.out.println("eventResponseDto = " + eventResponseDto);
+        System.out.println("eventResponseDto = " + eventResponse);
 
-        return eventResponseDto;
+        return eventResponse;
     }
 }

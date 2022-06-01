@@ -7,7 +7,7 @@ import kr.codesquad.airbnb.domain.Lodging;
 import lombok.Getter;
 
 @Getter
-public class LodgingResponseDto {
+public class LodgingDetailResponse {
 
     private Long id;
     private String name;
@@ -32,7 +32,7 @@ public class LodgingResponseDto {
     private String mainImageUrl;
     private List<String> subImageUrls;
 
-    public LodgingResponseDto(Lodging lodging) {
+    public LodgingDetailResponse(Lodging lodging) {
         this.id = lodging.getId();
         this.name = lodging.getName();
         this.country = lodging.getAddress().getCountry();

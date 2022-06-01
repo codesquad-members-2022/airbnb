@@ -26,7 +26,7 @@ class AddressRepositoryTest {
 
     @Test
     @Transactional(readOnly = true)
-    void findAddresWithinTest() {
+    void findAddressWithinTest() {
 
         double x = 209407.745384399;
         double y = 449459.252995276;

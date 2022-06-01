@@ -1,7 +1,9 @@
 package kr.codesquad.airbnb.response;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public class CommonResponse extends BasicResponse {
 
     private Object data;

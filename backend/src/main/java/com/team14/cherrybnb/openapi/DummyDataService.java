@@ -1,4 +1,4 @@
-package com.team14.cherrybnb.dummy;
+package com.team14.cherrybnb.openapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -18,8 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
-import javax.annotation.PostConstruct;
 
 @Service
 public class DummyDataService {

@@ -1,4 +1,4 @@
-package com.team14.cherrybnb.revervation.application;
+package com.team14.cherrybnb.openapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;

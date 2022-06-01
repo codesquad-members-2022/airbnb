@@ -1,6 +1,7 @@
 package com.ahoo.airbnb.reservation;
 
 import com.ahoo.airbnb.entity.Room;
+import com.ahoo.airbnb.exception.ExceptionMessage;
 import com.ahoo.airbnb.reservation.chargepolicy.ChargePolicyType;
 import com.ahoo.airbnb.reservation.dtos.ChargesResponse;
 import com.ahoo.airbnb.reservation.dtos.RoomChargeRequest;
@@ -21,8 +22,8 @@ public class ReservationService {
 
     public RoomChargeResponse calculateTotalChargeOf(Long roomId, RoomChargeRequest roomChargeRequest) {
 
-        Room room = roomRepository.findById(roomId)
-            .orElseThrow(() -> new NoSuchElementException("존재하지 않는 roomId 입니다."));
+        Room room =
+            roomRepository.findById(roomId).orElseThrow(() -> new NoSuchElementException(ExceptionMessage.NO_ROOM_ID));
         List<ChargePolicyType> roomChargePolicies =
             roomRepository.findActiveChargePolicyTypeById(roomId);
 
@@ -34,9 +35,9 @@ public class ReservationService {
 
         ChargesResponse charges = new ChargesResponse();
         for (ChargePolicyType roomChargePolicy : roomChargePolicies) {
-            int calculatedCharge = (int) roomChargePolicy.getChargePolicy()
-                .calculate(checkIn, checkOut, headcount, room);
-            charges.put(roomChargePolicy.getPolicyName(), calculatedCharge);
+            int calculatedCharge =
+                (int) roomChargePolicy.getChargePolicy().calculate(checkIn, checkOut, headcount, room);
+            charges.put(roomChargePolicy.getDisplayName(), calculatedCharge);
         }
 
         int totalCharge = charges.getCharges().values().stream()

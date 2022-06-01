@@ -3,7 +3,6 @@ package com.team14.cherrybnb.room.domain;
 import com.team14.cherrybnb.auth.domain.Member;
 import com.team14.cherrybnb.common.domain.Address;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -38,7 +37,7 @@ public class Room {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private List<RoomImage> roomImages;
 
     public Room(String name, RoomInfo roomInfo, String description,

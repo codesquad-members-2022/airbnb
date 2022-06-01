@@ -12,6 +12,4 @@ public class RoomInfo {
     private int bedCount;
 
     private int restroomCount;
-
-
 }

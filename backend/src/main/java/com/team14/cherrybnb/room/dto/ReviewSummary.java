@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 public class ReviewSummary {
 
     private final Long reviewCount;
+
     private final Double averageRating;
-
-
 }

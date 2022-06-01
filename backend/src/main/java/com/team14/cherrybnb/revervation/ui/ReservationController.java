@@ -14,7 +14,6 @@ import java.util.List;
 @RequestMapping("/reservations")
 public class ReservationController {
 
-
     //예약하기
     //예약취소
     //예약 상세 조회
@@ -65,7 +64,4 @@ public class ReservationController {
     public ResponseEntity<List<ReservationCardResponse>> getReservations() {
         return null;
     }
-
-
-
 }

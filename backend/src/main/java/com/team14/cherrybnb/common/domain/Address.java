@@ -1,6 +1,5 @@
 package com.team14.cherrybnb.common.domain;
 
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.ToString;

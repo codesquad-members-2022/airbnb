@@ -27,3 +27,5 @@ spring:
 
 logging.level:
   org.hibernate.SQL: debug
+
+kakao.rest.api.key: ${KAKAO_REST_KEY}

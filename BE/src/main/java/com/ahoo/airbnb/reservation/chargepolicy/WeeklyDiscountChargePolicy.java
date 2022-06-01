@@ -8,8 +8,8 @@ public class WeeklyDiscountChargePolicy implements ChargePolicy {
 
     private static final WeeklyDiscountChargePolicy instance = new WeeklyDiscountChargePolicy();
 
-    private final int dayCountOfWeek = 7;
-    private final double calculateRatio = -0.04;
+    private static final int dayCountOfWeek = 7;
+    private static final double calculateRatio = -0.04;
 
     private WeeklyDiscountChargePolicy() {
 
@@ -27,5 +27,9 @@ public class WeeklyDiscountChargePolicy implements ChargePolicy {
     public double calculate(LocalDateTime checkIn, LocalDateTime checkOut, int headcount,
         Room room) {
         return room.getCharge() * calculateRatio * calculateWeekCount(checkIn, checkOut);
+    }
+
+    public static String displayName() {
+        return (int)Math.abs(calculateRatio * 100) + "% 주 단위 요금 할인";
     }
 }

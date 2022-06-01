@@ -21,4 +21,8 @@ public class CleaningChargePolicy implements ChargePolicy {
         Room room) {
         return room.getCleaningCharge() * DateUtils.getBetweenDays(checkIn, checkOut);
     }
+
+    public static String displayName() {
+        return "청소비";
+    }
 }

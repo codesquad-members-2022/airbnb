@@ -22,4 +22,8 @@ public class AccommodationTaxChargePolicy implements ChargePolicy {
         Room room) {
         return room.getCharge() * calculateRatio;
     }
+
+    public static String displayName() {
+        return "숙박세와 수수료";
+    }
 }

@@ -22,4 +22,8 @@ public class ServiceChargePolicy implements ChargePolicy{
         Room room) {
         return room.getCharge() * calculateRatio;
     }
+
+    public static String displayName() {
+        return "서비스 수수료";
+    }
 }

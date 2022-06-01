@@ -30,6 +30,4 @@ public class Member {
 
     private String resourceServer;
 
-    @OneToMany(mappedBy = "member")
-    private List<Room> rooms;
 }

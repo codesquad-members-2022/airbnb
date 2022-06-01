@@ -14,10 +14,10 @@ public class DistanceInfo {
     }
 
     private double toKm(double distance) {
-        return distance/1000;
+        return distance / 1000;
     }
 
     private double toMin(double duration) {
-        return duration/60;
+        return duration / 60;
     }
 }

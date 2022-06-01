@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reservation {
 
@@ -37,4 +38,21 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    public Reservation(LocalDateTime checkIn, LocalDateTime checkOut,
+                       int guestCount, BigDecimal totalPrice,
+                       ReservationState state, Room room, Member member) {
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.guestCount = guestCount;
+        this.totalPrice = totalPrice;
+        this.state = state;
+        this.room = room;
+        this.member = member;
+    }
+
+    public void cancel() {
+        this.state = ReservationState.CANCEL;
+    }
+
 }

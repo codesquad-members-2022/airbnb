@@ -6,7 +6,7 @@ public enum ChargePolicyType {
     WEEKLY_DISCOUNT("주단위할인정책", WeeklyDiscountChargePolicy.getInstance()),
     SERVICE("서비스요금정책", ServiceChargePolicy.getInstance()),
     CLEANING("청소비요금정책", CleaningChargePolicy.getInstance()),
-    ACCOMMODATION_TAX("주말요금정책", AccommodationTaxChargePolicy.getInstance());
+    ACCOMMODATION_TAX("숙박세요금정책", AccommodationTaxChargePolicy.getInstance());
 
     private String policyName;
     private ChargePolicy chargePolicy;

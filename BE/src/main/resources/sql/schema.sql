@@ -91,7 +91,8 @@ CREATE TABLE room_image
     PRIMARY KEY (id)
 );
 
-ALTER TABLE room_image COMMENT '숙소 사진';
+ALTER TABLE room_image
+    COMMENT '숙소 사진';
 
 ALTER TABLE room_image
     ADD CONSTRAINT FK_room_image_room_id_room_id FOREIGN KEY (room_id)

@@ -47,8 +47,11 @@ function CalendarProvider({ children }) {
     }
   }
 
-  // 리셋 함수 작성 중...
-  function handelResetEvent() {}
+  function handelResetEvent() {
+    dispatchInputDate({
+      type: 'RESET_INPUT',
+    });
+  }
 
   const calendarReducerValue = useMemo(() => {
     return {

@@ -1,11 +1,12 @@
 import React from 'react';
 
 import Calendar from '@/components/Calendar';
+import Chart from '@/components/Chart';
+import Gnb from '@/components/Gnb/Gnb';
 import BigSearchBar from '@/components/SearchBar/BigSearchBar';
 import SmallSearchBar from '@/components/SearchBar/SmallSearchBar';
 
 import { DatePickerProvider } from './components/Calendar/context/PickedDateUnits';
-import Chart from '@/components/Chart';
 
 function Temp() {
   return (
@@ -26,6 +27,11 @@ function Temp() {
 
       <h3>Range Slider & Chart</h3>
       <Chart />
+      <Separator />
+
+      <Gnb>
+        <SmallSearchBar />
+      </Gnb>
     </div>
   );
 }

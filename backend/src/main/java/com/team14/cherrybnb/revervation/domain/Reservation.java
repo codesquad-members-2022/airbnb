@@ -1,5 +1,6 @@
 package com.team14.cherrybnb.revervation.domain;
 
+import com.team14.cherrybnb.auth.domain.Member;
 import com.team14.cherrybnb.room.domain.Room;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -32,4 +33,8 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 }

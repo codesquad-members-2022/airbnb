@@ -2,7 +2,6 @@ package com.team14.cherrybnb.room.domain;
 
 import com.team14.cherrybnb.auth.domain.Member;
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;

@@ -16,7 +16,6 @@ const GuestBox = () => {
 const guestBoxStyle = {
     width: "298px",
     height: "100%",
-    border: "",
 };
 
 export default GuestBox;

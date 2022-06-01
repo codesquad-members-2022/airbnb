@@ -51,7 +51,7 @@ const CylindricalButton = styled.div`
     padding: 0 20px 0 30px;
     cursor: pointer;
     white-space: nowrap;
-    border-radius: 999px;
+    border-radius: ${({theme}) => theme.borderRadius.circle};
     box-shadow: ${({theme, isClicked}) => (isClicked ? `0px 10px 20px ${theme.transparentColor.gray2}` : "")};
     &:hover {
         background-color: ${({theme, isClicked}) => (isClicked ? theme.color.white : theme.transparentColor.gray2)};
@@ -76,11 +76,11 @@ const PlaceHolder = styled.div`
 `;
 
 const Icon = styled.div`
-    ${({theme}) => theme.layout.flexLayoutMixin("", "center", "center")}
+    ${({theme}) => theme.layout.flexLayoutMixin("row", "center", "center")}
     background-color: ${({theme}) => theme.color.gray6};
     width: 20px;
     height: 20px;
-    border-radius: 999px;
+    border-radius: ${({theme}) => theme.borderRadius.circle};
     &:hover {
         background-color: ${({theme}) => theme.color.gray5};
     }
@@ -91,10 +91,10 @@ const Icon = styled.div`
 `;
 
 export const CircleSearchButton = styled.div`
-    ${({theme}) => theme.layout.flexLayoutMixin("", "center", "center")}
+    ${({theme}) => theme.layout.flexLayoutMixin("row", "center", "center")}
     background-color: ${({theme}) => theme.color.pointColorRed};
     color: ${({theme}) => theme.color.white};
-    border-radius: 999px;
+    border-radius: ${({theme}) => theme.borderRadius.circle};
     width: 40px;
     height: 40px;
     svg {
@@ -110,7 +110,7 @@ const CylindricalSearchButton = styled.div`
     background-color: ${({theme}) => theme.color.pointColorRed};
     color: ${({theme}) => theme.color.white};
     padding: 0 10px;
-    border-radius: 999px;
+    border-radius: ${({theme}) => theme.borderRadius.circle};
     svg {
         width: 25px;
         height: 25px;

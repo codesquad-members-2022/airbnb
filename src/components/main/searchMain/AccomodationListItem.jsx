@@ -58,11 +58,11 @@ const ItemDetail = styled.div`
 `;
 
 const FlexBox = styled.div`
-    ${({theme}) => theme.layout.flexLayoutMixin("", "space-between")};
+    ${({theme}) => theme.layout.flexLayoutMixin("row", "space-between")};
 `;
 
 const ItemDetailLocation = styled.div`
-    ${({theme}) => theme.layout.flexLayoutMixin("", "space-between")};
+    ${({theme}) => theme.layout.flexLayoutMixin("row", "space-between")};
     color: ${({theme}) => theme.color.gray3};
     font-size: 0.8rem;
     line-height: 17px;
@@ -91,7 +91,7 @@ const ItemDetailOption = styled.div`
 `;
 
 const DetailPrice = styled.div`
-    ${({theme}) => theme.layout.flexLayoutMixin("", "flex-end")};
+    ${({theme}) => theme.layout.flexLayoutMixin("row", "flex-end")};
     color: ${({theme}) => theme.color.gray1};
     font-weight: 700;
     font-size: 1.1rem;
@@ -99,7 +99,7 @@ const DetailPrice = styled.div`
 `;
 
 const EvaluatingBox = styled.div`
-    ${({theme}) => theme.layout.flexLayoutMixin("", "center", "center")};
+    ${({theme}) => theme.layout.flexLayoutMixin("row", "center", "center")};
     gap: 4px;
 `;
 

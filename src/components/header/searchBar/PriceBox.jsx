@@ -7,8 +7,7 @@ const PriceBox = () => {
 
 const priceBoxStyle = {
     width: "256px",
-    height: "100%",
-    border: "",
+    height: "100%"
 };
 
 export default PriceBox;

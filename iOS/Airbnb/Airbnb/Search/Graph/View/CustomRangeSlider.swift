@@ -39,12 +39,10 @@ class CustomRangeSlider: UIControl {
         
         lowerThumbLayer.rangeSlider = self
         lowerThumbLayer.contentsScale = UIScreen.main.scale
-        lowerThumbLayer.backgroundColor = UIColor.getGrayScale(.Grey1)?.cgColor
         layer.addSublayer(lowerThumbLayer)
         
         upperThumbLayer.rangeSlider = self
         upperThumbLayer.contentsScale = UIScreen.main.scale
-        upperThumbLayer.backgroundColor = UIColor.getGrayScale(.Grey1)?.cgColor
         layer.addSublayer(upperThumbLayer)
         
         updateLayerFrames()
@@ -67,7 +65,6 @@ class CustomRangeSlider: UIControl {
                 height: thumbWidth
         )
         lowerThumbLayer.contents = UIImage(named: "PauseCircle")?.cgImage
-        lowerThumbLayer.setNeedsDisplay()
         
         let upperThumbCenter = CGFloat(positionForValue(value: upperValue))
         
@@ -78,7 +75,6 @@ class CustomRangeSlider: UIControl {
                 height: thumbWidth
         )
         upperThumbLayer.contents = UIImage(named: "PauseCircle")?.cgImage
-        upperThumbLayer.setNeedsDisplay()
     }
     
     func positionForValue(value: Double) -> Double {

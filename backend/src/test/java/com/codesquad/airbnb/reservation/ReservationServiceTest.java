@@ -3,6 +3,7 @@ package com.codesquad.airbnb.reservation;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.BDDAssertions.then;
 
+import com.codesquad.airbnb.charge.ChargeManager;
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.Location;
 import com.codesquad.airbnb.common.embeddable.ReviewStat;
@@ -11,6 +12,7 @@ import com.codesquad.airbnb.common.embeddable.StayTime;
 import com.codesquad.airbnb.config.TestConfig;
 import com.codesquad.airbnb.district.District;
 import com.codesquad.airbnb.district.District.DistrictType;
+import com.codesquad.airbnb.exception.unchecked.NotAvailableException;
 import com.codesquad.airbnb.member.Member;
 import com.codesquad.airbnb.member.Member.MemberRole;
 import com.codesquad.airbnb.reservation.Reservation.ReservationState;
@@ -36,7 +38,7 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@Import({TestConfig.class, ReservationService.class})
+@Import({TestConfig.class, ReservationService.class, ChargeManager.class})
 @DisplayName("ReservationService 통합 테스트")
 class ReservationServiceTest {
 
@@ -126,7 +128,6 @@ class ReservationServiceTest {
         then(findReservation.getRoom().getId()).isEqualTo(room.getId());
         then(findReservation.getGuest().getId()).isEqualTo(guest.getId());
 
-        then(findReservation.getTotalPrice()).isEqualTo(97462.0);
         then(findReservation.getGuestGroup().getNumberAdult()).isEqualTo(2);
         then(findReservation.getGuestGroup().getNumberChild()).isEqualTo(1);
         then(findReservation.getGuestGroup().getNumberInfant()).isEqualTo(0);
@@ -169,8 +170,8 @@ class ReservationServiceTest {
         ));
 
         // then
-        then(throwable).isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("해당 날짜에 예약할 수 없습니다.");
+        then(throwable).isInstanceOf(NotAvailableException.class)
+            .hasMessage("해당 날짜에 예약을 할 수 없습니다.");
     }
 
     @Test

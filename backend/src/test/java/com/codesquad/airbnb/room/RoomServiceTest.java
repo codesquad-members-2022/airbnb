@@ -2,6 +2,7 @@ package com.codesquad.airbnb.room;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
+import com.codesquad.airbnb.charge.ChargeManager;
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.Location;
 import com.codesquad.airbnb.common.embeddable.ReviewStat;
@@ -42,7 +43,7 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@Import({TestConfig.class, RoomService.class})
+@Import({TestConfig.class, RoomService.class, ChargeManager.class})
 @DisplayName("RoomService 통합 테스트")
 class RoomServiceTest {
 

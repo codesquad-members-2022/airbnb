@@ -5,6 +5,7 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.StayTime;
+import com.codesquad.airbnb.exception.unchecked.NotAvailableException;
 import com.codesquad.airbnb.room.entity.embeddable.RoomGroup;
 import com.codesquad.airbnb.room.entity.embeddable.RoomOption;
 import java.time.LocalTime;
@@ -30,8 +31,8 @@ class RoomDetailTest {
             () -> roomDetail.validateGuestGroup(new GuestGroup(3, 1, 0)));
 
         // then
-        then(throwable).isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("수용할 수 없는 인원입니다.");
+        then(throwable).isInstanceOf(NotAvailableException.class)
+            .hasMessage("해당 인원으로 예약을 할 수 없습니다.");
     }
 
     @Test
@@ -51,8 +52,8 @@ class RoomDetailTest {
             () -> roomDetail.validateGuestGroup(new GuestGroup(2, 2, 0)));
 
         // then
-        then(throwable).isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("수용할 수 없는 인원입니다.");
+        then(throwable).isInstanceOf(NotAvailableException.class)
+            .hasMessage("해당 인원으로 예약을 할 수 없습니다.");
     }
 
     @Test
@@ -72,7 +73,7 @@ class RoomDetailTest {
             () -> roomDetail.validateGuestGroup(new GuestGroup(2, 1, 1)));
 
         // then
-        then(throwable).isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("수용할 수 없는 인원입니다.");
+        then(throwable).isInstanceOf(NotAvailableException.class)
+            .hasMessage("해당 인원으로 예약을 할 수 없습니다.");
     }
 }

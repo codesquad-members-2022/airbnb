@@ -6,6 +6,7 @@ import static org.assertj.core.api.BDDAssertions.then;
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.StayDate;
 import com.codesquad.airbnb.common.embeddable.StayTime;
+import com.codesquad.airbnb.exception.unchecked.NotAvailableException;
 import com.codesquad.airbnb.reservation.Reservation.ReservationState;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -21,7 +22,7 @@ class ReservationTest {
         Reservation reservation = new Reservation(
             null,
             null,
-            67007.0,
+            67007,
             new GuestGroup(2, 1, 0),
             new StayDate(LocalDate.of(2022, 5, 31), LocalDate.of(2022, 6, 1)),
             new StayTime(LocalTime.of(17, 0, 0), LocalTime.of(12, 0, 0)),
@@ -42,7 +43,7 @@ class ReservationTest {
         Reservation reservation = new Reservation(
             null,
             null,
-            67007.0,
+            67007,
             new GuestGroup(2, 1, 0),
             new StayDate(LocalDate.of(2022, 5, 31), LocalDate.of(2022, 6, 1)),
             new StayTime(LocalTime.of(17, 0, 0), LocalTime.of(12, 0, 0)),
@@ -53,7 +54,7 @@ class ReservationTest {
         Throwable throwable = catchThrowable(reservation::cancel);
 
         // then
-        then(throwable).isInstanceOf(IllegalStateException.class)
+        then(throwable).isInstanceOf(NotAvailableException.class)
             .hasMessage("예약된 상태가 아니므로 취소할 수 없습니다.");
     }
 

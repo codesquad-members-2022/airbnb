@@ -14,6 +14,10 @@ const GlobalStyles = createGlobalStyle`
 		width: ${({ theme }) => theme.layout.heroImgWidth};
 		margin: 0 auto;
 	}
+	
+	div {
+		box-sizing: border-box;
+	}
 
 	img {
 		width: 100%;

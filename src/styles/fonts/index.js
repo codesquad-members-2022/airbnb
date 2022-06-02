@@ -1,5 +1,5 @@
 import DongleRegular from "./Dongle-Regular.woff";
-import NotoSansKR from "./Notosanskr-regular-webfont.woff";
+import NotoSansKR from "./notosanskr-regular-webfont.woff";
 
 const fonts = `
 	@font-face {

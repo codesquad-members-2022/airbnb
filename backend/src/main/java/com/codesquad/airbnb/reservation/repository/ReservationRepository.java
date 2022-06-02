@@ -14,7 +14,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
         + " join fetch re.room ro"
         + " join fetch ro.district"
         + " join fetch re.guest g"
-        + " where g.id = :memberId")
+        + " where g.id = :memberId"
+        + " and re.state = 'BOOKED'")
     List<Reservation> findByMemberId(@Param("memberId") Integer memberId);
 
     @Query("select re from Reservation re"

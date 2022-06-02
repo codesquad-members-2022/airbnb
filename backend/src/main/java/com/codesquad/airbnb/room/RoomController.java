@@ -11,6 +11,9 @@ import com.codesquad.airbnb.room.dto.request.RoomSearCondition.Radius;
 import com.codesquad.airbnb.room.dto.request.RoomSearchRequest;
 import com.codesquad.airbnb.room.dto.response.RoomDetailResponse;
 import com.codesquad.airbnb.room.dto.response.RoomSearchResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Api(tags = "Room API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/rooms")
@@ -26,6 +30,7 @@ public class RoomController {
 
     private final RoomService roomService;
 
+    @ApiOperation(value = "숙소 목록 조회", notes = "입력한 값을 바탕으로 숙소의 목록을 조회한다.")
     @GetMapping
     public List<RoomSearchResponse> listRooms(@Valid RoomSearchRequest request) {
         return roomService.searchRooms(
@@ -55,17 +60,24 @@ public class RoomController {
         );
     }
 
+    @ApiOperation(value = "숙소 상세 조회", notes = "특정 숙소의 세부 사항을 조회한다.")
     @GetMapping("/{id}")
-    public RoomDetailResponse showRoom(@PathVariable(name = "id") Integer roomId) {
-        return roomService.findRoom(roomId);
+    public RoomDetailResponse showRoom(
+        @ApiParam(value = "숙소의 Id", required = true)
+        @PathVariable(name = "id") Integer id
+    ) {
+        return roomService.findRoom(id);
     }
 
+    @ApiOperation(value = "숙소 요금 조회", notes = "숙소의 세부 요금 사항을 조회한다.")
     @GetMapping("/{id}/charge")
     public ChargeBill showCharge(
-        @PathVariable("id") Integer roomId, @Valid ChargeRequest request
+        @ApiParam(value = "숙소의 Id", required = true)
+        @PathVariable("id") Integer id,
+        @Valid ChargeRequest request
     ) {
         return roomService.showCharge(
-            roomId,
+            id,
             new StayDate(
                 request.getCheckIn(),
                 request.getCheckOut()

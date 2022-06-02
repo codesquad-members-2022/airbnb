@@ -12,3 +12,13 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
+
+  # jackson
+  jackson:
+    default-property-inclusion: NON_NULL
+
+  # swagger
+  # https://www.inflearn.com/questions/230160
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

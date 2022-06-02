@@ -1,6 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const ScheduleWrapper = styled.div`
+  position: absolute;
+  left: 0;
+  top: 76px;
   display: flex;
   justify-content: space-between;
   height: 512px;
@@ -9,6 +12,7 @@ export const ScheduleWrapper = styled.div`
   padding: 64px 88px;
   background-color: white;
   margin-top: 16px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
 `;
 
 export const Calendar = styled.div`
@@ -32,37 +36,55 @@ export const WeekDay = styled.ul`
   }
 `;
 
-export const CalendarDay = styled.li`
+// TODO: 스타일드 컴포넌트 타입 어떻게 관리할지
+
+type CalendarDayProps = {
+  isSelected: boolean;
+};
+
+export const CalendarDay = styled.div<CalendarDayProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #bdbdbd;
+  color: #333333;
   height: 48px;
   width: 48px;
+  border-radius: 50%;
   font-size: 12px;
   font-weight: 400;
   line-height: 17px;
   cursor: pointer;
+
   &:hover {
-    color: black;
+    border: 1.5px solid #828282;
   }
+
+  ${({ isSelected }) =>
+    isSelected &&
+    css`
+      background-color: #333333;
+      color: white;
+    `}
+`;
+
+type CalendarDayBackgroundProps = {
+  isBetweenSelected: boolean;
+  isStartDate: boolean;
+  isEndDate: boolean;
+};
+export const CandarDayBackground = styled.li<CalendarDayBackgroundProps>`
+  ${({ isBetweenSelected, isStartDate, isEndDate }) =>
+    isBetweenSelected &&
+    css`
+      background-color: #f5f5f7;
+      border-radius: ${isStartDate ? `50%` : `0`} ${isEndDate ? `50%` : `0`}
+        ${isEndDate ? `50%` : `0`} ${isStartDate ? `50%` : `0`};
+    `}
 `;
 
 export const WeekDate = styled.ul`
   display: flex;
   margin-top: 4px;
-
-  li {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #bdbdbd;
-    height: 48px;
-    width: 48px;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 17px;
-  }
 `;
 
 export const Date = styled.div`

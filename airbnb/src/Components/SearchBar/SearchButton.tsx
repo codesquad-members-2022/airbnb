@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { Button } from '@mui/material';
-import * as S from './SearchBarStyle';
+import * as S from './SearchBar.style';
 
 export function SearchButton() {
   const [isSearch, setIsSearch] = useState(false);

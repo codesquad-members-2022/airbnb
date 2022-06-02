@@ -5,6 +5,7 @@ interface SearchBarItem {
 }
 
 export const searchBarWrapper = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   width: 916px;
@@ -13,6 +14,7 @@ export const searchBarWrapper = styled.div`
   border-radius: 999px;
   background-color: white;
   padding: 16px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
 `;
 
 // 스타일드 컴포넌트 호출시 제네릭 타입으로 SearchBarItems를 지정해 받는 인자타입 선언

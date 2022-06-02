@@ -55,6 +55,7 @@ struct CalendarPicker {
     mutating func select(monthSection: Int, dayItem: Int) {
         let selectedDay = getDay(monthSection: monthSection, dayItem: dayItem)
         
+        // 전달에 속한 날짜나 이미 지난 날짜는 선택 불가
         if selectedDay.isWithinLastMonth || selectedDay.isPast {
             return
         }

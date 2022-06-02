@@ -151,5 +151,56 @@ class CalendarPickerSpec: QuickSpec {
             }
         }
         
+        describe("캘린더에서 특정 날짜를 선택한 상태에서") {
+            var testDate: Date!
+            var calendarPicker: CalendarPicker!
+            var preSelectedDate: Date!
+            let preSelectedMonthSection = 1
+            let preSelectedDayItem = 15
+            
+            beforeEach {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "YY,M,d-HH:mm:ss"
+                testDate = dateFormatter.date(from: "22,05,15-07:00:00")
+                
+                calendarPicker = CalendarPicker(baseDate: testDate, numOfMonths: 12)
+                calendarPicker.didSelectDate = { dateSelection in
+                    preSelectedDate = dateSelection.checkIn
+                }
+                calendarPicker.select(monthSection: preSelectedMonthSection, dayItem: preSelectedDayItem)
+            }
+            
+            context("선택된 날짜 이후의 날짜를 탭하면") {
+                it("처음 선택 날짜와 이번 선택된 날짜가 범위로 선택된다.") {
+                    // Arrange
+                    let afterDayIndex = preSelectedDayItem + 1
+                    let afterDate = Calendar.current.date(byAdding: .day, value: 1, to: preSelectedDate)
+                    
+                    calendarPicker.didSelectDate = { dateSelection in
+                        // Assert
+                        expect(dateSelection).to(equal((preSelectedDate, afterDate)))
+                    }
+                    
+                    // Act
+                    calendarPicker.select(monthSection: preSelectedMonthSection, dayItem: afterDayIndex)
+                }
+            }
+            
+            context("선택된 날짜 이전의 날짜를 탭하면") {
+                it("새로 선택된 날짜가 시작 날짜로 선택된다.") {
+                    // Arrange
+                    let beforeDayIndex = preSelectedDayItem - 5
+                    let beforeDate = Calendar.current.date(byAdding: .day, value: -5, to: preSelectedDate)!
+                    
+                    calendarPicker.didSelectDate = { dateSelection in
+                        // Assert
+                        expect(dateSelection).to(equal((beforeDate, nil)))
+                    }
+                    
+                    // Act
+                    calendarPicker.select(monthSection: preSelectedMonthSection, dayItem: beforeDayIndex)
+                }
+            }
+        }
     }
 }

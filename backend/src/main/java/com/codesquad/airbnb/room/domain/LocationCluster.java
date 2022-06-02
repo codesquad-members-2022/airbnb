@@ -1,4 +1,4 @@
-package com.codesquad.airbnb.room.vo;
+package com.codesquad.airbnb.room.domain;
 
 import com.codesquad.airbnb.common.embeddable.Location;
 import com.codesquad.airbnb.room.dto.request.RoomSearCondition.Radius;

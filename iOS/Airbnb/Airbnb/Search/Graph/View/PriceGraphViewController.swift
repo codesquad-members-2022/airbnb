@@ -14,14 +14,15 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
     
     private let graph = ColumnGraphView()
     private var editableWidth: Constraint?
-    private let slider: UISlider = {
-        let slider = UISlider()
-        slider.minimumValue = 0
-        slider.maximumValue = 1
-        slider.thumbTintColor = UIColor.getGrayScale(.Grey3)
-        slider.tintColor = UIColor.getGrayScale(.Grey3)
-        return slider
-    }()
+//    private let slider: UISlider = {
+//        let slider = UISlider()
+//        slider.minimumValue = 0
+//        slider.maximumValue = 1
+//        slider.thumbTintColor = UIColor.getGrayScale(.Grey3)
+//        slider.tintColor = UIColor.getGrayScale(.Grey3)
+//        return slider
+//    }()
+    private var slider = CustomRangeSlider(frame: .zero)
     
     // 그래프의 선택되지 않는 희미한 부분
     private let lightGrayView: UIView = {
@@ -83,6 +84,8 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
         view.addSubview(graph)
         graph.addSubview(lightGrayView)
         graph.addSubview(semanticGrayView)
+        
+        slider.backgroundColor = .red
         view.addSubview(slider)
         
         graph.snp.makeConstraints { make in
@@ -98,17 +101,26 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
         semanticGrayView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
             $0.leading.equalTo(graph)
-            self.editableWidth = $0.width.equalTo(self.graph.frame.width * CGFloat(self.slider.value)).constraint
+//            self.editableWidth = $0.width.equalTo(self.graph.frame.width * CGFloat(self.slider.value)).constraint
+            self.editableWidth = $0.width.equalTo(self.graph.frame.width).constraint
         }
         
         slider.snp.makeConstraints { make in
             make.top.equalTo(self.graph.snp.bottom)
             make.leading.trailing.equalTo(graph)
+            make.height.equalTo(31)
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print(slider.frame)
+        slider.updateLayerFrames()
+        slider.layoutIfNeeded()
+    }
+    
     func bind() {
-        slider.addTarget(self, action: #selector(sliderValueChanged(_:)), for: .valueChanged)
+//        slider.addTarget(self, action: #selector(sliderValueChanged(_:)), for: .valueChanged)
     }
     
     private func priceLabel(_ labelText: String) -> UILabel {
@@ -122,7 +134,8 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
     }
     
     @objc func sliderValueChanged(_ sender: UISlider) {
-        let width = self.graph.frame.width * CGFloat(slider.value)
+//        let width = self.graph.frame.width * CGFloat(slider.value)
+        let width = self.graph.frame.width
         self.editableWidth?.update(offset: width)
         super.updateViewConstraints()
     }

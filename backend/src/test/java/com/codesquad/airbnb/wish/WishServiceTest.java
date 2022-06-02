@@ -95,16 +95,8 @@ class WishServiceTest {
         Wish findWish = em.find(Wish.class, savedWish.getId());
 
         // then
-        then(findWish.getMember().getName()).isEqualTo("BB-choi");
-        then(findWish.getMember().getImagePath()).isEqualTo(
-            "https://avatars.githubusercontent.com/u/78826879?v=4");
-        then(findWish.getMember().getIsSuperHost()).isFalse();
-        then(findWish.getMember().getRole()).isEqualTo(MemberRole.USER);
-
-        then(findWish.getRoom().getName()).isEqualTo("Spacious and Comfortable cozy house #4");
-        then(findWish.getRoom().getDescription()).isEqualTo("강남역 5번 출구에서 도보로 이동가능합니다.");
-        then(findWish.getRoom().getImagePath()).isEqualTo("https://bit.ly/39ZouHy");
-        then(findWish.getRoom().getType()).isEqualTo(RoomType.WHOLE_RESIDENCE);
+        then(findWish.getMember().getId()).isEqualTo(guest.getId());
+        then(findWish.getRoom().getId()).isEqualTo(room.getId());
     }
 
     @Test
@@ -119,16 +111,8 @@ class WishServiceTest {
 
         // then
         then(findWish.getDeleted()).isTrue();
-        then(findWish.getMember().getName()).isEqualTo("BB-choi");
-        then(findWish.getMember().getImagePath()).isEqualTo(
-            "https://avatars.githubusercontent.com/u/78826879?v=4");
-        then(findWish.getMember().getIsSuperHost()).isFalse();
-        then(findWish.getMember().getRole()).isEqualTo(MemberRole.USER);
-
-        then(findWish.getRoom().getName()).isEqualTo("Spacious and Comfortable cozy house #4");
-        then(findWish.getRoom().getDescription()).isEqualTo("강남역 5번 출구에서 도보로 이동가능합니다.");
-        then(findWish.getRoom().getImagePath()).isEqualTo("https://bit.ly/39ZouHy");
-        then(findWish.getRoom().getType()).isEqualTo(RoomType.WHOLE_RESIDENCE);
+        then(findWish.getMember().getId()).isEqualTo(guest.getId());
+        then(findWish.getRoom().getId()).isEqualTo(room.getId());
     }
 
 }

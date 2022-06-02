@@ -10,16 +10,17 @@ import * as S from './style';
 
 function RightInput({ minPrice, maxPrice }: IPriceRange) {
   const inputState = useInputRangeGetter();
-  const { minInputValue, maxInputValue } = inputState;
-  const setMaxInputValue = useInputRangeSetter();
+  const setInputValue = useInputRangeSetter();
   const inputRef = useRef(null);
+
+  const { leftInputValue, rightInputValue } = inputState;
 
   const handleChangeInput = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>): void => {
-      setMaxInputValue((prevInputState) => {
+      setInputValue((prevInputValue) => {
         return {
-          ...prevInputState,
-          maxInputValue: Math.max(minInputValue + 1, +event.target.value),
+          ...prevInputValue,
+          rightInputValue: Math.max(leftInputValue + 1, +event.target.value),
         };
       });
     },
@@ -28,12 +29,13 @@ function RightInput({ minPrice, maxPrice }: IPriceRange) {
 
   return (
     <S.Input
+      className="thumb"
       min={minPrice}
-      max={maxPrice}
-      value={maxInputValue}
+      max={Math.ceil(maxPrice)}
+      value={rightInputValue}
       ref={inputRef}
-      className="thumb zindex-4"
       onChange={handleChangeInput}
+      isLeftValue={false}
     />
   );
 }

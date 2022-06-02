@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState } from 'react';
 
 interface InputRangeType {
-  minInputValue: number;
-  maxInputValue: number;
+  leftInputValue: number;
+  rightInputValue: number;
 }
 
 type InputRangeSetterType = React.Dispatch<React.SetStateAction<InputRangeType>>;
@@ -11,16 +11,11 @@ export const InputRangeContext = createContext<InputRangeType | null>(null);
 
 export const InputRangeSetterContext = createContext<InputRangeSetterType | null>(null);
 
-export function InputRangeProvider({
-  children,
-  minPrice,
-  maxPrice,
-}: {
-  children: React.ReactNode;
-  minPrice: number;
-  maxPrice: number;
-}) {
-  const [state, setState] = useState({ minInputValue: minPrice, maxInputValue: maxPrice });
+export function InputRangeProvider({ children }: { children: React.ReactNode }) {
+  const [state, setState] = useState<InputRangeType>({
+    leftInputValue: 0,
+    rightInputValue: 0,
+  });
 
   return (
     <InputRangeSetterContext.Provider value={setState}>

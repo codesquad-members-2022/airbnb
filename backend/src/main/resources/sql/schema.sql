@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS member;
 CREATE TABLE member
 (
     member_id     INT         NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'member 테이블의 기본 키',
+    github_id     VARCHAR(39) NOT NULL COMMENT '멤버의 Github 아이디',
     name          VARCHAR(39) NOT NULL COMMENT '멤버의 이름',
     image_path    VARCHAR(255) COMMENT '멤버의 프로필 이미지 파일 경로',
     role          VARCHAR(10) NOT NULL COMMENT '멤버의 구분 (ADMIN/USER)',

@@ -22,3 +22,7 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+  # default path
+    servlet:
+      path: /api

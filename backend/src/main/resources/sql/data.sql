@@ -34,10 +34,10 @@ INSERT INTO district (name, image_path, address, type, point, review_score, revi
 VALUES ('부천시', 'https://bit.ly/3sVZyay', '부천시,경기도', 'SECONDARY',
         ST_GEOMFROMTEXT('POINT(126.7826 37.5060)'), 3.5, 50);
 
-INSERT INTO member (name, image_path, role, is_super_host)
-VALUES ('Miller', 'https://avatars.githubusercontent.com/u/50660684?v=4', 'USER', false);
-INSERT INTO member (name, image_path, role, is_super_host)
-VALUES ('BB-choi', 'https://avatars.githubusercontent.com/u/78826879?v=4', 'USER', false);
+INSERT INTO member (name, github_id, image_path, role, is_super_host)
+VALUES ('Miller', 'rxdcxdrnine', 'https://avatars.githubusercontent.com/u/50660684?v=4', 'USER', false);
+INSERT INTO member (name, github_id, image_path, role, is_super_host)
+VALUES ('BB-choi', 'BB-choi', 'https://avatars.githubusercontent.com/u/78826879?v=4', 'USER', false);
 
 -- room
 INSERT INTO room (district_id, host_id, name, description, image_path, type, longitude, latitude,

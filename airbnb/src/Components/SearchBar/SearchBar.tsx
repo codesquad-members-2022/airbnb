@@ -1,3 +1,4 @@
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { useNullGuard } from '@/Hooks/SearchBarHooks';
 import {
   SearchingContext,
@@ -46,12 +47,22 @@ export function SearchBar() {
             ? `${endDate.getMonth() + 1}월 ${endDate.getDate()}일`
             : '날짜 입력'
         }
-        width={160}
+        width={112}
       />
+      {/* TODO: 클로즈 버튼 컴포넌트 생성 */}
+      <S.CloseButton type="button">
+        <CloseRoundedIcon sx={{ fontSize: '13px' }} />
+      </S.CloseButton>
       <S.line />
       <SearchBarItem title="요금" value="내용" width={208} />
+      <S.CloseButton type="button">
+        <CloseRoundedIcon sx={{ fontSize: '13px' }} />
+      </S.CloseButton>
       <S.line />
-      <SearchBarItem title="인원" value="내용" width={194} />
+      <SearchBarItem title="인원" value="내용" width={144} />
+      <S.CloseButton type="button">
+        <CloseRoundedIcon sx={{ fontSize: '13px' }} />
+      </S.CloseButton>
       <SearchButton />
     </S.searchBarWrapper>
   );

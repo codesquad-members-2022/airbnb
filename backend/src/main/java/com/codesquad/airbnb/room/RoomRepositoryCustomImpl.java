@@ -7,17 +7,16 @@ import static com.codesquad.airbnb.room.entity.QRoomDetail.roomDetail;
 
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.Location;
+import com.codesquad.airbnb.common.embeddable.StayDate;
+import com.codesquad.airbnb.reservation.Reservation.ReservationState;
 import com.codesquad.airbnb.room.dto.Direction;
 import com.codesquad.airbnb.room.dto.RoomSearCondition;
 import com.codesquad.airbnb.room.dto.RoomSearCondition.PriceRange;
 import com.codesquad.airbnb.room.dto.RoomSearCondition.Radius;
-import com.codesquad.airbnb.room.dto.RoomSearCondition.StayDate;
 import com.codesquad.airbnb.room.entity.Room;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -50,10 +49,13 @@ public class RoomRepositoryCustomImpl implements RoomRepositoryCustom {
         }
 
         return query.leftJoin(room.reservations, reservation)
-            .on(reservation.stayDateTime.checkinDateTime.goe(
-                    stayDate.getCheckinDate().atStartOfDay())
-                .and(reservation.stayDateTime.checkoutDateTime.loe(
-                    LocalDateTime.of(stayDate.getCheckoutDate(), LocalTime.MAX))))
+            .on(reservation.state.eq(ReservationState.BOOKED),
+                reservation.stayDate.checkinDate.goe(stayDate.getCheckinDate())
+                    .and(reservation.stayDate.checkinDate.lt(stayDate.getCheckoutDate()))
+                    .or(reservation.stayDate.checkoutDate.gt(stayDate.getCheckinDate())
+                        .and(reservation.stayDate.checkoutDate.loe(stayDate.getCheckoutDate())))
+                    .or(reservation.stayDate.checkinDate.loe(stayDate.getCheckinDate())
+                        .and(reservation.stayDate.checkoutDate.goe(stayDate.getCheckoutDate()))))
             // sql_mode=only_full_group_by 에러 해결을 위해 roomDetail 의 id 도 GROUP BY 절에 포함
             .groupBy(room.id, roomDetail.id)
             .having(reservation.count().eq(0L));

@@ -40,6 +40,9 @@ dependencies {
     // querydsl
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+    // reflection
+    implementation 'org.reflections:reflections:0.10.2'
 }
 
 tasks.named('test') {

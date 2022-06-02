@@ -16,6 +16,6 @@ public class RoomService {
     public RoomPriceStatisticDto findStatisticOfRoomPrice(RoomPriceStatisticRequest roomPriceStatisticRequest) {
         RoomPriceStatistic roomPriceStatistic = roomRepository.findStatisticOfRoomPrice(roomPriceStatisticRequest.getCheckIn(), roomPriceStatisticRequest.getCheckOut());
 
-        return new RoomPriceStatisticDto().of(roomPriceStatistic);
+        return RoomPriceStatisticDto.of(roomPriceStatistic);
     }
 }

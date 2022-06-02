@@ -45,5 +45,6 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
             "        AND ((check_in <= :checkIn AND check_out >= :checkIn) OR (check_in > :checkIn AND check_in <= :checkOut))\n" +
             "WHERE\n" +
             "    b.room_id is NULL", nativeQuery = true)
+    //jpa projection 을 통해 쿼리 결과를 매핑
     RoomPriceStatistic findStatisticOfRoomPrice(@Param("checkIn") LocalDate checkIn, @Param("checkOut") LocalDate checkOut);
 }

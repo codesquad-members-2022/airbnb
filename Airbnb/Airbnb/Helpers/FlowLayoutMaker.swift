@@ -15,7 +15,7 @@ enum HomeSection: Int {
 
 enum FilterSection: Int {
     case container
-    case filterForm
+    case filterList
 }
 
 protocol LayoutProvidable {
@@ -90,13 +90,13 @@ struct HomeLayout: LayoutProvidable {
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                           heightDimension: .fractionalHeight(1.0))
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                   heightDimension: .fractionalHeight(0.65))
+                                                   heightDimension: .fractionalHeight(0.73))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
             let section = NSCollectionLayoutSection(group: group)
             return section
 
-        case .filterForm:
+        case .filterList:
             let configuration = UICollectionLayoutListConfiguration(appearance: .plain)
             let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: env)
             return section

@@ -140,12 +140,10 @@ extension SearchViewController: UICollectionViewDelegate {
         search.start { [weak self] (response, error) in
             guard error == nil else {return}
             guard let placeMark = response?.mapItems[0].placemark, let title = placeMark.title else {return}
-
             let location = Location(name: title, latitude: placeMark.coordinate.latitude, longitude: placeMark.coordinate.longitude)
             let filterViewModel = FilterViewModel()
             filterViewModel.location.value = location
             let nextVC = FilterViewController(filterViewModel: filterViewModel)
-
             self?.navigationController?.pushViewController(nextVC, animated: true)
         }
 

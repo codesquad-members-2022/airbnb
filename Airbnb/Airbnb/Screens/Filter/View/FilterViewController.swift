@@ -10,7 +10,9 @@ import UIKit
 final class FilterViewController: UIViewController {
 
     private var filterForm: UICollectionView!
+    private var toolbar: UIToolbar!
     private var filterViewModel: FilterViewModel?
+    private var containerContentView: [UIView]?
 
     init(filterViewModel: FilterViewModel) {
         self.filterViewModel = filterViewModel
@@ -21,16 +23,21 @@ final class FilterViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDisplay()
         configureConstraints()
-
     }
 
     private func configureDisplay() {
         setViewController()
         setFilterForm()
+        setToolBar()
         setDataBinding()
     }
 
@@ -50,13 +57,27 @@ final class FilterViewController: UIViewController {
         filterForm.translatesAutoresizingMaskIntoConstraints = false
     }
 
+    private func setToolBar() {
+        tabBarController?.tabBar.isHidden = true
+        toolbar = UIToolbar()
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        toolbar.barTintColor = .black
+        let skip = UIBarButtonItem(title: "건너뛰기", image: nil, primaryAction: nil, menu: nil)
+        let next = UIBarButtonItem(title: "다음", image: nil, primaryAction: nil, menu: nil)
+        toolbar.setItems([skip, next], animated: false)
+    }
+
     private func configureConstraints() {
         view.addSubview(filterForm)
+        view.addSubview(toolbar)
         NSLayoutConstraint.activate([
+            toolbar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor ),
+            toolbar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            toolbar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             filterForm.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             filterForm.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             filterForm.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            filterForm.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            filterForm.bottomAnchor.constraint(equalTo: toolbar.topAnchor)
         ])
     }
 
@@ -80,7 +101,7 @@ final class FilterViewController: UIViewController {
             self?.filterForm.reloadData()
         })
         filterViewModel?.occupants.bind(listener: { [weak self] model in
-            guard let model = model else { return }
+            guard let model = model  else { return }
             let viewModel = FilterListCellViewModel(model: model)
             self?.filterViewModel?.update(type: .occupants, viewModel: viewModel)
             self?.filterForm.reloadData()
@@ -96,14 +117,8 @@ extension FilterViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let sectionType = FilterSection.init(rawValue: section) else {return 0}
-        switch sectionType {
-        case .container:
-            return 1
-
-        case .filterForm:
-            return filterViewModel?.listCellViewModel.count ?? 0
-        }
+        guard let sectionType = FilterSection.init(rawValue: section), let filterViewModel = filterViewModel else {return 0}
+        return sectionType == .filterList ? filterViewModel.listCellViewModel.count : 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -115,7 +130,7 @@ extension FilterViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContainerCell.id, for: indexPath) as? ContainerCell else {return UICollectionViewCell()}
             return cell
 
-        case .filterForm:
+        case .filterList:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterListCell.id, for: indexPath) as? FilterListCell else {return UICollectionViewListCell()}
             cell.configure(filterViewModel?[indexPath])
             return cell

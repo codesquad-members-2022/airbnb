@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import { ScheduleProps, ScheduleProvider } from '@/Contexts/Schedule/context';
+import { useCurrentDate } from '@/Hooks/ScheduleHooks';
 import * as S from './Schedule.style';
 import { Calendar } from './Calendar';
 
@@ -11,7 +11,7 @@ export function Schedule({
   setStartDate,
   setEndDate,
 }: ScheduleProps): JSX.Element {
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const { changeCurrentDate, currentDate } = useCurrentDate();
 
   return (
     <ScheduleProvider
@@ -21,32 +21,11 @@ export function Schedule({
       setEndDate={setEndDate}
     >
       <S.ScheduleWrapper>
-        <S.BackButton
-          type="button"
-          onClick={() => {
-            setCurrentDate(
-              new Date(
-                currentDate.getFullYear(),
-                currentDate.getMonth() - 1,
-                1,
-              ),
-            );
-          }}
-        >
+        <S.BackButton type="button" onClick={changeCurrentDate(-1)}>
           <ArrowBackIosRoundedIcon fontSize="small" />
         </S.BackButton>
-        <S.ForwardButton
-          type="button"
-          onClick={() => {
-            setCurrentDate(
-              new Date(
-                currentDate.getFullYear(),
-                currentDate.getMonth() + 1,
-                1,
-              ),
-            );
-          }}
-        >
+        {/* TODO: 버튼 컴포넌트 분리 */}
+        <S.ForwardButton type="button" onClick={changeCurrentDate(1)}>
           <ArrowForwardIosRoundedIcon fontSize="small" />
         </S.ForwardButton>
         <Calendar date={currentDate} />

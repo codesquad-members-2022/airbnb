@@ -9,4 +9,15 @@ public class ErrorResponse extends BasicResponse {
         this.statusName = errorCode.getHttpStatus().name();
         this.message = errorCode.getDetail();
     }
+
+    public String convertToJson() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("{\"timestamp\": \"" + this.timestamp + "\",\n");
+        sb.append("\"statusCode\": \"" + this.statusCode + "\",\n");
+        sb.append("\"statusName\": \"" + this.statusName + "\",\n");
+        sb.append("\"message\": \"" + this.message + "\"}");
+
+        return sb.toString();
+    }
 }

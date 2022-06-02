@@ -24,13 +24,13 @@ class LocationViewController: BackgroundViewController, CommonViewControllerProt
         return searchController
     }()
         
-    lazy var nearbyLoactionView: UICollectionView = {
+    private(set) var nearbyLoactionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(LocationCollectionViewCell.self, forCellWithReuseIdentifier: LocationCollectionViewCell.reuseIdentifier)
         collectionView.register(HeaderReusableView.self,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderReusableView.ID)
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderReusableView.reuseIdentifier)
         return collectionView
     }()
     
@@ -53,7 +53,7 @@ class LocationViewController: BackgroundViewController, CommonViewControllerProt
         view.addSubview(nearbyLoactionView)
         
         nearbyLoactionView.snp.makeConstraints {
-            $0.top.trailing.leading.bottom.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
     }
     
@@ -78,7 +78,7 @@ class LocationViewController: BackgroundViewController, CommonViewControllerProt
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        attribute()
+        navigationController?.isToolbarHidden = true
     }
     
 }
@@ -125,8 +125,8 @@ extension LocationViewController: UICollectionViewDelegateFlowLayout, UICollecti
         guard let item = model[indexPath.row] else {
             return UICollectionViewCell()
         }
-        cell.cityName.text = item.destination
-        cell.spendingTime.text = (item as? PopularCityInfomation)?.distance
+        
+        cell.updateInfomation(item)
         return cell
     }
     
@@ -134,7 +134,7 @@ extension LocationViewController: UICollectionViewDelegateFlowLayout, UICollecti
     UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            let headerView = nearbyLoactionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderReusableView.ID, for: indexPath)
+            let headerView = nearbyLoactionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderReusableView.reuseIdentifier, for: indexPath)
             return headerView
         default:
             assert(false, "header, footer, withReuseIdentifier 를 확인하세요.")
@@ -142,14 +142,10 @@ extension LocationViewController: UICollectionViewDelegateFlowLayout, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let reservationModel = ReservationModel()
         guard let cell = collectionView.cellForItem(at: indexPath) as? LocationCollectionViewCell else {
             return
         }
-        let backButton = UIBarButtonItem(title: "뒤로", style: .plain,
-                                         target: self, action: nil)
-        backButton.tintColor = .gray
-        self.navigationItem.backBarButtonItem = backButton
+        let reservationModel = ReservationModel()
         reservationModel.location = cell.cityName.text
         let nextVC = CalendarViewController(reservationModel: reservationModel)
         self.navigationController?.pushViewController(nextVC, animated: true)

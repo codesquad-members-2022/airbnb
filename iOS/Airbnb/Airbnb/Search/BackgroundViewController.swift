@@ -22,6 +22,7 @@ class BackgroundViewController: UIViewController {
     }
     
     private func setUpNavigationAppearance() {
+        navigationItem.backButtonTitle = "뒤로"
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .systemGray6
@@ -30,7 +31,7 @@ class BackgroundViewController: UIViewController {
     }
     
     private func setUpToolBarAppearance() {
-        navigationController?.toolbar.tintColor = .black
+        navigationController?.toolbar.tintColor = .label
         let toolBarAppearance = UIToolbarAppearance()
         toolBarAppearance.configureWithOpaqueBackground()
         toolBarAppearance.backgroundColor = .systemGray6

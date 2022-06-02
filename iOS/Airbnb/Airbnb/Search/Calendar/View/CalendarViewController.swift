@@ -10,23 +10,16 @@ import UIKit
 class CalendarViewController: BackgroundViewController, CommonViewControllerProtocol {
     
     let reservationModel: ReservationModel
-    let calendarModel = SearchCalendarModel()
-    var resultArray: [CalendarResult] = []
-    var date = Date()
-    
-    private let calendar = Calendar(identifier: .gregorian)
+    let calendarModel: CalendarModel = CalendarModel(baseDate: Date())
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
-        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.isScrollEnabled = true
-        collectionView.isPagingEnabled = true
-        //TODO: - 캘린더 완성되면 지울 내용 - 빨간 배경색
         collectionView.backgroundColor = .systemBackground
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
     
@@ -44,16 +37,13 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
         attribute()
         layout()
         bind()
-        // 12달 만들기
-        for _ in 0..<12 {
-            let nextMonthResult = calendarModel.getNextMonthDays(from: date)
-            self.resultArray.append(nextMonthResult)
-            self.date = nextMonthResult.date
-        }
+    }
+    
+    private func setUpCollectionViewDelegates() {
         collectionView.register(CalendarViewCell.self, forCellWithReuseIdentifier: CalendarViewCell.reuseIdentifier)
+        collectionView.register(CalendarHearderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CalendarHearderView.reuseIdentifier)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.reloadData()
     }
     
     func attribute() {
@@ -61,6 +51,7 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
         navigationItem.title = "숙소 찾기"
         navigationController?.isToolbarHidden = false
         self.toolbarItems = setUpToolBarItems()
+        setUpCollectionViewDelegates()
     }
     
     func layout() {
@@ -68,12 +59,15 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
         
         collectionView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.readableContentGuide)
-            $0.height.equalTo(view.snp.height).multipliedBy(0.6)
+            $0.height.equalTo(view.snp.height).multipliedBy(0.5)
         }
     }
     
     func bind() {
-        
+        calendarModel.onUpdate = { [weak self] in
+            self?.collectionView.reloadData()
+        }
+//
     }
     
     private func setUpToolBarItems() -> [UIBarButtonItem] {
@@ -85,7 +79,6 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
     }
     
     @objc func pushNextVC() {
-        //TODO: - graphic 관련한 뷰컨트롤러로 변경
         let nextVC = PriceGraphViewController()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
@@ -93,28 +86,50 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
 
 extension CalendarViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        35
+        return calendarModel.month[section].result.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        self.resultArray.count
+        calendarModel.month.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: CalendarViewCell.reuseIdentifier, for: indexPath) as? CalendarViewCell else {
-            return UICollectionViewCell()
-        }
-        guard self.resultArray[indexPath.section].result.count - 1 >= indexPath.row else {
-            return cell
-        }
-        let day = self.resultArray[indexPath.section].result[indexPath.row]
+        guard let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: CalendarViewCell.reuseIdentifier, for: indexPath) as? CalendarViewCell else { return UICollectionViewCell() }
+        let day = calendarModel.month[indexPath.section].result[indexPath.row]
         cell.day = day
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            guard
+                let headerView = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier:  CalendarHearderView.reuseIdentifier,
+                    for: indexPath) as? CalendarHearderView
+            else { return UICollectionReusableView() }
+            
+            let date = calendarModel.month[indexPath.section]
+                .result.last?.date
+            headerView.baseDate = date
+            return headerView
+        default:
+            return UICollectionReusableView()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let width: CGFloat = self.collectionView.frame.width
+        let height: CGFloat = 60
+        return CGSize(width: width, height: height)
     }
 }
 
 extension CalendarViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.collectionView.frame.width / 7, height: self.collectionView.frame.width / 7)
+        let width: Int = Int(self.collectionView.frame.width / 7)
+        let height: Int = 50
+        return CGSize(width: width, height: height)
     }
 }

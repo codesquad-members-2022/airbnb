@@ -30,7 +30,7 @@ export function CalenderDateProvider({ children }) {
   const checkInValue = checkInInfo ? `${checkInInfo.month}월 ${checkInInfo.date}일` : '';
   const checkOutValue = checkOutInfo ? `${checkOutInfo.month}월 ${checkOutInfo.date}일` : '';
 
-  const resetInfos = () => {
+  const resetCalenderInfos = () => {
     setCheckInInfo(null);
     setCheckOutInfo(null);
   };
@@ -58,7 +58,7 @@ export function CalenderDateProvider({ children }) {
         checkOutTime,
         checkInValue,
         checkOutValue,
-        resetInfos,
+        resetCalenderInfos,
         resetCurDate,
       }}
     >

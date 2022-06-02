@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import { useContext } from 'react';
-import { CalenderDateContext } from '@/component/header/calender/CalenderDateProvider';
-import CalenderPage from '@/component/header/calender/CalenderPage';
-import PrevButton from '@/component/header/calender/PrevButton';
-import NextButton from '@/component/header/calender/NextButton';
+import { CalenderDateContext } from '@/context/CalenderDateProvider';
+import CalenderPage from '@calender/CalenderPage';
+import PrevButton from '@calender/PrevButton';
+import NextButton from '@calender/NextButton';
+import { ModalContainer } from '@/styled-component/ModalContainer';
 
 function Calender({ page = 1 }) {
   const { curDate } = useContext(CalenderDateContext);
@@ -39,12 +40,7 @@ function getDisplayPageArray({ curDate, page }) {
   return displayPageArray;
 }
 
-const StyledContainer = styled.div`
-  position: relative;
-  margin: 30px auto 0;
-  background-color: white;
-  border-radius: 40px;
-  box-shadow: 0 4px 10px rgba(51, 51, 51, 0.1), 0 0 4px rgba(51, 51, 51, 0.05);
+const StyledContainer = styled(ModalContainer)`
   ${({ page }) =>
     `width: ${page === 1 ? 370 : 828}px;
     height: ${382 * Math.ceil(page / 2)}px;

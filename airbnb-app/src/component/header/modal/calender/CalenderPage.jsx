@@ -1,5 +1,5 @@
-import Days from '@/component/header/calender/Days';
-import DatesOfMonth from '@/component/header/calender/DatesOfMonth';
+import Days from '@calender/Days';
+import DatesOfMonth from '@calender/DatesOfMonth';
 import styled from 'styled-components';
 
 function CalenderPage({ date }) {

@@ -1,4 +1,4 @@
-import { CustomThemeProvider } from '@/custom-styled-component/CustomThemeProvider';
+import { CustomThemeProvider } from '@/utils/custom-styled-component/CustomThemeProvider';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '@/common/globalStyle';
 import theme from '@/common/theme';

@@ -11,16 +11,11 @@ export const InputRangeContext = createContext<InputRangeType | null>(null);
 
 export const InputRangeSetterContext = createContext<InputRangeSetterType | null>(null);
 
-export function InputRangeProvider({
-  children,
-  minPrice,
-  maxPrice,
-}: {
-  children: React.ReactNode;
-  minPrice: number;
-  maxPrice: number;
-}) {
-  const [state, setState] = useState({ leftInputValue: minPrice, rightInputValue: maxPrice });
+export function InputRangeProvider({ children }: { children: React.ReactNode }) {
+  const [state, setState] = useState<InputRangeType>({
+    leftInputValue: 0,
+    rightInputValue: 0,
+  });
 
   return (
     <InputRangeSetterContext.Provider value={setState}>

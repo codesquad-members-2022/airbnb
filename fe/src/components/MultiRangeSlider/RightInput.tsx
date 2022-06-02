@@ -10,9 +10,10 @@ import * as S from './style';
 
 function RightInput({ minPrice, maxPrice }: IPriceRange) {
   const inputState = useInputRangeGetter();
-  const { leftInputValue, rightInputValue } = inputState;
   const setInputValue = useInputRangeSetter();
   const inputRef = useRef(null);
+
+  const { leftInputValue, rightInputValue } = inputState;
 
   const handleChangeInput = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -28,12 +29,13 @@ function RightInput({ minPrice, maxPrice }: IPriceRange) {
 
   return (
     <S.Input
+      className="thumb"
       min={minPrice}
-      max={maxPrice}
+      max={Math.ceil(maxPrice)}
       value={rightInputValue}
       ref={inputRef}
-      className="thumb zindex-4"
       onChange={handleChangeInput}
+      isLeftValue={false}
     />
   );
 }

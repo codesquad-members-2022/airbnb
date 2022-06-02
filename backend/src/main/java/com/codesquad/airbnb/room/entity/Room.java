@@ -84,4 +84,8 @@ public class Room {
         this.charge = charge;
         this.review = review;
     }
+
+    public Double getTotalCharge() {
+        return charge.sum();
+    }
 }

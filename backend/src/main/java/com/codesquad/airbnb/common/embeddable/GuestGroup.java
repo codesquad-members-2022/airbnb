@@ -27,4 +27,12 @@ public class GuestGroup {
         return numberAdult + numberChild + numberInfant;
     }
 
+    public void validateNumberGuest(GuestGroup guestGroup) {
+        if (this.numberInfant < guestGroup.numberInfant
+            || this.numberChild < guestGroup.numberChild
+            || this.numberAdult < guestGroup.numberAdult) {
+            throw new IllegalArgumentException("수용할 수 없는 인원입니다.");
+        }
+    }
+
 }

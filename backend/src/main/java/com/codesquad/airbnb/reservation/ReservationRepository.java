@@ -6,7 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
+public interface ReservationRepository extends JpaRepository<Reservation, Integer>,
+    ReservationRepositoryCustom {
 
     @Query("select re from Reservation re"
         + " join fetch re.room ro"
@@ -23,4 +24,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
         + " join fetch ro.images"
         + " where re.id = :id")
     Optional<Reservation> findByIdWithRoom(@Param("id") Integer id);
+
 }

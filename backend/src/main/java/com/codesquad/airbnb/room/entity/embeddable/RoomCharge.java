@@ -19,4 +19,8 @@ public class RoomCharge {
     @Column(name = "cleaning_charge")
     private Double cleaning;
 
+    public Double sum() {
+        return lodging + cleaning;
+    }
+
 }

@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,5 +54,16 @@ public class Room {
         this.description = description;
         this.roomPriceCondition = roomPriceCondition;
         this.address = address;
+    }
+
+    public BigDecimal calculateRating() {
+        return new BigDecimal(this.reviews.stream()
+                .mapToInt(Review::getStarRating)
+                .sum())
+                .divide(BigDecimal.valueOf(this.reviews.size()), 2, RoundingMode.FLOOR);
+    }
+
+    public BigDecimal calculateAveragePerDay() {
+        return this.getRoomPriceCondition().calculateAvgPricePerDay();
     }
 }

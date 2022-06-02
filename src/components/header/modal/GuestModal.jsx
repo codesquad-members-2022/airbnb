@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import Modal from "../../../Modal";
 import GuestTab from "./GuestTab";
@@ -6,12 +6,22 @@ import Boundary from "../../Boundary";
 import {getRandomKey} from "../../../util";
 
 const GuestModal = ({isClicked}) => {
+    const [guestCount, setGuestCount] = useState(initialGuestState);
+
     return (
         <GuestModalBox isClicked={isClicked}>
             {guestType
-                .map((guest) => <GuestTab key={guest.id} type={guest.type} detail={guest.detail} />)
+                .map((guest) => (
+                    <GuestTab
+                        key={guest.id}
+                        typeName={guest.name}
+                        detail={guest.detail}
+                        type={guest.type}
+                        guestCount={guestCount}
+                        setGuestCount={setGuestCount}
+                    />
+                ))
                 .reduce((acc, cur) => {
-                    console.log(acc);
                     return acc.length
                         ? [...acc, <Boundary key={getRandomKey()} condition={boundaryCondition} />, cur]
                         : [cur];
@@ -20,11 +30,18 @@ const GuestModal = ({isClicked}) => {
     );
 };
 
+const initialGuestState = {
+    adult: 0,
+    children: 0,
+    infant: 0,
+    companionAnimal: 0,
+};
+
 const guestType = [
-    {id: getRandomKey(), type: "성인", detail: "만 13세 이상"},
-    {id: getRandomKey(), type: "어린이", detail: "만 2~12세"},
-    {id: getRandomKey(), type: "유아", detail: "만 2세 미만"},
-    {id: getRandomKey(), type: "반려동물", detail: "보조동물을 동반하시나요?"},
+    {id: getRandomKey(), type: "adult", name: "성인", detail: "만 13세 이상"},
+    {id: getRandomKey(), type: "children", name: "어린이", detail: "만 2~12세"},
+    {id: getRandomKey(), type: "infant", name: "유아", detail: "만 2세 미만"},
+    {id: getRandomKey(), type: "companionAnimal", name: "반려동물", detail: "보조동물을 동반하시나요?"},
 ];
 
 const GuestModalBox = styled(Modal)`

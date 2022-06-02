@@ -3,21 +3,59 @@ import styled from "styled-components";
 import {ReactComponent as MinusIcon} from "../../../assets/minus.svg";
 import {ReactComponent as PlusIcon} from "../../../assets/plus.svg";
 
-const GuestTab = ({type, detail}) => {
-    const Detail = type === "반려동물" ? CompanionAnimalDetail : GuestDetail;
+const GuestTab = ({typeName, type, detail, guestCount, setGuestCount}) => {
+    const Detail = type === "companionAnimal" ? CompanionAnimalDetail : GuestDetail;
+    const disabled = (() => {
+        if (guestCount[type] === 0) {
+            return true;
+        }
+
+        if (
+            type === "adult" &&
+            guestCount.adult === 1 &&
+            guestCount.children + guestCount.infant + guestCount.companionAnimal
+        ) {
+            return true;
+        }
+
+        return false;
+    })();
+    const decreaseGuest = () => {
+        if (disabled) {
+            return;
+        }
+
+        guestCount[type] -= 1;
+        setGuestCount({...guestCount});
+    };
+    const increaseGuest = () => {
+        if (type === "adult") {
+            guestCount.adult += 1;
+            setGuestCount({
+                ...guestCount,
+            });
+            return;
+        }
+
+        if (!guestCount.adult) {
+            guestCount.adult += 1;
+        }
+        guestCount[type] += 1;
+        setGuestCount({...guestCount});
+    };
 
     return (
         <GuestTabBox>
             <div>
-                <GuestType>{type}</GuestType>
+                <GuestType>{typeName}</GuestType>
                 <Detail>{detail}</Detail>
             </div>
             <CountBox>
-                <IconBox>
+                <IconBox disabled={disabled} onClick={decreaseGuest}>
                     <MinusIcon />
                 </IconBox>
-                <Count>0</Count>
-                <IconBox>
+                <Count>{guestCount[type]}</Count>
+                <IconBox onClick={increaseGuest}>
                     <PlusIcon />
                 </IconBox>
             </CountBox>
@@ -67,12 +105,12 @@ const IconBox = styled.div`
     ${({theme}) => theme.layout.flexLayoutMixin("row", "center", "center")};
     width: 30px;
     height: 30px;
-    border: 1px solid ${({theme}) => theme.color.gray3};
+    border: 1px solid ${({theme, disabled}) => (disabled ? theme.color.gray5 : theme.color.gray3)};
     border-radius: ${({theme}) => theme.borderRadius.circle};
     svg {
         width: 18px;
         height: 18px;
-        color: ${({theme}) => theme.color.gray3};
+        color: ${({theme, disabled}) => (disabled ? theme.color.gray5 : theme.color.gray3)};
     }
 `;
 

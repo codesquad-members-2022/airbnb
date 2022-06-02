@@ -16,7 +16,4 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
         + "WHERE r.id=:id "
         + "AND rcp.chargePolicy.isActive = true")
     List<ChargePolicyType> findActiveChargePolicyTypeById(Long id);
-
-    @Query("SELECT r FROM Room r JOIN FETCH r.roomChargePolicies rcp JOIN FETCH rcp.chargePolicy WHERE r.id=:id AND rcp.chargePolicy.isActive=true")
-    Optional<Room> findActiveRoomChargePoliciesById(Long id);
 }

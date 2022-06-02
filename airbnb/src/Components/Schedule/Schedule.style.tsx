@@ -92,3 +92,15 @@ export const Date = styled.div`
   line-height: 23px;
   margin-bottom: 24px;
 `;
+
+export const BackButton = styled.button`
+  position: absolute;
+  left: 90px;
+  top: 63px;
+`;
+
+export const ForwardButton = styled.button`
+  position: absolute;
+  right: 90px;
+  top: 63px;
+`;

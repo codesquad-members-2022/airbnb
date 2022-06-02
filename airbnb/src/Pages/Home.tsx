@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box';
 import { GNB } from '@/Components/GNB';
 import { SearchBar } from '@/Components/SearchBar';
-import { Schedule } from '@/Components/Schedule/Schedule';
 import { SearchingProvider } from '@/Contexts/Searching';
 
 export function Home() {

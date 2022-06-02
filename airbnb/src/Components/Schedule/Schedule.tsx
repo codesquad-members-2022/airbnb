@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
+import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import { ScheduleProps, ScheduleProvider } from '@/Contexts/Schedule/context';
 import * as S from './Schedule.style';
 import { Calendar } from './Calendar';
@@ -19,7 +21,7 @@ export function Schedule({
       setEndDate={setEndDate}
     >
       <S.ScheduleWrapper>
-        <button
+        <S.BackButton
           type="button"
           onClick={() => {
             setCurrentDate(
@@ -31,9 +33,9 @@ export function Schedule({
             );
           }}
         >
-          {'<'}
-        </button>
-        <button
+          <ArrowBackIosRoundedIcon fontSize="small" />
+        </S.BackButton>
+        <S.ForwardButton
           type="button"
           onClick={() => {
             setCurrentDate(
@@ -45,8 +47,8 @@ export function Schedule({
             );
           }}
         >
-          {'>'}
-        </button>
+          <ArrowForwardIosRoundedIcon fontSize="small" />
+        </S.ForwardButton>
         <Calendar date={currentDate} />
         <Calendar
           date={

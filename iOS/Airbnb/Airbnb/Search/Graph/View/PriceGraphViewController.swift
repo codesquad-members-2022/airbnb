@@ -42,6 +42,7 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
         graph.drawGraph(distribution: [0.3, 0.4, 0.9, 0.65, 1, 0.65, 0.8, 0.8, 0.75, 0.8, 0.25, 0.5, 0.2, 0.05, 0.23, 0.4, 0.2, 0.0, 0.5, 0.1])
         view.backgroundColor = .systemBackground
         navigationItem.title = "숙소 찾기"
+        self.toolbarItems = setUpToolBarItems()
     }
     
     func layout() {
@@ -125,10 +126,23 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
         return label
     }
     
+    private func setUpToolBarItems() -> [UIBarButtonItem] {
+        let spacing = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let skipButton = UIBarButtonItem(title: "건너뛰기", style: .plain, target: self, action: #selector(nextButtonTouchUpInside(_:)))
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(nextButtonTouchUpInside(_:)))
+        nextButton.isEnabled = true
+        return [skipButton, spacing, nextButton]
+    }
+    
     @objc func sliderValueChanged(_ sender: CustomRangeSlider) {
         self.editableLeading?.update(inset: sender.lowerValue * graph.frame.width)
         self.editableTrailing?.update(inset: (sender.maximumValue - sender.upperValue) * graph.frame.width)
         super.updateViewConstraints()
+    }
+    
+    @objc func nextButtonTouchUpInside(_ sender: UIBarButtonItem) {
+        let nextVC = SearchHeadCountViewController()
+        self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
 

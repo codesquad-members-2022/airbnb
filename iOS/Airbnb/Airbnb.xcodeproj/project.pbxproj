@@ -30,6 +30,7 @@
 		00F1345A2845F20A0087A83C /* CalendarViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F134592845F20A0087A83C /* CalendarViewCell.swift */; };
 		1B18F7EF28488456005B1CAF /* CustomRangeSliderThumbLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B18F7EE28488456005B1CAF /* CustomRangeSliderThumbLayer.swift */; };
 		1B18F7F128489EA5005B1CAF /* CustomRangeSliderTrackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B18F7F028489EA5005B1CAF /* CustomRangeSliderTrackLayer.swift */; };
+		1B18F7F52848A71D005B1CAF /* SearchHeadCountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B18F7F42848A71D005B1CAF /* SearchHeadCountViewController.swift */; };
 		1B27E22F283CA12D00FCB990 /* SearchTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B27E22E283CA12D00FCB990 /* SearchTitleCollectionViewCell.swift */; };
 		1B27E231283CA14200FCB990 /* SearchTwoInARowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B27E230283CA14200FCB990 /* SearchTwoInARowCollectionViewCell.swift */; };
 		1B27E233283CA14900FCB990 /* SearchOneInARowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B27E232283CA14900FCB990 /* SearchOneInARowCollectionViewCell.swift */; };
@@ -108,6 +109,7 @@
 		00F134592845F20A0087A83C /* CalendarViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewCell.swift; sourceTree = "<group>"; };
 		1B18F7EE28488456005B1CAF /* CustomRangeSliderThumbLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRangeSliderThumbLayer.swift; sourceTree = "<group>"; };
 		1B18F7F028489EA5005B1CAF /* CustomRangeSliderTrackLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRangeSliderTrackLayer.swift; sourceTree = "<group>"; };
+		1B18F7F42848A71D005B1CAF /* SearchHeadCountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeadCountViewController.swift; sourceTree = "<group>"; };
 		1B27E22E283CA12D00FCB990 /* SearchTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		1B27E230283CA14200FCB990 /* SearchTwoInARowCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTwoInARowCollectionViewCell.swift; sourceTree = "<group>"; };
 		1B27E232283CA14900FCB990 /* SearchOneInARowCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOneInARowCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				1B27E22D283CA11200FCB990 /* SubView */,
 				00A85F37283B873F00EA32E0 /* SearchViewController.swift */,
 				00330A9C283BF91A009014AF /* LocationViewController.swift */,
+				1B18F7F42848A71D005B1CAF /* SearchHeadCountViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -556,6 +559,7 @@
 				1BF0618E2845CFBE0043FF2F /* ColumnGraphView.swift in Sources */,
 				1B90ED34283F547600E45FE8 /* SearchDayDTO.swift in Sources */,
 				1BF061902845F31E0043FF2F /* CommonColors.swift in Sources */,
+				1B18F7F52848A71D005B1CAF /* SearchHeadCountViewController.swift in Sources */,
 				1BF0618C2845CF8D0043FF2F /* PriceGraphViewController.swift in Sources */,
 				1B7EB7F32844E5A70078D4A9 /* NetworkServices.swift in Sources */,
 				00A85F44283B87B900EA32E0 /* MyInfoModel.swift in Sources */,

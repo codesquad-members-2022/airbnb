@@ -21,7 +21,7 @@ interface SearchBarType {
   headCountRef?: React.MutableRefObject<HTMLElement[] | null[]>;
 }
 
-export default function SearchBar({ calendarRef, headCountRef }: SearchBarType) {
+export default function SearchBar({ calendarRef, headCountRef, searchBarStyle }: SearchBarType) {
   const [calendarState, dispatchCalendar] = useCalendar();
   const [headCountState, dispatchHeadCount] = useHeadCount();
 
@@ -44,7 +44,7 @@ export default function SearchBar({ calendarRef, headCountRef }: SearchBarType) 
   };
 
   return (
-    <Container flex={true} justify="space-between">
+    <Container flex={true} justify="space-between" searchBarStyle={searchBarStyle}>
       <DateArea
         ref={(el) => calendarRef && (calendarRef.current[SEARCH_BAR_REF_IDX] = el)}
         flex={true}

@@ -21,6 +21,7 @@ interface StateType {
 }
 
 interface HeadCountType {
+  headCountStyle?: string;
   headCountRef?: React.MutableRefObject<HTMLElement[] | null[]>;
   headCountState?: StateType;
   handleClick?: (T: ClickEventType) => void;
@@ -42,21 +43,16 @@ const babyInfo: InfoType = {
   classification: "baby",
 };
 
-const containerStyle = `
-  width:400px;
-  height:355px;
-  background-color:#fff;
-  border-radius:40px;
-  margin-top:16px;
-  margin-left:778px;
-  padding:64px;
-`;
-
-export default function HeadCount({ headCountRef, headCountState, handleClick }: HeadCountType) {
+export default function HeadCount({
+  headCountRef,
+  headCountState,
+  handleClick,
+  headCountStyle,
+}: HeadCountType) {
   return (
     <HeadCountContainer
       ref={(el) => headCountRef && (headCountRef.current[MODAL_REF_IDX] = el)}
-      containerStyle={containerStyle}
+      containerStyle={headCountStyle}
     >
       <TicketBox handleClick={handleClick} headCountState={headCountState} contents={adultInfo}></TicketBox>
       <TicketBox handleClick={handleClick} headCountState={headCountState} contents={childInfo}></TicketBox>

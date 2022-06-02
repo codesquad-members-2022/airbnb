@@ -13,7 +13,7 @@ interface CalendarDateType {
 interface CalendarType {
   calendarShowCount?: number;
   columnCount?: number;
-  calendarModalStyle?: string;
+  calendarStyle?: string;
   checkIn?: DateType;
   checkOut?: DateType;
   calendarData: CalendarDateType;
@@ -42,7 +42,7 @@ const getNextMonthInfo = ({ prevMonth, prevYear }: MonthInfoType) => {
 export default function Calendar({
   calendarShowCount,
   columnCount,
-  calendarModalStyle,
+  calendarStyle,
   checkIn,
   checkOut,
   calendarData,
@@ -107,7 +107,7 @@ export default function Calendar({
     <CalendarContainer
       ref={(el) => calendarRef && (calendarRef.current[MODAL_REF_IDX] = el)}
       columnCount={columnCount}
-      calendarModalStyle={calendarModalStyle}
+      calendarStyle={calendarStyle}
     >
       {firstCalendar}
       {nextCalendar}

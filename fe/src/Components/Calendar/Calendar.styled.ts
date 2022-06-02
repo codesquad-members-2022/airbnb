@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 interface CalendarContainerType {
   columnCount?: number;
-  calendarModalStyle?: string;
+  calendarStyle?: string;
 }
 
 export const CalendarContainer = styled.div<CalendarContainerType>`
@@ -13,7 +13,7 @@ export const CalendarContainer = styled.div<CalendarContainerType>`
 
   grid-template-rows: repeat(1, 1fr);
   grid-auto-rows: 1fr;
-  ${({ calendarModalStyle }) => {
-    return calendarModalStyle ? calendarModalStyle : "";
+  ${({ calendarStyle }) => {
+    return calendarStyle ? calendarStyle : "";
   }};
 `;

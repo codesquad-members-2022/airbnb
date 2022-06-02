@@ -3,29 +3,32 @@ package com.codesquad.airbnb.room.domain;
 import com.codesquad.airbnb.common.embeddable.Location;
 import com.codesquad.airbnb.room.dto.request.RoomSearCondition.Radius;
 import lombok.AllArgsConstructor;
+import lombok.ToString;
 
 @AllArgsConstructor
+@ToString
 public class LocationCluster {
 
-    private final Location south;
     private final Location north;
+    private final Location south;
     private final Location east;
     private final Location west;
 
-    public double getMinLatitude() {
-        return south.getLatitude();
-    }
 
     public double getMaxLatitude() {
         return north.getLatitude();
     }
 
-    public double getMinLongitude() {
-        return west.getLongitude();
+    public double getMinLatitude() {
+        return south.getLatitude();
     }
 
     public double getMaxLongitude() {
         return east.getLongitude();
+    }
+
+    public double getMinLongitude() {
+        return west.getLongitude();
     }
 
     public static LocationCluster of(Location location, Radius radius) {

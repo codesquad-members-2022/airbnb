@@ -69,9 +69,9 @@ public class RoomRepositoryCustomImpl implements RoomRepositoryCustom {
         LocationCluster locationCluster = LocationCluster.of(location, radius);
 
         return room.location.latitude.loe(locationCluster.getMaxLatitude())
-            .and(room.location.latitude.goe(locationCluster.getMinLatitude())
-                .and(room.location.longitude.loe(locationCluster.getMaxLongitude())
-                    .and(room.location.longitude.goe(locationCluster.getMinLongitude()))));
+            .and(room.location.latitude.goe(locationCluster.getMinLatitude()))
+            .and(room.location.longitude.loe(locationCluster.getMaxLongitude()))
+            .and(room.location.longitude.goe(locationCluster.getMinLongitude()));
     }
 
     private BooleanExpression guestGroupGoe(GuestGroup guestGroup) {

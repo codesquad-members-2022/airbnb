@@ -1,28 +1,27 @@
-package com.codesquad.airbnb.room.dto;
+package com.codesquad.airbnb.room.dto.response;
 
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
+import com.codesquad.airbnb.common.embeddable.Location;
 import com.codesquad.airbnb.common.embeddable.ReviewStat;
 import com.codesquad.airbnb.room.entity.Room;
 import com.codesquad.airbnb.room.entity.Room.RoomType;
 import com.codesquad.airbnb.room.entity.RoomDetail;
-import com.codesquad.airbnb.room.entity.RoomImage;
 import com.codesquad.airbnb.room.entity.embeddable.RoomGroup;
 import com.codesquad.airbnb.room.entity.embeddable.RoomOption;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class RoomDetailResponse {
+public class RoomSearchResponse {
 
     private String name;
     private String address;
-    private String description;
+    private String imagePath;
     private RoomType type;
     private Integer price;
-    private List<String> imagePaths;
+    private Double longitude;
+    private Double latitude;
     private Double reviewScore;
     private Integer reviewCount;
     private Integer numberAdult;
@@ -35,23 +34,22 @@ public class RoomDetailResponse {
     private Boolean wirelessInternet;
     private Boolean airConditioner;
 
-    public static RoomDetailResponse from(Room room) {
+    public static RoomSearchResponse from(Room room) {
         RoomDetail detail = room.getDetail();
+        Location location = room.getLocation();
         ReviewStat review = room.getReview();
         GuestGroup guestGroup = detail.getGuestGroup();
         RoomGroup roomGroup = detail.getRoomGroup();
         RoomOption roomOption = detail.getOption();
-        List<String> imagePaths = room.getImages().stream()
-            .map(RoomImage::getPath)
-            .collect(Collectors.toList());
 
-        return new RoomDetailResponse(
+        return new RoomSearchResponse(
             room.getName(),
             room.getDistrict().getAddress(),
-            room.getDescription(),
+            room.getImagePath(),
             room.getType(),
             room.getPrice().getLodging(),
-            imagePaths,
+            location.getLongitude(),
+            location.getLatitude(),
             review.getScore(),
             review.getCount(),
             guestGroup.getNumberAdult(),

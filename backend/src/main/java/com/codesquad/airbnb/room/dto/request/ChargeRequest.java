@@ -1,4 +1,4 @@
-package com.codesquad.airbnb.room.dto;
+package com.codesquad.airbnb.room.dto.request;
 
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.codesquad.airbnb.room.dto;
+package com.codesquad.airbnb.room.vo;
 
 import lombok.Getter;
 

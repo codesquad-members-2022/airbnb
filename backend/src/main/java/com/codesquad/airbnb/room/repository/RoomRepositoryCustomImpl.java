@@ -9,11 +9,11 @@ import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.Location;
 import com.codesquad.airbnb.common.embeddable.StayDate;
 import com.codesquad.airbnb.reservation.Reservation.ReservationState;
-import com.codesquad.airbnb.room.dto.Direction;
-import com.codesquad.airbnb.room.dto.RoomSearCondition;
-import com.codesquad.airbnb.room.dto.RoomSearCondition.PriceRange;
-import com.codesquad.airbnb.room.dto.RoomSearCondition.Radius;
+import com.codesquad.airbnb.room.dto.request.RoomSearCondition;
+import com.codesquad.airbnb.room.dto.request.RoomSearCondition.PriceRange;
+import com.codesquad.airbnb.room.dto.request.RoomSearCondition.Radius;
 import com.codesquad.airbnb.room.entity.Room;
+import com.codesquad.airbnb.room.vo.LocationCluster;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -66,15 +66,12 @@ public class RoomRepositoryCustomImpl implements RoomRepositoryCustom {
             return null;
         }
 
-        Location north = location.move(radius.getVertical(), Direction.NORTH);
-        Location south = location.move(radius.getVertical(), Direction.SOUTH);
-        Location east = location.move(radius.getHorizontal(), Direction.EAST);
-        Location west = location.move(radius.getHorizontal(), Direction.WEST);
+        LocationCluster locationCluster = LocationCluster.of(location, radius);
 
-        return room.location.latitude.loe(north.getLatitude())
-            .and(room.location.latitude.goe(south.getLatitude()))
-            .and(room.location.longitude.loe(east.getLongitude()))
-            .and(room.location.longitude.goe(west.getLongitude()));
+        return room.location.latitude.loe(locationCluster.getMaxLatitude())
+            .and(room.location.latitude.goe(locationCluster.getMinLatitude())
+                .and(room.location.longitude.loe(locationCluster.getMaxLongitude())
+                    .and(room.location.longitude.goe(locationCluster.getMinLongitude()))));
     }
 
     private BooleanExpression guestGroupGoe(GuestGroup guestGroup) {

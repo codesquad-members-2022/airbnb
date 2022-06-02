@@ -1,4 +1,4 @@
-package com.codesquad.airbnb.room.dto;
+package com.codesquad.airbnb.room.dto.request;
 
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.Location;

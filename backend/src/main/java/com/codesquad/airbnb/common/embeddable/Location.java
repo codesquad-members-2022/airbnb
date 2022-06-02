@@ -1,7 +1,6 @@
 package com.codesquad.airbnb.common.embeddable;
 
 import com.codesquad.airbnb.common.util.GeometryUtil;
-import com.codesquad.airbnb.room.dto.Direction;
 import java.util.Objects;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -36,41 +35,6 @@ public class Location {
 
     public boolean isNull() {
         return longitude == null && latitude == null;
-    }
-
-    public Location move(double distance, Direction direction) {
-        double radianLatitude = toRadian(latitude);
-        double radianLongitude = toRadian(longitude);
-        double radianAngle = toRadian(direction.getBearing());
-        double distanceRadius = distance / 6371.01; // earth radius
-
-        double newLatitude = Math.asin(sin(radianLatitude) * cos(distanceRadius) +
-            cos(radianLatitude) * sin(distanceRadius) * cos(radianAngle));
-        double newLongitude = radianLongitude + Math.atan2(sin(radianAngle) * sin(distanceRadius) *
-            cos(radianLatitude), cos(distanceRadius) - sin(radianLatitude) * sin(newLatitude));
-
-        newLongitude = normalizeLongitude(newLongitude);
-        return new Location(toDegree(newLongitude), toDegree(newLatitude));
-    }
-
-    private Double toRadian(Double coordinate) {
-        return coordinate * Math.PI / 180.0;
-    }
-
-    private Double toDegree(Double coordinate) {
-        return coordinate * 180.0 / Math.PI;
-    }
-
-    private Double sin(Double coordinate) {
-        return Math.sin(coordinate);
-    }
-
-    private Double cos(Double coordinate) {
-        return Math.cos(coordinate);
-    }
-
-    private Double normalizeLongitude(Double longitude) {
-        return (longitude + 540) % 360 - 180;
     }
 
 }

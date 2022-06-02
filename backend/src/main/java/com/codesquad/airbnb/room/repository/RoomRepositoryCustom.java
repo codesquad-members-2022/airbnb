@@ -1,6 +1,6 @@
 package com.codesquad.airbnb.room.repository;
 
-import com.codesquad.airbnb.room.dto.RoomSearCondition;
+import com.codesquad.airbnb.room.dto.request.RoomSearCondition;
 import com.codesquad.airbnb.room.entity.Room;
 import java.util.List;
 

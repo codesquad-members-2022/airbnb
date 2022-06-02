@@ -17,7 +17,8 @@ function ResetButton({ display = 'none', onClick }) {
 }
 
 const Box = styled.div`
-  width: 5px;
+  margin-left: auto;
+  width: 20px;
 `;
 
 const IconButton = styled.button`

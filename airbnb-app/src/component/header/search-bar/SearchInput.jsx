@@ -16,10 +16,10 @@ function SearchInput({ value, resetBtnHandler, label, placeholder, isLastElement
       tabIndex="0"
       onFocus={() => updateFocusState(label)}
     >
-      <div>
+      <StyledWrapper>
         <Label>{label}</Label>
         <Input type="text" placeholder={placeholder} value={value} readOnly />
-      </div>
+      </StyledWrapper>
       <ResetButton display={value && isCurrentInput ? 'block' : 'none'} onClick={resetBtnHandler} />
       {isLastElement ? <SearchButton open={isFocus} /> : <Line />}
     </Container>
@@ -27,9 +27,9 @@ function SearchInput({ value, resetBtnHandler, label, placeholder, isLastElement
 }
 
 const Container = styled.div`
+  display: flex;
   box-sizing: border-box;
   position: relative;
-  display: inline-flex;
   align-items: center;
   flex-grow: ${({ flexGrow }) => flexGrow};
   padding: 20px 30px;
@@ -43,11 +43,16 @@ const Label = styled.div`
   line-height: 17px;
 `;
 
+const StyledWrapper = styled.div`
+  width: 55%;
+`;
+
 const Input = styled.input`
   width: 100%;
   font-size: ${({ theme }) => theme.fontSize.large};
   font-weight: ${({ theme }) => theme.fontWeight.regular};
   line-height: 20px;
+  text-overflow: ellipsis;
 `;
 
 const Line = styled.span`

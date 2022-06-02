@@ -110,7 +110,9 @@ CREATE TABLE reservation
     checkin_time   TIME        NOT NULL COMMENT '숙박 시작 시간',
     checkout_time  TIME        NOT NULL COMMENT '숙박 종료 시간',
     total_charge   DOUBLE      NOT NULL COMMENT '예약 시 총 금액',
-    type           VARCHAR(10) NOT NULL COMMENT '예약 상태 (BOOKED, CANCELED, COMPLETED)'
+    state          VARCHAR(10) NOT NULL COMMENT '예약 상태 (BOOKED, CANCELED, COMPLETED)',
+    FOREIGN KEY (guest_id) REFERENCES member (member_id),
+    FOREIGN KEY (room_id) REFERENCES room (room_id)
 );
 
 DROP TABLE IF EXISTS tag;
@@ -130,7 +132,9 @@ CREATE TABLE tag_room
 (
     tag_room_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'tag_room 테이블의 기본 키',
     tag_id      INT NOT NULL COMMENT 'tag 테이블의 외래 키',
-    room_id     INT NOT NULL COMMENT 'room 테이블의 외래 키'
+    room_id     INT NOT NULL COMMENT 'room 테이블의 외래 키',
+    FOREIGN KEY (tag_id) REFERENCES tag (tag_id),
+    FOREIGN KEY (room_id) REFERENCES room (room_id)
 );
 
 DROP TABLE IF EXISTS wish;

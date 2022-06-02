@@ -5,7 +5,7 @@ import com.codesquad.airbnb.common.embeddable.ReviewStat;
 import com.codesquad.airbnb.district.District;
 import com.codesquad.airbnb.member.Member;
 import com.codesquad.airbnb.reservation.Reservation;
-import com.codesquad.airbnb.room.entity.embeddable.RoomCharge;
+import com.codesquad.airbnb.room.entity.embeddable.RoomPrice;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -47,7 +47,7 @@ public class Room {
     private Location location;
 
     @Embedded
-    private RoomCharge charge;
+    private RoomPrice price;
 
     @Embedded
     private ReviewStat review;
@@ -73,7 +73,7 @@ public class Room {
     private List<Reservation> reservations;
 
     public Room(District district, Member host, String name, String description, String imagePath,
-        RoomType type, Location location, RoomCharge charge, ReviewStat review) {
+        RoomType type, Location location, RoomPrice price, ReviewStat review) {
         this.district = district;
         this.host = host;
         this.name = name;
@@ -81,11 +81,8 @@ public class Room {
         this.imagePath = imagePath;
         this.type = type;
         this.location = location;
-        this.charge = charge;
+        this.price = price;
         this.review = review;
     }
 
-    public Double getTotalCharge() {
-        return charge.sum();
-    }
 }

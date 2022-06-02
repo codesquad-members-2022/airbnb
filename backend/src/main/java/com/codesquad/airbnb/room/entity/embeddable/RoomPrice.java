@@ -6,21 +6,19 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RoomCharge {
+@ToString
+public class RoomPrice {
 
-    @Column(name = "lodging_charge")
-    private Double lodging;
+    @Column(name = "lodging_price")
+    private Integer lodging;
 
-    @Column(name = "cleaning_charge")
-    private Double cleaning;
-
-    public Double sum() {
-        return lodging + cleaning;
-    }
+    @Column(name = "cleaning_price")
+    private Integer cleaning;
 
 }

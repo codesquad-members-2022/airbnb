@@ -11,7 +11,7 @@ import com.codesquad.airbnb.member.Member;
 import com.codesquad.airbnb.member.Member.MemberRole;
 import com.codesquad.airbnb.room.entity.Room;
 import com.codesquad.airbnb.room.entity.Room.RoomType;
-import com.codesquad.airbnb.room.entity.embeddable.RoomCharge;
+import com.codesquad.airbnb.room.entity.embeddable.RoomPrice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -65,7 +65,7 @@ class WishServiceTest {
             "https://bit.ly/39ZouHy",
             RoomType.WHOLE_RESIDENCE,
             new Location(127.0286, 37.4953),
-            new RoomCharge(71466.0, 25996.0),
+            new RoomPrice(71466, 25996),
             new ReviewStat(4.8, 127)
         );
 

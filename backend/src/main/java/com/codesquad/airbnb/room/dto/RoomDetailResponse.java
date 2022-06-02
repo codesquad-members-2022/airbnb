@@ -21,7 +21,7 @@ public class RoomDetailResponse {
     private String address;
     private String description;
     private RoomType type;
-    private Double price;
+    private Integer price;
     private List<String> imagePaths;
     private Double reviewScore;
     private Integer reviewCount;
@@ -50,7 +50,7 @@ public class RoomDetailResponse {
             room.getDistrict().getAddress(),
             room.getDescription(),
             room.getType(),
-            room.getCharge().getLodging(),
+            room.getPrice().getLodging(),
             imagePaths,
             review.getScore(),
             review.getCount(),

@@ -92,7 +92,7 @@ public class RoomRepositoryCustomImpl implements RoomRepositoryCustom {
             return null;
         }
 
-        return room.charge.lodging.between(priceRange.getMin(), priceRange.getMax());
+        return room.price.lodging.between(priceRange.getMin(), priceRange.getMax());
     }
 
 }

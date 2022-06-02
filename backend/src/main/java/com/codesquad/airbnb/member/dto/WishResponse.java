@@ -11,7 +11,7 @@ public class WishResponse {
 
     private Integer roomId;
     private String name;
-    private Double price;
+    private Integer price;
     private String imagePath;
     private Double reviewScore;
     private Integer reviewCount;
@@ -23,7 +23,7 @@ public class WishResponse {
         return new WishResponse(
             room.getId(),
             room.getName(),
-            room.getCharge().getLodging(),
+            room.getPrice().getLodging(),
             room.getImagePath(),
             room.getReview().getScore(),
             room.getReview().getCount(),

@@ -21,7 +21,7 @@ public class ReservationDetailResponse {
     private String address;
     private String hostName;
     private List<String> imagePaths;
-    private Double charge;
+    private Integer price;
     private Integer numberGuest;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -43,7 +43,7 @@ public class ReservationDetailResponse {
             room.getDistrict().getAddress(),
             room.getHost().getName(),
             imagePaths,
-            reservation.getTotalCharge(),
+            reservation.getTotalPrice(),
             reservation.getGuestGroup().getNumberGuest(),
             LocalDateTime.of(
                 reservation.getStayDate().getCheckinDate(),

@@ -34,19 +34,19 @@ DROP TABLE IF EXISTS room;
 
 CREATE TABLE room
 (
-    room_id         INT          NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'room 테이블의 기본 키',
-    district_id     INT          NOT NULL COMMENT 'district 테이블의 외래 키',
-    host_id         INT          NOT NULL COMMENT 'member 테이블의 외래 키',
-    name            VARCHAR(255) NOT NULL COMMENT '숙소의 이름',
-    description     VARCHAR(1000) COMMENT '숙소에 대한 소개',
-    image_path      VARCHAR(1000) COMMENT '숙소의 대표 이미지 경로 (1번째 이미지)',
-    type            VARCHAR(255) COMMENT '숙소의 종류',
-    longitude       DOUBLE COMMENT '숙소의 경도',
-    latitude        DOUBLE COMMENT '숙소의 위도',
-    lodging_charge  DOUBLE       NOT NULL COMMENT '숙소의 숙박 요금',
-    cleaning_charge DOUBLE       NOT NULL COMMENT '숙소의 청소 요금',
-    review_score    DOUBLE COMMENT '숙소의 리뷰 평균 점수 집계',
-    review_count    INT COMMENT '숙소의 리뷰 개수 집계',
+    room_id        INT          NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'room 테이블의 기본 키',
+    district_id    INT          NOT NULL COMMENT 'district 테이블의 외래 키',
+    host_id        INT          NOT NULL COMMENT 'member 테이블의 외래 키',
+    name           VARCHAR(255) NOT NULL COMMENT '숙소의 이름',
+    description    VARCHAR(1000) COMMENT '숙소에 대한 소개',
+    image_path     VARCHAR(1000) COMMENT '숙소의 대표 이미지 경로 (1번째 이미지)',
+    type           VARCHAR(255) COMMENT '숙소의 종류',
+    longitude      DOUBLE COMMENT '숙소의 경도',
+    latitude       DOUBLE COMMENT '숙소의 위도',
+    lodging_price  INT          NOT NULL COMMENT '숙소의 숙박 요금',
+    cleaning_price INT          NOT NULL COMMENT '숙소의 청소 요금',
+    review_score   DOUBLE COMMENT '숙소의 리뷰 평균 점수 집계',
+    review_count   INT COMMENT '숙소의 리뷰 개수 집계',
     FOREIGN KEY (district_id) REFERENCES district (district_id),
     FOREIGN KEY (host_id) REFERENCES member (member_id)
 );
@@ -109,7 +109,7 @@ CREATE TABLE reservation
     checkout_date  DATE        NOT NULL COMMENT '숙박 종료 날짜',
     checkin_time   TIME        NOT NULL COMMENT '숙박 시작 시간',
     checkout_time  TIME        NOT NULL COMMENT '숙박 종료 시간',
-    total_charge   DOUBLE      NOT NULL COMMENT '예약 시 총 금액',
+    total_price    INT         NOT NULL COMMENT '예약 시 총 금액',
     state          VARCHAR(10) NOT NULL COMMENT '예약 상태 (BOOKED, CANCELED, COMPLETED)',
     FOREIGN KEY (guest_id) REFERENCES member (member_id),
     FOREIGN KEY (room_id) REFERENCES room (room_id)

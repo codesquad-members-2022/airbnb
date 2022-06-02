@@ -32,7 +32,7 @@ public class Reservation {
     @Column(name = "reservation_id")
     private Integer id;
 
-    private Double totalCharge;
+    private Integer totalPrice;
 
     @Embedded
     private GuestGroup guestGroup;
@@ -54,11 +54,11 @@ public class Reservation {
     @JoinColumn(name = "room_id")
     private Room room;
 
-    public Reservation(Member guest, Room room, Double totalCharge, GuestGroup guestGroup,
+    public Reservation(Member guest, Room room, Integer totalPrice, GuestGroup guestGroup,
         StayDate stayDate, StayTime stayTime, ReservationState state) {
         this.guest = guest;
         this.room = room;
-        this.totalCharge = totalCharge;
+        this.totalPrice = totalPrice;
         this.guestGroup = guestGroup;
         this.stayDate = stayDate;
         this.stayTime = stayTime;

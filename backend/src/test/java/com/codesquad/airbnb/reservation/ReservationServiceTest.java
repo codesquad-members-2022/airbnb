@@ -17,9 +17,9 @@ import com.codesquad.airbnb.reservation.Reservation.ReservationState;
 import com.codesquad.airbnb.room.entity.Room;
 import com.codesquad.airbnb.room.entity.Room.RoomType;
 import com.codesquad.airbnb.room.entity.RoomDetail;
-import com.codesquad.airbnb.room.entity.embeddable.RoomCharge;
 import com.codesquad.airbnb.room.entity.embeddable.RoomGroup;
 import com.codesquad.airbnb.room.entity.embeddable.RoomOption;
+import com.codesquad.airbnb.room.entity.embeddable.RoomPrice;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import org.junit.jupiter.api.BeforeEach;
@@ -75,7 +75,7 @@ class ReservationServiceTest {
             "https://bit.ly/39ZouHy",
             RoomType.WHOLE_RESIDENCE,
             new Location(127.0286, 37.4953),
-            new RoomCharge(71466.0, 25996.0),
+            new RoomPrice(71466, 25996),
             new ReviewStat(4.8, 127)
         );
 
@@ -111,9 +111,9 @@ class ReservationServiceTest {
         Reservation savedReservation = reservationService.makeReservation(
             guest.getId(),
             room.getId(),
-            new GuestGroup(2, 1, 0),
             new StayDate(LocalDate.of(2022, 5, 31),
-                LocalDate.of(2022, 6, 1))
+                LocalDate.of(2022, 6, 1)),
+            new GuestGroup(2, 1, 0)
         );
 
         em.flush();
@@ -126,7 +126,7 @@ class ReservationServiceTest {
         then(findReservation.getRoom().getId()).isEqualTo(room.getId());
         then(findReservation.getGuest().getId()).isEqualTo(guest.getId());
 
-        then(findReservation.getTotalCharge()).isEqualTo(97462.0);
+        then(findReservation.getTotalPrice()).isEqualTo(97462.0);
         then(findReservation.getGuestGroup().getNumberAdult()).isEqualTo(2);
         then(findReservation.getGuestGroup().getNumberChild()).isEqualTo(1);
         then(findReservation.getGuestGroup().getNumberInfant()).isEqualTo(0);
@@ -147,7 +147,7 @@ class ReservationServiceTest {
         Reservation reservation = new Reservation(
             guest,
             room,
-            67007.0,
+            67007,
             new GuestGroup(2, 1, 0),
             new StayDate(LocalDate.of(2022, 5, 31), LocalDate.of(2022, 6, 1)),
             new StayTime(LocalTime.of(17, 0, 0), LocalTime.of(12, 0, 0)),
@@ -163,9 +163,9 @@ class ReservationServiceTest {
         Throwable throwable = catchThrowable(() -> reservationService.makeReservation(
             guest.getId(),
             room.getId(),
-            new GuestGroup(2, 1, 0),
             new StayDate(LocalDate.of(2022, 5, 31),
-                LocalDate.of(2022, 6, 1))
+                LocalDate.of(2022, 6, 1)),
+            new GuestGroup(2, 1, 0)
         ));
 
         // then
@@ -180,7 +180,7 @@ class ReservationServiceTest {
         Reservation reservation = new Reservation(
             guest,
             room,
-            67007.0,
+            67007,
             new GuestGroup(2, 1, 0),
             new StayDate(LocalDate.of(2022, 5, 31), LocalDate.of(2022, 6, 1)),
             new StayTime(LocalTime.of(17, 0, 0), LocalTime.of(12, 0, 0)),

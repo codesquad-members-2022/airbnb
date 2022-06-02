@@ -41,7 +41,7 @@ VALUES ('BB-choi', 'https://avatars.githubusercontent.com/u/78826879?v=4', 'USER
 
 -- room
 INSERT INTO room (district_id, host_id, name, description, image_path, type, longitude, latitude,
-                  lodging_charge, cleaning_charge, review_score, review_count)
+                  lodging_price, cleaning_price, review_score, review_count)
 VALUES (1, 1, 'Spacious and Comfortable cozy house #4', '강남역 5번 출구에서 도보로 이동가능합니다.',
         'https://bit.ly/39ZouHy', 'WHOLE_RESIDENCE', 127.0286, 37.4953, 71466, 25996, 4.8, 127);
 
@@ -54,9 +54,9 @@ INSERT INTO room_image (room_id, path, sequence)
 VALUES (1, 'https://bit.ly/39ZouHy', 1);
 
 -- reservation
-INSERT INTO reservation (guest_id, room_id, total_charge, number_adult, number_child, number_infant,
-                         checkin_date_time, checkout_date_time)
-VALUES (2, 1, 67007, 2, 1, 0, '2021-05-30 17:00:00', '2021-05-31 12:00:00');
+INSERT INTO reservation (guest_id, room_id, total_price, number_adult, number_child, number_infant,
+                         checkin_date, checkin_time, checkout_date, checkout_time, state)
+VALUES (2, 1, 67007, 2, 1, 0, '2021-05-3', '17:00:00', '2021-05-31', '12:00:00', 'BOOKED');
 
 -- wishlist
 INSERT INTO wish (member_id, room_id)

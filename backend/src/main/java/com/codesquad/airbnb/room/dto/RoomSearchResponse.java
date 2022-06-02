@@ -19,7 +19,7 @@ public class RoomSearchResponse {
     private String address;
     private String imagePath;
     private RoomType type;
-    private Double price;
+    private Integer price;
     private Double longitude;
     private Double latitude;
     private Double reviewScore;
@@ -47,7 +47,7 @@ public class RoomSearchResponse {
             room.getDistrict().getAddress(),
             room.getImagePath(),
             room.getType(),
-            room.getCharge().getLodging(),
+            room.getPrice().getLodging(),
             location.getLongitude(),
             location.getLatitude(),
             review.getScore(),

@@ -1,7 +1,7 @@
 package com.codesquad.airbnb.config;
 
-import com.codesquad.airbnb.charge.discount.DiscountPolicy;
-import com.codesquad.airbnb.charge.discount.WeeklyDiscountPolicy;
+import com.codesquad.airbnb.core.charge.discount.DiscountPolicy;
+import com.codesquad.airbnb.core.charge.discount.WeeklyDiscountPolicy;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import javax.persistence.EntityManager;

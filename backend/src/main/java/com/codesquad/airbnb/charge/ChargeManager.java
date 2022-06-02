@@ -5,34 +5,20 @@ import com.codesquad.airbnb.charge.discount.DiscountPolicy;
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.StayDate;
 import com.codesquad.airbnb.room.entity.Room;
-import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import org.reflections.Reflections;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class ChargeManager {
 
     private static final double SERVICE_COMMISSION_RATE = 14.0;
     private static final double TAX_COMMISSION_RATE = 1.4;
 
-    private final List<DiscountPolicy> discountPolicies = new ArrayList<>();
-
-    public ChargeManager()
-        throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        // inject discount policy
-        Reflections reflections = new Reflections("com.codesquad.airbnb.charge.discount");
-        Set<Class<? extends DiscountPolicy>> annotated = reflections.getSubTypesOf(
-            DiscountPolicy.class);
-
-        for (Class<?> clazz : annotated) {
-            DiscountPolicy policy = (DiscountPolicy) clazz.getConstructor().newInstance();
-            discountPolicies.add(policy);
-        }
-    }
+    private final List<DiscountPolicy> discountPolicies;
 
     public ChargeBill createBill(Room room, StayDate stayDate, GuestGroup guestGroup) {
         Duration duration = Duration.between(

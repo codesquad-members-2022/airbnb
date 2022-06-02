@@ -8,6 +8,7 @@ import {
   customersInitialState,
 } from './reducer';
 import * as TYPE from './types';
+import * as ACTION from './Action';
 
 export const SearchingContext =
   React.createContext<TYPE.SearchingContextState | null>({
@@ -31,18 +32,6 @@ export function SearchingProvider({
     calendarInitialState,
   );
 
-  const getStartDateAction = (startDate: Date): TYPE.CalenderAction => {
-    return { type: 'SET_START_DATE', date: startDate };
-  };
-
-  const getEndDateAction = (endDate: Date): TYPE.CalenderAction => {
-    return { type: 'SET_END_DATE', date: endDate };
-  };
-
-  const getScheduleDisplayAction = (): TYPE.CalenderAction => {
-    return { type: 'SET_DISPLAY' };
-  };
-
   const [price, priceDispatch] = useReducer(priceReducer, priceInitialState);
 
   const [customers, customersDispatch] = useReducer(
@@ -57,9 +46,10 @@ export function SearchingProvider({
           calendarDispatch,
           priceDispatch,
           customersDispatch,
-          getStartDateAction,
-          getEndDateAction,
-          getScheduleDisplayAction,
+          getStartDateAction: ACTION.getStartDateAction,
+          getEndDateAction: ACTION.getEndDateAction,
+          getScheduleDisplayAction: ACTION.getScheduleDisplayAction,
+          getResetScheduleAction: ACTION.getResetScheduleAction,
         }}
       >
         {children}

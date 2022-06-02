@@ -1,4 +1,4 @@
-import customStyled from '@/custom-styled-component/customStyled';
+import customStyled from '@/utils/custom-styled-component/customStyled';
 import Logo from '@/component/header/gnb/Logo';
 import MenuTabs from '@/component/header/gnb/MenuTabs';
 import AccountMenu from '@/component/header/gnb/AccountMenu';

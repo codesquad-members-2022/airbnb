@@ -3,7 +3,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@component/*": ["src/component/*"]
+      "@component/*": ["src/component/*"],
+      "@calender/*": ["src/component/header/modal/calender/*"],
+      "@personnel/*": ["src/component/header/modal/personnel/*"],
+      "@price/*": ["src/component/header/modal/price/*"]
     }
   }
 }

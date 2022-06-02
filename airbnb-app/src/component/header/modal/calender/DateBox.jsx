@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useContext } from 'react';
-import { CalenderDateContext } from '@/component/header/calender/CalenderDateProvider';
+import { CalenderDateContext } from '@/context/CalenderDateProvider';
 import { CALENDER_MODE, DATE_CHECK_STATE } from '@/constants/calenderText';
-import { SearchBarContext } from '@component/header/search-bar/SearchBarProvider';
+import { SearchBarContext } from '@/context/SearchBarProvider';
 
 function DateBox({ year, month, date, lastDate, disabled }) {
   const { setCheckInInfo, setCheckOutInfo, checkInTime, checkOutTime } = useContext(CalenderDateContext);

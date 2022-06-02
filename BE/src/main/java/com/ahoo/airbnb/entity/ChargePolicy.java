@@ -1,6 +1,6 @@
 package com.ahoo.airbnb.entity;
 
-import com.ahoo.airbnb.reservation.ChargePolicyType;
+import com.ahoo.airbnb.reservation.chargepolicy.ChargePolicyType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,10 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Entity
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 @Table(name = "charge_policy")
 public class ChargePolicy {
 
@@ -22,7 +26,7 @@ public class ChargePolicy {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "name")
-    private ChargePolicyType chargePolicy;
+    private ChargePolicyType chargePolicyType;
 
     private boolean isActive;
 }

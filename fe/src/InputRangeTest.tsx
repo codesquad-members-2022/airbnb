@@ -8,12 +8,9 @@ interface InputRangeProps {
 
 function InputRangeTest({ minPrice, maxPrice }: InputRangeProps) {
   return (
-    <>
-      <div style={{ width: 150, height: 150 }}>test</div>
-      <InputRangeProvider minPrice={minPrice} maxPrice={maxPrice}>
-        <MultiRangeSlider minPrice={minPrice} maxPrice={maxPrice} />
-      </InputRangeProvider>
-    </>
+    <InputRangeProvider minPrice={minPrice} maxPrice={maxPrice}>
+      <MultiRangeSlider minPrice={minPrice} maxPrice={maxPrice} />
+    </InputRangeProvider>
   );
 }
 

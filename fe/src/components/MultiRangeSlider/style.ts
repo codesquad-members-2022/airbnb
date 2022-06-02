@@ -4,7 +4,7 @@ import { mixin } from '@/styles/mixin';
 
 export const MultiRangeSlider = styled.div`
   ${mixin.flexbox({ jc: 'center', ai: 'center' })};
-  position: apsolute;
+  position: absolute;
   width: 200px;
   z-index: 1;
 `;
@@ -33,8 +33,8 @@ export const Input = styled.input.attrs(() => ({ type: 'range' }))`
     pointer-events: all;
     height: 24px;
     width: 24px;
+    background: url('/sliderThumb.svg');
     border: none;
-    background: url('./sliderThumb.svg');
     cursor: pointer;
     z-index: 5;
   }

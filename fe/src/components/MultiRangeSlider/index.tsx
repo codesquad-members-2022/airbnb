@@ -1,13 +1,9 @@
+import { IPriceRange } from './common';
 import LeftInput from './LeftInput';
 import RightInput from './RightInput';
 import * as S from './style';
 
-export interface PriceRangeType {
-  minPrice: number;
-  maxPrice: number;
-}
-
-function MultiRangeSlider({ minPrice, maxPrice }: PriceRangeType) {
+function MultiRangeSlider({ minPrice, maxPrice }: IPriceRange) {
   return (
     <S.MultiRangeSlider>
       <LeftInput minPrice={minPrice} maxPrice={maxPrice} />

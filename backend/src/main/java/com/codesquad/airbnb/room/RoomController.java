@@ -1,8 +1,10 @@
 package com.codesquad.airbnb.room;
 
+import com.codesquad.airbnb.charge.ChargeBill;
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.Location;
 import com.codesquad.airbnb.common.embeddable.StayDate;
+import com.codesquad.airbnb.room.dto.ChargeRequest;
 import com.codesquad.airbnb.room.dto.RoomDetailResponse;
 import com.codesquad.airbnb.room.dto.RoomSearCondition;
 import com.codesquad.airbnb.room.dto.RoomSearCondition.PriceRange;
@@ -46,7 +48,7 @@ public class RoomController {
                 new Radius(horizontalRadius, verticalRadius),
                 new GuestGroup(numAdult, numChild, numInfant),
                 new PriceRange(minPrice, maxPrice),
-            new StayDate(checkInDate, checkOutDate)
+                new StayDate(checkInDate, checkOutDate)
             )
         );
     }
@@ -54,6 +56,22 @@ public class RoomController {
     @GetMapping("/{id}")
     public RoomDetailResponse showRoom(@PathVariable(name = "id") Integer roomId) {
         return roomService.findRoom(roomId);
+    }
+
+    @GetMapping("/{id}/charge")
+    public ChargeBill showCharge(@PathVariable("id") Integer roomId, ChargeRequest request
+    ) {
+        return roomService.showCharge(
+            roomId,
+            new StayDate(
+                request.getCheckIn(),
+                request.getCheckOut()
+            ),
+            new GuestGroup(
+                request.getNumAdult(),
+                request.getNumChild(),
+                request.getNumInfant())
+        );
     }
 
 }

@@ -1,5 +1,7 @@
 package com.codesquad.airbnb.reservation;
 
+import com.codesquad.airbnb.charge.ChargeBill;
+import com.codesquad.airbnb.charge.ChargeManager;
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.StayDate;
 import com.codesquad.airbnb.member.Member;
@@ -24,6 +26,7 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final MemberRepository memberRepository;
     private final RoomRepository roomRepository;
+    private final ChargeManager chargeManager;
 
     public List<ReservationListResponse> listMemberReservations(int memberId) {
         List<Reservation> reservations = reservationRepository.findByMemberId(memberId);
@@ -40,8 +43,8 @@ public class ReservationService {
     }
 
     @Transactional
-    public Reservation makeReservation(Integer memberId, Integer roomId, GuestGroup guestGroup,
-        StayDate stayDate) {
+    public Reservation makeReservation(Integer memberId, Integer roomId, StayDate stayDate,
+        GuestGroup guestGroup) {
         // 해당 날짜에 숙소에 예약이 이미 있는지 확인
         validateStayDate(roomId, stayDate);
 
@@ -54,9 +57,11 @@ public class ReservationService {
         RoomDetail detail = room.getDetail();
         detail.validateGuestGroup(guestGroup);
 
+        ChargeBill bill = chargeManager.createBill(room, stayDate, guestGroup);
+
         return reservationRepository.save(
-            new Reservation(member, room, room.getTotalCharge(),
-                guestGroup, stayDate, detail.getStayTime(), ReservationState.BOOKED));
+            new Reservation(member, room, bill.getTotalPrice(), guestGroup, stayDate,
+                detail.getStayTime(), ReservationState.BOOKED));
     }
 
     @Transactional

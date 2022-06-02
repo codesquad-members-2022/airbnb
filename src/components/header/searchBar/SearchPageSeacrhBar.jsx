@@ -11,6 +11,7 @@ import {useClickedTabContext} from "../../../ClickedTabProvider";
 
 const SearchPageSearchBar = () => {
     const {clickedTab} = useClickedTabContext();
+    const isCalendarModalClicked = clickedTab === "DateBox" || clickedTab === "CheckIn" || clickedTab === "CheckOut";
 
     return (
         <SearchPageSearchBarBox>
@@ -19,9 +20,7 @@ const SearchPageSearchBar = () => {
             <PriceBox />
             <Boundary condition={boundaryCondition} />
             <GuestBox />
-            <CalendarModal
-                isClicked={clickedTab === "DateBox" || clickedTab === "CheckIn" || clickedTab === "CheckOut"}
-            />
+            <CalendarModal isClicked={isCalendarModalClicked} />
             <PriceModal isClicked={clickedTab === "PriceBox"} />
             <GuestModal isClicked={clickedTab === "GuestBox"} />
         </SearchPageSearchBarBox>
@@ -39,7 +38,7 @@ const SearchPageSearchBarBox = styled.div`
     transform: translate(-50%, -50%);
     background-color: ${({theme}) => theme.color.white};
     user-select: none;
-    border-radius: 999px;
+    border-radius: ${({theme}) => theme.borderRadius.circle};
     z-index: 1;
 `;
 

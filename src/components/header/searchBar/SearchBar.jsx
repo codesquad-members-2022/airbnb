@@ -39,7 +39,7 @@ const SearchBarBox = styled.div`
     transform: translate(-50%, -50%);
     background-color: ${({theme}) => theme.color.white};
     user-select: none;
-    border-radius: 999px;
+    border-radius: ${({theme}) => theme.borderRadius.circle};
 `;
 
 const boundaryCondition = {

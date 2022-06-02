@@ -1,5 +1,4 @@
-import { CalendarContext, DispatchCalendarContext } from "Context/CalendarProvider";
-import { useContext, useReducer } from "react";
+import { useReducer } from "react";
 
 interface ActionType {
   type: string;
@@ -57,11 +56,17 @@ const reducer = (state: object, action: ActionType) => {
         ...initialState,
         isCalendarOpen: true,
       };
+    case "RESET_CHECK_IN":
+      console.log("??");
+      return {
+        ...state,
+        checkIn: {
+          ...initialState.checkIn,
+        },
+      };
     default:
       return state;
   }
 };
 
 export const useCalendarReducer = () => useReducer(reducer, initialState);
-
-export const useCalendar = () => [useContext(CalendarContext), useContext(DispatchCalendarContext)];

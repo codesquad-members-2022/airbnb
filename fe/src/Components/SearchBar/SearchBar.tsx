@@ -12,9 +12,9 @@ import cancelButton from "Asset/cancelButton.svg";
 import searchButton from "Asset/searchButton.svg";
 import activeSearchButton from "Asset/activeSearchButton.svg";
 import { Img } from "Components/Common/styled";
-import { useCalendar } from "Hook/useCalendar";
 import { SEARCH_BAR_REF_IDX } from "Helpers/constant";
 import { useHeadCount } from "Context/HeadCountProvider";
+import { useCalendar } from "Context/CalendarProvider";
 
 interface SearchBarType {
   calendarRef?: React.MutableRefObject<HTMLElement[] | null[]>;
@@ -28,8 +28,7 @@ export default function SearchBar({ calendarRef, headCountRef }: SearchBarType) 
   const { isHeadCountOpen, adult, child, baby: babyCount } = headCountState;
   const guestCount = adult + child;
 
-  const headCountTemplate =
-    babyCount > 0 ? `게스트 ${guestCount}명 유아 ${babyCount}명` : `게스트 ${guestCount}명`;
+  const headCountTemplate = `게스트 ${guestCount}명 ${babyCount > 0 ? `유아 ${babyCount}명` : ""}`;
 
   const { isCalendarOpen, checkIn, checkOut } = calendarState;
 
@@ -68,7 +67,7 @@ export default function SearchBar({ calendarRef, headCountRef }: SearchBarType) 
             <InActiveContent>날짜입력</InActiveContent>
           )}
         </ContentContainer>
-        {checkIn.day > 0 && checkOut.day > 0 && (
+        {isCalendarOpen && (
           <Img
             src={cancelButton}
             width="20px"
@@ -104,7 +103,7 @@ export default function SearchBar({ calendarRef, headCountRef }: SearchBarType) 
             <InActiveContent>게스트 추가</InActiveContent>
           )}
         </ContentContainer>
-        {guestCount > 0 && (
+        {isHeadCountOpen && (
           <Img src={cancelButton} width="20px" height="20px" onClick={() => handleReset(dispatchHeadCount)} />
         )}
         {isSearchBarOpen ? (

@@ -2,8 +2,8 @@ import Calendar from "Components/Calendar/Calendar";
 import { getTodayDate } from "Helpers/utils";
 import { useState } from "react";
 import { DateType, EventType } from "Helpers/interface";
-import { useCalendar } from "Hook/useCalendar";
 import { useOutsideClick } from "Hook/useOutsideClick";
+import { useCalendar } from "Context/CalendarProvider";
 
 interface compareCheckInType extends DateType {
   checkIn: DateType;
@@ -110,7 +110,7 @@ const isFasterThanCheckIn = ({ year, day, month, checkIn }: compareCheckInType) 
   if (year === checkIn.year && month < checkIn.month) {
     return true;
   }
-  if (year === checkIn.year && month === checkIn.month && day < checkIn.day) {
+  if (year === checkIn.year && month === checkIn.month && day <= checkIn.day) {
     return true;
   }
   return false;

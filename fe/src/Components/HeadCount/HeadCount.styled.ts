@@ -6,6 +6,6 @@ interface styleType {
 
 export const HeadCountContainer = styled.div<styleType>`
   ${({ containerStyle }) => {
-    return containerStyle ? containerStyle : "";
+    return containerStyle || "";
   }};
 `;

@@ -1,5 +1,5 @@
 import { useCalendarReducer } from "Hook/useCalendar";
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 
 // interface actionType {
 //   type: "OPEN" | "CLOSE" | "SET_CHECK_IN" | "SET_CHECK_OUT";
@@ -22,3 +22,5 @@ export default function CalendarProvider({ children }: any) {
     </DispatchCalendarContext.Provider>
   );
 }
+
+export const useCalendar = () => [useContext(CalendarContext), useContext(DispatchCalendarContext)];

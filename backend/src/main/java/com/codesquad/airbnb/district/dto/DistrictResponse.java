@@ -9,8 +9,10 @@ import lombok.ToString;
 @AllArgsConstructor
 public class DistrictResponse {
 
-    private final String name;
-    private final String imagePath;
-    private final Integer minutes;
+    private String name;
+    private String imagePath;
+    private Double longitude;
+    private Double latitude;
+    private Integer minutes;
 
 }

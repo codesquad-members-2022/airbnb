@@ -33,9 +33,10 @@ public class DistrictRepository {
     @Transactional(readOnly = true)
     public List<DistrictResponse> getDistrictsWithLocation(Location location,
         ReviewStat threshold) {
-        String sql = "SELECT name, image_path, ST_Distance_Sphere(:centre, point)"
-            + " FROM district"
-            + " WHERE review_score >= :review_score AND review_count >= :review_count";
+        String sql =
+            "SELECT name, image_path, ST_X(point), ST_Y(point), ST_Distance_Sphere(:centre, point)"
+                + " FROM district"
+                + " WHERE review_score >= :review_score AND review_count >= :review_count";
 
         try {
             Geometry centre = wktReader.read(String.format("POINT(%f %f))",
@@ -70,6 +71,8 @@ public class DistrictRepository {
         return new DistrictResponse(
             (String) result[0],
             (String) result[1],
+            (Double) result[2],
+            (Double) result[3],
             toMinutes((Double) result[2])
         );
     }

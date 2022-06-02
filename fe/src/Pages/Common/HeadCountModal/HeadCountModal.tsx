@@ -7,7 +7,7 @@ interface ClickEventType {
   target: string | undefined;
 }
 
-export default function HeadCountModal({ headCountRef }: any) {
+export default function HeadCountModal({ headCountRef, headCountStyle }: any) {
   const [headCountState, dispatchHeadCount] = useHeadCount();
   const { isHeadCountOpen } = headCountState;
 
@@ -29,7 +29,12 @@ export default function HeadCountModal({ headCountRef }: any) {
 
   return (
     isHeadCountOpen && (
-      <HeadCount headCountRef={headCountRef} headCountState={headCountState} handleClick={handleClick} />
+      <HeadCount
+        headCountRef={headCountRef}
+        headCountState={headCountState}
+        handleClick={handleClick}
+        headCountStyle={headCountStyle}
+      />
     )
   );
 }

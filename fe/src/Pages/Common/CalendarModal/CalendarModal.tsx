@@ -15,20 +15,11 @@ interface dispatchType extends DateType {
 
 const { year: initYear, month: initMonth } = getTodayDate();
 
-export default function CalendarModal({ calendarRef }: any) {
+export default function CalendarModal({ calendarRef, calendarStyle }: any) {
   const [calendarData, setCalendarData] = useState({ year: initYear, month: initMonth });
   const [calendarState, dispatchCalendar] = useCalendar();
 
   const { checkIn, checkOut, isCalendarOpen } = calendarState;
-
-  const calendarModalStyle = `
-    background-color:#fff;
-    width: 916px;
-    margin-left: 262px;
-    margin-top: 40px;
-    padding: 88px;
-    border-radius: 40px;
-  `;
   const calendarShowCount = 2;
 
   const runDispatchCalendar = ({ year, month, day, type }: dispatchType) => {
@@ -90,7 +81,7 @@ export default function CalendarModal({ calendarRef }: any) {
         calendarRef={calendarRef}
         calendarShowCount={calendarShowCount}
         columnCount={2}
-        calendarModalStyle={calendarModalStyle}
+        calendarStyle={calendarStyle}
         checkIn={checkIn}
         checkOut={checkOut}
         calendarData={calendarData}

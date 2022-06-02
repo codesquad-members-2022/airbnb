@@ -5,16 +5,18 @@ import static org.assertj.core.api.BDDAssertions.then;
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.Location;
 import com.codesquad.airbnb.common.embeddable.ReviewStat;
+import com.codesquad.airbnb.common.embeddable.StayDate;
+import com.codesquad.airbnb.common.embeddable.StayTime;
+import com.codesquad.airbnb.config.TestConfig;
 import com.codesquad.airbnb.district.District;
 import com.codesquad.airbnb.district.District.DistrictType;
 import com.codesquad.airbnb.member.Member;
 import com.codesquad.airbnb.member.Member.MemberRole;
 import com.codesquad.airbnb.reservation.Reservation;
-import com.codesquad.airbnb.reservation.embeddable.StayDateTime;
+import com.codesquad.airbnb.reservation.Reservation.ReservationState;
 import com.codesquad.airbnb.room.dto.RoomSearCondition;
 import com.codesquad.airbnb.room.dto.RoomSearCondition.PriceRange;
 import com.codesquad.airbnb.room.dto.RoomSearCondition.Radius;
-import com.codesquad.airbnb.room.dto.RoomSearCondition.StayDate;
 import com.codesquad.airbnb.room.dto.RoomSearchResponse;
 import com.codesquad.airbnb.room.entity.Room;
 import com.codesquad.airbnb.room.entity.Room.RoomType;
@@ -22,9 +24,7 @@ import com.codesquad.airbnb.room.entity.RoomDetail;
 import com.codesquad.airbnb.room.entity.embeddable.RoomCharge;
 import com.codesquad.airbnb.room.entity.embeddable.RoomGroup;
 import com.codesquad.airbnb.room.entity.embeddable.RoomOption;
-import com.codesquad.airbnb.room.entity.embeddable.StayTime;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,13 +35,16 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles("test")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@DisplayName("RoomRepository 통합 테스트")
-class RoomRepositoryTest {
+@Import({TestConfig.class, RoomService.class})
+@DisplayName("RoomService 통합 테스트")
+class RoomServiceTest {
 
     @Autowired
     TestEntityManager em;
@@ -94,14 +97,15 @@ class RoomRepositoryTest {
             new StayTime(LocalTime.of(17, 0, 0), LocalTime.of(12, 0, 0))
         );
 
+        // 5월 30일 ~ 6월 2일 예약
         Reservation reservation = new Reservation(
-            room,
             guest,
+            room,
             67007.0,
             new GuestGroup(2, 1, 0),
-            new StayDateTime(
-                LocalDateTime.of(2022, 5, 30, 17, 0, 0),
-                LocalDateTime.of(2022, 5, 31, 12, 0, 0))
+            new StayDate(LocalDate.of(2022, 5, 30), LocalDate.of(2022, 6, 2)),
+            new StayTime(LocalTime.of(17, 0, 0), LocalTime.of(12, 0, 0)),
+            ReservationState.BOOKED
         );
 
         em.persist(district);
@@ -132,15 +136,102 @@ class RoomRepositoryTest {
     }
 
     @Test
-    @DisplayName("요청한 날짜의 숙소에 이미 예약이 되어있는 경우 검색에서 제외한다")
-    public void roomSearchWitPeriodTest() {
+    @DisplayName("요청한 날짜의 체크아웃 날짜가 예약 불가능한 경우 검색에서 제외한다")
+    // 5월 29일 ~ 5월 31일 검색
+    public void roomSearchWitPeriodOverlappedLeftTest() {
         // when
         List<RoomSearchResponse> rooms = roomService.searchRooms(new RoomSearCondition(
             new Location(127.0286, 37.4953),
             new Radius(1.0, 1.0),
             new GuestGroup(2, 1, 0),
             new PriceRange(7000, 80000),
-            new StayDate(LocalDate.of(2022, 5, 30), LocalDate.of(2022, 5, 31))
+            new StayDate(LocalDate.of(2022, 5, 29), LocalDate.of(2022, 5, 31))
+        ));
+
+        // then
+        then(rooms.size()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("요청한 날짜의 체크아웃 날짜와 예약의 체크인 날짜가 겹치는 경우 검색에 포함한다")
+    // 5월 29일 ~ 5월 30일 검색
+    public void roomSearchWitPeriodNotOverlappedLeftTest() {
+        // when
+        List<RoomSearchResponse> rooms = roomService.searchRooms(new RoomSearCondition(
+            new Location(127.0286, 37.4953),
+            new Radius(1.0, 1.0),
+            new GuestGroup(2, 1, 0),
+            new PriceRange(7000, 80000),
+            new StayDate(LocalDate.of(2022, 5, 29), LocalDate.of(2022, 5, 30))
+        ));
+
+        // then
+        then(rooms.size()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("요청한 날짜의 숙소에 체크인 날짜가 예약 불가능한 경우 검색에서 제외한다")
+    // 6월 1일 ~ 6월 3일 검색
+    public void roomSearchWitPeriodOverlappedRightTest() {
+        // when
+        List<RoomSearchResponse> rooms = roomService.searchRooms(new RoomSearCondition(
+            new Location(127.0286, 37.4953),
+            new Radius(1.0, 1.0),
+            new GuestGroup(2, 1, 0),
+            new PriceRange(7000, 80000),
+            new StayDate(LocalDate.of(2022, 6, 1), LocalDate.of(2022, 6, 3))
+        ));
+
+        // then
+        then(rooms.size()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("요청한 날짜의 체크인 날짜와 예약의 체크아웃 날짜가 겹치는 경우 검색에 포함한다")
+    // 6월 2일 ~ 6월 3일 검색
+    public void roomSearchWitPeriodNotOverlappedRightTest() {
+        // when
+        List<RoomSearchResponse> rooms = roomService.searchRooms(new RoomSearCondition(
+            new Location(127.0286, 37.4953),
+            new Radius(1.0, 1.0),
+            new GuestGroup(2, 1, 0),
+            new PriceRange(7000, 80000),
+            new StayDate(LocalDate.of(2022, 6, 2), LocalDate.of(2022, 6, 3))
+        ));
+
+        // then
+        then(rooms.size()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("요청한 날짜의 숙소에 일정 중간에 예약 불가능한 경우 검색에서 제외한다")
+    // 5월 31일 ~ 6월 1일 검색
+    public void roomSearchWitPeriodOverlappedInTest() {
+        // when
+        List<RoomSearchResponse> rooms = roomService.searchRooms(new RoomSearCondition(
+            new Location(127.0286, 37.4953),
+            new Radius(1.0, 1.0),
+            new GuestGroup(2, 1, 0),
+            new PriceRange(7000, 80000),
+            new StayDate(LocalDate.of(2022, 5, 31), LocalDate.of(2022, 6, 1))
+        ));
+
+        // then
+        then(rooms.size()).isEqualTo(0);
+    }
+
+    @Test
+    @Rollback(false)
+    @DisplayName("요청한 날짜의 숙소에 일정 전부 예약 불가능한 경우 검색에서 제외한다")
+    // 5월 29일 ~ 6월 3일 검색
+    public void roomSearchWitPeriodOverlappedOutTest() {
+        // when
+        List<RoomSearchResponse> rooms = roomService.searchRooms(new RoomSearCondition(
+            new Location(127.0286, 37.4953),
+            new Radius(1.0, 1.0),
+            new GuestGroup(2, 1, 0),
+            new PriceRange(7000, 80000),
+            new StayDate(LocalDate.of(2022, 5, 29), LocalDate.of(2022, 6, 3))
         ));
 
         // then

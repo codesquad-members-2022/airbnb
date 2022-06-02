@@ -6,6 +6,10 @@ import com.team14.cherrybnb.room.application.WishService;
 import com.team14.cherrybnb.room.dto.wish.WishCardResponse;
 import com.team14.cherrybnb.room.dto.wish.WishRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,23 +27,23 @@ public class WishController {
 
     // 위시 리스트 조회
     @GetMapping
-    public List<WishCardResponse> getWishes(Member loginMember) {
-
-        return null;
+    public Page<WishCardResponse> searchWishes(@PageableDefault Pageable pageable, Member loginMember) {
+        return wishService.getWishes(pageable, loginMember);
     }
 
     // 위시 리스트에 추가
     @PostMapping
     public ResponseEntity<Void> addWish(Member loginMember, WishRequest wishRequest) {
-        Long roomId = wishRequest.getRoomId();
+        wishService.addWish(loginMember, wishRequest);
 
-        return null;
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     // 위시 리스트에서 제거
     @DeleteMapping
     public ResponseEntity<Void> removeWish(Member loginMember, Long wishId) {
+        wishService.removeWish(wishId, loginMember);
 
-        return null;
+        return ResponseEntity.ok().build();
     }
 }

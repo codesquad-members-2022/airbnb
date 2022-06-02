@@ -46,8 +46,11 @@ public class WishService {
     }
 
     // 위시 리스트에서 제거
-    public void removeWish(Long wishId) {
-        Wish wish = wishRepository.getById(wishId);
+    public void removeWish(Long wishId, Member loginMember) {
+        Wish wish = wishRepository.findById(wishId).orElseThrow(RuntimeException::new);
+        if (!loginMember.isSame(wish.getMember())) {
+            throw new RuntimeException();
+        }
         wishRepository.delete(wish);
     }
 }

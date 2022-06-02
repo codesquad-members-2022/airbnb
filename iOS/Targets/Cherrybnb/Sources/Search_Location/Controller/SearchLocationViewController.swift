@@ -94,7 +94,8 @@ extension SearchLocationViewController: UICollectionViewDelegate {
         
         let request = MKLocalSearch.Request(completion: searchCompletion)
         let localSearch = MKLocalSearch(request: request)
-        localSearch.start { response, error in
+        localSearch.start { [weak self] response, error in
+            guard let self = self else { return }
             guard error == nil else { return }
             guard let response = response else { return }
             

@@ -42,7 +42,7 @@ export const Background = styled.div`
   z-index: 2;
 `;
 
-export const Modal = styled.div<{ position: string }>`
+export const ModalContainer = styled.div<{ position: string }>`
   position: absolute;
   top: calc(100% + 8px);
   min-width: 200px;

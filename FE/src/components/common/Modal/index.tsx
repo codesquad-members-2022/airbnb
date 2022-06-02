@@ -21,7 +21,7 @@ const Modal = ({ element, position, children }: ModalTypes) => {
   return (
     <>
       <Portal element={element}>
-        <S.Modal position={position}>{children}</S.Modal>
+        <S.ModalContainer position={position}>{children}</S.ModalContainer>
       </Portal>
     </>
   );

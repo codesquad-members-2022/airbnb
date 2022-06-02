@@ -14,7 +14,9 @@ class SearchLocationViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var recommendationDataSource: RecommendationDataSource?
     private var searchLocationDataSource: SearchLocationDataSource?
-
+    private var detailSearchDataSource: DetailSearchLocationDataSource?
+    private var detailSearchDelegate: DetailSearchDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -23,6 +25,10 @@ class SearchLocationViewController: UIViewController {
         setLayout()
         setSearchBar()
         setDataSource()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        collectionView.delegate = self
     }
     
     private func setDataSource() {
@@ -37,6 +43,9 @@ class SearchLocationViewController: UIViewController {
                 self.collectionView.reloadData()
             }
         }
+        
+        self.detailSearchDataSource = DetailSearchLocationDataSource()
+        self.detailSearchDelegate = DetailSearchDelegate(navigation: self.navigationController ?? UINavigationController(), collectionView: self.collectionView)
         
         collectionView.dataSource = recommendationDataSource
     }
@@ -86,9 +95,24 @@ extension SearchLocationViewController: UICollectionViewDelegate {
         localSearch.start { response, error in
             guard error == nil else { return }
             // TODO: Search 결과 갯수에 따라, 추가적으로 컬렉션 뷰에 띄우거나 혹은 바로 날짜 선택 화면으로 이동
+            guard let response = response else { return }
+            
+            // 검색 결과가 여러개일때 Datasource, Delegate 변경
+            if response.mapItems.count > 1 {
+                self.detailSearchDataSource?.setSearchResultData(response.mapItems)
+                collectionView.dataSource = self.detailSearchDataSource
+                collectionView.delegate = self.detailSearchDelegate
+
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            }
+            
+            else {
+                self.navigationController?.pushViewController(searchDateVC, animated: true)
+            }
         }
-        
-        navigationController?.pushViewController(searchDateVC, animated: true)
+
     }
 }
 

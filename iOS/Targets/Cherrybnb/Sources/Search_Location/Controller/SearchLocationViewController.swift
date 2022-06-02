@@ -29,6 +29,8 @@ class SearchLocationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         collectionView.delegate = self
+        collectionView.dataSource = recommendationDataSource
+        self.navigationItem.searchController?.searchBar.text = nil
     }
     
     private func setDataSource() {

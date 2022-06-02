@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { ScheduleContext } from '@/Contexts/Schedule/context';
 
+// TODO: 함수, 변수 네이밍 컨벤션 체크
 export const useCurrentDate = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -14,4 +16,15 @@ export const useCurrentDate = () => {
   };
 
   return { changeCurrentDate, currentDate };
+};
+
+export const useScheduleContext = () => {
+  const { setDate, startDate, endDate } = useContext(ScheduleContext);
+
+  const setReservationDate = (day: Date | null) => () => {
+    if (!day) return;
+    setDate(day);
+  };
+
+  return { setReservationDate, startDate, endDate };
 };

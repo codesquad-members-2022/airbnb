@@ -1,5 +1,4 @@
-import { useContext } from 'react';
-import { ScheduleContext } from '@/Contexts/Schedule/context';
+import { useScheduleContext } from '@/Hooks/ScheduleHooks';
 import * as S from './Schedule.style';
 
 interface DayProps {
@@ -35,13 +34,8 @@ const isBetweenSelected = (
   endDate >= day;
 
 export function Day({ day }: DayProps): JSX.Element {
-  // TODO: 최적화 리렌더링 막아야함
-  const { setDate, startDate, endDate } = useContext(ScheduleContext);
-
-  const onClick = () => {
-    if (!day) return;
-    setDate(day);
-  };
+  // TODO: 최적화 리렌더링 막아야함 , 커스텀 훅 으로 로직 분리
+  const { setReservationDate, startDate, endDate } = useScheduleContext();
 
   return (
     <S.CandarDayBackground
@@ -51,7 +45,7 @@ export function Day({ day }: DayProps): JSX.Element {
     >
       {day && (
         <S.CalendarDay
-          onClick={onClick}
+          onClick={setReservationDate(day)}
           isSelected={isSelected(day, startDate, endDate)}
         >
           {day?.getDate()}

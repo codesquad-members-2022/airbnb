@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0014C47D28485C3F00241415 /* WeekdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0014C47C28485C3F00241415 /* WeekdayView.swift */; };
 		00230CF1283BB77500802765 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00230CF0283BB77500802765 /* TabBarViewController.swift */; };
 		0029729628445B8D0033437E /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0029729528445B8D0033437E /* LocationModel.swift */; };
 		0029729C2844B4DF0033437E /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0029729B2844B4DF0033437E /* CalendarViewController.swift */; };
@@ -92,6 +93,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0014C47C28485C3F00241415 /* WeekdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayView.swift; sourceTree = "<group>"; };
 		00230CF0283BB77500802765 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		0029729528445B8D0033437E /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		0029729B2844B4DF0033437E /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				0029729B2844B4DF0033437E /* CalendarViewController.swift */,
 				00F134592845F20A0087A83C /* CalendarViewCell.swift */,
 				00863C4C284609DD004E5954 /* CalendarHearderView.swift */,
+				0014C47C28485C3F00241415 /* WeekdayView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -238,7 +241,6 @@
 			isa = PBXGroup;
 			children = (
 				005AF7A5283B775300546D5B /* AirbnbTests.swift */,
-				1B90ED35283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift */,
 				1B7EB7FE2844FB800078D4A9 /* AirbnbSearchUseCaseResponseTests.swift */,
 			);
 			path = AirbnbTests;
@@ -294,7 +296,6 @@
 				00A85F34283B872800EA32E0 /* ReservationModel.swift */,
 				0029729528445B8D0033437E /* LocationModel.swift */,
 				1B27E234283CA44400FCB990 /* SearchViewModel.swift */,
-				1B807DCA283F529A00D6815F /* SearchCalendarModel.swift */,
 				00863C4E2847452F004E5954 /* CalendarModel.swift */,
 				00863C5228474792004E5954 /* MonthMetadata.swift */,
 			);
@@ -391,7 +392,6 @@
 		1B807DCD283F540500D6815F /* DTO */ = {
 			isa = PBXGroup;
 			children = (
-				1B90ED33283F547600E45FE8 /* SearchDayDTO.swift */,
 				00863C5028474614004E5954 /* Day.swift */,
 				1BF0618728459A210043FF2F /* Reservations.swift */,
 				1BDEFD26284E217A00EBC3DF /* SearchInfo.swift */,
@@ -558,9 +558,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0029729C2844B4DF0033437E /* CalendarViewController.swift in Sources */,
+				0014C47D28485C3F00241415 /* WeekdayView.swift in Sources */,
 				00863C5328474792004E5954 /* MonthMetadata.swift in Sources */,
 				00A85F3E283B877700EA32E0 /* WishModel.swift in Sources */,
-				1B807DCB283F529A00D6815F /* SearchCalendarModel.swift in Sources */,
 				1B27E233283CA14900FCB990 /* SearchOneInARowCollectionViewCell.swift in Sources */,
 				1B18F7EF28488456005B1CAF /* CustomRangeSliderThumbLayer.swift in Sources */,
 				0029729628445B8D0033437E /* LocationModel.swift in Sources */,
@@ -611,7 +611,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				005AF7A6283B775300546D5B /* AirbnbTests.swift in Sources */,
-				1B90ED36283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift in Sources */,
 				1B7EB7FF2844FB800078D4A9 /* AirbnbSearchUseCaseResponseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

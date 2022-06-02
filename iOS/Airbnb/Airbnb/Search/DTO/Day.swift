@@ -12,6 +12,13 @@ struct Day {
     let number: String
     let isSelected: Bool
     let isWithInDisplayedMonth: Bool
+    var isBeforeToday: Bool {
+        let calendar = Calendar.current
+        let todayDate =  calendar.date(
+                        from: calendar.dateComponents([.year, .month, .day],
+                                                      from: Date())) ?? Date()
+        return date < todayDate
+    }
     var fadeState: FadeState = .none
 }
 

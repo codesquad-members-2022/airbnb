@@ -122,10 +122,11 @@ private extension CalendarViewCell {
     }
     
     func applyDefaultStyle() {
+        guard let day = day else { return }
         accessibilityTraits.remove(.selected)
         accessibilityHint = "Tap to select"
         
-        numberLabel.textColor = .label
+        numberLabel.textColor = day.isBeforeToday ? .secondaryLabel : .label
         selectionBackgroundView.isHidden = true
     }
     

@@ -23,6 +23,8 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
         return collectionView
     }()
     
+    private let weekdayView: UIView = WeekdayView()
+    
     init(reservationModel: ReservationModel) {
         self.reservationModel = reservationModel
         super.init(nibName: nil, bundle: nil)
@@ -55,19 +57,27 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
     }
     
     func layout() {
+        view.addSubview(weekdayView)
         view.addSubview(collectionView)
         
+        weekdayView.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.readableContentGuide)
+            $0.top.equalTo(view.readableContentGuide).offset(32)
+        }
+        
         collectionView.snp.makeConstraints {
-            $0.top.leading.trailing.equalTo(view.readableContentGuide)
+            $0.leading.trailing.equalTo(weekdayView)
+            $0.top.equalTo(weekdayView.snp.bottom)
             $0.height.equalTo(view.snp.height).multipliedBy(0.5)
         }
+        
+        
     }
     
     func bind() {
         calendarModel.onUpdate = { [weak self] in
             self?.collectionView.reloadData()
         }
-//
     }
     
     private func setUpToolBarItems() -> [UIBarButtonItem] {

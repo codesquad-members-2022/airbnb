@@ -26,7 +26,6 @@ public class WishService {
         this.roomRepository = roomRepository;
     }
 
-    // 위시 리스트 조회
     public Page<WishCardResponse> getWishes(Pageable pageable, Member member) {
         Page<Wish> wishes = wishRepository.findAllByMemberId(pageable, member);
         List<WishCardResponse> wishCardResponses = wishes.getContent()
@@ -37,7 +36,6 @@ public class WishService {
         return new PageImpl<>(wishCardResponses, pageable, wishes.getTotalElements());
     }
     
-    // 위시 리스트에 추가
     public void addWish(Member member, WishRequest wishRequest) {
         Room room = roomRepository.findById(wishRequest.getRoomId())
                 .orElseThrow(RuntimeException::new);
@@ -45,7 +43,6 @@ public class WishService {
         wishRepository.save(new Wish(member, room));
     }
 
-    // 위시 리스트에서 제거
     public void removeWish(Long wishId, Member loginMember) {
         Wish wish = wishRepository.findById(wishId).orElseThrow(RuntimeException::new);
         if (!loginMember.isSame(wish.getMember())) {

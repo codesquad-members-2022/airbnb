@@ -1,11 +1,13 @@
 package com.team14.cherrybnb.room.dto.wish;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
-@AllArgsConstructor
+@ToString
 public class WishRequest {
 
+    @JsonProperty
     private Long roomId;
 }

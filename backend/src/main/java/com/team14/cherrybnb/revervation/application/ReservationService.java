@@ -28,21 +28,25 @@ public class ReservationService {
         this.roomRepository = roomRepository;
     }
 
-    public void bookRoom(Member member, ReservationRequest reservationRequest) {
+    public void bookRoom(Member loginMember, ReservationRequest reservationRequest) {
         Long roomId = reservationRequest.getRoomId();
         Room room = roomRepository.findById(roomId)
                 .orElseThrow(RuntimeException::new);
 
-        Reservation reservation = reservationRequest.toEntity(member, room);
+        Reservation reservation = reservationRequest.toEntity(loginMember, room);
         reservationRepository.save(reservation);
     }
 
-    public void cancelReservation(Long reservationId) {
+    public void cancelReservation(Member loginMember, Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(RuntimeException::new);
 
-       reservation.cancel();
-       reservationRepository.save(reservation);
+        if (!loginMember.isSame(reservation.getMember())) {
+            throw new RuntimeException();
+        }
+
+        reservation.cancel();
+        reservationRepository.save(reservation);
     }
 
     public Page<ReservationCardResponse> searchReservations(Pageable pageable, Member member) {

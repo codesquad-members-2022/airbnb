@@ -42,6 +42,7 @@ public class Reservation {
     public Reservation(LocalDateTime checkIn, LocalDateTime checkOut,
                        int guestCount, BigDecimal totalPrice,
                        ReservationState state, Room room, Member member) {
+
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.guestCount = guestCount;

@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public class DistanceInfo {
 
-    private double distance;
-    private double duration;
+    private final double distance;
+    private final double duration;
 
     public DistanceInfo(double distance, double duration) {
         this.distance = toKm(distance);

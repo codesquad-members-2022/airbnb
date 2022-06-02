@@ -29,6 +29,7 @@ public class Member {
     private Integer id;
 
     private String name;
+    private String githubId;
     private String imagePath;
     private Boolean isSuperHost;
 
@@ -41,8 +42,14 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Wish> wishRefs;
 
-    public Member(String name, String imagePath, Boolean isSuperHost, MemberRole role) {
+    public Member(String name, String githubId, String imagePath) {
+        this(name, githubId, imagePath, false, MemberRole.USER);
+    }
+
+    public Member(String name, String githubId, String imagePath, Boolean isSuperHost,
+        MemberRole role) {
         this.name = name;
+        this.githubId = githubId;
         this.imagePath = imagePath;
         this.isSuperHost = isSuperHost;
         this.role = role;
@@ -50,5 +57,12 @@ public class Member {
 
     public boolean isEqualsId(Integer id) {
         return Objects.equals(this.id, id);
+    }
+
+    public Member update(Member member) {
+        this.name = member.name;
+        this.githubId = member.githubId;
+        this.imagePath = member.imagePath;
+        return this;
     }
 }

@@ -53,11 +53,15 @@ struct CalendarPicker {
     }
     
     mutating func select(monthSection: Int, dayItem: Int) {
-        let selected = getDay(monthSection: monthSection, dayItem: dayItem).date
+        let selectedDay = getDay(monthSection: monthSection, dayItem: dayItem)
+        
+        if selectedDay.isWithinLastMonth || selectedDay.isPast {
+            return
+        }
         
         // 선택된 날짜가 아예 없는 상태였을 경우
         guard let dateSelection = dateSelection else {
-            let newSelection = DateSelection(selected, nil)
+            let newSelection = DateSelection(selectedDay.date, nil)
             self.dateSelection = newSelection
             return
         }
@@ -65,14 +69,14 @@ struct CalendarPicker {
         switch dateSelection {
         case (let start, nil):
             // 시작 날짜만 선택된 상태였을 경우
-            if start < calendar.startOfDay(for: selected) {
-                self.dateSelection?.checkOut = selected
+            if start < calendar.startOfDay(for: selectedDay.date) {
+                self.dateSelection?.checkOut = selectedDay.date
             } else {
-                self.dateSelection?.checkIn = selected
+                self.dateSelection?.checkIn = selectedDay.date
             }
         case (_, _):
             // 시작, 도착 날짜가 모두 선택된 상태였을 경우
-            self.dateSelection?.checkIn = selected
+            self.dateSelection?.checkIn = selectedDay.date
             self.dateSelection?.checkOut = nil
         }
     }

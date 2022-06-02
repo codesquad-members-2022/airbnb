@@ -26,13 +26,13 @@ extension CalendarPicker {
 
             let daysOfLastMonth: [Day] = (1..<firstDayWeekday).reversed().map { offset in
                 let date = calendar.getNextDay(for: firstDayOfMonth, offsetBy: -offset) ?? firstDayOfMonth
-                return Day(date: date, isSelected: false, isPast: true, isHidden: true)
+                return Day(date: date, isSelected: false, isPast: true, isWithinLastMonth: true)
             }
 
             let days: [Day] = (0..<numberOfDays).map { offset in
                 let date = calendar.getNextDay(for: firstDayOfMonth, offsetBy: offset) ?? firstDayOfMonth
                 let isPast = date <  calendar.startOfDay(for: baseDate)
-                return Day(date: date, isSelected: false, isPast: isPast, isHidden: false)
+                return Day(date: date, isSelected: false, isPast: isPast, isWithinLastMonth: false)
             }
 
             self.days = daysOfLastMonth + days
@@ -43,6 +43,6 @@ extension CalendarPicker {
         let date: Date
         let isSelected: Bool
         let isPast: Bool
-        let isHidden: Bool
+        let isWithinLastMonth: Bool
     }
 }

@@ -9,7 +9,7 @@ interface HeaderProps {
 export function CalendarHeader({ year, month }: HeaderProps): JSX.Element {
   return (
     <S.Date>
-      {year}년 {month}월{' '}
+      {year}년 {month + 1}월{' '}
     </S.Date>
   );
 }

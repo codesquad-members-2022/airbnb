@@ -11,7 +11,7 @@ import MapKit
 
 class DetailSearchLocationDataSource: NSObject, UICollectionViewDataSource {
     
-    private var searchResultData = [MKMapItem]()
+    private(set) var searchResultData = [MKMapItem]()
     
     func setSearchResultData(_ data: [MKMapItem]) {
         searchResultData = data

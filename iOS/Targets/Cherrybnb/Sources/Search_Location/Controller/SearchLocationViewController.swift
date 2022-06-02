@@ -94,7 +94,6 @@ extension SearchLocationViewController: UICollectionViewDelegate {
         let localSearch = MKLocalSearch(request: request)
         localSearch.start { response, error in
             guard error == nil else { return }
-            // TODO: Search 결과 갯수에 따라, 추가적으로 컬렉션 뷰에 띄우거나 혹은 바로 날짜 선택 화면으로 이동
             guard let response = response else { return }
             
             // 검색 결과가 여러개일때 Datasource, Delegate 변경
@@ -109,6 +108,15 @@ extension SearchLocationViewController: UICollectionViewDelegate {
             }
             
             else {
+                // 검색한 Mapitem 을 nextVC로 넘겨주어야 함
+                guard let mapItem = response.mapItems.first else { return }
+                guard let placeName = mapItem.name else { return }
+                let latitude = response.mapItems[0].placemark.coordinate.latitude as Coordinate.Degree
+                let longitude = response.mapItems[0].placemark.coordinate.longitude as Coordinate.Degree
+                let coordinate = Coordinate(latitude: latitude, longitude: longitude)
+                
+                let place = Place(name: placeName, location: Location(coordinate: coordinate), estimatedTime: 0)
+                searchDateVC.queryParameter?.place = place
                 self.navigationController?.pushViewController(searchDateVC, animated: true)
             }
         }

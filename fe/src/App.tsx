@@ -3,7 +3,9 @@ import HeadCountProvider from "Context/HeadCountProvider";
 import GlobalStyle from "Helpers/globalStyle";
 import { composeProvider } from "Helpers/utils";
 import Home from "Pages/Home/Home";
-import React from "react";
+import NotFound from "Pages/NotFound/NotFound";
+import SearchResult from "Pages/SearchResult/SearchResult";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const providerList = [CalendarProvider, HeadCountProvider];
 
@@ -14,7 +16,13 @@ function App() {
     <div className="App">
       <GlobalStyle />
       <Provider>
-        <Home />
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/searchResult" element={<SearchResult />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
       </Provider>
     </div>
   );

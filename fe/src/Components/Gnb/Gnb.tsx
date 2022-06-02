@@ -3,12 +3,15 @@ import drawerMenu from "Asset/drawerMenu.svg";
 import logo from "Asset/logo.svg";
 import { Buttons, Container, Logo, Menu, Menus } from "Components/Gnb/Gnb.styled";
 import { Img } from "Components/Common/styled";
+import { NavLink } from "react-router-dom";
 
 export default function Gnb() {
   return (
     <Container flex={true} justify="space-between">
       <Logo>
-        <Img src={logo} width="88px" height="46px" />
+        <NavLink to="/">
+          <Img src={logo} width="88px" height="46px" />
+        </NavLink>
       </Logo>
       <Menus flex={true}>
         <Menu>숙소</Menu>

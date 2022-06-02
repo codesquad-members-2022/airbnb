@@ -7,6 +7,7 @@ export const ICON_NAME: { [key: string]: string } = {
   MENU: 'Menu',
   USER: 'User',
   SEARCH: 'Search',
+  CLOSE_BTN: 'CloseBtn'
 };
 
 export const ICON_SIZE: { [key: string]: string } = {
@@ -14,10 +15,10 @@ export const ICON_SIZE: { [key: string]: string } = {
   LARGE: 'LARGE',
 };
 
-export type IconTypes = {
+export interface IconTypes {
   iconName: string;
   iconSize: string;
-};
+}
 
 const Icon = ({ iconName, iconSize }: IconTypes) => {
   return <S.Icon src={Icons[iconName]} size={iconSize} />;

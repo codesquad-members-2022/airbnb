@@ -6,10 +6,10 @@ export const SEARCH_BUTTON_SIZE: { [key: string]: string } = {
   LARGE: 'LARGE',
 };
 
-export type SearchButtonTypes = {
+export interface SearchButtonTypes {
   isButtonActive: boolean;
   size: string;
-};
+}
 
 const SearchButton = ({ isButtonActive, size }: SearchButtonTypes) => {
   const buttonSize = size === SEARCH_BUTTON_SIZE.SMALL ? ICON_SIZE.MEDIUM : ICON_SIZE.LARGE;

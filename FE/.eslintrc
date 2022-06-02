@@ -24,7 +24,7 @@
             "position": "before"
           },
           {
-            "pattern": "@constants",
+            "pattern": "@data",
             "group": "internal"
           },
           {

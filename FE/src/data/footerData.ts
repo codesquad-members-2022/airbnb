@@ -1,8 +1,8 @@
-export type FooterContentType = {
+export interface FooterContentTypes {
   id: number;
   title: string;
   subtitle: string[];
-};
+}
 
 export const footerContent = [
   {
@@ -58,10 +58,10 @@ export const footerContent = [
   },
 ];
 
-export type CompanyInfoType = {
+export interface CompanyInfoTypes {
   id: number;
   title: string;
-};
+}
 
 export const companyInfo = [
   {

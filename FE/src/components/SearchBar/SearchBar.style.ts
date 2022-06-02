@@ -6,9 +6,10 @@ const sizeStyles = css<{ size: string }>`
   ${({ size, theme }) =>
     size === SEARCH_BAR_SIZE.SMALL &&
     css`
-      width: 410px;
+      width: fit-content;
       height: 48px;
       border-radius: 30px;
+      padding: 16px 8px;
 
       ${SearchButton} {
         width: 32px;
@@ -20,11 +21,12 @@ const sizeStyles = css<{ size: string }>`
       }
 
       ${PeriodArea}, ${PriceArea}, ${PersonnelArea} {
+        width: fit-content;
         padding: 0 16px;
       }
     `}
 
-  ${({ size }) =>
+  ${({ size, theme }) =>
     size === SEARCH_BAR_SIZE.LARGE &&
     css`
       width: 916px;
@@ -32,12 +34,31 @@ const sizeStyles = css<{ size: string }>`
       border-radius: 60px;
 
       ${SearchButton} {
+        position: absolute;
+        top: 50%;
+        right: 16px;
         width: 40px;
         height: 40px;
+        transform: translateY(-50%);
       }
 
       ${PeriodArea}, ${PriceArea}, ${PersonnelArea} {
-        padding: 0 24px;
+        height: 100%;
+        padding: 16px 24px;
+        border-radius: 60px;
+
+        &:hover {
+          background-color: ${theme.color.grey5};
+
+          &::before,
+          & + div::before {
+            display: none;
+          }
+        }
+      }
+
+      ${PeriodArea} {
+        padding-left: 40px;
       }
     `}
 }
@@ -46,25 +67,27 @@ const sizeStyles = css<{ size: string }>`
 const areaStyles = css`
   position: relative;
   display: flex;
-  gap: 24px;
+  align-items: center;
+  gap: 12px;
   width: 296px;
 
-  &:not(:last-of-type)::after {
+  &:not(:first-of-type)::before {
     content: '';
     position: absolute;
-    right: 0;
+    left: 0;
     display: block;
     width: 1px;
-    height: 90%;
+    height: 60%;
     background-color: ${({ theme }) => theme.color.grey5};
   }
 `;
 
 export const Container = styled.header<{ size: string }>`
+  position: relative;
   display: flex;
+  align-items: center;
   background-color: ${({ theme }) => theme.color.white};
   border: 1px solid ${({ theme }) => theme.color.grey4};
-  padding: 16px;
   cursor: pointer;
 
   /* 크기 */
@@ -74,6 +97,26 @@ export const Container = styled.header<{ size: string }>`
 export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const Label = styled.span`
+  color: ${({ theme }) => theme.color.black};
+  font-size: ${({ theme }) => theme.fontSize.xSmall};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  margin-bottom: 4px;
+`;
+
+export const Content = styled.p<{ isContentExist: boolean }>`
+  ${({ isContentExist, theme }) => !isContentExist && `color: ${theme.color.grey3}`};
+  word-break: keep-all;
+  white-space: nowrap;
+`;
+
+export const CloseButton = styled.button`
+  position: relative;
+  top: -2px;
+  width: 24px;
+  height: 24px;
 `;
 
 export const PeriodArea = styled.div`
@@ -89,35 +132,33 @@ export const PeriodArea = styled.div`
 export const PriceArea = styled.div`
   ${areaStyles};
 
-  width: 256px;
+  width: 280px;
+
+  &:hover {
+  }
 
   ${ContentContainer} {
-    min-width: 160px;
+    min-width: 185px;
+  }
+
+  ${CloseButton} {
+    margin-left: auto;
   }
 `;
 
 export const PersonnelArea = styled.div`
   ${areaStyles};
+  flex-grow: 1;
   width: 192px;
 
   ${ContentContainer} {
     width: 96px;
   }
-`;
 
-export const Label = styled.span`
-  color: ${({ theme }) => theme.color.black};
-  font-size: ${({ theme }) => theme.fontSize.xSmall};
-  font-weight: ${({ theme }) => theme.fontWeight.bold};
-  margin-bottom: 4px;
-`;
-
-export const Content = styled.p<{ isContentExist: boolean }>`
-  ${({ isContentExist, theme }) => !isContentExist && `color: ${theme.color.grey3}`};
-  word-break: keep-all;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  ${Content} {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 export const SearchButton = styled.button<{ isContentWillShow: boolean }>`

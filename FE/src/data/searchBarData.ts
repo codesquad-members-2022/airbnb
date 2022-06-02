@@ -1,17 +1,23 @@
-export type PeriodTypes = {
+export interface PeriodTypes {
   checkIn: string;
   checkOut: string;
-};
+}
 
-export type PriceTypes = {
+export interface PriceTypes {
   min: number;
   max: number;
-};
+}
 
-export type PersonnelTypes = {
+export interface PersonnelTypes {
   guest: number;
   kid: number;
-};
+}
+
+export interface SearchBarDataTypes {
+  period: PeriodTypes;
+  price: PriceTypes;
+  personnel: PersonnelTypes;
+}
 
 export const searchBarData = {
   period: {

@@ -1,13 +1,14 @@
-import CitySection from '@components/MainContent/CitySection';
 import * as S from '@components/MainContent/MainContent.style';
-import TripSection from '@components/MainContent/TripSection';
+import MainSection from '@components/MainContent/MainSection';
+import { mainContentData, MainContentDataType } from '@data';
 
 const MainContent = () => {
   return (
     <S.Container>
       <S.Wrapper>
-        <CitySection />
-        <TripSection />
+        {mainContentData.map((data: MainContentDataType) => (
+          <MainSection key={data.id} data={data} />
+        ))}
       </S.Wrapper>
     </S.Container>
   );

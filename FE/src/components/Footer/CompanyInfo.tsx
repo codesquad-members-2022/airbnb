@@ -1,12 +1,14 @@
 import * as S from '@components/Footer/Footer.style';
-import { CompanyInfoType } from '@components/Footer/constants';
+import { companyInfo, CompanyInfoTypes } from '@data';
 
-type InfoType = {
-  info: CompanyInfoType;
-};
-
-const CompanyInfo = ({ info }: InfoType) => {
-  return <S.CompanyInfo>{info.title}</S.CompanyInfo>;
+const CompanyInfo = () => {
+  return (
+    <>
+      {companyInfo.map(({ id, title }: CompanyInfoTypes) => (
+        <S.CompanyInfo key={id}>{title}</S.CompanyInfo>
+      ))}
+    </>
+  );
 };
 
 export default CompanyInfo;

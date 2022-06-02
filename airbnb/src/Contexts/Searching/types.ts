@@ -13,6 +13,8 @@ export interface SearchContextDispatch {
   calendarDispatch: Dispatch<CalenderAction>;
   priceDispatch: Dispatch<PriceAction>;
   customersDispatch: Dispatch<CustomerAction>;
+  getStartDateAction(startDate: Date): CalenderAction;
+  getEndDateAction(endDate: Date): CalenderAction;
 }
 
 export interface CalenderState {

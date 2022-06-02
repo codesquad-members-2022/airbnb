@@ -32,6 +32,23 @@ export function SearchingProvider({
     calendarInitialState,
   );
 
+  const getStartDateAction = (startDate: Date) => {
+    const action: TYPE.CalenderAction = {
+      type: 'SET_START_DATE',
+      date: startDate,
+    };
+    return action;
+  };
+
+  const getEndDateAction = (endDate: Date) => {
+    const action: TYPE.CalenderAction = {
+      type: 'SET_END_DATE',
+      date: endDate,
+    };
+
+    return action;
+  };
+
   const [price, priceDispatch] = useReducer(priceReducer, priceInitialState);
 
   const [customers, customersDispatch] = useReducer(
@@ -42,7 +59,13 @@ export function SearchingProvider({
   return (
     <SearchingContext.Provider value={{ calendar, price, customers }}>
       <SearchingDispatchContext.Provider
-        value={{ calendarDispatch, priceDispatch, customersDispatch }}
+        value={{
+          calendarDispatch,
+          priceDispatch,
+          customersDispatch,
+          getStartDateAction,
+          getEndDateAction,
+        }}
       >
         {children}
       </SearchingDispatchContext.Provider>

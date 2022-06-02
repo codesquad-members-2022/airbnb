@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
+import MultiRangeSlider from '@/components/MultiRangeSlider';
+
 import bzCurve from './bzCurve';
 import Drawer from './Drawer';
 import * as S from './style';
@@ -38,8 +40,10 @@ function Chart({ chartData, width = 0, height = 0 }: Props) {
     <S.ChartLayer>
       <S.Canvas ref={canvas} width={width} height={height} />
       {ctx && (
-        // NOTE: 임시 Props: initialRightValue
-        <Drawer draw={createDrawFunc(ctx, chartData, height, options)} initialRightValue={width} />
+        <>
+          <Drawer draw={createDrawFunc(ctx, chartData, height, options)} />
+          <MultiRangeSlider minPrice={0} maxPrice={width} />
+        </>
       )}
     </S.ChartLayer>
   );

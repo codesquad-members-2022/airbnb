@@ -5,10 +5,10 @@ import {
   useInputRangeSetter,
 } from '@/components/MultiRangeSlider/context/InputRange';
 
-import { IPriceRange } from './common';
+import { InputRange } from './common';
 import * as S from './style';
 
-function LeftInput({ minPrice, maxPrice }: IPriceRange) {
+function LeftInput({ minValue, maxValue }: InputRange) {
   const inputState = useInputRangeGetter();
   const setInputValue = useInputRangeSetter();
   const inputRef = useRef(null);
@@ -30,8 +30,8 @@ function LeftInput({ minPrice, maxPrice }: IPriceRange) {
   return (
     <S.Input
       className="thumb"
-      min={minPrice}
-      max={Math.ceil(maxPrice)}
+      min={minValue}
+      max={Math.ceil(maxValue)}
       value={leftInputValue}
       ref={inputRef}
       onChange={handleChangeInput}

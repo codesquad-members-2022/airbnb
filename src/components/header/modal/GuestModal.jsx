@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import styled from "styled-components";
 import Modal from "../../../Modal";
 import GuestTab from "./GuestTab";
@@ -6,20 +6,11 @@ import Boundary from "../../Boundary";
 import {getRandomKey} from "../../../util";
 
 const GuestModal = ({isClicked}) => {
-    const [guestCount, setGuestCount] = useState(initialGuestState);
-
     return (
         <GuestModalBox isClicked={isClicked}>
             {guestType
                 .map((guest) => (
-                    <GuestTab
-                        key={guest.id}
-                        typeName={guest.name}
-                        detail={guest.detail}
-                        type={guest.type}
-                        guestCount={guestCount}
-                        setGuestCount={setGuestCount}
-                    />
+                    <GuestTab key={guest.id} typeName={guest.name} detail={guest.detail} type={guest.type} />
                 ))
                 .reduce((acc, cur) => {
                     return acc.length
@@ -28,13 +19,6 @@ const GuestModal = ({isClicked}) => {
                 }, [])}
         </GuestModalBox>
     );
-};
-
-const initialGuestState = {
-    adult: 0,
-    children: 0,
-    infant: 0,
-    companionAnimal: 0,
 };
 
 const guestType = [

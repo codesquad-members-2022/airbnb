@@ -5,7 +5,7 @@ import {ReactComponent as SearchIcon} from "../../../assets/searchIcon.svg";
 import {Link} from "react-router-dom";
 import {useClickedTabContext} from "../../../ClickedTabProvider";
 
-const CylindricalBox = ({title, placeHolder, style, partId, hasSearchButton}) => {
+const CylindricalBox = ({title, placeHolder, style, partId, hasSearchButton, description}) => {
     const {clickedTab, setClickedTab} = useClickedTabContext();
     const isClicked = partId === clickedTab;
     const changeClickedTab = (event) => {
@@ -16,12 +16,19 @@ const CylindricalBox = ({title, placeHolder, style, partId, hasSearchButton}) =>
             setClickedTab(partId);
         }
     };
+    const isGuestPart = partId === "GuestBox";
 
     return (
         <CylindricalButton isClicked={isClicked} style={style} onClick={changeClickedTab}>
             <TextBox>
                 <Title>{title}</Title>
-                <PlaceHolder>{placeHolder}</PlaceHolder>
+                {description ? (
+                    <Description isClicked={isClicked} isGuestPart={isGuestPart}>
+                        {description}
+                    </Description>
+                ) : (
+                    <PlaceHolder>{placeHolder}</PlaceHolder>
+                )}
             </TextBox>
             {isClicked && (
                 <Icon>
@@ -73,6 +80,20 @@ const PlaceHolder = styled.div`
     font-size: 1rem;
     line-height: 24px;
     color: ${({theme}) => theme.color.gray2};
+`;
+
+const Description = styled.div`
+    color: ${({theme}) => theme.color.black};
+    width: ${({isClicked, isGuestPart}) => {
+        if (isGuestPart) {
+            return isClicked ? "96px" : "144px";
+        }
+        return "100%";
+    }};
+    line-height: 23px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `;
 
 const Icon = styled.div`

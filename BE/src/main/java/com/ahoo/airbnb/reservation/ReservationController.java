@@ -1,5 +1,6 @@
 package com.ahoo.airbnb.reservation;
 
+import com.ahoo.airbnb.exception.ErrorResponse;
 import com.ahoo.airbnb.reservation.dtos.ReservationRequest;
 import com.ahoo.airbnb.reservation.dtos.ReservationResponse;
 import com.ahoo.airbnb.reservation.dtos.ReservationsResponse;
@@ -42,7 +43,17 @@ public class ReservationController {
                         mediaType = "application/json",
                         schema = @Schema(implementation = RoomChargeResponse.class)
                     )
-                })
+                }),
+            @ApiResponse(
+                responseCode = "400",
+                description = "숙소 요금 조회 실패",
+                content = {
+                    @Content(
+                        mediaType = "application/json",
+                        schema = @Schema(implementation = ErrorResponse.class)
+                    )
+                }
+            )
         }
     )
     @PostMapping("/{roomId}/totalCharge")

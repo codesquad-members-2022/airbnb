@@ -1,3 +1,5 @@
+import {v4 as uuid} from "uuid";
+
 const makePriceFormat = (priceString) => {
     return priceString ? Number(priceString).toLocaleString() : "";
 };
@@ -14,4 +16,8 @@ const fetchData = async (url) => {
     }
 };
 
-export {makePriceFormat, fetchData};
+const getRandomKey = () => {
+    return uuid();
+};
+
+export {makePriceFormat, fetchData, getRandomKey};

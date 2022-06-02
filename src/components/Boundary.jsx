@@ -12,9 +12,9 @@ const VerticalLine = styled.div`
 `;
 
 const HorizontalLine = styled.hr`
-    size: ${({weight}) => weight};
-    width: ${({length}) => length};
-    background: ${({backgroundColor}) => backgroundColor};
+    border: none;
+    border-top: ${({weight, backgroundColor}) => `${weight} solid ${backgroundColor}`};
+    margin: 0;
 `;
 
 export default Boundary;

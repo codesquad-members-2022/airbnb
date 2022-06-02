@@ -14,8 +14,7 @@ export const pages: PagesType = {
   notFound: <NotFound />,
 };
 
-export type LinkPath = "index" | "searchResult";
-
+export type LinkPath = keyof typeof pages;
 export interface PagesType {
   [key: string]: React.ReactNode;
 }

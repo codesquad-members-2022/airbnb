@@ -75,9 +75,9 @@ const Router = ({ children }: RouterProps): React.ReactElement => {
 };
 
 interface LinkProps {
-  to: LinkPath | string;
+  to: LinkPath;
   children: React.ReactNode;
-  params?: { [key: string]: string } | {}; // TODO: key 값 추후에 지정하기
+  params?: { [key: LinkPath]: string } | {}; // TODO: key 값 추후에 지정하기
   onClick?: () => void;
 }
 

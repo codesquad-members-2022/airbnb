@@ -7,6 +7,7 @@ import {
   ActiveContent,
   ContentHeader,
   ContentContainer,
+  SearchButtonArea,
 } from "./SearchBar.styled";
 import cancelButton from "Asset/cancelButton.svg";
 import searchButton from "Asset/searchButton.svg";
@@ -15,8 +16,10 @@ import { Img } from "Components/Common/styled";
 import { SEARCH_BAR_REF_IDX } from "Helpers/constant";
 import { useHeadCount } from "Context/HeadCountProvider";
 import { useCalendar } from "Context/CalendarProvider";
+import { NavLink } from "react-router-dom";
 
 interface SearchBarType {
+  searchBarStyle?: string;
   calendarRef?: React.MutableRefObject<HTMLElement[] | null[]>;
   headCountRef?: React.MutableRefObject<HTMLElement[] | null[]>;
 }
@@ -104,14 +107,24 @@ export default function SearchBar({ calendarRef, headCountRef, searchBarStyle }:
           )}
         </ContentContainer>
         {isHeadCountOpen && (
-          <Img src={cancelButton} width="20px" height="20px" onClick={() => handleReset(dispatchHeadCount)} />
-        )}
-        {isSearchBarOpen ? (
-          <Img src={activeSearchButton} width="90px" height="42px" />
-        ) : (
-          <Img src={searchButton} width="40px" height="40px" />
+          <Img
+            src={cancelButton}
+            width="20px"
+            height="20px"
+            margin="0 100px 0 0"
+            onClick={() => handleReset(dispatchHeadCount)}
+          />
         )}
       </HeadCountArea>
+      <SearchButtonArea>
+        <NavLink to="/searchResult">
+          {isSearchBarOpen ? (
+            <Img src={activeSearchButton} width="90px" height="42px" />
+          ) : (
+            <Img src={searchButton} width="40px" height="40px" />
+          )}
+        </NavLink>
+      </SearchButtonArea>
     </Container>
   );
 }

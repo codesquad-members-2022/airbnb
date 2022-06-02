@@ -56,3 +56,8 @@ export const ContentHeader = styled.header`
   line-height: 17px;
   margin-bottom: 4px;
 `;
+
+export const SearchButtonArea = styled.div`
+  position: absolute;
+  right: 20px;
+`;

@@ -52,7 +52,8 @@ public class Room extends BaseEntity {
     private double averageRate;
     private boolean isDeleted;
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany
+    @JoinColumn(name = "room_id")
     @Column(insertable = false, updatable = false)
     private List<RoomImage> images = new ArrayList<>();
 

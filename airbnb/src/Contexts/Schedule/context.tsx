@@ -1,27 +1,11 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
+import * as TYPE from './types';
 
-export interface ScheduleValueProps {
-  startDate: Date | null;
-  endDate: Date | null;
-  setDate(date: Date): void;
-}
-
-export interface ScheduleProps {
-  startDate: Date | null;
-  endDate: Date | null;
-  setStartDate(date: Date): void;
-  setEndDate(date: null | Date): void;
-}
-
-export const ScheduleContext = React.createContext<ScheduleValueProps>({
+export const ScheduleContext = React.createContext<TYPE.ScheduleValueProps>({
   startDate: null,
   endDate: null,
   setDate: () => {},
 });
-
-interface ScheduleProviderProps extends ScheduleProps {
-  children: ReactNode;
-}
 
 export function ScheduleProvider({
   startDate,
@@ -29,7 +13,7 @@ export function ScheduleProvider({
   setStartDate,
   setEndDate,
   children,
-}: ScheduleProviderProps) {
+}: TYPE.ScheduleProviderProps) {
   const setDate = (date: Date) => {
     if (!startDate) {
       setStartDate(date);

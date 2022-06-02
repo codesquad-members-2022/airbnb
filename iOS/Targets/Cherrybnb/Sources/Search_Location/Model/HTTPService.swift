@@ -15,14 +15,14 @@ protocol HTTPService {
 struct ResponseSuccessStub: HTTPService {
 
     let dummy = [
-        Place(name: "서울", location: .makeRandomInKR(), estimatedTime: Minute(30).toSeconds),
-        Place(name: "광주", location: .makeRandomInKR(), estimatedTime: Hour(4).toSeconds),
-        Place(name: "의정부시", location: .makeRandomInKR(), estimatedTime: Minute(30).toSeconds),
-        Place(name: "수원시", location: .makeRandomInKR(), estimatedTime: Minute(45).toSeconds),
-        Place(name: "대구", location: .makeRandomInKR(), estimatedTime: Hour(3.5).toSeconds),
-        Place(name: "울산", location: .makeRandomInKR(), estimatedTime: Hour(3.5).toSeconds),
-        Place(name: "대전", location: .makeRandomInKR(), estimatedTime: Hour(2).toSeconds),
-        Place(name: "부천시", location: .makeRandomInKR(), estimatedTime: Minute(30).toSeconds)
+        Place(name: "서울", location: .makeRandomInKR(), estimatedTime: 30 * 60),
+        Place(name: "광주", location: .makeRandomInKR(), estimatedTime: 4 * 60 * 60),
+        Place(name: "의정부시", location: .makeRandomInKR(), estimatedTime: 30 * 60),
+        Place(name: "수원시", location: .makeRandomInKR(), estimatedTime: 45 * 60),
+        Place(name: "대구", location: .makeRandomInKR(), estimatedTime: 3.5 * 60 * 60),
+        Place(name: "울산", location: .makeRandomInKR(), estimatedTime: 4.5 * 60 * 60),
+        Place(name: "대전", location: .makeRandomInKR(), estimatedTime: 2 * 60 * 60),
+        Place(name: "부천시", location: .makeRandomInKR(), estimatedTime: 30 * 60)
     ]
 
     func getRecommendation(for location: Location, completion: @escaping ([Place]?) -> Void) {

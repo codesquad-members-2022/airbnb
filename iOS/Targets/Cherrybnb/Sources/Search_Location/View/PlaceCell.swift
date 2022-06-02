@@ -15,7 +15,7 @@ class PlaceCell: UICollectionViewCell {
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "Place_thumb_1")
+        imageView.image = UIImage.recommendationDefault
         imageView.layer.cornerRadius = 10
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -24,7 +24,7 @@ class PlaceCell: UICollectionViewCell {
     lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 17)
+        label.font = UIFont.cherrybnbBody
         label.text = "서울"
         return label
     }()
@@ -32,7 +32,7 @@ class PlaceCell: UICollectionViewCell {
     lazy var distanceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 17)
+        label.font = UIFont.cherrybnbBody
         label.textColor = .systemGray
         label.text = "차로 30분 거리"
         return label
@@ -76,7 +76,9 @@ class PlaceCell: UICollectionViewCell {
 
     func setPlaceCell(_ place: Place) {
         nameLabel.text = place.name
-        distanceLabel.text = "차로 \(place.estimatedTime) 분 거리"
+        let timeFormatter = TimeFormatter()
+        let estimatedTimeString = timeFormatter.string(from: place.estimatedTime) ?? "?"
+        distanceLabel.text = "차로 \(estimatedTimeString) 거리"
     }
 
 }

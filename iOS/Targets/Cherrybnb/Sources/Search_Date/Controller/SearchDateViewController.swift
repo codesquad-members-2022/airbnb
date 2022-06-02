@@ -15,7 +15,8 @@ struct QueryParameter {
 
 class SearchDateViewController: UIViewController {
 
-    let calendarPickerVC = CalendarPickerViewController(baseDate: Date(), numOfMonths: 12)
+    let calendarPickerVC = CalendarPickerViewController(baseDate: Date(), numOfMonths: CalendarPickerViewController.defaultNumberOfMonths)
+    
     lazy var queryParameterView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemGray

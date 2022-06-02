@@ -19,7 +19,7 @@ const Personnel = ({ modalOpen, setModalOpen }: props) => {
   return (
     <>
       <S.Personnel onClick={onClickHandler}>
-        <TextBox label={`인원`} text={`게스트 추가`} />
+        <TextBox label={`인원`} placeholder={`게스트 추가`} text={null} />
         <Icon iconName={X_ICON} iconSize={"base"} />
         <SearchButton />
       </S.Personnel>

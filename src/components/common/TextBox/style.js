@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const TextBox = styled.div`
   display: flex;
@@ -18,6 +18,6 @@ export const TextBoxLabel = styled.div`
 
 export const TextBoxText = styled.div`
   font-size: ${({ theme }) => theme.fontSize.base};
-  font-weight: ${({ theme }) => theme.fontWeight.base};
   color: ${({ theme }) => theme.color.gray2};
+  font-weight: ${({ theme, placeholder }) => (placeholder ? theme.fontWeight.base : theme.fontWeight.bold)};
 `;

@@ -1,17 +1,29 @@
-import X_ICON from "@assets/x-icon.svg";
+import { useRef } from "react";
+
 import Calendar from "@components/Calendar";
-import Icon from "@components/common/Icon";
 import Modal from "@components/common/Modal";
 import TextBox from "@components/common/TextBox";
+import { useCalendarState } from "@contexts/CalendarProvider";
 
 import * as S from "./style";
 
-interface props {
+type Props = {
   modalOpen: number;
   setModalOpen: React.Dispatch<React.SetStateAction<number>>;
+};
+
+// 어디에 모아두는 것이 좋을까
+enum Modals {
+  NONE,
+  PERIOD,
+  PRICE,
+  PERSONNEL,
 }
 
-const Period = ({ modalOpen, setModalOpen }: props) => {
+const Period = ({ modalOpen, setModalOpen }: Props) => {
+  const { checkIn, checkOut } = useCalendarState();
+  const today = useRef(new Date());
+
   const onClickHandler = () => {
     setModalOpen(1);
   };
@@ -19,26 +31,16 @@ const Period = ({ modalOpen, setModalOpen }: props) => {
   return (
     <>
       <S.Period onClick={onClickHandler}>
-        <CheckIn />
-        <CheckOut />
-        <Icon iconName={X_ICON} iconSize={"base"} />
+        <TextBox label={`체크인`} placeholder={`날짜 입력`} text={checkIn} />
+        <TextBox label={`체크아웃`} placeholder={`날짜 입력`} text={checkOut} />
       </S.Period>
       {modalOpen === 1 && (
         <Modal setModalOpen={setModalOpen}>
-          <Calendar />
+          <Calendar today={today.current} />
         </Modal>
       )}
     </>
   );
-};
-
-// useModal()
-
-const CheckIn = () => {
-  return <TextBox label={`체크인`} text={`날짜 입력`} />;
-};
-const CheckOut = () => {
-  return <TextBox label={`체크아웃`} text={`날짜 입력`} />;
 };
 
 export default Period;

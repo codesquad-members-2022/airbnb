@@ -27,7 +27,8 @@ const Price = ({ modalOpen, setModalOpen }: props) => {
   return (
     <>
       <S.Price onClick={onClickHandler}>
-        <TextBox label={`요금`} text={`금액대 설정`} />
+        {/* <TextBox label={`요금`} placeholders={`금액대 설정`} text={null} /> */}
+        <TextBox label={`요금`} placeholder={`금액대 설정`} text={null} />
         <Icon iconName={X_ICON} iconSize={"base"} />
       </S.Price>
       {modalOpen === 2 && (

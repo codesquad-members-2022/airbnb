@@ -1,5 +1,5 @@
 import React, { useMemo, useReducer } from 'react';
-import { compareDate } from 'utility/dateUtil';
+import { compareDate, changeLocalDateStr } from 'utility/dateUtil';
 
 export const CalendarContext = React.createContext();
 
@@ -32,7 +32,7 @@ function CalendarProvider({ children }) {
   );
 
   function handelClickEvent(year, month, date) {
-    const selectedDate = new Date(year, month - 1, date).toLocaleDateString();
+    const selectedDate = changeLocalDateStr(year, month - 1, date);
 
     if (!inputDate.checkIn || compareDate(inputDate.checkIn, selectedDate)) {
       dispatchInputDate({
@@ -47,8 +47,11 @@ function CalendarProvider({ children }) {
     }
   }
 
-  // 리셋 함수 작성 중...
-  function handelResetEvent() {}
+  function handelResetEvent() {
+    dispatchInputDate({
+      type: 'RESET_INPUT',
+    });
+  }
 
   const calendarReducerValue = useMemo(() => {
     return {

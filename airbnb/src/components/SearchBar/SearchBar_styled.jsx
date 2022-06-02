@@ -10,7 +10,7 @@ const ContentBox = styled.div`
   flex-direction: column;
   text-align: center;
   align-items: flex-start;
-  padding-left: 15px;
+  margin-left: 40px;
   border: 1px solid #e0e0e0;
   border-top-style: none;
   border-left-style: none;

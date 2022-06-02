@@ -66,4 +66,12 @@ public class Room {
     public BigDecimal calculateAveragePerDay() {
         return this.getRoomPriceCondition().calculateAvgPricePerDay();
     }
+
+    public int getReviewCount() {
+        return reviews.size();
+    }
+
+    public BigDecimal getTotalPrice() {
+        return roomPriceCondition.calculateTotalPrice();
+    }
 }

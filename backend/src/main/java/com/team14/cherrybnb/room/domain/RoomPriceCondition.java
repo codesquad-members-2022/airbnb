@@ -27,4 +27,8 @@ public class RoomPriceCondition {
                 .add(weekendPrice)
                 .divide(new BigDecimal(2), 2, RoundingMode.FLOOR);
     }
+
+    public BigDecimal calculateTotalPrice() {
+        return null;
+    }
 }

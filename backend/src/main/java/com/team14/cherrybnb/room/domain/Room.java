@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -38,10 +39,14 @@ public class Room {
     private Member member;
 
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
-    private List<RoomImage> roomImages;
+    private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    private List<RoomImage> roomImages = new ArrayList<>();
 
     public Room(String name, RoomInfo roomInfo, String description,
                 RoomPriceCondition roomPriceCondition, Address address) {
+
         this.name = name;
         this.roomInfo = roomInfo;
         this.description = description;

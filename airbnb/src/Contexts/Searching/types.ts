@@ -15,11 +15,13 @@ export interface SearchContextDispatch {
   customersDispatch: Dispatch<CustomerAction>;
   getStartDateAction(startDate: Date): CalenderAction;
   getEndDateAction(endDate: Date): CalenderAction;
+  getScheduleDisplayAction(): CalenderAction;
 }
 
 export interface CalenderState {
   startDate: Date | null;
   endDate: Date | null;
+  displaySchedule: boolean;
 }
 
 export interface PriceState {
@@ -38,6 +40,7 @@ export interface CustomerState {
 export type CalenderAction =
   | { type: 'SET_START_DATE'; date: Date }
   | { type: 'SET_END_DATE'; date: Date }
+  | { type: 'SET_DISPLAY' }
   | { type: 'RESET' };
 
 export type PriceAction =

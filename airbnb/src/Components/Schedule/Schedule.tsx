@@ -10,6 +10,7 @@ export function Schedule({
   endDate,
   setStartDate,
   setEndDate,
+  displaySchedule,
 }: ScheduleProps): JSX.Element {
   const { changeCurrentDate, currentDate } = useCurrentDate();
 
@@ -19,8 +20,9 @@ export function Schedule({
       endDate={endDate}
       setStartDate={setStartDate}
       setEndDate={setEndDate}
+      displaySchedule={displaySchedule}
     >
-      <S.ScheduleWrapper>
+      <S.ScheduleWrapper shouldDisplay={displaySchedule}>
         <S.BackButton type="button" onClick={changeCurrentDate(-1)}>
           <ArrowBackIosRoundedIcon fontSize="small" />
         </S.BackButton>

@@ -1,10 +1,14 @@
 import styled, { css } from 'styled-components';
 
-export const ScheduleWrapper = styled.div`
+type ScheduleWrapperProp = {
+  shouldDisplay: boolean;
+};
+
+export const ScheduleWrapper = styled.div<ScheduleWrapperProp>`
   position: absolute;
   left: 0;
   top: 76px;
-  display: flex;
+  display: ${({ shouldDisplay }) => (shouldDisplay ? 'flex' : 'none')};
   justify-content: space-between;
   height: 512px;
   width: 916px;

@@ -12,10 +12,14 @@ import { SearchButton } from './SearchButton';
 
 export function SearchBar() {
   const {
-    calendar: { startDate, endDate },
+    calendar: { startDate, endDate, displaySchedule },
   } = useNullGuard(SearchingContext);
-  const { getStartDateAction, getEndDateAction, calendarDispatch } =
-    useNullGuard(SearchingDispatchContext);
+  const {
+    getStartDateAction,
+    getEndDateAction,
+    getScheduleDisplayAction,
+    calendarDispatch,
+  } = useNullGuard(SearchingDispatchContext);
 
   const dateDispatch =
     (action: (date: Date) => CalenderAction) => (date: Date) => {
@@ -29,6 +33,7 @@ export function SearchBar() {
         endDate={endDate}
         setStartDate={dateDispatch(getStartDateAction)}
         setEndDate={dateDispatch(getEndDateAction)}
+        displaySchedule={displaySchedule}
       />
 
       <SearchBarItem
@@ -39,6 +44,9 @@ export function SearchBar() {
             : '날짜 입력'
         }
         width={112}
+        onClick={() => {
+          calendarDispatch(getScheduleDisplayAction());
+        }}
       />
       <SearchBarItem
         title="체크아웃"
@@ -48,6 +56,9 @@ export function SearchBar() {
             : '날짜 입력'
         }
         width={112}
+        onClick={() => {
+          calendarDispatch(getScheduleDisplayAction());
+        }}
       />
       {/* TODO: 클로즈 버튼 컴포넌트 생성 */}
       <S.CloseButton type="button">

@@ -20,6 +20,7 @@ export const searchBarItem = styled.div<SearchBarItem>`
   padding: 16px 24px;
   padding-right: 0;
   width: ${({ width }) => width}px;
+  cursor: pointer;
 `;
 
 export const itemTitle = styled.div`

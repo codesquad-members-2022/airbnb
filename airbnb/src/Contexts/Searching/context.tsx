@@ -31,21 +31,16 @@ export function SearchingProvider({
     calendarInitialState,
   );
 
-  const getStartDateAction = (startDate: Date) => {
-    const action: TYPE.CalenderAction = {
-      type: 'SET_START_DATE',
-      date: startDate,
-    };
-    return action;
+  const getStartDateAction = (startDate: Date): TYPE.CalenderAction => {
+    return { type: 'SET_START_DATE', date: startDate };
   };
 
-  const getEndDateAction = (endDate: Date) => {
-    const action: TYPE.CalenderAction = {
-      type: 'SET_END_DATE',
-      date: endDate,
-    };
+  const getEndDateAction = (endDate: Date): TYPE.CalenderAction => {
+    return { type: 'SET_END_DATE', date: endDate };
+  };
 
-    return action;
+  const getScheduleDisplayAction = (): TYPE.CalenderAction => {
+    return { type: 'SET_DISPLAY' };
   };
 
   const [price, priceDispatch] = useReducer(priceReducer, priceInitialState);
@@ -64,6 +59,7 @@ export function SearchingProvider({
           customersDispatch,
           getStartDateAction,
           getEndDateAction,
+          getScheduleDisplayAction,
         }}
       >
         {children}

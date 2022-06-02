@@ -11,8 +11,11 @@ import Foundation
 struct CalendarPicker {
 
     private var months: [Month]
-
-    init(baseDate: Date, numOfMonths: Int, calendar: Calendar = Calendar.current) {
+    
+    var didSelectDate: ((dateSelection) -> Void)?
+    
+    init(baseDate: Date, numOfMonths: Int, calendar: Calendar = Calendar.current, didSelectDate: ((dateSelection) -> Void)? = nil) {
+        
         let firstMonth = Month(baseDate: baseDate)
 
         let afterMonths: [Month] = (1..<numOfMonths).map { offset in
@@ -21,6 +24,7 @@ struct CalendarPicker {
         }
 
         self.months = [firstMonth] + afterMonths
+        self.didSelectDate = didSelectDate
     }
 
     var monthCount: Int {

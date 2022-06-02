@@ -8,6 +8,8 @@
 
 import UIKit
 
+typealias dateSelection = (checkIn: Date, checkOut: Date?)
+
 class CalendarPickerViewController: UIViewController {
 
     static let defaultNumberOfMonths = 12
@@ -32,19 +34,17 @@ class CalendarPickerViewController: UIViewController {
         return collectionView
     }()
 
-    let calendarPicker: CalendarPicker
-
-    var didSelectDate: ((Date) -> Void)?
-    var didSelectDataRange: ((Range<Date>) -> Void)?
-
+    var calendarPicker: CalendarPicker
+    
     init(baseDate: Date, numOfMonths: Int,
-         didDateSelect: ((Date) -> Void)? = nil,
-         didDataRangeSelect: ((Range<Date>) -> Void)? = nil) {
-        self.calendarPicker = CalendarPicker(baseDate: baseDate, numOfMonths: numOfMonths)
+         didSelectDate: ((dateSelection) -> Void)? = nil) {
+        self.calendarPicker = CalendarPicker(baseDate: baseDate, numOfMonths: numOfMonths, didSelectDate: didSelectDate)
 
-        self.didSelectDate = didDateSelect
-        self.didSelectDataRange = didDataRangeSelect
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    func setSelectionHandler(_ didSelectDate: ((dateSelection) -> Void)?) {
+        self.calendarPicker.didSelectDate = didSelectDate
     }
 
     required init?(coder: NSCoder) {
@@ -53,8 +53,7 @@ class CalendarPickerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+
         setSubviews()
         setLayout()
     }

@@ -14,3 +14,13 @@ export const SEARCH_BAR_SIZE: { [key: string]: string } = {
   SMALL: 'SMALL',
   LARGE: 'LARGE',
 };
+
+export const CHART_TYPE = {
+  LINE: 'LINE',
+  BAR: 'BAR',
+};
+
+export const CANVAS_SIZE = {
+  canvasWidth: 365,
+  canvasHeight: 100,
+}

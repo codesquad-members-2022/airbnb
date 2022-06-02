@@ -10,3 +10,4 @@ export { footerContent, companyInfo } from '@data/footerData';
 export type { FooterContentTypes, CompanyInfoTypes } from '@data/footerData';
 export { mainContentData } from '@data/MainContentData';
 export type { MainContentDataType } from '@data/MainContentData';
+export { rangeData } from '@data/rangeData';

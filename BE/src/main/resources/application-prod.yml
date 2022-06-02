@@ -1,8 +1,9 @@
 spring:
-  profiles:
-    active: prod
+  config:
+    activate:
+      on-profile: prod
 
-  datasource: # 암호화
+  datasource:
     url: jdbc:mysql://ahoo-airbnb-mysql.cez5xmumdaq7.ap-northeast-2.rds.amazonaws.com:3306/airbnb
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ahoo

@@ -1,12 +1,13 @@
 spring:
-  profiles:
-    active: dev
+  config:
+    activate:
+      on-profile: dev
 
   datasource:
-  url: jdbc:mysql://0.0.0.0:3306/airbnb
-  driver-class-name: com.mysql.cj.jdbc.Driver
-  username: root
-  password: 1234
+    url: jdbc:mysql://0.0.0.0:3306/airbnb
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
 
   sql:
     init:

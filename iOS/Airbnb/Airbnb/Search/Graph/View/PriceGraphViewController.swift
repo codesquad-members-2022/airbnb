@@ -13,7 +13,8 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
     private let viewPadding: CGFloat = 16
     
     private let graph = ColumnGraphView()
-    private var editableWidth: Constraint?
+    private var editableLeading: Constraint?
+    private var editableTrailing: Constraint?
     private var slider = CustomRangeSlider(frame: .zero)
     
     // 그래프의 선택되지 않는 희미한 부분
@@ -85,15 +86,16 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
             make.height.equalTo(100)
         }
         
+        graph.layoutIfNeeded()
+        
         lightGrayView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
 
         semanticGrayView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
-            $0.leading.equalTo(graph)
-//            self.editableWidth = $0.width.equalTo(self.graph.frame.width * CGFloat(self.slider.value)).constraint
-            self.editableWidth = $0.width.equalTo(self.graph.frame.width).constraint
+            self.editableLeading = $0.leading.equalTo(graph).inset(graph.frame.width * slider.lowerValue).constraint
+            self.editableTrailing = $0.trailing.equalTo(graph).inset(graph.frame.width * (slider.maximumValue - slider.upperValue)).constraint
         }
         
         slider.snp.makeConstraints { make in
@@ -110,7 +112,7 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
     }
     
     func bind() {
-//        slider.addTarget(self, action: #selector(sliderValueChanged(_:)), for: .valueChanged)
+        slider.addTarget(self, action: #selector(sliderValueChanged(_:)), for: .valueChanged)
     }
     
     private func priceLabel(_ labelText: String) -> UILabel {
@@ -123,10 +125,9 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
         return label
     }
     
-    @objc func sliderValueChanged(_ sender: UISlider) {
-//        let width = self.graph.frame.width * CGFloat(slider.value)
-        let width = self.graph.frame.width
-        self.editableWidth?.update(offset: width)
+    @objc func sliderValueChanged(_ sender: CustomRangeSlider) {
+        self.editableLeading?.update(inset: sender.lowerValue * graph.frame.width)
+        self.editableTrailing?.update(inset: (sender.maximumValue - sender.upperValue) * graph.frame.width)
         super.updateViewConstraints()
     }
 }

@@ -37,6 +37,11 @@ class CustomRangeSlider: UIControl {
         upperThumbLayer.backgroundColor = UIColor.getGrayScale(.Grey1)?.cgColor
         layer.addSublayer(upperThumbLayer)
         
+        if let thumbImage = UIImage(named: "PauseCircle") {
+            lowerThumbLayer.backgroundColor = UIColor(patternImage: thumbImage).cgColor
+            upperThumbLayer.backgroundColor = UIColor(patternImage: thumbImage).cgColor
+        }
+        
         updateLayerFrames()
     }
     
@@ -111,6 +116,8 @@ class CustomRangeSlider: UIControl {
         updateLayerFrames()
         
         CATransaction.commit()
+        
+        sendActions(for: .valueChanged)
         
         return true
     }

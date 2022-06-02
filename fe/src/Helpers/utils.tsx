@@ -1,20 +1,10 @@
 import { MONTH_DICTIONARY } from "./constant";
+import { FlexBoxPropertyType, FlexType } from "Helpers/interface";
 
-interface FlexBoxPropertyType {
-  justify?: string;
-  align?: string;
-  direction?: string;
-  wrap?: string;
-}
-
-export interface FlexBoxType extends FlexBoxPropertyType {
-  flex: boolean;
-}
-
-export function applyFlex({ flex, justify, align, direction, wrap }: FlexBoxType) {
+export function applyFlex({ flex, justify, align, direction, wrap, grow }: FlexType) {
   return (
     flex &&
-    `${getFlexTemplate({ justify, align, direction, wrap })}
+    `${getFlexTemplate({ justify, align, direction, wrap, grow })}
     `
   );
 }
@@ -24,6 +14,7 @@ function getFlexTemplate({
   align = "stretch",
   direction = "row",
   wrap = "nowrap",
+  grow = "0",
 }: FlexBoxPropertyType) {
   return `
     display: flex;
@@ -31,6 +22,7 @@ function getFlexTemplate({
     align-items: ${align};
     flex-direction: ${direction};
     flex-wrap:${wrap}
+    flex-grow:${grow}
   `;
 }
 

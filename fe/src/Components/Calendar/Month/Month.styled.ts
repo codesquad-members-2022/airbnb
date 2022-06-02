@@ -1,4 +1,5 @@
-import { applyFlex, FlexBoxType } from "Helpers/utils";
+import { FlexType } from "Helpers/interface";
+import { applyFlex } from "Helpers/utils";
 import styled from "styled-components";
 
 interface ButtonType {
@@ -10,7 +11,7 @@ export const Monthly = styled.div`
 `;
 
 export const YearMonthArea = styled.div`
-  ${({ flex, justify }: FlexBoxType) => applyFlex({ flex, justify })};
+  ${({ flex, justify }: FlexType) => applyFlex({ flex, justify })};
   width: 90%;
   height: 40px;
   margin-bottom: 40px;

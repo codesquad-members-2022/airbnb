@@ -1,4 +1,4 @@
-package com.codesquad.airbnb.room;
+package com.codesquad.airbnb.room.repository;
 
 import static com.codesquad.airbnb.district.QDistrict.district;
 import static com.codesquad.airbnb.reservation.QReservation.reservation;

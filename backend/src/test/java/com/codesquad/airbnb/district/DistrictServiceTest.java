@@ -6,6 +6,7 @@ import com.codesquad.airbnb.common.embeddable.Location;
 import com.codesquad.airbnb.common.embeddable.ReviewStat;
 import com.codesquad.airbnb.config.TestConfig;
 import com.codesquad.airbnb.district.District.DistrictType;
+import com.codesquad.airbnb.district.dto.DistrictResponse;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

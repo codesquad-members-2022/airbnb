@@ -1,5 +1,7 @@
 package com.codesquad.airbnb.tag;
 
+import com.codesquad.airbnb.tag.dto.TagResponse;
+import com.codesquad.airbnb.tag.entity.Tag;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;

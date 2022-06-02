@@ -1,5 +1,6 @@
 package com.codesquad.airbnb.tag;
 
+import com.codesquad.airbnb.tag.dto.TagResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

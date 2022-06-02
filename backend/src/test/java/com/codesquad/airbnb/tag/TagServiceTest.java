@@ -3,6 +3,8 @@ package com.codesquad.airbnb.tag;
 import static org.assertj.core.api.BDDAssertions.then;
 
 import com.codesquad.airbnb.config.TestConfig;
+import com.codesquad.airbnb.tag.dto.TagResponse;
+import com.codesquad.airbnb.tag.entity.Tag;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

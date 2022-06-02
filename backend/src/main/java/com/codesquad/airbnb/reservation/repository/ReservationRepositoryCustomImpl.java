@@ -1,9 +1,10 @@
-package com.codesquad.airbnb.reservation;
+package com.codesquad.airbnb.reservation.repository;
 
 import static com.codesquad.airbnb.reservation.QReservation.reservation;
 import static com.codesquad.airbnb.room.entity.QRoom.room;
 
 import com.codesquad.airbnb.common.embeddable.StayDate;
+import com.codesquad.airbnb.reservation.Reservation;
 import com.codesquad.airbnb.reservation.Reservation.ReservationState;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;

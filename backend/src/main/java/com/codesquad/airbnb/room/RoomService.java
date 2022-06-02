@@ -4,6 +4,7 @@ import com.codesquad.airbnb.room.dto.RoomDetailResponse;
 import com.codesquad.airbnb.room.dto.RoomSearCondition;
 import com.codesquad.airbnb.room.dto.RoomSearchResponse;
 import com.codesquad.airbnb.room.entity.Room;
+import com.codesquad.airbnb.room.repository.RoomRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;

@@ -1,5 +1,6 @@
-package com.codesquad.airbnb.tag;
+package com.codesquad.airbnb.tag.dto;
 
+import com.codesquad.airbnb.tag.entity.Tag;
 import lombok.Getter;
 
 @Getter

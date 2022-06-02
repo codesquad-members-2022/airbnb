@@ -1,4 +1,4 @@
-package com.codesquad.airbnb.room;
+package com.codesquad.airbnb.room.repository;
 
 import com.codesquad.airbnb.room.entity.Room;
 import java.util.Optional;

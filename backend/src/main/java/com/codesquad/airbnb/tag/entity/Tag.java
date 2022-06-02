@@ -1,4 +1,4 @@
-package com.codesquad.airbnb.tag;
+package com.codesquad.airbnb.tag.entity;
 
 import java.util.List;
 import javax.persistence.Column;

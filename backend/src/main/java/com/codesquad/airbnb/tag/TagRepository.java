@@ -1,5 +1,6 @@
 package com.codesquad.airbnb.tag;
 
+import com.codesquad.airbnb.tag.entity.Tag;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

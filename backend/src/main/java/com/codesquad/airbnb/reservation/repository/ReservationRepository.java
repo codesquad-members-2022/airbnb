@@ -1,5 +1,6 @@
-package com.codesquad.airbnb.reservation;
+package com.codesquad.airbnb.reservation.repository;
 
+import com.codesquad.airbnb.reservation.Reservation;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

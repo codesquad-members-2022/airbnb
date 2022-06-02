@@ -1,4 +1,4 @@
-package com.codesquad.airbnb.district;
+package com.codesquad.airbnb.district.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

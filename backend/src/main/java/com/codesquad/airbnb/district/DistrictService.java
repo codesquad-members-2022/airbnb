@@ -2,6 +2,7 @@ package com.codesquad.airbnb.district;
 
 import com.codesquad.airbnb.common.embeddable.Location;
 import com.codesquad.airbnb.common.embeddable.ReviewStat;
+import com.codesquad.airbnb.district.dto.DistrictResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

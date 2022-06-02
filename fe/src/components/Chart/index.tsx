@@ -4,8 +4,6 @@ import bzCurve from './bzCurve';
 import Drawer from './Drawer';
 import * as S from './style';
 
-const WIDTH = 500;
-const HEIGHT = 500;
 const PRIMARY = '#333';
 const SECONDARY = '#e5e5e5';
 const options: Options = {
@@ -13,31 +11,36 @@ const options: Options = {
   outerFillStyle: SECONDARY,
 };
 
-function Chart() {
+interface Props {
+  chartData: Point[];
+  width: number;
+  height: number;
+}
+
+function Chart({ chartData, width = 0, height = 0 }: Props) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
 
-  // TODO: data, canvasHeight도 옮기기
-  const createDrawFunc: CreateDrawFunc = (context, opts) => (data, min, max, canvasHeight) => {
-    console.log('[Draw Chart]');
-    bzCurve(context, data, min, max, canvasHeight, opts);
-  };
+  const createDrawFunc: CreateDrawFunc =
+    (context, data, canvasHeight, opts) => (leftValue, rightValue) => {
+      bzCurve(context, data, leftValue, rightValue, canvasHeight, opts);
+    };
 
   useEffect(() => {
     if (!canvas.current) {
       return;
     }
 
-    // NOTE: width, height 설정 여기서.
-    canvas.current.width = 400;
-    canvas.current.height = 350;
     setCtx(canvas.current.getContext('2d'));
   }, []);
 
   return (
     <S.ChartLayer>
-      <S.Canvas ref={canvas} width={WIDTH} height={HEIGHT} />
-      {ctx && <Drawer draw={createDrawFunc(ctx, options)} />}
+      <S.Canvas ref={canvas} width={width} height={height} />
+      {ctx && (
+        // NOTE: 임시 Props: initialRightValue
+        <Drawer draw={createDrawFunc(ctx, chartData, height, options)} initialRightValue={width} />
+      )}
     </S.ChartLayer>
   );
 }
@@ -56,11 +59,9 @@ interface Options {
 }
 
 interface CreateDrawFunc {
-  (context: CanvasRenderingContext2D, opts: Options): (
-    data: Point[],
-    min: number,
-    max: number,
-    CANVAS_HEIGHT: number,
+  (context: CanvasRenderingContext2D, data: Point[], CANVAS_HEIGHT: number, opts: Options): (
+    leftValue: number,
+    rightValue: number,
   ) => void;
 }
 

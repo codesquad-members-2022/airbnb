@@ -45,8 +45,14 @@ public class ReservationDetailResponse {
             imagePaths,
             reservation.getTotalCharge(),
             reservation.getGuestGroup().getNumberGuest(),
-            reservation.getStayDateTime().getCheckinDateTime(),
-            reservation.getStayDateTime().getCheckoutDateTime()
+            LocalDateTime.of(
+                reservation.getStayDate().getCheckinDate(),
+                reservation.getStayTime().getCheckinTime()
+            ),
+            LocalDateTime.of(
+                reservation.getStayDate().getCheckoutDate(),
+                reservation.getStayTime().getCheckoutTime()
+            )
         );
     }
 }

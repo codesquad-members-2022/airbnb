@@ -1,9 +1,9 @@
 package com.codesquad.airbnb.room.entity;
 
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
+import com.codesquad.airbnb.common.embeddable.StayTime;
 import com.codesquad.airbnb.room.entity.embeddable.RoomGroup;
 import com.codesquad.airbnb.room.entity.embeddable.RoomOption;
-import com.codesquad.airbnb.room.entity.embeddable.StayTime;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -51,4 +51,9 @@ public class RoomDetail {
         this.option = option;
         this.stayTime = stayTime;
     }
+
+    public void validateGuestGroup(GuestGroup guestGroup) {
+        this.guestGroup.validateNumberGuest(guestGroup);
+    }
+
 }

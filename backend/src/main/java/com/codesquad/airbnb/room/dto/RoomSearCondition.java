@@ -2,7 +2,7 @@ package com.codesquad.airbnb.room.dto;
 
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.Location;
-import java.time.LocalDate;
+import com.codesquad.airbnb.common.embeddable.StayDate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -40,16 +40,4 @@ public class RoomSearCondition {
         }
     }
 
-    @Getter
-    @AllArgsConstructor
-    public static class StayDate {
-
-        private LocalDate checkinDate;
-        private LocalDate checkoutDate;
-
-        public boolean isNull() {
-            return checkinDate == null && checkoutDate == null;
-        }
-
-    }
 }

@@ -32,8 +32,14 @@ public class ReservationListResponse {
             room.getName(),
             room.getDistrict().getAddress(),
             room.getImagePath(),
-            reservation.getStayDateTime().getCheckinDateTime(),
-            reservation.getStayDateTime().getCheckoutDateTime()
+            LocalDateTime.of(
+                reservation.getStayDate().getCheckinDate(),
+                reservation.getStayTime().getCheckinTime()
+            ),
+            LocalDateTime.of(
+                reservation.getStayDate().getCheckoutDate(),
+                reservation.getStayTime().getCheckoutTime()
+            )
         );
     }
 }

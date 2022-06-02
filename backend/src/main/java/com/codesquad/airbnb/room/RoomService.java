@@ -23,7 +23,7 @@ public class RoomService {
     }
 
     public RoomDetailResponse findRoom(Integer roomId) {
-        Room room = roomRepository.findByIdWithDetail(roomId)
+        Room room = roomRepository.findByIdWithDetailAndDistrictAndImages(roomId)
             .orElseThrow(() -> new IllegalStateException("숙소 정보가 존재하지 않습니다."));
 
         return RoomDetailResponse.from(room);

@@ -18,6 +18,7 @@ export function SearchBar() {
     getStartDateAction,
     getEndDateAction,
     getScheduleDisplayAction,
+    getResetScheduleAction,
     calendarDispatch,
   } = useNullGuard(SearchingDispatchContext);
 
@@ -61,7 +62,12 @@ export function SearchBar() {
         }}
       />
       {/* TODO: 클로즈 버튼 컴포넌트 생성 */}
-      <S.CloseButton type="button">
+      <S.CloseButton
+        type="button"
+        onClick={() => {
+          calendarDispatch(getResetScheduleAction());
+        }}
+      >
         <CloseRoundedIcon sx={{ fontSize: '13px' }} />
       </S.CloseButton>
       <S.line />

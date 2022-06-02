@@ -16,6 +16,7 @@ export interface SearchContextDispatch {
   getStartDateAction(startDate: Date): CalenderAction;
   getEndDateAction(endDate: Date): CalenderAction;
   getScheduleDisplayAction(): CalenderAction;
+  getResetScheduleAction(): CalenderAction;
 }
 
 export interface CalenderState {

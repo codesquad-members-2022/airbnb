@@ -34,7 +34,10 @@ export const calenderReducer = (
       return { ...state, displaySchedule: !state.displaySchedule };
 
     case 'RESET':
-      return { ...calendarInitialState };
+      return {
+        ...calendarInitialState,
+        displaySchedule: state.displaySchedule,
+      };
     // no default
   }
 };

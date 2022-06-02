@@ -10,45 +10,39 @@ import Foundation
 
 extension CalendarPicker {
     struct Month {
-        var numberOfNonEmptyDays: Int
+        var numberOfDays: Int
         let firstDay: Date
         let firstDayWeekday: Int
         let days: [Day]
-        
-        init(basedate: Date) throws {
-            guard let numberOfDaysInMonth = CalendarPicker.KRCalendar.getNumberOfDaysInMonth(for: basedate),
-                  let firstDayOfMonth = CalendarPicker.KRCalendar.getFirstDayOfMonth(for: basedate) else {
-                throw CalendarPickerError.metadataGeneration
-            }
 
-            let firstDayWeekday = CalendarPicker.KRCalendar.getWeekDay(of: firstDayOfMonth)
+        init(baseDate: Date) {
+            let numberOfDaysInMonth = Calendar.current.getNumberOfDaysInMonth(for: baseDate)
+            let firstDayOfMonth = Calendar.current.getFirstDayOfMonth(for: baseDate)
+            let firstDayWeekday = Calendar.current.getWeekDay(of: firstDayOfMonth)
 
-            self.numberOfNonEmptyDays = numberOfDaysInMonth
+            self.numberOfDays = numberOfDaysInMonth
             self.firstDay = firstDayOfMonth
             self.firstDayWeekday = firstDayWeekday
-            
-            let emptyDays = (1..<firstDayWeekday).map { _ in
-                return Day(date: nil, isSelected: false, isPast: nil)
+
+            let daysOfLastMonth: [Day] = (1..<firstDayWeekday).reversed().map { offset in
+                let date = Calendar.current.getNextDay(for: firstDayOfMonth, offsetBy: -offset) ?? firstDayOfMonth
+                return Day(date: date, isSelected: false, isPast: true, isHidden: true)
             }
 
-            let days: [Day] = (0..<numberOfNonEmptyDays).map { offset in
-                let date = CalendarPicker.KRCalendar.getNextDay(for: firstDayOfMonth, offset: offset) ?? firstDayOfMonth
-                let isPast = date < basedate
-                return Day(date: date, isSelected: false, isPast: isPast)
+            let days: [Day] = (0..<numberOfDays).map { offset in
+                let date = Calendar.current.getNextDay(for: firstDayOfMonth, offsetBy: offset) ?? firstDayOfMonth
+                let isPast = date <  Calendar.current.startOfDay(for: baseDate)
+                return Day(date: date, isSelected: false, isPast: isPast, isHidden: false)
             }
 
-            self.days = emptyDays + days
+            self.days = daysOfLastMonth + days
         }
     }
 
     struct Day {
-        // Day가 나타내는 시점(일)
-        let date: Date?
-
-        // Calendar에서 선택되었는지 여부
-        let isSelected: Bool?
-
-        // 현재 이전 날짜인지 여부
-        let isPast: Bool?
+        let date: Date
+        let isSelected: Bool
+        let isPast: Bool
+        let isHidden: Bool
     }
 }

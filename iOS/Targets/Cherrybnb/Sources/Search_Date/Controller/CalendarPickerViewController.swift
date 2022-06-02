@@ -25,7 +25,7 @@ class CalendarPickerViewController: UIViewController {
 
         collectionView.delegate = self
         collectionView.dataSource = self
-        
+
         collectionView.isScrollEnabled = true
         return collectionView
     }()
@@ -35,8 +35,10 @@ class CalendarPickerViewController: UIViewController {
     var didSelectDate: ((Date) -> Void)?
     var didSelectDataRange: ((Range<Date>) -> Void)?
 
-    init(basedate: Date, numOfMonths: Int, didDateSelect: ((Date) -> Void)?, didDataRangeSelect: ((Range<Date>) -> Void)?) throws {
-        self.calendarPicker = try CalendarPicker(basedate: basedate, numOfMonths: numOfMonths)
+    init(baseDate: Date, numOfMonths: Int,
+         didDateSelect: ((Date) -> Void)? = nil,
+         didDataRangeSelect: ((Range<Date>) -> Void)? = nil) {
+        self.calendarPicker = CalendarPicker(baseDate: baseDate, numOfMonths: numOfMonths)
 
         self.didSelectDate = didDateSelect
         self.didSelectDataRange = didDataRangeSelect
@@ -49,10 +51,12 @@ class CalendarPickerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         setSubviews()
         setLayout()
     }
-    
+
     private func setSubviews() {
         view.addSubview(collectionView)
     }

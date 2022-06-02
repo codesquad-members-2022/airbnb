@@ -3,6 +3,8 @@ package com.codesquad.airbnb.reservation;
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.StayDate;
 import com.codesquad.airbnb.common.embeddable.StayTime;
+import com.codesquad.airbnb.exception.ErrorCode;
+import com.codesquad.airbnb.exception.unchecked.NotAvailableException;
 import com.codesquad.airbnb.member.Member;
 import com.codesquad.airbnb.room.entity.Room;
 import javax.persistence.Column;
@@ -67,7 +69,7 @@ public class Reservation {
 
     public void cancel() {
         if (this.state != ReservationState.BOOKED) {
-            throw new IllegalStateException("예약된 상태가 아니므로 취소할 수 없습니다.");
+            throw new NotAvailableException(ErrorCode.RESERVATION_NOT_CANCELED);
         }
 
         this.state = ReservationState.CANCELED;

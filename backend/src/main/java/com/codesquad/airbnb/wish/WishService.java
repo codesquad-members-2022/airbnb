@@ -1,5 +1,8 @@
 package com.codesquad.airbnb.wish;
 
+import com.codesquad.airbnb.exception.ErrorCode;
+import com.codesquad.airbnb.exception.unchecked.NotAvailableException;
+import com.codesquad.airbnb.exception.unchecked.NotFoundException;
 import com.codesquad.airbnb.member.Member;
 import com.codesquad.airbnb.member.MemberRepository;
 import com.codesquad.airbnb.member.dto.WishResponse;
@@ -29,10 +32,10 @@ public class WishService {
     @Transactional
     public Wish addWish(Integer memberId, Integer roomId) {
         Member member = memberRepository.findById(memberId)
-            .orElseThrow(() -> new IllegalStateException("멤버 정보가 존재하지 않습니다."));
+            .orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
 
         Room room = roomRepository.findById(roomId)
-            .orElseThrow(() -> new IllegalStateException("숙소 정보가 존재하지 않습니다."));
+            .orElseThrow(() -> new NotFoundException(ErrorCode.ROOM_NOT_FOUND));
 
         return wishRepository.save(new Wish(member, room));
     }
@@ -40,7 +43,7 @@ public class WishService {
     @Transactional
     public Wish deleteWish(Integer memberId, Integer wishId) {
         Wish wish = wishRepository.findByIdWithMember(wishId)
-            .orElseThrow(() -> new IllegalStateException("위시리스트 정보가 존재하지 않습니다."));
+            .orElseThrow(() -> new NotFoundException(ErrorCode.WISH_NOT_FOUND));
 
         validateMember(wish.getMember(), memberId);
         wish.setDeleted(true);
@@ -49,7 +52,7 @@ public class WishService {
 
     private void validateMember(Member member, Integer memberId) {
         if (!member.isEqualsId(memberId)) {
-            throw new IllegalArgumentException("멤버 정보가 일치하지 않습니다.");
+            throw new NotAvailableException(ErrorCode.MEMBER_NOT_IDENTIFIED);
         }
     }
 

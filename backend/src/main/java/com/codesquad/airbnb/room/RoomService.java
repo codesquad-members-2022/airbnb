@@ -4,6 +4,8 @@ import com.codesquad.airbnb.charge.ChargeBill;
 import com.codesquad.airbnb.charge.ChargeManager;
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.StayDate;
+import com.codesquad.airbnb.exception.ErrorCode;
+import com.codesquad.airbnb.exception.unchecked.NotFoundException;
 import com.codesquad.airbnb.room.dto.RoomDetailResponse;
 import com.codesquad.airbnb.room.dto.RoomSearCondition;
 import com.codesquad.airbnb.room.dto.RoomSearchResponse;
@@ -30,14 +32,14 @@ public class RoomService {
 
     public RoomDetailResponse findRoom(Integer id) {
         Room room = roomRepository.findByIdWithDetailAndDistrictAndImages(id)
-            .orElseThrow(() -> new IllegalStateException("숙소 정보가 존재하지 않습니다."));
+            .orElseThrow(() -> new NotFoundException(ErrorCode.ROOM_NOT_FOUND));
 
         return RoomDetailResponse.from(room);
     }
 
     public ChargeBill showCharge(Integer id, StayDate stayDate, GuestGroup guestGroup) {
         Room room = roomRepository.findById(id)
-            .orElseThrow(() -> new IllegalStateException("숙소 정보가 존재하지 않습니다."));
+            .orElseThrow(() -> new NotFoundException(ErrorCode.ROOM_NOT_FOUND));
 
         return chargeManager.createBill(room, stayDate, guestGroup);
     }

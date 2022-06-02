@@ -4,6 +4,9 @@ import com.codesquad.airbnb.charge.ChargeBill;
 import com.codesquad.airbnb.charge.ChargeManager;
 import com.codesquad.airbnb.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.common.embeddable.StayDate;
+import com.codesquad.airbnb.exception.ErrorCode;
+import com.codesquad.airbnb.exception.unchecked.NotAvailableException;
+import com.codesquad.airbnb.exception.unchecked.NotFoundException;
 import com.codesquad.airbnb.member.Member;
 import com.codesquad.airbnb.member.MemberRepository;
 import com.codesquad.airbnb.reservation.Reservation.ReservationState;
@@ -37,7 +40,7 @@ public class ReservationService {
 
     public ReservationDetailResponse findReservation(int id) {
         Reservation reservation = reservationRepository.findByIdWithRoom(id)
-            .orElseThrow(() -> new IllegalStateException("예약 정보가 존재하지 않습니다."));
+            .orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
 
         return ReservationDetailResponse.from(reservation);
     }
@@ -49,10 +52,10 @@ public class ReservationService {
         validateStayDate(roomId, stayDate);
 
         Member member = memberRepository.findById(memberId)
-            .orElseThrow(() -> new IllegalStateException("멤버 정보가 존재하지 않습니다."));
+            .orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
 
         Room room = roomRepository.findByIdWithDetail(roomId)
-            .orElseThrow(() -> new IllegalStateException("숙소 정보가 존재하지 않습니다."));
+            .orElseThrow(() -> new NotFoundException(ErrorCode.ROOM_NOT_FOUND));
 
         RoomDetail detail = room.getDetail();
         detail.validateGuestGroup(guestGroup);
@@ -67,7 +70,7 @@ public class ReservationService {
     @Transactional
     public Reservation cancelReservation(Integer id) {
         Reservation reservation = reservationRepository.findById(id)
-            .orElseThrow(() -> new IllegalStateException("예약 정보가 존재하지 않습니다."));
+            .orElseThrow(() -> new NotFoundException(ErrorCode.RESERVATION_NOT_FOUND));
 
         reservation.cancel();
         return reservation;
@@ -78,7 +81,7 @@ public class ReservationService {
             roomId, stayDate);
 
         if (reservations.size() > 0) {
-            throw new IllegalArgumentException("해당 날짜에 예약할 수 없습니다.");
+            throw new NotAvailableException(ErrorCode.DATE_NOT_AVAILABLE);
         }
     }
 }

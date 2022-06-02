@@ -3,6 +3,8 @@ package com.codesquad.airbnb.district;
 import com.codesquad.airbnb.common.embeddable.Location;
 import com.codesquad.airbnb.common.embeddable.ReviewStat;
 import com.codesquad.airbnb.district.dto.DistrictResponse;
+import com.codesquad.airbnb.exception.ErrorCode;
+import com.codesquad.airbnb.exception.unchecked.BusinessException;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,9 +54,9 @@ public class DistrictRepository {
                 .map(this::rowMapper)
                 .collect(Collectors.toList());
 
-            // RuntimeException 예외 전환
+            // BusinessException 예외 전환
         } catch (ParseException e) {
-            throw new IllegalArgumentException();
+            throw new BusinessException(ErrorCode.INTERNAL_ERROR, e);
         }
     }
 

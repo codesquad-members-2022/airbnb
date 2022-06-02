@@ -1,5 +1,7 @@
 package com.codesquad.airbnb.common.embeddable;
 
+import com.codesquad.airbnb.exception.ErrorCode;
+import com.codesquad.airbnb.exception.unchecked.NotAvailableException;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
@@ -31,7 +33,7 @@ public class GuestGroup {
         if (this.numberInfant < guestGroup.numberInfant
             || this.numberChild < guestGroup.numberChild
             || this.numberAdult < guestGroup.numberAdult) {
-            throw new IllegalArgumentException("수용할 수 없는 인원입니다.");
+            throw new NotAvailableException(ErrorCode.GUEST_NOT_AVAILABLE);
         }
     }
 

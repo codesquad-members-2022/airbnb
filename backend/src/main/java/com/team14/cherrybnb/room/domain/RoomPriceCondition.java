@@ -1,7 +1,6 @@
 package com.team14.cherrybnb.room.domain;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.Embeddable;
 import java.math.BigDecimal;
@@ -19,9 +18,9 @@ public class RoomPriceCondition {
 
     private BigDecimal cleaningFee;
 
-    private BigDecimal serviceCommission;
-
-    private BigDecimal tax;
+//    private BigDecimal serviceCommission;
+//
+//    private BigDecimal tax;
 
     public BigDecimal calculateAvgPricePerDay() {
         return weekdayPrice

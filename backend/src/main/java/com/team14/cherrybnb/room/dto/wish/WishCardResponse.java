@@ -19,9 +19,9 @@ public class WishCardResponse {
     private BigDecimal pricePerDay;
 
     public WishCardResponse(Wish wish) {
-        this.starRating = new BigDecimal(5);
+        this.starRating = wish.getRoom().calculateRating();
         this.reviewCount = wish.getRoom().getReviews().size();
         this.roomName = wish.getRoom().getName();
-        this.pricePerDay = wish.getRoom().getRoomPriceCondition().calculateAvgPricePerDay();
+        this.pricePerDay = wish.getRoom().calculateAveragePerDay();
     }
 }

@@ -17,6 +17,8 @@ class CalendarPickerSpec: QuickSpec {
             var testDate: Date!
             var calendarPicker: CalendarPicker!
             
+            
+            
             beforeEach {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "YY,M,d-HH:mm:ss"
@@ -76,16 +78,22 @@ class CalendarPickerSpec: QuickSpec {
                     // Arrange
                     let firstdayOfCurrentMonth = Calendar.current.getFirstDayOfMonth(for: Date())
                     
-                    calendarPicker.didSelectDate = { dateSelection in
+                    
+                    
+                    calendarPicker.didSelectDate = { daySelection in
                         // Assert
-                        expect(dateSelection).to(equal((firstdayOfCurrentMonth, nil)))
+                        let checkIn = daySelection.checkIn
+                        let checkOut = daySelection.checkOut
+                        
+                        expect(checkIn?.date).to(equal(firstdayOfCurrentMonth))
+                        expect(checkOut).to(beNil())
                     }
                     
                     // Act
                     let currentMonthSection = 1
                     let firstDayItem = calendarPicker.getMonth(monthSection: currentMonthSection).firstDayWeekday-1
                     
-                    calendarPicker.select(monthSection: currentMonthSection, dayItem: firstDayItem)
+                    calendarPicker.select(newMonthSection: currentMonthSection, newDayItem: firstDayItem)
                 }
             }
             
@@ -96,16 +104,20 @@ class CalendarPickerSpec: QuickSpec {
                     let elevenMonthAfter = Calendar.current.getFirstDayOfMonthAfter(for: Date(), offsetBy: 10)
                     let lastDayof10MonthAfter = Calendar.current.date(byAdding: .day, value: -1, to: elevenMonthAfter)
                     
-                    calendarPicker.didSelectDate = { dateSelection in
+                    calendarPicker.didSelectDate = { daySelection in
                         // Assert
-                        expect(dateSelection).to(equal((lastDayof10MonthAfter, nil)))
+                        let checkIn = daySelection.checkIn
+                        let checkOut = daySelection.checkOut
+                        
+                        expect(checkIn?.date).to(equal(lastDayof10MonthAfter))
+                        expect(checkOut?.date).to(beNil())
                     }
                     
                     // Act
                     let section = 10
                     let lastDayItem = calendarPicker.getMonth(monthSection: section).days.count-1
                     
-                    calendarPicker.select(monthSection: section, dayItem: lastDayItem)
+                    calendarPicker.select(newMonthSection: section, newDayItem: lastDayItem)
                 }
             }
             
@@ -118,13 +130,17 @@ class CalendarPickerSpec: QuickSpec {
                     let pastDayItem = calendarPicker.getMonth(monthSection: currentMonthSection).days.firstIndex(where: { $0.isPast })!
                     
                     
-                    calendarPicker.didSelectDate = { dateSelection in
+                    calendarPicker.didSelectDate = { daySelection in
                         // Assert
-                        expect(dateSelection).to(beNil())
+                        let checkIn = daySelection.checkIn
+                        let checkOut = daySelection.checkOut
+                        
+                        expect(checkIn).to(beNil())
+                        expect(checkOut).to(beNil())
                     }
                     
                     // Act
-                    calendarPicker.select(monthSection: currentMonthSection, dayItem: pastDayItem)
+                    calendarPicker.select(newMonthSection: currentMonthSection, newDayItem: pastDayItem)
                 }
             }
             
@@ -140,13 +156,17 @@ class CalendarPickerSpec: QuickSpec {
                     let lastMonthDayItem = calendarPicker.getMonth(monthSection: currentMonthSection).days.firstIndex(where: { $0.isWithinLastMonth })!
                     
                     
-                    calendarPicker.didSelectDate = { dateSelection in
+                    calendarPicker.didSelectDate = { daySelection in
                         // Assert
-                        expect(dateSelection).to(beNil())
+                        let checkIn = daySelection.checkIn
+                        let checkOut = daySelection.checkOut
+                        
+                        expect(checkIn).to(beNil())
+                        expect(checkOut).to(beNil())
                     }
                     
                     // Act
-                    calendarPicker.select(monthSection: currentMonthSection, dayItem: lastMonthDayItem)
+                    calendarPicker.select(newMonthSection: currentMonthSection, newDayItem: lastMonthDayItem)
                 }
             }
         }
@@ -164,25 +184,29 @@ class CalendarPickerSpec: QuickSpec {
                 testDate = dateFormatter.date(from: "22,05,15-07:00:00")
                 
                 calendarPicker = CalendarPicker(baseDate: testDate, numOfMonths: 12)
-                calendarPicker.didSelectDate = { dateSelection in
-                    preSelectedDate = dateSelection.checkIn
+                calendarPicker.didSelectDate = { daySelection in
+                    preSelectedDate = daySelection.checkIn?.date
                 }
-                calendarPicker.select(monthSection: preSelectedMonthSection, dayItem: preSelectedDayItem)
+                calendarPicker.select(newMonthSection: preSelectedMonthSection, newDayItem: preSelectedDayItem)
             }
             
             context("선택된 날짜 이후의 날짜를 탭하면") {
                 it("처음 선택 날짜와 이번 선택된 날짜가 범위로 선택된다.") {
                     // Arrange
                     let afterDayIndex = preSelectedDayItem + 1
-                    let afterDate = Calendar.current.date(byAdding: .day, value: 1, to: preSelectedDate)
+                    let afterDate = Calendar.current.date(byAdding: .day, value: 1, to: preSelectedDate)!
                     
-                    calendarPicker.didSelectDate = { dateSelection in
+                    calendarPicker.didSelectDate = { daySelection in
                         // Assert
-                        expect(dateSelection).to(equal((preSelectedDate, afterDate)))
+                        let checkIn = daySelection.checkIn
+                        let checkOut = daySelection.checkOut
+                        
+                        expect(checkIn?.date).to(equal(preSelectedDate))
+                        expect(checkOut?.date).to(equal(afterDate))
                     }
                     
                     // Act
-                    calendarPicker.select(monthSection: preSelectedMonthSection, dayItem: afterDayIndex)
+                    calendarPicker.select(newMonthSection: preSelectedMonthSection, newDayItem: afterDayIndex)
                 }
             }
             
@@ -192,13 +216,17 @@ class CalendarPickerSpec: QuickSpec {
                     let beforeDayIndex = preSelectedDayItem - 5
                     let beforeDate = Calendar.current.date(byAdding: .day, value: -5, to: preSelectedDate)!
                     
-                    calendarPicker.didSelectDate = { dateSelection in
+                    calendarPicker.didSelectDate = { daySelection in
                         // Assert
-                        expect(dateSelection).to(equal((beforeDate, nil)))
+                        let checkIn = daySelection.checkIn
+                        let checkOut = daySelection.checkOut
+                        
+                        expect(checkIn?.date).to(equal(beforeDate))
+                        expect(checkOut).to(beNil())
                     }
                     
                     // Act
-                    calendarPicker.select(monthSection: preSelectedMonthSection, dayItem: beforeDayIndex)
+                    calendarPicker.select(newMonthSection: preSelectedMonthSection, newDayItem: beforeDayIndex)
                 }
             }
         }

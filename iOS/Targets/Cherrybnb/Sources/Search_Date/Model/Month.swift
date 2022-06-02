@@ -13,7 +13,7 @@ extension CalendarPicker {
         var numberOfDays: Int
         let firstDay: Date
         let firstDayWeekday: Int
-        let days: [Day]
+        var days: [Day]
 
         init(baseDate: Date, calendar: Calendar = Calendar.current) {
             let numberOfDaysInMonth = calendar.getNumberOfDaysInMonth(for: baseDate)
@@ -26,22 +26,23 @@ extension CalendarPicker {
 
             let daysOfLastMonth: [Day] = (1..<firstDayWeekday).reversed().map { offset in
                 let date = calendar.getNextDay(for: firstDayOfMonth, offsetBy: -offset) ?? firstDayOfMonth
-                return Day(date: date, isSelected: false, isPast: true, isWithinLastMonth: true)
+                return Day(date: date, isSelected: false, isBetweenSelection: false, isPast: true, isWithinLastMonth: true)
             }
 
             let days: [Day] = (0..<numberOfDays).map { offset in
                 let date = calendar.getNextDay(for: firstDayOfMonth, offsetBy: offset) ?? firstDayOfMonth
                 let isPast = date <  calendar.startOfDay(for: baseDate)
-                return Day(date: date, isSelected: false, isPast: isPast, isWithinLastMonth: false)
+                return Day(date: date, isSelected: false, isBetweenSelection: false, isPast: isPast, isWithinLastMonth: false)
             }
 
             self.days = daysOfLastMonth + days
         }
     }
 
-    struct Day {
+    struct Day: Hashable {
         let date: Date
-        let isSelected: Bool
+        var isSelected: Bool
+        var isBetweenSelection: Bool
         let isPast: Bool
         let isWithinLastMonth: Bool
     }

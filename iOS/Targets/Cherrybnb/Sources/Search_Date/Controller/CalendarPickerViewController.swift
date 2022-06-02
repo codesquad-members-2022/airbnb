@@ -8,7 +8,7 @@
 
 import UIKit
 
-typealias DateSelection = (checkIn: Date, checkOut: Date?)
+typealias DaySelection = (checkIn: CalendarPicker.Day?, checkOut: CalendarPicker.Day?)
 
 class CalendarPickerViewController: UIViewController {
 
@@ -37,15 +37,14 @@ class CalendarPickerViewController: UIViewController {
     var calendarPicker: CalendarPicker
     
     init(baseDate: Date, numOfMonths: Int,
-         didSelectDate: ((DateSelection) -> Void)? = nil) {
-        self.calendarPicker = CalendarPicker(baseDate: baseDate, numOfMonths: numOfMonths, didSelectDate: didSelectDate)
+         didSelectDate: ((DaySelection) -> Void)? = nil) {
+        self.calendarPicker = CalendarPicker(baseDate: baseDate, numOfMonths: numOfMonths)
 
+        
+        
         super.init(nibName: nil, bundle: nil)
     }
     
-    func setSelectionHandler(_ didSelectDate: ((DateSelection) -> Void)?) {
-        self.calendarPicker.didSelectDate = didSelectDate
-    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

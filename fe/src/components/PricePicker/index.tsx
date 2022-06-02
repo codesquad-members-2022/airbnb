@@ -20,6 +20,7 @@ function PricePicker() {
   const accommodationDispatch = useAccommodationDispatch();
   const { maxPrice, minPrice, maxCount, averageNightlyPrice, chartData, canvasWidth } =
     useAccommodation();
+
   useEffect(() => {
     if (!accommodationData) {
       return;

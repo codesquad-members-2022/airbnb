@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { ScheduleContext } from '@/Contexts/Schedule/context';
+import { ScheduleContext } from '@/Contexts/Schedule';
 
 // TODO: 함수, 변수 네이밍 컨벤션 체크
 export const useCurrentDate = () => {
@@ -9,7 +9,7 @@ export const useCurrentDate = () => {
     setCurrentDate(
       new Date(
         currentDate.getFullYear(),
-        currentDate.getMonth() - monthIncome,
+        currentDate.getMonth() + monthIncome,
         1,
       ),
     );

@@ -1,6 +1,6 @@
 import { Theme } from "@mui/material";
 
-const selectItemStyles = {
+const SelectItemStyle = {
   button: {
     flexDirection: "column",
     padding: 0,
@@ -19,6 +19,10 @@ const selectItemStyles = {
     color: ({ palette }: Theme) => palette.grey2.main,
     fontSize: "16px",
   },
+  border: {
+    borderRight: ({ palette }: { palette: { grey5: { main: string } } }) =>
+      `1px solid ${palette.grey5.main}`,
+  },
 };
 
-export default selectItemStyles;
+export default SelectItemStyle;

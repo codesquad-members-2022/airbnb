@@ -1,8 +1,6 @@
 import { Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-import { SearchBarContainerProps } from "@types";
-
 const SearchBarContainer = styled(Container, {
   shouldForwardProp: (prop) => prop !== "currentPage",
   name: "MyThemeComponent",
@@ -18,7 +16,15 @@ const SearchBarContainer = styled(Container, {
   background-color: ${palette.white.main};
   border: 1px solid ${palette.grey4.main};
   border-radius: calc(${elementSize.searchBar.fullSize.maxWidth} / 2);
+
+  button {
+    z-index: 1500;
+  }
   `
 );
 
 export default SearchBarContainer;
+
+export interface SearchBarContainerProps {
+  currentPage?: string;
+}

@@ -2,26 +2,22 @@ import { useRef } from "react";
 
 import { Grid } from "@mui/material";
 
-import { SelectItemProps } from "@types";
-
 import ButtonArea from "../ButtonArea/ButtonArea";
 import { ModalTemplate } from "../SelectItemTemplate/SelectItemTemplate";
-import SelectItem, { WhiteSpaceCloseButtonSize } from "./SelectItem";
+import SelectItem, { SelectItemProps, WhiteSpace } from "./SelectItem";
 
 const wrapperId = "check-in-out-wrap";
 
 const CheckInOut = ({
-  setAnchorEl,
   anchorEl,
+  setAnchorEl,
+  onClose,
 }: SelectItemProps): JSX.Element => {
   const $wrap = useRef<HTMLDivElement>(null);
-  const isOpen = Boolean(anchorEl?.id === wrapperId);
+  const isOpen = anchorEl?.id === wrapperId;
 
   const handleClick = () => {
-    setAnchorEl($wrap.current);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl?.($wrap.current);
   };
 
   return (
@@ -49,19 +45,11 @@ const CheckInOut = ({
         handleClick={handleClick}
         open={isOpen}
       />
-      <ModalTemplate
-        open={isOpen}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-      >
+      <ModalTemplate open={isOpen} anchorEl={anchorEl} onClose={onClose}>
         테스트용
       </ModalTemplate>
       {(isOpen && <ButtonArea icon="close" divide xs={2} />) || (
-        <WhiteSpaceCloseButtonSize divide xs={2} />
+        <WhiteSpace divide xs={2} />
       )}
     </Grid>
   );

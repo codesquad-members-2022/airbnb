@@ -2,6 +2,8 @@ import React from "react";
 
 import ReactDOM from "react-dom/client";
 
+import { Router } from "router/router";
+
 import App from "./App";
 
 const root = ReactDOM.createRoot(
@@ -9,6 +11,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </React.StrictMode>
 );

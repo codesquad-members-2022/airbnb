@@ -1,3 +1,5 @@
+import { SetStateAction } from "react";
+
 import {
   Button,
   Grid,
@@ -6,12 +8,11 @@ import {
   Typography,
 } from "@mui/material";
 
-import { SelectItemTemplateProps } from "@types";
-
 import {
   ModalTemplate,
   SelectItemTemplate,
 } from "../SelectItemTemplate/SelectItemTemplate";
+import { SelectItemTemplateProps } from "../SelectItemTemplate/SelectItemTemplate.style";
 import itemStyles from "./SelectItem.style";
 
 const SelectItem = ({ ...props }: SelectItemDataProps): JSX.Element => {
@@ -59,23 +60,16 @@ const SelectItem = ({ ...props }: SelectItemDataProps): JSX.Element => {
   );
 };
 
-export const WhiteSpaceCloseButtonSize = ({
+export const WhiteSpace = ({
   divide,
   xs = 1,
 }: SelectItemTemplateProps): JSX.Element => {
-  const styles =
-    (divide && {
-      borderRight: ({ palette }: { palette: { grey5: { main: string } } }) =>
-        `1px solid ${palette.grey5.main}`,
-    }) ||
-    {};
-
-  return <Grid item sx={styles} xs={xs} />;
+  return <Grid item sx={(divide && itemStyles.border) || {}} xs={xs} />;
 };
 
 export default SelectItem;
 
-interface SelectItemDataProps extends PopoverProps {
+export interface SelectItemDataProps extends PopoverProps {
   gridStyle: {
     xs: boolean | GridSize | undefined;
     pl?: number | undefined;
@@ -93,3 +87,12 @@ interface SelectItemDataProps extends PopoverProps {
   handleClose?: () => void;
   createNewPopup?: boolean;
 }
+
+export interface SelectItemProps {
+  setAnchorEl?: React.Dispatch<SetStateAction<AnchorEl>>;
+  anchorEl?: null | HTMLDivElement | (EventTarget & HTMLElement);
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+  onClose: () => void;
+}
+
+export type AnchorEl = null | HTMLDivElement | (EventTarget & HTMLElement);

@@ -45,6 +45,7 @@ const theme = createTheme({
       height: `32px`,
     },
     searchBar: {
+      height: 60,
       closeButton: {
         width: "20px",
         height: "20px",
@@ -98,6 +99,10 @@ const theme = createTheme({
         a: {
           textDecoration: "none",
           color: "inherit",
+        },
+
+        button: {
+          fontFamily: ["Noto Sans KR", "sans-serif"].join(","),
         },
       },
     },
@@ -170,6 +175,7 @@ declare module "@mui/material/styles" {
         height: string;
       };
       searchBar: {
+        height: number;
         closeButton: {
           width: string;
           height: string;
@@ -218,6 +224,7 @@ declare module "@mui/material/styles" {
         height?: string;
       };
       searchBar?: {
+        height?: number;
         closeButton?: {
           width?: string;
           height?: string;

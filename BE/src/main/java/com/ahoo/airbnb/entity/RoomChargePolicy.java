@@ -31,7 +31,8 @@ public class RoomChargePolicy {
     @JoinColumn(name = "charge_policy_id")
     private ChargePolicy chargePolicy;
 
-    public void connectRoom(Room room) {
+    public void setRoom(Room room) {
         this.room = room;
+        this.room.getRoomChargePolicies().add(this);
     }
 }

@@ -23,7 +23,16 @@ public class RoomImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    private Room room;
+
     private int sequence;
     private String url;
     private boolean isMainImage;
+
+    public void setRoom(Room room) {
+        this.room = room;
+        this.room.getImages().add(this);
+    }
 }

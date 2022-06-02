@@ -1,11 +1,14 @@
-export const throttle = (callback, ms) => {
-  let timer = null;
+/* eslint-disable react/prop-types */
 
-  return (...args) => {
-    if (!timer) {
-      timer = setTimeout(() => {
-        callback(...args);
-      }, ms);
-    }
-  };
+export const ComposedProivider = ({ components, children }) => {
+  return (
+    <>
+      {components?.reduceRight(
+        (prev, Component) => (
+          <Component>{prev}</Component>
+        ),
+        children,
+      )}
+    </>
+  );
 };

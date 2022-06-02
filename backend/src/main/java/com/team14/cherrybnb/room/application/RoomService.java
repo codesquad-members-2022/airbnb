@@ -1,32 +1,31 @@
 package com.team14.cherrybnb.room.application;
 
+import com.team14.cherrybnb.room.domain.Room;
 import com.team14.cherrybnb.room.domain.RoomRepository;
+import com.team14.cherrybnb.room.dto.RoomCardResponse;
+import com.team14.cherrybnb.room.dto.RoomDetailResponse;
+import lombok.RequiredArgsConstructor;
+import org.locationtech.jts.geom.Geometry;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
+@RequiredArgsConstructor
 public class RoomService {
 
     private final RoomRepository roomRepository;
 
-    public RoomService(RoomRepository roomRepository) {
-        this.roomRepository = roomRepository;
+    public List<RoomCardResponse> getRoomsWithinCircle(Geometry circle) {
+        return roomRepository.findRoomsWithinCircle(circle)
+                .stream()
+                .map(room -> new RoomCardResponse(room, false))
+                .collect(Collectors.toList());
     }
 
-    // TODO
-    // 위치, 가격, 일정, 인원 수를 조건으로 해당하는 숙소 리스트 조회
-
-
-    // TODO
-    // 검색 지역 문자열을 기준으로 숙소 리스트 조회하기 (Elastic Search)
-
-
-    /**
-     * 특정 지점을 기준으로 일정 반경 내에 위치한 숙소 리스트 조회하기
-     * @param circle
-     */
-
-    /**
-     * 숙박 시설의 상세 정보 조회
-     * @param roomId
-     */
+    public RoomDetailResponse getRoomDetail(Long roomId) {
+        Room room = roomRepository.findByRoomId(roomId).orElseThrow(RuntimeException::new);
+        return new RoomDetailResponse(room, false);
+    }
 }

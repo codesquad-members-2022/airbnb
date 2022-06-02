@@ -51,7 +51,7 @@ export const CalendarDay = styled.div<CalendarDayProps>`
   width: 48px;
   border-radius: 50%;
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 17px;
   cursor: pointer;
 
@@ -73,6 +73,8 @@ type CalendarDayBackgroundProps = {
   isEndDate: boolean;
 };
 export const CandarDayBackground = styled.li<CalendarDayBackgroundProps>`
+  height: 48px;
+  width: 48px;
   ${({ isBetweenSelected, isStartDate, isEndDate }) =>
     isBetweenSelected &&
     css`
@@ -91,6 +93,7 @@ export const Date = styled.div`
   font-size: 16px;
   line-height: 23px;
   margin-bottom: 24px;
+  font-weight: 700;
 `;
 
 export const BackButton = styled.button`

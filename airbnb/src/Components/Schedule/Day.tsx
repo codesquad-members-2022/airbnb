@@ -49,12 +49,14 @@ export function Day({ day }: DayProps): JSX.Element {
       isStartDate={isStartDate(day, startDate)}
       isEndDate={isEndDate(day, endDate)}
     >
-      <S.CalendarDay
-        onClick={onClick}
-        isSelected={isSelected(day, startDate, endDate)}
-      >
-        {day?.getDate()}
-      </S.CalendarDay>
+      {day && (
+        <S.CalendarDay
+          onClick={onClick}
+          isSelected={isSelected(day, startDate, endDate)}
+        >
+          {day?.getDate()}
+        </S.CalendarDay>
+      )}
     </S.CandarDayBackground>
   );
 }

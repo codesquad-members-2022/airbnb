@@ -15,7 +15,13 @@ class CustomRangeSlider: UIControl {
     var lowerValue: CGFloat = 0.2
     var upperValue: CGFloat = 0.8
     
-    let (trackLayer, lowerThumbLayer, upperThumbLayer) = (CALayer(), CustomRangeSliderThumbLayer(), CustomRangeSliderThumbLayer())
+    let (trackLayer, lowerThumbLayer, upperThumbLayer) = (CustomRangeSliderTrackLayer(), CustomRangeSliderThumbLayer(), CustomRangeSliderThumbLayer())
+    
+    var trackTintColor = UIColor.getGrayScale(.Grey4)
+    var trackHighlightTintColor = UIColor.getGrayScale(.Grey3)
+    var thumbTintColor = UIColor.white
+    
+    var curvanceousness: CGFloat = 1.0
     
     var thumbWidth: CGFloat {
         CGFloat(bounds.height)
@@ -26,21 +32,20 @@ class CustomRangeSlider: UIControl {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        trackLayer.rangeSlider = self
+        trackLayer.contentsScale = UIScreen.main.scale
         trackLayer.backgroundColor = UIColor.getGrayScale(.Grey3)?.cgColor
         layer.addSublayer(trackLayer)
         
         lowerThumbLayer.rangeSlider = self
+        lowerThumbLayer.contentsScale = UIScreen.main.scale
         lowerThumbLayer.backgroundColor = UIColor.getGrayScale(.Grey1)?.cgColor
         layer.addSublayer(lowerThumbLayer)
         
         upperThumbLayer.rangeSlider = self
+        upperThumbLayer.contentsScale = UIScreen.main.scale
         upperThumbLayer.backgroundColor = UIColor.getGrayScale(.Grey1)?.cgColor
         layer.addSublayer(upperThumbLayer)
-        
-        if let thumbImage = UIImage(named: "PauseCircle") {
-            lowerThumbLayer.backgroundColor = UIColor(patternImage: thumbImage).cgColor
-            upperThumbLayer.backgroundColor = UIColor(patternImage: thumbImage).cgColor
-        }
         
         updateLayerFrames()
     }
@@ -61,6 +66,7 @@ class CustomRangeSlider: UIControl {
                 width: thumbWidth,
                 height: thumbWidth
         )
+        lowerThumbLayer.contents = UIImage(named: "PauseCircle")?.cgImage
         lowerThumbLayer.setNeedsDisplay()
         
         let upperThumbCenter = CGFloat(positionForValue(value: upperValue))
@@ -71,6 +77,7 @@ class CustomRangeSlider: UIControl {
                 width: thumbWidth,
                 height: thumbWidth
         )
+        upperThumbLayer.contents = UIImage(named: "PauseCircle")?.cgImage
         upperThumbLayer.setNeedsDisplay()
     }
     

@@ -29,6 +29,7 @@
 		00A85F44283B87B900EA32E0 /* MyInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A85F43283B87B900EA32E0 /* MyInfoModel.swift */; };
 		00F1345A2845F20A0087A83C /* CalendarViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F134592845F20A0087A83C /* CalendarViewCell.swift */; };
 		1B18F7EF28488456005B1CAF /* CustomRangeSliderThumbLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B18F7EE28488456005B1CAF /* CustomRangeSliderThumbLayer.swift */; };
+		1B18F7F128489EA5005B1CAF /* CustomRangeSliderTrackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B18F7F028489EA5005B1CAF /* CustomRangeSliderTrackLayer.swift */; };
 		1B27E22F283CA12D00FCB990 /* SearchTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B27E22E283CA12D00FCB990 /* SearchTitleCollectionViewCell.swift */; };
 		1B27E231283CA14200FCB990 /* SearchTwoInARowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B27E230283CA14200FCB990 /* SearchTwoInARowCollectionViewCell.swift */; };
 		1B27E233283CA14900FCB990 /* SearchOneInARowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B27E232283CA14900FCB990 /* SearchOneInARowCollectionViewCell.swift */; };
@@ -106,6 +107,7 @@
 		00A85F43283B87B900EA32E0 /* MyInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoModel.swift; sourceTree = "<group>"; };
 		00F134592845F20A0087A83C /* CalendarViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewCell.swift; sourceTree = "<group>"; };
 		1B18F7EE28488456005B1CAF /* CustomRangeSliderThumbLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRangeSliderThumbLayer.swift; sourceTree = "<group>"; };
+		1B18F7F028489EA5005B1CAF /* CustomRangeSliderTrackLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRangeSliderTrackLayer.swift; sourceTree = "<group>"; };
 		1B27E22E283CA12D00FCB990 /* SearchTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		1B27E230283CA14200FCB990 /* SearchTwoInARowCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTwoInARowCollectionViewCell.swift; sourceTree = "<group>"; };
 		1B27E232283CA14900FCB990 /* SearchOneInARowCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOneInARowCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 				1BF0618B2845CF8D0043FF2F /* PriceGraphViewController.swift */,
 				1BF0618D2845CFBE0043FF2F /* ColumnGraphView.swift */,
 				1B756E71284855CE003AC0EA /* CustomRangeSlider.swift */,
+				1B18F7F028489EA5005B1CAF /* CustomRangeSliderTrackLayer.swift */,
 				1B18F7EE28488456005B1CAF /* CustomRangeSliderThumbLayer.swift */,
 			);
 			path = View;
@@ -535,6 +538,7 @@
 				00230CF1283BB77500802765 /* TabBarViewController.swift in Sources */,
 				1B69F369283CD506001A2860 /* MultipleRowsCollectionViewController.swift in Sources */,
 				00330A9D283BF91A009014AF /* LocationViewController.swift in Sources */,
+				1B18F7F128489EA5005B1CAF /* CustomRangeSliderTrackLayer.swift in Sources */,
 				1B27E235283CA44400FCB990 /* SearchViewModel.swift in Sources */,
 				1B69F36B283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift in Sources */,
 				1B27E22F283CA12D00FCB990 /* SearchTitleCollectionViewCell.swift in Sources */,

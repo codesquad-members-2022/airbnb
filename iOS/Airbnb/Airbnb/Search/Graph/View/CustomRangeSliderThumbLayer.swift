@@ -9,9 +9,6 @@ import UIKit
 import QuartzCore
 
 class CustomRangeSliderThumbLayer: CALayer {
-    
     var highlighted = false
     weak var rangeSlider: CustomRangeSlider?
-    
-    
 }

@@ -99,7 +99,7 @@ export const ContentContainer = styled.div`
   flex-direction: column;
 `;
 
-export const Label = styled.span`
+export const Label = styled.h3`
   color: ${({ theme }) => theme.color.black};
   font-size: ${({ theme }) => theme.fontSize.xSmall};
   font-weight: ${({ theme }) => theme.fontWeight.bold};

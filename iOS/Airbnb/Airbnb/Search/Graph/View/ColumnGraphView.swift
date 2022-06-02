@@ -54,8 +54,6 @@ class ColumnGraphView: UIView {
             }
         }
         
-        UIColor(named: "Grey3")?.set()
-        
         let maskingLayer = CAShapeLayer()
         maskingLayer.path = path.cgPath
         

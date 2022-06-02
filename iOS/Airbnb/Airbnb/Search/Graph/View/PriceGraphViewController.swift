@@ -14,14 +14,6 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
     
     private let graph = ColumnGraphView()
     private var editableWidth: Constraint?
-//    private let slider: UISlider = {
-//        let slider = UISlider()
-//        slider.minimumValue = 0
-//        slider.maximumValue = 1
-//        slider.thumbTintColor = UIColor.getGrayScale(.Grey3)
-//        slider.tintColor = UIColor.getGrayScale(.Grey3)
-//        return slider
-//    }()
     private var slider = CustomRangeSlider(frame: .zero)
     
     // 그래프의 선택되지 않는 희미한 부분
@@ -85,7 +77,6 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
         graph.addSubview(lightGrayView)
         graph.addSubview(semanticGrayView)
         
-        slider.backgroundColor = .red
         view.addSubview(slider)
         
         graph.snp.makeConstraints { make in
@@ -106,17 +97,16 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
         }
         
         slider.snp.makeConstraints { make in
-            make.top.equalTo(self.graph.snp.bottom)
+            make.top.equalTo(self.graph.snp.bottom).inset(9)
             make.leading.trailing.equalTo(graph)
-            make.height.equalTo(31)
+            make.height.equalTo(20)
         }
+        slider.layoutIfNeeded()
+        slider.updateLayerFrames()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print(slider.frame)
-        slider.updateLayerFrames()
-        slider.layoutIfNeeded()
     }
     
     func bind() {

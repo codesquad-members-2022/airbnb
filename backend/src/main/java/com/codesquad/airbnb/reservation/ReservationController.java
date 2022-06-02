@@ -6,6 +6,7 @@ import com.codesquad.airbnb.reservation.dto.ReservationDetailResponse;
 import com.codesquad.airbnb.reservation.dto.ReservationListResponse;
 import com.codesquad.airbnb.reservation.dto.ReservationRequest;
 import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +39,7 @@ public class ReservationController {
     }
 
     @PostMapping
-    public void createReservation(@RequestBody ReservationRequest request) {
+    public void createReservation(@RequestBody @Valid ReservationRequest request) {
         reservationService.makeReservation(
             request.getMemberId(),
             request.getRoomId(),

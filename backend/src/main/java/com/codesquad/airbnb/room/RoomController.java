@@ -12,6 +12,7 @@ import com.codesquad.airbnb.room.dto.request.RoomSearchRequest;
 import com.codesquad.airbnb.room.dto.response.RoomDetailResponse;
 import com.codesquad.airbnb.room.dto.response.RoomSearchResponse;
 import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,8 +27,9 @@ public class RoomController {
     private final RoomService roomService;
 
     @GetMapping
-    public List<RoomSearchResponse> listRooms(RoomSearchRequest request) {
-        return roomService.searchRooms(new RoomSearCondition(
+    public List<RoomSearchResponse> listRooms(@Valid RoomSearchRequest request) {
+        return roomService.searchRooms(
+            new RoomSearCondition(
                 new Location(
                     request.getLongitude(),
                     request.getLatitude()
@@ -59,7 +61,8 @@ public class RoomController {
     }
 
     @GetMapping("/{id}/charge")
-    public ChargeBill showCharge(@PathVariable("id") Integer roomId, ChargeRequest request
+    public ChargeBill showCharge(
+        @PathVariable("id") Integer roomId, @Valid ChargeRequest request
     ) {
         return roomService.showCharge(
             roomId,

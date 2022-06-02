@@ -17,15 +17,24 @@ public class RoomSearCondition {
     private StayDate stayDate;
 
     @Getter
-    @AllArgsConstructor
     public static class PriceRange {
 
-        private Integer min;
-        private Integer max;
+        private final Integer min;
+        private final Integer max;
+
+        public PriceRange(Integer min, Integer max) {
+            if (min != null && max != null && min > max) {
+                throw new IllegalArgumentException("최소가격이 최대가격보다 클 수 없습니다.");
+            }
+
+            this.min = min;
+            this.max = max;
+        }
 
         public boolean isNull() {
             return min == null && max == null;
         }
+
     }
 
     @Getter

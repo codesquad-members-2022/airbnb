@@ -4,6 +4,7 @@ import com.codesquad.airbnb.member.dto.WishResponse;
 import com.codesquad.airbnb.wish.dto.WishCreateRequest;
 import com.codesquad.airbnb.wish.dto.WishDeleteRequest;
 import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ public class WishController {
     }
 
     @PostMapping
-    public void createWish(@RequestBody WishCreateRequest request) {
+    public void createWish(@RequestBody @Valid WishCreateRequest request) {
         wishService.addWish(request.getMemberId(), request.getRoomId());
     }
 

@@ -10,10 +10,9 @@ public interface WishRepository extends JpaRepository<Wish, Long> {
 
     /**
      * 로그인 회원의 위시 리스트 조회
-     * @param pageable
-     * @param memberId
      */
-    @Query("select w from Wish w join fetch w.room where w.member = :member")
+    @Query(value = "select w from Wish w join fetch w.room where w.member = :member",
+            countQuery = "select count(w) from Wish w where w.member = :member")
     Page<Wish> findAllByMemberId(Pageable pageable, Member member);
 
     /**

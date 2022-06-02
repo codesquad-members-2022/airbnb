@@ -1,6 +1,6 @@
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import * as S from './GNBstyle';
+import * as S from './GNB.style';
 
 export function AccountMenu() {
   return (

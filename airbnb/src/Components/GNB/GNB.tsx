@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material';
 import { AccountMenu } from './AccountMenu';
 import { Menus } from './Menus';
-import * as S from './GNBstyle';
+import * as S from './GNB.style';
 
 export function GNB() {
   return (

@@ -1,7 +1,7 @@
 import * as TYPE from './types';
 
 export const calendarInitialState: TYPE.CalenderState = {
-  startDate: new Date(),
+  startDate: null,
   endDate: null,
 };
 

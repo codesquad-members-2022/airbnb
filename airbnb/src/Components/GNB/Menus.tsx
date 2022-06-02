@@ -1,5 +1,5 @@
 import ButtonGroup from '@mui/material/ButtonGroup';
-import * as S from './GNBstyle';
+import * as S from './GNB.style';
 
 // TODO: 버튼 반복 리팩토링
 export function Menus() {

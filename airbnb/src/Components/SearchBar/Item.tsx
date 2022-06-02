@@ -1,12 +1,16 @@
-import * as S from './SearchBarStyle';
+import * as S from './SearchBar.style';
 
-type ItemContents = {
+interface ItemContents {
   title: string;
   value: string;
   width: number;
-};
+}
 
-export function SearchBarItem({ title, value, width }: ItemContents) {
+export function SearchBarItem({
+  title,
+  value,
+  width,
+}: ItemContents): JSX.Element {
   return (
     <S.searchBarItem width={width}>
       <S.itemTitle>{title}</S.itemTitle>

@@ -27,10 +27,15 @@ const transparentColor = {
     gray2: "rgba(0, 0, 0, 0.15)",
 };
 
+const borderRadius = {
+    circle: "999px",
+};
+
 const theme = {
     layout,
     color,
     transparentColor,
+    borderRadius,
 };
 
 export default theme;

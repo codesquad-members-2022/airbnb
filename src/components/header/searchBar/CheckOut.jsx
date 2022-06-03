@@ -8,7 +8,6 @@ const CheckOut = () => {
 const checkOutStyle = {
     width: "200px",
     height: "100%",
-    border: "",
 };
 
 export default CheckOut;

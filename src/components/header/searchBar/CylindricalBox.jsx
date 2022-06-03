@@ -5,7 +5,7 @@ import {ReactComponent as SearchIcon} from "../../../assets/searchIcon.svg";
 import {Link} from "react-router-dom";
 import {useClickedTabContext} from "../../../ClickedTabProvider";
 
-const CylindricalBox = ({title, placeHolder, style, partId, hasSearchButton}) => {
+const CylindricalBox = ({title, placeHolder, style, partId, hasSearchButton, description}) => {
     const {clickedTab, setClickedTab} = useClickedTabContext();
     const isClicked = partId === clickedTab;
     const changeClickedTab = (event) => {
@@ -16,12 +16,19 @@ const CylindricalBox = ({title, placeHolder, style, partId, hasSearchButton}) =>
             setClickedTab(partId);
         }
     };
+    const isGuestPart = partId === "GuestBox";
 
     return (
         <CylindricalButton isClicked={isClicked} style={style} onClick={changeClickedTab}>
             <TextBox>
                 <Title>{title}</Title>
-                <PlaceHolder>{placeHolder}</PlaceHolder>
+                {description ? (
+                    <Description isClicked={isClicked} isGuestPart={isGuestPart}>
+                        {description}
+                    </Description>
+                ) : (
+                    <PlaceHolder>{placeHolder}</PlaceHolder>
+                )}
             </TextBox>
             {isClicked && (
                 <Icon>
@@ -51,7 +58,7 @@ const CylindricalButton = styled.div`
     padding: 0 20px 0 30px;
     cursor: pointer;
     white-space: nowrap;
-    border-radius: 999px;
+    border-radius: ${({theme}) => theme.borderRadius.circle};
     box-shadow: ${({theme, isClicked}) => (isClicked ? `0px 10px 20px ${theme.transparentColor.gray2}` : "")};
     &:hover {
         background-color: ${({theme, isClicked}) => (isClicked ? theme.color.white : theme.transparentColor.gray2)};
@@ -75,12 +82,26 @@ const PlaceHolder = styled.div`
     color: ${({theme}) => theme.color.gray2};
 `;
 
+const Description = styled.div`
+    color: ${({theme}) => theme.color.black};
+    width: ${({isClicked, isGuestPart}) => {
+        if (isGuestPart) {
+            return isClicked ? "96px" : "144px";
+        }
+        return "100%";
+    }};
+    line-height: 23px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+`;
+
 const Icon = styled.div`
-    ${({theme}) => theme.layout.flexLayoutMixin("", "center", "center")}
+    ${({theme}) => theme.layout.flexLayoutMixin("row", "center", "center")}
     background-color: ${({theme}) => theme.color.gray6};
     width: 20px;
     height: 20px;
-    border-radius: 999px;
+    border-radius: ${({theme}) => theme.borderRadius.circle};
     &:hover {
         background-color: ${({theme}) => theme.color.gray5};
     }
@@ -91,10 +112,10 @@ const Icon = styled.div`
 `;
 
 export const CircleSearchButton = styled.div`
-    ${({theme}) => theme.layout.flexLayoutMixin("", "center", "center")}
+    ${({theme}) => theme.layout.flexLayoutMixin("row", "center", "center")}
     background-color: ${({theme}) => theme.color.pointColorRed};
     color: ${({theme}) => theme.color.white};
-    border-radius: 999px;
+    border-radius: ${({theme}) => theme.borderRadius.circle};
     width: 40px;
     height: 40px;
     svg {
@@ -110,7 +131,7 @@ const CylindricalSearchButton = styled.div`
     background-color: ${({theme}) => theme.color.pointColorRed};
     color: ${({theme}) => theme.color.white};
     padding: 0 10px;
-    border-radius: 999px;
+    border-radius: ${({theme}) => theme.borderRadius.circle};
     svg {
         width: 25px;
         height: 25px;

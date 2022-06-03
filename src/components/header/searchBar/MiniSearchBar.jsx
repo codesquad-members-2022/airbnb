@@ -41,7 +41,7 @@ const MiniSearchBarBox = styled.div`
     width: 410px;
     transform: translate(-50%, -50%);
     border: 1px solid ${({theme}) => theme.color.gray4};
-    border-radius: 999px;
+    border-radius: ${({theme}) => theme.borderRadius.circle};
 `;
 
 const MiniDateBox = styled.div`

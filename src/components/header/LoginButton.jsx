@@ -25,7 +25,7 @@ const LoginButtonBox = styled.div`
     gap: 10px;
     padding: 0px 0px 0px 4px;
     cursor: pointer;
-    border-radius: 999px;
+    border-radius: ${({theme}) => theme.borderRadius.circle};
     &:hover {
         box-shadow: 0px 2px 2px ${({theme}) => theme.transparentColor.gray2};
         transition: 0.3s;

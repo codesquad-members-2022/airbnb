@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import App from '@/App';
+import { InputRangeProvider } from '@/components/MultiRangeSlider/context/InputRange';
 import { AccommodationProvider } from '@/contexts/Accommodation';
 import '@/assets/style.css';
 import theme from '@/styles/theme';
@@ -19,7 +20,9 @@ root.render(
   <ThemeProvider theme={theme}>
     <BrowserRouter>
       <AccommodationProvider>
-        <App />
+        <InputRangeProvider>
+          <App />
+        </InputRangeProvider>
       </AccommodationProvider>
     </BrowserRouter>
   </ThemeProvider>,

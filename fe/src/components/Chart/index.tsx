@@ -42,7 +42,7 @@ function Chart({ chartData, width = 0, height = 0 }: Props) {
       {ctx && (
         <>
           <Drawer draw={createDrawFunc(ctx, chartData, height, options)} />
-          <MultiRangeSlider minPrice={0} maxPrice={width} />
+          <MultiRangeSlider minValue={0} maxValue={width} />
         </>
       )}
     </S.ChartLayer>

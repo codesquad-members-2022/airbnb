@@ -1,4 +1,4 @@
-export interface IPriceRange {
-  minPrice: number;
-  maxPrice: number;
+export interface InputRange {
+  minValue: number;
+  maxValue: number;
 }

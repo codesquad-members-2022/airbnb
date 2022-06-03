@@ -60,8 +60,6 @@ class SearchLocationViewController: UIViewController {
         collectionView.dataSource = recommendationDataSource
         collectionView.delegate = recommendationDelegate
     }
-
-    static let defaultNavTitle = "숙소찾기"
   
     private func setSearchBar() {
         self.navigationItem.title = SearchLocationViewController.defaultNavTitle

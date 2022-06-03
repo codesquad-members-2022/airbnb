@@ -1,4 +1,4 @@
-package com.example.todo.airbnb.presentation.main.components
+package com.example.todo.airbnb.presentation.search.main
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import com.example.todo.airbnb.presentation.search.SearchWidgetState
 import com.example.todo.airbnb.ui.theme.Gray
 
 @Composable
@@ -27,7 +26,7 @@ fun MainAppBar(
     onCloseClicked: () -> Unit,
     onSearchClicked: (String) -> Unit,
     onOpenTriggered: () -> Unit,
-    onCloseTriggered: () -> Unit
+    onCloseTriggered: () -> Unit,
 ) {
     when (searchWidgetState) {
         SearchWidgetState.CLOSED -> {
@@ -62,7 +61,8 @@ private fun DefaultAppBar(onSearchClicked: () -> Unit) {
                     tint = Color.Red
                 )
             }
-        }
+        },
+        elevation = 0.dp
     )
 }
 
@@ -72,13 +72,13 @@ private fun SearchAppBar(
     onTextChange: (String) -> Unit,
     onCloseClicked: () -> Unit,
     onSearchClicked: (String) -> Unit,
-    onCloseTriggered: () -> Unit
+    onCloseTriggered: () -> Unit,
 ) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp),
-        elevation = AppBarDefaults.TopAppBarElevation,
+        elevation = 0.dp,
         color = Gray
     ) {
         TextField(

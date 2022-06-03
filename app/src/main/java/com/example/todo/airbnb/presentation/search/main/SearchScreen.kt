@@ -1,8 +1,13 @@
+package com.example.todo.airbnb.presentation.search.main
+
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -13,18 +18,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.todo.airbnb.data.Travel
-import com.example.todo.airbnb.presentation.main.components.MainAppBar
+import com.example.todo.airbnb.presentation.main.components.Destinations
 import com.example.todo.airbnb.presentation.search.SearchViewModel
-import com.example.todo.airbnb.presentation.search.SearchWidgetState
-import com.example.todo.airbnb.presentation.search.components.*
-import com.example.todo.airbnb.presentation.search.components.navigation.SearchNavGraph
-import com.example.todo.airbnb.presentation.search.components.navigation.SearchScreens
 
+@ExperimentalMaterialApi
 @Composable
-fun SearchScreen(viewModel: SearchViewModel) {
-    SearchNavGraph(viewModel)
+fun SearchScreen(viewModel: SearchViewModel, navController: NavController) {
+    SearchMainScreen(navController, viewModel)
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun SearchMainScreen(navController: NavController, viewModel: SearchViewModel) {
     val searchWidgetState by viewModel.searchWidgetState
@@ -56,8 +59,13 @@ fun SearchMainScreen(navController: NavController, viewModel: SearchViewModel) {
             }
             is SearchWidgetState.OPEN -> {
                 when {
-                    searchTextState.isEmpty() -> SearchList(navController, travelLocations)
-                    else -> SearchList(navController, searchLocations)
+                    searchTextState.isEmpty() -> SearchList(navController,
+                        travelLocations,
+                        viewModel)
+                    else -> SearchList(navController, searchLocations, viewModel)
+                }
+                BackHandler {
+                    viewModel.updateSearchWidgetState(SearchWidgetState.CLOSED)
                 }
             }
         }
@@ -65,8 +73,13 @@ fun SearchMainScreen(navController: NavController, viewModel: SearchViewModel) {
 
 }
 
+@ExperimentalMaterialApi
 @Composable
-private fun SearchList(navController: NavController, travelLocations: List<Travel>) {
+private fun SearchList(
+    navController: NavController,
+    travelLocations: List<Travel>,
+    viewModel: SearchViewModel,
+) {
     LazyColumn(
         modifier = Modifier
             .padding(start = 16.dp, bottom = 60.dp, top = 32.dp, end = 16.dp)
@@ -84,7 +97,9 @@ private fun SearchList(navController: NavController, travelLocations: List<Trave
             items(travelLocations) { location ->
                 Row(
                     modifier = Modifier
-                        .clickable { navController.navigate(SearchScreens.Date.route) }
+                        .clickable {
+                            navController.navigate(Destinations.calendar)
+                        }
                         .fillMaxWidth()
                 ) { MakeItem(location = location) }
                 Spacer(modifier = Modifier.height(16.dp))

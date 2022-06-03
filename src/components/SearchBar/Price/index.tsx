@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+/* eslint-disable no-debugger */
+import React, { Children, DragEventHandler, MouseEventHandler, useCallback, useEffect, useRef, useState } from "react";
 
 import PAUSE_ICON from "@assets/pause-icon.svg";
 import X_ICON from "@assets/x-icon.svg";
@@ -46,7 +47,6 @@ const PriceRangeGraph = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvas = canvasRef.current as HTMLCanvasElement;
   const context = canvas?.getContext("2d");
-
   //데이터 받는 로직 임시 주석화
   // const priceArray: number[] = [];
 
@@ -64,12 +64,14 @@ const PriceRangeGraph = () => {
   //   );
   // });
 
+  const [pricePerPixel, setPricePerPixel] = useState(0);
   //TODO: 데이터 받아오면 수정할 부분
   useEffect(() => {
     if (minPrice === 0 || maxPrice === 0 || average === 0) {
       setMinPrice(Math.min(...mockArray.map(({ x }) => x)));
       setMaxPrice(Math.max(...mockArray.map(({ x }) => x)));
       setAverage(getAverage(mockArray) >> 0);
+      setPricePerPixel((Math.max(...mockArray.map(({ x }) => x)) - Math.min(...mockArray.map(({ x }) => x))) / 365);
     }
   }, []);
 
@@ -85,26 +87,129 @@ const PriceRangeGraph = () => {
         </div>
         <div>평균 1박 요금은 {average}원 입니다.</div>
         {/* TODO: Description 컴포넌트로 변경 */}
-
-        <canvas width="365" height="100" ref={canvasRef} />
-        <Slider min={minPrice} max={maxPrice} />
+        <S.GraphContainer>
+          <S.CanvasContainer>
+            <canvas width="365" height="100" ref={canvasRef} />
+          </S.CanvasContainer>
+          <Slider setMinPrice={setMinPrice} setMaxPrice={setMaxPrice} pricePerPixel={pricePerPixel} />
+        </S.GraphContainer>
       </div>
     </>
   );
 };
 
-interface sliderProps {
-  min: number;
-  max: number;
-}
+type SilderProps = {
+  pricePerPixel: number;
+  setMinPrice: React.Dispatch<React.SetStateAction<number>>;
+  setMaxPrice: React.Dispatch<React.SetStateAction<number>>;
+};
+// let posX = 0;
+const Slider = ({ setMinPrice, setMaxPrice, pricePerPixel }: SilderProps) => {
+  const [leftLimit, setLeftLimit] = useState(12);
+  const [rightLimit, setRightLimit] = useState(353);
+  const leftRef = useRef<HTMLButtonElement>(null);
+  const leftFilterRef = useRef<HTMLDivElement | null>(null);
+  const posX = useRef(0);
 
-const Slider = ({ min, max }: sliderProps) => {
-  // const onChangeHandlerMin = () => {};
+  //remove ghost image
+  useEffect(() => {
+    document.addEventListener(
+      "dragstart",
+      (event) => {
+        if (event.dataTransfer) {
+          const img = new Image();
+          img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
+          event.dataTransfer.setDragImage(img, 0, 0);
+          event.dataTransfer.effectAllowed = "move";
+        }
+      },
+      false,
+    );
+  }, []);
+
+  const dragStartHandler = (event: React.DragEvent<HTMLButtonElement>) => {
+    if ("clientX" in event) {
+      posX.current = event.clientX;
+    }
+
+    document.addEventListener("dragover", preventDragEvent);
+  };
+
+  const preventDragEvent = (event: DragEvent) => {
+    event.preventDefault();
+    return false;
+  };
+
+  const leftButtonDragHandler = (event: React.DragEvent<HTMLButtonElement>) => {
+    if (event.currentTarget.offsetLeft < 0) {
+      event.currentTarget.style.left = "0px";
+    }
+    if (event.currentTarget.offsetLeft > rightLimit) {
+      event.currentTarget.style.left = rightLimit + "px";
+    }
+    // console.log(event.currentTarget.offsetLeft);
+    event.currentTarget.style.left = event.currentTarget.offsetLeft + event.clientX - posX.current + "px";
+
+    posX.current = event.clientX;
+
+    setMinPrice((15000 + event.currentTarget.offsetLeft * pricePerPixel) >> 0);
+
+    if (leftFilterRef.current !== null) {
+      leftFilterRef.current.style.width = event.currentTarget.offsetLeft + 12 + "px";
+    }
+  };
+
+  const rightButtonDragHandler = (event: React.DragEvent<HTMLButtonElement>) => {
+    if (event.currentTarget.offsetLeft <= leftLimit) {
+      event.currentTarget.style.left = leftLimit + "px";
+    }
+    if (event.currentTarget.offsetLeft >= 365) {
+      event.currentTarget.style.left = "365px";
+    }
+
+    event.currentTarget.style.left = event.currentTarget.offsetLeft + event.clientX - posX.current + "px";
+
+    posX.current = event.clientX;
+
+    setMaxPrice((15000 + event.currentTarget.offsetLeft * pricePerPixel) >> 0);
+  };
+
+  const leftButtonDragEndHandler = (event: React.DragEvent<HTMLButtonElement>) => {
+    event.currentTarget.style.left = event.currentTarget.offsetLeft + event.clientX - posX.current + "px";
+
+    posX.current = event.clientX;
+    setLeftLimit(event.currentTarget.offsetLeft + 12);
+    document.removeEventListener("dragover", preventDragEvent);
+  };
+
+  const rightButtonDragEndHandler = (event: React.DragEvent<HTMLButtonElement>) => {
+    event.currentTarget.style.left = event.currentTarget.offsetLeft + event.clientX - posX.current + "px";
+
+    posX.current = event.clientX;
+    setRightLimit(event.currentTarget.offsetLeft - 12);
+    document.removeEventListener("dragover", preventDragEvent);
+  };
+
   return (
-    <S.Slider>
-      <S.LeftInput type="range" min={min} max={max} />
-      <S.RightInput type="range" min={min} max={max} />
-    </S.Slider>
+    <>
+      <S.LeftFilter ref={leftFilterRef} />
+      <S.Slider>
+        <S.LeftButton
+          ref={leftRef}
+          draggable
+          onDragStart={dragStartHandler}
+          onDrag={leftButtonDragHandler}
+          onDragEnd={leftButtonDragEndHandler}
+        />
+        <S.RightButton
+          draggable
+          ref={leftRef}
+          onDragStart={dragStartHandler}
+          onDrag={rightButtonDragHandler}
+          onDragEnd={rightButtonDragEndHandler}
+        />
+      </S.Slider>
+    </>
   );
 };
 
@@ -118,7 +223,7 @@ const mockArray = [
   { x: 15000, y: 5 },
   { x: 30000, y: 14 },
   { x: 50000, y: 10 },
-  { x: 70000, y: 14 },
+  { x: 70000, y: 3 },
   { x: 90000, y: 26 },
   { x: 100000, y: 30 },
   { x: 120000, y: 45 },

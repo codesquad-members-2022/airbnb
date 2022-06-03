@@ -23,13 +23,7 @@ class DetailSearchDelegate: NSObject, UICollectionViewDelegate {
         
         guard let datasource = self.collectionView?.dataSource as? DetailSearchLocationDataSource else { return }
         let mapItem = datasource.searchResultData[0]
-        guard let placeName = mapItem.name else { return }
-        let latitude = mapItem.placemark.coordinate.latitude as Coordinate.Degree
-        let longitude = mapItem.placemark.coordinate.longitude as Coordinate.Degree
-        let coordinate = Coordinate(latitude: latitude, longitude: longitude)
-        
-        let place = Place(name: placeName, location: Location(coordinate: coordinate), estimatedTime: 0)
-      
+        guard let place = PlaceFactory.makePlace(with: mapItem) else { return }
         searchDateVC.queryParameter?.place = place
         self.navigationController?.pushViewController(searchDateVC, animated: true)
     }

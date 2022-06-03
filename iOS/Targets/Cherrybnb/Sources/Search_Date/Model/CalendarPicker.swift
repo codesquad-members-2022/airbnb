@@ -9,6 +9,8 @@
 import Foundation
 import Metal
 
+typealias DaySelection = (checkIn: CalendarPicker.Day?, checkOut: CalendarPicker.Day?)
+
 struct CalendarPicker {
     
     private var months: [Month]
@@ -68,9 +70,7 @@ struct CalendarPicker {
         let selectedDay = getDay(monthSection: newMonthSection, dayItem: newDayItem)
         
         // 전달에 속한 날짜나 이미 지난 날짜는 선택 불가
-        if selectedDay.isWithinLastMonth || selectedDay.isPast {
-            return
-        }
+        if selectedDay.isWithinLastMonth || selectedDay.isPast { return }
         
         switch daySelection {
         case (nil, nil):

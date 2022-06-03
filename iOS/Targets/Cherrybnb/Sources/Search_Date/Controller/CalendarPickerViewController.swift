@@ -8,12 +8,11 @@
 
 import UIKit
 
-typealias DaySelection = (checkIn: CalendarPicker.Day?, checkOut: CalendarPicker.Day?)
 
 class CalendarPickerViewController: UIViewController {
 
     static let defaultNumberOfMonths = 12
-    
+
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.headerReferenceSize = CGSize(width: 400, height: 50)
@@ -40,24 +39,17 @@ class CalendarPickerViewController: UIViewController {
          didSelectDate: ((DaySelection) -> Void)? = nil) {
         self.calendarPicker = CalendarPicker(baseDate: baseDate, numOfMonths: numOfMonths)
         super.init(nibName: nil, bundle: nil)
-        
-        calendarPicker.didUpdateMonth = { [weak self] range in
-            DispatchQueue.main.async {
-                self?.collectionView.reloadSections(IndexSet(range))
-            }
-            
-        }
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setSubviews()
         setLayout()
+        setHandler()
     }
 
     private func setSubviews() {
@@ -71,6 +63,14 @@ class CalendarPickerViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.readableContentGuide.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.readableContentGuide.bottomAnchor)
         ])
+    }
+    
+    private func setHandler() {
+        calendarPicker.didUpdateMonth = { [weak self] range in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadSections(IndexSet(range))
+            }
+        }
     }
 }
 
@@ -89,7 +89,6 @@ extension CalendarPickerViewController: UICollectionViewDataSource {
         }
 
         let day = calendarPicker.getDay(monthSection: indexPath.section, dayItem: indexPath.item)
-
         cell.setDay(day)
 
         return cell

@@ -27,7 +27,7 @@ class CalendarPickerViewCell: UICollectionViewCell {
         return view
     }()
     
-    private lazy var selectionBetweenBackgroundView: UIView = {
+    private lazy var inBetweenSelectionBackgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .lightGray
@@ -50,11 +50,7 @@ class CalendarPickerViewCell: UICollectionViewCell {
         setLayout()
     }
     
-    private var day: CalendarPicker.Day?
-    
     func setDay(_ day: CalendarPicker.Day) {
-        self.day = day
-        
         guard !day.isWithinLastMonth else { return }
         
         let dateString = dateFormatter.string(from: day.date)
@@ -63,10 +59,12 @@ class CalendarPickerViewCell: UICollectionViewCell {
             selectionBackgroundView.isHidden = false
             numberLabel.attributedText = selected(dateString)
         } else if day.isBetweenSelection {
-            selectionBetweenBackgroundView.isHidden = false
+            inBetweenSelectionBackgroundView.isHidden = false
             numberLabel.attributedText = normal(dateString)
+        } else if day.isPast {
+            numberLabel.attributedText = strikethrough(dateString)
         } else {
-            numberLabel.attributedText = day.isPast ? strikethrough(dateString) : normal(dateString)
+            numberLabel.attributedText = normal(dateString)
         }
     }
     
@@ -108,7 +106,7 @@ class CalendarPickerViewCell: UICollectionViewCell {
     
     private func setSubviews() {
         contentView.addSubview(selectionBackgroundView)
-        contentView.addSubview(selectionBetweenBackgroundView)
+        contentView.addSubview(inBetweenSelectionBackgroundView)
         contentView.addSubview(numberLabel)
     }
     
@@ -126,18 +124,17 @@ class CalendarPickerViewCell: UICollectionViewCell {
         ])
         
         NSLayoutConstraint.activate([
-            selectionBetweenBackgroundView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            selectionBetweenBackgroundView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            selectionBetweenBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            selectionBetweenBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            inBetweenSelectionBackgroundView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            inBetweenSelectionBackgroundView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            inBetweenSelectionBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            inBetweenSelectionBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor),
         ])
     }
     
     override func prepareForReuse() {
-        day = nil
         numberLabel.text = nil
         numberLabel.attributedText = nil
         selectionBackgroundView.isHidden = true
-        selectionBetweenBackgroundView.isHidden = true
+        inBetweenSelectionBackgroundView.isHidden = true
     }
 }

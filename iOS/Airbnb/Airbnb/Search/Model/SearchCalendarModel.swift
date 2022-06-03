@@ -9,26 +9,6 @@ import Foundation
 
 class SearchCalendarModel {
     
-    private(set) var resultArray: [CalendarResult] = [] {
-        didSet {
-            self.onUpdateAYear()
-        }
-    }
-    
-    private(set) var date = Date()
-    
-    var count: Int { resultArray.count }
-    
-    var onUpdateAYear: () -> Void = { }
-    
-    func make12month(baseDate: Date) {
-        for _ in 0..<12 {
-            let nextMonthResult = getNextMonthDays(from: baseDate)
-            self.resultArray.append(nextMonthResult)
-            self.date = nextMonthResult.date
-        }
-    }
-    
     private(set) var localCalendar: Calendar = {
         var calendar = Calendar(identifier: .gregorian)
         calendar.locale = Locale(identifier: "ko_kr")
@@ -67,7 +47,7 @@ class SearchCalendarModel {
         }
         
         var dateComponent = localCalendar.dateComponents([.year,.month,.day,.hour], from: dateMonthMoved)
-//        dateComponent.day = 2
+        dateComponent.day = 2
         dateComponent.hour = 0
         
         guard

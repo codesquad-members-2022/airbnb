@@ -14,12 +14,6 @@ class SearchViewController: BackgroundViewController, CommonViewControllerProtoc
         case searchMainBody
     }
     
-    private let searchBar: UISearchBar = {
-        let searchBar = UISearchBar()
-        searchBar.placeholder = "어디로 여행가세요?"
-        return searchBar
-    }()
-    
     private var searchMainCollectionViewLayout: UICollectionViewLayout {
         let inset = NSDirectionalEdgeInsets(
             top: 2, leading: 2, bottom: 2, trailing: 2)
@@ -149,6 +143,12 @@ class SearchViewController: BackgroundViewController, CommonViewControllerProtoc
         return collectionView
     }()
   
+    private let searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.placeholder = "어디로 여행가세요?"
+        return searchBar
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         layout()
@@ -166,6 +166,7 @@ class SearchViewController: BackgroundViewController, CommonViewControllerProtoc
     
     func attribute() {
         setUpSearchController()
+        super.setUpNavigationAppearance()
     }
     
     func layout() {
@@ -181,9 +182,12 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        let locationViewController = LocationViewController()
-        locationViewController.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(locationViewController, animated: false)
+        let backButton = UIBarButtonItem(title: "뒤로", style: .plain,
+                                         target: self, action: nil)
+        backButton.tintColor = .gray
+        self.navigationItem.backBarButtonItem = backButton
+        
+        navigationController?.pushViewController(LocationViewController(), animated: false)
     }
     
     private func setUpSearchController() {

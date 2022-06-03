@@ -18,7 +18,8 @@ class LocationCollectionViewCell: UICollectionViewCell {
         imageView.image = #imageLiteral(resourceName: "mockImage")
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 6
+        imageView.layer.cornerRadius = CGFloat(6)
+        imageView.frame = CGRect(x: 0, y: 0, width: 64, height: 64)
         return imageView
     }()
     
@@ -42,7 +43,6 @@ class LocationCollectionViewCell: UICollectionViewCell {
     }
     
     private func attribute() {
-        self.backgroundColor = .systemBackground
         cityName.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         cityName.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         spendingTime.font = UIFont.systemFont(ofSize: 17, weight: .light)
@@ -65,10 +65,5 @@ class LocationCollectionViewCell: UICollectionViewCell {
             $0.leading.equalTo(cityImage.snp.trailing).offset(16)
             $0.centerY.equalToSuperview()
         }
-    }
-    
-    func updateInfomation(_ info: CityInformation) {
-        cityName.text = info.destination
-        spendingTime.text = (info as? PopularCityInfomation)?.distance
     }
 }

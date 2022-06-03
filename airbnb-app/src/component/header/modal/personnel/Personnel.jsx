@@ -16,6 +16,7 @@ function Personnel() {
 }
 
 const Container = styled(ModalContainer)`
+  margin: 30px 0 0 auto;
   width: 400px;
 `;
 

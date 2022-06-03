@@ -39,7 +39,7 @@ function SearchBar() {
   }
 
   return (
-    <>
+    <Container>
       <Form method="POST" bgColor={isFocus ? 'grey6' : 'white'} onBlur={handleBlur}>
         {searchInputText.map(([key, { label, placeholder }], index) => (
           <SearchInput
@@ -52,14 +52,17 @@ function SearchBar() {
         ))}
       </Form>
       <SearchInputModal />
-    </>
+    </Container>
   );
 }
+const Container = styled.div`
+  max-width: 1070px;
+  margin: 0 auto;
+`;
 
 const Form = styled.form`
   display: flex;
   margin: 30px auto 0;
-  max-width: 1070px;
   border: 1px solid ${({ theme }) => theme.color.grey4};
   border-radius: ${({ theme }) => theme.borderRadius.radius1};
   background-color: ${({ theme, bgColor }) => theme.color[bgColor]};

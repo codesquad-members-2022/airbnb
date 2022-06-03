@@ -9,26 +9,20 @@
 import Foundation
 import Metal
 
-protocol CalendarPickerDelegate {
-    func didChangeSection(_ range: ClosedRange<Int>)
-    func didChangeSelection(_ daySelection: DaySelection)
-}
-
 struct CalendarPicker {
     
     private var months: [Month]
     
     var daySelection: DaySelection = (nil, nil) {
         didSet {
-            delegate?.didChangeSelection(daySelection)
+            didSelectDate?(daySelection)
         }
     }
-    
-    var delegate: CalendarPickerDelegate?
-    var dayDict = [Day: (Int, Int)]()
-    
     var didSelectDate: ((DaySelection) -> Void)?
+
     var didUpdateMonth: ((ClosedRange<Int>) -> Void)?
+    
+    var datePositions = [Date: (Int, Int)]()
     
     init(baseDate: Date, numOfMonths: Int, calendar: Calendar = Calendar.current) {
         
@@ -40,18 +34,18 @@ struct CalendarPicker {
         }
         
         self.months = [firstMonth] + afterMonths
-        self.dayDict = getDayDict(months: self.months)
+        self.datePositions = getDatePositions(months: self.months)
     }
     
-    private func getDayDict(months: [Month]) -> [Day: (Int, Int)] {
-        var dayDict = [Day: (Int, Int)]()
+    private func getDatePositions(months: [Month]) -> [Date: (Int, Int)] {
+        var datePosition = [Date: (Int, Int)]()
         
         for m in 0..<months.count {
-            for d in 0..<months[m].days.count {
-                dayDict[months[m].days[d]] = (m,d)
+            for d in months[m].firstDayWeekday-1..<months[m].days.count {
+                datePosition[months[m].days[d].date] = (m,d)
             }
         }
-        return dayDict
+        return datePosition
     }
     
     var monthCount: Int {
@@ -88,10 +82,9 @@ struct CalendarPicker {
             toggleSelection(of: selectedDay)
             
             // 새로운 날짜의 월 섹션을 업데이트
-            guard let updatedRange = getUpdatedSectionRange(days: [selectedDay]) else {
-                return
+            if let updatedRange = getUpdatedSectionRange(days: [selectedDay]) {
+                didUpdateMonth?(updatedRange)
             }
-            delegate?.didChangeSection(updatedRange)
             
         case (.some(let oldCheckIn), nil) where oldCheckIn.date < selectedDay.date:
             
@@ -101,13 +94,13 @@ struct CalendarPicker {
             // 새로운 날짜를 On
             toggleSelection(of: selectedDay)
             
-            // 새로운 날짜 월 섹션, 기존 월 섹션을 업데이트
-            guard let updatedRange = getUpdatedSectionRange(days: [oldCheckIn, selectedDay]) else {
-                return
-            }
-            delegate?.didChangeSection(updatedRange)
+            // 두 날짜 사이의 Between 셀렉션 on
+            toggleBetweenSelection(from: oldCheckIn, to: selectedDay)
             
-            // TODO: 선택 범위 사이에 있는 날짜 표시
+            // 새로운 날짜 월 섹션, 기존 월 섹션을 업데이트
+            if let updatedRange = getUpdatedSectionRange(days: [oldCheckIn, selectedDay]) {
+                didUpdateMonth?(updatedRange)
+            }
             
         case (.some(let oldCheckIn), nil) where oldCheckIn.date >= selectedDay.date:
             
@@ -121,10 +114,9 @@ struct CalendarPicker {
             toggleSelection(of: oldCheckIn)
             
             // 새로운 날짜 월 섹션, 기존 월 섹션 범위를 업데이트
-            guard let updatedRange = getUpdatedSectionRange(days: [oldCheckIn, selectedDay]) else {
-                return
+            if let updatedRange = getUpdatedSectionRange(days: [oldCheckIn, selectedDay]) {
+                didUpdateMonth?(updatedRange)
             }
-            delegate?.didChangeSection(updatedRange)
             
         case (.some(let oldCheckIn), .some(let oldCheckOut)):
             // 시작, 도착 날짜가 모두 선택된 상태였을 경우
@@ -141,15 +133,13 @@ struct CalendarPicker {
             // 새로운 선택 날짜 On
             toggleSelection(monthSection: newMonthSection, dayItem: newDayItem)
             
+            // 두 날짜 사이의 Between 셀렉션 off
+            toggleBetweenSelection(from: oldCheckIn, to: oldCheckOut)
+            
             // 기존 출발 월, 기존 도착 월, 새로운 출발 월 섹션의 범위를 업데이트
-            guard let updatedRange = getUpdatedSectionRange(days: [oldCheckIn, oldCheckOut, selectedDay]) else {
-                return
+            if let updatedRange = getUpdatedSectionRange(days: [oldCheckIn, oldCheckOut, selectedDay]) {
+                didUpdateMonth?(updatedRange)
             }
-            
-            delegate?.didChangeSection(updatedRange)
-            
-            // TODO: 선택 범위 사이에 있는 날짜 표시 제거
-            
         default:
             return
         }
@@ -159,8 +149,8 @@ struct CalendarPicker {
     private func getUpdatedSectionRange(days: [Day]) -> ClosedRange<Int>? {
         if days.isEmpty { return nil }
         
-        let updatedSections: [Int] = days.map {
-            let (m, _) = dayDict[$0]!
+        let updatedSections: [Int] = days.compactMap {
+            guard let (m, _) = datePositions[$0.date] else { return nil }
             return m
         }
         
@@ -172,25 +162,47 @@ struct CalendarPicker {
     }
     
     private mutating func toggleBetweenSelection(from: Day, to: Day) {
-        // ...
+        // 시작과 끝의 위치를 구한다.
+        guard let (beginningMonth, beginngDay) = datePositions[from.date], let (endingMonth, endingDay) = datePositions[to.date] else {
+            return
+        }
+        
+        if beginningMonth == endingMonth {
+            // 시작과 끝의 먼스가 같다면 시작 날짜부터 끝 날짜까지 바꿔준다.
+            toggleBetweenSelection(monthsIndex:beginningMonth) { beginngDay < $0 && $0 < endingDay }
+        } else {
+            // 시작과 끝의 월이 다르다면, 다음에 대해 isBetweenSelection을 바꿔준다.
+
+            // 1) 시작 날짜부터 시작 월의 끝
+            toggleBetweenSelection(monthsIndex: beginningMonth) { $0 > beginngDay }
+            
+            // 2) 시작 월과 끝 월 사이의 월 모두
+            (beginningMonth+1..<endingMonth).forEach { monthIndex in
+                toggleBetweenSelection(monthsIndex: monthIndex, where: { _ in true })
+            }
+            
+            // 3) 마지막 월의 시작부터 마지막 날짜
+            toggleBetweenSelection(monthsIndex: endingMonth) { $0 < endingDay }
+        }
+    }
+    
+    private mutating func toggleBetweenSelection(monthsIndex: Int, where shouldToggle: (Int) -> Bool) {
+        let newDays: [Day] = months[monthsIndex].days.enumerated().map{ (i, day) in
+            var day = day
+            if shouldToggle(i) { day.isBetweenSelection.toggle() }
+            return day
+        }
+        months[monthsIndex].days = newDays
     }
     
     
     private mutating func toggleSelection(of day: Day) {
-        let (m, d) = dayDict[day]!
+        let (m, d) = datePositions[day.date]!
         toggleSelection(monthSection: m, dayItem: d)
     }
     
     private mutating func toggleSelection(monthSection: Int, dayItem: Int) {
         months[monthSection].days[dayItem].isSelected.toggle()
-    }
-    
-    private mutating func deselect(date: Date) {
-        for i in 0..<monthCount {
-            if let index = months[i].days.firstIndex(where: { $0.date == date })  {
-                months[i].days[index].isSelected = false
-            }
-        }
     }
 }
 

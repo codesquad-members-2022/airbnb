@@ -37,6 +37,10 @@ extension CalendarPicker {
 
             self.days = daysOfLastMonth + days
         }
+        
+        func dayWithInMonth(_ index: Int) -> Day {
+            return days[firstDayWeekday+index]
+        }
     }
 
     struct Day: Hashable {

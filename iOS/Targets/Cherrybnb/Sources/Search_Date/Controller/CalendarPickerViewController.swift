@@ -39,12 +39,15 @@ class CalendarPickerViewController: UIViewController {
     init(baseDate: Date, numOfMonths: Int,
          didSelectDate: ((DaySelection) -> Void)? = nil) {
         self.calendarPicker = CalendarPicker(baseDate: baseDate, numOfMonths: numOfMonths)
-
-        
-        
         super.init(nibName: nil, bundle: nil)
+        
+        calendarPicker.didUpdateMonth = { [weak self] range in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadSections(IndexSet(range))
+            }
+            
+        }
     }
-    
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -111,5 +114,7 @@ extension CalendarPickerViewController: UICollectionViewDataSource {
 }
 
 extension CalendarPickerViewController: UICollectionViewDelegate {
-    // TODO: HANDLING SELECTION
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        calendarPicker.select(newMonthSection: indexPath.section, newDayItem: indexPath.item)
+    }
 }

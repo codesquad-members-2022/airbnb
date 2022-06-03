@@ -5,130 +5,144 @@
 //  Created by 백상휘 on 2022/05/31.
 //
 
-import Foundation
 import UIKit
 import SnapKit
 
-class PriceGraphViewController: UIViewController {
+class PriceGraphViewController: BackgroundViewController, CommonViewControllerProtocol {
     
     private let viewPadding: CGFloat = 16
     
     private let graph = ColumnGraphView()
-    private var editableWidth: Constraint?
-    private let slider: UISlider = {
-        let slider = UISlider()
-        slider.minimumValue = 0
-        slider.maximumValue = 1
-        slider.thumbTintColor = UIColor.gray3
-        slider.tintColor = UIColor.gray3
-        return slider
-    }()
-    
-    private lazy var priceLabel: (String) -> UILabel = {
-        let label = UILabel()
-        label.text = $0
-        label.textColor = UIColor.gray1
-        self.view.addSubview(label)
-        return label
-    }
+    private var editableLeading: Constraint?
+    private var editableTrailing: Constraint?
+    private var slider = CustomRangeSlider(frame: .zero)
     
     // 그래프의 선택되지 않는 희미한 부분
     private let lightGrayView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.gray4
+        view.backgroundColor = UIColor.getGrayScale(.Grey4)
         return view
     }()
     
     // 그래프에서 선택되는 진한 부분
     let semanticGrayView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.gray3
+        view.backgroundColor = UIColor.getGrayScale(.Grey3)
         return view
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        attribute()
+        layout()
+        bind()
+    }
+    
+    func attribute() {
+        graph.drawGraph(distribution: [0.3, 0.4, 0.9, 0.65, 1, 0.65, 0.8, 0.8, 0.75, 0.8, 0.25, 0.5, 0.2, 0.05, 0.23, 0.4, 0.2, 0.0, 0.5, 0.1])
+        view.backgroundColor = .systemBackground
+        navigationItem.title = "숙소 찾기"
+        self.toolbarItems = setUpToolBarItems()
+    }
+    
+    func layout() {
         let titleLabel = priceLabel("가격 범위")
-        let minimumLabel = priceLabel("\(NumberFormatter.localizedString(from: 11000, number: .currency))")
-        let slashLabel = priceLabel("-")
-        let maximumLabel = priceLabel("\(NumberFormatter.localizedString(from: 1000000, number: .currency))")
+        let priceRangeLabel = priceLabel("₩\(NumberFormatter.localizedString(from: 11000, number: .decimal)) - ₩\(NumberFormatter.localizedString(from: 1000000, number: .decimal))")
         
-        let largeFont = UIFont(name: titleLabel.font.fontName, size: 17)
-        let smallFont = UIFont(name: titleLabel.font.fontName, size: 12)
+        let labelFont: (CGFloat) -> UIFont? = { size in
+            UIFont(name: titleLabel.font.fontName, size: size)
+        }
         
-        titleLabel.font = largeFont
-        minimumLabel.font = largeFont
-        maximumLabel.font = largeFont
+        titleLabel.font = labelFont(17)
+        priceRangeLabel.font = labelFont(17)
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide).inset(32)
-            make.leading.equalTo(self.view.safeAreaLayoutGuide).offset(16)
+            make.leading.equalTo(self.view.safeAreaLayoutGuide).offset(viewPadding)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(viewPadding)
         }
         
-        minimumLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(32)
-            make.leading.equalTo(titleLabel)
-        }
-        
-        slashLabel.snp.makeConstraints { make in
-            make.leading.equalTo(minimumLabel.snp.trailing).offset(8)
-            make.centerY.equalTo(minimumLabel)
-        }
-        
-        maximumLabel.snp.makeConstraints { make in
-            make.leading.equalTo(slashLabel.snp.trailing).offset(8)
-            make.centerY.equalTo(minimumLabel)
+        priceRangeLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(viewPadding)
+            make.leading.trailing.equalTo(titleLabel)
         }
         
         let descriptionLabel = priceLabel("평균 1박 요금은 ₩165,556 입니다.")
-        descriptionLabel.font = smallFont
-        descriptionLabel.textColor = UIColor.gray3
-        
+        descriptionLabel.font = labelFont(12)
+        descriptionLabel.textColor = UIColor.getGrayScale(.Grey3)
         descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(minimumLabel.snp.bottom).offset(8)
-            make.leading.equalTo(titleLabel)
+            make.top.equalTo(priceRangeLabel.snp.bottom).offset(8)
+            make.leading.trailing.equalTo(titleLabel)
         }
         
-        graph.drawGraph(distribution: [0.3, 0.4, 0.9, 0.65, 1, 0.65, 0.8, 0.8, 0.75, 0.8, 0.25, 0.5, 0.2, 0.05, 0.23, 0.4, 0.2, 0.0, 0.5, 0.1])
         view.addSubview(graph)
+        graph.addSubview(lightGrayView)
+        graph.addSubview(semanticGrayView)
+        
+        view.addSubview(slider)
         
         graph.snp.makeConstraints { make in
             make.top.equalTo(descriptionLabel.snp.bottom).offset(48)
-            make.leading.equalTo(titleLabel)
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(16)
+            make.leading.trailing.equalTo(titleLabel)
             make.height.equalTo(100)
         }
         
-        graph.addSubview(lightGrayView)
+        graph.layoutIfNeeded()
         
         lightGrayView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-        
-        view.addSubview(slider)
-        
-        graph.addSubview(semanticGrayView)
 
         semanticGrayView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
-            $0.leading.equalTo(graph)
-            self.editableWidth = $0.width.equalTo(self.graph.frame.width * CGFloat(self.slider.value)).constraint
+            self.editableLeading = $0.leading.equalTo(graph).inset(graph.frame.width * slider.lowerValue).constraint
+            self.editableTrailing = $0.trailing.equalTo(graph).inset(graph.frame.width * (slider.maximumValue - slider.upperValue)).constraint
         }
         
         slider.snp.makeConstraints { make in
-            make.top.equalTo(self.graph.snp.bottom)
-            make.leading.equalTo(graph)
-            make.trailing.equalTo(graph)
+            make.top.equalTo(self.graph.snp.bottom).inset(9)
+            make.leading.trailing.equalTo(graph)
+            make.height.equalTo(20)
         }
-        
+        slider.layoutIfNeeded()
+        slider.updateLayerFrames()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
+    func bind() {
         slider.addTarget(self, action: #selector(sliderValueChanged(_:)), for: .valueChanged)
     }
     
-    @objc func sliderValueChanged(_ sender: UISlider) {
-        let width = self.graph.frame.width * CGFloat(slider.value)
-        self.editableWidth?.update(offset: width)
+    private func priceLabel(_ labelText: String) -> UILabel {
+        let label = UILabel()
+        label.text = labelText
+        label.textColor = UIColor.getGrayScale(.Grey1)
+        label.textAlignment = .left
+        label.adjustsFontSizeToFitWidth = true
+        view.addSubview(label)
+        return label
+    }
+    
+    private func setUpToolBarItems() -> [UIBarButtonItem] {
+        let spacing = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let skipButton = UIBarButtonItem(title: "건너뛰기", style: .plain, target: self, action: #selector(nextButtonTouchUpInside(_:)))
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(nextButtonTouchUpInside(_:)))
+        nextButton.isEnabled = true
+        return [skipButton, spacing, nextButton]
+    }
+    
+    @objc func sliderValueChanged(_ sender: CustomRangeSlider) {
+        self.editableLeading?.update(inset: sender.lowerValue * graph.frame.width)
+        self.editableTrailing?.update(inset: (sender.maximumValue - sender.upperValue) * graph.frame.width)
         super.updateViewConstraints()
+    }
+    
+    @objc func nextButtonTouchUpInside(_ sender: UIBarButtonItem) {
+        let nextVC = SearchHeadCountViewController()
+        self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
 

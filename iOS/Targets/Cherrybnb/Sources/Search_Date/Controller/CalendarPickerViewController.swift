@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class CalendarPickerViewController: UIViewController {
 
     static let defaultNumberOfMonths = 12
@@ -34,13 +33,13 @@ class CalendarPickerViewController: UIViewController {
     }()
 
     var calendarPicker: CalendarPicker
-    
+
     init(baseDate: Date, numOfMonths: Int,
          didSelectDate: ((DaySelection) -> Void)? = nil) {
         self.calendarPicker = CalendarPicker(baseDate: baseDate, numOfMonths: numOfMonths)
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -64,7 +63,7 @@ class CalendarPickerViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.readableContentGuide.bottomAnchor)
         ])
     }
-    
+
     private func setHandler() {
         calendarPicker.didUpdateMonth = { [weak self] range in
             DispatchQueue.main.async {

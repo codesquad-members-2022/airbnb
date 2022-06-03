@@ -33,48 +33,48 @@ class SearchSpec: QuickSpec {
 
             }
         }
-        
-        describe("검색바를 터치하고"){
-            
-            context("인기 여행 목적지 리스트 요청 응답에 성공한다면"){
+
+        describe("검색바를 터치하고") {
+
+            context("인기 여행 목적지 리스트 요청 응답에 성공한다면") {
                 var responseSuccessStub: ResponseSuccessStub!
                 var location: Location!
                 var placeData: [Place]?
-                
+
                 beforeEach {
                     responseSuccessStub = ResponseSuccessStub()
                     location = Location.makeRandomInKR()
-                    
+
                 }
-                
-                it("인기 여행 목적지 리스트가 들어와야 한다."){
+
+                it("인기 여행 목적지 리스트가 들어와야 한다.") {
                     responseSuccessStub.getRecommendation(for: location) { place in
                         placeData = place
                     }
                     expect(placeData?.count).toEventually(equal(responseSuccessStub.dummy.count), timeout: .seconds(1))
                 }
-                
+
             }
-            
-            context("인기 여행 목적지 리스트 요청 응답에 실패한다면"){
+
+            context("인기 여행 목적지 리스트 요청 응답에 실패한다면") {
                 var responseFailureStub: ResponseFailureStub!
                 var location: Location!
                 var placeData: [Place]?
-                
+
                 beforeEach {
                     responseFailureStub = ResponseFailureStub()
                     location = Location.makeRandomInKR()
                 }
-                
-                it("인기 여행 목적지 리스트가 비어있어야 한다."){
+
+                it("인기 여행 목적지 리스트가 비어있어야 한다.") {
                     responseFailureStub.getRecommendation(for: location) { place in
                         placeData = place
                     }
                     expect(placeData).toEventually(beNil(), timeout: .seconds(1))
                 }
-                
+
             }
-            
+
         }
 
     }

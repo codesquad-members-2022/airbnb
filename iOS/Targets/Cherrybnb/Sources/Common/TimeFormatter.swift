@@ -22,7 +22,7 @@ struct TimeFormatter {
             return nil
         }
     }
-    
+
     private func hourString(second: Second) -> String {
         if (second / 3600).rounded() == (second / 3600) {
             return String(format: "%.f", second / 3600)

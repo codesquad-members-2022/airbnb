@@ -10,30 +10,30 @@ import UIKit
 import MapKit
 
 class SearchLocationDataSource: NSObject, UICollectionViewDataSource {
-    
+
     private var searchResultData = [MKLocalSearchCompletion]()
     private var searchCompleter = MKLocalSearchCompleter()
     private var didLoadData: () -> Void
-    
+
     init(didLoadData: @escaping () -> Void) {
         self.didLoadData = didLoadData
         super.init()
         searchCompleter.delegate = self
     }
-    
+
     func getResult(of index: Int) -> MKLocalSearchCompletion? {
         guard index < searchResultData.count else { return nil }
         return searchResultData[index]
     }
-    
+
     func setQueryFragment(_ queryFragement: String) {
         searchCompleter.queryFragment = queryFragement
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return searchResultData.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LocationCell.reuseIdentifier, for: indexPath) as? LocationCell else { return UICollectionViewCell() }
         let data = searchResultData[indexPath.item]

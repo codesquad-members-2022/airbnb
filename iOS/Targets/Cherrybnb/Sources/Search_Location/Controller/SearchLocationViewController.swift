@@ -18,31 +18,31 @@ class SearchLocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
+
         setCollectionView()
         setLayout()
         setSearchBar()
         setDataSource()
     }
-    
+
     private func setDataSource() {
         self.recommendationDataSource = RecommendationDataSource {
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
-        
+
         self.searchLocationDataSource = SearchLocationDataSource {
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
-        
+
         collectionView.dataSource = recommendationDataSource
     }
-    
+
     static let defaultNavTitle = "숙소찾기"
-    
+
     private func setSearchBar() {
         self.navigationItem.title = SearchLocationViewController.defaultNavTitle
         self.navigationItem.searchController = UISearchController(searchResultsController: nil)
@@ -78,16 +78,16 @@ class SearchLocationViewController: UIViewController {
 extension SearchLocationViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let searchDateVC = SearchDateViewController()
-        
+
         guard let searchCompletion = searchLocationDataSource?.getResult(of: indexPath.item) else { return }
-        
+
         let request = MKLocalSearch.Request(completion: searchCompletion)
         let localSearch = MKLocalSearch(request: request)
-        localSearch.start { response, error in
+        localSearch.start { _, error in
             guard error == nil else { return }
             // TODO: Search 결과 갯수에 따라, 추가적으로 컬렉션 뷰에 띄우거나 혹은 바로 날짜 선택 화면으로 이동
         }
-        
+
         navigationController?.pushViewController(searchDateVC, animated: true)
     }
 }
@@ -98,7 +98,6 @@ extension SearchLocationViewController: UICollectionViewDelegateFlowLayout {
         return size
     }
 }
-
 
 extension SearchLocationViewController: UISearchBarDelegate {
 
@@ -113,4 +112,3 @@ extension SearchLocationViewController: UISearchBarDelegate {
         }
     }
 }
-

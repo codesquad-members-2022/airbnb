@@ -19,5 +19,5 @@ export const TextBoxLabel = styled.div`
 export const TextBoxText = styled.div`
   font-size: ${({ theme }) => theme.fontSize.base};
   color: ${({ theme }) => theme.color.gray2};
-  font-weight: ${({ theme, placeholder }) => (placeholder ? theme.fontWeight.base : theme.fontWeight.bold)};
+  font-weight: ${({ theme, text }) => (text ? theme.fontWeight.bold : theme.fontWeight.base)};
 `;

@@ -1,27 +1,30 @@
-import { Key } from "react";
-
-import { useCalendarState } from "@contexts/CalendarProvider";
-import { CalendarInfoType, DateTarget } from "@utils/calendar";
+import { DateTarget } from "@constants/calendar";
+import { useCalendarDispatch, useCalendarState } from "@contexts/CalendarProvider";
+import { CalendarInfoType, getDate } from "@utils/calendar";
 
 import * as S from "./style";
 
 const CalendarDate = ({ calendarInfo }: { calendarInfo: CalendarInfoType }) => {
   const { calendarArray, year, month } = calendarInfo;
   const { checkIn, checkOut } = useCalendarState();
+  const { onCheckIn, onCheckOut, onCheckRemove } = useCalendarDispatch();
 
-  const handleClickDate = () => {
-    // TODO 체크인일때, 체크아웃일 때 클릭
+  const handleClickDate = (dateData: Date) => {
+    // TODO 체크인일때, 체크아웃일 때 구분
     if (!checkIn) {
-      // dispatch-checkin
-
-      // 색깔 칠하기
-      ("안녕");
+      onCheckIn(dateData);
     }
-    // && new Date(year, month, date)
+
+    if (checkIn) {
+      onCheckOut(dateData);
+    }
   };
 
-  const isPast = (): boolean => {
-    return false;
+  const isPast = (dateData: number | Date): boolean => {
+    const today = new Date();
+    const isPastBoolean = dateData < today;
+    console.log("isPastBoolean :>> ", isPastBoolean);
+    return isPastBoolean;
   };
 
   const getDateTarget = (): DateTarget => {
@@ -30,15 +33,20 @@ const CalendarDate = ({ calendarInfo }: { calendarInfo: CalendarInfoType }) => {
 
   return (
     <S.CalendarDate>
-      {calendarArray.map((date: number, index: Key) => {
+      {calendarArray.map((date: number, index) => {
         const dateInfo = {
           date: date,
-          dateData: new Date(year, month, date),
+          dateData: getDate(year, month, date),
           dateTarget: getDateTarget(),
-          isPast: isPast,
+          isPast: date ? isPast(getDate(year, month, date)) : false,
         };
+
         return (
-          <S.DateItem onClick={handleClickDate} key={index} {...dateInfo}>
+          <S.DateItem
+            onClick={() => !dateInfo.isPast && handleClickDate(dateInfo.dateData)}
+            key={dateInfo.dateData.getTime() + index}
+            {...dateInfo}
+          >
             {date || ""}
           </S.DateItem>
         );

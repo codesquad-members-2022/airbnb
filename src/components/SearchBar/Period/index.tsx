@@ -4,6 +4,7 @@ import Calendar from "@components/Calendar";
 import Modal from "@components/common/Modal";
 import TextBox from "@components/common/TextBox";
 import { useCalendarState } from "@contexts/CalendarProvider";
+import { getCheckInTemplate } from "@utils/calendar";
 
 import * as S from "./style";
 
@@ -21,8 +22,8 @@ enum Modals {
 }
 
 const Period = ({ modalOpen, setModalOpen }: Props) => {
-  const { checkIn, checkOut } = useCalendarState();
   const today = useRef(new Date());
+  const { checkIn, checkOut } = useCalendarState();
 
   const onClickHandler = () => {
     setModalOpen(1);
@@ -31,8 +32,8 @@ const Period = ({ modalOpen, setModalOpen }: Props) => {
   return (
     <>
       <S.Period onClick={onClickHandler}>
-        <TextBox label={`체크인`} placeholder={`날짜 입력`} text={checkIn} />
-        <TextBox label={`체크아웃`} placeholder={`날짜 입력`} text={checkOut} />
+        <TextBox label={`체크인`} placeholder={`날짜 입력`} text={checkIn && getCheckInTemplate(checkIn)} />
+        <TextBox label={`체크아웃`} placeholder={`날짜 입력`} text={checkOut && getCheckInTemplate(checkOut)} />
       </S.Period>
       {modalOpen === 1 && (
         <Modal setModalOpen={setModalOpen}>

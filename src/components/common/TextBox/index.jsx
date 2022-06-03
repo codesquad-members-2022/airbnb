@@ -7,7 +7,7 @@ const TextBox = ({ label, text, placeholder }) => {
   return (
     <S.TextBox type="text">
       <S.TextBoxLabel>{label}</S.TextBoxLabel>
-      <S.TextBoxText type="text" placeholder={placeholder}>
+      <S.TextBoxText type="text" text={text}>
         {text || placeholder}
       </S.TextBoxText>
     </S.TextBox>

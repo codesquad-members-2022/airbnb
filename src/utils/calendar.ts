@@ -1,14 +1,34 @@
+import { CalendarTypes } from "@constants/calendar";
+
+export type CalendarState = {
+  checkIn: Date | null;
+  checkOut: Date | null;
+};
+
+export type CalendarActionType =
+  | { type: CalendarTypes.CHECK_IN; data: Date }
+  | { type: CalendarTypes.CHECK_OUT; data: Date }
+  | {
+      type: CalendarTypes.ALL_REMOVE;
+    };
+
+export type CalendarDispatches = {
+  onCheckIn(date: Date): void;
+  onCheckOut(date: Date): void;
+  onCheckRemove(): void;
+};
+
 export type DirectionType = "FORWARD" | "BACKWARD" | null;
+
 export type CalendarInfoType = {
   calendarArray: number[];
   year: number;
   month: number;
 };
-export enum DateTarget {
-  CHECK_IN,
-  CHECK_OUT,
-  BETWEEN,
-}
+
+export const getDate = (year: number, month: number, date: number | undefined): Date => {
+  return new Date(year, month, date);
+};
 
 // 달의 첫번째 날의 요일 구하기
 export const getFirstDay = (year: number, month: number) => {
@@ -43,4 +63,10 @@ export const getDirectionValue = (direction: DirectionType) => {
     default:
       return 0;
   }
+};
+
+export const getCheckInTemplate = (date: Date | null): string => {
+  const month = Number(date?.getMonth()) + 1;
+  const year = Number(date?.getDate());
+  return `${month}월${year}일`;
 };

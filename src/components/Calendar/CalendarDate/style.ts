@@ -4,7 +4,14 @@ import { CalendarDay, DayItem } from "@components/Calendar/CalendarPage/style";
 
 export const CalendarDate = styled(CalendarDay)``;
 
-export const DateItem = styled(DayItem)<{ date: number }>`
+//           date: date,
+//           dateData: getDate(year, month, date),
+//           dateTarget: getDateTarget(),
+//           isPast: isPast,
+
+export const DateItem = styled(DayItem)<{ date: number; isPast: boolean }>`
+  color: ${({ theme }) => theme.color.black};
+
   ${({ date }) =>
     date &&
     css`
@@ -15,6 +22,9 @@ export const DateItem = styled(DayItem)<{ date: number }>`
       }
     `}
 
-  /* 과거와 checkin checkout between 구분 */
-  color: ${({ theme }) => theme.color.black};
+  ${({ isPast }) =>
+    isPast &&
+    css`
+      color: ${({ theme }) => theme.color.gray4};
+    `}
 `;

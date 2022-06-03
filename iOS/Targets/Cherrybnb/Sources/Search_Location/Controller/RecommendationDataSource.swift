@@ -9,18 +9,20 @@
 import UIKit
 
 class RecommendationDataSource: NSObject, UICollectionViewDataSource {
+
     
     private(set) var recommendationData = [Place]()
     
     private var didLoadData: () -> Void
-    
+
     init(didLoadData: @escaping () -> Void) {
-        
+
         self.didLoadData = didLoadData
         super.init()
-        
+
         let location = Location.makeRandomInKR()
         let recommendSuccessStubRequest = DefaultRecommendator(httpService: ResponseSuccessStub())
+
         
         recommendSuccessStubRequest.recommend(for: location) { [weak self] place in
             guard let self = self else { return }
@@ -29,11 +31,11 @@ class RecommendationDataSource: NSObject, UICollectionViewDataSource {
             didLoadData()
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         recommendationData.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceCell.reuseIdentifier, for: indexPath) as? PlaceCell else { return UICollectionViewCell() }
         let data = recommendationData[indexPath.item]

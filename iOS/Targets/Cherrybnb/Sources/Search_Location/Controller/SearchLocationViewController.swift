@@ -23,12 +23,13 @@ class SearchLocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
+
         setCollectionView()
         setLayout()
         setSearchBar()
         setDataSource()
     }
+
     
     override func viewWillAppear(_ animated: Bool) {
         collectionView.delegate = recommendationDelegate
@@ -36,6 +37,7 @@ class SearchLocationViewController: UIViewController {
         self.navigationItem.searchController?.searchBar.text = nil
     }
     
+
     private func setDataSource() {
         self.recommendationDataSource = RecommendationDataSource {
             DispatchQueue.main.async {
@@ -44,11 +46,13 @@ class SearchLocationViewController: UIViewController {
         }
         self.recommendationDelegate = RecommandationDelegate(navigation: self.navigationController ?? UINavigationController(), collectionView: self.collectionView)
         
+
         self.searchLocationDataSource = SearchLocationDataSource {
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
+
         
         self.detailSearchDataSource = DetailSearchLocationDataSource()
         self.detailSearchDelegate = DetailSearchDelegate(navigation: self.navigationController ?? UINavigationController(), collectionView: self.collectionView)
@@ -56,8 +60,9 @@ class SearchLocationViewController: UIViewController {
         collectionView.dataSource = recommendationDataSource
         collectionView.delegate = recommendationDelegate
     }
-    
-    
+
+    static let defaultNavTitle = "숙소찾기"
+  
     private func setSearchBar() {
         self.navigationItem.title = SearchLocationViewController.defaultNavTitle
         self.navigationItem.searchController = UISearchController(searchResultsController: nil)
@@ -94,11 +99,12 @@ class SearchLocationViewController: UIViewController {
 extension SearchLocationViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let searchDateVC = SearchDateViewController()
-        
+
         guard let searchCompletion = searchLocationDataSource?.getResult(of: indexPath.item) else { return }
-        
+
         let request = MKLocalSearch.Request(completion: searchCompletion)
         let localSearch = MKLocalSearch(request: request)
+
         
         localSearch.start { [weak self] response, error in
             guard let self = self, let response = response else { return }
@@ -137,7 +143,6 @@ extension SearchLocationViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-
 extension SearchLocationViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -153,4 +158,3 @@ extension SearchLocationViewController: UISearchBarDelegate {
         }
     }
 }
-

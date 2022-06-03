@@ -1,5 +1,5 @@
 import { usePeriodState } from 'contexts/periodContext';
-import Calendar from 'components/Calendar';
+import Calendar from 'components/Calender/Calendar';
 import styled from 'styled-components';
 import { ModalWrap } from './styled';
 

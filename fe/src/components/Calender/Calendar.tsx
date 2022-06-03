@@ -3,7 +3,7 @@ import { ReactComponent as LeftIcon } from 'images/FE_숙소예약서비스/Prop
 import { ReactComponent as RightIcon } from 'images/FE_숙소예약서비스/Property 1=chevron-right.svg';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { getDays, keyMaker } from 'util/util';
+import { getDays, keyMaker } from 'utils/util';
 import Day from './Day';
 
 type CalendarProps = {

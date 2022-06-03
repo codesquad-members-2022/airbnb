@@ -5,8 +5,8 @@ import styled, { css } from 'styled-components';
 import { Link } from '@mui/material';
 import { ReactComponent as LogoImg } from 'images/logo.svg';
 
-import SearchWrapper from './SearchWrapper';
-import UserMenu from './UserMenu';
+import SearchWrapper from 'components/Header/SearchWrapper';
+import UserMenu from 'components/Header/UserMenu';
 
 // type Router = '/' | '/result';
 

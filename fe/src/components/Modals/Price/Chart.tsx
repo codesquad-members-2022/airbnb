@@ -1,19 +1,30 @@
 import { useEffect, useRef } from 'react';
-
-type PriceInfoType = {
-  minPrice: number;
-  maxPrice: number;
-  priceData: Array<number>;
-};
-
-type ObjType = {
-  [key: string]: number;
-};
+import { ObjType, PriceInfoType, DataInfo } from './priceTypes';
 
 const CANVAS_INFO = {
   WIDTH: 365,
   HEIGHT: 100,
   SECTIONS: 15,
+};
+
+const getRangeInfo = ({ data, sections, maxPrice, minPrice }: DataInfo) => {
+  const 고정범위 = Math.floor((maxPrice - minPrice) / sections);
+
+  const dataRangeObj: ObjType = {};
+  for (let range = minPrice; range < maxPrice; range += 고정범위) {
+    dataRangeObj[range] = 0;
+  }
+
+  // 최대값이 들어갈 수 있게...
+  dataRangeObj[maxPrice] = 0;
+
+  Object.keys(dataRangeObj).forEach((objData, idx) => {
+    const 이전범위 = idx !== 0 ? Number(Object.keys(dataRangeObj)[idx - 1]) : 0;
+    const 해당하는값배열 = data.filter((el) => el <= Number(objData) && 이전범위 < el);
+    dataRangeObj[objData] = 해당하는값배열.length;
+  });
+
+  return dataRangeObj;
 };
 
 function Chart({ minPrice, maxPrice, priceData }: PriceInfoType) {
@@ -27,42 +38,14 @@ function Chart({ minPrice, maxPrice, priceData }: PriceInfoType) {
     if (!ctx) return;
 
     const { WIDTH, HEIGHT, SECTIONS } = CANVAS_INFO;
-    const getRange = (data: Array<number>) => {
-      const 고정범위 = Math.floor((maxPrice - minPrice) / SECTIONS);
-      let 현재범위 = 고정범위;
-
-      const obj: ObjType = {};
-      for (let range = 고정범위; range < maxPrice - minPrice; range += 고정범위) {
-        obj[range] = 0;
-      }
-
-      data.forEach((el) => {
-        if (현재범위 < el) {
-          현재범위 += 고정범위;
-
-          if (현재범위 + 고정범위 < el) {
-            // eslint-disable-next-line no-unreachable-loop
-            do {
-              현재범위 += 고정범위;
-              obj[현재범위] = 1;
-              return;
-            } while (현재범위 > el && maxPrice > 현재범위);
-          }
-        }
-
-        !obj[현재범위] ? (obj[현재범위] = 1) : (obj[현재범위] += 1);
-      });
-
-      return obj;
-    };
-
-    const dataRange = getRange(priceData);
+    const dataInfo = { data: priceData, sections: SECTIONS, maxPrice, minPrice };
+    const dataRange = getRangeInfo(dataInfo);
 
     const drawLine = (dataRange: ObjType) => {
       const dataValues = Object.values(dataRange);
 
       dataValues.forEach((data: number, idx: number) => {
-        const sectionWidth = Math.floor(WIDTH / (SECTIONS - 1));
+        const sectionWidth = Math.floor(WIDTH / SECTIONS);
         const pointY = Math.floor((data / Math.max(...dataValues)) * HEIGHT);
         const prevPointY =
           idx === 0 ? HEIGHT : HEIGHT - (dataValues[idx - 1] / Math.max(...dataValues)) * HEIGHT;

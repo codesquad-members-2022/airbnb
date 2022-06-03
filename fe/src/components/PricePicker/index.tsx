@@ -41,7 +41,10 @@ function PricePicker() {
             <S.Price>
               {`${prefix}${minPrice.toLocaleString()}`} - {`${prefix}${maxPrice.toLocaleString()}`}
             </S.Price>
-            <S.Average>평균 1박 요금은 ${averageNightlyPrice.toLocaleString()} 입니다.</S.Average>
+            <S.Average>
+              평균 1박 요금은 {prefix}
+              {averageNightlyPrice.toLocaleString()} 입니다.
+            </S.Average>
           </>
         )}
       </S.PriceInfo>

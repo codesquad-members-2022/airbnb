@@ -1,9 +1,12 @@
-package com.team14.cherrybnb.revervation.dto;
+package com.team14.cherrybnb.openapi;
 
 import lombok.Getter;
 
 @Getter
 public class DistanceInfo {
+
+    private static final int M_TO_KM = 1000;
+    private static final int SEC_TO_MIN = 60;
 
     private final double distance;
     private final double duration;
@@ -14,10 +17,10 @@ public class DistanceInfo {
     }
 
     private double toKm(double distance) {
-        return distance / 1000;
+        return distance / M_TO_KM;
     }
 
     private double toMin(double duration) {
-        return duration / 60;
+        return duration / SEC_TO_MIN;
     }
 }

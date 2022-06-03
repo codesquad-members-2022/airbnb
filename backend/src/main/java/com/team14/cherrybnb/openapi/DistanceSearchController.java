@@ -2,10 +2,8 @@ package com.team14.cherrybnb.openapi;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.team14.cherrybnb.revervation.dto.DistanceInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

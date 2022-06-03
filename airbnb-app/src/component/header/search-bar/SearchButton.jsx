@@ -1,10 +1,12 @@
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 function SearchButton({ open = false }) {
+  const theme = useTheme();
+
   return (
     <SubmitButton type="submit" padding={open ? '8px 16px 8px 8px' : '8px'}>
-      <SearchRoundedIcon />
+      <SearchRoundedIcon sx={{ fill: theme.color.white }} />
       <ButtonText display={open ? 'block' : 'none'}>검색</ButtonText>
     </SubmitButton>
   );

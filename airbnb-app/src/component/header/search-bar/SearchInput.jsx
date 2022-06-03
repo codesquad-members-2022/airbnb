@@ -2,29 +2,34 @@ import { useContext } from 'react';
 import styled from 'styled-components';
 import ResetButton from '@/component/header/search-bar/ResetButton';
 import SearchButton from '@/component/header/search-bar/SearchButton';
-import { SearchBarContext } from '@component/header/search-bar/SearchBarProvider';
+import { SearchBarContext } from '@/context/SearchBarProvider';
 
-function SearchInput({ label, placeholder, value, isLastElement }) {
+function SearchInput({ value, resetBtnHandler, label, placeholder, isLastElement }) {
   const { isFocus, updateFocusState, currentInput } = useContext(SearchBarContext);
 
   const isCurrentInput = currentInput === label;
 
   return (
-    <Container flexGrow={isLastElement ? 2 : 1} bgColor={currentInput === label ? 'white' : null} tabIndex="0" onFocus={() => updateFocusState(label)}>
-      <div>
+    <Container
+      flexGrow={isLastElement ? 2 : 1}
+      bgColor={isCurrentInput ? 'white' : null}
+      tabIndex="0"
+      onFocus={() => updateFocusState(label)}
+    >
+      <StyledWrapper>
         <Label>{label}</Label>
         <Input type="text" placeholder={placeholder} value={value} readOnly />
-      </div>
-      <ResetButton display={value && isCurrentInput ? 'block' : 'none'} />
+      </StyledWrapper>
+      <ResetButton display={value && isCurrentInput ? 'block' : 'none'} onClick={resetBtnHandler} />
       {isLastElement ? <SearchButton open={isFocus} /> : <Line />}
     </Container>
   );
 }
 
 const Container = styled.div`
+  display: flex;
   box-sizing: border-box;
   position: relative;
-  display: inline-flex;
   align-items: center;
   flex-grow: ${({ flexGrow }) => flexGrow};
   padding: 20px 30px;
@@ -38,11 +43,16 @@ const Label = styled.div`
   line-height: 17px;
 `;
 
+const StyledWrapper = styled.div`
+  width: 55%;
+`;
+
 const Input = styled.input`
   width: 100%;
   font-size: ${({ theme }) => theme.fontSize.large};
   font-weight: ${({ theme }) => theme.fontWeight.regular};
   line-height: 20px;
+  text-overflow: ellipsis;
 `;
 
 const Line = styled.span`

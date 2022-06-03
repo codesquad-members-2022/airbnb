@@ -1,7 +1,8 @@
 import { useMemo, useContext } from 'react';
-import { SearchBarContext } from '@component/header/search-bar/SearchBarProvider';
+import { SearchBarContext } from '@/context/SearchBarProvider';
 import SEARCH_INPUT_TEXT from '@/constants/searchBarText';
-import Calender from '@/component/header/calender/Calender';
+import Calender from '@calender/Calender';
+import Personnel from '@personnel/Personnel';
 
 function SearchInputModal() {
   const { currentInput } = useContext(SearchBarContext);
@@ -15,7 +16,7 @@ function SearchInputModal() {
       case SEARCH_INPUT_TEXT.PRICE.label:
         break;
       case SEARCH_INPUT_TEXT.PERSONNEL.label:
-        break;
+        return <Personnel />;
       default:
         return null;
     }

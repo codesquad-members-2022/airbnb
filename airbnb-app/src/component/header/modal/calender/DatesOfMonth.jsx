@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import DateBox from '@/component/header/calender/DateBox';
+import DateBox from '@calender/DateBox';
 
 function DatesOfMonth({ date }) {
   const year = date.year;

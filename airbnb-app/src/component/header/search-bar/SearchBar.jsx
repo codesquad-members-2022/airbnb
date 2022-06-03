@@ -1,22 +1,36 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 import SEARCH_INPUT_TEXT from '@/constants/searchBarText';
-import { SearchBarContext } from '@component/header/search-bar/SearchBarProvider';
 import SearchInput from '@/component/header/search-bar/SearchInput';
 import SearchInputModal from './SearchInputModal';
-import { CalenderDateContext } from '@component/header/calender/CalenderDateProvider';
+import { SearchBarContext } from '@/context/SearchBarProvider';
+import { CalenderDateContext } from '@/context/CalenderDateProvider';
+import { PersonnelContext } from '@/context/PersonnelProvider';
 
 const searchInputText = Object.entries(SEARCH_INPUT_TEXT);
 
 function SearchBar() {
   const { isFocus, resetFocusState } = useContext(SearchBarContext);
-  const { checkInValue, checkOutValue, resetCurDate } = useContext(CalenderDateContext);
+  const { checkInValue, checkOutValue, resetCurDate, resetCalenderInfos } = useContext(CalenderDateContext);
+  const { personnelValue, resetPersonnel } = useContext(PersonnelContext);
 
-  const values = {
-    체크인: checkInValue,
-    체크아웃: checkOutValue,
-    요금: `~`,
-    인원: `게스트 명, 유아 명`,
+  const inputProps = {
+    체크인: {
+      value: checkInValue,
+      resetBtnHandler: resetCalenderInfos,
+    },
+    체크아웃: {
+      value: checkOutValue,
+      resetBtnHandler: resetCalenderInfos,
+    },
+    요금: {
+      value: `~`,
+      resetBtnHandler: () => {},
+    },
+    인원: {
+      value: personnelValue,
+      resetBtnHandler: resetPersonnel,
+    },
   };
 
   function handleBlur() {
@@ -25,27 +39,30 @@ function SearchBar() {
   }
 
   return (
-    <>
+    <Container>
       <Form method="POST" bgColor={isFocus ? 'grey6' : 'white'} onBlur={handleBlur}>
         {searchInputText.map(([key, { label, placeholder }], index) => (
           <SearchInput
+            {...inputProps[label]}
             key={key}
             label={label}
             placeholder={placeholder}
-            value={values[label]}
             isLastElement={isLastElement(index)}
           />
         ))}
       </Form>
       <SearchInputModal />
-    </>
+    </Container>
   );
 }
+const Container = styled.div`
+  max-width: 1070px;
+  margin: 0 auto;
+`;
 
 const Form = styled.form`
   display: flex;
   margin: 30px auto 0;
-  max-width: 1070px;
   border: 1px solid ${({ theme }) => theme.color.grey4};
   border-radius: ${({ theme }) => theme.borderRadius.radius1};
   background-color: ${({ theme, bgColor }) => theme.color[bgColor]};

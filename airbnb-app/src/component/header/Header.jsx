@@ -1,8 +1,9 @@
-import customStyled from '@/custom-styled-component/customStyled';
-import { CalenderDateProvider } from '@/component/header/calender/CalenderDateProvider';
+import customStyled from '@/utils/custom-styled-component/customStyled';
 import GNB from '@/component/header/gnb/GNB';
 import SearchBar from '@/component/header/search-bar/SearchBar';
-import { SearchBarProvider } from '@/component/header/search-bar/SearchBarProvider';
+import { SearchBarProvider } from '@/context/SearchBarProvider';
+import { CalenderDateProvider } from '@/context/CalenderDateProvider';
+import { PersonnelProvider } from '@/context/PersonnelProvider';
 
 function Header() {
   return (
@@ -10,7 +11,9 @@ function Header() {
       <GNB />
       <SearchBarProvider>
         <CalenderDateProvider>
-          <SearchBar />
+          <PersonnelProvider>
+            <SearchBar />
+          </PersonnelProvider>
         </CalenderDateProvider>
       </SearchBarProvider>
     </Container>

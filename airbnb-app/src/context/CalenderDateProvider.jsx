@@ -12,25 +12,10 @@ export function CalenderDateProvider({ children }) {
   const [checkInInfo, setCheckInInfo] = useState(null);
   const [checkOutInfo, setCheckOutInfo] = useState(null);
 
-  const [checkInTime, setCheckInTime] = useState(0);
-  const [checkOutTime, setCheckOutTime] = useState(0);
-
-  useEffect(() => {
-    const newCheckInTime =
-      checkInInfo === null ? 0 : new Date(`${checkInInfo.year}-${checkInInfo.month}-${checkInInfo.date}`).getTime();
-    setCheckInTime(newCheckInTime);
-  }, [checkInInfo]);
-
-  useEffect(() => {
-    const newCheckOutTime =
-      checkOutInfo === null ? 0 : new Date(`${checkOutInfo.year}-${checkOutInfo.month}-${checkOutInfo.date}`).getTime();
-    setCheckOutTime(newCheckOutTime);
-  }, [checkOutInfo]);
-
   const checkInValue = checkInInfo ? `${checkInInfo.month}월 ${checkInInfo.date}일` : '';
   const checkOutValue = checkOutInfo ? `${checkOutInfo.month}월 ${checkOutInfo.date}일` : '';
 
-  const resetInfos = () => {
+  const resetCalenderInfos = () => {
     setCheckInInfo(null);
     setCheckOutInfo(null);
   };
@@ -43,11 +28,30 @@ export function CalenderDateProvider({ children }) {
     }
   };
 
+  const getTimeFromInfo = Info => {
+    return Info === null ? 0 : new Date(`${Info.year}-${Info.month}-${Info.date}`).getTime();
+  };
+
+  const checkInTime = getTimeFromInfo(checkInInfo);
+  const checkOutTime = getTimeFromInfo(checkOutInfo);
+
+  const prevDate = {
+    year: curDate.month === 1 ? curDate.year - 1 : curDate.year,
+    month: curDate.month === 1 ? 12 : curDate.month - 1,
+  };
+
+  const nextDate = {
+    year: curDate.month === 12 ? curDate.year + 1 : curDate.year,
+    month: curDate.month === 12 ? 1 : curDate.month + 1,
+  };
+
   return (
     <CalenderDateContext.Provider
       value={{
         curDate,
         setCurDate,
+        prevDate,
+        nextDate,
         mode,
         setMode,
         checkInInfo,
@@ -58,7 +62,7 @@ export function CalenderDateProvider({ children }) {
         checkOutTime,
         checkInValue,
         checkOutValue,
-        resetInfos,
+        resetCalenderInfos,
         resetCurDate,
       }}
     >

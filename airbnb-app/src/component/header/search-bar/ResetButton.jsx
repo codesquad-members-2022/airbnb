@@ -1,22 +1,25 @@
-import { useContext } from 'react';
 import ClearIcon from '@mui/icons-material/Clear';
 import styled from 'styled-components';
-import { CalenderDateContext } from '@component/header/calender/CalenderDateProvider';
 
-function ResetButton({ display = 'none' }) {
-  const { resetInfos } = useContext(CalenderDateContext);
-
+function ResetButton({ display = 'none', onClick }) {
   const handleClick = e => {
     e.preventDefault();
-    resetInfos();
+    onClick();
   };
 
   return (
-    <IconButton display={display} onClick={handleClick} onMouseDown={e => e.preventDefault()}>
-      <ClearIcon fontSize="small" />
-    </IconButton>
+    <Box>
+      <IconButton display={display} onClick={handleClick} onMouseDown={e => e.preventDefault()}>
+        <ClearIcon fontSize="small" />
+      </IconButton>
+    </Box>
   );
 }
+
+const Box = styled.div`
+  margin-left: auto;
+  width: 20px;
+`;
 
 const IconButton = styled.button`
   display: ${({ display }) => display};

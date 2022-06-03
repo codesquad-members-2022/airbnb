@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useContext } from 'react';
-import { CalenderDateContext } from '@/component/header/calender/CalenderDateProvider';
+import { CalenderDateContext } from '@/context/CalenderDateProvider';
 import { CALENDER_MODE, DATE_CHECK_STATE } from '@/constants/calenderText';
-import { SearchBarContext } from '@component/header/search-bar/SearchBarProvider';
+import { SearchBarContext } from '@/context/SearchBarProvider';
 
 function DateBox({ year, month, date, lastDate, disabled }) {
   const { setCheckInInfo, setCheckOutInfo, checkInTime, checkOutTime } = useContext(CalenderDateContext);
@@ -10,6 +10,8 @@ function DateBox({ year, month, date, lastDate, disabled }) {
 
   const currentTime = new Date(`${year}-${month}-${date}`).getTime();
   const checkState = getCheckStateOfCurrent({ currentTime, checkInTime, checkOutTime });
+
+  const isRequiredExpandBackground = checkState === DATE_CHECK_STATE.BETWEEN && (date === 1 || date === lastDate);
 
   function handleClick() {
     // 검색바에서 체크인을 누른 경우 - 체크인을 바꾼다. 체크아웃 날짜와 비교
@@ -40,12 +42,12 @@ function DateBox({ year, month, date, lastDate, disabled }) {
 
   return (
     <StyledBackground checkState={checkState}>
-      {!date ? null : (
+      {date ? (
         <StyledDate disabled={disabled} checkState={checkState} onClick={handleClick}>
           {date}
         </StyledDate>
-      )}
-      <StyledExpandBackground checkState={checkState} date={date} lastDate={lastDate} />
+      ) : null}
+      {isRequiredExpandBackground ? <StyledExpandBackground date={date} lastDate={lastDate} /> : null}
     </StyledBackground>
   );
 }
@@ -73,23 +75,20 @@ const StyledBackground = styled.div`
 `;
 
 const StyledExpandBackground = styled.div`
-  ${({ checkState, date, lastDate }) => {
-    if (checkState === DATE_CHECK_STATE.BETWEEN && date === 1) {
+  position: absolute;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  ${({ date, lastDate }) => {
+    if (date === 1) {
       return `
-      position: absolute;
-      top: 0;
       left: -50px;
-      width: 50px;
-      height: 50px;
       background: linear-gradient(270deg, #F5F5F7 30%, #fff);
       `;
-    } else if (checkState === DATE_CHECK_STATE.BETWEEN && date === lastDate) {
+    }
+    if (date === lastDate) {
       return `
-      position: absolute;
-      top: 0;
       right: -50px;
-      width: 50px;
-      height: 50px;
       background: linear-gradient(90deg, #F5F5F7 30%, #fff);
       `;
     }

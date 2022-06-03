@@ -1,4 +1,4 @@
-import customStyled from '@/custom-styled-component/customStyled';
+import customStyled from '@/utils/custom-styled-component/customStyled';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 

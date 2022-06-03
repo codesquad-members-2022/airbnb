@@ -31,18 +31,18 @@ export const headCountStyle = `
   height:355px;
   background-color:#fff;
   border-radius:40px;
-  margin-top:16px;
+  margin-top:40px;
   margin-left:778px;
   padding:64px;
 `;
 
 export const calendarStyle = `
-background-color:#fff;
-width: 916px;
-margin-left: 262px;
-margin-top: 40px;
-padding: 88px;
-border-radius: 40px;
+  background-color:#fff;
+  width: 916px;
+  margin-left: 262px;
+  margin-top: 40px;
+  padding: 88px;
+  border-radius: 40px;
 `;
 
 export const SearchResultHeader = styled.header`
@@ -52,9 +52,8 @@ export const SearchResultHeader = styled.header`
 `;
 
 export const SearchResultHeaderContainer = styled.div`
-  ${({ isMini }: SearchResultContainerType) => `height:${!isMini ? "120" : "250"}px`};
+  ${({ isMini }: SearchResultContainerType) => `height:${!isMini ? "120" : "240"}px`};
   border-bottom: 1px solid #000;
-  box-shadow: 0px 0px 20px 1px rgb(200, 200, 200);
 `;
 
 export const SearchResultHeaderArea = styled.div`
@@ -68,8 +67,12 @@ export const SearchResultArea = styled.div`
 
 export const Tourist = styled.div`
   flex: 1;
+  height: 1024px;
+  background-color: blue;
 `;
 
 export const Map = styled.div`
   flex: 1;
+  height: 1024px;
+  background-color: green;
 `;

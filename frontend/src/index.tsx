@@ -2,7 +2,7 @@ import React from "react";
 
 import ReactDOM from "react-dom/client";
 
-import { Router } from "router/router";
+import Router from "router/router";
 
 import App from "./App";
 

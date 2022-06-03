@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import Link from "router/Link";
+
 import ButtonArea from "./ButtonArea/ButtonArea";
 import { CheckInOut, ReservationFee, PeopleCount } from "./SelectItem";
 import { AnchorEl } from "./SelectItem/SelectItem";
@@ -36,12 +38,14 @@ const SelectItemArea = (): JSX.Element => {
         onClose={handleClose}
         onClick={handleClick}
       />
-      <ButtonArea
-        icon="search"
-        isFocused={Boolean(anchorEl)}
-        onClick={handleClose}
-        ariaLabel="설정한 정보로 검색하기"
-      />
+      <Link to="searchResult" onClick={handleClose}>
+        <ButtonArea
+          icon="search"
+          isFocused={Boolean(anchorEl)}
+          // onClick={handleClose}
+          ariaLabel="설정한 정보로 검색하기"
+        />
+      </Link>
     </SelectItemAreaWrapper>
   );
 };

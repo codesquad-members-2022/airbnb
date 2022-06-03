@@ -10,7 +10,7 @@ import UIKit
 
 class RecommendationDataSource: NSObject, UICollectionViewDataSource {
     
-    private var recommendationData = [Place]()
+    private(set) var recommendationData = [Place]()
     
     private var didLoadData: () -> Void
     

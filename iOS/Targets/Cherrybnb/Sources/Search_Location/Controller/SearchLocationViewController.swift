@@ -11,8 +11,11 @@ import MapKit
 
 class SearchLocationViewController: UIViewController {
 
+    static let defaultNavTitle = "숙소찾기"
+    
     private var collectionView: UICollectionView!
     private var recommendationDataSource: RecommendationDataSource?
+    private var recommendationDelegate: RecommandationDelegate?
     private var searchLocationDataSource: SearchLocationDataSource?
     private var detailSearchDataSource: DetailSearchLocationDataSource?
     private var detailSearchDelegate: DetailSearchDelegate?
@@ -28,7 +31,7 @@ class SearchLocationViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        collectionView.delegate = self
+        collectionView.delegate = recommendationDelegate
         collectionView.dataSource = recommendationDataSource
         self.navigationItem.searchController?.searchBar.text = nil
     }
@@ -39,6 +42,7 @@ class SearchLocationViewController: UIViewController {
                 self.collectionView.reloadData()
             }
         }
+        self.recommendationDelegate = RecommandationDelegate(navigation: self.navigationController ?? UINavigationController(), collectionView: self.collectionView)
         
         self.searchLocationDataSource = SearchLocationDataSource {
             DispatchQueue.main.async {
@@ -50,9 +54,9 @@ class SearchLocationViewController: UIViewController {
         self.detailSearchDelegate = DetailSearchDelegate(navigation: self.navigationController ?? UINavigationController(), collectionView: self.collectionView)
         
         collectionView.dataSource = recommendationDataSource
+        collectionView.delegate = recommendationDelegate
     }
     
-    static let defaultNavTitle = "숙소찾기"
     
     private func setSearchBar() {
         self.navigationItem.title = SearchLocationViewController.defaultNavTitle
@@ -97,13 +101,11 @@ extension SearchLocationViewController: UICollectionViewDelegate {
         let localSearch = MKLocalSearch(request: request)
         
         localSearch.start { [weak self] response, error in
-    
             guard let self = self, let response = response else { return }
             guard error == nil else { return }
             
             if response.mapItems.count > 1 {
                 self.toSearchDetail(with: response)
-                
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
@@ -141,10 +143,12 @@ extension SearchLocationViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             collectionView.dataSource = recommendationDataSource
+            collectionView.delegate = recommendationDelegate
             collectionView.reloadData()
         } else {
             guard let searchLocationDataSource = searchLocationDataSource else { return }
             collectionView.dataSource = searchLocationDataSource
+            collectionView.delegate = self
             searchLocationDataSource.setQueryFragment(searchText)
         }
     }

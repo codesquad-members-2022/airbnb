@@ -3,7 +3,6 @@ import * as S from './Schedule.style';
 
 interface DayProps {
   day: Date | null;
-  //   setReservationDate: Dispatch<{ year: number; month: number; day: number }>;
 }
 
 const isStartDate = (day: Date | null, startDate: Date | null) =>

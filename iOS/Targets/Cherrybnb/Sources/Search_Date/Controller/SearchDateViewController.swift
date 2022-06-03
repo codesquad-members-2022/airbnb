@@ -9,8 +9,8 @@
 import UIKit
 
 struct QueryParameter {
-    var location: Location?
     var dateRange: Range<Date>?
+    var place: Place?
 }
 
 class SearchDateViewController: UIViewController {

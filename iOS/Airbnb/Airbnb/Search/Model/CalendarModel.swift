@@ -9,9 +9,12 @@ import Foundation
 
 class CalendarModel {
     
-    let selectedDateChaged: (Date) -> Void = { _ in }
+    var onUpdateCheckinDate: () -> Void = {  }
+    var onUpdateCheckoutDate: () -> Void = {  }
     
-    var selectedDate: Date?
+    var checkinDate: Date?
+    var checkoutDate: Date?
+    
     
     private var baseDate: Date {
         didSet {
@@ -89,11 +92,11 @@ class CalendarModel {
         let date = calendar.date(byAdding: .day,
                                  value: dayOffset,
                                  to: baseDate) ?? baseDate
-        if let selectedDate = selectedDate {
+        if let checkinDate = checkinDate {
             return Day(date: date,
                        number: dateFormatter.string(from: date),
                        isSelected: calendar.isDate(date,
-                                                   inSameDayAs: selectedDate),
+                                                   inSameDayAs: checkinDate),
                         isWithInDisplayedMonth: isWithinDisplayedMonth)
         } else {
             return Day(date: date,
@@ -129,6 +132,35 @@ extension CalendarModel {
         (0..<startWeekDay - 1).forEach { _ in dates.insert(nil, at: 0) }
         (lastWeekDay - 1..<6).forEach { _ in dates.append(nil) }
         return dates
+    }
+}
+
+extension CalendarModel {
+    func validateCheckDate(for date: Date) {
+        if let checkinDate = checkinDate {
+            /// 체크인 날짜 앞뒤로 크기 판별
+            if checkinDate < date {
+                if let checkoutDate = checkoutDate {
+                    self.checkoutDate = date
+                    onUpdateCheckoutDate()
+                } else {
+                    self.checkoutDate = date
+                    onUpdateCheckoutDate()
+                }
+            }
+            else if  checkinDate > date {
+                self.checkinDate = date
+                onUpdateCheckinDate()
+            }
+            else if checkinDate == date {
+                self.checkoutDate = date
+                onUpdateCheckoutDate()
+            }
+        } else {
+            ///  없으면 체크인 데이트를 업데이트
+            self.checkinDate = date
+            onUpdateCheckinDate()
+        }
     }
 }
 

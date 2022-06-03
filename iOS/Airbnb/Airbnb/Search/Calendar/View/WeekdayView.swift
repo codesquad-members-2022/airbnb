@@ -17,8 +17,6 @@ class WeekdayView: UIView {
         return stackView
     }()
     
-
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         generateWeekday()

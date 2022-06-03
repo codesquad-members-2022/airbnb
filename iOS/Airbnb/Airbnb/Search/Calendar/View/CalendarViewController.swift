@@ -12,6 +12,9 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
     let reservationModel: ReservationModel
     let calendarModel: CalendarModel = CalendarModel(baseDate: Date())
     
+    private var checkinCell: CalendarViewCell?
+    private var checkoutCell: CalendarViewCell?
+    
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
@@ -33,7 +36,7 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         attribute()
@@ -78,6 +81,14 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
         calendarModel.onUpdate = { [weak self] in
             self?.collectionView.reloadData()
         }
+        
+        //        calendarModel.onUpdateCheckinDate = { date in
+        //            print("체크인: \(date)")
+        //        }
+        //
+        //        calendarModel.onUpdateCheckoutDate = { date in
+        //            print("체크아웃: \(date)")
+        //        }
     }
     
     private func setUpToolBarItems() -> [UIBarButtonItem] {
@@ -128,6 +139,38 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
         default:
             return UICollectionReusableView()
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CalendarViewCell,
+              let date = cell.day?.date,
+              var day = cell.day,
+              cell.day?.isBeforeToday == false else { return }
+        
+        calendarModel.onUpdateCheckinDate = {
+            if let beforeCell = self.checkinCell {
+                guard var beforeDay = beforeCell.day else { return }
+                beforeDay.isSelected = false
+                beforeCell.tabGenerated(for: beforeDay)
+            }
+            day.isSelected = true
+            cell.tabGenerated(for: day)
+            self.checkinCell = cell
+        }
+        
+        
+        calendarModel.onUpdateCheckoutDate = {
+            if let beforeCell = self.checkoutCell {
+                guard var beforeDay = beforeCell.day else { return }
+                beforeDay.isSelected = false
+                beforeCell.tabGenerated(for: beforeDay)
+            }
+            day.isSelected = true
+            cell.tabGenerated(for: day)
+            self.checkoutCell = cell
+        }
+        
+        calendarModel.validateCheckDate(for: date)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

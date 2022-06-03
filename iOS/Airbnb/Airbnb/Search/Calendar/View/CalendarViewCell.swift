@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class CalendarViewCell: UICollectionViewCell {
     
@@ -28,6 +29,14 @@ class CalendarViewCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
         view.backgroundColor = UIColor.getGrayScale(.Grey1)
+        return view
+    }()
+    
+    private var fadeStateView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.clipsToBounds = true
+        view.backgroundColor = .gray3
         return view
     }()
     
@@ -54,6 +63,7 @@ class CalendarViewCell: UICollectionViewCell {
         accessibilityTraits = .button
         contentView.addSubview(selectionBackgroundView)
         contentView.addSubview(numberLabel)
+        contentView.addSubview(fadeStateView)
     }
     
     required init?(coder: NSCoder) {
@@ -81,6 +91,10 @@ class CalendarViewCell: UICollectionViewCell {
                 .constraint(equalTo: selectionBackgroundView.widthAnchor)
         ])
         
+//        fadeStateView.snp.makeConstraints {
+//            $0.edges.equalToSuperview()
+//        }
+        
         selectionBackgroundView.layer.cornerRadius = size / 2
         
     }
@@ -88,7 +102,16 @@ class CalendarViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         numberLabel.text = nil
+        selectionBackgroundView.isHidden = true
     }
+    
+    func tabGenerated(for day: Day) {
+        if !day.isBeforeToday {
+            prepareForReuse()
+            self.day = day
+        }
+    }
+
 }
 
 // MARK: - Appearance
@@ -102,6 +125,9 @@ private extension CalendarViewCell {
         } else {
             applyDefaultStyle()
         }
+//        if day.fadeState == .fill {
+//            applyFadeStyle()
+//        }
     }
     
     var isSmallScreenSize: Bool {
@@ -113,7 +139,7 @@ private extension CalendarViewCell {
         return isCompact && (smallWidth || widthGreaterThanHeight)
     }
     
-    func applySelectedStyle() {
+    private func applySelectedStyle() {
         accessibilityTraits.insert(.selected)
         accessibilityHint = nil
         
@@ -121,7 +147,7 @@ private extension CalendarViewCell {
         selectionBackgroundView.isHidden = isSmallScreenSize
     }
     
-    func applyDefaultStyle() {
+    private func applyDefaultStyle() {
         guard let day = day else { return }
         accessibilityTraits.remove(.selected)
         accessibilityHint = "Tap to select"
@@ -130,4 +156,7 @@ private extension CalendarViewCell {
         selectionBackgroundView.isHidden = true
     }
     
+//    private func applyFadeStyle() {
+//        fadeStateView.isHidden = false
+//    }
 }

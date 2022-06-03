@@ -10,7 +10,7 @@ import { createContext, useContext } from "react";
 // Dispatch 타입, children 타입 보류중
 // Children : React.ReactNode 왜 안될까?
 
-export const CalendarContext = createContext({});
+export const CalendarContext: React.Context<{}> = createContext({});
 export const DispatchCalendarContext = createContext<any>(undefined);
 
 export default function CalendarProvider({ children }: any) {

@@ -7,7 +7,13 @@ interface ActionType {
   day?: number;
 }
 
-const initialState = {
+interface CalendarStateType {
+  isCalendarOpen: boolean;
+  checkIn: object;
+  checkOut: object;
+}
+
+const initialState: CalendarStateType = {
   isCalendarOpen: false,
   checkIn: {
     year: 0,
@@ -57,7 +63,6 @@ const reducer = (state: object, action: ActionType) => {
         isCalendarOpen: true,
       };
     case "RESET_CHECK_IN":
-      console.log("??");
       return {
         ...state,
         checkIn: {

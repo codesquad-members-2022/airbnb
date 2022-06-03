@@ -15,7 +15,7 @@ function CalenderPage({ date }) {
 }
 
 const StyledContainer = styled.div`
-  width: 336px;
+  width: 350px;
 `;
 
 const StyledTitle = styled.h2`

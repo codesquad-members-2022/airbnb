@@ -1,15 +1,10 @@
-import { useContext } from 'react';
 import styled from 'styled-components';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { CalenderDateContext } from '@/context/CalenderDateProvider';
 
-function NextButton() {
-  const { curDate, setCurDate } = useContext(CalenderDateContext);
-
+function NextButton({ calenderPosition, setCalenderPosition }) {
   function handleClick() {
-    const newDate =
-      curDate.month === 12 ? { year: curDate.year + 1, month: 1 } : { year: curDate.year, month: curDate.month + 1 };
-    setCurDate(newDate);
+    if (calenderPosition !== 0) return;
+    setCalenderPosition(prev => prev - 1);
   }
 
   return (
@@ -23,8 +18,6 @@ const StyledDiv = styled.div`
   position: absolute;
   right: 88px;
   top: 64px;
-  //right: 15%;
-  //top: 13%;
 `;
 
 export default NextButton;

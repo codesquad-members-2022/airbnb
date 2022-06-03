@@ -27,9 +27,13 @@ const end = {
   x: canvasSize.width,
   y: canvasSize.height,
 };
-const { grey5: externalRangeColor, black: selectedRangeColor } = theme.palette;
+const {
+  grey5: { main: externalRangeColor },
+  black: { main: selectedRangeColor },
+} = theme.palette;
 
 const FIRST_INDEX = 0;
+const ONE_PERCENT = 0.01;
 
 const PriceChart = () => {
   const $canvasRef = useRef<HTMLCanvasElement>(null);
@@ -50,12 +54,23 @@ const PriceChart = () => {
     let currentX = -coordXIncrementRange;
     let prevCoords = { ...start };
 
+    const drawBezierCurve = (targetCoords: { x: number; y: number }) => {
+      ctx.bezierCurveTo(
+        prevCoords.x + coordXIncrementRange / 2,
+        prevCoords.y,
+        prevCoords.x + coordXIncrementRange / 2,
+        targetCoords.y,
+        targetCoords.x,
+        targetCoords.y
+      );
+    };
+
     accomodationsCountList.forEach((el, idx) => {
       currentX += coordXIncrementRange;
 
       const coords = {
         x: currentX,
-        y: 100 - Math.floor((el / maxCount) * canvasSize.height),
+        y: canvasSize.height - Math.floor((el / maxCount) * canvasSize.height),
       };
 
       if (idx === FIRST_INDEX) {
@@ -65,26 +80,12 @@ const PriceChart = () => {
         return;
       }
 
-      ctx.bezierCurveTo(
-        prevCoords.x + coordXIncrementRange / 2,
-        prevCoords.y,
-        prevCoords.x + coordXIncrementRange / 2,
-        coords.y,
-        coords.x,
-        coords.y
-      );
+      drawBezierCurve(coords);
 
       prevCoords = { ...coords };
     });
 
-    ctx.bezierCurveTo(
-      prevCoords.x + coordXIncrementRange / 2,
-      prevCoords.y,
-      prevCoords.x + coordXIncrementRange / 2,
-      end.y,
-      end.x,
-      end.y
-    );
+    drawBezierCurve(end);
 
     ctx.closePath();
   };
@@ -99,25 +100,23 @@ const PriceChart = () => {
       end.y
     );
 
-    linearGardaradientStyle.addColorStop(0, externalRangeColor.main);
     linearGardaradientStyle.addColorStop(
-      rangeStart * 0.01,
-      externalRangeColor.main
+      rangeStart * ONE_PERCENT,
+      externalRangeColor
     );
     linearGardaradientStyle.addColorStop(
-      rangeStart * 0.01,
-      selectedRangeColor.main
+      rangeStart * ONE_PERCENT,
+      selectedRangeColor
     );
 
     linearGardaradientStyle.addColorStop(
-      rangeEnd * 0.01,
-      selectedRangeColor.main
+      rangeEnd * ONE_PERCENT,
+      selectedRangeColor
     );
     linearGardaradientStyle.addColorStop(
-      rangeEnd * 0.01,
-      externalRangeColor.main
+      rangeEnd * ONE_PERCENT,
+      externalRangeColor
     );
-    linearGardaradientStyle.addColorStop(1, externalRangeColor.main);
     ctx.fillStyle = linearGardaradientStyle;
     ctx.fill();
   };

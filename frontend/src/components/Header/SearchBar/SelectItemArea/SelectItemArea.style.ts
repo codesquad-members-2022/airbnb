@@ -8,4 +8,9 @@ const SelectItemAreaWrapper = styled(Grid)(
   `
 );
 
-export default SelectItemAreaWrapper;
+const searchButtonWrapperStyle = {
+  display: "flex",
+  justifyContent: "flex-end",
+};
+
+export { SelectItemAreaWrapper, searchButtonWrapperStyle };

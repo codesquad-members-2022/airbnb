@@ -1,4 +1,4 @@
-import { useScheduleContext } from '@/Hooks/ScheduleHooks';
+import { useScheduleContext } from '../Hooks/ScheduleHooks';
 import * as S from './Schedule.style';
 
 interface DayProps {

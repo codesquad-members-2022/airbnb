@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { ScheduleContext } from '@/Contexts/Schedule';
+import { ScheduleContext } from '../Contexts';
 
 // TODO: 함수, 변수 네이밍 컨벤션 체크
 export const useCurrentDate = () => {

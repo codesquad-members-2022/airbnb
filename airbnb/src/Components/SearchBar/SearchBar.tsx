@@ -1,12 +1,12 @@
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { useNullGuard } from '@/Hooks/SearchBarHooks';
+import { Schedule } from '@/lib/Schedule';
 import {
   SearchingContext,
   SearchingDispatchContext,
   CalenderAction,
 } from '@/Contexts/Searching';
 import * as S from './SearchBar.style';
-import { Schedule } from '../Schedule/Schedule';
 import { SearchBarItem } from './Item';
 import { SearchButton } from './SearchButton';
 

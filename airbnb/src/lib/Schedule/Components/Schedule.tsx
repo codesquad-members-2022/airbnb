@@ -1,7 +1,7 @@
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
-import { ScheduleProps, ScheduleProvider } from '@/Contexts/Schedule';
-import { useCurrentDate } from '@/Hooks/ScheduleHooks';
+import { ScheduleProps, ScheduleProvider } from '../Contexts';
+import { useCurrentDate } from '../Hooks/ScheduleHooks';
 import * as S from './Schedule.style';
 import { Calendar } from './Calendar';
 

@@ -38,7 +38,6 @@ const GuestModalBox = styled(Modal)`
     padding: 64px;
     transform: translate(-50%, -50%);
     gap: 24px;
-    box-shadow: 0px 4px 10px rgba(51, 51, 51, 0.1);
 `;
 
 const boundaryCondition = {

@@ -9,11 +9,11 @@ import Foundation
 
 class CalendarModel {
     
-    var onUpdateCheckinDate: () -> Void = {  }
-    var onUpdateCheckoutDate: () -> Void = {  }
+    var onUpdateCheckinDay: (Day) -> Void = { _ in }
+    var onUpdateCheckoutDay: (Day) -> Void = { _ in }
     
-    var checkinDate: Date?
-    var checkoutDate: Date?
+    var checkinDay: Day?
+    var checkoutDay: Day?
     
     
     private var baseDate: Date {
@@ -26,7 +26,7 @@ class CalendarModel {
     lazy var month = generate12month(for: baseDate)
     
     var numberOfWeeksInBaseDate: Int {
-      calendar.range(of: .weekOfMonth, in: .month, for: baseDate)?.count ?? 0
+        calendar.range(of: .weekOfMonth, in: .month, for: baseDate)?.count ?? 0
     }
     
     var onUpdate: () -> Void = { }
@@ -34,14 +34,14 @@ class CalendarModel {
     let calendar: Calendar = Calendar.current
     
     private lazy var dateFormatter: DateFormatter = {
-      let dateFormatter = DateFormatter()
-      dateFormatter.dateFormat = "d"
-      return dateFormatter
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d"
+        return dateFormatter
     }()
     
     init(baseDate: Date) {
         self.baseDate = baseDate
-
+        
     }
     
     func generate12month(for baseDate: Date) -> [Month] {
@@ -52,7 +52,7 @@ class CalendarModel {
                 year.append(generateDaysInMonth(for: month))
             }
         }
-        // 그 이중 배열을 내보냄 근데 그 기준일이 언제임, 그 기준일을 가지고 제일 처음에 보여줄 달을 짜는 로직도 힘겹겠네.. 가장 처음 지금 있는 달이 나와야 할테니까...
+        
         return year
     }
     
@@ -92,12 +92,12 @@ class CalendarModel {
         let date = calendar.date(byAdding: .day,
                                  value: dayOffset,
                                  to: baseDate) ?? baseDate
-        if let checkinDate = checkinDate {
+        if let checkinDate = checkinDay?.date {
             return Day(date: date,
                        number: dateFormatter.string(from: date),
                        isSelected: calendar.isDate(date,
                                                    inSameDayAs: checkinDate),
-                        isWithInDisplayedMonth: isWithinDisplayedMonth)
+                       isWithInDisplayedMonth: isWithinDisplayedMonth)
         } else {
             return Day(date: date,
                        number: dateFormatter.string(from: date),
@@ -136,30 +136,32 @@ extension CalendarModel {
 }
 
 extension CalendarModel {
-    func validateCheckDate(for date: Date) {
-        if let checkinDate = checkinDate {
+    func validateCheckDate(for day: Day) {
+        
+        day.isSelected = true
+        let date = day.date
+        if let checkinDate = checkinDay?.date {
             /// 체크인 날짜 앞뒤로 크기 판별
             if checkinDate < date {
-                if let checkoutDate = checkoutDate {
-                    self.checkoutDate = date
-                    onUpdateCheckoutDate()
-                } else {
-                    self.checkoutDate = date
-                    onUpdateCheckoutDate()
-                }
+                day.fadeState = .right
+                self.checkoutDay = day
+                onUpdateCheckoutDay(day)
             }
             else if  checkinDate > date {
-                self.checkinDate = date
-                onUpdateCheckinDate()
+                day.fadeState = .left
+                self.checkinDay = day
+                onUpdateCheckinDay(day)
             }
             else if checkinDate == date {
-                self.checkoutDate = date
-                onUpdateCheckoutDate()
+                day.fadeState = .right
+                self.checkoutDay = day
+                onUpdateCheckoutDay(day)
             }
         } else {
-            ///  없으면 체크인 데이트를 업데이트
-            self.checkinDate = date
-            onUpdateCheckinDate()
+            ///  없으면 체크인 데이를 업데이트
+            day.fadeState = .left
+            self.checkinDay = day
+            onUpdateCheckinDay(day)
         }
     }
 }

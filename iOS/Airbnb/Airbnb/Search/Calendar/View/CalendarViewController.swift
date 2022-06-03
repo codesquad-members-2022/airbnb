@@ -143,13 +143,12 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? CalendarViewCell,
-              let date = cell.day?.date,
-              var day = cell.day,
+              let day = cell.day,
               cell.day?.isBeforeToday == false else { return }
         
-        calendarModel.onUpdateCheckinDate = {
+        calendarModel.onUpdateCheckinDay = { selectedDay in
             if let beforeCell = self.checkinCell {
-                guard var beforeDay = beforeCell.day else { return }
+                guard let beforeDay = beforeCell.day else { return }
                 beforeDay.isSelected = false
                 beforeCell.tabGenerated(for: beforeDay)
             }
@@ -159,18 +158,20 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
         }
         
         
-        calendarModel.onUpdateCheckoutDate = {
+        calendarModel.onUpdateCheckoutDay = { selectedDay in
             if let beforeCell = self.checkoutCell {
-                guard var beforeDay = beforeCell.day else { return }
+                guard let beforeDay = beforeCell.day else { return }
                 beforeDay.isSelected = false
                 beforeCell.tabGenerated(for: beforeDay)
             }
             day.isSelected = true
             cell.tabGenerated(for: day)
             self.checkoutCell = cell
+            // 체크인과 체크 아웃 사이에 날들을 배열로 넘기는 작업도 필요...???? 도대체 감이 안잡힘
+            // 그 값들을 모델한테 여기랑 저기가 값이 넘어왔다고 해야하는게 그때마다 뷰를 리로드하는게 맞는가 싶기도하고..
         }
         
-        calendarModel.validateCheckDate(for: date)
+        calendarModel.validateCheckDate(for: day)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

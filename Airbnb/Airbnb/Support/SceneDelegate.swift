@@ -15,31 +15,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
-
-        let homeViewController =  UINavigationController(rootViewController: HomeViewController())
-        let wishListViewController = UIViewController()
-        wishListViewController.view.backgroundColor = .primary
-        let reservationViewController = UIViewController()
-        reservationViewController.view.backgroundColor = .orange
-
-        let tabVC =  UITabBarController()
-        tabVC.setViewControllers([homeViewController, wishListViewController, reservationViewController], animated: false)
-
-        homeViewController.tabBarItem = UITabBarItem(title: "검색", image: UIImage(named: "search"), tag: 0)
-        wishListViewController.tabBarItem = UITabBarItem(title: "위시리스트", image: UIImage(named: "like"), tag: 1)
-        reservationViewController.tabBarItem = UITabBarItem(title: "내 예약", image: UIImage(named: "profile"), tag: 2)
-
-        tabVC.tabBar.backgroundColor = .gray6
-        tabVC.tabBar.tintColor = .gray1
-
-        let lineView = UIView(frame: CGRect(x: 0, y: 0, width: tabVC.tabBar.frame.size.width, height: 1))
-        lineView.backgroundColor = .gray4
-        tabVC.tabBar.addSubview(lineView)
-
+        let tabVC = TabBarController()
         window.rootViewController = tabVC
         window.makeKeyAndVisible()
         self.window = window
-
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

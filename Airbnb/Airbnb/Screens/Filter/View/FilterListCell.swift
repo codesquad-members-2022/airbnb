@@ -11,22 +11,22 @@ final class FilterListCell: UICollectionViewListCell {
 
     static let id = "FilterFormCell"
 
-    var field: UILabel = {
+    private var field: UILabel = {
         let label = UILabel()
-        label.font = .mediumRegular
+        label.font = .smallRegular
         label.textAlignment = .left
         return label
     }()
 
-    var fieldValue: UILabel = {
+    private var fieldValue: UILabel = {
         let label = UILabel()
-        label.font = .mediumRegular
-        label.textColor = .secondarySystemBackground
+        label.font = .smallRegular
+        label.textColor = .gray3
         label.textAlignment = .right
         return label
     }()
 
-    lazy var stackView: UIStackView = {
+    private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [field, fieldValue])
         stackView.distribution = .fillProportionally
         stackView.axis = .horizontal
@@ -49,8 +49,18 @@ final class FilterListCell: UICollectionViewListCell {
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            stackView.heightAnchor.constraint(equalToConstant: 44)
         ])
+    }
+
+    override func updateConfiguration(using state: UICellConfigurationState) {
+        automaticallyUpdatesBackgroundConfiguration = false
+    }
+
+    func configure(_ model: FilterListCellViewModel?) {
+        guard let model = model else {return}
+        field.text = model.fieldTitle
+        fieldValue.text = model.fieldValue
     }
 
     required init?(coder: NSCoder) {

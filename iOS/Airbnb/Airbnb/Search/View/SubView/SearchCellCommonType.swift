@@ -12,6 +12,6 @@ protocol SearchCellCommonType: UICollectionViewCell {
     func setData(model: SearchViewModel)
 }
 
-extension UICollectionViewCell {
-    static var reuseIdentifier: String { String(describing: Self.self) }
-}
+//extension UICollectionViewCell {
+////    static var reuseIdentifier: String { String(describing: Self.self) }
+//}

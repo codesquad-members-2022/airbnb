@@ -2,6 +2,7 @@ package com.ahoo.airbnb.reservation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.BDDMockito.given;
 
 import com.ahoo.airbnb.data.TestData;
@@ -59,9 +60,11 @@ class ReservationServiceTest {
         RoomChargeResponse roomChargeResponse = reservationService.calculateTotalChargeOf(roomId, requestParam);
 
         // then
-        assertThat(roomChargeResponse.getChargePerDay()).isEqualTo(expected.getChargePerDay());
-        assertThat(roomChargeResponse.getTotalCharge()).isEqualTo(expected.getTotalCharge());
-        assertThat(roomChargeResponse.getChargesResponse().getCharges()).containsAllEntriesOf(expected.getChargesResponse().getCharges());
+        assertAll(
+            () -> assertThat(roomChargeResponse.getChargePerDay()).isEqualTo(expected.getChargePerDay()),
+            () -> assertThat(roomChargeResponse.getTotalCharge()).isEqualTo(expected.getTotalCharge()),
+            () -> assertThat(roomChargeResponse.getChargesResponse().getCharges()).containsAllEntriesOf(expected.getChargesResponse().getCharges())
+        );
     }
 
     @Test

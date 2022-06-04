@@ -1,6 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 
+import { PriceRangeContext } from "contexts/contexts";
 import theme from "styles/theme";
+
+import { PriceChartCanvas } from "./ReservationFeeModal.style";
 
 // TODO: 실제 API 데이터로 수정, 테마 분리
 
@@ -38,13 +41,9 @@ const ONE_PERCENT = 0.01;
 const PriceChart = () => {
   const $canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // TODO: setPriceRange 사용하여 rangeSlider로 범위 조절
-  const [priceRange /* setPriceRange */] = useState({
-    rangeStartPercent: 0,
-    rangeEndPercent: 100,
-  });
-
-  const { rangeStartPercent, rangeEndPercent } = priceRange;
+  const {
+    priceRange: { percentage },
+  } = useContext(PriceRangeContext)!;
 
   const drawChart = () => {
     const ctx = $canvasRef.current?.getContext("2d")!;
@@ -92,6 +91,7 @@ const PriceChart = () => {
 
   const fillChart = (rangeStart: number, rangeEnd: number) => {
     const ctx = $canvasRef.current?.getContext("2d")!;
+    ctx.clearRect(0, 0, canvasSize.width, canvasSize.height);
 
     const linearGardaradientStyle = ctx.createLinearGradient(
       start.x,
@@ -123,17 +123,17 @@ const PriceChart = () => {
 
   useEffect(() => {
     drawChart();
-    fillChart(rangeStartPercent, rangeEndPercent);
-  }, []);
+    fillChart(percentage.min, percentage.max);
+  }, [percentage]);
 
   return (
-    <canvas
+    <PriceChartCanvas
       ref={$canvasRef}
       width={canvasSize.width}
       height={canvasSize.height}
     >
       선택한 날짜 기준 숙소들의 가격 범위를 나타내는 차트입니다.
-    </canvas>
+    </PriceChartCanvas>
   );
 };
 

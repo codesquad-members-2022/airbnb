@@ -1,35 +1,63 @@
-import { useContext } from "react";
+import { useState, useContext, useMemo } from "react";
 
+import { QueryContexts } from "contexts/QueryContexts";
+import { PriceRangeContext } from "contexts/contexts";
 import numToWon from "utils/utils";
 
-import {
-  PriceSelectContext,
-  initialPrice,
-} from "../../Context/SearchBarContexts";
-import PriceSelectArea from "../../ModalInnerItems/PriceSelectArea";
+import PriceSelectArea from "../../ModalInnerItems/ReservationFeeModal/PriceSelectArea";
 import ButtonArea from "../ButtonArea/ButtonArea";
 import SelectItem, { WhiteSpace, SelectItemProps } from "./SelectItem";
 
 const buttonId = "reservation-fee-button";
 
+const INITIAL_PRICE_PERCENTAGE = {
+  min: 0,
+  max: 100,
+};
+
 const ReservationFee = ({
   anchorEl,
   onClick,
   onClose,
-}: SelectItemProps): JSX.Element => {
-  const isOpen = anchorEl?.id === buttonId;
+  stateData,
+  initialPrice,
+}: ReservationFeeProps): JSX.Element => {
+  const { state: price, setState: setPrice } = stateData!;
+  const queryData = useContext(QueryContexts);
 
-  const {
-    accomodationPrice: { minPrice, maxPrice },
-  } = useContext(PriceSelectContext);
+  const [percentage, setPercentage] = useState({
+    min: INITIAL_PRICE_PERCENTAGE.min,
+    max: INITIAL_PRICE_PERCENTAGE.max,
+  });
+
+  const isQueryDataIncludesPriceRange =
+    queryData.minPrice || queryData.maxPrice;
 
   const description =
-    minPrice !== initialPrice.minPrice && maxPrice !== initialPrice.maxPrice
-      ? `${numToWon(minPrice)}~${numToWon(maxPrice)}`
-      : "금액대 설정";
+    !isQueryDataIncludesPriceRange &&
+    percentage.min === INITIAL_PRICE_PERCENTAGE.min &&
+    percentage.max === INITIAL_PRICE_PERCENTAGE.max
+      ? "금액대 설정"
+      : `${numToWon(price.min)}~${numToWon(price.max)}`;
 
+  const isOpen = anchorEl?.id === buttonId;
   return (
-    <>
+    <PriceRangeContext.Provider
+      value={useMemo(
+        () => ({
+          initialPrice: {
+            min: initialPrice?.minPrice!,
+            max: initialPrice?.maxPrice!,
+          },
+          priceRange: { price, percentage },
+          setPriceRange: {
+            setPrice,
+            setPercentage,
+          },
+        }),
+        [price, percentage, setPrice, setPercentage, initialPrice]
+      )}
+    >
       <SelectItem
         gridStyle={{
           xs: 2,
@@ -50,8 +78,15 @@ const ReservationFee = ({
       {(isOpen && <ButtonArea icon="close" divide />) || (
         <WhiteSpace divide xs={1} />
       )}
-    </>
+    </PriceRangeContext.Provider>
   );
 };
 
 export default ReservationFee;
+
+interface ReservationFeeProps extends SelectItemProps {
+  initialPrice?: {
+    minPrice: number;
+    maxPrice: number;
+  };
+}

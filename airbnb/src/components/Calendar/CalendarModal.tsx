@@ -7,14 +7,14 @@ import CalendarHead from './CalendarHead';
 import { makeDate } from 'utility/dateUtil';
 
 function CalendarModal() {
-  const DATE = new Date();
-  const YEAR = DATE.getFullYear();
-  const MONTH = DATE.getMonth() + 1;
+  const DATE: Date = new Date();
+  const YEAR: number = DATE.getFullYear();
+  const MONTH: number = DATE.getMonth() + 1;
 
-  const [year, setYear] = useState(YEAR);
-  const [month, setMonth] = useState(MONTH);
-  const [earlyTotalDate, setEarlyTotalDate] = useState([]);
-  const [lastTotalDate, setLastTotalDate] = useState([]);
+  const [year, setYear] = useState<number>(YEAR);
+  const [month, setMonth] = useState<any>(MONTH);
+  const [earlyTotalDate, setEarlyTotalDate] = useState<number[] | string[]>([]);
+  const [lastTotalDate, setLastTotalDate] = useState<number[] | string[]>([]);
 
   useEffect(() => {
     setEarlyTotalDate(makeDate(year, month));

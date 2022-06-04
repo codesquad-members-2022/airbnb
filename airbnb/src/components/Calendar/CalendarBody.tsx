@@ -2,10 +2,16 @@ import styled from 'styled-components';
 
 import CalendarDates from './CalendarDates';
 
-function CalendarBody({ totalDate, year, month }) {
+type props = {
+  totalDate: number[] | string[];
+  year: number;
+  month: number;
+};
+
+function CalendarBody({ totalDate, year, month }: props) {
   return (
     <DateContainer>
-      {totalDate.map((date, idx) => {
+      {totalDate.map((date: string | number, idx: number) => {
         return (
           <CalendarDates
             key={`${month}-${date}-${idx}`}

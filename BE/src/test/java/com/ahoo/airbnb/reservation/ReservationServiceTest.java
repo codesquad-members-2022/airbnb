@@ -57,7 +57,7 @@ class ReservationServiceTest {
         given(roomRepository.findActiveChargePolicyTypeById(roomId)).willReturn(TestData.chargePolicyTypes);
 
         // when
-        RoomChargeResponse roomChargeResponse = reservationService.calculateTotalChargeOf(roomId, requestParam);
+        RoomChargeResponse roomChargeResponse = reservationService.calculateRoomCharge(roomId, requestParam);
 
         // then
         assertAll(
@@ -83,7 +83,7 @@ class ReservationServiceTest {
 
         // when
         // then
-        assertThatThrownBy(() -> reservationService.calculateTotalChargeOf(roomId, requestParam))
+        assertThatThrownBy(() -> reservationService.calculateRoomCharge(roomId, requestParam))
             .isInstanceOf(NoSuchElementException.class)
             .hasMessage(ExceptionMessage.NO_ROOM_ID);
     }

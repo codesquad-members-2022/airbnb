@@ -20,8 +20,7 @@ public class ReservationService {
 
     private final RoomRepository roomRepository;
 
-    public RoomChargeResponse calculateTotalChargeOf(Long roomId, RoomChargeRequest roomChargeRequest) {
-
+    public RoomChargeResponse calculateRoomCharge(Long roomId, RoomChargeRequest roomChargeRequest) {
         Room room =
             roomRepository.findById(roomId).orElseThrow(() -> new NoSuchElementException(ExceptionMessage.NO_ROOM_ID));
         List<ChargePolicyType> roomChargePolicies =
@@ -33,20 +32,34 @@ public class ReservationService {
             DateUtils.stringToLocalDateTime(roomChargeRequest.getCheckOutDate());
         int headcount = roomChargeRequest.getHeadcount();
 
+        ChargesResponse charges = getChargesResponse(room, roomChargePolicies, checkIn, checkOut, headcount);
+        int totalCharge = calculateTotalCharge(charges);
+        int chargePerDay = calculateChargePerDay(checkIn, checkOut, totalCharge);
+
+        return RoomChargeResponse.of(chargePerDay, totalCharge, charges);
+    }
+
+    private int calculateChargePerDay(LocalDateTime checkIn, LocalDateTime checkOut, int totalCharge) {
+        int betweenDays = DateUtils.getBetweenDays(checkIn, checkOut);
+        return totalCharge / betweenDays;
+    }
+
+    private int calculateTotalCharge(ChargesResponse charges) {
+        return charges.getCharges().values().stream()
+            .mapToInt(Integer::intValue)
+            .sum();
+    }
+
+    private ChargesResponse getChargesResponse(Room room, List<ChargePolicyType> roomChargePolicies,
+        LocalDateTime checkIn, LocalDateTime checkOut, int headcount) {
         ChargesResponse charges = new ChargesResponse();
+
         for (ChargePolicyType roomChargePolicy : roomChargePolicies) {
             int calculatedCharge =
                 (int) roomChargePolicy.getChargePolicy().calculate(checkIn, checkOut, headcount, room);
             charges.put(roomChargePolicy.getDisplayName(), calculatedCharge);
         }
 
-        int totalCharge = charges.getCharges().values().stream()
-            .mapToInt(Integer::intValue)
-            .sum();
-
-        int betweenDays = DateUtils.getBetweenDays(checkIn, checkOut);
-        int chargePerDay = totalCharge / betweenDays;
-
-        return RoomChargeResponse.of(chargePerDay, totalCharge, charges);
+        return charges;
     }
 }

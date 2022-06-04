@@ -62,7 +62,7 @@ public class ReservationController {
         @RequestBody RoomChargeRequest roomChargeRequest) {
 
         log.info("roomChargeRequest={}", roomChargeRequest);
-        RoomChargeResponse responseBody = reservationService.calculateTotalChargeOf(roomId, roomChargeRequest);
+        RoomChargeResponse responseBody = reservationService.calculateRoomCharge(roomId, roomChargeRequest);
         return ResponseEntity.ok(responseBody);
     }
 

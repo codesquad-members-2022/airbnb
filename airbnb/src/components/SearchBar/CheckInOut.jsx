@@ -7,8 +7,10 @@ function CheckInOut({ onClick, title }) {
   const { checkIn, checkOut } = useInputState();
   const { handelResetEvent } = useInputDispatch();
 
-  const checkPoint =
-    title === '체크인' ? checkIn : title === '체크아웃' ? checkOut : null;
+  let checkPoint;
+  if (title === '체크인') checkPoint = checkIn;
+  else if (title === '체크아웃') checkPoint = checkOut;
+  else checkPoint = '';
 
   const deleteBtn =
     title === '체크아웃' && checkIn && checkOut ? (

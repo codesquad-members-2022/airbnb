@@ -1,31 +1,40 @@
+import { Dispatch } from 'react';
 import styled from 'styled-components';
 
-const DAY = ['일', '월', '화', '수', '목', '금', '토'];
+type props = {
+  year: number;
+  month: number;
+  setYear: Dispatch<number>;
+  setMonth: Dispatch<(month: number) => void>;
+  position: string;
+};
 
-function CalendarHead({ year, month, setYear, setMonth, position }) {
-  function handleLeftBit() {
+const DAY: string[] = ['일', '월', '화', '수', '목', '금', '토'];
+
+function CalendarHead({ year, month, setYear, setMonth, position }: props) {
+  function slideLeftDirection() {
     if (month - 1 === 0) {
       setYear(year - 1);
-      setMonth(12 - 1);
+      setMonth((month: number) => month + 11);
       return;
     }
-    setMonth(month - 2);
+    setMonth((month: number) => month - 1);
   }
 
-  function handleRightBtn() {
+  function slideRightDirection() {
     if (month + 1 > 12) {
       setYear(year + 1);
-      setMonth(1);
+      setMonth((month: number) => month - 10);
       return;
     }
-    setMonth(month + 1);
+    setMonth((month: number) => month + 1);
   }
 
   return (
     <DayHeader>
       <HeaderInfo>
         {position === 'leftBtn' && (
-          <ArrowBtn onClick={handleLeftBit} position={position}>
+          <ArrowBtn onClick={slideLeftDirection} position={position}>
             &lt;
           </ArrowBtn>
         )}
@@ -33,7 +42,7 @@ function CalendarHead({ year, month, setYear, setMonth, position }) {
           {year}년 {month}월
         </Year>
         {position === 'rightBtn' && (
-          <ArrowBtn onClick={handleRightBtn} position={position}>
+          <ArrowBtn onClick={slideRightDirection} position={position}>
             &gt;
           </ArrowBtn>
         )}
@@ -58,7 +67,7 @@ const HeaderInfo = styled.nav`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10px;
+  margin: 25px;
 `;
 
 const Year = styled.div`
@@ -87,17 +96,16 @@ const Day = styled.li`
   }
 `;
 
-const ArrowBtn = styled.button`
+const ArrowBtn = styled.button<{ position: string }>`
   position: absolute;
-  top: 10px;
-  padding: 5px;
-  border: 0.5px solid #e4e3e6;
+  top: 25px;
+  border: 0.5px solid ${({ theme }) => theme.colors.black};
   border-radius: 5px;
   width: 10%;
   cursor: pointer;
 
-  font-size: ${({ theme }) => theme.fontSizes.xs};
-
+  font-size: ${({ theme }) => theme.fontSizes.s};
+  font-weight: bold;
   left: ${({ position }) => (position === 'leftBtn' ? 10 : '')}px;
 
   right: ${({ position }) => (position === 'rightBtn' ? 10 : '')}px;

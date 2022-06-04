@@ -24,7 +24,7 @@ public class RoomImage {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name = "room_id", insertable = false, updatable = false)
     private Room room;
 
     private Integer sequence;

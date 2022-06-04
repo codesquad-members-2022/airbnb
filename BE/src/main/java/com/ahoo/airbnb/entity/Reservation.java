@@ -31,10 +31,10 @@ public class Reservation extends BaseEntity {
     private Boolean isDeleted;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name = "room_id", insertable = false, updatable = false)
     private Room room;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id", insertable = false, updatable = false)
     private Member member;
 }

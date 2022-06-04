@@ -24,11 +24,11 @@ public class RoomChargePolicy {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name = "room_id", insertable = false, updatable = false)
     private Room room;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "charge_policy_id")
+    @JoinColumn(name = "charge_policy_id", insertable = false, updatable = false)
     private ChargePolicy chargePolicy;
 
     public void setRoom(Room room) {

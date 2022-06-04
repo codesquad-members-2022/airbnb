@@ -1,12 +1,18 @@
 package kr.codesquad.airbnb.domain;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Amenity {
 
     @Id
@@ -17,5 +23,5 @@ public class Amenity {
     private String name;
 
     @OneToMany(mappedBy = "amenity")
-    private List<RoomAmenity> roomAmenities;
+    private final List<RoomAmenity> roomAmenities = new ArrayList<>();
 }

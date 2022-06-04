@@ -1,6 +1,9 @@
 package kr.codesquad.airbnb.domain;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,6 +11,8 @@ import java.util.List;
 
 @Entity
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DiscountTax {
 
     @Id
@@ -19,5 +24,5 @@ public class DiscountTax {
     private Integer rate;
 
     @OneToMany(mappedBy = "discountTax")
-    private List<RoomDiscountTax> roomDiscountTax = new ArrayList<>();
+    private final List<RoomDiscountTax> roomDiscountTax = new ArrayList<>();
 }

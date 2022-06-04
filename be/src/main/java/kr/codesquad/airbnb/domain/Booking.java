@@ -1,12 +1,18 @@
 package kr.codesquad.airbnb.domain;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Booking {
 
     @Id
@@ -29,4 +35,5 @@ public class Booking {
     private Guest guest;
 
     private Integer totalPrice;
+    private LocalDateTime createdAt;
 }

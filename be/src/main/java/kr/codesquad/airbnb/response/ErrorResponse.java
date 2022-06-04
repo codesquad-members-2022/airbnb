@@ -1,6 +1,7 @@
 package kr.codesquad.airbnb.response;
 
 import kr.codesquad.airbnb.exception.ErrorCode;
+import org.springframework.http.HttpStatus;
 
 public class ErrorResponse extends BasicResponse {
 
@@ -8,6 +9,12 @@ public class ErrorResponse extends BasicResponse {
         this.statusCode = errorCode.getHttpStatus().value();
         this.statusName = errorCode.getHttpStatus().name();
         this.message = errorCode.getDetail();
+    }
+
+    public ErrorResponse(HttpStatus httpStatus, String message) {
+        this.statusCode = httpStatus.value();
+        this.statusName = httpStatus.name();
+        this.message = message;
     }
 
     public String convertToJson() {

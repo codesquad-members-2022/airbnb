@@ -11,10 +11,10 @@ public class RoomResponse {
 
     private Long roomId;
     private String name;
-    private int charge;
-    private int totalCharge;
-    private double averageRates;
-    private int reviewCount;
+    private Integer charge;
+    private Integer totalCharge;
+    private Double averageRates;
+    private Integer reviewCount;
     private String mainImageUrl;
     private Long wishId;
     private String coordinate;

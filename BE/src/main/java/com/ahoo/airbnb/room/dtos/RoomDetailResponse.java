@@ -16,8 +16,8 @@ public class RoomDetailResponse {
     private Long roomId;
     private String name;
     private String description;
-    private double averageRates;
-    private int reviewCount;
+    private Double averageRates;
+    private Integer reviewCount;
     private Address address;
     private MemberResponse host;
     private RoomCondition roomCondition;

@@ -41,15 +41,15 @@ public class Room extends BaseEntity {
     private String title;
     private String description;
     private String roomType;
-    private int maxCapacity;
-    private int bedroomCount;
-    private int bedCount;
-    private int bathroomCount;
-    private int charge;
-    private int cleaningCharge;
-    private int reviewCount;
-    private double averageRate;
-    private boolean isDeleted;
+    private Integer maxCapacity;
+    private Integer bedroomCount;
+    private Integer bedCount;
+    private Integer bathroomCount;
+    private Integer charge;
+    private Integer cleaningCharge;
+    private Integer reviewCount;
+    private Double averageRate;
+    private Boolean isDeleted;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<RoomImage> images = new ArrayList<>();

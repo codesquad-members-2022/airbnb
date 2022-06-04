@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class RoomChargeResponse {
 
-	private int chargePerDay;
-	private int totalCharge;
+	private Integer chargePerDay;
+	private Integer totalCharge;
 	private ChargesResponse chargesResponse;
 
 	public static RoomChargeResponse of(int chargePerDay, int totalCharge, ChargesResponse chargesResponse) {

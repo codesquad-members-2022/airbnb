@@ -27,9 +27,9 @@ public class RoomImage {
     @JoinColumn(name = "room_id")
     private Room room;
 
-    private int sequence;
+    private Integer sequence;
     private String url;
-    private boolean isMainImage;
+    private Boolean isMainImage;
 
     public void setRoom(Room room) {
         this.room = room;

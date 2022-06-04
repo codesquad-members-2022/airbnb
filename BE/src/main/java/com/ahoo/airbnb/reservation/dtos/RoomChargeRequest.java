@@ -13,5 +13,5 @@ public class RoomChargeRequest {
 
 	private String checkInDate;
 	private String checkOutDate;
-	private int headcount;
+	private Integer headcount;
 }

@@ -28,5 +28,5 @@ public class ChargePolicy {
     @Column(name = "name")
     private ChargePolicyType chargePolicyType;
 
-    private boolean isActive;
+    private Boolean isActive;
 }

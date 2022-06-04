@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class Coordinate {
 
-    private double latitude;
-    private double longitude;
+    private Double latitude;
+    private Double longitude;
 }

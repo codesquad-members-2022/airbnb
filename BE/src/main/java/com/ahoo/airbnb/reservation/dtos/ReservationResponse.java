@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 public class ReservationResponse {
 
 	private Long reservationID;
-	private int headCount;
-	private int totalCharge;
+	private Integer headCount;
+	private Integer totalCharge;
 	private String roomName;
 	private String roomType;
 	private String mainImageUrl;

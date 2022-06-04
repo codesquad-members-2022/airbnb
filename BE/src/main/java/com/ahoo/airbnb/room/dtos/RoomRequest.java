@@ -14,7 +14,7 @@ public class RoomRequest {
     private String location;
     private String checkInDate;
     private String checkOutDate;
-    private int minCharge;
-    private int maxCharge;
-    private int headCount;
+    private Integer minCharge;
+    private Integer maxCharge;
+    private Integer headCount;
 }

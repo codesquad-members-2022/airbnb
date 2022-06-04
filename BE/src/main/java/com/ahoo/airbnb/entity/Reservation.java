@@ -26,9 +26,9 @@ public class Reservation extends BaseEntity {
 
     private LocalDateTime checkIn;
     private LocalDateTime checkOut;
-    private int headcount;
-    private int totalCharge;
-    private boolean isDeleted;
+    private Integer headcount;
+    private Integer totalCharge;
+    private Boolean isDeleted;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")

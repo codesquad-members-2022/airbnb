@@ -6,33 +6,32 @@ import X_ICON from "@assets/x-icon.svg";
 import Icon from "@components/common/Icon";
 import Modal from "@components/common/Modal";
 import TextBox from "@components/common/TextBox";
+import { ModalList } from "@constants/calendar";
+import { ModalOpenType } from "@utils/calendar";
 
 import * as S from "./style";
-
-interface props {
-  modalOpen: number;
-  setModalOpen: React.Dispatch<React.SetStateAction<number>>;
-}
 
 interface coordinates {
   x: number;
   y: number;
 }
 
-const Price = ({ modalOpen, setModalOpen }: props) => {
-  const onClickHandler = () => {
-    setModalOpen(2);
+const Price = ({ modalOpen, setModalOpen }: ModalOpenType) => {
+  const priceElement = useRef(null);
+
+  const handleModal = () => {
+    setModalOpen(ModalList.PRICE);
   };
 
   return (
     <>
-      <S.Price onClick={onClickHandler}>
+      <S.Price onClick={handleModal} ref={priceElement}>
         {/* <TextBox label={`요금`} placeholders={`금액대 설정`} text={null} /> */}
         <TextBox label={`요금`} placeholder={`금액대 설정`} text={null} />
         <Icon iconName={X_ICON} iconSize={"base"} />
       </S.Price>
-      {modalOpen === 2 && (
-        <Modal setModalOpen={setModalOpen}>
+      {modalOpen === ModalList.PRICE && (
+        <Modal setModalOpen={setModalOpen} containElement={priceElement}>
           <PriceRangeGraph />
         </Modal>
       )}

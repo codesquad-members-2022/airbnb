@@ -2,14 +2,15 @@ import { useState } from "react";
 
 import styled from "styled-components";
 
+import { ModalList } from "@constants/calendar";
+
 import Period from "./Period";
 import Personnel from "./Personnel";
 import Price from "./Price";
 import * as S from "./style";
 
 const SearchBar = () => {
-  const [modalOpen, setModalOpen] = useState(0); //1 2 3
-
+  const [modalOpen, setModalOpen] = useState(ModalList.NONE);
   return (
     <S.SearchBar>
       <Period modalOpen={modalOpen} setModalOpen={setModalOpen} />

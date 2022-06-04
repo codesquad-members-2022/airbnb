@@ -1,4 +1,12 @@
-import { CalendarTypes } from "@constants/calendar";
+import { ReactNode } from "react";
+
+import { CalendarTypes, ModalList } from "@constants/calendar";
+
+// ModalList가 enum인데 받지 못해 object로 적용
+export type ModalOpenType = {
+  modalOpen: number;
+  setModalOpen: React.Dispatch<React.SetStateAction<number>>;
+};
 
 export type CalendarState = {
   checkIn: Date | null;

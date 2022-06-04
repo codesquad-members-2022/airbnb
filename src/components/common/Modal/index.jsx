@@ -1,24 +1,27 @@
+/* eslint-disable react/prop-types */
+// eslint-disable-next-line react/prop-types
 import { useEffect, useRef } from "react";
 
 import * as S from "./style";
 
-// eslint-disable-next-line react/prop-types
-const Modal = ({ setModalOpen, children }) => {
+const Modal = ({ setModalOpen, containElement, children }) => {
   const modalRef = useRef(null);
-
   const outsideClickHandler = (e) => {
-    if (!modalRef.current.contains(e.target)) {
+    if (containElement.current?.contains(e.target)) {
+      return;
+    }
+    if (!modalRef.current?.contains(e.target)) {
       setModalOpen(0);
     }
   };
 
   useEffect(() => {
-    document.addEventListener("mouseup", outsideClickHandler);
+    document.addEventListener("mousedown", outsideClickHandler);
 
     return () => {
-      document.removeEventListener("mouseup", outsideClickHandler);
+      document.removeEventListener("mousedown", outsideClickHandler);
     };
-  });
+  }, []);
 
   return (
     <S.Modal onClick={outsideClickHandler} ref={modalRef}>

@@ -11,3 +11,10 @@ export enum CalendarTypes {
   CHECK_OUT,
   ALL_REMOVE,
 }
+
+export enum ModalList {
+  NONE,
+  PERIOD,
+  PRICE,
+  PERSONNEL,
+}

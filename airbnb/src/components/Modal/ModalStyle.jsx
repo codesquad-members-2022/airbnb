@@ -2,16 +2,18 @@ import { css } from 'styled-components';
 
 const calendarModalStyle = css`
   width: 880px;
-  height: 470px;
-  top: 190px;
+  height: 480px;
 `;
 
 const priceRangeModalStyle = css`
   width: 300px;
   height: 200px;
-  top: 190px;
   padding: 30px;
-  z-index: 10;
 `;
 
-export { calendarModalStyle, priceRangeModalStyle };
+const personnelModalStyle = css`
+  width: 400px;
+  height: 355px;
+`;
+
+export { calendarModalStyle, priceRangeModalStyle, personnelModalStyle };

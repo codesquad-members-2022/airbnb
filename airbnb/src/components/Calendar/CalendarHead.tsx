@@ -99,6 +99,7 @@ const Day = styled.li`
 const ArrowBtn = styled.button<{ position: string }>`
   position: absolute;
   top: 25px;
+  margin-left: 15px;
   border: 0.5px solid ${({ theme }) => theme.colors.black};
   border-radius: 5px;
   width: 10%;

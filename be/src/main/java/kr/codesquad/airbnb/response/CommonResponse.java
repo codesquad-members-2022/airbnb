@@ -4,9 +4,9 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public class CommonResponse extends BasicResponse {
+public class CommonResponse<T> extends BasicResponse {
 
-    private Object data;
+    private T data;
 
     private CommonResponse(HttpStatus httpStatus, String message) {
         this.statusCode = httpStatus.value();
@@ -14,7 +14,7 @@ public class CommonResponse extends BasicResponse {
         this.message = message;
     }
 
-    private CommonResponse(HttpStatus httpStatus, String message, Object data) {
+    private CommonResponse(HttpStatus httpStatus, String message, T data) {
         this.statusCode = httpStatus.value();
         this.statusName = httpStatus.name();
         this.message = message;

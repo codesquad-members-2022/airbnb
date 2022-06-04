@@ -3,9 +3,9 @@ package com.ahoo.airbnb.room;
 import com.ahoo.airbnb.entity.Room;
 import com.ahoo.airbnb.reservation.chargepolicy.ChargePolicyType;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
@@ -15,5 +15,5 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
         + "ON r.id = rcp.room.id "
         + "WHERE r.id=:id "
         + "AND rcp.chargePolicy.isActive = true")
-    List<ChargePolicyType> findActiveChargePolicyTypeById(Long id);
+    List<ChargePolicyType> findActiveChargePolicyTypeById(@Param("id") Long id);
 }

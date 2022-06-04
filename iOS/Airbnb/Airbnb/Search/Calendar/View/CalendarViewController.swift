@@ -9,6 +9,7 @@ import UIKit
 
 class CalendarViewController: SearchInfoTrackingViewController, CommonViewControllerProtocol {
     
+    
     let reservationModel: ReservationModel
     let calendarModel: CalendarModel = CalendarModel(baseDate: Date())
     
@@ -81,14 +82,6 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
         calendarModel.onUpdate = { [weak self] in
             self?.collectionView.reloadData()
         }
-        
-        //        calendarModel.onUpdateCheckinDate = { date in
-        //            print("체크인: \(date)")
-        //        }
-        //
-        //        calendarModel.onUpdateCheckoutDate = { date in
-        //            print("체크아웃: \(date)")
-        //        }
     }
     
     private func setUpToolBarItems() -> [UIBarButtonItem] {
@@ -167,8 +160,6 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
             day.isSelected = true
             cell.tabGenerated(for: day)
             self.checkoutCell = cell
-            // 체크인과 체크 아웃 사이에 날들을 배열로 넘기는 작업도 필요...???? 도대체 감이 안잡힘
-            // 그 값들을 모델한테 여기랑 저기가 값이 넘어왔다고 해야하는게 그때마다 뷰를 리로드하는게 맞는가 싶기도하고..
         }
         
         calendarModel.validateCheckDate(for: day)

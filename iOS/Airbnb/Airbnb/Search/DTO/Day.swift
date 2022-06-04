@@ -32,3 +32,18 @@ class Day {
 enum FadeState {
     case left, right, fill, none
 }
+
+extension Day: Hashable {
+    static func == (lhs: Day, rhs: Day) -> Bool {
+        let calendar = Calendar.current
+        let leftComponent = calendar.dateComponents([.year, .month, .day], from: lhs.date)
+        let rightComponent = calendar.dateComponents([.year, .month, .day], from: rhs.date)
+        let lhsDate = calendar.date(from: leftComponent) ?? Date()
+        let rhsDate = calendar.date(from: rightComponent) ?? Date()
+        return lhsDate == rhsDate
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.date)
+    }
+}

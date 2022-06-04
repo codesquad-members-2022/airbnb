@@ -1,10 +1,17 @@
 package codesquad.airbnb.service;
 
+import codesquad.airbnb.domain.Accommodation;
+import codesquad.airbnb.domain.Member;
+import codesquad.airbnb.domain.Reservation;
+import codesquad.airbnb.domain.Schedule;
 import codesquad.airbnb.dto.AccommodationDto;
 import codesquad.airbnb.dto.AccommodationListDto;
 import codesquad.airbnb.dto.AccommodationPriceDto;
 import codesquad.airbnb.dto.AccommodationPriceListDto;
 import codesquad.airbnb.repository.AccommodationRepository;
+import codesquad.airbnb.repository.MemberRepository;
+import codesquad.airbnb.repository.ReservationRepository;
+import codesquad.airbnb.repository.ScheduleRepository;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -21,6 +28,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccommodationService {
 
     private final AccommodationRepository accommodationRepository;
+    private final MemberRepository memberRepository;
+    private final ReservationRepository reservationRepository;
+    private final ScheduleRepository scheduleRepository;
 
     public AccommodationPriceListDto getPricesByStayDate(LocalDate checkInDate, LocalDate checkOutDate, Double latitude, Double longitude) {
         Long stayDays = checkInDate.until(checkOutDate, ChronoUnit.DAYS) + 1;
@@ -51,5 +61,37 @@ public class AccommodationService {
             point, checkInDate, checkOutDate.plusDays(1), minimumMoney, maximumMoney, personnel, stayDays);
 
         return new AccommodationListDto(accommodation);
+    }
+
+    @Transactional
+    public void reserveAccommodation(Long memberId, Long accommodationId, LocalDate checkInDate, LocalDate checkOutDate,
+        Integer personnel, Integer reservationPrice) {
+
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> {
+            throw new IllegalStateException("존재하지 않는 회원입니다.");
+        });
+
+        Accommodation accommodation = accommodationRepository.findById(accommodationId).orElseThrow(() -> {
+            throw new IllegalStateException("존재하지 않는 숙소입니다.");
+        });
+
+        List<Schedule> schedules = scheduleRepository.findSchedulesByStayDateBetween(checkInDate, checkOutDate);
+        checkAvailabilityOfReservation(schedules, checkInDate, checkOutDate);
+
+        Reservation reservation = Reservation.createReservation(member, accommodation,
+            reservationPrice, personnel, checkInDate, checkOutDate);
+
+        reservationRepository.save(reservation);
+    }
+
+    private void checkAvailabilityOfReservation(List<Schedule> schedules, LocalDate checkInDate, LocalDate checkOutDate) {
+        long stayDays = checkInDate.until(checkOutDate, ChronoUnit.DAYS) + 1;
+        if (schedules.size() != stayDays) {
+            throw new IllegalStateException("해당 일정으로는 에약이 불가능합니다.");
+        }
+
+        for (Schedule schedule : schedules) {
+            schedule.removeVacantRoomQuantity();
+        }
     }
 }

@@ -1,13 +1,12 @@
-import { useState } from 'react';
-import styled, { css } from 'styled-components';
 import BarChart from './Canvas';
+
 import {
   RangeSlider,
   RangeSliderTrack,
   RangeSliderFilledTrack,
   RangeSliderThumb,
 } from '@chakra-ui/react';
-import { SliderInput } from './Slider';
+
 const sampleData = [
   { price: 10000, number: 100 },
   { price: 20000, number: 20 },
@@ -26,9 +25,6 @@ const sampleData = [
 ];
 
 function PriceRangeModal() {
-  // const [min, setMin] = useState(0);
-  // const [max, setMax] = useState(100);
-
   return (
     <>
       <BarChart
@@ -38,17 +34,6 @@ function PriceRangeModal() {
         width="300px"
         padding="20px"
       />
-      {/* <SliderInput
-        onInput={(e) => setMin(e.target.value)}
-        // onInput={(e) => setMax(e.target.value)}
-        type="range"
-        style={{
-          width: '100%',
-          '--min': 0,
-          '--max': 100,
-          '--val': min,
-        }}
-      /> */}
       <RangeSlider
         aria-label={['min', 'max']}
         colorScheme="pink"
@@ -60,7 +45,6 @@ function PriceRangeModal() {
         <RangeSliderThumb index={0} />
         <RangeSliderThumb index={1} />
       </RangeSlider>
-      <p>hi!</p>
     </>
   );
 }

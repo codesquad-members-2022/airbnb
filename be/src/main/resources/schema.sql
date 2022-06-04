@@ -43,6 +43,7 @@ CREATE TABLE reservation (
     member_id INT NOT NULL,
     accommodation_id INT NOT NULL,
     reservation_price INT,
+    personnel INT,
     checkin_date TIMESTAMP,
     checkout_date TIMESTAMP,
     reservation_datetime TIMESTAMP,

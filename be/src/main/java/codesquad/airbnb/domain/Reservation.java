@@ -41,6 +41,7 @@ public class Reservation {
     private Accommodation accommodation;
 
     private Integer reservationPrice;
+    private Integer personnel;
 
     @Column(name = "checkin_date")
     private LocalDate checkInDate;
@@ -52,12 +53,12 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
-    private Reservation(Member member, Accommodation accommodation, Integer reservationPrice, LocalDate checkInDate,
-        LocalDate checkOutDate, LocalDateTime reservationDateTime,
-        ReservationStatus status) {
+    private Reservation(Member member, Accommodation accommodation, Integer reservationPrice, Integer personnel,
+        LocalDate checkInDate, LocalDate checkOutDate, LocalDateTime reservationDateTime, ReservationStatus status) {
         this.member = member;
         this.accommodation = accommodation;
         this.reservationPrice = reservationPrice;
+        this.personnel = personnel;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
         this.reservationDateTime = reservationDateTime;
@@ -65,9 +66,10 @@ public class Reservation {
     }
 
     public static Reservation createReservation(Member member, Accommodation accommodation, Integer reservationPrice,
-        LocalDate checkInDate, LocalDate checkOutDate) {
-        Reservation reservation = new Reservation(member, accommodation, reservationPrice, checkInDate,
-            checkOutDate, LocalDateTime.now(), ReservationStatus.ORDER);
+        Integer personnel, LocalDate checkInDate, LocalDate checkOutDate) {
+        Reservation reservation = new Reservation(member, accommodation, reservationPrice, personnel,
+            checkInDate, checkOutDate, LocalDateTime.now(), ReservationStatus.ORDER);
+
         return reservation;
     }
 }

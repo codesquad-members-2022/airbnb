@@ -1,32 +1,42 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { CalendarContext } from 'contexts/CalendarProvider';
-import { changeLocalDateStr, changeTimeDate } from 'utility/dateUtil';
+import {
+  changeLocalDateStr,
+  changeTimeDate,
+  compareDate,
+} from 'utility/dateUtil';
+import { useInputState } from 'hooks/useInputState';
+import { useInputDispatch } from 'hooks/useInputDispatch';
 
-function CalendarDates({ lastDate, firstDate, year, month, date }) {
-  const {
-    inputDate: { checkIn, checkOut },
-    handelClickEvent,
-  } = useContext(CalendarContext);
+type props = {
+  date: string | number;
+  year: number;
+  month: number;
+};
 
-  const nowDate = changeLocalDateStr(year, month - 1, date);
+function CalendarDates({ date, year, month }: props) {
+  const { checkIn, checkOut } = useInputState();
+  const { handelClickEvent } = useInputDispatch();
 
-  const checkedDate =
+  const nowDate: string = changeLocalDateStr(year, month - 1, date);
+
+  const disableDate: boolean = compareDate(new Date(), nowDate);
+
+  const checkedDate: boolean =
     changeTimeDate(checkIn) === changeTimeDate(nowDate) ||
     changeTimeDate(checkOut) === changeTimeDate(nowDate);
 
-  const selectedDate =
+  const selectedDate: boolean =
     changeTimeDate(checkIn) < changeTimeDate(nowDate) &&
     changeTimeDate(nowDate) < changeTimeDate(checkOut);
 
   return (
     <DateList>
       <DateNum
-        lastDate={lastDate}
-        firstDate={firstDate}
         onClick={() => {
           handelClickEvent(year, month, date);
         }}
+        disabled={disableDate}
         checkedDate={checkedDate}
         selectedDate={selectedDate}
         date={date}
@@ -42,7 +52,7 @@ const DateList = styled.li`
   width: calc(94% / 7);
   height: 60px;
   text-align: right;
-  border: 1px solid ${({ theme }) => theme.colors.gray1};
+  border: 1px solid ${({ theme }) => theme.colors.white};
 
   :nth-child(7n + 1) {
     color: ${({ theme }) => theme.colors.red};
@@ -53,12 +63,22 @@ const DateList = styled.li`
   }
 `;
 
-const DateNum = styled.button`
+const DateNum = styled.button<{
+  disabled: boolean;
+  checkedDate: boolean;
+  selectedDate: boolean;
+  date: string | number;
+}>`
   width: 100%;
   text-align: right;
   font-size: ${({ theme }) => theme.fontSizes.m};
   font-weight: 500;
   color: inherit;
+
+  &:disabled {
+    ${({ disabled }) => disabled && `color : #BDBDBD`}
+  }
+
   ${({ checkedDate, date }) =>
     checkedDate && date && ` border-bottom: 3px solid #f00`};
   ${({ selectedDate, date }) =>

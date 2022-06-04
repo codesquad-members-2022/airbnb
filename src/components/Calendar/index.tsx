@@ -15,16 +15,14 @@ const initSlideInfo: { translateX: number; direction: DirectionType } = {
 };
 
 const Calendar = ({ today }: { today: Date }) => {
-  const { checkIn, checkOut } = useCalendarState();
+  // const { checkIn, checkOut } = useCalendarState();
 
   const todayYear = today.getFullYear();
   const todayMonth = today.getMonth();
-  // pageIndex는 더 상위에서 관리해야 함. 초기화되면 안됨
 
   const [pageIndex, setPageIndex] = useState(0);
   const [slideInfo, setSlideInfo] = useState(initSlideInfo);
   const isMovePending = useRef(false);
-  // const { checkIn, checkout } = useCalendarState();
 
   const handleMoveCalendar = useCallback((movePoint: number, direction: DirectionType) => {
     if (!isMovePending.current) {

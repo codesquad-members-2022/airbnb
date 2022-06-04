@@ -22,9 +22,7 @@ const CalendarDate = ({ calendarInfo }: { calendarInfo: CalendarInfoType }) => {
 
   const isPast = (dateData: number | Date): boolean => {
     const today = new Date();
-    const isPastBoolean = dateData < today;
-    console.log("isPastBoolean :>> ", isPastBoolean);
-    return isPastBoolean;
+    return dateData < today;
   };
 
   const getDateTarget = (): DateTarget => {

@@ -3,6 +3,7 @@ package kr.codesquad.airbnb;
 import kr.codesquad.airbnb.exception.ErrorCode;
 import kr.codesquad.airbnb.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -24,25 +25,28 @@ public class AuthenticationFilter extends GenericFilterBean {
         String token = req.getHeader("token");
 
         if (!token.equals("member1")) {
-            setForbiddenResponse((HttpServletResponse) response);
+            sendForbiddenResponse((HttpServletResponse) response);
             return;
         }
 
         chain.doFilter(request, response);
     }
 
-    public void setForbiddenResponse(HttpServletResponse response) {
+    public void sendForbiddenResponse(HttpServletResponse response) throws IOException {
         ErrorCode errorCode = ErrorCode.FORBIDDEN_USER;
+        ErrorResponse errorResponse = new ErrorResponse(errorCode);
         log.error("AuthenticationFilter reject request to server. cause = {}", errorCode.getDetail());
+
         response.setStatus(errorCode.getHttpStatus().value());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        ErrorResponse errorResponse = new ErrorResponse(errorCode);
+
         try {
             String json = errorResponse.convertToJson();
             response.getWriter().write(json);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.warn("server error. cause = {}", e.getMessage());
+            response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
         }
     }
 }

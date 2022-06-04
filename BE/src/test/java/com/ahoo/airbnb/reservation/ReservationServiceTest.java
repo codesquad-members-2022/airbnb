@@ -23,7 +23,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 @ExtendWith(MockitoExtension.class)
-@Transactional
 class ReservationServiceTest {
 
     @Mock
@@ -34,6 +33,7 @@ class ReservationServiceTest {
 
     @Test
     @DisplayName("존재하는 roomId에 해당하는 숙소의 1박당 요금, 총 요금, 상세 요금 항목들을 계산하여 리턴한다.")
+    @Transactional
     void roomId에_해당하는_숙소의_요금계산_성공() {
         // given
         Long roomId = 1L;
@@ -69,6 +69,7 @@ class ReservationServiceTest {
 
     @Test
     @DisplayName("존재하지 않는 roomId에 해당하는 숙소의 1박당 요금, 총 요금, 상세 요금 항목들을 계산하려고 시도하면 NoSuchElementException을 리턴한다.")
+    @Transactional
     void roomId에_해당하는_숙소의_요금계산_실패() {
         // given
         Long roomId = 8L;

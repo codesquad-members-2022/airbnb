@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    url: jdbc:mysql://ahoo-airbnb-mysql.cez5xmumdaq7.ap-northeast-2.rds.amazonaws.com:3306/airbnb
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ahoo
+    password: IouTinnxABYzdLyOagRA
+
+  sql:
+    init:
+      schema-locations: classpath*:sql/schema.sql
+      data-locations: classpath*:sql/data.sql
+      mode: always

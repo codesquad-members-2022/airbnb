@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
-    List<Schedule> findSchedulesByStayDateBetween(LocalDate checkInDate, LocalDate checkOutDate);
+    List<Schedule> findSchedulesByAccommodation_IdAndStayDateBetween(Long accommodationId, LocalDate checkInDate, LocalDate checkOutDate);
 
 }

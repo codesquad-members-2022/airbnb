@@ -8,6 +8,7 @@ import codesquad.airbnb.dto.AccommodationDto;
 import codesquad.airbnb.dto.AccommodationListDto;
 import codesquad.airbnb.dto.AccommodationPriceDto;
 import codesquad.airbnb.dto.AccommodationPriceListDto;
+import codesquad.airbnb.dto.ReservationForm;
 import codesquad.airbnb.repository.AccommodationRepository;
 import codesquad.airbnb.repository.MemberRepository;
 import codesquad.airbnb.repository.ReservationRepository;
@@ -64,8 +65,14 @@ public class AccommodationService {
     }
 
     @Transactional
-    public void reserveAccommodation(Long memberId, Long accommodationId, LocalDate checkInDate, LocalDate checkOutDate,
-        Integer personnel, Integer reservationPrice) {
+    public void reserveAccommodation(ReservationForm reservationForm) {
+
+        Long memberId = reservationForm.getMemberId();
+        Long accommodationId = reservationForm.getAccommodationId();
+        LocalDate checkInDate = reservationForm.getCheckInDate();
+        LocalDate checkOutDate = reservationForm.getCheckOutDate();
+        Integer personnel = reservationForm.getPersonnel();
+        Integer reservationPrice = reservationForm.getReservationPrice();
 
         Member member = memberRepository.findById(memberId).orElseThrow(() -> {
             throw new IllegalStateException("존재하지 않는 회원입니다.");
@@ -75,8 +82,7 @@ public class AccommodationService {
             throw new IllegalStateException("존재하지 않는 숙소입니다.");
         });
 
-        List<Schedule> schedules = scheduleRepository.findSchedulesByStayDateBetween(checkInDate, checkOutDate);
-        checkAvailabilityOfReservation(schedules, checkInDate, checkOutDate);
+        checkAvailabilityOfReservation(accommodationId, checkInDate, checkOutDate);
 
         Reservation reservation = Reservation.createReservation(member, accommodation,
             reservationPrice, personnel, checkInDate, checkOutDate);
@@ -84,7 +90,8 @@ public class AccommodationService {
         reservationRepository.save(reservation);
     }
 
-    private void checkAvailabilityOfReservation(List<Schedule> schedules, LocalDate checkInDate, LocalDate checkOutDate) {
+    private void checkAvailabilityOfReservation(Long accommodationId, LocalDate checkInDate, LocalDate checkOutDate) {
+        List<Schedule> schedules = scheduleRepository.findSchedulesByAccommodation_IdAndStayDateBetween(accommodationId, checkInDate, checkOutDate.plusDays(1));
         long stayDays = checkInDate.until(checkOutDate, ChronoUnit.DAYS) + 1;
         if (schedules.size() != stayDays) {
             throw new IllegalStateException("해당 일정으로는 에약이 불가능합니다.");

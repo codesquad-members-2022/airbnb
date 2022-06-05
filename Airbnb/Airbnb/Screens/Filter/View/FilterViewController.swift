@@ -10,7 +10,7 @@ import UIKit
 final class FilterViewController: UIViewController {
 
     private var filterForm: UICollectionView?
-    private var toolbar = UIToolbar()
+    private var toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 35))
     private var filterViewModel: FilterViewModel?
     private var containerContentView: [UIView]?
 
@@ -74,13 +74,13 @@ final class FilterViewController: UIViewController {
         view.addSubview(filterForm)
         view.addSubview(toolbar)
         NSLayoutConstraint.activate([
-            toolbar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            toolbar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            toolbar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             filterForm.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            filterForm.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            filterForm.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            filterForm.bottomAnchor.constraint(equalTo: toolbar.topAnchor)
+            filterForm.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            filterForm.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            filterForm.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            toolbar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            toolbar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            toolbar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 

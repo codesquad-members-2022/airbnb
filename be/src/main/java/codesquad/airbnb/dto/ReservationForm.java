@@ -14,7 +14,11 @@ public class ReservationForm {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkOutDate;
     private Integer personnel;
-    private Integer reservationPrice;
-
+    private Integer accommodationCost;
+    private Integer discountAmount;
+    private Integer cleaningFee;
+    private Integer serviceFee;
+    private Integer tax;
+    private Integer totalPrice;
 
 }

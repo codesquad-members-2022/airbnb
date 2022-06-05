@@ -3,6 +3,7 @@ package codesquad.airbnb.service;
 import codesquad.airbnb.domain.Accommodation;
 import codesquad.airbnb.domain.Member;
 import codesquad.airbnb.domain.Reservation;
+import codesquad.airbnb.domain.ReservationPrice;
 import codesquad.airbnb.domain.Schedule;
 import codesquad.airbnb.dto.AccommodationDto;
 import codesquad.airbnb.dto.AccommodationListDto;
@@ -72,7 +73,6 @@ public class AccommodationService {
         LocalDate checkInDate = reservationForm.getCheckInDate();
         LocalDate checkOutDate = reservationForm.getCheckOutDate();
         Integer personnel = reservationForm.getPersonnel();
-        Integer reservationPrice = reservationForm.getReservationPrice();
 
         Member member = memberRepository.findById(memberId).orElseThrow(() -> {
             throw new IllegalStateException("존재하지 않는 회원입니다.");
@@ -83,6 +83,12 @@ public class AccommodationService {
         });
 
         checkAvailabilityOfReservation(accommodationId, checkInDate, checkOutDate);
+
+        ReservationPrice reservationPrice = ReservationPrice.createReservationPrice(
+            reservationForm.getAccommodationCost(), reservationForm.getDiscountAmount(),
+            reservationForm.getCleaningFee(), reservationForm.getServiceFee(),
+            reservationForm.getTax(), reservationForm.getTotalPrice()
+        );
 
         Reservation reservation = Reservation.createReservation(member, accommodation,
             reservationPrice, personnel, checkInDate, checkOutDate);

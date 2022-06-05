@@ -40,7 +40,10 @@ public class Reservation {
     @NotNull
     private Accommodation accommodation;
 
-    private Integer reservationPrice;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "reservation_price_id")
+    private ReservationPrice reservationPrice;
+
     private Integer personnel;
 
     @Column(name = "checkin_date")
@@ -53,8 +56,9 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
-    private Reservation(Member member, Accommodation accommodation, Integer reservationPrice, Integer personnel,
+    private Reservation(Member member, Accommodation accommodation, ReservationPrice reservationPrice, Integer personnel,
         LocalDate checkInDate, LocalDate checkOutDate, LocalDateTime reservationDateTime, ReservationStatus status) {
+
         this.member = member;
         this.accommodation = accommodation;
         this.reservationPrice = reservationPrice;
@@ -65,8 +69,9 @@ public class Reservation {
         this.status = status;
     }
 
-    public static Reservation createReservation(Member member, Accommodation accommodation, Integer reservationPrice,
+    public static Reservation createReservation(Member member, Accommodation accommodation, ReservationPrice reservationPrice,
         Integer personnel, LocalDate checkInDate, LocalDate checkOutDate) {
+
         Reservation reservation = new Reservation(member, accommodation, reservationPrice, personnel,
             checkInDate, checkOutDate, LocalDateTime.now(), ReservationStatus.ORDER);
 

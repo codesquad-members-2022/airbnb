@@ -6,14 +6,14 @@ import java.time.LocalDateTime;
 
 public class CleaningChargePolicy implements ChargePolicy {
 
-    private static final CleaningChargePolicy instance = new CleaningChargePolicy();
+    private static final CleaningChargePolicy policy = new CleaningChargePolicy();
 
     private CleaningChargePolicy() {
 
     }
 
     public static CleaningChargePolicy getInstance() {
-        return instance;
+        return policy;
     }
 
     @Override

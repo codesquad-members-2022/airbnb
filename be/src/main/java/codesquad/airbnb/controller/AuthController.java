@@ -1,7 +1,8 @@
 package codesquad.airbnb.controller;
 
 import codesquad.airbnb.dto.LoginResponse;
-import codesquad.airbnb.service.JwtProvider;
+import codesquad.airbnb.jwt.JwtManager;
+import codesquad.airbnb.jwt.JwtProvider;
 import codesquad.airbnb.service.AuthService;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ public class AuthController {
 
     private final AuthService authService;
     private final JwtProvider jwtProvider;
+    private final JwtManager jwtManager;
 
     @GetMapping("/api/github-login")
     public ResponseEntity<LoginResponse> login(HttpServletResponse response, @RequestParam String code) {
@@ -25,6 +27,7 @@ public class AuthController {
 
         String accessToken = jwtProvider.createAccessToken(email);
         String refreshToken = jwtProvider.createRefreshToken();
+        jwtManager.saveRefreshToken(email, refreshToken);
 
         response.addCookie(createCookieWithRefreshToken(refreshToken));
 
@@ -41,6 +44,8 @@ public class AuthController {
     private Cookie createCookieWithRefreshToken(String refreshToken) {
         Cookie cookie = new Cookie("refresh_token", refreshToken);
         cookie.setPath("/api");
+        cookie.setSecure(true);
+        cookie.setHttpOnly(true);
         return cookie;
     }
 }

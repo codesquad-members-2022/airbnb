@@ -17,7 +17,9 @@ import yanse.airbnb.domain.room.Room;
 
 @Entity
 public class Reservation {
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "reservation_id")
 	private Long id;
 

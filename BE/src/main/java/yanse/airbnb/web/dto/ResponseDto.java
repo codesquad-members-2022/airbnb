@@ -1,16 +1,15 @@
 package yanse.airbnb.web.dto;
 
-import lombok.AccessLevel;
+import java.util.List;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class ResponseSearchAddressDto {
+@NoArgsConstructor
+public class ResponseDto<T> {
 
-	private String address;
+	private List<T> result;
+
 }

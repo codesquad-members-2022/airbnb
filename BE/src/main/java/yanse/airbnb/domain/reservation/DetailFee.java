@@ -10,8 +10,11 @@ public class DetailFee {
 
 	@Enumerated(EnumType.STRING)
 	private DiscountPolicy discountPolicy;
+
 	private double cleaningFee;
+
 	private double serviceTax;
+
 	private double roomTax;
 
 }

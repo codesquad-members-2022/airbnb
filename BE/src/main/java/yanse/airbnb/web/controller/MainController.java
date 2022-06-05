@@ -6,18 +6,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import yanse.airbnb.service.MainService;
-import yanse.airbnb.web.dto.ImageListDto;
+import yanse.airbnb.web.dto.ImageDto;
 
-import java.util.List;
+import yanse.airbnb.web.dto.ResponseDto;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("main")
 public class MainController {
-    private final MainService mainService;
 
-    @GetMapping
-    public List<ImageListDto> mainImageType(@RequestParam("type") String imageType){
-        return mainService.findAllByImage(imageType);
-    }
+	private final MainService mainService;
+
+	@GetMapping
+	public ResponseDto<ImageDto> mainImageType(@RequestParam("type") String imageType) {
+		return new ResponseDto<>(mainService.findAllByImage(imageType));
+	}
 }

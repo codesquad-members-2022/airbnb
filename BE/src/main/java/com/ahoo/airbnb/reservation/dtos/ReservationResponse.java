@@ -1,7 +1,7 @@
 package com.ahoo.airbnb.reservation.dtos;
 
+import com.ahoo.airbnb.entity.Address;
 import com.ahoo.airbnb.member.MemberResponse;
-import com.ahoo.airbnb.room.Address;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 public class ReservationResponse {
 
 	private Long reservationID;
-	private int headCount;
-	private int totalCharge;
+	private Integer headCount;
+	private Integer totalCharge;
 	private String roomName;
 	private String roomType;
 	private String mainImageUrl;

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Image {
+public class ImageResponse {
 
     private int sequence;
     private String imageUrl;

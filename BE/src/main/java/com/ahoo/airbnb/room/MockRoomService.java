@@ -1,5 +1,6 @@
 package com.ahoo.airbnb.room;
 
+import com.ahoo.airbnb.entity.Address;
 import com.ahoo.airbnb.member.MemberResponse;
 import com.ahoo.airbnb.room.dtos.RoomDetailResponse;
 import com.ahoo.airbnb.room.dtos.RoomRequest;
@@ -44,16 +45,16 @@ public class MockRoomService {
             new MemberResponse(1L, "ahoo", "https://avatars.githubusercontent.com/u/68011320?v=4"),
             new RoomCondition("투룸", 5, 2, 2, 1),
             75_000,
-            new Images(List.of(
-                new Image(1,
+            new ImagesResponse(List.of(
+                new ImageResponse(1,
                     "https://a0.muscache.com/im/pictures/f033e5ee-ae6f-48c2-9196-996444f16c4a.jpg?im_w=1200"),
-                new Image(2,
+                new ImageResponse(2,
                     "https://a0.muscache.com/im/pictures/b69572aa-c59d-4157-a190-1718a8f664cf.jpg?im_w=720"),
-                new Image(3,
+                new ImageResponse(3,
                     "https://a0.muscache.com/im/pictures/9dc70b7f-8011-4824-97db-23341bb12750.jpg?im_w=720"),
-                new Image(4,
+                new ImageResponse(4,
                     "https://a0.muscache.com/im/pictures/2e96ffff-336c-4495-a2ea-bd18780bfdbf.jpg?im_w=720"),
-                new Image(5,
+                new ImageResponse(5,
                     "https://a0.muscache.com/im/pictures/e0c1bbf3-50a1-4095-920c-7440af2ded1e.jpg?im_w=720")
             )),
             1L);

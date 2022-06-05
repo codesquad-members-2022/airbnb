@@ -12,6 +12,6 @@ public class ReservationRequest {
 	private Long roomId;
 	private String checkInDate;
 	private String checkOutDate;
-	private int headcount;
-	private int totalCharge;
+	private Integer headcount;
+	private Integer totalCharge;
 }

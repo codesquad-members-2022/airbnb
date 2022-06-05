@@ -20,8 +20,18 @@ class CalendarPickerViewCell: UICollectionViewCell {
     private lazy var selectionBackgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 20
         view.clipsToBounds = true
         view.backgroundColor = .black
+        view.isHidden = true
+        return view
+    }()
+
+    private lazy var inBetweenSelectionBackgroundView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .lightGray
+        view.isHidden = true
         return view
     }()
 
@@ -40,16 +50,33 @@ class CalendarPickerViewCell: UICollectionViewCell {
         setLayout()
     }
 
-    private var day: CalendarPicker.Day?
-
     func setDay(_ day: CalendarPicker.Day) {
-        self.day = day
-
-        guard !day.isHidden else { return }
+        guard !day.isWithinLastMonth else { return }
 
         let dateString = dateFormatter.string(from: day.date)
 
-        numberLabel.attributedText = day.isPast ? strikethrough(dateString) : normal(dateString)
+        if day.isSelected {
+            selectionBackgroundView.isHidden = false
+            numberLabel.attributedText = selected(dateString)
+        } else if day.isBetweenSelection {
+            inBetweenSelectionBackgroundView.isHidden = false
+            numberLabel.attributedText = normal(dateString)
+        } else if day.isPast {
+            numberLabel.attributedText = strikethrough(dateString)
+        } else {
+            numberLabel.attributedText = normal(dateString)
+        }
+    }
+
+    private func selected(_ string: String) -> NSAttributedString {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .medium),
+            .strikethroughStyle: "nil",
+            .foregroundColor: UIColor.white
+        ]
+
+        return NSAttributedString(string: string, attributes: attributes)
+
     }
 
     private func strikethrough(_ string: String) -> NSAttributedString {
@@ -66,7 +93,8 @@ class CalendarPickerViewCell: UICollectionViewCell {
         let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 18, weight: .medium),
             .strikethroughStyle: "nil",
-            .foregroundColor: UIColor.black]
+            .foregroundColor: UIColor.black
+        ]
 
         return NSAttributedString(string: string, attributes: attributes)
 
@@ -77,6 +105,8 @@ class CalendarPickerViewCell: UICollectionViewCell {
     }
 
     private func setSubviews() {
+        contentView.addSubview(selectionBackgroundView)
+        contentView.addSubview(inBetweenSelectionBackgroundView)
         contentView.addSubview(numberLabel)
     }
 
@@ -85,11 +115,26 @@ class CalendarPickerViewCell: UICollectionViewCell {
             numberLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             numberLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
+
+        NSLayoutConstraint.activate([
+            selectionBackgroundView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            selectionBackgroundView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            selectionBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            selectionBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor)
+        ])
+
+        NSLayoutConstraint.activate([
+            inBetweenSelectionBackgroundView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            inBetweenSelectionBackgroundView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            inBetweenSelectionBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            inBetweenSelectionBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor)
+        ])
     }
 
     override func prepareForReuse() {
-        day = nil
         numberLabel.text = nil
         numberLabel.attributedText = nil
+        selectionBackgroundView.isHidden = true
+        inBetweenSelectionBackgroundView.isHidden = true
     }
 }

@@ -10,6 +10,8 @@ import UIKit
 
 class CalendarPickerViewController: UIViewController {
 
+    static let defaultNumberOfMonths = 12
+
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.headerReferenceSize = CGSize(width: 400, height: 50)
@@ -30,18 +32,11 @@ class CalendarPickerViewController: UIViewController {
         return collectionView
     }()
 
-    let calendarPicker: CalendarPicker
-
-    var didSelectDate: ((Date) -> Void)?
-    var didSelectDataRange: ((Range<Date>) -> Void)?
+    var calendarPicker: CalendarPicker
 
     init(baseDate: Date, numOfMonths: Int,
-         didDateSelect: ((Date) -> Void)? = nil,
-         didDataRangeSelect: ((Range<Date>) -> Void)? = nil) {
+         didSelectDate: ((DaySelection) -> Void)? = nil) {
         self.calendarPicker = CalendarPicker(baseDate: baseDate, numOfMonths: numOfMonths)
-
-        self.didSelectDate = didDateSelect
-        self.didSelectDataRange = didDataRangeSelect
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -51,10 +46,9 @@ class CalendarPickerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         setSubviews()
         setLayout()
+        setHandler()
     }
 
     private func setSubviews() {
@@ -68,6 +62,14 @@ class CalendarPickerViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.readableContentGuide.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.readableContentGuide.bottomAnchor)
         ])
+    }
+
+    private func setHandler() {
+        calendarPicker.didUpdateMonth = { [weak self] range in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadSections(IndexSet(range))
+            }
+        }
     }
 }
 
@@ -86,7 +88,6 @@ extension CalendarPickerViewController: UICollectionViewDataSource {
         }
 
         let day = calendarPicker.getDay(monthSection: indexPath.section, dayItem: indexPath.item)
-
         cell.setDay(day)
 
         return cell
@@ -111,5 +112,7 @@ extension CalendarPickerViewController: UICollectionViewDataSource {
 }
 
 extension CalendarPickerViewController: UICollectionViewDelegate {
-    // TODO: HANDLING SELECTION
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        calendarPicker.select(newMonthSection: indexPath.section, newDayItem: indexPath.item)
+    }
 }

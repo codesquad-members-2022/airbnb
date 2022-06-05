@@ -19,12 +19,16 @@ final class TabBarController: UITabBarController {
         let homeViewController =  UINavigationController(rootViewController: HomeViewController())
         let wishListViewController = UIViewController()
         let reservationViewController = UIViewController()
+        let searchTabItem = UITabBarItem(title: "검색", image: UIImage(named: "search"), tag: 0)
+        let wishListTabItem = UITabBarItem(title: "위시리스트", image: UIImage(named: "like"), tag: 1)
+        let myPageTabItem = UITabBarItem(title: "내 예약", image: UIImage(named: "profile"), tag: 2)
+
         wishListViewController.view.backgroundColor = .primary
         reservationViewController.view.backgroundColor = .orange
-        homeViewController.tabBarItem = UITabBarItem(title: "검색", image: UIImage(named: "search"), tag: 0)
-        wishListViewController.tabBarItem = UITabBarItem(title: "위시리스트", image: UIImage(named: "like"), tag: 1)
-        reservationViewController.tabBarItem = UITabBarItem(title: "내 예약", image: UIImage(named: "profile"), tag: 2)
-        self.setViewControllers([homeViewController, wishListViewController, reservationViewController], animated: false)
+        homeViewController.tabBarItem = searchTabItem
+        wishListViewController.tabBarItem = wishListTabItem
+        reservationViewController.tabBarItem = myPageTabItem
+        setViewControllers([homeViewController, wishListViewController, reservationViewController], animated: false)
         tabBar.backgroundColor = .gray6
         tabBar.tintColor = .gray1
     }

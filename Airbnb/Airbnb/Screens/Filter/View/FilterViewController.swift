@@ -9,8 +9,8 @@ import UIKit
 
 final class FilterViewController: UIViewController {
 
-    private var filterForm: UICollectionView!
-    private var toolbar: UIToolbar!
+    private var filterForm: UICollectionView?
+    private var toolbar = UIToolbar()
     private var filterViewModel: FilterViewModel?
     private var containerContentView: [UIView]?
 
@@ -50,28 +50,31 @@ final class FilterViewController: UIViewController {
         let layoutProvider = FilterLayout()
         let layout = FlowLayout.makeCompositionalLayout(layoutProvider)
         filterForm = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        filterForm.isScrollEnabled = false
-        filterForm.dataSource = self
-        filterForm.register(FilterListCell.self, forCellWithReuseIdentifier: FilterListCell.id)
-        filterForm.register(ContainerCell.self, forCellWithReuseIdentifier: ContainerCell.id)
-        filterForm.translatesAutoresizingMaskIntoConstraints = false
+        filterForm?.isScrollEnabled = false
+        filterForm?.dataSource = self
+        filterForm?.register(FilterListCell.self, forCellWithReuseIdentifier: FilterListCell.id)
+        filterForm?.register(ContainerCell.self, forCellWithReuseIdentifier: ContainerCell.id)
+        filterForm?.translatesAutoresizingMaskIntoConstraints = false
     }
 
     private func setToolBar() {
         tabBarController?.tabBar.isHidden = true
-        toolbar = UIToolbar()
         toolbar.translatesAutoresizingMaskIntoConstraints = false
-        toolbar.barTintColor = .black
+        toolbar.barTintColor = .gray6
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: self, action: nil)
+        fixedSpace.width = 16
         let skip = UIBarButtonItem(title: "건너뛰기", image: nil, primaryAction: nil, menu: nil)
         let next = UIBarButtonItem(title: "다음", image: nil, primaryAction: nil, menu: nil)
-        toolbar.setItems([skip, next], animated: false)
+        toolbar.setItems([fixedSpace, skip, flexibleSpace, next, fixedSpace], animated: false)
     }
 
     private func configureConstraints() {
+        guard let filterForm = filterForm else {return}
         view.addSubview(filterForm)
         view.addSubview(toolbar)
         NSLayoutConstraint.activate([
-            toolbar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor ),
+            toolbar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             toolbar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             toolbar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             filterForm.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -82,29 +85,31 @@ final class FilterViewController: UIViewController {
     }
 
     private func setDataBinding() {
-        filterViewModel?.location.bind(listener: { [weak self] model in
+        guard let filterForm = filterForm, let filterViewModel = filterViewModel else {return}
+
+        filterViewModel.location.bind(listener: { model in
             guard let model = model else { return }
             let viewModel = FilterListCellViewModel(model: model)
-            self?.filterViewModel?.update(type: .location, viewModel: viewModel)
-            self?.filterForm.reloadData()
+            filterViewModel.update(type: .location, viewModel: viewModel)
+            filterForm.reloadData()
         })
-        filterViewModel?.period.bind(listener: { [weak self] model in
+        filterViewModel.period.bind(listener: { model in
             guard let model = model else { return }
             let viewModel = FilterListCellViewModel(model: model)
-            self?.filterViewModel?.update(type: .period, viewModel: viewModel)
-            self?.filterForm.reloadData()
+           filterViewModel.update(type: .period, viewModel: viewModel)
+           filterForm.reloadData()
         })
-        filterViewModel?.price.bind(listener: { [weak self] model in
+        filterViewModel.price.bind(listener: { model in
             guard let model = model else { return }
             let viewModel = FilterListCellViewModel(model: model)
-            self?.filterViewModel?.update(type: .price, viewModel: viewModel)
-            self?.filterForm.reloadData()
+            filterViewModel.update(type: .price, viewModel: viewModel)
+            filterForm.reloadData()
         })
-        filterViewModel?.occupants.bind(listener: { [weak self] model in
+        filterViewModel.occupants.bind(listener: { model in
             guard let model = model  else { return }
             let viewModel = FilterListCellViewModel(model: model)
-            self?.filterViewModel?.update(type: .occupants, viewModel: viewModel)
-            self?.filterForm.reloadData()
+            filterViewModel.update(type: .occupants, viewModel: viewModel)
+            filterForm.reloadData()
         })
     }
 

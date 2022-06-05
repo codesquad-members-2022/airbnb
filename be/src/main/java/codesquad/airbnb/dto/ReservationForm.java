@@ -20,5 +20,4 @@ public class ReservationForm {
     private Integer serviceFee;
     private Integer tax;
     private Integer totalPrice;
-
 }

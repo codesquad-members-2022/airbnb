@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS reservation;
+DROP TABLE IF EXISTS reservation_price;
 DROP TABLE IF EXISTS member;
 DROP TABLE IF EXISTS schedule;
 DROP TABLE IF EXISTS accommodation;
@@ -38,6 +39,17 @@ CREATE TABLE schedule (
     FOREIGN KEY (accommodation_id) REFERENCES accommodation (accommodation_id)
 );
 
+CREATE TABLE reservation_price (
+    reservation_price_id INT NOT NULL AUTO_INCREMENT,
+    accommodation_cost   INT,
+    discount_amount      INT,
+    cleaning_fee         INT,
+    service_fee          INT,
+    tax                  INT,
+    total_price          INT,
+    PRIMARY KEY (reservation_price_id)
+);
+
 CREATE TABLE reservation (
     reservation_id       INT NOT NULL AUTO_INCREMENT,
     member_id            INT NOT NULL,
@@ -52,15 +64,4 @@ CREATE TABLE reservation (
     FOREIGN KEY (member_id) REFERENCES member (member_id),
     FOREIGN KEY (accommodation_id) REFERENCES accommodation (accommodation_id),
     FOREIGN KEY (reservation_price_id) REFERENCES reservation_price (reservation_price_id)
-);
-
-CREATE TABLE reservation_price (
-    reservation_price_id INT NOT NULL AUTO_INCREMENT,
-    accommodation_cost   INT,
-    discount_amount      INT,
-    cleaning_fee         INT,
-    service_fee          INT,
-    tax                  INT,
-    total_price          INT,
-    PRIMARY KEY (reservation_price_id)
 );

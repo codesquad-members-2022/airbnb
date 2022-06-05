@@ -31,7 +31,7 @@ public class Schedule {
     public void removeVacantRoomQuantity() {
         int restVacantRoomQuantity = this.vacantRoomQuantity - 1;
         if (vacantRoomQuantity < 0) {
-            throw new IllegalStateException("여분의 방이 부족합니다.");
+            throw new IllegalStateException("해당 일정으로는 에약이 불가능합니다.");
         }
         this.vacantRoomQuantity = restVacantRoomQuantity;
     }

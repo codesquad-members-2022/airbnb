@@ -1,9 +1,13 @@
 package codesquad.airbnb.controller;
 
-import codesquad.airbnb.service.OAuthService;
-import java.io.IOException;
+import codesquad.airbnb.dto.LoginResponse;
+import codesquad.airbnb.service.JwtProvider;
+import codesquad.airbnb.service.AuthService;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,15 +16,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class OAuthController {
 
-    private final OAuthService oAuthService;
+    private final AuthService authService;
+    private final JwtProvider jwtProvider;
 
     @GetMapping("/api/github-login")
-    public void login(HttpServletResponse response,
-        @RequestParam String code) throws IOException {
-        String email = oAuthService.authorizeForThirdParty(code);
+    public ResponseEntity<LoginResponse> login(HttpServletResponse response, @RequestParam String code) {
+        String email = authService.authorizeForThirdParty(code);
 
-        // TODO : JWT 발급
+        String accessToken = jwtProvider.createAccessToken(email);
+        String refreshToken = jwtProvider.createRefreshToken();
 
-        response.sendRedirect("http://3.36.67.143/");
+        response.addCookie(createCookieWithRefreshToken(refreshToken));
+
+        LoginResponse loginResponse = LoginResponse.builder()
+            .email(email)
+            .tokenType("Bearer")
+            .accessToken(accessToken)
+            .refreshToken(refreshToken)
+            .build();
+
+        return new ResponseEntity<>(loginResponse, HttpStatus.OK);
+    }
+
+    private Cookie createCookieWithRefreshToken(String refreshToken) {
+        Cookie cookie = new Cookie("refresh_token", refreshToken);
+        cookie.setPath("/api");
+        return cookie;
     }
 }

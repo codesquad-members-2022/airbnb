@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS member;
 CREATE TABLE member
 (
     member_id     INT         NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'member 테이블의 기본 키',
+    github_id     VARCHAR(39) NOT NULL COMMENT '멤버의 Github 아이디',
     name          VARCHAR(39) NOT NULL COMMENT '멤버의 이름',
     image_path    VARCHAR(255) COMMENT '멤버의 프로필 이미지 파일 경로',
     role          VARCHAR(10) NOT NULL COMMENT '멤버의 구분 (ADMIN/USER)',
@@ -34,19 +35,19 @@ DROP TABLE IF EXISTS room;
 
 CREATE TABLE room
 (
-    room_id         INT          NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'room 테이블의 기본 키',
-    district_id     INT          NOT NULL COMMENT 'district 테이블의 외래 키',
-    host_id         INT          NOT NULL COMMENT 'member 테이블의 외래 키',
-    name            VARCHAR(255) NOT NULL COMMENT '숙소의 이름',
-    description     VARCHAR(1000) COMMENT '숙소에 대한 소개',
-    image_path      VARCHAR(1000) COMMENT '숙소의 대표 이미지 경로 (1번째 이미지)',
-    type            VARCHAR(255) COMMENT '숙소의 종류',
-    longitude       DOUBLE COMMENT '숙소의 경도',
-    latitude        DOUBLE COMMENT '숙소의 위도',
-    lodging_charge  DOUBLE       NOT NULL COMMENT '숙소의 숙박 요금',
-    cleaning_charge DOUBLE       NOT NULL COMMENT '숙소의 청소 요금',
-    review_score    DOUBLE COMMENT '숙소의 리뷰 평균 점수 집계',
-    review_count    INT COMMENT '숙소의 리뷰 개수 집계',
+    room_id        INT          NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'room 테이블의 기본 키',
+    district_id    INT          NOT NULL COMMENT 'district 테이블의 외래 키',
+    host_id        INT          NOT NULL COMMENT 'member 테이블의 외래 키',
+    name           VARCHAR(255) NOT NULL COMMENT '숙소의 이름',
+    description    VARCHAR(1000) COMMENT '숙소에 대한 소개',
+    image_path     VARCHAR(1000) COMMENT '숙소의 대표 이미지 경로 (1번째 이미지)',
+    type           VARCHAR(255) COMMENT '숙소의 종류',
+    longitude      DOUBLE COMMENT '숙소의 경도',
+    latitude       DOUBLE COMMENT '숙소의 위도',
+    lodging_price  INT          NOT NULL COMMENT '숙소의 숙박 요금',
+    cleaning_price INT          NOT NULL COMMENT '숙소의 청소 요금',
+    review_score   DOUBLE COMMENT '숙소의 리뷰 평균 점수 집계',
+    review_count   INT COMMENT '숙소의 리뷰 개수 집계',
     FOREIGN KEY (district_id) REFERENCES district (district_id),
     FOREIGN KEY (host_id) REFERENCES member (member_id)
 );
@@ -99,15 +100,20 @@ DROP TABLE IF EXISTS reservation;
 
 CREATE TABLE reservation
 (
-    reservation_id     INT      NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'reservation 테이블의 기본 키',
-    guest_id           INT      NOT NULL COMMENT 'member 테이블의 외래 키',
-    room_id            INT      NOT NULL COMMENT 'room 테이블의 외래 키',
-    number_adult       INT      NOT NULL COMMENT '예약 시 성인 인원',
-    number_child       INT      NOT NULL COMMENT '예약 시 어린이 인원',
-    number_infant      INT      NOT NULL COMMENT '예약 시 영유아 인원',
-    checkin_date_time  DATETIME NOT NULL COMMENT '숙박 시작 날짜와 시간',
-    checkout_date_time DATETIME NOT NULL COMMENT '숙박 종료 날짜와 시간',
-    total_charge       DOUBLE   NOT NULL COMMENT '예약 시 총 금액'
+    reservation_id INT         NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'reservation 테이블의 기본 키',
+    guest_id       INT         NOT NULL COMMENT 'member 테이블의 외래 키',
+    room_id        INT         NOT NULL COMMENT 'room 테이블의 외래 키',
+    number_adult   INT         NOT NULL COMMENT '예약 시 성인 인원',
+    number_child   INT         NOT NULL COMMENT '예약 시 어린이 인원',
+    number_infant  INT         NOT NULL COMMENT '예약 시 영유아 인원',
+    checkin_date   DATE        NOT NULL COMMENT '숙박 시작 날짜',
+    checkout_date  DATE        NOT NULL COMMENT '숙박 종료 날짜',
+    checkin_time   TIME        NOT NULL COMMENT '숙박 시작 시간',
+    checkout_time  TIME        NOT NULL COMMENT '숙박 종료 시간',
+    total_price    INT         NOT NULL COMMENT '예약 시 총 금액',
+    state          VARCHAR(10) NOT NULL COMMENT '예약 상태 (BOOKED, CANCELED, COMPLETED)',
+    FOREIGN KEY (guest_id) REFERENCES member (member_id),
+    FOREIGN KEY (room_id) REFERENCES room (room_id)
 );
 
 DROP TABLE IF EXISTS tag;
@@ -127,7 +133,9 @@ CREATE TABLE tag_room
 (
     tag_room_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'tag_room 테이블의 기본 키',
     tag_id      INT NOT NULL COMMENT 'tag 테이블의 외래 키',
-    room_id     INT NOT NULL COMMENT 'room 테이블의 외래 키'
+    room_id     INT NOT NULL COMMENT 'room 테이블의 외래 키',
+    FOREIGN KEY (tag_id) REFERENCES tag (tag_id),
+    FOREIGN KEY (room_id) REFERENCES room (room_id)
 );
 
 DROP TABLE IF EXISTS wish;
@@ -137,6 +145,7 @@ CREATE TABLE wish
     wish_id   INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'wish 테이블의 기본 키',
     member_id INT NOT NULL COMMENT 'member 테이블의 기본 키',
     room_id   INT NOT NULL COMMENT 'room 테이블의 기본 키',
+    deleted   BOOL DEFAULT FALSE COMMENT '삭제 여부',
     FOREIGN KEY (member_id) REFERENCES member (member_id),
     FOREIGN KEY (room_id) REFERENCES room (room_id)
 );

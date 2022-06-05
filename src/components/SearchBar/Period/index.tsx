@@ -9,8 +9,6 @@ import { getCheckInTemplate, ModalOpenType } from "@utils/calendar";
 
 import * as S from "./style";
 
-// 어디에 모아두는 것이 좋을까
-
 const Period = ({ modalOpen, setModalOpen }: ModalOpenType) => {
   const periodElement = useRef(null);
   const today = useRef(new Date());
@@ -23,8 +21,8 @@ const Period = ({ modalOpen, setModalOpen }: ModalOpenType) => {
   return (
     <>
       <S.Period onClick={handleModal} ref={periodElement}>
-        <TextBox label={`체크인`} placeholder={`날짜 입력`} text={checkIn && getCheckInTemplate(checkIn)} />
-        <TextBox label={`체크아웃`} placeholder={`날짜 입력`} text={checkOut && getCheckInTemplate(checkOut)} />
+        <TextBox label={`체크인`} placeholder={`날짜 입력`} textContent={getCheckInTemplate(checkIn)} />
+        <TextBox label={`체크아웃`} placeholder={`날짜 입력`} textContent={getCheckInTemplate(checkOut)} />
       </S.Period>
       {modalOpen === ModalList.PERIOD && (
         <Modal setModalOpen={setModalOpen} containElement={periodElement}>

@@ -20,7 +20,7 @@ const Personnel = ({ modalOpen, setModalOpen }: ModalOpenType) => {
   return (
     <>
       <S.Personnel onClick={handleModal} ref={personnelElement}>
-        <TextBox label={`인원`} placeholder={`게스트 추가`} text={null} />
+        <TextBox label={`인원`} placeholder={`게스트 추가`} textContent={null} />
         <Icon iconName={X_ICON} iconSize={"base"} />
         <SearchButton />
       </S.Personnel>

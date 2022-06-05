@@ -73,7 +73,11 @@ export const getDirectionValue = (direction: DirectionType) => {
   }
 };
 
-export const getCheckInTemplate = (date: Date | null): string => {
+export const getCheckInTemplate = (date: Date | null): string | null => {
+  if (!date) {
+    return null;
+  }
+
   const month = Number(date?.getMonth()) + 1;
   const year = Number(date?.getDate());
   return `${month}월${year}일`;

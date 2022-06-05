@@ -26,5 +26,6 @@ export const DateItem = styled(DayItem)<{ date: number; isPast: boolean }>`
     isPast &&
     css`
       color: ${({ theme }) => theme.color.gray4};
+      pointer-events: none;
     `}
 `;

@@ -16,8 +16,14 @@ export const TextBoxLabel = styled.div`
   color: ${({ theme }) => theme.color.black};
 `;
 
-export const TextBoxText = styled.div`
+export const TextBoxText = styled.div<{ textContent: string | null }>`
   font-size: ${({ theme }) => theme.fontSize.base};
   color: ${({ theme }) => theme.color.gray2};
-  font-weight: ${({ theme, text }) => (text ? theme.fontWeight.bold : theme.fontWeight.base)};
+
+  ${({ textContent }) =>
+    textContent &&
+    css`
+      color: ${({ theme }) => theme.color.black};
+      font-weight: ${({ theme }) => theme.fontWeight.bold};
+    `};
 `;

@@ -27,7 +27,7 @@ const Price = ({ modalOpen, setModalOpen }: ModalOpenType) => {
     <>
       <S.Price onClick={handleModal} ref={priceElement}>
         {/* <TextBox label={`요금`} placeholders={`금액대 설정`} text={null} /> */}
-        <TextBox label={`요금`} placeholder={`금액대 설정`} text={null} />
+        <TextBox label={`요금`} placeholder={`금액대 설정`} textContent={null} />
         <Icon iconName={X_ICON} iconSize={"base"} />
       </S.Price>
       {modalOpen === ModalList.PRICE && (

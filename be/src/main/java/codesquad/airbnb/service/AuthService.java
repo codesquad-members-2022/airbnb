@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @RequiredArgsConstructor
-public class OAuthService {
+public class AuthService {
 
     private static final String CLIENT_ID = "bc6ce8b1d104602ca988";
     private static final String GITHUB_AUTHORIZATION_SERVER_URL = "https://github.com/login/oauth/access_token";
@@ -45,18 +45,18 @@ public class OAuthService {
         return (OAuthAccessToken) response.getBody();
     }
 
+    private MultiValueMap<String, String> getRequestHeader() {
+        MultiValueMap<String, String> requestHeader = new LinkedMultiValueMap<>();
+        requestHeader.set("Accept", "application/json");
+        return requestHeader;
+    }
+
     private MultiValueMap<String, String> getRequestPayload(String code) {
         MultiValueMap<String, String> requestPayload = new LinkedMultiValueMap<>();
         requestPayload.set("client_id", CLIENT_ID);
         requestPayload.set("client_secret", System.getenv("CLIENT_SECRET"));
         requestPayload.set("code", code);
         return requestPayload;
-    }
-
-    private MultiValueMap<String, String> getRequestHeader() {
-        MultiValueMap<String, String> requestHeader = new LinkedMultiValueMap<>();
-        requestHeader.set("Accept", "application/json");
-        return requestHeader;
     }
 
     private String getUserEmailFromResourceServer(OAuthAccessToken OAuthAccessToken) {
@@ -78,8 +78,8 @@ public class OAuthService {
     }
 
     private void saveUserEmail(String email) {
-        Long userId = memberRepository.findByEmail(email);
-        if (userId == null) {
+        Member member = memberRepository.findByEmail(email);
+        if (member == null) {
             memberRepository.save(new Member(null, email));
         }
     }

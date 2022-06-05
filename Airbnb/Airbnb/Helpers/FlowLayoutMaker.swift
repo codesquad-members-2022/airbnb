@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import HorizonCalendar
 
 enum HomeSection: Int {
     case banner

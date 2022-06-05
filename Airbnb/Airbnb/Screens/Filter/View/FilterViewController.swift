@@ -12,7 +12,6 @@ final class FilterViewController: UIViewController {
     private var filterForm: UICollectionView?
     private var toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 35))
     private var filterViewModel: FilterViewModel?
-    private var containerContentView: [UIView]?
 
     init(filterViewModel: FilterViewModel) {
         self.filterViewModel = filterViewModel
@@ -133,6 +132,12 @@ extension FilterViewController: UICollectionViewDataSource {
         switch sectionType {
         case .container:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContainerCell.id, for: indexPath) as? ContainerCell else {return UICollectionViewCell()}
+
+
+            let calendar = CalendarViewController()
+            self.addChild(calendar)
+            cell.fillContent(view: calendar.view)
+
             return cell
 
         case .filterList:

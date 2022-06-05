@@ -1,4 +1,4 @@
-package codesquad.airbnb.service;
+package codesquad.airbnb.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -8,9 +8,11 @@ import java.util.Date;
 import java.util.Random;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class JwtProvider {
 
     private static final long accessTokenValidityInMilliseconds = 60; // access token 유효시간 : 1분

@@ -25,7 +25,7 @@ const CalendarModal = ({isClicked}) => {
     return (
         <CalendarModalBox isClicked={isClicked}>
             <Calendar
-                date={"2022 05 31"}
+                date={new Date(2022, 5, 31)}
                 calendarWidth={380}
                 dayStyle={dayStyle}
                 dayHoverStyle={dayHoverStyle}

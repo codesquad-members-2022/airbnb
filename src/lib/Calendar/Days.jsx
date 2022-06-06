@@ -1,7 +1,7 @@
 import React from "react";
 import {useContext} from "react";
-import styled, {withTheme} from "styled-components";
-import {CalendarContext} from "./CalendarContext";
+import styled from "styled-components";
+import {CalendarContext} from "../CalendarContext";
 
 const Days = () => {
     const {date, calendarWidth, dayStyle, dayHoverStyle, dayClickHandler, periodStyle} = useContext(CalendarContext);

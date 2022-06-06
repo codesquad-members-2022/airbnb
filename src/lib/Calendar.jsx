@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import {CalendarContext} from "./CalendarContext";
-import Days from "./Days";
-import Month from "./Month";
-import Week from "./Week";
+import Days from "./Calendar/Days";
+import Month from "./Calendar/Month";
+import Week from "./Calendar/Week";
 
 const Calendar = ({date, calendarWidth = 336, dayStyle, dayHoverStyle, dayClickHandler, periodStyle}) => {
     try {
@@ -26,7 +26,7 @@ const Calendar = ({date, calendarWidth = 336, dayStyle, dayHoverStyle, dayClickH
 };
 
 const isValidDate = (strDate) => {
-    return String(new Date(strDate)) === "Invalid Date" ? false : true;
+    return String(strDate) === "Invalid Date" ? false : true;
 };
 
 const CalendarBox = styled.div`

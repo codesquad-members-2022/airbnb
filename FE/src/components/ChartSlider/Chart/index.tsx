@@ -1,3 +1,4 @@
+import * as S from '@components/ChartSlider/Chart/Chart.style';
 import { CHART_TYPE } from '@components/SearchBar/constants';
 import useCanvas from '@lib/hooks/useCanvas';
 
@@ -53,6 +54,12 @@ const Chart = ({ type, rangeData, canvasWidth, canvasHeight }: ChartTypes) => {
     const separation = separationWidth / coordinates.length ** 2;
 
     if (ctx) {
+      ctx.moveTo(0, canvasHeight);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#333';
+      ctx.lineTo(canvasWidth, canvasHeight);
+      ctx.stroke();
+
       const initialX = coordinates[0][0];
       coordinates.forEach(([x, y], i) => {
         const coordX = i ? x - initialX + separation * i : 0;
@@ -69,7 +76,7 @@ const Chart = ({ type, rangeData, canvasWidth, canvasHeight }: ChartTypes) => {
 
   const canvasRef = useCanvas({ canvasWidth, canvasHeight, animate });
 
-  return <canvas ref={canvasRef} />;
+  return <S.Canvas ref={canvasRef} />;
 };
 
 export default Chart;

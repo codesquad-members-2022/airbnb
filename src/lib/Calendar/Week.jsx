@@ -1,7 +1,7 @@
 import React from "react";
 import {useContext} from "react";
 import styled from "styled-components";
-import {CalendarContext} from "./CalendarContext";
+import {CalendarContext} from "../CalendarContext";
 
 const Week = () => {
     const {calendarWidth} = useContext(CalendarContext);

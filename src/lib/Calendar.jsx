@@ -1,16 +1,50 @@
 import React from "react";
 import styled from "styled-components";
 import {CalendarContext} from "./CalendarContext";
-import Days from "./Days";
-import Month from "./Month";
-import Week from "./Week";
+import Days from "./Calendar/Days";
+import Month from "./Calendar/Month";
+import Week from "./Calendar/Week";
+import {isValidDate} from "./util";
 
-const Calendar = ({date, calendarWidth = 336, dayStyle, dayHoverStyle, dayClickHandler, periodStyle}) => {
+const Calendar = ({
+    date = {
+        year: new Date().getFullYear(),
+        month: new Date().getMonth(),
+    },
+    calendarWidth = 336,
+    dateStyle = {},
+    dateHoverStyle = {
+        "border-radius": "50%",
+        border: "1px solid black",
+    },
+    dateClickHandler = (e) => {
+        e.target.style.backgroundColor = "black";
+        e.target.style.borderRadius = "50%";
+        e.target.style.color = "white";
+    },
+    periodStyle = {
+        period: {
+            periodStart: {
+                year: new Date().getFullYear(),
+                month: new Date().getMonth(),
+                day: 1,
+            },
+            periodEnd: {
+                year: new Date().getFullYear(),
+                month: new Date().getMonth(),
+                day: 1,
+            },
+        },
+        style: {
+            backgroundColor: "#e0e0e0",
+            hoverColor: "black",
+        },
+    },
+}) => {
     try {
         if (isValidDate(date)) {
-            date = new Date(date);
             return (
-                <CalendarContext.Provider value={{date, calendarWidth, dayStyle, dayHoverStyle, dayClickHandler, periodStyle}}>
+                <CalendarContext.Provider value={{date, calendarWidth, dateStyle, dateHoverStyle, dateClickHandler, periodStyle}}>
                     <CalendarBox calendarWidth={calendarWidth}>
                         <Month />
                         <Week />
@@ -23,10 +57,6 @@ const Calendar = ({date, calendarWidth = 336, dayStyle, dayHoverStyle, dayClickH
     } catch (e) {
         console.error("Invalid Date");
     }
-};
-
-const isValidDate = (strDate) => {
-    return String(new Date(strDate)) === "Invalid Date" ? false : true;
 };
 
 const CalendarBox = styled.div`

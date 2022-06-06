@@ -12,8 +12,13 @@ public class JwtManager {
 
     private final RedisTemplate<String, String> redisTemplate;
 
-    public void saveRefreshToken(String email, String refreshToken) {
+    public void saveEmailByRefreshToken(String refreshToken, String email) {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-        valueOperations.set(email, refreshToken, Duration.ofDays(1));
+        valueOperations.set(refreshToken, email, Duration.ofMinutes(30));
+    }
+
+    public String getEmailByRefreshToken(String refreshToken) {
+        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+        return valueOperations.get(refreshToken);
     }
 }

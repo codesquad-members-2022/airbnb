@@ -10,17 +10,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TokenService {
 
+    private static final String TOKEN_TYPE = "Bearer ";
     private final JwtProvider jwtProvider;
     private final JwtManager jwtManager;
 
     public LoginResponse createToken(String email) {
         String accessToken = jwtProvider.createAccessToken(email);
         String refreshToken = jwtProvider.createRefreshToken();
-        jwtManager.saveRefreshToken(email, refreshToken);
+        jwtManager.saveEmailByRefreshToken(refreshToken, email);
 
         return LoginResponse.builder()
             .email(email)
-            .tokenType("Bearer")
+            .tokenType(TOKEN_TYPE)
             .accessToken(accessToken)
             .refreshToken(refreshToken)
             .build();

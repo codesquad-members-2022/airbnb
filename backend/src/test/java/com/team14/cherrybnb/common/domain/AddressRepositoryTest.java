@@ -7,6 +7,7 @@ import org.locationtech.jts.geom.Geometry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -36,6 +37,5 @@ class AddressRepositoryTest {
         List<Address> addresses = addressRepository.findAddressWithin(circle);
 
         assertThat(addresses.size()).isEqualTo(52);
-
     }
 }

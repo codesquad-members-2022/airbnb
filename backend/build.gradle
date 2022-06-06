@@ -54,6 +54,8 @@ dependencies {
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
 
+    /* proj4 */
+    implementation 'org.webjars.npm:proj4:2.7.5'
 }
 
 test {

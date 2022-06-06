@@ -10,16 +10,22 @@ export const ModalDispatchContext = React.createContext({
   hideModal: () => {},
 });
 
-export function ModalProvider({ children }: { children: ReactNode }) {
+export function ModalProvider({
+  children,
+}: {
+  children: ReactNode;
+}): JSX.Element {
   const {
     boolState: isShowModal,
     setTrue: showModal,
     setFalse: hideModal,
   } = useBoolean();
 
-  <ModalStateContext.Provider value={{ isShowModal }}>
-    <ModalDispatchContext.Provider value={{ showModal, hideModal }}>
-      {children}
-    </ModalDispatchContext.Provider>
-  </ModalStateContext.Provider>;
+  return (
+    <ModalStateContext.Provider value={{ isShowModal }}>
+      <ModalDispatchContext.Provider value={{ showModal, hideModal }}>
+        {children}
+      </ModalDispatchContext.Provider>
+    </ModalStateContext.Provider>
+  );
 }

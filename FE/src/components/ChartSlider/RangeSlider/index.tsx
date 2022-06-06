@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 
 import * as S from '@components/ChartSlider/RangeSlider/RangeSlider.style';
 import Icon, { ICON_NAME, ICON_SIZE } from '@components/common/Icon';
+import { PriceContext, PriceContextTypes } from '@context/price/Provider';
 
 const MIN_RANGE = 100000;
 const MIN_PRICE = 12000;
@@ -9,8 +10,7 @@ const MAX_PRICE = 1100000;
 
 const RangeSlider = () => {
 
-  const [minPrice, setMinPrice] = useState(MIN_PRICE);
-  const [maxPrice, setMaxPrice] = useState(MAX_PRICE);
+  const { minPrice, setMinPrice, maxPrice, setMaxPrice } = useContext<PriceContextTypes>(PriceContext);
 
   const leftThumbRef = useRef<HTMLButtonElement>(null);
   const rightThumbRef = useRef<HTMLButtonElement>(null);

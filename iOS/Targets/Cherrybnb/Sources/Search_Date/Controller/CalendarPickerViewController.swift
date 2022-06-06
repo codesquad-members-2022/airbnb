@@ -68,7 +68,6 @@ class CalendarPickerViewController: UIViewController {
         calendarPicker.didUpdateMonth = { [weak self] range in
             DispatchQueue.main.async {
                 self?.collectionView.reloadSections(IndexSet(range))
-                
             }
         }
     }

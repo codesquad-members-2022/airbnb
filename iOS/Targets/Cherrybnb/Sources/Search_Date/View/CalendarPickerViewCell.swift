@@ -105,8 +105,8 @@ class CalendarPickerViewCell: UICollectionViewCell {
     }
 
     private func setSubviews() {
-        contentView.addSubview(selectionBackgroundView)
         contentView.addSubview(inBetweenSelectionBackgroundView)
+        contentView.addSubview(selectionBackgroundView)
         contentView.addSubview(numberLabel)
     }
 

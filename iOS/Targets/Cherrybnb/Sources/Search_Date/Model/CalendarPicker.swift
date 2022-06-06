@@ -63,7 +63,8 @@ struct CalendarPicker {
         let selectedDay = getDay(monthSection: newMonthSection, dayItem: newDayItem)
 
         // 전달에 속한 날짜나 이미 지난 날짜는 선택 불가
-        if selectedDay.isWithinMonth || selectedDay.isPast { return }
+        guard selectedDay.isWithinMonth else { return }
+        if selectedDay.isPast { return }
 
         switch daySelection {
         case (nil, nil):
@@ -162,12 +163,12 @@ struct CalendarPicker {
 
         if beginningMonth == endingMonth {
             // 시작과 끝의 먼스가 같다면 시작 날짜부터 끝 날짜까지 바꿔준다.
-            toggleBetweenSelection(monthsIndex: beginningMonth) { beginngDay < $0 && $0 < endingDay }
+            toggleBetweenSelection(monthsIndex: beginningMonth) { beginngDay <= $0 && $0 <= endingDay }
         } else {
             // 시작과 끝의 월이 다르다면, 다음에 대해 isBetweenSelection을 바꿔준다.
 
             // 1) 시작 날짜부터 시작 월의 끝
-            toggleBetweenSelection(monthsIndex: beginningMonth) { $0 > beginngDay }
+            toggleBetweenSelection(monthsIndex: beginningMonth) { $0 >= beginngDay }
 
             // 2) 시작 월과 끝 월 사이의 월 모두
             (beginningMonth+1..<endingMonth).forEach { monthIndex in
@@ -175,7 +176,7 @@ struct CalendarPicker {
             }
 
             // 3) 마지막 월의 시작부터 마지막 날짜
-            toggleBetweenSelection(monthsIndex: endingMonth) { $0 < endingDay }
+            toggleBetweenSelection(monthsIndex: endingMonth) { $0 <= endingDay }
         }
     }
 

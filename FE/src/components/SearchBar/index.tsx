@@ -31,7 +31,7 @@ const SearchBar = ({ size = SEARCH_BAR_SIZE.LARGE }: SearchBarTypes) => {
       {searchBarData && (
         <>
           <PeriodArea size={size} />
-          <PriceArea size={size} price={searchBarData.price} />
+          <PriceArea size={size} />
           <PersonnelArea size={size} personnel={searchBarData.personnel} />
         </>
       )}

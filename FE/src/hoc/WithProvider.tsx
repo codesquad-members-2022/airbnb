@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { PeriodAreaTypes } from '@components/SearchBar/PeriodArea';
+import { PriceAreaTypes } from '@components/SearchBar/PriceArea';
 
 interface WithProviderTypes {
   Component: React.FC<ComponentTypes>;
@@ -11,7 +12,7 @@ interface ProviderTypes {
   children: JSX.Element;
 }
 
-type ComponentTypes = PeriodAreaTypes;
+type ComponentTypes = PriceAreaTypes | PeriodAreaTypes;
 
 const WithProvider = ({ Component, Provider }: WithProviderTypes) => {
   return (props: ComponentTypes) => {

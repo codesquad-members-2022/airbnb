@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-export const ComposedProivider = ({ components, children }) => {
+export const ComposedProvider = ({ components, children }) => {
   return (
     <>
       {components?.reduceRight(

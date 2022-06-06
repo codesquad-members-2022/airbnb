@@ -5,30 +5,23 @@ import X_ICON from "@assets/x-icon.svg";
 import Icon from "@components/common/Icon";
 import Modal from "@components/common/Modal";
 import TextBox from "@components/common/TextBox";
-import { ModalList } from "@constants/calendar";
-import { ModalOpenType } from "@utils/calendar";
 
 import * as S from "./style";
 
-const Personnel = ({ modalOpen, setModalOpen }: ModalOpenType) => {
+export const Personnel = ({ setModalOpen }: { setModalOpen: React.Dispatch<React.SetStateAction<string | null>> }) => {
   const personnelElement = useRef(null);
 
   const handleModal = () => {
-    setModalOpen(ModalList.PERSONNEL);
+    setModalOpen("PERSONNEL");
   };
 
   return (
     <>
       <S.Personnel onClick={handleModal} ref={personnelElement}>
-        <TextBox label={`인원`} placeholder={`게스트 추가`} textContent={null} />
-        <Icon iconName={X_ICON} iconSize={"base"} />
+        <TextBox label="인원" placeholder="게스트 추가" textContent={null} />
+        <Icon data-button="REMOVE" iconName={X_ICON} iconSize="base" />
         <SearchButton />
       </S.Personnel>
-      {modalOpen === 3 && (
-        <Modal setModalOpen={setModalOpen} containElement={personnelElement}>
-          Personnel
-        </Modal>
-      )}
     </>
   );
 };

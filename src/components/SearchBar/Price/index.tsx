@@ -6,8 +6,6 @@ import X_ICON from "@assets/x-icon.svg";
 import Icon from "@components/common/Icon";
 import Modal from "@components/common/Modal";
 import TextBox from "@components/common/TextBox";
-import { ModalList } from "@constants/calendar";
-import { ModalOpenType } from "@utils/calendar";
 
 import * as S from "./style";
 
@@ -16,30 +14,28 @@ interface coordinates {
   y: number;
 }
 
-const Price = ({ modalOpen, setModalOpen }: ModalOpenType) => {
+const Price = ({ setModalOpen }: { setModalOpen: React.Dispatch<React.SetStateAction<string | null>> }) => {
   const priceElement = useRef(null);
 
   const handleModal = () => {
-    setModalOpen(ModalList.PRICE);
+    setModalOpen("PRICE");
+  };
+
+  const onClickHandler = () => {
+    console.log("hi");
   };
 
   return (
     <>
       <S.Price onClick={handleModal} ref={priceElement}>
-        {/* <TextBox label={`요금`} placeholders={`금액대 설정`} text={null} /> */}
-        <TextBox label={`요금`} placeholder={`금액대 설정`} textContent={null} />
-        <Icon iconName={X_ICON} iconSize={"base"} />
+        <TextBox label="요금" placeholder="금액대 설정" textContent={null} />
+        <Icon onClick={onClickHandler} data-button="REMOVE" iconName={X_ICON} iconSize="base" />
       </S.Price>
-      {modalOpen === ModalList.PRICE && (
-        <Modal setModalOpen={setModalOpen} containElement={priceElement}>
-          <PriceRangeGraph />
-        </Modal>
-      )}
     </>
   );
 };
 
-const PriceRangeGraph = () => {
+export const PriceRangeGraph = () => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
   const [average, setAverage] = useState(0);

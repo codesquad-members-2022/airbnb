@@ -4,14 +4,15 @@ import { useEffect, useRef } from "react";
 
 import * as S from "./style";
 
-const Modal = ({ setModalOpen, containElement, children }) => {
+const Modal = ({ setModalOpen, children }) => {
   const modalRef = useRef(null);
   const outsideClickHandler = (e) => {
-    if (containElement.current?.contains(e.target)) {
+    if (e.target.dataset.button === "REMOVE") {
       return;
     }
+
     if (!modalRef.current?.contains(e.target)) {
-      setModalOpen(0);
+      setModalOpen(null);
     }
   };
 

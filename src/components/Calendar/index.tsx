@@ -14,7 +14,9 @@ const initSlideInfo: { translateX: number; direction: DirectionType } = {
   direction: null,
 };
 
-const Calendar = ({ today }: { today: Date }) => {
+const today = new Date();
+
+const Calendar = () => {
   // const { checkIn, checkOut } = useCalendarState();
 
   const todayYear = today.getFullYear();

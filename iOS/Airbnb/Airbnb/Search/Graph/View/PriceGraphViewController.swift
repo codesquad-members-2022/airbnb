@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class PriceGraphViewController: BackgroundViewController, CommonViewControllerProtocol {
+class PriceGraphViewController: CommonTableViewController, CommonViewControllerProtocol {
     
     private let viewPadding: CGFloat = 16
     
@@ -33,9 +33,16 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(tableViewHidden(_:)))
+        
         attribute()
         layout()
         bind()
+    }
+    
+    @objc func tableViewHidden(_ sender: Any) {
+        setTableViewHidden()
     }
     
     func attribute() {
@@ -57,9 +64,9 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
         priceRangeLabel.font = labelFont(17)
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).inset(32)
-            make.leading.equalTo(self.view.safeAreaLayoutGuide).offset(viewPadding)
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(viewPadding)
+            make.top.equalTo(self.contentView.safeAreaLayoutGuide).inset(32)
+            make.leading.equalTo(self.contentView.safeAreaLayoutGuide).offset(viewPadding)
+            make.trailing.equalTo(self.contentView.safeAreaLayoutGuide).inset(viewPadding)
         }
         
         priceRangeLabel.snp.makeConstraints { make in
@@ -75,11 +82,11 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
             make.leading.trailing.equalTo(titleLabel)
         }
         
-        view.addSubview(graph)
+        contentView.addSubview(graph)
         graph.addSubview(lightGrayView)
         graph.addSubview(semanticGrayView)
         
-        view.addSubview(slider)
+        contentView.addSubview(slider)
         
         graph.snp.makeConstraints { make in
             make.top.equalTo(descriptionLabel.snp.bottom).offset(48)
@@ -122,7 +129,7 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
         label.textColor = UIColor.getGrayScale(.Grey1)
         label.textAlignment = .left
         label.adjustsFontSizeToFitWidth = true
-        view.addSubview(label)
+        contentView.addSubview(label)
         return label
     }
     

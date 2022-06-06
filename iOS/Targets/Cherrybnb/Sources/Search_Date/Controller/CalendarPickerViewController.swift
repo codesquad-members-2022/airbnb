@@ -68,6 +68,7 @@ class CalendarPickerViewController: UIViewController {
         calendarPicker.didUpdateMonth = { [weak self] range in
             DispatchQueue.main.async {
                 self?.collectionView.reloadSections(IndexSet(range))
+                
             }
         }
     }
@@ -115,4 +116,12 @@ extension CalendarPickerViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         calendarPicker.select(newMonthSection: indexPath.section, newDayItem: indexPath.item)
     }
+}
+
+extension CalendarPickerViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = Int(collectionView.frame.width / 7)
+        return CGSize(width: width, height: width)
+    }
+    
 }

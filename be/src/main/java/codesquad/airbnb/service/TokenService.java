@@ -16,8 +16,8 @@ public class TokenService {
 
     public LoginResponse createToken(String email) {
         String accessToken = jwtProvider.createAccessToken(email);
-        String refreshToken = jwtProvider.createRefreshToken();
-        jwtManager.saveEmailByRefreshToken(refreshToken, email);
+        String refreshToken = jwtProvider.createRefreshToken(email);
+        jwtManager.saveRefreshTokenByEmail(email, refreshToken);
 
         return LoginResponse.builder()
             .email(email)

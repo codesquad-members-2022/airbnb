@@ -12,14 +12,14 @@ public class JwtManager {
 
     private final RedisTemplate<String, String> redisTemplate;
 
-    public void saveEmailByRefreshToken(String refreshToken, String email) {
+    public void saveRefreshTokenByEmail(String email, String refreshToken) {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-        valueOperations.set(refreshToken, email, Duration.ofMinutes(30));
+        valueOperations.set(email, refreshToken, Duration.ofMinutes(30));
     }
 
-    public String getEmailByRefreshToken(String refreshToken) {
+    public String getRefreshTokenByEmail(String email) {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-        return valueOperations.get(refreshToken);
+        return valueOperations.get(email);
     }
 
     public void removeRefreshToken(String refreshToken) {

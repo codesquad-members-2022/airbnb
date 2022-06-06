@@ -27,6 +27,7 @@ public class OAuthController {
         String email = OAuthService.authorizeForThirdParty(code);
         LoginResponse loginResponse = tokenService.createToken(email);
 
+        response.addHeader("access_token", loginResponse.getAccessToken());
         Cookie cookieWithRefreshToken = createCookieWithRefreshToken(loginResponse.getRefreshToken());
         response.addCookie(cookieWithRefreshToken);
 

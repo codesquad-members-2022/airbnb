@@ -18,15 +18,12 @@ public class JwtProvider {
     private static final long accessTokenValidityInMilliseconds = 60 * 1000; // access token 유효시간 : 2분
     private static final long refreshTokenValidityInMilliseconds = 60 * 30 * 1000; // refresh token 유효시간 : 30분
 
-    public String createAccessToken(String payload) {
-        return createToken(payload, accessTokenValidityInMilliseconds);
+    public String createAccessToken(String email) {
+        return createToken(email, accessTokenValidityInMilliseconds);
     }
 
-    public String createRefreshToken() {
-        byte[] array = new byte[7];
-        new Random().nextBytes(array);
-        String valueForRefreshToken = new String(array, StandardCharsets.UTF_8);
-        return createToken(valueForRefreshToken, refreshTokenValidityInMilliseconds);
+    public String createRefreshToken(String email) {
+        return createToken(email, refreshTokenValidityInMilliseconds);
     }
 
     private String createToken(String payload, long expireTime) {

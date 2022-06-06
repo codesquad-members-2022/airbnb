@@ -38,12 +38,13 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         String refreshToken = JwtUtil.getRefreshToken(request);
+        String email = jwtValidator.getPayload(refreshToken);
 
         if (!jwtValidator.validateExpirationOfToken(refreshToken)) {
             throw new NoSuchElementException("refresh 토큰의 만료기한이 지났습니다. 다시 로그인 해주세요.");
         }
 
-        issueRenewedAccessToken(response, refreshToken);
+        issueRenewedAccessToken(response, email);
 
         return false;
     }
@@ -53,10 +54,10 @@ public class AuthInterceptor implements HandlerInterceptor {
         return httpMethod.equals("POST");
     }
 
-    private void issueRenewedAccessToken(HttpServletResponse response, String refreshToken) throws IOException {
-        String email = jwtManager.getEmailByRefreshToken(refreshToken);
+    private void issueRenewedAccessToken(HttpServletResponse response, String email) throws IOException {
+        String refreshToken = jwtManager.getRefreshTokenByEmail(email);
 
-        if (email == null) {
+        if (refreshToken == null) {
             throw new NoSuchElementException("refresh 토큰이 존재하지 않습니다.");
         }
 
@@ -68,14 +69,15 @@ public class AuthInterceptor implements HandlerInterceptor {
             .refreshToken(refreshToken)
             .build();
 
-        setResponseHeader(response);
+        setResponseHeader(response, renewedAccessToken);
         setResponseBody(response, loginResponse);
     }
 
-    private void setResponseHeader(HttpServletResponse response) {
+    private void setResponseHeader(HttpServletResponse response, String renewedAccessToken) {
         response.setStatus(HttpStatus.OK.value());
         response.setContentType("application/json");
         response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+        response.addHeader("access_token", renewedAccessToken);
     }
 
     private void setResponseBody(HttpServletResponse response, LoginResponse responseMessage) throws IOException {

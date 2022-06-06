@@ -67,12 +67,11 @@ public class AccommodationService {
 
     @Transactional
     public void reserveAccommodation(ReservationForm reservationForm) {
-
         Long memberId = reservationForm.getMemberId();
         Long accommodationId = reservationForm.getAccommodationId();
+        Integer personnel = reservationForm.getPersonnel();
         LocalDate checkInDate = reservationForm.getCheckInDate();
         LocalDate checkOutDate = reservationForm.getCheckOutDate();
-        Integer personnel = reservationForm.getPersonnel();
 
         Member member = memberRepository.findById(memberId).orElseThrow(() -> {
             throw new IllegalStateException("존재하지 않는 회원입니다.");
@@ -84,14 +83,10 @@ public class AccommodationService {
 
         checkAvailabilityOfReservation(accommodationId, checkInDate, checkOutDate);
 
-        ReservationPrice reservationPrice = ReservationPrice.createReservationPrice(
-            reservationForm.getAccommodationCost(), reservationForm.getDiscountAmount(),
-            reservationForm.getCleaningFee(), reservationForm.getServiceFee(),
-            reservationForm.getTax(), reservationForm.getTotalPrice()
-        );
+        ReservationPrice reservationPrice = getReservationPrice(reservationForm);
 
-        Reservation reservation = Reservation.createReservation(member, accommodation,
-            reservationPrice, personnel, checkInDate, checkOutDate);
+        Reservation reservation = Reservation.createReservation(member, accommodation, reservationPrice,
+            personnel, checkInDate, checkOutDate);
 
         reservationRepository.save(reservation);
     }
@@ -106,5 +101,13 @@ public class AccommodationService {
         for (Schedule schedule : schedules) {
             schedule.removeVacantRoomQuantity();
         }
+    }
+
+    private ReservationPrice getReservationPrice(ReservationForm reservationForm) {
+        return ReservationPrice.createReservationPrice(
+            reservationForm.getAccommodationCost(), reservationForm.getDiscountAmount(),
+            reservationForm.getCleaningFee(), reservationForm.getServiceFee(),
+            reservationForm.getTax(), reservationForm.getTotalPrice()
+        );
     }
 }

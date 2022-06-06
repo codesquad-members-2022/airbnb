@@ -1,35 +1,40 @@
 package kr.codesquad.airbnb.repository;
 
-import kr.codesquad.airbnb.dto.RoomPriceStatistic;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import kr.codesquad.airbnb.domain.Room;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import javax.persistence.EntityManager;
 import java.time.LocalDate;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.List;
 
 @DataJpaTest
 class RoomRepositoryTest {
 
     @Autowired
-    private RoomRepository roomRepository;
+    private EntityManager em;
+    private RoomQueryRepository roomQueryRepository;
+
+    @BeforeEach
+    public void init() {
+        roomQueryRepository = new RoomQueryRepository(new JPAQueryFactory(em));
+    }
 
     @Test
-    @DisplayName("통계 조회가 제대로 이루어지는 지 확인")
-    void findStatisticOfRoomPrice_test() {
+    @DisplayName("예약 가능한 숙소 조회")
+    void findPossibleBookingRooms_test() {
         //given
         LocalDate checkIn = LocalDate.now();
         LocalDate checkOut = LocalDate.now().plusDays(1L);
 
         //when
-        RoomPriceStatistic statisticOfRoomPrice = roomRepository.findStatisticOfRoomPrice(checkIn, checkOut);
+        List<Room> possibleBookingRooms = roomQueryRepository.findPossibleBookingRooms(checkIn, checkOut);
 
         //then
-        assertThat(statisticOfRoomPrice.getMinPricePerNight()).isNotNull();
-        assertThat(statisticOfRoomPrice.getMaxPricePerNight()).isNotNull();
-        assertThat(statisticOfRoomPrice.getAvgPricePerNight()).isNotNull();
-        assertThat(statisticOfRoomPrice.getCountOfCategorizedPricePerNight().size()).isNotEqualTo(0);
+
     }
 }

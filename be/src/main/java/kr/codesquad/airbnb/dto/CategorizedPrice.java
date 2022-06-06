@@ -3,15 +3,26 @@ package kr.codesquad.airbnb.dto;
 import lombok.Getter;
 
 @Getter
-public class CategorizedPrice {
+public class CategorizedPrice implements Comparable<CategorizedPrice> {
 
-    private Integer min;
-    private Integer max;
+    public static final int RANGE_OF_PRICE = 10_000;
+
+    private Integer tag;
+    private Integer endOfRange;
     private Integer count;
 
-    public CategorizedPrice(RangeOfPrice rangeOfPrice, Integer count) {
-        this.min = rangeOfPrice.getMin();
-        this.max = rangeOfPrice.getMax();
-        this.count = count;
+    public CategorizedPrice(int priceTag) {
+        this.tag = priceTag;
+        this.endOfRange = priceTag + RANGE_OF_PRICE - 1;
+        this.count = 1;
+    }
+
+    public void addRoomCount() {
+        this.count++;
+    }
+
+    @Override
+    public int compareTo(CategorizedPrice other) {
+        return tag.compareTo(other.tag);
     }
 }

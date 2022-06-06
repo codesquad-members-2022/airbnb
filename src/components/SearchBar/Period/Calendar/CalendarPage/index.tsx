@@ -1,4 +1,4 @@
-import CalendarDate from "@components/Calendar/CalendarDate";
+import CalendarDate from "@components/SearchBar/Period/Calendar/CalendarDate";
 import { DAY_OF_WEEK } from "@constants/calendar";
 import { getCalendarArray } from "@utils/calendar";
 

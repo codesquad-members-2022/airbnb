@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 
-import Calendar from "@components/Calendar";
 import Modal from "@components/common/Modal";
+import Calendar from "@components/SearchBar/Period/Calendar";
 import useModal from "@hooks/useModal";
 
 import Period from "./Period";

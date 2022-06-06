@@ -1,16 +1,17 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import NEXT_BUTTON from "@assets/nextButton.svg";
 import PREV_BUTTON from "@assets/prevButton.svg";
-import CalendarPage from "@components/Calendar/CalendarPage";
 import Icon from "@components/common/Icon";
+import CalendarPage from "@components/SearchBar/Period/Calendar/CalendarPage";
+import { CALENDAR_PAGE, HALF_MOVE_POINT } from "@constants/calendar";
 import { useCalendarState } from "@contexts/CalendarProvider";
 import { DirectionType, getDirectionValue } from "@utils/calendar";
 
 import * as S from "./style";
 
 const initSlideInfo: { translateX: number; direction: DirectionType } = {
-  translateX: -50,
+  translateX: -HALF_MOVE_POINT,
   direction: null,
 };
 
@@ -45,20 +46,20 @@ const Calendar = () => {
   );
 
   const getCalendarPageArr = useCallback(
-    (pageLength: number) =>
-      Array.from({ length: pageLength + 2 }, (_, i) => getTodayDatePassByMonth(pageIndex + i - 1)),
+    (CALENDAR_PAGE: number) =>
+      Array.from({ length: CALENDAR_PAGE + 2 }, (_, i) => getTodayDatePassByMonth(pageIndex + i - 1)),
     [getTodayDatePassByMonth, pageIndex],
   );
 
   return (
     <S.Calendar>
-      <Icon onClick={() => handleMoveCalendar(50, "FORWARD")} iconName={PREV_BUTTON} iconSize="small" />
+      <Icon onClick={() => handleMoveCalendar(HALF_MOVE_POINT, "FORWARD")} iconName={PREV_BUTTON} iconSize="small" />
       <S.SlideList translateX={slideInfo.translateX} direction={slideInfo.direction} onTransitionEnd={handleMoveEnd}>
-        {getCalendarPageArr(2).map((currDate) => (
+        {getCalendarPageArr(CALENDAR_PAGE).map((currDate) => (
           <CalendarPage key={currDate.getTime()} currDate={currDate} />
         ))}
       </S.SlideList>
-      <Icon onClick={() => handleMoveCalendar(-50, "BACKWARD")} iconName={NEXT_BUTTON} iconSize="small" />
+      <Icon onClick={() => handleMoveCalendar(-HALF_MOVE_POINT, "BACKWARD")} iconName={NEXT_BUTTON} iconSize="small" />
     </S.Calendar>
   );
 };

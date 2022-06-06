@@ -1,7 +1,6 @@
 import useCallback, { useRef } from "react";
 
 import X_ICON from "@assets/x-icon.svg";
-import Calendar from "@components/Calendar";
 import Icon from "@components/common/Icon";
 import Modal from "@components/common/Modal";
 import TextBox from "@components/common/TextBox";

@@ -7,7 +7,7 @@ const Home = () => {
     return (
         <>
             <Header />
-            <SearchBar searchBarState={size.MAXI} />;
+            <SearchBar searchBarState={size.MAXI} />
         </>
     );
 };

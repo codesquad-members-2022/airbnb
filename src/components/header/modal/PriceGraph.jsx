@@ -1,17 +1,8 @@
-import React, {useState, useEffect, useRef} from "react";
-import { fetchData } from "../../../helper/util";
+import React, {useEffect, useRef} from "react";
 
-const PriceGraph = () => {
+const PriceGraph = ({priceData}) => {
     const graphRef = useRef(null);
-    const [priceData, setPriceData] = useState(null);
 
-    useEffect(() => {
-        const getPriceData = async () => {
-            const result = await fetchData("http://localhost:3000/price");
-            setPriceData(result);
-        };
-        getPriceData();
-    }, []);
     useEffect(() => {
         const graph = graphRef.current;
         graph.width = 730;
@@ -30,8 +21,8 @@ const drawGraph = ({context, width, bottom, unit, priceData}) => {
     const unitOfWidth = Math.floor(width / unit);
     let height = bottom;
 
-    const minPrice = Math.min(...priceData.map((data) => data.price));
-    const maxPrice = Math.max(...priceData.map((data) => data.price));
+    const minPrice = Math.min(...priceData);
+    const maxPrice = Math.max(...priceData);
     const unitOfPrice = (maxPrice - minPrice) / unit;
 
     let range = {min: 0, max: minPrice};
@@ -60,7 +51,7 @@ const drawGraph = ({context, width, bottom, unit, priceData}) => {
 };
 
 const getCount = (range, priceData, bottom) => {
-    let count = priceData.filter((data) => range.min < data.price && data.price <= range.max).length;
+    let count = priceData.filter((price) => range.min < price && price <= range.max).length;
     count *= 4;
     if (count > bottom) {
         count = bottom;

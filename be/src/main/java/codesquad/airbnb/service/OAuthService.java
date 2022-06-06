@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class OAuthService {
 
     private static final String CLIENT_ID = "bc6ce8b1d104602ca988";
     private static final String GITHUB_AUTHORIZATION_SERVER_URL = "https://github.com/login/oauth/access_token";

@@ -4,6 +4,7 @@ import codesquad.airbnb.dto.LoginResponse;
 import codesquad.airbnb.jwt.JwtManager;
 import codesquad.airbnb.jwt.JwtProvider;
 import codesquad.airbnb.service.AuthService;
+import codesquad.airbnb.service.TokenService;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,25 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
-    private final JwtProvider jwtProvider;
-    private final JwtManager jwtManager;
+    private final TokenService tokenService;
 
     @GetMapping("/api/github-login")
     public ResponseEntity<LoginResponse> login(HttpServletResponse response, @RequestParam String code) {
         String email = authService.authorizeForThirdParty(code);
+        LoginResponse loginResponse = tokenService.createToken(email);
 
-        String accessToken = jwtProvider.createAccessToken(email);
-        String refreshToken = jwtProvider.createRefreshToken();
-        jwtManager.saveRefreshToken(email, refreshToken);
-
-        response.addCookie(createCookieWithRefreshToken(refreshToken));
-
-        LoginResponse loginResponse = LoginResponse.builder()
-            .email(email)
-            .tokenType("Bearer")
-            .accessToken(accessToken)
-            .refreshToken(refreshToken)
-            .build();
+        response.addCookie(createCookieWithRefreshToken(loginResponse.getRefreshToken()));
 
         return new ResponseEntity<>(loginResponse, HttpStatus.OK);
     }

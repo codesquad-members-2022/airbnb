@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class JwtProvider {
 
-    private static final long accessTokenValidityInMilliseconds = 60; // access token 유효시간 : 1분
-    private static final long refreshTokenValidityInMilliseconds = 60 * 30; // refresh token 유효시간 : 30분
+    private static final long accessTokenValidityInMilliseconds = 60 * 1000; // access token 유효시간 : 2분
+    private static final long refreshTokenValidityInMilliseconds = 60 * 30 * 1000; // refresh token 유효시간 : 30분
 
     public String createAccessToken(String payload) {
         return createToken(payload, accessTokenValidityInMilliseconds);
@@ -31,7 +31,7 @@ public class JwtProvider {
 
     private String createToken(String payload, long expireTime) {
         if (expireTime <= 0) {
-            throw new RuntimeException("토큰의 만료시간은 0 보다 커야 합니다.");
+            throw new IllegalArgumentException("토큰의 만료시간은 0 보다 커야 합니다.");
         }
 
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;

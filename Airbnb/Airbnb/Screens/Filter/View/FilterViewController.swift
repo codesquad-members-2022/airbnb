@@ -133,8 +133,6 @@ extension FilterViewController: UICollectionViewDataSource {
         case .container:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContainerCell.id, for: indexPath) as? ContainerCell else {return UICollectionViewCell()}
 
-//            let calendar = CalendarViewController(monthsLayout: .vertical(options: .init(pinDaysOfWeekToTop: true, alwaysShowCompleteBoundaryMonths: true)))
-
             let calendar = CalendarViewController()
             self.addChild(calendar)
 

@@ -39,6 +39,8 @@ final class CalendarViewController: UIViewController {
     private func manageDaySelection() {
         calendarView.daySelectionHandler = { [weak self] day in
             guard let self = self else { return }
+            guard !self.isDayDisabled(day) else { return }
+
             switch self.calendarSelection {
             case .singleDay(let selectedDay):
                 if day > selectedDay {
@@ -73,39 +75,47 @@ final class CalendarViewController: UIViewController {
         return CalendarViewContent(
             calendar: calendar,
             visibleDateRange: startDate...endDate,
-            monthsLayout: .vertical(options: VerticalMonthsLayoutOptions()))
+            monthsLayout: .vertical(options: VerticalMonthsLayoutOptions(pinDaysOfWeekToTop: true, alwaysShowCompleteBoundaryMonths: true)))
 
         .interMonthSpacing(24)
         .verticalDayMargin(8)
         .horizontalDayMargin(8)
 
         .dayItemProvider { [calendar, dayDateFormatter] day in
-            var invariantViewProperties = DayView.InvariantViewProperties.baseInteractive
-
-            let isSelectedStyle: Bool
-
-            switch calendarSelection {
-            case .singleDay(let selectedDay):
-                isSelectedStyle = day == selectedDay
-            case .dayRange(let selectedDayRange):
-                isSelectedStyle = day == selectedDayRange.lowerBound || day == selectedDayRange.upperBound
-            case .none:
-                isSelectedStyle = false
-            }
-
-            if isSelectedStyle {
-                invariantViewProperties.backgroundShapeDrawingConfig.fillColor = .gray1 ?? .black
-                invariantViewProperties.textColor = .white
-            }
 
             let date = calendar.date(from: day.components)
+            if self.isDayDisabled(day) {
+                var InvariantViewProperties = DayView.InvariantViewProperties.baseNonInteractive
+                InvariantViewProperties.textColor = .gray4 ?? .darkGray
+                return CalendarItemModel<DayView>(
+                    invariantViewProperties: InvariantViewProperties,
+                    viewModel: .init(
+                        dayText: "\(day.day)",
+                        accessibilityLabel: date.map { dayDateFormatter.string(from: $0) },
+                        accessibilityHint: nil))
+            } else {
+                var invariantViewProperties = DayView.InvariantViewProperties.baseInteractive
+                let isSelectedStyle: Bool
+                switch calendarSelection {
+                case .singleDay(let selectedDay):
+                    isSelectedStyle = day == selectedDay
+                case .dayRange(let selectedDayRange):
+                    isSelectedStyle = day == selectedDayRange.lowerBound || day == selectedDayRange.upperBound
+                case .none:
+                    isSelectedStyle = false
+                }
 
-            return CalendarItemModel<DayView>(
-                invariantViewProperties: invariantViewProperties,
-                viewModel: .init(
-                    dayText: "\(day.day)",
-                    accessibilityLabel: date.map { dayDateFormatter.string(from: $0) },
-                    accessibilityHint: nil))
+                if isSelectedStyle {
+                    invariantViewProperties.backgroundShapeDrawingConfig.fillColor = .gray1 ?? .black
+                    invariantViewProperties.textColor = .white
+                }
+                return CalendarItemModel<DayView>(
+                    invariantViewProperties: invariantViewProperties,
+                    viewModel: .init(
+                        dayText: "\(day.day)",
+                        accessibilityLabel: date.map { dayDateFormatter.string(from: $0) },
+                        accessibilityHint: nil))
+            }
         }
 
         .dayRangeItemProvider(for: dateRanges) { dayRangeLayoutContext in
@@ -113,6 +123,15 @@ final class CalendarViewController: UIViewController {
                 invariantViewProperties: .init(),
                 viewModel: .init(
                     framesOfDaysToHighlight: dayRangeLayoutContext.daysAndFrames.map { $0.frame }))
+        }
+    }
+
+    private func isDayDisabled(_ day: Day) -> Bool {
+        guard let date = calendar.date(from: day.components) else {return true}
+        if date < Date() {
+            return true
+        } else {
+            return false
         }
     }
 }

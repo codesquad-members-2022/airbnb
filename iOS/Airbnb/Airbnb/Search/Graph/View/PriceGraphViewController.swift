@@ -33,16 +33,9 @@ class PriceGraphViewController: CommonTableViewController, CommonViewControllerP
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(tableViewHidden(_:)))
-        
         attribute()
         layout()
         bind()
-    }
-    
-    @objc func tableViewHidden(_ sender: Any) {
-        setTableViewHidden()
     }
     
     func attribute() {

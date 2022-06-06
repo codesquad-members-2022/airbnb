@@ -93,6 +93,15 @@ export interface SelectItemProps {
   anchorEl?: null | HTMLDivElement | (EventTarget & HTMLElement);
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   onClose: () => void;
+  stateData?: {
+    state: RangeType;
+    setState: React.Dispatch<React.SetStateAction<RangeType>>;
+  };
 }
 
 export type AnchorEl = null | HTMLDivElement | (EventTarget & HTMLElement);
+
+interface RangeType {
+  min: number;
+  max: number;
+}

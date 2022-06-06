@@ -3,7 +3,8 @@ import { useContext } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 
-import { Link, RouterContext } from "router/router";
+import RouterContext from "router/Contexts";
+import { pages } from "router/pages";
 import theme from "styles/theme";
 
 const App = (): JSX.Element => {
@@ -13,8 +14,7 @@ const App = (): JSX.Element => {
     <div className="App">
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        {page}
-        <Link to="searchResult">hi</Link>
+        {pages[page]}
       </ThemeProvider>
     </div>
   );

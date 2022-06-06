@@ -71,6 +71,10 @@ const theme = createTheme({
         height: `76px`,
         padding: `16px 16px 16px 40px !important`,
       },
+      priceChart: {
+        width: 365,
+        height: 100,
+      },
     },
   },
   style: {
@@ -201,6 +205,10 @@ declare module "@mui/material/styles" {
           height: string;
           padding: string;
         };
+        priceChart: {
+          width: number;
+          height: number;
+        };
       };
     };
     style: {
@@ -249,6 +257,10 @@ declare module "@mui/material/styles" {
           maxWidth?: string;
           height?: string;
           padding?: string;
+        };
+        priceChart?: {
+          width?: number;
+          height?: number;
         };
       };
     };

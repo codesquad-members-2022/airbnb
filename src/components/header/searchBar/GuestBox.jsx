@@ -1,6 +1,6 @@
 import React from "react";
 import CylindricalBox from "./CylindricalBox";
-import {useOptionContext} from "../../../OptionProvider";
+import {useOptionContext} from "../../../contexts/OptionProvider";
 
 const GuestBox = () => {
     const {guestCount} = useOptionContext();

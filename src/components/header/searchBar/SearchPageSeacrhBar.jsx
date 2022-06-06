@@ -7,7 +7,7 @@ import Boundary from "../../Boundary";
 import CalendarModal from "../modal/CalendarModal";
 import PriceModal from "../modal/PriceModal";
 import GuestModal from "../modal/GuestModal";
-import {useSearchBarClickedTabContext} from "../../../SearchBarClickedTabProvider";
+import {useSearchBarClickedTabContext} from "../../../contexts/SearchBarClickedTabProvider";
 
 const SearchPageSearchBar = () => {
     const {searchBarClickedTab} = useSearchBarClickedTabContext();

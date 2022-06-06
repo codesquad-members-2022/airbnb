@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {ReactComponent as CrossIcon} from "../../../assets/crossIcon.svg";
 import {ReactComponent as SearchIcon} from "../../../assets/searchIcon.svg";
 import {Link} from "react-router-dom";
-import {useSearchBarClickedTabContext} from "../../../SearchBarClickedTabProvider";
+import {useSearchBarClickedTabContext} from "../../../contexts/SearchBarClickedTabProvider";
 
 const CylindricalBox = ({title, placeHolder, style, partId, hasSearchButton, description}) => {
     const {searchBarClickedTab, setSearchBarClickedTab} = useSearchBarClickedTabContext();

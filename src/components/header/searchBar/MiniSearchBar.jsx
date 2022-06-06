@@ -3,14 +3,14 @@ import Boundary from "../../Boundary";
 import styled from "styled-components";
 import {CircleSearchButton} from "../../header/searchBar/CylindricalBox";
 import {ReactComponent as SearchIcon} from "../../../assets/searchIcon.svg";
-import {useClickedTabContext} from "../../../ClickedTabProvider";
+import {useSearchBarClickedTabContext} from "../../../SearchBarClickedTabProvider";
 
 const MiniSearchBar = ({setClickedState}) => {
-    const {setClickedTab} = useClickedTabContext();
+    const {setSearchBarClickedTab} = useSearchBarClickedTabContext();
     const changeClickedPart = (event, tabName) => {
         event.stopPropagation();
         setClickedState(true);
-        setClickedTab(tabName);
+        setSearchBarClickedTab(tabName);
     };
 
     return (

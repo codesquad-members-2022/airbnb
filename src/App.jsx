@@ -4,13 +4,13 @@ import theme from "./theme";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
-import ClickedTabProvider from "./ClickedTabProvider";
+import SearchBarClickedTabProvider from "./SearchBarClickedTabProvider";
 import OptionProvider from "./OptionProvider";
 
 const App = () => {
     return (
         <ThemeProvider theme={theme}>
-            <ClickedTabProvider>
+            <SearchBarClickedTabProvider>
                 <OptionProvider>
                     <BrowserRouter>
                         <Routes>
@@ -19,7 +19,7 @@ const App = () => {
                         </Routes>
                     </BrowserRouter>
                 </OptionProvider>
-            </ClickedTabProvider>
+            </SearchBarClickedTabProvider>
         </ThemeProvider>
     );
 };

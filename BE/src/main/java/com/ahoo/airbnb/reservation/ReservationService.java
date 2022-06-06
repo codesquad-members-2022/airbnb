@@ -4,7 +4,6 @@ import com.ahoo.airbnb.entity.Room;
 import com.ahoo.airbnb.exception.ExceptionMessage;
 import com.ahoo.airbnb.reservation.chargepolicy.ChargePolicyType;
 import com.ahoo.airbnb.reservation.dtos.ChargesResponse;
-import com.ahoo.airbnb.reservation.dtos.RoomChargeRequest;
 import com.ahoo.airbnb.reservation.dtos.RoomChargeResponse;
 import com.ahoo.airbnb.room.RoomRepository;
 import com.ahoo.airbnb.utils.DateUtils;
@@ -20,17 +19,11 @@ public class ReservationService {
 
     private final RoomRepository roomRepository;
 
-    public RoomChargeResponse calculateRoomCharge(Long roomId, RoomChargeRequest roomChargeRequest) {
+    public RoomChargeResponse calculateRoomCharge(Long roomId, LocalDateTime checkIn, LocalDateTime checkOut, Integer headcount) {
         Room room =
             roomRepository.findById(roomId).orElseThrow(() -> new NoSuchElementException(ExceptionMessage.NO_ROOM_ID));
         List<ChargePolicyType> roomChargePolicies =
             roomRepository.findActiveChargePolicyTypeById(roomId);
-
-        LocalDateTime checkIn =
-            DateUtils.stringToLocalDateTime(roomChargeRequest.getCheckInDate());
-        LocalDateTime checkOut =
-            DateUtils.stringToLocalDateTime(roomChargeRequest.getCheckOutDate());
-        int headcount = roomChargeRequest.getHeadcount();
 
         ChargesResponse charges = getChargesResponse(room, roomChargePolicies, checkIn, checkOut, headcount);
         int totalCharge = calculateTotalCharge(charges);

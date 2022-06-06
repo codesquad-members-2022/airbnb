@@ -25,20 +25,11 @@ const Calendar = ({
     dateClickHandler,
     periodStyle = {
         period: {
-            periodStart: {
-                year: new Date().getFullYear(),
-                month: new Date().getMonth(),
-                date: 2,
-            },
-            periodEnd: {
-                year: new Date().getFullYear(),
-                month: new Date().getMonth(),
-                date: 1,
-            },
+            periodStart: null,
+            periodEnd: null,
         },
         style: {
-            backgroundColor: "#e0e0e0",
-            hoverColor: "black",
+            backgroundColor: "#F5F5F7",
         },
     },
 }) => {

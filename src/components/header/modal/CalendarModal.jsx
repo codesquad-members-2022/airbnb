@@ -1,11 +1,15 @@
-import React, {useState} from "react";
+import React from "react";
 import Modal from "./Modal";
 import styled from "styled-components";
 import Calendar from "../../../lib/Calendar";
+import {usePeriodContext} from "../../../contexts/PeriodProvider";
 
 const CalendarModal = ({isClicked}) => {
-    const [firstClickedDate, setFirstClickedDate] = useState(null);
-    const [secondClickedDate, setSecondClickedDate] = useState(null);
+    const {firstClickedDate, setFirstClickedDate, secondClickedDate, setSecondClickedDate} = usePeriodContext();
+    const hoverDateStyle = {
+        "border-radius": "50%",
+        border: "1px solid black",
+    };
     const periodStyle = {
         period: {
             periodStart: firstClickedDate,
@@ -13,7 +17,6 @@ const CalendarModal = ({isClicked}) => {
         },
         style: {
             backgroundColor: "#F5F5F7",
-            hoverColor: "black",
         },
     };
     const dateClickHandler = (e) => {
@@ -40,8 +43,8 @@ const CalendarModal = ({isClicked}) => {
     };
     return (
         <CalendarModalBox isClicked={isClicked}>
-            <Calendar dateClickHandler={dateClickHandler} periodStyle={periodStyle} />
-            <Calendar date={{year: 2022, month: 6}} dateClickHandler={dateClickHandler} periodStyle={periodStyle} />
+            <Calendar date={{year: 2022, month: 5}} dateClickHandler={dateClickHandler} hoverDateStyle={hoverDateStyle} periodStyle={periodStyle} />
+            <Calendar date={{year: 2022, month: 6}} dateClickHandler={dateClickHandler} hoverDateStyle={hoverDateStyle} periodStyle={periodStyle} />
         </CalendarModalBox>
     );
 };

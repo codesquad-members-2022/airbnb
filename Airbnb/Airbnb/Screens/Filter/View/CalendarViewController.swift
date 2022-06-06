@@ -22,6 +22,7 @@ final class CalendarViewController: UIViewController {
             locale: calendar.locale ?? Locale.current)
         return dateFormatter
     }()
+    var periodSelectionHandler: ((Period?) -> Void)?
 
     private enum CalendarSelection {
         case singleDay(Day)
@@ -44,7 +45,10 @@ final class CalendarViewController: UIViewController {
             switch self.calendarSelection {
             case .singleDay(let selectedDay):
                 if day > selectedDay {
+                    guard let startDate = self.calendar.date(from: selectedDay.components), let endDate = self.calendar.date(from: day.components) else {return}
                     self.calendarSelection = .dayRange(selectedDay...day)
+                    let selectedPeriod = Period(start: startDate, end: endDate)
+                    self.periodSelectionHandler?(selectedPeriod)
                 } else {
                     self.calendarSelection = .singleDay(day)
                 }

@@ -18,7 +18,7 @@ struct FilterListCellViewModel {
 
     init(model: Period) {
         fieldTitle = FilterFields.period.description
-        fieldValue = "\(model.start) - \(model.end)"
+        fieldValue = "\(CustomDateFormatter.PeriodFieldFormatter.string(from: model.start)) - \(CustomDateFormatter.PeriodFieldFormatter.string(from: model.end))"
     }
 
     init(model: PriceRange) {

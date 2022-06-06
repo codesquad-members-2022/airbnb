@@ -8,13 +8,15 @@
 import Foundation
 
 final class FilterViewModel {
-
+    struct ToolbarStatus {
+        var isfilled: Bool
+    }
     var location = Observable<Location?>(nil)
     var period =  Observable<Period?>(nil)
     var price =  Observable<PriceRange?>(nil)
     var occupants = Observable<Occupants?>(nil)
-
     var listCellViewModel: [FilterFields: FilterListCellViewModel] = [:]
+    var toolBar = Observable<ToolbarStatus>(ToolbarStatus(isfilled: false))
 
     init() {
         for field in FilterFields.allCases {

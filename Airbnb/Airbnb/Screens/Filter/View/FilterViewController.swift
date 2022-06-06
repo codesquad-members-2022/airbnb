@@ -30,6 +30,7 @@ final class FilterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDisplay()
+        configureChildViewControllers()
         configureConstraints()
     }
 
@@ -38,6 +39,23 @@ final class FilterViewController: UIViewController {
         setFilterForm()
         setToolBar()
         setDataBinding()
+    }
+
+    private func configureChildViewControllers() {
+        let calendar = CalendarViewController()
+        let price = UIViewController()
+        price.view.backgroundColor = .darkGray
+        let occupants = UIViewController()
+        occupants.view.backgroundColor = .blue
+        [calendar, price, occupants].forEach({addChild($0)})
+
+        calendar.periodSelectionHandler = {[weak self] period in
+            guard let self = self else {return}
+            self.filterViewModel?.period.value = period
+            if self.isFilled(field: .period) {
+                self.filterViewModel?.toolBar.value.isfilled = true
+            }
+        }
     }
 
     private func setViewController() {
@@ -65,6 +83,7 @@ final class FilterViewController: UIViewController {
         fixedSpace.width = 16
         let skip = UIBarButtonItem(title: "건너뛰기", image: nil, primaryAction: nil, menu: nil)
         let next = UIBarButtonItem(title: "다음", image: nil, primaryAction: nil, menu: nil)
+        next.isEnabled = false
         toolbar.setItems([fixedSpace, skip, flexibleSpace, next, fixedSpace], animated: false)
     }
 
@@ -92,26 +111,46 @@ final class FilterViewController: UIViewController {
             filterViewModel.update(type: .location, viewModel: viewModel)
             filterForm.reloadData()
         })
+
         filterViewModel.period.bind(listener: { model in
             guard let model = model else { return }
             let viewModel = FilterListCellViewModel(model: model)
            filterViewModel.update(type: .period, viewModel: viewModel)
            filterForm.reloadData()
         })
+
         filterViewModel.price.bind(listener: { model in
             guard let model = model else { return }
             let viewModel = FilterListCellViewModel(model: model)
             filterViewModel.update(type: .price, viewModel: viewModel)
             filterForm.reloadData()
         })
+
         filterViewModel.occupants.bind(listener: { model in
             guard let model = model  else { return }
             let viewModel = FilterListCellViewModel(model: model)
             filterViewModel.update(type: .occupants, viewModel: viewModel)
             filterForm.reloadData()
         })
+
+        filterViewModel.toolBar.bind { field in
+            if field.isfilled {
+                self.toolbar.items?[1].title = "지우기"
+                self.toolbar.items?[3].isEnabled = true
+            } else {
+                self.toolbar.items?[1].title = "건너 뛰기"
+                self.toolbar.items?[3].isEnabled = false
+            }
+        }
+
     }
 
+}
+
+extension FilterViewController {
+    private func isFilled(field: FilterFields) -> Bool {
+        return filterViewModel?.listCellViewModel[field]?.fieldValue != nil ? true:false
+    }
 }
 
 extension FilterViewController: UICollectionViewDataSource {
@@ -131,13 +170,8 @@ extension FilterViewController: UICollectionViewDataSource {
 
         switch sectionType {
         case .container:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContainerCell.id, for: indexPath) as? ContainerCell else {return UICollectionViewCell()}
-
-            let calendar = CalendarViewController()
-            self.addChild(calendar)
-
-            cell.fillContent(view: calendar.view)
-
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ContainerCell.id, for: indexPath) as? ContainerCell, let currentChildVC = children.first else {return UICollectionViewCell()}
+            cell.fillContent(view: currentChildVC.view)
             return cell
 
         case .filterList:

@@ -35,16 +35,18 @@ INSERT INTO lodging (id, bathroom_count, bed_count, bedroom_count, place_type, l
             '안좋은 숙소','HOUSE',1000,4.7,2,1,1);
 
 INSERT INTO images (id, image_url, lodging_id, is_main_image)
-VALUES (1, '메인이미지1', 1, true),
-       (2, '서브이미지1-1', 1, false),
-       (3, '서브이미지1-2', 1, false);
+VALUES (1, 'https://a0.muscache.com/im/pictures/monet/Select-34444025/original/944d56fa-e9a6-48fb-a9c5-e4e3778042d7?im_w=720', 1, true),
+       (2, 'https://a0.muscache.com/im/pictures/monet/Select-34444025/original/9e8d63dc-a594-4364-9be4-daf83610fd8c?im_w=1200', 1, false),
+       (3, 'https://a0.muscache.com/im/pictures/monet/Select-34444025/original/bbc08ed9-3415-4f38-ae72-1fbee28e6b8d?im_w=1200', 1, false),
+       (4, 'https://a0.muscache.com/im/pictures/1a0edc12-4a18-42da-b44a-42d77ea595b3.jpg?im_w=960', 2, true),
+       (5, 'https://a0.muscache.com/im/pictures/a9a5e884-0ce4-442d-9348-a5bd130e8811.jpg?im_w=720', 2, false),
+       (6, 'https://a0.muscache.com/im/pictures/miso/Hosting-29642943/original/70e585af-5985-4b86-9e71-7e3d17902b08.jpeg?im_w=720', 2, false);
 
-INSERT INTO members (id, email)
-VALUE (1, 'test@test.com');
 
-INSERT INTO wish (id, lodging_id, members_id)
-VALUE (1, 1, 1);
 
-INSERT INTO reservation(id, canceled, check_in, check_out, guests, price, lodging_id, members_id)
-VALUES (1,0,'2022-03-03', '2022-04-04', 2, 11, 1, 1),
-       (2,0,'2022-04-05', '2022-04-10',2,11,2,1);
+-- INSERT INTO wish (id, lodging_id, members_id)
+-- VALUE (1, 1, 1);
+--
+-- INSERT INTO reservation(id, canceled, check_in, check_out, guests, price, lodging_id, members_id)
+-- VALUES (1,0,'2022-03-03', '2022-04-04', 2, 11, 1, 1),
+--        (2,0,'2022-04-05', '2022-04-10',2,11,2,1);

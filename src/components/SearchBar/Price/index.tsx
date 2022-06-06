@@ -103,12 +103,12 @@ type SilderProps = {
   setMinPrice: React.Dispatch<React.SetStateAction<number>>;
   setMaxPrice: React.Dispatch<React.SetStateAction<number>>;
 };
-// let posX = 0;
 const Slider = ({ setMinPrice, setMaxPrice, pricePerPixel }: SilderProps) => {
   const [leftLimit, setLeftLimit] = useState(12);
   const [rightLimit, setRightLimit] = useState(353);
   const leftRef = useRef<HTMLButtonElement>(null);
   const leftFilterRef = useRef<HTMLDivElement | null>(null);
+  const rightFilterRef = useRef<HTMLDivElement | null>(null);
   const posX = useRef(0);
 
   //remove ghost image
@@ -147,7 +147,6 @@ const Slider = ({ setMinPrice, setMaxPrice, pricePerPixel }: SilderProps) => {
     if (event.currentTarget.offsetLeft > rightLimit) {
       event.currentTarget.style.left = rightLimit + "px";
     }
-    // console.log(event.currentTarget.offsetLeft);
     event.currentTarget.style.left = event.currentTarget.offsetLeft + event.clientX - posX.current + "px";
 
     posX.current = event.clientX;
@@ -172,6 +171,10 @@ const Slider = ({ setMinPrice, setMaxPrice, pricePerPixel }: SilderProps) => {
     posX.current = event.clientX;
 
     setMaxPrice((15000 + event.currentTarget.offsetLeft * pricePerPixel) >> 0);
+
+    if (rightFilterRef.current !== null) {
+      rightFilterRef.current.style.width = 365 - event.currentTarget.offsetLeft + 12 + "px";
+    }
   };
 
   const leftButtonDragEndHandler = (event: React.DragEvent<HTMLButtonElement>) => {
@@ -209,6 +212,7 @@ const Slider = ({ setMinPrice, setMaxPrice, pricePerPixel }: SilderProps) => {
           onDragEnd={rightButtonDragEndHandler}
         />
       </S.Slider>
+      <S.RightFilter ref={rightFilterRef} />
     </>
   );
 };

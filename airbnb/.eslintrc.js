@@ -36,6 +36,7 @@ module.exports = {
   ],
 
   rules: {
+    'react/require-default-props': 'off',
     'consistent-return': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'global-require': 'off',

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import BarChart from './Canvas';
 import { Slider } from '@mui/material';
@@ -45,21 +45,31 @@ function valuetext(price: number) {
 
 function PriceRangeModal() {
   const [value, setValue] = useState([0, 100]);
-  const [data, setData] = useState();
-  const [price, setPrice] = useState();
-  const [average, setAverage] = useState();
+  // type dataType = { price: number, number: number };
+  const [data, setData] = useState<any[]>([]);
+  const dataList:any[] = [];
+  const maxPrice=0;
+  const minPrice=0;
+  const average=0;
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
   };
 
   const showPrice = () => {};
+  const calculateAverage = () => {};
+
+  useEffect(()=>{
+    if(!data){
+      setData(sampleData);
+    }
+  },[]);
 
   return (
     <>
     <RangeContainer>
       <PriceRangeTitle>가격범위</PriceRangeTitle>
-      <PriceRangePrice>{price}1000원</PriceRangePrice>
+      <PriceRangePrice>{minPrice}원 - {maxPrice}원</PriceRangePrice>
       <PriceRangeCaption>평균 1박 요금은 {average}입니다.</PriceRangeCaption>
       <BarChart
         color="#bfbfbf"

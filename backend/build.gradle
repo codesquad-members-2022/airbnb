@@ -1,6 +1,15 @@
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
+
 plugins {
     id 'org.springframework.boot' version '2.6.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
     id 'java'
 }
 
@@ -9,6 +18,12 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 dependencies {
@@ -36,8 +51,27 @@ dependencies {
     /* Hibernate Spatial */
     implementation 'org.hibernate:hibernate-spatial:5.6.8.Final'
 
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+
 }
 
 test {
     useJUnitPlatform()
 }
+
+def querydslDir = "$buildDir/generated/querydsl"
+
+ querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+ }
+ sourceSets {
+    main.java.srcDir querydslDir
+ }
+ configurations {
+    querydsl.extendsFrom compileClasspath
+ }
+ compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+ }

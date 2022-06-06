@@ -11,7 +11,6 @@ export interface ScheduleProps {
   endDate: Date | null;
   setStartDate(date: Date): void;
   setEndDate(date: null | Date): void;
-  displaySchedule: boolean;
 }
 
 export interface ScheduleProviderProps extends ScheduleProps {

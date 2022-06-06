@@ -5,35 +5,28 @@ interface DayProps {
   day: Date | null;
 }
 
-const isStartDate = (day: Date | null, startDate: Date | null) =>
-  day !== null && startDate?.getTime() === day.getTime();
+const isStartDate = (day: Date | null, startDate: Date | null): boolean =>
+  !!day && startDate?.getTime() === day.getTime();
 
 const isEndDate = (day: Date | null, endDate: Date | null) =>
-  day !== null && endDate?.getTime() === day.getTime();
+  !!day && endDate?.getTime() === day.getTime();
 
 function isSelected(
   day: Date | null,
   startDate: Date | null,
   endDate: Date | null,
 ) {
-  return (
-    (day !== null && isStartDate(day, startDate)) || isEndDate(day, endDate)
-  );
+  return (!!day && isStartDate(day, startDate)) || isEndDate(day, endDate);
 }
 
 const isBetweenSelected = (
   day: Date | null,
   startDate: Date | null,
   endDate: Date | null,
-) =>
-  day !== null &&
-  startDate !== null &&
-  endDate !== null &&
-  startDate <= day &&
-  endDate >= day;
+) => !!day && !!startDate && !!endDate && startDate <= day && endDate >= day;
 
 export function Day({ day }: DayProps): JSX.Element {
-  // TODO: 최적화 리렌더링 막아야함 , 커스텀 훅 으로 로직 분리
+  // TODO: 최적화 리렌더링 막아야함
   const { setReservationDate, startDate, endDate } = useScheduleContext();
 
   return (

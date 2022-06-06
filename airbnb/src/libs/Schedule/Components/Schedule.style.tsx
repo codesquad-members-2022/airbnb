@@ -1,22 +1,12 @@
 import styled, { css } from 'styled-components';
 
-type ScheduleWrapperProp = {
-  shouldDisplay: boolean;
-};
-
-export const ScheduleWrapper = styled.div<ScheduleWrapperProp>`
-  position: absolute;
-  left: 0;
-  top: 76px;
-  display: ${({ shouldDisplay }) => (shouldDisplay ? 'flex' : 'none')};
+export const ScheduleWrapper = styled.div`
+  position: relative;
+  display: flex;
   justify-content: space-between;
-  height: 512px;
-  width: 916px;
+  width: 740px;
   border-radius: 40px;
-  padding: 64px 88px;
-  background-color: white;
   margin-top: 16px;
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
 `;
 
 export const Calendar = styled.div`
@@ -102,12 +92,12 @@ export const Date = styled.div`
 
 export const BackButton = styled.button`
   position: absolute;
-  left: 90px;
-  top: 63px;
+  left: 0px;
+  top: 0px;
 `;
 
 export const ForwardButton = styled.button`
   position: absolute;
-  right: 90px;
-  top: 63px;
+  right: 0px;
+  top: 0px;
 `;

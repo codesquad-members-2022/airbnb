@@ -25,11 +25,11 @@ class SearchDateViewController: UIViewController {
 
     var queryParameter: QueryParameter = QueryParameter() {
         didSet {
-            queryParameterView.set(queryParameter)
+            queryParameterStackView.set(queryParameter)
         }
     }
 
-    lazy var queryParameterView = QueryParameterStackView(queryParameter: queryParameter)
+    lazy var queryParameterStackView = QueryParameterStackView(queryParameter: queryParameter)
 
     lazy var calendarPickerVC = CalendarPickerViewController(baseDate: Date(), numOfMonths: CalendarPickerViewController.defaultNumberOfMonths)
 
@@ -46,7 +46,7 @@ class SearchDateViewController: UIViewController {
         view.addSubview(calendarPickerVC.view)
         calendarPickerVC.didMove(toParent: self)
 
-        view.addSubview(queryParameterView)
+        view.addSubview(queryParameterStackView)
     }
 
     private func setHandler() {
@@ -65,10 +65,10 @@ class SearchDateViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-            queryParameterView.bottomAnchor.constraint(equalTo: view.readableContentGuide.bottomAnchor),
-            queryParameterView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
-            queryParameterView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
-            queryParameterView.heightAnchor.constraint(equalToConstant: 44*4)
+            queryParameterStackView.bottomAnchor.constraint(equalTo: view.readableContentGuide.bottomAnchor),
+            queryParameterStackView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
+            queryParameterStackView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
+            queryParameterStackView.heightAnchor.constraint(equalToConstant: 44*4)
         ])
 
     }

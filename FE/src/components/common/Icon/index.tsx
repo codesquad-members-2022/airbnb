@@ -6,6 +6,7 @@ import * as S from '@components/common/Icon/Icon.style';
 export const ICON_NAME: { [key: string]: string } = {
   MENU: 'Menu',
   USER: 'User',
+  PAUSE: 'Pause',
   SEARCH: 'Search',
   CLOSE_BTN: 'CloseBtn',
   PREV: 'Prev',

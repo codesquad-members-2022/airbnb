@@ -21,4 +21,8 @@ public class JwtManager {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         return valueOperations.get(refreshToken);
     }
+
+    public void removeRefreshToken(String refreshToken) {
+        redisTemplate.delete(refreshToken);
+    }
 }

@@ -26,4 +26,8 @@ public class TokenService {
             .refreshToken(refreshToken)
             .build();
     }
+
+    public void removeToken(String refreshToken) {
+        jwtManager.removeRefreshToken(refreshToken);
+    }
 }

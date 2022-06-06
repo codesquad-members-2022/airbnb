@@ -9,7 +9,7 @@
 import UIKit
 
 struct QueryParameter {
-    var dateRange: Range<Date>?
+    var dateRange: (Date?, Date?)?
     var place: Place?
     var priceRange: Range<Decimal>?
     var people: HeadCount?
@@ -38,6 +38,7 @@ class SearchDateViewController: UIViewController {
         view.backgroundColor = .white
         setSubviews()
         setLayout()
+        setHandler()
     }
 
     private func setSubviews() {
@@ -46,6 +47,12 @@ class SearchDateViewController: UIViewController {
         calendarPickerVC.didMove(toParent: self)
         
         view.addSubview(queryParameterView)
+    }
+    
+    private func setHandler() {
+        calendarPickerVC.didSelectDate { [weak self] daySelection in
+            self?.queryParameter.dateRange = (daySelection.checkIn?.date, daySelection.checkOut?.date)
+        }
     }
 
     private func setLayout() {

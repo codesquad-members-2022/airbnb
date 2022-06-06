@@ -93,15 +93,19 @@ class QueryParameterStackView: UIStackView {
         return place?.name ?? ""
     }
     
-    private func toString(_ range: Range<Date>?) -> String {
+    private func toString(_ range: (Date?, Date?)?) -> String {
+        guard let range = range else { return "" }
+        
         let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM d일"
+            dateFormatter.dateFormat = "MMM d일"
         dateFormatter.locale = Locale(identifier: "ko")
         
-        var dateString = ""
-        if let start = queryParameter?.dateRange?.lowerBound, let end =  queryParameter?.dateRange?.upperBound {
-            dateString = dateFormatter.string(from: start) + " - " + dateFormatter.string(from: end)
+        switch range {
+        case (.some(let checkIn), .some(let checkOut)):
+            return dateFormatter.string(from: checkIn) + " - " + dateFormatter.string(from: checkOut)
+        case (.some(let checkIn), _):
+            return dateFormatter.string(from: checkIn)
+        default: return ""
         }
-        return dateString
     }
 }

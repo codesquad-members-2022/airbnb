@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import team18.airbnb.generalDto.LookAroundRegionDto;
+import team18.airbnb.region.RegionService;
 
 import java.util.List;
 
@@ -15,21 +16,21 @@ import static org.assertj.core.api.Assertions.*;
 @SpringBootTest
 @Transactional
 @ActiveProfiles(profiles = "local")
-class HomeServiceTest {
+class RegionServiceTest {
 
     @Autowired
-    private HomeService homeService;
+    private RegionService regionService;
 
     @Test
     @DisplayName("regionCount 갯수만큼 각 region 리스트에 객체가 추가되어야 한다.")
     void createRegion() {
 
         // when
-        List<LookAroundRegionDto> homeRegions = homeService.createRegion(4);
-        List<LookAroundRegionDto> searchRegions = homeService.createRegion(8);
+        List<LookAroundRegionDto> homeRegions = regionService.createLookAroundRegionDto();
+        List<LookAroundRegionDto> searchRegions = regionService.createLookAroundRegionDto();
 
         // then
-        assertThat(homeRegions.size()).isEqualTo(4);
+        assertThat(homeRegions.size()).isEqualTo(8);
         assertThat(searchRegions.size()).isEqualTo(8);
     }
 }

@@ -1,7 +1,11 @@
 package team18.airbnb.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,11 +17,18 @@ public class Accommodation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "accommodation_id")
     private Long id;
 
     private float startPoint;
-    private int nReview;
+    private int reviewCount;
     private String description;
+    private String name;
+    private String mainImgUrl;
+
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "accommodation")
+    private List<Reservation> reservation = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id")
@@ -29,14 +40,16 @@ public class Accommodation {
     @Embedded
     private AccommodationInfo accommodationInfo;
 
-    public Accommodation(float startPoint, int nReview, String description,
+    public Accommodation(float startPoint, int reviewCount, String description, String name, String mainImgUrl,
                          AccommodationAddress accommodationAddress,
                          AccommodationInfo accommodationInfo,
                          Region region) {
 
         this.startPoint = startPoint;
-        this.nReview = nReview;
+        this.reviewCount = reviewCount;
         this.description = description;
+        this.name = name;
+        this.mainImgUrl = mainImgUrl;
         this.accommodationAddress = accommodationAddress;
         this.accommodationInfo = accommodationInfo;
 
@@ -45,7 +58,6 @@ public class Accommodation {
         }
     }
 
-    // TODO : 양방향 편의 메서드 작성
     private void changeRegion(Region region) {
         this.region = region;
         region.getAccommodations().add(this);

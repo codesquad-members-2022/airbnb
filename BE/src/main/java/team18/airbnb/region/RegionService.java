@@ -1,4 +1,4 @@
-package team18.airbnb.home;
+package team18.airbnb.region;
 
 import org.springframework.stereotype.Service;
 
@@ -9,15 +9,15 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import team18.airbnb.domain.Region;
 import team18.airbnb.generalDto.LookAroundRegionDto;
-import team18.airbnb.home.dto.AccommodationByConceptDto;
+import team18.airbnb.region.dto.AccommodationByConceptDto;
 
 @Service
 @RequiredArgsConstructor
-public class HomeService {
+public class RegionService {
 
-    private final HomeRepository homeRepository;
+    private final RegionRepository regionRepository;
 
-    public List<AccommodationByConceptDto> createAccommodationByConcept() {
+    public List<AccommodationByConceptDto> createAccommodationByConceptDto() {
         List<AccommodationByConceptDto> accommodations = new ArrayList<>();
 
         AccommodationByConceptDto first =
@@ -32,11 +32,10 @@ public class HomeService {
         return accommodations;
     }
 
-        public List<LookAroundRegionDto> createRegion(int regionCount) {
-            List<Region> allRegion = homeRepository.findAll();
+        public List<LookAroundRegionDto> createLookAroundRegionDto() {
+            List<Region> allRegion = regionRepository.findAll();
 
             return allRegion.stream()
-                    .limit(regionCount)
                     .map(LookAroundRegionDto::new)
                 .collect(Collectors.toList());
     }

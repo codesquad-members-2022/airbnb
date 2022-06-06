@@ -6,6 +6,7 @@ import com.ahoo.airbnb.reservation.dtos.ReservationResponse;
 import com.ahoo.airbnb.reservation.dtos.ReservationsResponse;
 import com.ahoo.airbnb.reservation.dtos.RoomChargeRequest;
 import com.ahoo.airbnb.reservation.dtos.RoomChargeResponse;
+import com.ahoo.airbnb.utils.DateUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -62,7 +63,10 @@ public class ReservationController {
         @RequestBody RoomChargeRequest roomChargeRequest) {
 
         log.info("roomChargeRequest={}", roomChargeRequest);
-        RoomChargeResponse responseBody = reservationService.calculateRoomCharge(roomId, roomChargeRequest);
+        RoomChargeResponse responseBody = reservationService.calculateRoomCharge(roomId,
+            DateUtils.stringToLocalDateTime(roomChargeRequest.getCheckInDate()),
+            DateUtils.stringToLocalDateTime(roomChargeRequest.getCheckOutDate()),
+            roomChargeRequest.getHeadcount());
         return ResponseEntity.ok(responseBody);
     }
 

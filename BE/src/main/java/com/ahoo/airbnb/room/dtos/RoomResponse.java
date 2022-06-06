@@ -13,12 +13,12 @@ public class RoomResponse {
 
     private Long roomId;
     private String name;
-    private Integer charge;
+    private Integer chargePerDay;
     private Integer totalCharge;
     private Double averageRates;
     private Integer reviewCount;
     private String mainImageUrl;
-    private Long wishId;
+    private Boolean isWish;
     private String coordinate;
 
     public static RoomResponse from(Wish wish) {
@@ -26,12 +26,26 @@ public class RoomResponse {
         return new RoomResponse(
             room.getId(),
             room.getTitle(),
-            room.getCharge(),
+            null,
             null,
             room.getAverageRate(),
             room.getReviewCount(),
             room.getMainImageUrl().orElse(""),
-            wish.getId(),
+            true,
+            room.getCoordinate().toStringWithComma()
+        );
+    }
+
+    public static RoomResponse of(Room room, Integer chargePerDay, Integer totalCharge, Boolean isWish) {
+        return new RoomResponse(
+            room.getId(),
+            room.getTitle(),
+            chargePerDay,
+            totalCharge,
+            room.getAverageRate(),
+            room.getReviewCount(),
+            room.getMainImageUrl().orElse(""),
+            isWish,
             room.getCoordinate().toStringWithComma()
         );
     }

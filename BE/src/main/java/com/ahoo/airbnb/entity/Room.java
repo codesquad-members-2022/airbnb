@@ -2,6 +2,7 @@ package com.ahoo.airbnb.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
@@ -63,6 +64,34 @@ public class Room extends BaseEntity {
             .filter(RoomImage::getIsMainImage)
             .map(RoomImage::getUrl)
             .findAny();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Room room = (Room) o;
+        return Objects.equals(id, room.id) && Objects.equals(host, room.host)
+            && Objects.equals(coordinate, room.coordinate) && Objects.equals(address, room.address)
+            && Objects.equals(title, room.title) && Objects.equals(description, room.description)
+            && Objects.equals(roomType, room.roomType) && Objects.equals(maxCapacity, room.maxCapacity)
+            && Objects.equals(bedroomCount, room.bedroomCount) && Objects.equals(bedCount,
+            room.bedCount) && Objects.equals(bathroomCount, room.bathroomCount) && Objects.equals(
+            charge, room.charge) && Objects.equals(cleaningCharge, room.cleaningCharge)
+            && Objects.equals(reviewCount, room.reviewCount) && Objects.equals(averageRate,
+            room.averageRate) && Objects.equals(isDeleted, room.isDeleted) && Objects.equals(images,
+            room.images) && Objects.equals(roomChargePolicies, room.roomChargePolicies);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, host, coordinate, address, title, description, roomType, maxCapacity, bedroomCount,
+            bedCount, bathroomCount, charge, cleaningCharge, reviewCount, averageRate, isDeleted, images,
+            roomChargePolicies);
     }
 }
 

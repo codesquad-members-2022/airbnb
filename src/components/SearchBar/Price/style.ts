@@ -35,6 +35,7 @@ export const RightButton = styled.button`
   background-color: white;
   border: 1px solid black;
   border-radius: 50%;
+  z-index: 105;
 `;
 
 export const GraphContainer = styled.section`
@@ -55,7 +56,14 @@ export const LeftFilter = styled.div`
   position: absolute;
   height: 127.5px;
   left: 64px;
-  backdrop-filter: opacity(0.2);
   z-index: 100;
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.5);
+`;
+
+export const RightFilter = styled.div`
+  position: absolute;
+  height: 127.5px;
+  right: 64px;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.5);
 `;

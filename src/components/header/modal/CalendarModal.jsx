@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "../../../Modal";
+import Modal from "./Modal";
 import styled from "styled-components";
 import Calendar from "../../../lib/Calendar";
 

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import {ReactComponent as MinusIcon} from "../../../assets/minus.svg";
 import {ReactComponent as PlusIcon} from "../../../assets/plus.svg";
-import {useOptionContext} from "../../../OptionProvider";
+import {useOptionContext} from "../../../contexts/OptionProvider";
 
 const GuestTab = ({typeName, type, detail}) => {
     const {guestCount, setGuestCount} = useOptionContext();

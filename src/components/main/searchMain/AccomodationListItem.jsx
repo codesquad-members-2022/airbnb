@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {ReactComponent as EmptyHeartIcon} from "../../../assets/emptyHeart.svg";
 import {ReactComponent as FullHeartIcon} from "../../../assets/fullHeart.svg";
 import {ReactComponent as FullStarIcon} from "../../../assets/fullStar.svg";
-import {makePriceFormat} from "../../../util";
+import {makePriceFormat} from "../../../helper/util";
 
 const AccomodationListItem = ({img, location, relation, option1, option2, price, grade, review}) => {
     return (

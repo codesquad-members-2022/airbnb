@@ -1,16 +1,16 @@
 import React from "react";
 import {ThemeProvider} from "styled-components";
-import theme from "./theme";
+import theme from "./helper/theme";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
-import ClickedTabProvider from "./ClickedTabProvider";
-import OptionProvider from "./OptionProvider";
+import SearchBarClickedTabProvider from "./contexts/SearchBarClickedTabProvider";
+import OptionProvider from "./contexts/OptionProvider";
 
 const App = () => {
     return (
         <ThemeProvider theme={theme}>
-            <ClickedTabProvider>
+            <SearchBarClickedTabProvider>
                 <OptionProvider>
                     <BrowserRouter>
                         <Routes>
@@ -19,7 +19,7 @@ const App = () => {
                         </Routes>
                     </BrowserRouter>
                 </OptionProvider>
-            </ClickedTabProvider>
+            </SearchBarClickedTabProvider>
         </ThemeProvider>
     );
 };

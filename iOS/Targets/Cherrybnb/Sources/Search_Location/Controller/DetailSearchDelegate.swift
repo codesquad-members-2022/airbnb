@@ -22,7 +22,7 @@ class DetailSearchDelegate: NSObject, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         guard let datasource = self.collectionView?.dataSource as? DetailSearchLocationDataSource else { return }
-        let mapItem = datasource.searchResultData[0]
+        guard let mapItem = datasource.searchResultData.first else { return }
         guard let place = PlaceFactory.makePlace(with: mapItem) else { return }
         searchDateVC.queryParameter?.place = place
         self.navigationController?.pushViewController(searchDateVC, animated: true)

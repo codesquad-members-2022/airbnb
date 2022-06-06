@@ -1,24 +1,25 @@
 package com.team14.cherrybnb.revervation.ui;
 
+import com.team14.cherrybnb.auth.domain.Member;
+import com.team14.cherrybnb.revervation.application.ReservationService;
 import com.team14.cherrybnb.revervation.dto.ReservationCardResponse;
 import com.team14.cherrybnb.revervation.dto.ReservationDetailResponse;
 import com.team14.cherrybnb.revervation.dto.ReservationRequest;
 import com.team14.cherrybnb.room.dto.RoomDetailResponse;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/reservations")
+@RequiredArgsConstructor
 public class ReservationController {
 
-
-    //예약하기
-    //예약취소
-    //예약 상세 조회
-    //예약 리스트 조회
+    private final ReservationService reservationService;
 
     @ApiOperation(
             value = "숙소 예약하기",
@@ -27,11 +28,12 @@ public class ReservationController {
             response = RoomDetailResponse.class
     )
     @PostMapping()
-    public ResponseEntity<Void> reserve(@RequestBody ReservationRequest reservationRequest) {
-        // return Ok 또는 리다이렉트 url 넘겨주기
-        return null;
+    public ResponseEntity<Void> reserve(Member loginMember, @RequestBody ReservationRequest reservationRequest) {
+        reservationService.bookRoom(loginMember, reservationRequest);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    // TODO 리다이렉트?!
     @ApiOperation(
             value = "숙소 예약 취소하기",
             notes = "예약 정보를 삭제한다.",
@@ -39,9 +41,9 @@ public class ReservationController {
             response = RoomDetailResponse.class
     )
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> cancel(@PathVariable Long id) {
-        // return ok 또는 리다이렉트 url 넘겨주기
-        return null;
+    public ResponseEntity<Void> cancel(Member loginMember, @PathVariable("id") Long reservationId) {
+        reservationService.cancelReservation(loginMember, reservationId);
+        return ResponseEntity.ok().build();
     }
 
     @ApiOperation(
@@ -51,8 +53,8 @@ public class ReservationController {
             response = RoomDetailResponse.class
     )
     @GetMapping("/{id}")
-    public ResponseEntity<ReservationDetailResponse> getReservationDetail(@PathVariable Long id) {
-        return ResponseEntity.ok(null);
+    public ResponseEntity<ReservationDetailResponse> getReservationDetail(@PathVariable("id") Long reservationId) {
+        return ResponseEntity.ok(reservationService.showReservationDetail(reservationId));
     }
 
     @ApiOperation(
@@ -62,10 +64,7 @@ public class ReservationController {
             response = RoomDetailResponse.class
     )
     @GetMapping()
-    public ResponseEntity<List<ReservationCardResponse>> getReservations() {
-        return null;
+    public ResponseEntity<Page<ReservationCardResponse>> getReservations(Pageable pageable, Member loginMember) {
+        return ResponseEntity.ok(reservationService.searchReservations(pageable, loginMember));
     }
-
-
-
 }

@@ -1,14 +1,15 @@
 package com.team14.cherrybnb.auth.domain;
 
-import com.team14.cherrybnb.room.domain.Room;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Objects;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
@@ -30,6 +31,20 @@ public class Member {
 
     private String resourceServer;
 
-    @OneToMany(mappedBy = "member")
-    private List<Room> rooms;
+    public boolean isSame(Member member) {
+        return this.equals(member);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Member member = (Member) o;
+        return id != null && Objects.equals(id, member.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

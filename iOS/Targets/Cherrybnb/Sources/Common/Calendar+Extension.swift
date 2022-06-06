@@ -19,7 +19,7 @@ extension Calendar {
         let baseDateComponents = dateComponents([.year, .month], from: baseDate)
         return date(from: baseDateComponents) ?? baseDate
     }
-    
+
     func getLastDayOfMonth(for baseDate: Date) -> Date {
         let firstDay = getFirstDayOfMonth(for: baseDate)
         let firstDayOfNextMonth = date(byAdding: .month, value: 1, to: firstDay) ?? baseDate

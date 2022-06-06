@@ -12,7 +12,7 @@ import Metal
 typealias DaySelection = (checkIn: Day?, checkOut: Day?)
 
 struct CalendarPicker {
-    
+
     private var months: [Month]
 
     var daySelection: DaySelection = (nil, nil) {
@@ -26,7 +26,7 @@ struct CalendarPicker {
 
     typealias CalendarPosition = (monthIndex: Int, dayIndex: Int)
     var datePositions = [Date: CalendarPosition]()
-    
+
     init(baseDate: Date, numOfMonths: Int, calendar: Calendar = Calendar.current) {
         self.months = CalendarFactory.makeMonths(baseDate: baseDate, numOfMonths: numOfMonths, calendar: calendar)
         self.datePositions = getDatePositions(months: self.months)

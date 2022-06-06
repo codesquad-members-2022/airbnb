@@ -70,7 +70,7 @@ class CalendarPickerViewController: UIViewController {
             }
         }
     }
-    
+
     func didSelectDate(completion: ((DaySelection) -> Void)?) {
         calendarPicker.didSelectDate = completion
     }
@@ -125,5 +125,5 @@ extension CalendarPickerViewController: UICollectionViewDelegateFlowLayout {
         let width = Int(collectionView.frame.width / 7)
         return CGSize(width: width, height: width)
     }
-    
+
 }

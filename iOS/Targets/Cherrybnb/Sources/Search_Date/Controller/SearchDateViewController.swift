@@ -30,7 +30,7 @@ class SearchDateViewController: UIViewController {
     }
 
     lazy var queryParameterView = QueryParameterStackView(queryParameter: queryParameter)
-    
+
     lazy var calendarPickerVC = CalendarPickerViewController(baseDate: Date(), numOfMonths: CalendarPickerViewController.defaultNumberOfMonths)
 
     override func viewDidLoad() {
@@ -45,10 +45,10 @@ class SearchDateViewController: UIViewController {
         addChild(calendarPickerVC)
         view.addSubview(calendarPickerVC.view)
         calendarPickerVC.didMove(toParent: self)
-        
+
         view.addSubview(queryParameterView)
     }
-    
+
     private func setHandler() {
         calendarPickerVC.didSelectDate { [weak self] daySelection in
             self?.queryParameter.dateRange = (daySelection.checkIn?.date, daySelection.checkOut?.date)
@@ -73,4 +73,3 @@ class SearchDateViewController: UIViewController {
 
     }
 }
-

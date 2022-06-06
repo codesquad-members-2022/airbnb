@@ -10,9 +10,8 @@ import UIKit
 
 class RecommendationDataSource: NSObject, UICollectionViewDataSource {
 
-    
     private(set) var recommendationData = [Place]()
-    
+
     private var didLoadData: () -> Void
 
     init(didLoadData: @escaping () -> Void) {

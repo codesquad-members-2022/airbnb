@@ -9,10 +9,10 @@
 import Foundation
 import Metal
 
-typealias DaySelection = (checkIn: CalendarPicker.Day?, checkOut: CalendarPicker.Day?)
+typealias DaySelection = (checkIn: Day?, checkOut: Day?)
 
 struct CalendarPicker {
-
+    
     private var months: [Month]
 
     var daySelection: DaySelection = (nil, nil) {
@@ -24,23 +24,16 @@ struct CalendarPicker {
 
     var didUpdateMonth: ((ClosedRange<Int>) -> Void)?
 
-    var datePositions = [Date: (Int, Int)]()
-
+    typealias CalendarPosition = (monthIndex: Int, dayIndex: Int)
+    var datePositions = [Date: CalendarPosition]()
+    
     init(baseDate: Date, numOfMonths: Int, calendar: Calendar = Calendar.current) {
-
-        let firstMonth = Month(baseDate: baseDate)
-
-        let afterMonths: [Month] = (1..<numOfMonths).map { offset in
-            let firstDayOfMonthAfter = calendar.getFirstDayOfMonthAfter(for: baseDate, offsetBy: offset)
-            return Month(baseDate: firstDayOfMonthAfter)
-        }
-
-        self.months = [firstMonth] + afterMonths
+        self.months = CalendarFactory.makeMonths(baseDate: baseDate, numOfMonths: numOfMonths, calendar: calendar)
         self.datePositions = getDatePositions(months: self.months)
     }
 
     private func getDatePositions(months: [Month]) -> [Date: (Int, Int)] {
-        var datePosition = [Date: (Int, Int)]()
+        var datePosition = [Date: CalendarPosition]()
 
         for m in 0..<months.count {
             for d in months[m].firstDayWeekday-1..<months[m].days.count {
@@ -70,7 +63,7 @@ struct CalendarPicker {
         let selectedDay = getDay(monthSection: newMonthSection, dayItem: newDayItem)
 
         // 전달에 속한 날짜나 이미 지난 날짜는 선택 불가
-        if selectedDay.isWithinLastMonth || selectedDay.isPast { return }
+        if selectedDay.isWithinMonth || selectedDay.isPast { return }
 
         switch daySelection {
         case (nil, nil):

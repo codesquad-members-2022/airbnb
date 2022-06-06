@@ -50,8 +50,8 @@ class CalendarPickerViewCell: UICollectionViewCell {
         setLayout()
     }
 
-    func setDay(_ day: CalendarPicker.Day) {
-        guard !day.isWithinLastMonth else { return }
+    func setDay(_ day: Day) {
+        guard day.isWithinMonth else { return }
 
         let dateString = dateFormatter.string(from: day.date)
 

@@ -5,7 +5,7 @@ import {CalendarContext} from "../CalendarContext";
 import {isValidDate} from "../util";
 
 const Days = () => {
-    const {date, calendarWidth, dateStyle, dateHoverStyle, dateClickHandler, periodStyle} = useContext(CalendarContext);
+    const {date, calendarWidth, dateStyle, hoverDateStyle, clickedDateStyle, dateClickHandler, periodStyle} = useContext(CalendarContext);
     const periodStart = periodStyle.period.periodStart;
     const periodEnd = periodStyle.period.periodEnd;
     const weeks = getWeeks(date.year, date.month);
@@ -34,8 +34,11 @@ const Days = () => {
                                     data-date={day}
                                     calendarWidth={calendarWidth}
                                     dateStyle={dateStyle}
-                                    dateHoverStyle={dateHoverStyle}
+                                    hoverDateStyle={hoverDateStyle}
+                                    clickedDateStyle={clickedDateStyle}
                                     onClick={dateClickHandler}
+                                    isPeriodStart={isSameDate(periodStart, currentDate)}
+                                    isPeriodEnd={isSameDate(periodEnd, currentDate)}
                                     periodStyle={periodStyle.style}
                                     isDuringPeriod={isDuringPeriod(periodStart, periodEnd, currentDate)}
                                 >
@@ -65,6 +68,9 @@ const getWeeks = (year, month) => {
 
 const isDuringPeriod = (periodStart, periodEnd, today) => {
     try {
+        if (!periodStart || !periodEnd) {
+            return false;
+        }
         if (isValidDate(periodStart) && isValidDate(periodEnd) && isValidDate(today)) {
             return (
                 new Date(periodStart.year, periodStart.month - 1, periodStart.date) <= new Date(today.year, today.month - 1, today.date) &&
@@ -80,6 +86,9 @@ const isDuringPeriod = (periodStart, periodEnd, today) => {
 
 const isSameDate = (date1, date2) => {
     try {
+        if (!date1 || !date2) {
+            return false;
+        }
         if (isValidDate(date1) && isValidDate(date2)) {
             return new Date(date1.year, date1.month - 1, date1.date).getTime() === new Date(date2.year, date2.month - 1, date2.date).getTime();
         }
@@ -118,10 +127,10 @@ const DateBackground = styled.div`
 const DateContent = styled.div`
     border: 1px solid ${({periodStyle, isDuringPeriod}) => (isDuringPeriod ? periodStyle.backgroundColor : "white")};
     border-radius: 50%;
-    ${({dateStyle}) => dateStyle}
+    ${({isPeriodStart, isPeriodEnd, clickedDateStyle}) => (isPeriodStart || isPeriodEnd ? clickedDateStyle : "")};
     &:hover {
         border-radius: 50%;
-        ${({dateHoverStyle}) => dateHoverStyle}
+        ${({hoverDateStyle}) => hoverDateStyle}
     }
 `;
 

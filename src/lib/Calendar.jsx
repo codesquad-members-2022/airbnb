@@ -13,26 +13,27 @@ const Calendar = ({
     },
     calendarWidth = 336,
     dateStyle = {},
-    dateHoverStyle = {
+    hoverDateStyle = {
         "border-radius": "50%",
         border: "1px solid black",
     },
-    dateClickHandler = (e) => {
-        e.target.style.backgroundColor = "black";
-        e.target.style.borderRadius = "50%";
-        e.target.style.color = "white";
+    clickedDateStyle = {
+        backgroundColor: "#000",
+        borderRadius: "50%",
+        color: "white",
     },
+    dateClickHandler,
     periodStyle = {
         period: {
             periodStart: {
                 year: new Date().getFullYear(),
                 month: new Date().getMonth(),
-                day: 1,
+                date: 2,
             },
             periodEnd: {
                 year: new Date().getFullYear(),
                 month: new Date().getMonth(),
-                day: 1,
+                date: 1,
             },
         },
         style: {
@@ -44,7 +45,7 @@ const Calendar = ({
     try {
         if (isValidDate(date)) {
             return (
-                <CalendarContext.Provider value={{date, calendarWidth, dateStyle, dateHoverStyle, dateClickHandler, periodStyle}}>
+                <CalendarContext.Provider value={{date, calendarWidth, dateStyle, hoverDateStyle, clickedDateStyle, dateClickHandler, periodStyle}}>
                     <CalendarBox calendarWidth={calendarWidth}>
                         <Month />
                         <Week />

@@ -20,6 +20,11 @@ class SearchLocationViewController: UIViewController {
     private var detailSearchDataSource: DetailSearchLocationDataSource?
     private var detailSearchDelegate: DetailSearchDelegate?
     
+    private lazy var clearButton: UIBarButtonItem = {
+            let button = UIBarButtonItem(title: "지우기", style: .plain, target: self, action: #selector(buttonPressed(_:)))
+            return button
+        }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -64,9 +69,13 @@ class SearchLocationViewController: UIViewController {
     private func setSearchBar() {
         self.navigationItem.title = SearchLocationViewController.defaultNavTitle
         self.navigationItem.searchController = UISearchController(searchResultsController: nil)
-        self.navigationItem.hidesSearchBarWhenScrolling = false
-        self.navigationController?.hidesBarsOnSwipe = false
         self.navigationItem.searchController?.searchBar.delegate = self
+        self.navigationItem.setRightBarButton(clearButton, animated: true)
+        
+        self.navigationController?.hidesBarsOnSwipe = false
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        self.navigationItem.searchController?.searchBar.showsCancelButton = false
+        self.navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
 
         navigationItem.searchController?.isActive = true
         navigationItem.searchController?.searchBar.becomeFirstResponder()
@@ -90,6 +99,16 @@ class SearchLocationViewController: UIViewController {
         collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 16).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+    }
+
+    @objc
+    private func buttonPressed(_ sender: Any){
+        collectionView.delegate = recommendationDelegate
+        collectionView.dataSource = recommendationDataSource
+        self.navigationItem.searchController?.searchBar.text = nil
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
 }
 

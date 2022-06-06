@@ -24,7 +24,7 @@ class DetailSearchDelegate: NSObject, UICollectionViewDelegate {
         guard let datasource = self.collectionView?.dataSource as? DetailSearchLocationDataSource else { return }
         guard let mapItem = datasource.searchResultData.first else { return }
         guard let place = PlaceFactory.makePlace(with: mapItem) else { return }
-        searchDateVC.queryParameter?.place = place
+        searchDateVC.queryParameter.place = place
         self.navigationController?.pushViewController(searchDateVC, animated: true)
     }
 }

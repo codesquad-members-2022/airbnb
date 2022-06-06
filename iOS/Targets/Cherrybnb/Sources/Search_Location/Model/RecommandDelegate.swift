@@ -25,7 +25,7 @@ class RecommandationDelegate: NSObject, UICollectionViewDelegate {
         guard let datasource = self.collectionView?.dataSource as? RecommendationDataSource else { return }
         
         let place = datasource.recommendationData[indexPath.item]
-        searchDateVC.queryParameter?.place = place
+        searchDateVC.queryParameter.place = place
         self.navigationController?.pushViewController(searchDateVC, animated: true)
     }
         

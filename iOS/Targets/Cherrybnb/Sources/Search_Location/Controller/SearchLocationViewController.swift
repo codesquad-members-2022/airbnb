@@ -138,7 +138,7 @@ extension SearchLocationViewController: UICollectionViewDelegate {
                 // 검색한 Mapitem 을 nextVC로 넘겨주어야 함
                 guard let mapItem = response.mapItems.first else { return }
                 guard let place = PlaceFactory.makePlace(with: mapItem) else { return }
-                searchDateVC.queryParameter?.place = place
+                searchDateVC.queryParameter.place = place
                 self.navigationController?.pushViewController(searchDateVC, animated: true)
             }
         }

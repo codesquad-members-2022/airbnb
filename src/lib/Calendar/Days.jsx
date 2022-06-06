@@ -2,66 +2,63 @@ import React from "react";
 import {useContext} from "react";
 import styled from "styled-components";
 import {CalendarContext} from "../CalendarContext";
+import {isValidDate} from "../util";
 
 const Days = () => {
-    const {date, calendarWidth, dayStyle, dayHoverStyle, dayClickHandler, periodStyle} = useContext(CalendarContext);
-    const year = date.getFullYear();
-    const month = date.getMonth();
+    const {date, calendarWidth, dateStyle, dateHoverStyle, dateClickHandler, periodStyle} = useContext(CalendarContext);
     const periodStart = periodStyle.period.periodStart;
     const periodEnd = periodStyle.period.periodEnd;
-    const weeks = getWeeks(year, month);
+    const weeks = getWeeks(date.year, date.month);
     return (
-        <DaysBox>
-            {weeks.map((week, weekInd) => {
-                return (
-                    <Week key={weekInd} weekInd={weekInd}>
-                        {week.map((day, ind) => {
-                            return (
-                                <DayBackground
-                                    key={ind}
+        <DateBox>
+            {weeks.map((week, weekIdx) => (
+                <Week key={weekIdx} weekInd={weekIdx}>
+                    {week.map((day, idx) => {
+                        const currentDate = {
+                            year: date.year,
+                            month: date.month,
+                            date: day,
+                        };
+                        return (
+                            <DateBackground
+                                key={idx}
+                                calendarWidth={calendarWidth}
+                                isDuringPeriod={isDuringPeriod(periodStart, periodEnd, currentDate)}
+                                isPeriodStart={isSameDate(periodStart, currentDate)}
+                                isPeriodEnd={isSameDate(periodEnd, currentDate)}
+                                periodStyle={periodStyle.style}
+                            >
+                                <DateContent
+                                    data-year={date.year}
+                                    data-month={date.month}
+                                    data-date={day}
                                     calendarWidth={calendarWidth}
-                                    isDuringPeriod={isDuringPeriod(
-                                        periodStart,
-                                        periodEnd,
-                                        `${year} ${String(month + 1).padStart(2, "0")} ${String(day).padStart(2, "0")}`
-                                    )}
-                                    isPeriodStart={isSameDate(periodStart, `${year} ${String(month + 1).padStart(2, "0")} ${String(day).padStart(2, "0")}`)}
-                                    isPeriodEnd={isSameDate(periodEnd, `${year} ${String(month + 1).padStart(2, "0")} ${String(day).padStart(2, "0")}`)}
+                                    dateStyle={dateStyle}
+                                    dateHoverStyle={dateHoverStyle}
+                                    onClick={dateClickHandler}
                                     periodStyle={periodStyle.style}
+                                    isDuringPeriod={isDuringPeriod(periodStart, periodEnd, currentDate)}
                                 >
-                                    <Day
-                                        data-date={`${year} ${String(month + 1).padStart(2, "0")} ${String(day).padStart(2, "0")}`}
-                                        calendarWidth={calendarWidth}
-                                        dayStyle={dayStyle}
-                                        dayHoverStyle={dayHoverStyle}
-                                        onClick={dayClickHandler}
-                                        periodStyle={periodStyle.style}
-                                        isDuringPeriod={isDuringPeriod(
-                                            periodStart,
-                                            periodEnd,
-                                            `${year} ${String(month + 1).padStart(2, "0")} ${String(day).padStart(2, "0")}`
-                                        )}
-                                    >
-                                        {day}
-                                    </Day>
-                                </DayBackground>
-                            );
-                        })}
-                    </Week>
-                );
-            })}
-        </DaysBox>
+                                    {day}
+                                </DateContent>
+                            </DateBackground>
+                        );
+                    })}
+                </Week>
+            ))}
+        </DateBox>
     );
 };
 
 const getWeeks = (year, month) => {
+    const WEEK_NUM = 7;
     const weeks = [];
-    const firstDay = new Date(Number(year), Number(month), 1).getDay();
-    const lastDate = new Date(Number(year), Number(month + 1), 0).getDate();
-    const days = Array.from({length: lastDate}, (_, ind) => ind + 1);
-    weeks.push(days.slice(0, 7 - firstDay));
-    for (let idx = 7 - firstDay; idx < lastDate; idx += 7) {
-        weeks.push(days.slice(idx, idx + 7));
+    const firstDay = new Date(Number(year), Number(month) - 1, 1).getDay();
+    const lastDate = new Date(Number(year), Number(month), 0).getDate();
+    const dates = Array.from({length: lastDate}, (_, ind) => ind + 1);
+    weeks.push(dates.slice(0, WEEK_NUM - firstDay));
+    for (let idx = WEEK_NUM - firstDay; idx < lastDate; idx += WEEK_NUM) {
+        weeks.push(dates.slice(idx, idx + WEEK_NUM));
     }
     return weeks;
 };
@@ -69,7 +66,10 @@ const getWeeks = (year, month) => {
 const isDuringPeriod = (periodStart, periodEnd, today) => {
     try {
         if (isValidDate(periodStart) && isValidDate(periodEnd) && isValidDate(today)) {
-            return new Date(periodStart) <= new Date(today) && new Date(today) <= new Date(periodEnd);
+            return (
+                new Date(periodStart.year, periodStart.month - 1, periodStart.date) <= new Date(today.year, today.month - 1, today.date) &&
+                new Date(today.year, today.month - 1, today.date) <= new Date(periodEnd.year, periodEnd.month - 1, periodEnd.date)
+            );
         }
         throw new Error();
     } catch (e) {
@@ -78,14 +78,10 @@ const isDuringPeriod = (periodStart, periodEnd, today) => {
     }
 };
 
-const isValidDate = (strDate) => {
-    return String(new Date(strDate)) === "Invalid Date" ? false : true;
-};
-
 const isSameDate = (date1, date2) => {
     try {
         if (isValidDate(date1) && isValidDate(date2)) {
-            return new Date(date1).getTime() === new Date(date2).getTime();
+            return new Date(date1.year, date1.month - 1, date1.date).getTime() === new Date(date2.year, date2.month - 1, date2.date).getTime();
         }
     } catch (e) {
         console.error("Invalid preiod Date");
@@ -93,7 +89,7 @@ const isSameDate = (date1, date2) => {
     }
 };
 
-const DaysBox = styled.div`
+const DateBox = styled.div`
     display: flex;
     flex-direction: column;
     height: ${({calendarWidth}) => `${calendarWidth / 14}px`};
@@ -109,46 +105,23 @@ const Week = styled.div`
     justify-content: ${({weekInd}) => (weekInd === 0 ? "flex-end" : "flex-start")};
 `;
 
-const DayBackground = styled.div`
+const DateBackground = styled.div`
     width: ${({calendarWidth}) => `${calendarWidth / 7}px`};
     line-height: ${({calendarWidth}) => `${calendarWidth / 7}px`};
     text-align: center;
     font-size: ${({calendarWidth}) => `${calendarWidth / 28}px`};
-    ${({isDuringPeriod, periodStyle}) => {
-        return isDuringPeriod ? periodStyle : {};
-    }}
-    ${({isPeriodStart}) => {
-        if (isPeriodStart) {
-            return {
-                "border-top-left-radius": "50%",
-                "border-bottom-left-radius": "50%",
-            };
-        }
-    }}
-    ${({isPeriodEnd}) => {
-        if (isPeriodEnd) {
-            return {
-                "border-top-right-radius": "50%",
-                "border-bottom-right-radius": "50%",
-            };
-        }
-    }}
+    ${({isDuringPeriod, periodStyle}) => (isDuringPeriod ? periodStyle : {})}
+    ${({isPeriodStart}) => isPeriodStart && {"border-top-left-radius": "50%", "border-bottom-left-radius": "50%"}}
+    ${({isPeriodEnd}) => isPeriodEnd && {"border-top-right-radius": "50%", "border-bottom-right-radius": "50%"}}
 `;
 
-const Day = styled.div`
-    border: 1px solid
-        ${({periodStyle, isDuringPeriod}) => {
-            return isDuringPeriod ? periodStyle.backgroundColor : "white";
-        }};
+const DateContent = styled.div`
+    border: 1px solid ${({periodStyle, isDuringPeriod}) => (isDuringPeriod ? periodStyle.backgroundColor : "white")};
     border-radius: 50%;
-    ${({dayStyle}) => {
-        return dayStyle;
-    }}
+    ${({dateStyle}) => dateStyle}
     &:hover {
         border-radius: 50%;
-        ${({dayHoverStyle}) => {
-            return dayHoverStyle;
-        }}
+        ${({dateHoverStyle}) => dateHoverStyle}
     }
 `;
 

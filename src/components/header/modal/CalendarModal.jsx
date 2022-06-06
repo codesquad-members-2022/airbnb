@@ -4,42 +4,9 @@ import styled from "styled-components";
 import Calendar from "../../../lib/Calendar";
 
 const CalendarModal = ({isClicked}) => {
-    const dayStyle = {};
-    const dayHoverStyle = {
-        "border-radius": "50%",
-        border: "1px solid black",
-    };
-    const dayClickHandler = (e) => {
-        console.log(e.target.dataset.date);
-        e.target.style.backgroundColor = "black";
-        e.target.style.borderRadius = "50%";
-        e.target.style.color = "white";
-    };
-    const periodStyle = {
-        period: {periodStart: "2022 05 10", periodEnd: "2022 05 20"},
-        style: {
-            backgroundColor: "#e0e0e0",
-            hoverColor: "black",
-        },
-    };
     return (
         <CalendarModalBox isClicked={isClicked}>
-            <Calendar
-                date={new Date(2022, 5, 31)}
-                calendarWidth={380}
-                dayStyle={dayStyle}
-                dayHoverStyle={dayHoverStyle}
-                dayClickHandler={dayClickHandler}
-                periodStyle={periodStyle}
-            />
-            <Calendar
-                date={"2022 06 29"}
-                calendarWidth={380}
-                dayStyle={dayStyle}
-                dayHoverStyle={dayHoverStyle}
-                dayClickHandler={dayClickHandler}
-                periodStyle={periodStyle}
-            />
+            <Calendar />
         </CalendarModalBox>
     );
 };

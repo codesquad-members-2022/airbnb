@@ -25,27 +25,29 @@ const PriceArea = ({ size, price }: PriceAreaTypes) => {
     ? `${formatPrice(min)} ~ ${formatPrice(max)}`
     : NO_CONTENT[AREA_TYPE.PRICE];
 
-  const toggleIsPriceModalOpen = () => setIsPriceModalOpen((isPriceModalOpen) => !isPriceModalOpen);
+  const toggleIsPriceModalOpen = () => setIsPriceModalOpen(() => true);
 
   return (
-    <S.PriceArea ref={containerRef as React.RefObject<HTMLDivElement>} onClick={toggleIsPriceModalOpen}>
-      {size === SEARCH_BAR_SIZE.LARGE ? (
-        <>
-          <S.ContentContainer>
-            <S.Label>요금</S.Label>
-            <S.Content isContentExist={isPriceExist}>{priceContent}</S.Content>
-          </S.ContentContainer>
-          {isPriceExist && (
-            <S.CloseButton>
-              <Icon iconName={ICON_NAME.CLOSE_BTN} iconSize={ICON_SIZE.LARGE} />
-            </S.CloseButton>
-          )}
-        </>
-      ) : (
-        <S.Content isContentExist={isPriceExist}>{priceContent}</S.Content>
-      )}
+    <>
+      <S.PriceArea ref={containerRef as React.RefObject<HTMLDivElement>} onClick={toggleIsPriceModalOpen}>
+        {size === SEARCH_BAR_SIZE.LARGE ? (
+          <>
+            <S.ContentContainer>
+              <S.Label>요금</S.Label>
+              <S.Content isContentExist={isPriceExist}>{priceContent}</S.Content>
+            </S.ContentContainer>
+            {isPriceExist && (
+              <S.CloseButton>
+                <Icon iconName={ICON_NAME.CLOSE_BTN} iconSize={ICON_SIZE.LARGE} />
+              </S.CloseButton>
+            )}
+          </>
+        ) : (
+          <S.Content isContentExist={isPriceExist}>{priceContent}</S.Content>
+        )}
+      </S.PriceArea>
       {isPriceModalOpen && <PriceModal element={element} price={price} modalRef={modalRef} />}
-    </S.PriceArea>
+    </>
   );
 };
 

@@ -1,10 +1,10 @@
 import * as S from './SearchBar.style';
 
-interface ItemContents {
+interface ItemContentsProps {
   title: string;
   value: string;
   width: number;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
 export function SearchBarItem({
@@ -12,7 +12,7 @@ export function SearchBarItem({
   value,
   width,
   onClick,
-}: ItemContents): JSX.Element {
+}: ItemContentsProps): JSX.Element {
   return (
     <S.searchBarItem width={width} onClick={onClick}>
       <S.itemTitle>{title}</S.itemTitle>
@@ -20,7 +20,3 @@ export function SearchBarItem({
     </S.searchBarItem>
   );
 }
-
-SearchBarItem.defaultProps = {
-  onClick: () => {},
-};

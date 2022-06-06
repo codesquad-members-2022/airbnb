@@ -28,7 +28,7 @@ function BarChart(props) {
         Math.floor(255 - 4.25 * i) +
         ')';
       ctx.fillRect(positionX, positionY, graphWidth, graphHeight);
-      console.log(positionX, positionY, graphWidth, graphHeight);
+      console.log(positionX, positionY, graphWidth, graphHeight); // 결과값 출력테스트
     }
   };
 

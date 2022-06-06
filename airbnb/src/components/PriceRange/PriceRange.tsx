@@ -47,24 +47,40 @@ function PriceRangeModal() {
   const [value, setValue] = useState([0, 100]);
   // type dataType = { price: number, number: number };
   const [data, setData] = useState<any[]>([]);
-  const dataList:any[] = [];
-  const maxPrice=0;
-  const minPrice=0;
-  const average=0;
+  let priceList:any[] = [];
+  let maxPrice=0;
+  let minPrice=0;
+  let average=0;
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
   };
 
-  const showPrice = () => {};
-  const calculateAverage = () => {};
+  const showPrice = () => {
+    sampleData.map(e=>e.price).forEach(a=>priceList.push(a));
+    maxPrice = priceList.reduce((pre, cur) => pre<cur? cur:pre);
+    minPrice = priceList.reduce((pre, cur) => pre>cur? cur:pre);
+  
+    console.log('showprice is... '+priceList, typeof priceList); // 결과값 출력테스트
+    console.log(priceList);
+    console.log('maxPrice is...' + maxPrice);
+    console.log('minPrice is...' + minPrice);
+
+  };
+  const calculateAverage = () => {
+    if(priceList.length > 0){
+      let sum = priceList.reduce((pre,cur) => pre + cur);
+      average = sum/priceList.length;
+      console.log('average is...' + average);
+    }
+  };
 
   useEffect(()=>{
-    if(!data){
       setData(sampleData);
-    }
+      showPrice();
+      calculateAverage();
   },[]);
-
+  
   return (
     <>
     <RangeContainer>

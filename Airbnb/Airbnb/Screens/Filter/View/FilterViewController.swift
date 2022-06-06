@@ -52,9 +52,7 @@ final class FilterViewController: UIViewController {
         calendar.periodSelectionHandler = {[weak self] period in
             guard let self = self else {return}
             self.filterViewModel?.period.value = period
-            if self.isFilled(field: .period) {
-                self.filterViewModel?.toolBar.value.isfilled = true
-            }
+            self.filterViewModel?.toolBarStatus.value = FilterViewModel.ToolbarStatus(currentField: .period, isFilled: true)
         }
     }
 
@@ -81,8 +79,10 @@ final class FilterViewController: UIViewController {
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: self, action: nil)
         fixedSpace.width = 16
-        let skip = UIBarButtonItem(title: "건너뛰기", image: nil, primaryAction: nil, menu: nil)
-        let next = UIBarButtonItem(title: "다음", image: nil, primaryAction: nil, menu: nil)
+        let skip = UIBarButtonItem(image: nil, style: .plain, target: self, action: #selector(didTapFirstToolItem))
+        skip.title = "건너뛰기"
+        let next = UIBarButtonItem(image: nil, style: .plain, target: self, action: #selector(didTapFirstToolItem))
+        next.title = "다음"
         next.isEnabled = false
         toolbar.setItems([fixedSpace, skip, flexibleSpace, next, fixedSpace], animated: false)
     }
@@ -106,35 +106,32 @@ final class FilterViewController: UIViewController {
         guard let filterForm = filterForm, let filterViewModel = filterViewModel else {return}
 
         filterViewModel.location.bind(listener: { model in
-            guard let model = model else { return }
             let viewModel = FilterListCellViewModel(model: model)
             filterViewModel.update(type: .location, viewModel: viewModel)
+
             filterForm.reloadData()
         })
 
         filterViewModel.period.bind(listener: { model in
-            guard let model = model else { return }
             let viewModel = FilterListCellViewModel(model: model)
-           filterViewModel.update(type: .period, viewModel: viewModel)
-           filterForm.reloadData()
+            filterViewModel.update(type: .period, viewModel: viewModel)
+            filterForm.reloadData()
         })
 
         filterViewModel.price.bind(listener: { model in
-            guard let model = model else { return }
             let viewModel = FilterListCellViewModel(model: model)
             filterViewModel.update(type: .price, viewModel: viewModel)
             filterForm.reloadData()
         })
 
         filterViewModel.occupants.bind(listener: { model in
-            guard let model = model  else { return }
             let viewModel = FilterListCellViewModel(model: model)
             filterViewModel.update(type: .occupants, viewModel: viewModel)
             filterForm.reloadData()
         })
 
-        filterViewModel.toolBar.bind { field in
-            if field.isfilled {
+        filterViewModel.toolBarStatus.bind { currentField in
+            if currentField.isFilled {
                 self.toolbar.items?[1].title = "지우기"
                 self.toolbar.items?[3].isEnabled = true
             } else {
@@ -142,7 +139,6 @@ final class FilterViewController: UIViewController {
                 self.toolbar.items?[3].isEnabled = false
             }
         }
-
     }
 
 }
@@ -150,6 +146,39 @@ final class FilterViewController: UIViewController {
 extension FilterViewController {
     private func isFilled(field: FilterFields) -> Bool {
         return filterViewModel?.listCellViewModel[field]?.fieldValue != nil ? true:false
+    }
+
+    @objc func didTapFirstToolItem() {
+        guard let currentField = filterViewModel?.toolBarStatus.value.currentField else {return}
+        if isFilled(field: currentField) {
+            switch currentField {
+            case .location:
+                return
+            case .period:
+                filterViewModel?.period.value = nil
+                filterViewModel?.toolBarStatus.value = FilterViewModel.ToolbarStatus(currentField: .period, isFilled: false)
+                let currentVC = self.children.first as? CalendarViewController
+                currentVC?.resetCalendar()
+            case .price:
+                filterViewModel?.price.value = nil
+            case .occupants:
+                filterViewModel?.occupants.value = nil
+            }
+        } else {
+            removeFirstChildViewController()
+        }
+        DispatchQueue.main.async {
+            self.filterForm?.reloadData()
+        }
+    }
+
+    func removeFirstChildViewController() {
+        if self.children.count > 1 {
+            let viewControllers: [UIViewController] = self.children
+            viewControllers.first?.willMove(toParent: nil)
+            viewControllers.first?.removeFromParent()
+            viewControllers.first?.view.removeFromSuperview()
+        }
     }
 }
 

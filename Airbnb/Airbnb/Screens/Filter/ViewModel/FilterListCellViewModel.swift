@@ -11,24 +11,36 @@ struct FilterListCellViewModel {
     let fieldTitle: String
     let fieldValue: String?
 
-    init(model: Location) {
+    init(model: Location?) {
         fieldTitle = FilterFields.location.description
-        fieldValue = model.name
+        fieldValue = model?.name
     }
 
-    init(model: Period) {
+    init(model: Period?) {
         fieldTitle = FilterFields.period.description
-        fieldValue = "\(CustomDateFormatter.PeriodFieldFormatter.string(from: model.start)) - \(CustomDateFormatter.PeriodFieldFormatter.string(from: model.end))"
+        if let model = model {
+            fieldValue = "\(CustomDateFormatter.PeriodFieldFormatter.string(from: model.start)) - \(CustomDateFormatter.PeriodFieldFormatter.string(from: model.end))"
+        } else {
+            fieldValue = nil
+        }
     }
 
-    init(model: PriceRange) {
+    init(model: PriceRange?) {
         fieldTitle = FilterFields.price.description
-        fieldValue = "\(model.min) - \(model.max)"
+        if let model = model {
+            fieldValue = "\(model.min) - \(model.max)"
+        } else {
+            fieldValue = nil
+        }
     }
 
-    init(model: Occupants) {
+    init(model: Occupants?) {
         fieldTitle = FilterFields.occupants.description
-        fieldValue = "게스트 \(model.numberOfGuest)명"
+        if let model = model {
+            fieldValue = "게스트 \(model.numberOfGuest)명"
+        } else {
+            fieldValue = nil
+        }
     }
 
     init(fieldTitle: String, fieldValue: String? = nil) {

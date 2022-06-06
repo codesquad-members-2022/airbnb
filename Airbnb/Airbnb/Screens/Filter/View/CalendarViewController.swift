@@ -132,10 +132,11 @@ final class CalendarViewController: UIViewController {
 
     private func isDayDisabled(_ day: Day) -> Bool {
         guard let date = calendar.date(from: day.components) else {return true}
-        if date < Date() {
-            return true
-        } else {
-            return false
-        }
+        return date < Date() ? true : false
+    }
+
+    func resetCalendar() {
+        calendarSelection = .none
+        calendarView.setContent(makeContent())
     }
 }

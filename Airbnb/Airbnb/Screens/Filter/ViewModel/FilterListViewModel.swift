@@ -9,14 +9,15 @@ import Foundation
 
 final class FilterViewModel {
     struct ToolbarStatus {
-        var isfilled: Bool
+        var currentField: FilterFields?
+        var isFilled: Bool
     }
     var location = Observable<Location?>(nil)
     var period =  Observable<Period?>(nil)
     var price =  Observable<PriceRange?>(nil)
     var occupants = Observable<Occupants?>(nil)
     var listCellViewModel: [FilterFields: FilterListCellViewModel] = [:]
-    var toolBar = Observable<ToolbarStatus>(ToolbarStatus(isfilled: false))
+    var toolBarStatus: Observable<ToolbarStatus> = Observable<ToolbarStatus>(ToolbarStatus(isFilled: false))
 
     init() {
         for field in FilterFields.allCases {
@@ -25,12 +26,13 @@ final class FilterViewModel {
     }
 
     subscript(_ index: IndexPath) -> FilterListCellViewModel? {
-        guard let field = FilterFields.init(rawValue: index.item), let viewModel = listCellViewModel[field] else {return nil}
+        guard let field = FilterFields.init(rawValue: index.item) else {return nil}
+        let viewModel = listCellViewModel[field]
         return viewModel
     }
 
-    func update(type: FilterFields, viewModel: FilterListCellViewModel) {
-        listCellViewModel.updateValue(viewModel, forKey: type)
+    func update(type field: FilterFields, viewModel: FilterListCellViewModel) {
+        listCellViewModel.updateValue(viewModel, forKey: field)
     }
 
 }

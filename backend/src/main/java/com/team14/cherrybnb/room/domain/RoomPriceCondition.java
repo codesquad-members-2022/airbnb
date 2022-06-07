@@ -1,9 +1,6 @@
 package com.team14.cherrybnb.room.domain;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Embeddable;
 import java.math.BigDecimal;
@@ -11,6 +8,7 @@ import java.math.RoundingMode;
 
 @Embeddable
 @Getter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class RoomPriceCondition {

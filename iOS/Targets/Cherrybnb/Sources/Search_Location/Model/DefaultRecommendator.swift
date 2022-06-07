@@ -14,7 +14,7 @@ protocol PlaceRecommanding {
 
 struct DefaultRecommendator: PlaceRecommanding {
 
-    let httpService: HTTPService
+    let httpService: HTTPRecommandService
 
     func recommend(for location: Location, completion: @escaping ([Place]?) -> Void) {
         httpService.getRecommendation(for: location) { places in

@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol HTTPService {
+protocol HTTPRecommandService {
     func getRecommendation(for location: Location, completion: @escaping ([Place]?) -> Void)
 }
 
-struct ResponseSuccessStub: HTTPService {
+struct ResponseSuccessStub: HTTPRecommandService {
 
     let dummy = [
         Place(name: "서울", location: .makeRandomInKR(), estimatedTime: 30 * 60),
@@ -32,7 +32,7 @@ struct ResponseSuccessStub: HTTPService {
     }
 }
 
-struct ResponseFailureStub: HTTPService {
+struct ResponseFailureStub: HTTPRecommandService {
 
     func getRecommendation(for location: Location, completion: @escaping ([Place]?) -> Void) {
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {

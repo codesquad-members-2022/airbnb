@@ -30,7 +30,7 @@ class PriceSettingViewController: UIViewController {
         let priceSuccessStubRequest = SearchManager(httpService: PriceSuccessStub())
         priceSuccessStubRequest.searchPriceFrequency(queryComponent: queryParameter ?? QueryParameter()) { [weak self] price in
             guard let price = price, let self = self else { return }
-            self.priceSettingView.setComponents(price)
+            self.priceSettingView.setContents(price)
         }
         setSubviews()
         setLayout()

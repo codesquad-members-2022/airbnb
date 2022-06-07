@@ -76,7 +76,7 @@ class PriceSettingView: UIView {
 
     }
     
-    func setComponents(_ price: Price) {
+    func setContents(_ price: PriceHistogram) {
         rangeLabel.text = "\(price.min) - \(price.max)"
         averageLabel.text = "평균 1박 요금 가격은 \(price.average)원 입니다."
     }

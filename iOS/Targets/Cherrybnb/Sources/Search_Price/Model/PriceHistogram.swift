@@ -8,8 +8,9 @@
 
 import Foundation
 
+typealias Price = Int
 
-struct Price {
+struct PriceHistogram {
     let min: Int
     let max: Int
     let average: Int

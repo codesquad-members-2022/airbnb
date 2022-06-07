@@ -2,6 +2,7 @@ import React from "react";
 
 import Modal from "@components/common/Modal";
 import Calendar from "@components/SearchBar/Period/Calendar";
+import InputGuest from "@components/SearchBar/Personnel/InputGuest";
 import { useSearchModalState } from "@contexts/SearchModalProvider";
 
 import Period from "./Period";
@@ -13,7 +14,7 @@ import * as S from "./style";
 const SEARCH_BAR = {
   PERIOD: <Calendar />,
   PRICE: <PriceRangeGraph />,
-  PERSONNEL: "PERSONNEL",
+  PERSONNEL: <InputGuest />,
 };
 
 const SearchBar = () => {

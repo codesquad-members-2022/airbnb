@@ -7,23 +7,21 @@ import org.springframework.http.HttpHeaders;
 
 public class JwtUtil {
 
-    private static final String TOKEN_TYPE = "Bearer ";
-
     public static String getAccessToken(HttpServletRequest request) {
         String valueOfAuthorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if (valueOfAuthorizationHeader == null || !valueOfAuthorizationHeader.startsWith(TOKEN_TYPE)) {
+        if (valueOfAuthorizationHeader == null || !valueOfAuthorizationHeader.startsWith(JwtConstant.ACCESS_TOKEN_TYPE)) {
             throw new NoSuchElementException("access 토큰이 존재하지 않습니다.");
         }
 
-        return valueOfAuthorizationHeader.substring(TOKEN_TYPE.length());
+        return valueOfAuthorizationHeader.substring(JwtConstant.ACCESS_TOKEN_TYPE.length());
     }
 
     public static String getRefreshToken(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         String refreshToken = null;
         for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("refresh_token")) {
+            if (cookie.getName().equals(JwtConstant.REFRESH_TOKEN_HEADER_NAME)) {
                 refreshToken = cookie.getValue();
                 break;
             }

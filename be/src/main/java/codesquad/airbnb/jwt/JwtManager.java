@@ -12,22 +12,22 @@ public class JwtManager {
 
     private final RedisTemplate<String, String> redisTemplate;
 
-    public void saveRefreshTokenByMemberId(String memberId, String refreshToken) {
+    public void addRefreshTokenByMemberId(String memberId, String refreshToken) {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         valueOperations.set(memberId, refreshToken, Duration.ofMinutes(30));
     }
 
-    public String getRefreshTokenByMemberId(String memberId) {
+    public String getValueByKey(String key) {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-        return valueOperations.get(memberId);
+        return valueOperations.get(key);
     }
 
-    public void blacklistAccessToken(String accessToken, long expiredTime) {
+    public void blacklistAccessToken(String accessToken, long expireTime) {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-        valueOperations.set(accessToken, "logout", Duration.ofMillis(expiredTime));
+        valueOperations.set(accessToken, JwtConstant.LOGOUT_FLAG, Duration.ofMillis(expireTime));
     }
 
-    public void removeRefreshToken(String memberId) {
-        redisTemplate.delete(memberId);
+    public void removeRefreshToken(String key) {
+        redisTemplate.delete(key);
     }
 }

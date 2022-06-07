@@ -13,15 +13,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class JwtProvider {
 
-    private static final long accessTokenValidityInMilliseconds = 60 * 1000; // access token 유효시간 : 2분
-    private static final long refreshTokenValidityInMilliseconds = 60 * 30 * 1000; // refresh token 유효시간 : 30분
-
     public String createAccessToken(String memberId) {
-        return createToken(memberId, accessTokenValidityInMilliseconds);
+        return createToken(memberId, JwtConstant.ACCESS_TOKEN_DURATION);
     }
 
     public String createRefreshToken(String memberId) {
-        return createToken(memberId, refreshTokenValidityInMilliseconds);
+        return createToken(memberId, JwtConstant.REFRESH_TOKEN_DURATION);
     }
 
     private String createToken(String memberId, long expireTime) {
@@ -31,7 +28,7 @@ public class JwtProvider {
 
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
-        byte[] secretKeyBytes = DatatypeConverter.parseBase64Binary(System.getenv("SECRET_KEY"));
+        byte[] secretKeyBytes = DatatypeConverter.parseBase64Binary(JwtConstant.SECRET_KEY);
         Key signatureKey = new SecretKeySpec(secretKeyBytes, signatureAlgorithm.getJcaName());
 
         return Jwts.builder()

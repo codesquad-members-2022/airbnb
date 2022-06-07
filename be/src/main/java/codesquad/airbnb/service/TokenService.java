@@ -20,7 +20,7 @@ public class TokenService {
     public LoginResponse createToken(String memberId) {
         String accessToken = jwtProvider.createAccessToken(memberId);
         String refreshToken = jwtProvider.createRefreshToken(memberId);
-        jwtManager.saveRefreshTokenByMemberId(memberId, refreshToken);
+        jwtManager.addRefreshTokenByMemberId(memberId, refreshToken);
 
         return LoginResponse.builder()
             .message("로그인이 정상적으로 처리되었습니다.")
@@ -32,7 +32,7 @@ public class TokenService {
 
     public String reissueAccessToken(String refreshToken) {
         String memberId = jwtValidator.getMemberId(refreshToken);
-        String refreshTokenAtRedis = jwtManager.getRefreshTokenByMemberId(memberId);
+        String refreshTokenAtRedis = jwtManager.getValueByKey(memberId);
         if (refreshTokenAtRedis == null) {
             throw new NoSuchElementException("refresh 토큰의 만료기한이 지났습니다. 다시 로그인 해주세요.");
         }

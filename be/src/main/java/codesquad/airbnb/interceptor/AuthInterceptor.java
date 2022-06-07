@@ -1,6 +1,8 @@
 package codesquad.airbnb.interceptor;
 
 import codesquad.airbnb.dto.ResponseMessage;
+import codesquad.airbnb.jwt.JwtConstant;
+import codesquad.airbnb.jwt.JwtManager;
 import codesquad.airbnb.jwt.JwtUtil;
 import codesquad.airbnb.jwt.JwtValidator;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class AuthInterceptor implements HandlerInterceptor {
 
     private final JwtValidator jwtValidator;
+    private final JwtManager jwtManager;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -27,7 +30,8 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         String accessToken = JwtUtil.getAccessToken(request);
-        if (jwtValidator.validateExpirationOfToken(accessToken)) {
+        String isLogout = jwtManager.getValueByKey(accessToken);
+        if (jwtValidator.validateExpirationOfToken(accessToken) && !isLogout.equals(JwtConstant.LOGOUT_FLAG)) {
             return true;
         }
 

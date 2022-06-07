@@ -11,12 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtValidator {
 
-    private final static String SECRET_KEY = System.getenv("SECRET_KEY");
-
     public boolean validateExpirationOfToken(String token) {
         try {
             return !Jwts.parserBuilder()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
+                .setSigningKey(DatatypeConverter.parseBase64Binary(JwtConstant.SECRET_KEY))
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
@@ -30,7 +28,7 @@ public class JwtValidator {
     public String getMemberId(String token) {
         try {
             return Jwts.parserBuilder()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
+                .setSigningKey(DatatypeConverter.parseBase64Binary(JwtConstant.SECRET_KEY))
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
@@ -44,7 +42,7 @@ public class JwtValidator {
 
     public long getExpiration(String accessToken) {
         Date expiration = Jwts.parserBuilder()
-            .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
+            .setSigningKey(DatatypeConverter.parseBase64Binary(JwtConstant.SECRET_KEY))
             .build()
             .parseClaimsJws(accessToken)
             .getBody()

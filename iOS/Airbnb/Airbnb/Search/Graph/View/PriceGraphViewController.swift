@@ -46,8 +46,13 @@ class PriceGraphViewController: CommonTableViewController, CommonViewControllerP
     }
     
     func layout() {
+        
+        let localizedDecimal: (UInt) -> String = {
+            "₩\(NumberFormatter.localizedString(from: $0 as NSNumber, number: .decimal))"
+        }
+        
         let titleLabel = priceLabel("가격 범위")
-        let priceRangeLabel = priceLabel("₩\(NumberFormatter.localizedString(from: 11000, number: .decimal)) - ₩\(NumberFormatter.localizedString(from: 1000000, number: .decimal))")
+        let priceRangeLabel = priceLabel(localizedDecimal(11000) + " - " + localizedDecimal(1000000))
         
         let labelFont: (CGFloat) -> UIFont? = { size in
             UIFont(name: titleLabel.font.fontName, size: size)
@@ -57,9 +62,9 @@ class PriceGraphViewController: CommonTableViewController, CommonViewControllerP
         priceRangeLabel.font = labelFont(17)
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.contentView.safeAreaLayoutGuide).inset(32)
-            make.leading.equalTo(self.contentView.safeAreaLayoutGuide).offset(viewPadding)
-            make.trailing.equalTo(self.contentView.safeAreaLayoutGuide).inset(viewPadding)
+            make.top.equalTo(self.contentView).inset(32)
+            make.leading.equalTo(self.contentView).offset(viewPadding)
+            make.trailing.equalTo(self.contentView).inset(viewPadding)
         }
         
         priceRangeLabel.snp.makeConstraints { make in
@@ -104,6 +109,7 @@ class PriceGraphViewController: CommonTableViewController, CommonViewControllerP
             make.leading.trailing.equalTo(graph)
             make.height.equalTo(20)
         }
+        
         slider.layoutIfNeeded()
         slider.updateLayerFrames()
     }

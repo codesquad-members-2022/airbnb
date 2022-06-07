@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class CityData {
+struct CityData {
     
     var city: String
     var distance: String

@@ -32,6 +32,7 @@ enum Title {
 }
 
 enum Size {
+    static let barHeight = CGFloat(95)
     static let heroImageCell = CGSize(width: 250, height: 500)
 }
 
@@ -68,4 +69,18 @@ enum Layout {
             } else { return travelDestinationLayout }
         }
     }
+}
+
+enum UIComponents {
+    static let navigationBarUnderLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .line
+        return view
+    }()
+    
+    static let backButton: UIBarButtonItem = {
+        let buttonItem = UIBarButtonItem(title: "뒤로", style: .plain, target: nil, action: nil)
+        buttonItem.tintColor = .black
+        return buttonItem
+    }()
 }

@@ -11,6 +11,8 @@ import UIKit
 class CalendarPickerViewCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: CalendarPickerViewCell.self)
 
+    // MARK: - Subviews
+    
     private let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d"
@@ -44,11 +46,19 @@ class CalendarPickerViewCell: UICollectionViewCell {
         return label
     }()
 
+    // MARK: - Initializers
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setSubviews()
         setLayout()
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Public Method
 
     func setContent(_ day: Day) {
         guard day.isWithinMonth else { return }
@@ -67,42 +77,15 @@ class CalendarPickerViewCell: UICollectionViewCell {
             numberLabel.attributedText = normal(dateString)
         }
     }
-
-    private func selected(_ string: String) -> NSAttributedString {
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 18, weight: .medium),
-            .strikethroughStyle: "nil",
-            .foregroundColor: UIColor.white
-        ]
-
-        return NSAttributedString(string: string, attributes: attributes)
-
+    
+    override func prepareForReuse() {
+        numberLabel.text = nil
+        numberLabel.attributedText = nil
+        selectionBackgroundView.isHidden = true
+        inBetweenSelectionBackgroundView.isHidden = true
     }
-
-    private func strikethrough(_ string: String) -> NSAttributedString {
-        let attributes: [NSAttributedString.Key: Any] = [
-            .strikethroughStyle: NSUnderlineStyle.single.rawValue,
-            .strikethroughColor: UIColor.systemGray,
-            .foregroundColor: UIColor.systemGray]
-
-        return NSAttributedString(string: string, attributes: attributes)
-
-    }
-
-    private func normal(_ string: String) -> NSAttributedString {
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 18, weight: .medium),
-            .strikethroughStyle: "nil",
-            .foregroundColor: UIColor.black
-        ]
-
-        return NSAttributedString(string: string, attributes: attributes)
-
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    
+    // MARK: - Private (helper) methods
 
     private func setSubviews() {
         contentView.addSubview(inBetweenSelectionBackgroundView)
@@ -130,11 +113,33 @@ class CalendarPickerViewCell: UICollectionViewCell {
             inBetweenSelectionBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor)
         ])
     }
+    
+    private func selected(_ string: String) -> NSAttributedString {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .medium),
+            .strikethroughStyle: "nil",
+            .foregroundColor: UIColor.white
+        ]
 
-    override func prepareForReuse() {
-        numberLabel.text = nil
-        numberLabel.attributedText = nil
-        selectionBackgroundView.isHidden = true
-        inBetweenSelectionBackgroundView.isHidden = true
+        return NSAttributedString(string: string, attributes: attributes)
+    }
+
+    private func strikethrough(_ string: String) -> NSAttributedString {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .strikethroughStyle: NSUnderlineStyle.single.rawValue,
+            .strikethroughColor: UIColor.systemGray,
+            .foregroundColor: UIColor.systemGray]
+
+        return NSAttributedString(string: string, attributes: attributes)
+    }
+
+    private func normal(_ string: String) -> NSAttributedString {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .medium),
+            .strikethroughStyle: "nil",
+            .foregroundColor: UIColor.black
+        ]
+
+        return NSAttributedString(string: string, attributes: attributes)
     }
 }

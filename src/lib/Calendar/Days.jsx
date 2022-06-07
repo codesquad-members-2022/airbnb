@@ -5,7 +5,7 @@ import {CalendarContext} from "../CalendarContext";
 import {isValidDate} from "../util";
 
 const Days = () => {
-    const {date, calendarWidth, dateStyle, hoverDateStyle, clickedDateStyle, dateClickHandler, periodStyle} = useContext(CalendarContext);
+    const {date, calendarWidth, dateStyle, hoverDateStyle, clickedDateStyle, dateClickHandler, dateHoverHandler, periodStyle} = useContext(CalendarContext);
     const periodStart = periodStyle.period.periodStart;
     const periodEnd = periodStyle.period.periodEnd;
     const weeks = getWeeks(date.year, date.month);
@@ -37,6 +37,7 @@ const Days = () => {
                                     hoverDateStyle={hoverDateStyle}
                                     clickedDateStyle={clickedDateStyle}
                                     onClick={dateClickHandler}
+                                    onMouseOver={dateHoverHandler}
                                     isPeriodStart={isSameDate(periodStart, currentDate)}
                                     isPeriodEnd={isSameDate(periodEnd, currentDate)}
                                     periodStyle={periodStyle.style}

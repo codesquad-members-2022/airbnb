@@ -23,6 +23,7 @@ const Calendar = ({
         color: "white",
     },
     dateClickHandler,
+    dateHoverHandler,
     periodStyle = {
         period: {
             periodStart: null,
@@ -36,8 +37,10 @@ const Calendar = ({
     try {
         if (isValidDate(date)) {
             return (
-                <CalendarContext.Provider value={{date, calendarWidth, dateStyle, hoverDateStyle, clickedDateStyle, dateClickHandler, periodStyle}}>
-                    <CalendarBox calendarWidth={calendarWidth}>
+                <CalendarContext.Provider
+                    value={{date, calendarWidth, dateStyle, hoverDateStyle, clickedDateStyle, dateClickHandler, dateHoverHandler, periodStyle}}
+                >
+                    <CalendarBox>
                         <Month />
                         <Week />
                         <Days />

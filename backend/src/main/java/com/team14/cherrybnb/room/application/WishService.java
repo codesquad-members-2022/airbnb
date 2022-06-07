@@ -40,7 +40,7 @@ public class WishService {
         Room room = roomRepository.findById(wishRequest.getRoomId())
                 .orElseThrow(RuntimeException::new);
 
-        wishRepository.save(new Wish(member, room));
+        wishRepository.save(Wish.of(member, room));
     }
 
     public void removeWish(Long wishId, Member loginMember) {

@@ -8,6 +8,9 @@ import com.team14.cherrybnb.auth.domain.MemberRepository;
 import com.team14.cherrybnb.auth.domain.Role;
 import com.team14.cherrybnb.common.domain.Address;
 import com.team14.cherrybnb.common.util.GeometryUtils;
+import com.team14.cherrybnb.revervation.domain.Reservation;
+import com.team14.cherrybnb.revervation.domain.ReservationRepository;
+import com.team14.cherrybnb.revervation.domain.ReservationState;
 import com.team14.cherrybnb.room.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Point;
@@ -23,6 +26,9 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,8 +36,13 @@ import java.util.List;
 public class DummyDataService {
 
     private final RoomRepository roomRepository;
+
     private final MemberRepository memberRepository;
+
+    private final ReservationRepository reservationRepository;
+
     private final ReviewRepository reviewRepository;
+
     private final WishRepository wishRepository;
 
     @PostConstruct
@@ -39,6 +50,9 @@ public class DummyDataService {
         createHost();
         createGeneral();
         createDummyRoom();
+        createDummyReservation();
+        createDummyReview();
+        createWish();
     }
 
     private void createHost() {
@@ -108,7 +122,7 @@ public class DummyDataService {
             String zipcode = stringBuilder.substring(0, stringBuilder.lastIndexOf(" "));
             Address location = new Address(address, splited[0], splited[1], splited[2], zipcode, point);
             Room dummyRoom = new Room(
-                    name, new RoomInfo(),
+                    name, new RoomInfo((int) (Math.random() * 11) + 1, 10, 5, 2),
                     "dummy room",
                     RoomPriceCondition.of(new BigDecimal(1000), new BigDecimal(2000), new BigDecimal("0.04"), new BigDecimal(14000)),
                     location,
@@ -119,11 +133,49 @@ public class DummyDataService {
         }
     }
 
+    private void createDummyReservation() {
+        List<Room> rooms = roomRepository.findAll();
+        List<Reservation> reservations = new ArrayList<>();
+        List<Member> generals = memberRepository.findByRole(Role.GENERAL);
+        int generalCount = generals.size();
+
+        LocalDateTime checkIn = LocalDateTime.of(2022, Month.JUNE, 1, 0, 0);
+        LocalDateTime checkOut = LocalDateTime.of(2022, Month.JUNE, 7, 0, 0);
+
+        for (Room room : rooms) {
+            int booker = (int) (Math.random() * generalCount) % generalCount;
+            Reservation reservation = Reservation.of(checkIn, checkOut, 1, new BigDecimal(1000), ReservationState.COMPLETE, room, generals.get(booker));
+            reservations.add(reservation);
+        }
+        reservationRepository.saveAll(reservations);
+    }
+
     private void createDummyReview() {
         List<Room> rooms = roomRepository.findAll();
+        List<Review> reviews = new ArrayList<>();
+        List<Member> generals = memberRepository.findByRole(Role.GENERAL);
+
+        int generalCount = generals.size();
+        for (Room room : rooms) {
+            int starRating = (int) (Math.random() * 6);
+            int writerIdx = (int) (Math.random() * generalCount) % generalCount;
+            Review review = Review.of(starRating, generals.get(writerIdx), room);
+            reviews.add(review);
+        }
+        reviewRepository.saveAll(reviews);
     }
 
     private void createWish() {
+        List<Member> generals = memberRepository.findByRole(Role.GENERAL);
+        List<Room> rooms = roomRepository.findAll();
+        List<Wish> wishes = new ArrayList<>();
 
+        int generalCount = generals.size();
+        for (Room room : rooms) {
+            int wisherIdx = (int) (Math.random() * generalCount) % generalCount;
+            Wish wish = Wish.of(generals.get(wisherIdx), room);
+            wishes.add(wish);
+        }
+        wishRepository.saveAll(wishes);
     }
 }

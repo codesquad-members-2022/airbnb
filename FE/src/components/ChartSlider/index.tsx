@@ -1,12 +1,15 @@
 import Chart from '@components/ChartSlider/Chart';
 import RangeSlider from '@components/ChartSlider/RangeSlider';
 import { CANVAS_SIZE, CHART_TYPE } from '@components/SearchBar/constants';
-import { rangeData } from '@data';
+import { usePriceState } from '@lib/hooks/useContext';
 
 const ChartSlider = () => {
+
+  const { priceRange } = usePriceState();
+
   return (
     <>
-      <Chart type={CHART_TYPE.BAR} rangeData={rangeData} {...CANVAS_SIZE} />
+      <Chart type={CHART_TYPE.BAR} rangeData={priceRange} {...CANVAS_SIZE} />
       <RangeSlider />
     </>
   );

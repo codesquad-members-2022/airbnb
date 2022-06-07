@@ -1,14 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import * as S from '@components/ChartSlider/RangeSlider/RangeSlider.style';
 import Icon, { ICON_NAME, ICON_SIZE } from '@components/common/Icon';
 import { usePriceState } from '@lib/hooks/useContext';
 
 const MIN_RANGE = 100000;
-const MIN_PRICE = 12000;
-const MAX_PRICE = 1100000;
 
 const RangeSlider = () => {
+  const [defaultMinPrice, setDefaultMinPrice] = useState(0);
+  const [defaultMaxPrice, setDefaultMaxPrice] = useState(0);
 
   const { minPrice, setMinPrice, maxPrice, setMaxPrice } = usePriceState();
 
@@ -20,7 +20,7 @@ const RangeSlider = () => {
       maxPrice - Number(target.value) >= MIN_RANGE
         ? Math.min(Number(target.value), maxPrice)
         : maxPrice - MIN_RANGE;
-    const priceRatio = (newMinPrice / MAX_PRICE) * 100;
+    const priceRatio = (newMinPrice / defaultMaxPrice) * 100;
     setMinPrice(newMinPrice);
     if (leftThumbRef.current) {
       leftThumbRef.current.style.left = `${priceRatio}%`;
@@ -32,7 +32,7 @@ const RangeSlider = () => {
       Number(target.value) - minPrice >= MIN_RANGE
         ? Math.max(Number(target.value), minPrice)
         : minPrice + MIN_RANGE;
-    const priceRatio = (newMaxPrice / MAX_PRICE) * 100;
+    const priceRatio = (newMaxPrice / defaultMaxPrice) * 100;
     setMaxPrice(newMaxPrice);
     if (rightThumbRef.current) {
       rightThumbRef.current.style.left = `${priceRatio}%`;
@@ -44,6 +44,8 @@ const RangeSlider = () => {
       leftThumbRef.current.style.left = '0%';
       rightThumbRef.current.style.left = '100%';
     }
+    setDefaultMinPrice(defaultMinPrice || minPrice);
+    setDefaultMaxPrice(defaultMaxPrice || maxPrice);
   }, []);
 
   return (
@@ -56,8 +58,18 @@ const RangeSlider = () => {
           <Icon iconName={ICON_NAME.PAUSE} iconSize={ICON_SIZE.LARGE} />
         </S.Thumb>
       </S.RangeContainer>
-      <S.RangeInput min={MIN_PRICE} max={MAX_PRICE} value={minPrice} onChange={handleMinPriceInput} />
-      <S.RangeInput min={MIN_PRICE} max={MAX_PRICE} value={maxPrice} onChange={handleMaxPriceInput} />
+      <S.RangeInput
+        min={defaultMinPrice}
+        max={defaultMaxPrice}
+        value={minPrice}
+        onChange={handleMinPriceInput}
+      />
+      <S.RangeInput
+        min={defaultMinPrice}
+        max={defaultMaxPrice}
+        value={maxPrice}
+        onChange={handleMaxPriceInput}
+      />
     </S.Container>
   );
 };

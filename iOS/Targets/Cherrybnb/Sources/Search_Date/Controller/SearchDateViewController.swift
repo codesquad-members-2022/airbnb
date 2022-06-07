@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 struct QueryParameter {
     var dateRange: Range<Date>?
     var place: Place?
@@ -16,25 +17,22 @@ struct QueryParameter {
 
 class SearchDateViewController: UIViewController {
 
-    let calendarPickerVC = CalendarPickerViewController(baseDate: Date(), numOfMonths: CalendarPickerViewController.defaultNumberOfMonths)
-
-    lazy var queryParameterView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemGray
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
-    var queryParameter: QueryParameter?
-
-    override func viewWillAppear(_ animated: Bool) {
-        view.backgroundColor = .white
+    var queryParameter: QueryParameter = QueryParameter() {
+        didSet {
+            queryParameterStackView.setContent(queryParameter)
+        }
     }
+
+    lazy var queryParameterStackView = QueryParameterStackView(queryParameter: queryParameter)
+
+    lazy var calendarPickerVC = CalendarPickerViewController(baseDate: Date(), numOfMonths: CalendarPickerViewController.defaultNumberOfMonths)
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         setSubviews()
         setLayout()
+        setHandler()
     }
 
     private func setSubviews() {
@@ -42,7 +40,13 @@ class SearchDateViewController: UIViewController {
         view.addSubview(calendarPickerVC.view)
         calendarPickerVC.didMove(toParent: self)
 
-        view.addSubview(queryParameterView)
+        view.addSubview(queryParameterStackView)
+    }
+
+    private func setHandler() {
+        calendarPickerVC.didSelectDate { [weak self] daySelection in
+            self?.queryParameter.dateRange = (daySelection.checkIn?.date, daySelection.checkOut?.date)
+        }
     }
 
     private func setLayout() {
@@ -55,10 +59,10 @@ class SearchDateViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-            queryParameterView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            queryParameterView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            queryParameterView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            queryParameterView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.25)
+            queryParameterStackView.bottomAnchor.constraint(equalTo: view.readableContentGuide.bottomAnchor),
+            queryParameterStackView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
+            queryParameterStackView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
+            queryParameterStackView.heightAnchor.constraint(equalToConstant: 44*4)
         ])
 
     }

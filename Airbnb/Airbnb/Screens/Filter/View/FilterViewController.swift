@@ -54,6 +54,7 @@ final class FilterViewController: UIViewController {
             self.filterViewModel?.period.value = period
             self.filterViewModel?.toolBarStatus.value = FilterViewModel.ToolbarStatus(currentField: .period, isFilled: true)
         }
+
     }
 
     private func setViewController() {
@@ -81,7 +82,7 @@ final class FilterViewController: UIViewController {
         fixedSpace.width = 16
         let skip = UIBarButtonItem(image: nil, style: .plain, target: self, action: #selector(didTapFirstToolItem))
         skip.title = "건너뛰기"
-        let next = UIBarButtonItem(image: nil, style: .plain, target: self, action: #selector(didTapFirstToolItem))
+        let next = UIBarButtonItem(image: nil, style: .plain, target: self, action: #selector(didTapSecondToolItem))
         next.title = "다음"
         next.isEnabled = false
         toolbar.setItems([fixedSpace, skip, flexibleSpace, next, fixedSpace], animated: false)
@@ -108,7 +109,6 @@ final class FilterViewController: UIViewController {
         filterViewModel.location.bind(listener: { model in
             let viewModel = FilterListCellViewModel(model: model)
             filterViewModel.update(type: .location, viewModel: viewModel)
-
             filterForm.reloadData()
         })
 
@@ -149,7 +149,7 @@ extension FilterViewController {
     }
 
     @objc func didTapFirstToolItem() {
-        guard let currentField = filterViewModel?.toolBarStatus.value.currentField else {return}
+        guard let currentField = filterViewModel?.toolBarStatus.value.currentField else {return showNextChildViewController()}
         if isFilled(field: currentField) {
             switch currentField {
             case .location:
@@ -165,14 +165,24 @@ extension FilterViewController {
                 filterViewModel?.occupants.value = nil
             }
         } else {
-            removeFirstChildViewController()
+            showNextChildViewController()
         }
+
+    }
+
+    @objc func didTapSecondToolItem() {
+        showNextChildViewController()
+    }
+
+    private func showNextChildViewController() {
+        removeFirstChildViewController()
+        filterViewModel?.resetToolBarStatus()
         DispatchQueue.main.async {
             self.filterForm?.reloadData()
         }
     }
 
-    func removeFirstChildViewController() {
+    private func removeFirstChildViewController() {
         if self.children.count > 1 {
             let viewControllers: [UIViewController] = self.children
             viewControllers.first?.willMove(toParent: nil)

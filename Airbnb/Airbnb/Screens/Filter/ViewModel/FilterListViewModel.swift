@@ -35,4 +35,8 @@ final class FilterViewModel {
         listCellViewModel.updateValue(viewModel, forKey: field)
     }
 
+    func resetToolBarStatus() {
+        toolBarStatus.value = ToolbarStatus(isFilled: false)
+    }
+
 }

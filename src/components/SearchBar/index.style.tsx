@@ -3,7 +3,7 @@ import { COLOR } from '@/constants';
 
 const Container = styled.div`
   margin: 40px auto 0;
-  padding: 16px 40px;
+  padding: 16px 16px 16px 40px;
   display: flex;
   gap: 24px;
   align-items: center;
@@ -13,19 +13,20 @@ const Container = styled.div`
   max-width: 960px;
 `;
 
-const VerticalLine = styled.div`
-  width: 1px;
-  height: 40px;
-  background: ${COLOR.GREY[400]};
-`;
-
-const SearchBtnWrap = styled.div`
+const SearchButtonWrap = styled.div`
   padding: 8px;
   border-radius: 40px;
   height: 40px;
-  background-color: ${COLOR.PRIMARY};
-  svg {
+  color: ${COLOR.WHITE};
+  background-color: ${({ disabled }: { disabled: boolean }) =>
+    disabled ? `${COLOR.GREY[400]}` : `${COLOR.PRIMARY}`};
+  button {
     padding: 0;
   }
 `;
-export { Container, VerticalLine, SearchBtnWrap };
+
+const SearchText = styled.span`
+  margin: 0 8px;
+  line-height: 24px;
+`;
+export { Container, SearchButtonWrap, SearchText };

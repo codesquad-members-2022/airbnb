@@ -43,6 +43,7 @@
 		1B69F36B283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B69F36A283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift */; };
 		1B756E702848533B003AC0EA /* SearchInfoTrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B756E6F2848533B003AC0EA /* SearchInfoTrackingViewController.swift */; };
 		1B756E72284855CE003AC0EA /* CustomRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B756E71284855CE003AC0EA /* CustomRangeSlider.swift */; };
+		1B7CBD82284F02C5008C31F1 /* SearchInfoTrackingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7CBD81284F02C5008C31F1 /* SearchInfoTrackingModel.swift */; };
 		1B7EB7F32844E5A70078D4A9 /* NetworkServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7EB7F22844E5A70078D4A9 /* NetworkServices.swift */; };
 		1B7EB7F52844E5B10078D4A9 /* NetworkCommonComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7EB7F42844E5B10078D4A9 /* NetworkCommonComponents.swift */; };
 		1B7EB7FD2844F1290078D4A9 /* SearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7EB7FC2844F1290078D4A9 /* SearchUseCase.swift */; };
@@ -129,6 +130,7 @@
 		1B69F36A283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleRowsCollectionViewContainerCell.swift; sourceTree = "<group>"; };
 		1B756E6F2848533B003AC0EA /* SearchInfoTrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoTrackingViewController.swift; sourceTree = "<group>"; };
 		1B756E71284855CE003AC0EA /* CustomRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRangeSlider.swift; sourceTree = "<group>"; };
+		1B7CBD81284F02C5008C31F1 /* SearchInfoTrackingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoTrackingModel.swift; sourceTree = "<group>"; };
 		1B7EB7F22844E5A70078D4A9 /* NetworkServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServices.swift; sourceTree = "<group>"; };
 		1B7EB7F42844E5B10078D4A9 /* NetworkCommonComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCommonComponents.swift; sourceTree = "<group>"; };
 		1B7EB7FC2844F1290078D4A9 /* SearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUseCase.swift; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 				1B807DCD283F540500D6815F /* DTO */,
 				008A2061283F4E220095F7BC /* BackgroundViewController.swift */,
 				1B756E6F2848533B003AC0EA /* SearchInfoTrackingViewController.swift */,
+				1B7CBD81284F02C5008C31F1 /* SearchInfoTrackingModel.swift */,
 				1BDEFD28284E2B6400EBC3DF /* SearchInfoTrackingTableViewDelegate.swift */,
 				1BDEFD22284E203700EBC3DF /* SearchInfoTrackingTableViewDataSource.swift */,
 				1BDEFD24284E207D00EBC3DF /* SearchInfoTrackingTableViewCell.swift */,
@@ -558,6 +561,7 @@
 				00A85F35283B872800EA32E0 /* ReservationModel.swift in Sources */,
 				00A85F3C283B876A00EA32E0 /* WishListViewController.swift in Sources */,
 				1BDEFD23284E203700EBC3DF /* SearchInfoTrackingTableViewDataSource.swift in Sources */,
+				1B7CBD82284F02C5008C31F1 /* SearchInfoTrackingModel.swift in Sources */,
 				00A85F41283B87A300EA32E0 /* MyInfoViewController.swift in Sources */,
 				008A2064283F62910095F7BC /* LocationCollectionViewCell.swift in Sources */,
 				008A2062283F4E220095F7BC /* BackgroundViewController.swift in Sources */,

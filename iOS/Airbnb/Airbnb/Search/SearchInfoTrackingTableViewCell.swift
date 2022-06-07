@@ -40,6 +40,7 @@ class SearchInfoTrackingTableViewCell: UITableViewCell {
     
     private let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
+        formatter.locale = Locale.current
         return formatter
     }()
 
@@ -54,8 +55,8 @@ class SearchInfoTrackingTableViewCell: UITableViewCell {
     }
     
     private func setLayout() {
-        self.contentView.addSubview(titleLabel)
-        self.contentView.addSubview(contentsLabel)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(contentsLabel)
         
         titleLabel.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(11)
@@ -64,37 +65,40 @@ class SearchInfoTrackingTableViewCell: UITableViewCell {
         }
         
         contentsLabel.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(11)
-            $0.trailing.equalToSuperview().offset(11)
-            $0.leading.equalTo(self.titleLabel.snp.trailing)
+            $0.top.bottom.trailing.equalToSuperview().inset(11)
+            $0.leading.equalTo(self.titleLabel.snp.trailing).offset(8)
         }
     }
     
     func setInformation(_ dto: SearchInfo, infoType: SearchInfoType) {
-        titleLabel.text = infoType.rawValue
-        var contents: String?
+        
+        var contents: String = ""
         
         switch infoType {
         case .location:
-            contents = dto.location
+            contents = dto.location ?? ""
         case .date:
-            if let date = dto.checkInDate {
-                contents = dateFormatter.string(from: date)
-            }
+            contents = dto.checkInFormatted ?? ""
+            contents += " - "
             
-            contents = " ~ "
+            if contents == " - " { contents = "" }
             
-            if let date = dto.checkOutDate {
-                if contents == " ~ " { contents = nil }
-                contents = dateFormatter.string(from: date)
-            }
+            contents += dto.checkOutFormatted ?? ""
         case .price:
-            numberFormatter.currencySymbol = dto.priceUnit.rawValue
-            contents = numberFormatter.string(from: NSNumber(value: dto.pricePerDay))
+            contents = dto.lowerPricePerDayFormatted ?? ""
+            contents += " - "
+            
+            if contents == " - " { contents = "" }
+            
+            contents += dto.maximumPricePerDayFormatted ?? ""
+            
         case .headCount:
-            contents = "\(dto.headCount)"
+            if let headCount = dto.headCount, headCount > 0 {
+                contents = "게스트 \(headCount)명"
+            }
         }
         
+        titleLabel.text = infoType.rawValue
         contentsLabel.text = contents
     }
 }

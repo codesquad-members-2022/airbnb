@@ -19,21 +19,23 @@ struct SearchInfo {
     
     /// 체크인 Date 타입(ISO8601)
     var checkInDate: Date?
-    /// 체크인 String 타입(ISO8601)
-    var checkIn: String?
+    var checkInFormatted: String?
     
     /// 체크아웃 Date 타입(ISO8601)
     var checkOutDate: Date?
-    /// 체크아웃 String 타입(ISO8601)
-    var checkOut: String?
+    var checkOutFormatted: String?
     
-    /// 가격
-    var pricePerDay: UInt64 = 0
+    /// 최소 1박 당 가격(사용자가 지정한 값)
+    var lowerPricePerDay: UInt?
+    var lowerPricePerDayFormatted: String?
+    /// 최대 1박 당 가격(사용자가 지정한 값)
+    var maximumPricePerDay: UInt?
+    var maximumPricePerDayFormatted: String?
     /// 가격단위
     var priceUnit: PriceUnit = .Won
     
     /// 숙박인원
-    var headCount: Int = 0
+    var headCount: UInt?
 }
 
 enum PriceUnit: String {
@@ -54,6 +56,15 @@ enum SearchInfoType: String {
         case 2: return .price
         case 3: return .headCount
         default: return nil
+        }
+    }
+    
+    func getIndex() -> Int {
+        switch self {
+        case .location: return 0
+        case .date: return 1
+        case .price: return 2
+        case .headCount: return 3
         }
     }
 }

@@ -31,6 +31,10 @@ class PriceGraphViewController: SearchInfoTrackingViewController, CommonViewCont
         return view
     }()
     
+    private let lowestPrice: UInt = 100000
+    private let highestPrice: UInt = 1000000
+    private let distribution: [Float] = [0.3, 0.4, 0.9, 0.65, 1, 0.65, 0.8, 0.8, 0.75, 0.8, 0.25, 0.5, 0.2, 0.05, 0.23, 0.4, 0.2, 0.0, 0.5, 0.1]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         attribute()
@@ -39,7 +43,8 @@ class PriceGraphViewController: SearchInfoTrackingViewController, CommonViewCont
     }
     
     func attribute() {
-        graph.drawGraph(distribution: [0.3, 0.4, 0.9, 0.65, 1, 0.65, 0.8, 0.8, 0.75, 0.8, 0.25, 0.5, 0.2, 0.05, 0.23, 0.4, 0.2, 0.0, 0.5, 0.1])
+        setPriceRange(lowestPrice, highestPrice)
+        graph.drawGraph(distribution: distribution)
         view.backgroundColor = .systemBackground
         navigationItem.title = "숙소 찾기"
         self.toolbarItems = setUpToolBarItems()
@@ -52,7 +57,7 @@ class PriceGraphViewController: SearchInfoTrackingViewController, CommonViewCont
         }
         
         let titleLabel = priceLabel("가격 범위")
-        let priceRangeLabel = priceLabel(localizedDecimal(11000) + " - " + localizedDecimal(1000000))
+        let priceRangeLabel = priceLabel(localizedDecimal(lowestPrice) + " - " + localizedDecimal(highestPrice) + "+")
         
         let labelFont: (CGFloat) -> UIFont? = { size in
             UIFont(name: titleLabel.font.fontName, size: size)
@@ -141,9 +146,16 @@ class PriceGraphViewController: SearchInfoTrackingViewController, CommonViewCont
     }
     
     @objc func sliderValueChanged(_ sender: CustomRangeSlider) {
-        self.editableLeading?.update(inset: sender.lowerValue * graph.frame.width)
-        self.editableTrailing?.update(inset: (sender.maximumValue - sender.upperValue) * graph.frame.width)
-        super.updateViewConstraints()
+        
+        let lowerSliderValue = Float(sender.lowerValue)
+        let upperSliderValue = Float(sender.upperValue)
+        
+        editableLeading?.update(inset: sender.lowerValue * graph.frame.width)
+        editableTrailing?.update(inset: (sender.maximumValue - sender.upperValue) * graph.frame.width)
+        
+        reloadTableView(dict: [.price: PricePercentageRange(lowPercent: lowerSliderValue, highPercent: upperSliderValue)])
+        
+        updateViewConstraints()
     }
     
     @objc func nextButtonTouchUpInside(_ sender: UIBarButtonItem) {

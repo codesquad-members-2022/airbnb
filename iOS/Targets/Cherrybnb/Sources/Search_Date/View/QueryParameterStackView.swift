@@ -92,7 +92,7 @@ class QueryParameterStackView: UIStackView {
         let dateString = toString(queryParameter?.dateRange)
 
         // TODO: Formatting Logic for price & headCount
-        let priceString = ""
+        let priceString = toString(queryParameter?.priceRange)
         let headCountString = ""
 
         return [
@@ -122,4 +122,11 @@ class QueryParameterStackView: UIStackView {
         default: return ""
         }
     }
+    
+    private func toString(_ priceRange: (Price?, Price?)?) -> String {
+        guard let priceRange = priceRange else { return "" }
+        guard let min = priceRange.0, let max = priceRange.1 else { return ""}
+        return "\(min)₩-\(max)₩"
+    }
+    
 }

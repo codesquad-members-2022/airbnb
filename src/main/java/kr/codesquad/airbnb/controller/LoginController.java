@@ -21,20 +21,11 @@ public class LoginController {
     private final GithubOAuthService githubOAuthService;
     private final JwtProvider jwtProvider;
 
-//    @GetMapping("/login/oauth")
-//    public LoginResponse Login(@RequestParam String token) {
-//        GitHubUser gitHubUser = githubOAuthService.getGithubUser(token);
-//        Members loginMember = memberService.findLoginMember(gitHubUser);
-//        return jwtProvider.createLoginResponse(loginMember);
-//    }
-
-    @GetMapping("/login/oauth/test")
+    @GetMapping("/login/oauth/github")
     public LoginResponse Login(@RequestParam String code){
-        log.debug("코드:{}", code);
         String accessToken = githubOAuthService.getAccessToken(code);
         GitHubUser gitHubUser = githubOAuthService.getGithubUser(accessToken);
         Members loginMember = memberService.findLoginMember(gitHubUser);
         return jwtProvider.createLoginResponse(loginMember);
     }
-
 }

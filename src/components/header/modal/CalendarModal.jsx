@@ -5,9 +5,12 @@ import Calendar from "../../../lib/Calendar";
 import {usePeriodContext} from "../../../contexts/PeriodProvider";
 import {ReactComponent as LeftIcon} from "../../../assets/leftArrow.svg";
 import {ReactComponent as RightIcon} from "../../../assets/rightArrow.svg";
+import {searchBarTab} from "../../../helper/constants";
+import {useSearchBarClickedTabContext} from "../../../contexts/SearchBarClickedTabProvider";
 
 const CalendarModal = ({isClicked}) => {
     const {firstClickedDate, setFirstClickedDate, secondClickedDate, setSecondClickedDate} = usePeriodContext();
+    const {setSearchBarClickedTab} = useSearchBarClickedTabContext();
     const firstDate = {
         year: new Date().getFullYear(),
         month: new Date().getMonth() + 1,
@@ -43,6 +46,7 @@ const CalendarModal = ({isClicked}) => {
                 date: clickedDate,
             });
             setSecondClickedDate(null);
+            setSearchBarClickedTab(searchBarTab.CHECKOUT);
         } else {
             setSecondClickedDate({
                 year: clickedYear,

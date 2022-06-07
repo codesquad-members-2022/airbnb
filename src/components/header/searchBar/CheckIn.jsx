@@ -4,7 +4,12 @@ import {searchBarTab} from "../../../helper/constants";
 import CylindricalBox from "./CylindricalBox";
 
 const CheckIn = () => {
-    const {firstClickedDate} = usePeriodContext();
+    const {firstClickedDate, setFirstClickedDate, setSecondClickedDate} = usePeriodContext();
+    const crossClickHandler = (e) => {
+        setFirstClickedDate(null);
+        setSecondClickedDate(null);
+        e.stopPropagation();
+    };
 
     return (
         <CylindricalBox
@@ -13,6 +18,7 @@ const CheckIn = () => {
             style={checkInStyle}
             partId={searchBarTab.CHECKIN}
             description={firstClickedDate && `${firstClickedDate.month}월 ${firstClickedDate.date}일`}
+            crossClickHandler={crossClickHandler}
         />
     );
 };

@@ -10,7 +10,7 @@ import {useSearchBarClickedTabContext} from "../../../contexts/SearchBarClickedT
 
 const CalendarModal = ({isClicked}) => {
     const {firstClickedDate, setFirstClickedDate, secondClickedDate, setSecondClickedDate} = usePeriodContext();
-    const {setSearchBarClickedTab} = useSearchBarClickedTabContext();
+    const {searchBarClickedTab, setSearchBarClickedTab} = useSearchBarClickedTabContext();
     const firstDate = {
         year: new Date().getFullYear(),
         month: new Date().getMonth() + 1,
@@ -33,26 +33,26 @@ const CalendarModal = ({isClicked}) => {
         },
     };
     const dateClickHandler = (e) => {
-        const clickedYear = e.target.dataset.year;
-        const clickedMonth = e.target.dataset.month;
-        const clickedDate = e.target.dataset.date;
-        if (
-            !firstClickedDate ||
-            new Date(firstClickedDate.year, firstClickedDate.month - 1, firstClickedDate.date) > new Date(clickedYear, clickedMonth - 1, clickedDate)
-        ) {
-            setFirstClickedDate({
-                year: clickedYear,
-                month: clickedMonth,
-                date: clickedDate,
-            });
-            setSecondClickedDate(null);
-            setSearchBarClickedTab(searchBarTab.CHECKOUT);
-        } else {
-            setSecondClickedDate({
-                year: clickedYear,
-                month: clickedMonth,
-                date: clickedDate,
-            });
+        const clickedDate = {
+            year: e.target.dataset.year,
+            month: e.target.dataset.month,
+            date: e.target.dataset.date,
+        };
+
+        switch (searchBarClickedTab) {
+            case searchBarTab.CHECKIN:
+                setFirstClickedDate(clickedDate);
+                secondClickedDate && isPrevious(secondClickedDate, clickedDate) && setSecondClickedDate(null);
+                setSearchBarClickedTab(searchBarTab.CHECKOUT);
+                break;
+            case searchBarTab.CHECKOUT:
+                setSecondClickedDate(clickedDate);
+                if (firstClickedDate && isPrevious(clickedDate, firstClickedDate)) {
+                    setFirstClickedDate(clickedDate);
+                    setSecondClickedDate(null);
+                }
+                !firstClickedDate && setSearchBarClickedTab(searchBarTab.CHECKIN);
+                break;
         }
     };
 
@@ -108,6 +108,10 @@ const getPreviousMonth = (date) => {
     const year = date.year;
     const month = date.month;
     return {year: year, month: month - 1};
+};
+
+const isPrevious = (date1, date2) => {
+    return new Date(date1.year, date1.month - 1, date1.date) < new Date(date2.year, date2.month - 1, date2.date);
 };
 
 const CalendarModalBox = styled(Modal)`

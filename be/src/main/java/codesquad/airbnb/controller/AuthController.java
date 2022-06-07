@@ -24,29 +24,41 @@ public class AuthController {
 
     @GetMapping("/api/github-login")
     public ResponseEntity<LoginResponse> login(HttpServletResponse response, @RequestParam String code) {
-        String email = OAuthService.authorizeForThirdParty(code);
-        LoginResponse loginResponse = tokenService.createToken(email);
+        Long memberId = OAuthService.authorizeForThirdParty(code);
+        LoginResponse loginResponse = tokenService.createToken(String.valueOf(memberId));
 
         response.addHeader("access_token", loginResponse.getAccessToken());
-        Cookie cookieWithRefreshToken = createCookieWithRefreshToken(loginResponse.getRefreshToken());
-        response.addCookie(cookieWithRefreshToken);
+        response.addCookie(createCookieWithRefreshToken(loginResponse.getRefreshToken()));
 
         return new ResponseEntity<>(loginResponse, HttpStatus.OK);
-    }
-
-    @GetMapping("/api/logout")
-    public ResponseEntity<ResponseMessage> logout(HttpServletRequest request) {
-        String refreshToken = JwtUtil.getRefreshToken(request);
-        tokenService.removeToken(refreshToken);
-        ResponseMessage message = new ResponseMessage(HttpStatus.OK, "로그아웃이 처리되었습니다.");
-        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     private Cookie createCookieWithRefreshToken(String refreshToken) {
         Cookie cookie = new Cookie("refresh_token", refreshToken);
         cookie.setPath("/api");
-        cookie.setSecure(true);
         cookie.setHttpOnly(true);
         return cookie;
+    }
+
+    @GetMapping("/api/access-token/reissue")
+    public ResponseEntity<ResponseMessage> reissue(HttpServletRequest request, HttpServletResponse response) {
+        String refreshToken = JwtUtil.getRefreshToken(request);
+        String renewedAccessToken = tokenService.reissueAccessToken(refreshToken);
+
+        response.addHeader("access_token", renewedAccessToken);
+        ResponseMessage message = new ResponseMessage(HttpStatus.OK, "access 토큰이 갱신되었습니다.");
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @GetMapping("/api/logout")
+    public ResponseEntity<ResponseMessage> logout(HttpServletRequest request) {
+        String accessToken = JwtUtil.getAccessToken(request);
+        String refreshToken = JwtUtil.getRefreshToken(request);
+
+        tokenService.invalidateToken(accessToken, refreshToken);
+        ResponseMessage message = new ResponseMessage(HttpStatus.OK, "로그아웃이 처리되었습니다.");
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }

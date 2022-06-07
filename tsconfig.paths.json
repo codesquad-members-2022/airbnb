@@ -10,7 +10,7 @@
       "@assets/*": ["assets/*"],
       "@utils/*": ["utils/*"],
       "@hooks/*": ["hooks/*"],
-      "@types/*": ["types/*"]
+      "_types/*": ["types/*"]
     }
   }
 }

@@ -9,6 +9,7 @@ target 'Cherrybnb' do
  
   pod 'Swinject'
   pod 'SwiftLint'
+  pod 'MultiSlider'
 
   target 'CherrybnbTests' do
     inherit! :search_paths

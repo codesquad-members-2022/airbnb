@@ -46,6 +46,10 @@ public class Reservation {
     @JoinColumn(name = "accommodation_id")
     private Accommodation accommodation;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Embedded
     private ReservationFee reservationFee;
 

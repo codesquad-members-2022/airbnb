@@ -24,11 +24,8 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_id")
-    private List<Reservation> reservations = new ArrayList<>();
 
     @Column(nullable = false)
     private String username;

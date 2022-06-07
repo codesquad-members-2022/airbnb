@@ -17,12 +17,6 @@ final class SearchViewController: UIViewController {
     
     private lazy var rightButton = UIBarButtonItem(title: "지우기", style: .plain, target: self, action: #selector(didTabRemoveButton))
 
-    private let navigationBarUnderLineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .line
-        return view
-    }()
-    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 21, weight: .bold)
@@ -46,6 +40,7 @@ final class SearchViewController: UIViewController {
         title = "숙소 찾기"
         view.backgroundColor = .white
         
+        navigationItem.backBarButtonItem = UIComponents.backButton
         navigationItem.rightBarButtonItem = rightButton
         navigationItem.searchController = searchController
         navigationItem.searchController?.searchBar.becomeFirstResponder() // First Responder 로 지정
@@ -60,16 +55,17 @@ final class SearchViewController: UIViewController {
         tableView.register(CityViewCell.self, forCellReuseIdentifier: CityViewCell.identifier)
         tableView.register(LocationTableViewCell.self, forCellReuseIdentifier: LocationTableViewCell.identifier)
         tableView.dataSource = dataSource
+        tableView.delegate = self
         
         searchCompleter.delegate = self
     }
     
     private func layout() {
-        view.addSubview(navigationBarUnderLineView)
+        view.addSubview(UIComponents.navigationBarUnderLineView)
         view.addSubview(titleLabel)
         view.addSubview(tableView)
         
-        navigationBarUnderLineView.snp.makeConstraints {
+        UIComponents.navigationBarUnderLineView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(1)
         }
@@ -123,5 +119,15 @@ extension SearchViewController: MKLocalSearchCompleterDelegate {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
+    }
+}
+
+extension SearchViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.selectionStyle = .none
+
+        let nextViewController = CalendarViewController()
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
 }

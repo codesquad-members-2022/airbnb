@@ -11,12 +11,6 @@ import SnapKit
 final class HomeViewController: UIViewController {
 
     private let dataSource = HomeCollectionViewDataSource()
-    
-    private let backButton: UIBarButtonItem = {
-        let buttonItem = UIBarButtonItem(title: "뒤로", style: .plain, target: nil, action: nil)
-        buttonItem.tintColor = .black
-        return buttonItem
-    }()
 
     private let searchBarController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -52,7 +46,7 @@ final class HomeViewController: UIViewController {
         
         navigationItem.searchController = searchBarController
         navigationItem.titleView = logoImageView
-        navigationItem.backBarButtonItem = backButton
+        navigationItem.backBarButtonItem = UIComponents.backButton
         navigationItem.hidesSearchBarWhenScrolling = false
         
         searchBarController.searchBar.delegate = self
@@ -79,7 +73,7 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        let searchViewController = SearchViewController()
-        navigationController?.pushViewController(searchViewController, animated: true)
+        let nextViewController = SearchViewController()
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
 }

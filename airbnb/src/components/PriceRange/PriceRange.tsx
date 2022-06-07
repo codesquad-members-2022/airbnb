@@ -8,7 +8,6 @@ import {
   PriceRangePrice,
   PriceRangeCaption,
 } from './PriceRange_styled';
-
 const sampleData = [
   { percentage: 0, price: 10500, number: 100 },
   { percentage: 0, price: 20000, number: 20 },
@@ -24,19 +23,6 @@ const sampleData = [
   { percentage: 0, price: 55000, number: 20 },
   { percentage: 0, price: 12300, number: 35 },
 ];
-
-function valuetext(price: number) {
-  return `${price}°C`;
-}
-
-// function taggingPercentage(arr: any[]) {
-//   let newArr = [];
-//   for (let i = 1; i <= arr.length; i++) {
-//     arr[i].percentage = i / arr.length;
-//     newArr.push(arr[i]);
-//   }
-//   return newArr;
-// }
 
 function PriceRangeModal() {
   const [value, setValue] = useState([0, 100]); // Range Slider의 percentage 계산.
@@ -63,42 +49,42 @@ function PriceRangeModal() {
   };
 
   const recalculatePrice = () => {
+    // 사용자가 넣은 인풋 안에서 최저 가격과 최고 가격을 구한다.
     const minPercentage = value[0] / 100;
     const maxPercentage = value[1] / 100;
 
-    // sortedList.reduce((pre, cur) => {
-    //   pre.percentage > minPercentage ? pre.price : '';
-    // });
-    const newMinPriceOptions = sortedList
+    const newMinPriceOptions = sortedList // 최저 가격을 구하기 위해 슬라이더의 최소값보다 큰 값들의 배열을 구한다.
       .filter(function (e) {
         return e.percentage > minPercentage;
       })
       .map((a) => a.price);
-    const newMaxPriceOptions = sortedList
+    const newMaxPriceOptions = sortedList // 최고 가격을 구하기 위해 슬라이더의 최대값보다 작은 값들의 배열을 구한다.
       .filter(function (e) {
         return e.percentage < maxPercentage;
       })
       .map((a) => a.price);
 
-    console.log('newmin..' + newMinPriceOptions);
-    console.log('newmax..' + newMaxPriceOptions);
-
     const newMinPrice = newMinPriceOptions[0];
     const newMaxPrice = newMaxPriceOptions[newMaxPriceOptions.length - 1];
 
-    console.log('newminPrice..' + newMinPrice);
-    console.log('newmaxPrice..' + newMaxPrice);
+    // 최저 가격과 최고 가격 사이의 평균을 구한다.
+    const theListForNewAverageCalculationStep1 = newMinPriceOptions.filter(
+      (e) => newMaxPriceOptions.includes(e),
+    );
+    const theListForNewAverageCalculationStep2 =
+      theListForNewAverageCalculationStep1.reduce((pre, cur) => pre + cur);
+    const theListForNewAverageCalculationStep3 = Math.floor(
+      theListForNewAverageCalculationStep2 /
+        theListForNewAverageCalculationStep1.length,
+    ); // 최저 가격과 최고 가격 사이에 있는 값들의 교집합을 구한 후 평균을 구한다. (엄밀히 말하면 숙소의 개수가 반영되지 않았기 때문에 정확한 평균이 아니지만... 여기까지 하는 것으로 한다.)
 
     setPrice([newMinPrice, newMaxPrice]);
-  };
-
-  const result = () => {
-    console.log(priceList);
-    console.log(sortedList);
+    setNewAverage(theListForNewAverageCalculationStep3);
   };
 
   useEffect(() => {
     setPrice([priceList[0], priceList[priceList.length - 1]]);
+    setNewAverage(average);
   }, []);
 
   return (
@@ -109,7 +95,7 @@ function PriceRangeModal() {
           {price[0]}원 - {price[1]}원
         </PriceRangePrice>
         <PriceRangeCaption>
-          평균 1박 요금은 {average}원입니다.
+          평균 1박 요금은 {newAverage}원입니다.
         </PriceRangeCaption>
         <Box
           sx={{
@@ -118,7 +104,6 @@ function PriceRangeModal() {
           }}
         >
           <BarChart
-            color="#bfbfbf"
             data={sortedList}
             height="150px"
             width="300px"
@@ -138,7 +123,7 @@ function PriceRangeModal() {
             value={value}
             onChange={handleChange}
             valueLabelDisplay="auto"
-            getAriaValueText={valuetext}
+            valueLabelFormat={(e) => <span>상위 {100 - e}%의 가격입니다.</span>}
           />
         </Box>
       </PriceRangeContainer>

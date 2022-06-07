@@ -31,6 +31,7 @@ function BarChart(props) {
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
     if (canvas) {
       canvas.width = CANVAS_WIDTH;
       canvas.height = CANVAS_HEIGHT;

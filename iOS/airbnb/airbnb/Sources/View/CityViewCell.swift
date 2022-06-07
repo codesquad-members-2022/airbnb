@@ -46,12 +46,6 @@ final class CityViewCell: UITableViewCell {
         fatalError("Init with coder is unavailable")
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        contentView.layer.backgroundColor = selected ? UIColor.gray5.cgColor : UIColor.white.cgColor
-    }
-    
     private func layout() {
         contentView.addSubview(cityImageView)
         contentView.addSubview(stackView)

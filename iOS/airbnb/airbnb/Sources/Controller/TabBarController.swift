@@ -8,8 +8,6 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-    
-    private let tabBarHeight: CGFloat = 95
    
     private let searchVC = UINavigationController(rootViewController: HomeViewController())
     private let wishListVC = UINavigationController(rootViewController: WishListViewController())
@@ -25,8 +23,8 @@ final class TabBarController: UITabBarController {
         super.viewDidLayoutSubviews()
         
         var tabBarFrame = tabBar.frame
-        tabBarFrame.size.height = tabBarHeight
-        tabBarFrame.origin.y = view.frame.size.height - tabBarHeight
+        tabBarFrame.size.height = Size.barHeight
+        tabBarFrame.origin.y = view.frame.size.height - Size.barHeight
         tabBar.frame = tabBarFrame
     }
     

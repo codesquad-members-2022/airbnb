@@ -20,8 +20,10 @@
 		73571FD0283E1706002F411F /* MyReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73571FCF283E1706002F411F /* MyReservationViewController.swift */; };
 		73571FD4283F4621002F411F /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73571FD3283F4621002F411F /* Common.swift */; };
 		73571FD82840605D002F411F /* RecommendedTravelDestinationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73571FD72840605D002F411F /* RecommendedTravelDestinationCell.swift */; };
+		736ADC61284F1936000B5609 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736ADC60284F1936000B5609 /* CalendarViewController.swift */; };
 		7388ABE128488D690036D8CE /* HomeCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7388ABE028488D690036D8CE /* HomeCollectionViewDataSource.swift */; };
 		7388ABEB2848ED230036D8CE /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7388ABEA2848ED230036D8CE /* LocationTableViewCell.swift */; };
+		738CB7EB284EFD8C0009B17D /* HorizonCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 738CB7EA284EFD8C0009B17D /* HorizonCalendar */; };
 		73B579C3284098C50043465D /* CollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B579C2284098C50043465D /* CollectionHeaderView.swift */; };
 		73B9A767283C7EE8003A8C25 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B9A766283C7EE8003A8C25 /* AppDelegate.swift */; };
 		73B9A769283C7EE8003A8C25 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B9A768283C7EE8003A8C25 /* SceneDelegate.swift */; };
@@ -69,6 +71,7 @@
 		73571FCF283E1706002F411F /* MyReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReservationViewController.swift; sourceTree = "<group>"; };
 		73571FD3283F4621002F411F /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		73571FD72840605D002F411F /* RecommendedTravelDestinationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedTravelDestinationCell.swift; sourceTree = "<group>"; };
+		736ADC60284F1936000B5609 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		7388ABE028488D690036D8CE /* HomeCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		7388ABEA2848ED230036D8CE /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		73B579C2284098C50043465D /* CollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionHeaderView.swift; sourceTree = "<group>"; };
@@ -95,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				738CB7EB284EFD8C0009B17D /* HorizonCalendar in Frameworks */,
 				CB4B17F8D1F87148B26CE515 /* Pods_airbnb.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -155,6 +159,7 @@
 				73571FCD283E16E9002F411F /* WishListViewController.swift */,
 				73571FCF283E1706002F411F /* MyReservationViewController.swift */,
 				73202EEF2844B63B006D53AE /* SearchViewController.swift */,
+				736ADC60284F1936000B5609 /* CalendarViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -283,6 +288,9 @@
 			dependencies = (
 			);
 			name = airbnb;
+			packageProductDependencies = (
+				738CB7EA284EFD8C0009B17D /* HorizonCalendar */,
+			);
 			productName = airbnb;
 			productReference = 73B9A763283C7EE8003A8C25 /* airbnb.app */;
 			productType = "com.apple.product-type.application";
@@ -358,6 +366,9 @@
 				Base,
 			);
 			mainGroup = 73B9A75A283C7EE8003A8C25;
+			packageReferences = (
+				738CB7E9284EFD8C0009B17D /* XCRemoteSwiftPackageReference "HorizonCalendar" */,
+			);
 			productRefGroup = 73B9A764283C7EE8003A8C25 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -522,6 +533,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				731674C8284E095100ABC303 /* SearchTableViewDataSource.swift in Sources */,
+				736ADC61284F1936000B5609 /* CalendarViewController.swift in Sources */,
 				73571FD0283E1706002F411F /* MyReservationViewController.swift in Sources */,
 				73202EFA2845DAB6006D53AE /* CityData.swift in Sources */,
 				73571FD82840605D002F411F /* RecommendedTravelDestinationCell.swift in Sources */,
@@ -875,6 +887,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		738CB7E9284EFD8C0009B17D /* XCRemoteSwiftPackageReference "HorizonCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/HorizonCalendar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		738CB7EA284EFD8C0009B17D /* HorizonCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 738CB7E9284EFD8C0009B17D /* XCRemoteSwiftPackageReference "HorizonCalendar" */;
+			productName = HorizonCalendar;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 73B9A75B283C7EE8003A8C25 /* Project object */;
 }

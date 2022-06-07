@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class PriceGraphViewController: CommonTableViewController, CommonViewControllerProtocol {
+class PriceGraphViewController: SearchInfoTrackingViewController, CommonViewControllerProtocol {
     
     private let viewPadding: CGFloat = 16
     

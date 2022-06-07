@@ -1,5 +1,5 @@
 //
-//  CommonTableViewCell.swift
+//  SearchInfoTrackingTableViewCell.swift
 //  Airbnb
 //
 //  Created by 백상휘 on 2022/06/06.
@@ -7,10 +7,10 @@
 
 import UIKit
 
-class CommonTableViewCell: UITableViewCell {
+class SearchInfoTrackingTableViewCell: UITableViewCell {
     
     static var reuseIdentifier: String {
-        return String(describing: CommonTableViewCell.self)
+        return String(describing: SearchInfoTrackingTableViewCell.self)
     }
     
     private let titleLabel: UILabel = {

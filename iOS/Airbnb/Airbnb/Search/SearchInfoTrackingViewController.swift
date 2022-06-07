@@ -1,5 +1,5 @@
 //
-//  CommonTableViewController.swift
+//  SearchInfoTrackingViewController.swift
 //  Airbnb
 //
 //  Created by 백상휘 on 2022/06/02.
@@ -8,11 +8,11 @@
 import UIKit
 import SnapKit
 
-class CommonTableViewController: BackgroundViewController {
+class SearchInfoTrackingViewController: BackgroundViewController {
     
     let tableView = UITableView()
     let contentView = UIView()
-    private var dataSource: CommonTableViewDataSource?
+    private var dataSource: SearchInfoTrackingTableViewDataSource?
     
     private let cellHeight: CGFloat = 44
     
@@ -39,8 +39,8 @@ class CommonTableViewController: BackgroundViewController {
         
         contentView.layoutIfNeeded()
         
-        tableView.register(CommonTableViewCell.self, forCellReuseIdentifier: CommonTableViewCell.reuseIdentifier)
-        dataSource = CommonTableViewDataSource()
+        tableView.register(SearchInfoTrackingTableViewCell.self, forCellReuseIdentifier: SearchInfoTrackingTableViewCell.reuseIdentifier)
+        dataSource = SearchInfoTrackingTableViewDataSource()
         tableView.dataSource = dataSource
         tableView.rowHeight = cellHeight
     }

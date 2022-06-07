@@ -1,5 +1,5 @@
 //
-//  CommonTableViewDataSource.swift
+//  SearchInfoTrackingTableViewDataSource.swift
 //  Airbnb
 //
 //  Created by 백상휘 on 2022/06/06.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CommonTableViewDataSource: NSObject, UITableViewDataSource {
+class SearchInfoTrackingTableViewDataSource: NSObject, UITableViewDataSource {
     
     var searchInfo = SearchInfo()
     
@@ -16,7 +16,7 @@ class CommonTableViewDataSource: NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CommonTableViewCell.reuseIdentifier, for: indexPath) as? CommonTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchInfoTrackingTableViewCell.reuseIdentifier, for: indexPath) as? SearchInfoTrackingTableViewCell else {
             return UITableViewCell()
         }
         

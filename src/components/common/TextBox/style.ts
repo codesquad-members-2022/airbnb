@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-export const TextBox = styled.div`
+export const TextBox = styled.div<{ styles?: string }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -8,6 +8,12 @@ export const TextBox = styled.div`
   height: 44px;
   margin-right: 24px;
   gap: 10px;
+
+  ${({ styles }) =>
+    styles &&
+    css`
+      ${styles}
+    `}
 `;
 
 export const TextBoxLabel = styled.div`

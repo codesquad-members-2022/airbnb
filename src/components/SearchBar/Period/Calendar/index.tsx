@@ -15,8 +15,8 @@ import * as S from "./style";
 // FIXME 새로고침 될 때 초기화가 되는 걸까?
 const today = new Date();
 
-const initSlideInfo: { translateX: number; direction: DirectionType } = {
-  translateX: -HALF_MOVE_POINT,
+const initSlideInfo: { moveX: number; direction: DirectionType } = {
+  moveX: -HALF_MOVE_POINT,
   direction: null,
 };
 // TODO 캘린더 슬라이드 라이브러리 만들어보기
@@ -33,7 +33,7 @@ const Calendar = () => {
   const handleMoveCalendar = useCallback((movePoint: number, direction: DirectionType) => {
     if (!isMovePending.current) {
       isMovePending.current = true;
-      setSlideInfo(({ translateX }) => ({ translateX: translateX + movePoint, direction: direction }));
+      setSlideInfo(({ moveX }) => ({ moveX: moveX + movePoint, direction: direction }));
     }
   }, []);
 
@@ -50,14 +50,14 @@ const Calendar = () => {
 
   const getCalendarPageArr = useCallback(
     (CALENDAR_PAGE: number) =>
-      Array.from({ length: CALENDAR_PAGE + 2 }, (_, i) => getTodayDatePassByMonth(pageIndex.current + i - 1)),
+      Array.from({ length: CALENDAR_PAGE }, (_, i) => getTodayDatePassByMonth(pageIndex.current + i - 1)),
     [getTodayDatePassByMonth],
   );
 
   return (
     <S.Calendar>
       <Icon onClick={() => handleMoveCalendar(HALF_MOVE_POINT, "FORWARD")} iconName={PREV_BUTTON} iconSize="small" />
-      <S.SlideList translateX={slideInfo.translateX} direction={slideInfo.direction} onTransitionEnd={handleMoveEnd}>
+      <S.SlideList movePoint={slideInfo.moveX} direction={slideInfo.direction} onTransitionEnd={handleMoveEnd}>
         {getCalendarPageArr(CALENDAR_PAGE).map((currDate) => (
           <CalendarPage key={currDate.getTime()} currDate={currDate} />
         ))}

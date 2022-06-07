@@ -15,5 +15,7 @@ export enum CalendarTypes {
 export const CANVAS_HEIGHT = 100;
 export const CANVAS_WIDTH = 365;
 export const BUTTON_RADIUS = 12;
-export const CALENDAR_PAGE = 2;
+
+// Calendar
+export const CALENDAR_PAGE = 4;
 export const HALF_MOVE_POINT = 50;

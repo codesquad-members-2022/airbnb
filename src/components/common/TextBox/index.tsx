@@ -5,7 +5,7 @@ import * as S from "./style";
 type TextBoxProps = {
   label: string;
   placeholder: string;
-  textContent: string | null;
+  textContent?: string | null;
   styles?: string;
 };
 

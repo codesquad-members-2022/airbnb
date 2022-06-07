@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 import { useCalendarDispatch, useCalendarState } from "@contexts/CalendarProvider";
 import { getStyleDateTarget, isPast, isSunday } from "@utils/calendar";
@@ -14,29 +14,32 @@ const DateItem = ({ currDate, date }: DateItemProps) => {
   const { checkIn, checkOut, checkHover } = useCalendarState();
   const { onCheckIn, onCheckOut, onCheckHover, onCheckRemove } = useCalendarDispatch();
 
-  const handleCheckDate = (dateData: Date) => {
-    if (isPast(dateData)) {
-      return;
-    }
+  const handleCheckDate = useCallback(
+    (dateData: Date) => {
+      if (isPast(dateData)) {
+        return;
+      }
 
-    switch (true) {
-      case !checkIn:
-        onCheckIn(dateData);
-        break;
+      switch (true) {
+        case !checkIn:
+          onCheckIn(dateData);
+          break;
 
-      case !!checkIn && dateData < checkIn:
-        onCheckRemove();
-        onCheckIn(dateData);
-        break;
+        case !!checkIn && dateData < checkIn:
+          onCheckRemove();
+          onCheckIn(dateData);
+          break;
 
-      case !!checkIn:
-        onCheckOut(dateData);
-        break;
+        case !!checkIn:
+          onCheckOut(dateData);
+          break;
 
-      default:
-        throw new Error("Invalid dateClick");
-    }
-  };
+        default:
+          throw new Error("Invalid dateClick");
+      }
+    },
+    [checkIn, onCheckIn, onCheckOut, onCheckRemove],
+  );
 
   const handleHoverDate = (dateData: Date) => {
     if (!checkIn || checkOut) {

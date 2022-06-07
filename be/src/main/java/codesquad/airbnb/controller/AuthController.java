@@ -22,7 +22,7 @@ public class AuthController {
     private final OAuthService OAuthService;
     private final TokenService tokenService;
 
-    @GetMapping("/api/github-login")
+    @GetMapping("/api/login")
     public ResponseEntity<LoginResponse> login(HttpServletResponse response, @RequestParam String code) {
         Long memberId = OAuthService.authorizeForThirdParty(code);
         LoginResponse loginResponse = tokenService.createToken(String.valueOf(memberId));

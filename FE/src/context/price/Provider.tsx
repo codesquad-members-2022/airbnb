@@ -11,7 +11,7 @@ interface PriceProviderTypes {
   children: JSX.Element;
 }
 
-export const PriceContext = React.createContext<PriceContextTypes>({} as PriceContextTypes);
+export const PriceContext = React.createContext<PriceContextTypes | null>(null);
 
 export const PriceProvider = ({ children }: PriceProviderTypes) => {
   const [minPrice, setMinPrice] = useState(0);

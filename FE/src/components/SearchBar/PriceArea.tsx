@@ -1,12 +1,13 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import PriceModal from '@components/SearchBar/Modal/PriceModal';
 import * as S from '@components/SearchBar/SearchBar.style';
 import { AREA_TYPE, NO_CONTENT, SEARCH_BAR_SIZE } from '@components/SearchBar/constants';
 import Icon, { ICON_NAME, ICON_SIZE } from '@components/common/Icon';
-import { PriceContext, PriceContextTypes, PriceProvider } from '@context/price/Provider';
+import { PriceProvider } from '@context/price/Provider';
 import { defaultPrice } from '@data';
 import WithProvider from '@hoc/WithProvider';
+import { usePriceState } from '@lib/hooks/useContext';
 import useModal from '@lib/hooks/useModal';
 import { formatPrice } from '@lib/utils';
 
@@ -19,7 +20,7 @@ const PriceArea = ({ size }: PriceAreaTypes) => {
   const [containerRef, element] = useModal();
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const { minPrice, maxPrice } = useContext<PriceContextTypes>(PriceContext);
+  const { minPrice, maxPrice } = usePriceState();
   const isPriceExist = minPrice !== defaultPrice.min || maxPrice !== defaultPrice.max;
 
   const priceContent = isPriceExist

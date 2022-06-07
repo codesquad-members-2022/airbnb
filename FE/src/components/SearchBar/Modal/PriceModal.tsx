@@ -1,9 +1,9 @@
-import React, { RefObject, useContext } from 'react';
+import React, { RefObject } from 'react';
 
 import RangeSlider from '@components/ChartSlider';
 import * as S from '@components/SearchBar/Modal/Modal.style';
 import Modal, { MODAL_POSITION } from '@components/common/Modal';
-import { PriceContext, PriceContextTypes } from '@context/price/Provider';
+import { usePriceState } from '@lib/hooks/useContext';
 import { formatPrice } from '@lib/utils';
 
 interface PriceModalTypes {
@@ -12,7 +12,7 @@ interface PriceModalTypes {
 }
 
 const PriceModal = ({ element, modalRef }: PriceModalTypes) => {
-  const { minPrice, maxPrice } = useContext<PriceContextTypes>(PriceContext);
+  const { minPrice, maxPrice } = usePriceState();
   const priceContent = `${formatPrice(minPrice)} ~ ${formatPrice(maxPrice)}`;
 
   return (

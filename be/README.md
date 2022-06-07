@@ -142,6 +142,37 @@
   + 액세스 토큰 재발행 요청 시 refresh 토큰 만료 시간 검증 
 + <a href="https://near-snipe-0de.notion.site/API-Description-094e9cd17eaa4c3d89e8c9966fd6d8a5">API 명세서 확인하기(클릭)</a><br/>
 
+#### 로그인 및 로그인 검증 흐름 예시
+```
+1. 클라이언트 -> 서버 : Github OAuth 연동 로그인 요청(with 인증 코드)
+
+2. 서버 -> 클라이언트 : access token 및 refresh token 응답
+ - 응답 헤더 access_token에 access token 값 할당
+ - 쿠키 refresh_token에 refresh token 값 할당
+  ※ 서버는 refresh token을 레디스(redis)에 별도 저장
+
+3. 클라이언트 -> 서버 : 숙소 예약 요청
+ - 요청 헤더 Authorization에 "Bearer {access token 값}" 할당
+
+4. (서버가 검증한 결과 access token이 만료된 경우) 서버 -> 클라이언트 : access token 만료 메시지 응답
+ ※ (access token이 만료되지 않은 경우) 서버 -> 클라이언트 : 숙소 예약 정상 처리 메시지 응답
+
+5. 클라이언트 -> 서버 : access token 갱신 요청
+ - 쿠키 refresh_token에 refresh token 값 할당
+ ※ 리액트 단에서 보유하고 있는 access token 만료 기한 자체 검증 후 서버에 갱신 요청
+  - 참고자료 1 : https://www.bezkoder.com/react-logout-token-expired/
+  - 참고자료 2 : http://naver.me/FCLUz6ZE
+
+6. 서버 -> 클라이언트 : 갱신된 access token 응답
+ - 응답 헤더 access_token에 access token 값 할당
+
+7. 클라이언트 -> 서버 : 로그아웃 요청
+
+8. 서버 -> 클라이언트 : 로그아웃 정상 처리 메시지 응답
+ - 클라이언트가 보낸 refresh token에 대한 정보를 레디스에서 삭제
+ - 클라이언트가 보낸 access token에 대한 정보를 레디스에 저장(블랙 리스트)하는데, 이때 해당 데이터의 만료 시간은 해당 access token의 남은 만료 시간으로 설정
+```
+
 #### 인프라 아키텍처
 > ![image](https://user-images.githubusercontent.com/82401504/172468079-244b8df4-3464-49f1-8649-b454028d9101.png)
 

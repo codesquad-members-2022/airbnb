@@ -40,8 +40,6 @@ public class Reservation {
     @Column(nullable = false)
     private int minPrice;
 
-    // 양방향 매핑일 때 무한루프 발생
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accommodation_id")
     private Accommodation accommodation;
@@ -57,7 +55,7 @@ public class Reservation {
                        LocalDateTime checkoutTime,
                        int adultCount,
                        int childCount,
-                       int nInfant,
+                       int infantCount,
                        Accommodation accommodation,
                        ReservationFee reservationFee) {
 
@@ -65,16 +63,8 @@ public class Reservation {
         this.checkoutTime = checkoutTime;
         this.adultCount = adultCount;
         this.childCount = childCount;
-        this.infantCount = nInfant;
-        this.reservationFee = reservationFee;
-
-        if (accommodation != null) {
-            changeAccommodation(accommodation);
-        }
-    }
-
-    private void changeAccommodation(Accommodation accommodation) {
+        this.infantCount = infantCount;
         this.accommodation = accommodation;
-        accommodation.getReservation().add(this);
+        this.reservationFee = reservationFee;
     }
 }

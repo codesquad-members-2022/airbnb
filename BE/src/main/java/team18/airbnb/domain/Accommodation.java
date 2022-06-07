@@ -26,10 +26,6 @@ public class Accommodation {
     private String name;
     private String mainImageUrl;
 
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "accommodation")
-    private List<Reservation> reservation = new ArrayList<>();
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id")
     private Region region;

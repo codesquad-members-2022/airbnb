@@ -1,6 +1,5 @@
 package team18.airbnb.domain;
 
-
 import javax.persistence.*;
 
 import lombok.AccessLevel;
@@ -33,9 +32,13 @@ public class Accommodation {
     @Embedded
     private AccommodationInfo accommodationInfo;
 
+    @Embedded
+    private AccommodationFee accommodationFee;
+
     public Accommodation(float startPoint, int reviewCount, String description, String name, String mainImgUrl,
                          AccommodationAddress accommodationAddress,
                          AccommodationInfo accommodationInfo,
+                         AccommodationFee accommodationFee,
                          Region region) {
 
         this.startPoint = startPoint;
@@ -45,6 +48,7 @@ public class Accommodation {
         this.mainImageUrl = mainImgUrl;
         this.accommodationAddress = accommodationAddress;
         this.accommodationInfo = accommodationInfo;
+        this.accommodationFee = accommodationFee;
         this.region = region;
     }
 }

@@ -48,3 +48,14 @@ export function changeLocalDateStr(year, month, date) {
 export function changeTimeDate(date) {
   return new Date(date).getTime();
 }
+
+export function checkMonth(nowMonth) {
+  const totalMonth = 11;
+  if (nowMonth === 13) return nowMonth - 1 - totalMonth;
+  else return nowMonth;
+}
+
+export function checkYear(nowYear, nowMonth) {
+  if (nowMonth === 13) return nowYear + 1;
+  else return nowYear;
+}

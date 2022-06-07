@@ -1,6 +1,7 @@
 package com.ahoo.airbnb.oauth;
 
-public interface ProviderRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
 
-	OAuthProvider findByProviderName(String name);
+public interface ProviderRepository extends JpaRepository<OAuth, String> {
+
 }

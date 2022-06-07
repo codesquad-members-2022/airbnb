@@ -1,6 +1,9 @@
 package com.team14.cherrybnb.room.domain;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 import java.math.BigDecimal;
@@ -8,6 +11,8 @@ import java.math.RoundingMode;
 
 @Embeddable
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class RoomPriceCondition {
 
     private BigDecimal weekdayPrice;
@@ -18,9 +23,11 @@ public class RoomPriceCondition {
 
     private BigDecimal cleaningFee;
 
-//    private BigDecimal serviceCommission;
-//
-//    private BigDecimal tax;
+    public static RoomPriceCondition of(BigDecimal weekdayPrice, BigDecimal weekendPrice,
+                                        BigDecimal weeklyDiscount, BigDecimal cleaningFee) {
+
+        return new RoomPriceCondition(weekdayPrice, weekendPrice, weeklyDiscount, cleaningFee);
+    }
 
     public BigDecimal calculateAvgPricePerDay() {
         return weekdayPrice

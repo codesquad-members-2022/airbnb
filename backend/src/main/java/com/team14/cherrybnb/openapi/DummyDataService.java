@@ -3,13 +3,15 @@ package com.team14.cherrybnb.openapi;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.team14.cherrybnb.auth.domain.Member;
+import com.team14.cherrybnb.auth.domain.MemberRepository;
+import com.team14.cherrybnb.auth.domain.Role;
 import com.team14.cherrybnb.common.domain.Address;
 import com.team14.cherrybnb.common.util.GeometryUtils;
-import com.team14.cherrybnb.room.domain.Room;
-import com.team14.cherrybnb.room.domain.RoomInfo;
-import com.team14.cherrybnb.room.domain.RoomPriceCondition;
-import com.team14.cherrybnb.room.domain.RoomRepository;
+import com.team14.cherrybnb.room.domain.*;
+import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.io.ParseException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -19,16 +21,55 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
+import java.util.List;
+
 @Service
+@RequiredArgsConstructor
 public class DummyDataService {
 
     private final RoomRepository roomRepository;
+    private final MemberRepository memberRepository;
+    private final ReviewRepository reviewRepository;
+    private final WishRepository wishRepository;
 
-    public DummyDataService(RoomRepository roomRepository) {
-        this.roomRepository = roomRepository;
+    @PostConstruct
+    private void initDummy() throws ParseException, JsonProcessingException {
+        createHost();
+        createGeneral();
+        createDummyRoom();
     }
 
-    private void requestDummyData() throws JsonProcessingException, org.locationtech.jts.io.ParseException {
+    private void createHost() {
+        List<Member> hosts = List.of(
+                Member.of("리아코", "rouie@naver.com", Role.HOST),
+                Member.of("로니", "lonely@naver.com", Role.HOST),
+                Member.of("에디", "goody@naver.com", Role.HOST),
+                Member.of("체즈", "jazz@naver.com", Role.HOST));
+
+        memberRepository.saveAll(hosts);
+    }
+
+    private void createGeneral() {
+        List<Member> users = List.of(
+                Member.of("user1", "user1@naver.com", Role.GENERAL),
+                Member.of("user2", "user2y@naver.com", Role.GENERAL),
+                Member.of("user3", "user3@naver.com", Role.GENERAL),
+                Member.of("user4", "user4@naver.com", Role.GENERAL),
+                Member.of("user5", "user5@naver.com", Role.GENERAL),
+                Member.of("user6", "user6@naver.com", Role.GENERAL),
+                Member.of("user7", "user7@naver.com", Role.GENERAL),
+                Member.of("user8", "user8@naver.com", Role.GENERAL),
+                Member.of("user9", "user9@naver.com", Role.GENERAL),
+                Member.of("user10", "user10@naver.com", Role.GENERAL),
+                Member.of("user11", "user11@naver.com", Role.GENERAL),
+                Member.of("user12", "user12@naver.com", Role.GENERAL));
+
+        memberRepository.saveAll(users);
+    }
+
+    private void createDummyRoom() throws JsonProcessingException, org.locationtech.jts.io.ParseException {
 
         String url = "http://openapi.seoul.go.kr:8088/454b52746e79687331303668466a544a/json/LOCALDATA_031101/1/1000/";
 
@@ -43,6 +84,10 @@ public class DummyDataService {
         JsonNode jsonNode = objectMapper.readTree(body);
         JsonNode localdata_031101 = jsonNode.get("LOCALDATA_031101");
         JsonNode row = localdata_031101.get("row");
+
+        List<Member> hosts = memberRepository.findAll();
+
+        int idx = 0;
         for (JsonNode node : row) {
 
             String address = node.get("RDNWHLADDR").asText();
@@ -62,9 +107,23 @@ public class DummyDataService {
 
             String zipcode = stringBuilder.substring(0, stringBuilder.lastIndexOf(" "));
             Address location = new Address(address, splited[0], splited[1], splited[2], zipcode, point);
-            Room dummyRoom = new Room(name, new RoomInfo(), "dummy room", new RoomPriceCondition(), location);
+            Room dummyRoom = new Room(
+                    name, new RoomInfo(),
+                    "dummy room",
+                    RoomPriceCondition.of(new BigDecimal(1000), new BigDecimal(2000), new BigDecimal("0.04"), new BigDecimal(14000)),
+                    location,
+                    hosts.get(idx++ % hosts.size())
+            );
 
             roomRepository.save(dummyRoom);
         }
+    }
+
+    private void createDummyReview() {
+        List<Room> rooms = roomRepository.findAll();
+    }
+
+    private void createWish() {
+
     }
 }

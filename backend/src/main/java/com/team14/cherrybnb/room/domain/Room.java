@@ -47,13 +47,14 @@ public class Room {
     private List<RoomImage> roomImages = new ArrayList<>();
 
     public Room(String name, RoomInfo roomInfo, String description,
-                RoomPriceCondition roomPriceCondition, Address address) {
+                RoomPriceCondition roomPriceCondition, Address address, Member member) {
 
         this.name = name;
         this.roomInfo = roomInfo;
         this.description = description;
         this.roomPriceCondition = roomPriceCondition;
         this.address = address;
+        this.member = member;
     }
 
     public BigDecimal calculateRating() {

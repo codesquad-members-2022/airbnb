@@ -9,6 +9,7 @@ public enum OAuthAttributes {
 		@Override
 		public UserProfileResponse of(Map<String, Object> attributes) {
 			return new UserProfileResponse(
+				getProviderName(),
 				String.valueOf(attributes.get("id")),
 				String.valueOf(attributes.get("email")),
 				String.valueOf(attributes.get("name")),
@@ -18,6 +19,10 @@ public enum OAuthAttributes {
 	};
 
 	private final String providerName;
+
+	public String getProviderName() {
+		return this.providerName;
+	}
 
 	OAuthAttributes(String name) {
 		this.providerName = name;

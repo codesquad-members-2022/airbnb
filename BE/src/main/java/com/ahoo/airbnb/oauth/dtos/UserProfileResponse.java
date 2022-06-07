@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserProfileResponse {
 
+	private String providerName;
 	private String oAuthId;
 	private String email;
 	private String name;
@@ -21,8 +22,10 @@ public class UserProfileResponse {
 			null,
 			name,
 			email,
-			profileImageUrl,
 			null,
+			profileImageUrl,
+			providerName,
+			oAuthId,
 			null,
 			null,
 			MemberType.GUEST

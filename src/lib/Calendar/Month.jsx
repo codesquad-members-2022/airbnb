@@ -7,7 +7,7 @@ const Month = () => {
     const {date, calendarWidth} = useContext(CalendarContext);
     return (
         <MonthBox calendarWidth={calendarWidth}>
-            {date.year}년 {date.month + 1}월
+            {date.year}년 {date.month}월
         </MonthBox>
     );
 };

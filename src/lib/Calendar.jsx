@@ -35,7 +35,7 @@ const Calendar = ({
 }) => {
     date = {
         year: new Date(date.year, date.month - 1).getFullYear(),
-        month: new Date(date.year, date.month - 1).getMonth(),
+        month: new Date(date.year, date.month - 1).getMonth() + 1,
     };
     return (
         <CalendarContext.Provider value={{date, calendarWidth, dateStyle, hoverDateStyle, clickedDateStyle, dateClickHandler, dateHoverHandler, periodStyle}}>

@@ -56,8 +56,8 @@ const Days = () => {
 const getWeeks = (year, month) => {
     const WEEK_NUM = 7;
     const weeks = [];
-    const firstDay = new Date(Number(year), Number(month), 1).getDay();
-    const lastDate = new Date(Number(year), Number(month) + 1, 0).getDate();
+    const firstDay = new Date(Number(year), Number(month) - 1, 1).getDay();
+    const lastDate = new Date(Number(year), Number(month), 0).getDate();
     const dates = Array.from({length: lastDate}, (_, ind) => ind + 1);
     weeks.push(dates.slice(0, WEEK_NUM - firstDay));
     for (let idx = WEEK_NUM - firstDay; idx < lastDate; idx += WEEK_NUM) {

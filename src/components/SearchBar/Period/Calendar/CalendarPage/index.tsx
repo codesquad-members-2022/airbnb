@@ -31,7 +31,9 @@ const CalendarDay = () => {
   return (
     <S.CalendarDay>
       {DAY_OF_WEEK.map((day, index) => (
-        <S.DayItem key={index}>{day}</S.DayItem>
+        <S.DayItem key={day + index} day={day}>
+          {day}
+        </S.DayItem>
       ))}
     </S.CalendarDay>
   );

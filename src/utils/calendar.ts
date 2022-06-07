@@ -78,3 +78,19 @@ export const getStyleDateTarget = ({ min, currDate, max }: IsBetweenTimeType) =>
 
   return null;
 };
+
+export const getMonthDifference = (startDate: Date, endDate: Date | null) => {
+  if (!endDate) {
+    return 0;
+  }
+  return endDate?.getMonth() - startDate?.getMonth() + 12 * (endDate?.getFullYear() - startDate?.getFullYear());
+};
+
+export const isPast = (dateData: number | Date): boolean => {
+  const today = new Date();
+  return dateData < today;
+};
+
+export const isSunday = (date: Date): boolean => {
+  return !date.getDay() ? true : false;
+};

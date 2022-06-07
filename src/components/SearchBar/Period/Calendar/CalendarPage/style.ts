@@ -16,7 +16,7 @@ export const CalendarPage = styled.div`
 export const CalendarContent = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: ${({ theme }) => theme.fontSize.smaller};
+  font-size: ${({ theme }) => theme.fontSize.small};
   color: ${({ theme }) => theme.color.black};
 `;
 
@@ -27,10 +27,16 @@ export const CalendarDay = styled.div`
   color: ${({ theme }) => theme.color.gray3};
 `;
 
-export const DayItem = styled.div`
+export const DayItem = styled.div<{ day: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 48px;
   height: 48px;
+
+  ${({ day }) =>
+    day === "일" &&
+    css`
+      color: ${({ theme }) => theme.color.pink};
+    `}
 `;

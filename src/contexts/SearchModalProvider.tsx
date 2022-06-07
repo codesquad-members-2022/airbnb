@@ -3,6 +3,10 @@ import { createContext, useContext, useMemo, useReducer, useCallback } from "rea
 import { SearchModalActionType, SearchModalDispatches, SearchModalState, SearchModalType } from "_types/searchModal";
 
 const reducer = (state: SearchModalState, action: SearchModalActionType): SearchModalState => {
+  if (action.type === state.openedModal) {
+    return state;
+  }
+
   switch (action.type) {
     case "PERIOD":
       return { openedModal: "PERIOD" };
@@ -11,7 +15,6 @@ const reducer = (state: SearchModalState, action: SearchModalActionType): Search
       return { openedModal: "PRICE" };
 
     case "PERSONNEL":
-      // TODO
       return { openedModal: "PERSONNEL" };
 
     case "OFF":

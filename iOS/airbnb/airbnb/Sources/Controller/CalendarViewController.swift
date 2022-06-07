@@ -29,9 +29,16 @@ final class CalendarViewController: UIViewController {
         return toolBar
     }()
     
+    private let collectionView: UICollectionView = {
+        let layout = Layout.calendar()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        return collectionView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
+        setCollectionView()
         layout()
     }
     
@@ -47,11 +54,34 @@ final class CalendarViewController: UIViewController {
         navigationController?.tabBarController?.tabBar.isHidden = true
     }
     
+    private func setCollectionView() {
+        collectionView.dataSource = self
+        
+        collectionView.register(CalendarCell.self, forCellWithReuseIdentifier: CalendarCell.identifier)
+    }
+    
     private func layout() {
         view.addSubview(toolBar)
+        view.addSubview(collectionView)
         
         toolBar.snp.makeConstraints {
             $0.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
+        
+        collectionView.snp.makeConstraints {
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(toolBar.snp.top)
+        }
+    }
+}
+
+extension CalendarViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalendarCell.identifier, for: indexPath) as? CalendarCell else { return UICollectionViewCell() }
+        return cell
     }
 }

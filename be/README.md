@@ -143,7 +143,7 @@
 + <a href="https://near-snipe-0de.notion.site/API-Description-094e9cd17eaa4c3d89e8c9966fd6d8a5">API 명세서 확인하기(클릭)</a><br/>
 
 #### 인프라 아키텍처
-> ![image](https://user-images.githubusercontent.com/82401504/172436726-a1901a24-2ade-48d3-89a1-0ef7919ad57a.png)
+> ![image](https://user-images.githubusercontent.com/82401504/172468079-244b8df4-3464-49f1-8649-b454028d9101.png)
 
 #### 도메인 모델과 테이블 설계
 > ```

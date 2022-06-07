@@ -4,8 +4,11 @@ import codesquad.airbnb.dto.AccommodationListDto;
 import codesquad.airbnb.dto.AccommodationPriceListDto;
 import codesquad.airbnb.dto.ReservationForm;
 import codesquad.airbnb.dto.ResponseMessage;
+import codesquad.airbnb.jwt.JwtUtil;
+import codesquad.airbnb.jwt.JwtValidator;
 import codesquad.airbnb.service.AccommodationService;
 import java.time.LocalDate;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccommodationController {
 
     private final AccommodationService accommodationService;
+    private final JwtValidator jwtValidator;
 
     @GetMapping("/api/accommodations/price")
     public AccommodationPriceListDto prices(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate in,
@@ -44,9 +48,10 @@ public class AccommodationController {
     }
 
     @PostMapping("/api/accommodations")
-    public ResponseEntity<ResponseMessage> reserve(@RequestBody ReservationForm reservationForm) {
-
-        accommodationService.reserveAccommodation(reservationForm);
+    public ResponseEntity<ResponseMessage> reserve(HttpServletRequest request, @RequestBody ReservationForm reservationForm) {
+        String accessToken = JwtUtil.getAccessToken(request);
+        String memberId = jwtValidator.getMemberId(accessToken);
+        accommodationService.reserveAccommodation(Long.parseLong(memberId), reservationForm);
 
         ResponseMessage message = new ResponseMessage(HttpStatus.OK, "예약이 처리되었습니다.");
 

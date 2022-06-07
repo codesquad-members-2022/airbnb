@@ -7,7 +7,6 @@ import lombok.Getter;
 @Getter
 public class ReservationForm {
 
-    private Long memberId;
     private Long accommodationId;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkInDate;

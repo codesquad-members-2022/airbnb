@@ -66,8 +66,7 @@ public class AccommodationService {
     }
 
     @Transactional
-    public void reserveAccommodation(ReservationForm reservationForm) {
-        Long memberId = reservationForm.getMemberId();
+    public void reserveAccommodation(Long memberId, ReservationForm reservationForm) {
         Long accommodationId = reservationForm.getAccommodationId();
         Integer personnel = reservationForm.getPersonnel();
         LocalDate checkInDate = reservationForm.getCheckInDate();

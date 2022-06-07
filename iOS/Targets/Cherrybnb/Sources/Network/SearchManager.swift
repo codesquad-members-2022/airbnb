@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol PriceFrequencySearching {
+    func searchPriceFrequency(queryComponent: QueryParameter, complete: @escaping (Price?) -> Void)
+}
+
 struct SearchManager: PriceFrequencySearching {
     
     let httpService: HTTPSearchService

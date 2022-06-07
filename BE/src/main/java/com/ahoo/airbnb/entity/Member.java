@@ -29,6 +29,18 @@ public class Member extends BaseEntity {
 	private String accessToken;
 	private String refreshToken;
 
-    @Enumerated(EnumType.STRING)
-    private MemberType type;
+	@Enumerated(EnumType.STRING)
+	private MemberType type;
+
+	public Member updateProfile(String email, String name, String profileImageUrl) {
+		this.email = email;
+		this.name = name;
+		this.profileImageUrl = profileImageUrl;
+		return this;
+	}
+
+	public void updateToken(String accessToken, String refreshToken) {
+		this.accessToken = accessToken;
+		this.refreshToken = refreshToken;
+	}
 }

@@ -2,6 +2,7 @@ package com.example.todo.airbnb.data.repository
 
 import com.example.todo.airbnb.data.Accommodations
 import com.example.todo.airbnb.data.Travel
+import com.example.todo.airbnb.domain.model.Reservation
 import com.example.todo.airbnb.domain.repository.MainRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -42,7 +43,64 @@ class MainRepositoryImpl : MainRepository {
         Accommodations(dummyImage, "자연생활을 만끽할 수\n있는 숙소", 650000),
         Accommodations(dummyImage, "독특한 공간", 400000),
         Accommodations(dummyImage, "자연생활을 만끽할 수\n있는 숙소", 400000),
-        Accommodations(dummyImage, "독특한 공간", 400000)
+        Accommodations(dummyImage, "독특한 공간", 400000),
+        Accommodations(dummyImage, "자연생활을 만끽할 수\n있는 숙소", 100000),
+        Accommodations(dummyImage, "독특한 공간", 150000),
+        Accommodations(dummyImage, "자연생활을 만끽할 수\n있는 숙소", 100000),
+        Accommodations(dummyImage, "독특한 공간", 150000),
+        Accommodations(dummyImage, "자연생활을 만끽할 수\n있는 숙소", 100000),
+        Accommodations(dummyImage, "독특한 공간", 150000),
+    )
+
+    private val reservationTestList1 = Reservation(
+        "https://a0.muscache.com/im/pictures/2f13349d-879d-43c6-83e3-8e5679291d53.jpg?im_w=480",
+        "1번 숙박집",
+        "아주아주좋은 고오급 숙박집",
+        "2021년 1월 2일 오후 4:00",
+        "2021년 3월 2일 오후 12:00",
+        "Jung Park",
+        4,
+        1000000
+    )
+
+    private val reservationTestList2 = Reservation(
+        "https://a0.muscache.com/im/pictures/2f13349d-879d-43c6-83e3-8e5679291d53.jpg?im_w=480",
+        "2번 숙박집",
+        "조금좋은 숙박집",
+        "2021년 4월 5일 오후 4:00",
+        "2021년 5월 5일 오후 12:00",
+        "Jung Hwan",
+        2,
+        1500000
+    )
+
+    private val reservationTestList3 = Reservation(
+        "https://a0.muscache.com/im/pictures/2f13349d-879d-43c6-83e3-8e5679291d53.jpg?im_w=480",
+        "3번 숙박집",
+        "중간 숙박집",
+        "2021년 5월 17일 오후 4:00",
+        "2021년 6월 4일 오후 12:00",
+        "Jung Hwan",
+        6,
+        1500000
+    )
+
+    private val reservationTestList4 = Reservation(
+        "https://a0.muscache.com/im/pictures/2f13349d-879d-43c6-83e3-8e5679291d53.jpg?im_w=480",
+        "4번 숙박집",
+        "럭셔리 숙박집",
+        "2021년 8월 17일 오후 4:00",
+        "2021년 11월 4일 오후 12:00",
+        "Jung Hwan",
+        8,
+        450000
+    )
+
+    private val reservationList = mutableListOf(
+        reservationTestList1,
+        reservationTestList2,
+        reservationTestList3,
+        reservationTestList4
     )
 
     override fun getSearchWordList(searchWord: String): Flow<List<Travel>> = flow {
@@ -58,5 +116,9 @@ class MainRepositoryImpl : MainRepository {
 
     override fun getAccommodations(): Flow<List<Accommodations>> = flow {
         emit(accommodationList)
+    }
+
+    override fun getReservationList(): Flow<MutableList<Reservation>> = flow {
+        emit(reservationList)
     }
 }

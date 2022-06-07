@@ -1,9 +1,11 @@
 package com.example.todo.airbnb.presentation.main
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
@@ -12,31 +14,35 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.todo.airbnb.presentation.main.components.MainScreen
+import com.example.todo.airbnb.presentation.reservation.ReservationViewModel
 import com.example.todo.airbnb.presentation.search.SearchViewModel
 import com.example.todo.airbnb.ui.theme.AirbnbTheme
 
+@RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
 
     private val viewModel: SearchViewModel by viewModels()
+    private val reservationViewModel: ReservationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AirbnbTheme(viewModel)
+            AirbnbTheme(viewModel, reservationViewModel)
         }
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalMaterialApi
 @Composable
-fun AirbnbTheme(viewModel: SearchViewModel) {
+fun AirbnbTheme(viewModel: SearchViewModel, reservationViewModel: ReservationViewModel) {
     AirbnbTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
-            MainScreen(viewModel = viewModel)
+            MainScreen(viewModel = viewModel, reservationViewModel = reservationViewModel)
         }
     }
 }
@@ -46,6 +52,6 @@ fun AirbnbTheme(viewModel: SearchViewModel) {
 @Composable
 fun DefaultPreview() {
     AirbnbTheme {
-        MainScreen(SearchViewModel())
+        MainScreen(SearchViewModel(), ReservationViewModel())
     }
 }

@@ -14,6 +14,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import com.example.todo.airbnb.R
 import com.example.todo.airbnb.presentation.main.components.Destinations.searchResult
+import com.example.todo.airbnb.presentation.reservation.ReservationViewModel
 import com.example.todo.airbnb.presentation.reservation.components.ReservationScreen
 import com.example.todo.airbnb.presentation.search.SearchViewModel
 import com.example.todo.airbnb.presentation.search.date.components.DateScreen
@@ -71,7 +72,7 @@ fun BottomBar(
                     val backStackEntry = navController.previousBackStackEntry
                     val route = backStackEntry?.destination?.route
                     if (item.route == "검색" && route == searchResult) {
-                        navController.navigate(route ?: item.route) {
+                        navController.navigate(route) {
                             launchSingleTop = true
                             restoreState = true
                         }
@@ -89,14 +90,19 @@ fun BottomBar(
 
 @ExperimentalMaterialApi
 @Composable
-fun BottomNavGraph(navController: NavHostController, viewModel: SearchViewModel) {
+fun BottomNavGraph(
+    navController: NavHostController,
+    viewModel: SearchViewModel,
+    reservationViewModel: ReservationViewModel
+) {
     NavHost(
         navController = navController,
         startDestination = Destinations.search
     ) {
         airbnbNavGraph(
             navController = navController,
-            viewModel = viewModel
+            viewModel = viewModel,
+            reservationViewModel = reservationViewModel
         )
     }
 }
@@ -105,6 +111,7 @@ fun BottomNavGraph(navController: NavHostController, viewModel: SearchViewModel)
 private fun NavGraphBuilder.airbnbNavGraph(
     navController: NavController,
     viewModel: SearchViewModel,
+    reservationViewModel: ReservationViewModel
 ) {
     navigation(
         route = Destinations.search,
@@ -112,7 +119,12 @@ private fun NavGraphBuilder.airbnbNavGraph(
     ) {
         composable(HomeSections.Search.route) { SearchScreen(viewModel, navController) }
         composable(HomeSections.WishList.route) { WishListScreen() }
-        composable(HomeSections.Reservation.route) { ReservationScreen() }
+        composable(HomeSections.Reservation.route) {
+            ReservationScreen(
+                navController,
+                reservationViewModel
+            )
+        }
     }
 
     composable(route = Destinations.calendar) {

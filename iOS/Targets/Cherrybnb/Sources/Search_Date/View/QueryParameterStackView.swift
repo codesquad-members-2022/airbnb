@@ -15,6 +15,7 @@ class QueryParameterStackView: UIStackView {
     lazy var parameterRow: (String, String) -> UIStackView = { keyText, valueText in
         let stackView = UIStackView()
         stackView.axis = .horizontal
+        stackView.spacing = 8
         let keyLabel = self.parameterKeyLabel(keyText)
         let valueLabel = self.parameterValueLabel(valueText)
         stackView.addArrangedSubview(keyLabel)
@@ -26,6 +27,7 @@ class QueryParameterStackView: UIStackView {
         let label = UILabel()
         label.text = text
         label.textAlignment = .left
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         return label
     }
     
@@ -34,6 +36,7 @@ class QueryParameterStackView: UIStackView {
         label.text = text
         label.textAlignment = .right
         label.textColor = .gray
+        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return label
     }
     
@@ -106,6 +109,7 @@ class QueryParameterStackView: UIStackView {
     
     private func toString(_ range: (Date?, Date?)?) -> String {
         guard let range = range else { return "" }
+
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d일"

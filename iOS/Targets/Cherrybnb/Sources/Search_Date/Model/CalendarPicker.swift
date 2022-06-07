@@ -58,6 +58,24 @@ struct CalendarPicker {
     func getDay(monthSection: Int, dayItem: Int) -> Day {
         return months[monthSection].days[dayItem]
     }
+    
+    mutating func deselectAll() {
+        if let checkIn = daySelection.checkIn , let checkOut = daySelection.checkOut {
+            toggleSelection(of: checkIn)
+            toggleSelection(of: checkOut)
+            toggleBetweenSelection(from: checkIn, to: checkOut)
+            if let updatedRange = getUpdatedSectionRange(days: [checkIn, checkOut]) {
+                didUpdateMonth?(updatedRange)
+            }
+        } else if let checkIn = daySelection.checkIn {
+            toggleSelection(of: checkIn)
+            if let updatedRange = getUpdatedSectionRange(days: [checkIn]) {
+                didUpdateMonth?(updatedRange)
+            }
+        }
+        
+        daySelection = (nil, nil)
+    }
 
     mutating func select(newMonthSection: Int, newDayItem: Int) {
         let selectedDay = getDay(monthSection: newMonthSection, dayItem: newDayItem)

@@ -37,6 +37,7 @@ class CalendarPickerViewController: UIViewController {
     init(baseDate: Date, numOfMonths: Int) {
         self.calendarPicker = CalendarPicker(baseDate: baseDate, numOfMonths: numOfMonths)
         super.init(nibName: nil, bundle: nil)
+        self.view.translatesAutoresizingMaskIntoConstraints = false
     }
 
     required init?(coder: NSCoder) {
@@ -73,6 +74,11 @@ class CalendarPickerViewController: UIViewController {
 
     func didSelectDate(completion: ((DaySelection) -> Void)?) {
         calendarPicker.didSelectDate = completion
+    }
+    
+    func deselectAll() {
+        calendarPicker.deselectAll()
+        collectionView.reloadData()
     }
 }
 

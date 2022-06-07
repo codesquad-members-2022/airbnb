@@ -28,7 +28,7 @@ class CalendarPickerViewSectionHeader: UICollectionReusableView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .systemYellow
+        backgroundColor = .white
         setSubviews()
         setLayout()
     }

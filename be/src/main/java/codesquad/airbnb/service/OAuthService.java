@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -26,12 +27,13 @@ public class OAuthService {
 
     private final MemberRepository memberRepository;
 
-    public String authorizeForThirdParty(String code) {
+    @Transactional
+    public Long authorizeForThirdParty(String code) {
         OAuthAccessToken OAuthAccessToken = getAccessTokenFromAuthServer(code);
         String email = getUserEmailFromResourceServer(OAuthAccessToken);
-        saveUserEmail(email);
+        Long memberId = saveUserEmail(email);
 
-        return email;
+        return memberId;
     }
 
     private OAuthAccessToken getAccessTokenFromAuthServer(String code) {
@@ -77,10 +79,12 @@ public class OAuthService {
         return (String) ((LinkedHashMap) userEmails[0]).get("email");
     }
 
-    private void saveUserEmail(String email) {
+    private Long saveUserEmail(String email) {
         Member member = memberRepository.findByEmail(email);
         if (member == null) {
-            memberRepository.save(new Member(null, email));
+            member = memberRepository.save(new Member(null, email));
         }
+
+        return member.getId();
     }
 }

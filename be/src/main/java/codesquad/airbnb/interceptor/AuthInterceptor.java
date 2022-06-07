@@ -5,6 +5,7 @@ import codesquad.airbnb.jwt.JwtUtil;
 import codesquad.airbnb.jwt.JwtValidator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             return true;
         }
 
+        setResponseHeader(response);
         setResponseBody(response);
 
         return false;
@@ -38,6 +40,12 @@ public class AuthInterceptor implements HandlerInterceptor {
     private boolean validateThatHttpMethodIsPost(HttpServletRequest request) {
         String httpMethod = request.getMethod();
         return httpMethod.equals("POST");
+    }
+
+    private void setResponseHeader(HttpServletResponse response) {
+        response.setStatus(HttpStatus.FORBIDDEN.value());
+        response.setContentType("application/json");
+        response.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
     }
 
     private void setResponseBody(HttpServletResponse response) throws IOException {

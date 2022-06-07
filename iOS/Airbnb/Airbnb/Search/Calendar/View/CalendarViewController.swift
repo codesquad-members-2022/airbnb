@@ -7,13 +7,17 @@
 
 import UIKit
 
+<<<<<<< HEAD
 class CalendarViewController: SearchInfoTrackingViewController, CommonViewControllerProtocol {
+=======
+class CalendarViewController: BackgroundViewController, CommonViewControllerProtocol {
+>>>>>>> dfddfe9e (fix: snapshot 으로 checkin, checkout 까지는 구현, .fill 은 아직 구현하지 못함)
     
     let reservationModel: ReservationModel
     let calendarModel: CalendarModel = CalendarModel(baseDate: Date())
     
-    private var checkinCell: CalendarViewCell?
-    private var checkoutCell: CalendarViewCell?
+    //    private var checkinCell: CalendarViewCell?
+    //    private var checkoutCell: CalendarViewCell?
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -48,24 +52,26 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
     
     private func setUpCollectionViewDelegates() {
         
-//        collectionView.register(CalendarHearderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CalendarHearderView.reuseIdentifier)
-        
         collectionView.delegate = self
-        let cellRegistration = UICollectionView.CellRegistration<CalendarViewCell, Day> { [weak self] (cell, indexPath, identifier) in
-            //            cell.day = identifier
+        let cellRegistration = UICollectionView.CellRegistration<CalendarViewCell, Day> {
+            [weak self] (cell, indexPath, identifier) in
             guard let day = self?.calendarModel.month[indexPath.section].result[indexPath.row] else { return }
             cell.day = day
         }
         
-        let headerRegister = UICollectionView.SupplementaryRegistration<CalendarHearderView>(elementKind: UICollectionView.elementKindSectionHeader) { [weak self] (supplementaryView, elementKind, indexPath) in
-            DispatchQueue.main.async {
-                supplementaryView.baseDate = self?.calendarModel.month[indexPath.section].result.last?.date
+        let headerRegister = UICollectionView.SupplementaryRegistration<CalendarHearderView>(
+            elementKind: UICollectionView.elementKindSectionHeader) {
+                [weak self] (supplementaryView, elementKind, indexPath) in
+                DispatchQueue.main.async {
+                    supplementaryView.baseDate = self?.calendarModel.month[indexPath.section].result.last?.date
+                }
             }
-        }
         
-        dataSource = UICollectionViewDiffableDataSource<Int, Day>(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
-            collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
-        })
+        dataSource = UICollectionViewDiffableDataSource<Int, Day>(
+            collectionView: collectionView,
+            cellProvider: { collectionView, indexPath, itemIdentifier in
+                collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
+            })
         
         dataSource.supplementaryViewProvider = { (_, _, index) in
             return self.collectionView.dequeueConfiguredReusableSupplementary(
@@ -73,24 +79,35 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
         }
         
         // initail date
-        let month = calendarModel.month
-        let sections = Array(0..<month.count)
-        var snapshot = NSDiffableDataSourceSnapshot<Int, Day>()
-        sections.forEach {
-            snapshot.appendSections([$0])
-            snapshot.appendItems(month[$0].result)
-        }
-        dataSource.apply(snapshot, animatingDifferences: false)
+        performQuery()
     }
     
     
     
-    //    func performQuery() {
-    //        var snapshot = NSDiffableDataSourceSnapshot<Section, Day>()
-    //        snapshot.appendSections([.main])
-    //        snapshot.appendItems([Day(date: Date(), number: "4", isSelected: false, isWithInDisplayedMonth: true)])
-    //        self.dataSource.apply(snapshot, animatingDifferences: true)
-    //    }
+    func performQuery(indexes: [IndexPath]? = nil, days: [Day]? = nil) {
+        var snapshot = NSDiffableDataSourceSnapshot<Int, Day>()
+        if let indexes = indexes,
+           let days = days {
+//            indexes.enumerated().forEach { index, value in
+    //            guard let cell = dataSource.collectionView(collectionView, cellForItemAt: value) as? CalendarViewCell else { return }
+    //            cell.day = days[index]
+//            }
+            var newSnapshot = dataSource.snapshot()
+            newSnapshot.reloadItems(days)
+            dataSource.apply(newSnapshot, animatingDifferences: false)
+        }
+        //MARK: - 초기 설정
+        else {
+            let month = calendarModel.month
+            let sections = Array(0..<month.count)
+            sections.forEach {
+                snapshot.appendSections([$0])
+                snapshot.appendItems(month[$0].result)
+            }
+            dataSource.apply(snapshot, animatingDifferences: false)
+        }
+    }
+    
     
     func attribute() {
         contentView.backgroundColor = .systemBackground
@@ -98,7 +115,6 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
         navigationController?.isToolbarHidden = false
         self.toolbarItems = setUpToolBarItems()
         setUpCollectionViewDelegates()
-        //        self.performQuery()
     }
     
     func layout() {
@@ -116,13 +132,13 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
             $0.height.equalTo(view.snp.height).multipliedBy(0.5)
         }
         
-        
     }
     
     func bind() {
-        calendarModel.onUpdate = { [weak self] in
-            self?.collectionView.reloadData()
+        calendarModel.onUpdate = { [weak self] days, indexes in
+            self?.performQuery(indexes: indexes, days: days)
         }
+        
     }
     
     private func setUpToolBarItems() -> [UIBarButtonItem] {
@@ -144,36 +160,37 @@ extension CalendarViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? CalendarViewCell,
-              let day = cell.day,
               cell.day?.isBeforeToday == false else { return }
         
-        calendarModel.onUpdateCheckinDay = { selectedDay in
-            if let beforeCell = self.checkinCell {
-                guard let beforeDay = beforeCell.day else { return }
-                beforeDay.isSelected = false
-                beforeCell.tabGenerated(for: beforeDay)
-            }
-            day.isSelected = true
-            cell.tabGenerated(for: day)
-            self.checkinCell = cell
-        }
+        //        calendarModel.onUpdateCheckinDay = { selectedDay in
+        //            if let beforeCell = self.checkinCell {
+        //                guard let beforeDay = beforeCell.day else { return }
+        //                beforeDay.isSelected = false
+        //                beforeCell.tabGenerated(for: beforeDay)
+        //            }
+        //            day.isSelected = true
+        //            cell.tabGenerated(for: day)
+        //            self.checkinCell = cell
+        //        }
+        //
+        //
+        //        calendarModel.onUpdateCheckoutDay = { selectedDay in
+        //            if let beforeCell = self.checkoutCell {
+        //                guard let beforeDay = beforeCell.day else { return }
+        //                beforeDay.isSelected = false
+        //                beforeCell.tabGenerated(for: beforeDay)
+        //            }
+        //            day.isSelected = true
+        //            cell.tabGenerated(for: day)
+        //            self.checkoutCell = cell
+        //        }
         
+        //        calendarModel.onUpdate = { [weak self] beforeDays, afterDays, beforeIndex, afterIndex in
+        //
+        //        }
         
-        calendarModel.onUpdateCheckoutDay = { selectedDay in
-            if let beforeCell = self.checkoutCell {
-                guard let beforeDay = beforeCell.day else { return }
-                beforeDay.isSelected = false
-                beforeCell.tabGenerated(for: beforeDay)
-            }
-            day.isSelected = true
-            cell.tabGenerated(for: day)
-            self.checkoutCell = cell
-        }
-        
-        calendarModel.validateCheckDate(for: day)
+        calendarModel.validateCheckDate(at: indexPath)
     }
-    
-    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         let width: CGFloat = self.collectionView.frame.width

@@ -9,17 +9,27 @@ import Foundation
 
 class CalendarModel {
     
-    var onUpdateCheckinDay: (Day) -> Void = { _ in }
-    var onUpdateCheckoutDay: (Day) -> Void = { _ in }
+    var checkinDayIndex: IndexPath? {
+        didSet {
+            guard let checkinDayIndex = checkinDayIndex else { return }
+            let result = getDays(fromIndex: checkinDayIndex, toIndex: checkoutDayIndex)
+            return self.onUpdate(result.days, result.indexes)
+        }
+    }
     
-    var checkinDay: Day?
-    var checkoutDay: Day?
+    var checkoutDayIndex: IndexPath? {
+        didSet {
+            guard let checkinDayIndex = checkinDayIndex else { return }
+            guard let checkoutDayIndex = checkoutDayIndex else { return }
+            let result = getDays(fromIndex: checkinDayIndex, toIndex: checkoutDayIndex)
+            return self.onUpdate(result.days, result.indexes)
+        }
+    }
     
     
     private var baseDate: Date {
         didSet {
             month = generate12month(for: baseDate)
-            self.onUpdate()
         }
     }
     
@@ -29,7 +39,7 @@ class CalendarModel {
         calendar.range(of: .weekOfMonth, in: .month, for: baseDate)?.count ?? 0
     }
     
-    var onUpdate: () -> Void = { }
+    var onUpdate: (_ days: [Day], _ indexes: [IndexPath]) -> Void = { _, _ in }
     
     let calendar: Calendar = Calendar.current
     
@@ -80,7 +90,7 @@ class CalendarModel {
                                    for: firstDayOfMonth,
                                    isWithinDisplayedMonth: isWithinDisplayedMonth)
             }
-            return Month(date: baseDate, result: days)
+            return Month(metadata: metadata, result: days)
         case .failure(let error):
             fatalError("failed making month ==> \(dump(error))")
         }
@@ -92,18 +102,12 @@ class CalendarModel {
         let date = calendar.date(byAdding: .day,
                                  value: dayOffset,
                                  to: baseDate) ?? baseDate
-        if let checkinDate = checkinDay?.date {
-            return Day(date: date,
-                       number: dateFormatter.string(from: date),
-                       isSelected: calendar.isDate(date,
-                                                   inSameDayAs: checkinDate),
-                       isWithInDisplayedMonth: isWithinDisplayedMonth)
-        } else {
-            return Day(date: date,
-                       number: dateFormatter.string(from: date),
-                       isSelected: false,
-                       isWithInDisplayedMonth: isWithinDisplayedMonth)
-        }
+        
+        return Day(date: date,
+                   number: dateFormatter.string(from: date),
+                   isSelected: false,
+                   isWithInDisplayedMonth: isWithinDisplayedMonth)
+        
     }
 }
 
@@ -136,37 +140,114 @@ extension CalendarModel {
 }
 
 extension CalendarModel {
-    func validateCheckDate(for day: Day) {
-        
-        day.isSelected = true
-        let date = day.date
-        if let checkinDate = checkinDay?.date {
-            /// 체크인 날짜 앞뒤로 크기 판별
-            if checkinDate < date {
-                day.fadeState = .right
-                self.checkoutDay = day
-                onUpdateCheckoutDay(day)
+    func validateCheckDate(at indexPath: IndexPath) {
+        if let checkinDayIndex = checkinDayIndex {
+            if checkinDayIndex <= indexPath {
+                self.checkoutDayIndex = indexPath
             }
-            else if  checkinDate > date {
-                day.fadeState = .left
-                self.checkinDay = day
-                onUpdateCheckinDay(day)
+            if checkinDayIndex > indexPath {
+                self.checkinDayIndex = indexPath
             }
-            else if checkinDate == date {
-                day.fadeState = .right
-                self.checkoutDay = day
-                onUpdateCheckoutDay(day)
+        }
+        else if let checkoutDayIndex = checkoutDayIndex {
+            if checkoutDayIndex > indexPath || checkoutDayIndex < indexPath {
+                self.checkoutDayIndex = indexPath
             }
         } else {
-            ///  없으면 체크인 데이를 업데이트
-            day.fadeState = .left
-            self.checkinDay = day
-            onUpdateCheckinDay(day)
+            self.checkinDayIndex = indexPath
         }
+        //        day.isSelected = true
+        //        let date = day.date
+        //        if let checkinDate = checkinDay?.date {
+        //            /// 체크인 날짜 앞뒤로 크기 판별
+        //            if checkinDate < date {
+        //                day.fadeState = .right
+        //                self.checkoutDay = day
+        //                onUpdateCheckoutDay(day)
+        //            }
+        //            else if  checkinDate > date {
+        //                day.fadeState = .left
+        //                self.checkinDay = day
+        //                onUpdateCheckinDay(day)
+        //            }
+        //            else if checkinDate == date {
+        //                day.fadeState = .right
+        //                self.checkoutDay = day
+        //                onUpdateCheckoutDay(day)
+        //            }
+        //        } else {
+        //            ///  없으면 체크인 데이를 업데이트
+        //            day.fadeState = .left
+        //            self.checkinDay = day
+        //            onUpdateCheckinDay(day)
+        //        }
     }
 }
 
 struct Month {
-    let date: Date
+    let metadata: MonthMetadata
     let result: [Day]
+}
+
+private extension CalendarModel {
+    func getDays(fromIndex: IndexPath, toIndex: IndexPath? = nil) -> (days: [Day], indexes: [IndexPath]) {
+        let indexes = generateIndexes(fromIndex: fromIndex, toIndex: toIndex)
+        let days = indexes.compactMap {
+            month[$0.section].result[$0.row]
+        }
+        let drawingDays = drawingDays(days: days)
+        return (drawingDays, indexes)
+    }
+    
+    func generateIndexes(fromIndex: IndexPath, toIndex: IndexPath? = nil) -> [IndexPath] {
+        if let toIndex = toIndex {
+            if fromIndex.section == toIndex.section {
+                return (fromIndex.row...toIndex.row).compactMap {
+                    return IndexPath(row: $0, section: fromIndex.section)
+                }
+            } else {
+                let sections = Array(fromIndex.section...toIndex.section)
+                var result: [IndexPath] = []
+
+                sections.enumerated().forEach { offset, value in
+                    let metadata = month[value].metadata
+                    switch offset {
+                    case 0:
+                        (fromIndex.row..<metadata.numberOfDays).forEach { num in
+                            result.append(IndexPath(row: num, section: value))
+                        }
+                    case 1..<sections.count - 1:
+                        (0..<metadata.numberOfDays).forEach { num in
+                            result.append(IndexPath(row: num, section: value))
+                        }
+                    case sections.count - 1:
+                        (0...toIndex.row).forEach { num in
+                            result.append(IndexPath(row: num, section: value))
+                        }
+                    default:
+                        print(metadata)
+                    }
+                }
+                return result
+            }
+        } else {
+            return [fromIndex]
+        }
+    }
+    
+    func drawingDays(days: [Day]) -> [Day] {
+        return days.enumerated().map {
+            switch $0.offset {
+            case 0:
+                $0.element.fadeState = .left
+            case 1..<days.count - 1:
+                $0.element.fadeState = .fill
+            case days.count - 1:
+                $0.element.fadeState = .right
+            default:
+                $0.element.fadeState = .none
+            }
+            return $0.element
+        }
+    }
 }

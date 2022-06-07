@@ -12,7 +12,7 @@ class CalendarPickerViewCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: CalendarPickerViewCell.self)
 
     // MARK: - Subviews
-    
+
     private let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d"
@@ -47,17 +47,17 @@ class CalendarPickerViewCell: UICollectionViewCell {
     }()
 
     // MARK: - Initializers
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setSubviews()
         setLayout()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Public Method
 
     func setContent(_ day: Day) {
@@ -77,14 +77,14 @@ class CalendarPickerViewCell: UICollectionViewCell {
             numberLabel.attributedText = normal(dateString)
         }
     }
-    
+
     override func prepareForReuse() {
         numberLabel.text = nil
         numberLabel.attributedText = nil
         selectionBackgroundView.isHidden = true
         inBetweenSelectionBackgroundView.isHidden = true
     }
-    
+
     // MARK: - Private (helper) methods
 
     private func setSubviews() {
@@ -113,7 +113,7 @@ class CalendarPickerViewCell: UICollectionViewCell {
             inBetweenSelectionBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor)
         ])
     }
-    
+
     private func selected(_ string: String) -> NSAttributedString {
         let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 18, weight: .medium),

@@ -9,8 +9,6 @@ import UIKit
 
 class CalendarViewController: SearchInfoTrackingViewController, CommonViewControllerProtocol {
     
-//    static let sectionHeaderElementKind = "section-header-element-kind"
-    
     let reservationModel: ReservationModel
     let calendarModel: CalendarModel = CalendarModel(baseDate: Date())
     
@@ -50,6 +48,8 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
     
     private func setUpCollectionViewDelegates() {
         
+//        collectionView.register(CalendarHearderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CalendarHearderView.reuseIdentifier)
+        
         collectionView.delegate = self
         let cellRegistration = UICollectionView.CellRegistration<CalendarViewCell, Day> { [weak self] (cell, indexPath, identifier) in
             //            cell.day = identifier
@@ -57,8 +57,10 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
             cell.day = day
         }
         
-        let headerRegister = UICollectionView.SupplementaryRegistration<CalendarHearderView>(elementKind: CalendarHearderView.sectionHeaderElementKind) { [weak self] (supplementaryView, elementKind, indexPath) in
-            supplementaryView.baseDate = self?.calendarModel.month[indexPath.section].result.last?.date
+        let headerRegister = UICollectionView.SupplementaryRegistration<CalendarHearderView>(elementKind: UICollectionView.elementKindSectionHeader) { [weak self] (supplementaryView, elementKind, indexPath) in
+            DispatchQueue.main.async {
+                supplementaryView.baseDate = self?.calendarModel.month[indexPath.section].result.last?.date
+            }
         }
         
         dataSource = UICollectionViewDiffableDataSource<Int, Day>(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
@@ -171,11 +173,14 @@ extension CalendarViewController: UICollectionViewDelegate {
         calendarModel.validateCheckDate(for: day)
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        let width: CGFloat = self.collectionView.frame.width
-//        let height: CGFloat = 60
-//        return CGSize(width: width, height: height)
-//    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let width: CGFloat = self.collectionView.frame.width
+        let height: CGFloat = 60
+        return CGSize(width: width, height: height)
+    }
+    
 }
 
 extension CalendarViewController: UICollectionViewDelegateFlowLayout {

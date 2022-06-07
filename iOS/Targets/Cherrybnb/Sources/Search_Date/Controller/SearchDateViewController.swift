@@ -15,11 +15,11 @@ class SearchDateViewController: UIViewController {
             queryParameterStackView.setContent(queryParameter)
         }
     }
-    
+
     private lazy var toolbar = SearchNavigationToolbar()
 
     private lazy var calendarPickerVC = CalendarPickerViewController(baseDate: Date(), numOfMonths: CalendarPickerViewController.defaultNumberOfMonths)
-    
+
     private lazy var queryParameterStackView = QueryParameterStackView(queryParameter: queryParameter)
 
     override func viewDidLoad() {
@@ -30,7 +30,7 @@ class SearchDateViewController: UIViewController {
         setCalendarPickerHandler()
         setToolbarHandler()
     }
-    
+
     private func setSubviews() {
         addChild(calendarPickerVC)
         view.addSubview(calendarPickerVC.view)
@@ -44,16 +44,16 @@ class SearchDateViewController: UIViewController {
         NSLayoutConstraint.activate([
             toolbar.bottomAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.bottomAnchor, multiplier: 0),
             toolbar.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 0),
-            toolbar.trailingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.trailingAnchor, multiplier: 0),
+            toolbar.trailingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.trailingAnchor, multiplier: 0)
         ])
-        
+
         NSLayoutConstraint.activate([
             queryParameterStackView.bottomAnchor.constraint(equalTo: toolbar.topAnchor),
             queryParameterStackView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
             queryParameterStackView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
             queryParameterStackView.heightAnchor.constraint(equalToConstant: 44*4)
         ])
-        
+
         NSLayoutConstraint.activate([
             calendarPickerVC.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             calendarPickerVC.view.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -61,10 +61,8 @@ class SearchDateViewController: UIViewController {
             calendarPickerVC.view.bottomAnchor.constraint(equalTo: queryParameterStackView.topAnchor, constant: -16)
         ])
     }
-    
-    
-}
 
+}
 
 // MARK: - Handling CalendarPicker
 
@@ -80,30 +78,30 @@ extension SearchDateViewController {
 // MARK: - Handling Navigation Toolbar
 
 extension SearchDateViewController {
-    
+
     private func setToolbarHandler() {
         toolbar.didTouchNext = { [weak self] in
             let nextVC = UIViewController()
             // TODO: query 파라미터 주입
             self?.navigationController?.pushViewController(nextVC, animated: true)
         }
-        
+
         toolbar.didTouchSkip = { [weak self] in
             let nextVC = UIViewController()
             // TODO: query 파라미터 초기화 후 주입
             self?.navigationController?.pushViewController(nextVC, animated: true)
         }
-        
+
         toolbar.didTouchReset = { [weak self] in
             self?.calendarPickerVC.deselectAll()
         }
     }
-    
+
     func updateToolbarItems(daySelection: DaySelection) {
         switch (daySelection.checkIn, daySelection.checkOut) {
-        case (.some(_), .some(_)):
+        case (.some, .some):
             toolbar.enableNextButton()
-        case (.some(_), nil):
+        case (.some, nil):
             toolbar.showResetButton()
             toolbar.disableNextButton()
         case (nil, nil):

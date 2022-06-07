@@ -58,7 +58,7 @@ struct CalendarPicker {
     func getDay(monthSection: Int, dayItem: Int) -> Day {
         return months[monthSection].days[dayItem]
     }
-    
+
     mutating func deselectAll() {
         switch (daySelection.checkIn, daySelection.checkOut) {
         case (.some(let checkIn), .some(let checkOut)):
@@ -66,15 +66,15 @@ struct CalendarPicker {
             toggleSelection(of: checkOut)
             toggleBetweenSelection(from: checkIn, to: checkOut)
             updateSections(including: [checkIn, checkOut])
-            
+
         case (.some(let checkIn), nil):
             toggleSelection(of: checkIn)
             updateSections(including: [checkIn])
-            
+
         default:
             break
         }
-        
+
         daySelection = (nil, nil)
     }
 
@@ -208,9 +208,4 @@ struct CalendarPicker {
     private mutating func toggleSelection(monthSection: Int, dayItem: Int) {
         months[monthSection].days[dayItem].isSelected.toggle()
     }
-}
-
-enum CalendarPickerError: Error {
-    case metadataGeneration
-    case offsetMonthGeneration
 }

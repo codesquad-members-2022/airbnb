@@ -75,7 +75,7 @@ class CalendarPickerViewController: UIViewController {
     func didSelectDate(completion: ((DaySelection) -> Void)?) {
         calendarPicker.didSelectDate = completion
     }
-    
+
     func deselectAll() {
         calendarPicker.deselectAll()
     }

@@ -24,7 +24,7 @@ public class Accommodation {
     private int reviewCount;
     private String description;
     private String name;
-    private String mainImgUrl;
+    private String mainImageUrl;
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "accommodation")
@@ -49,7 +49,7 @@ public class Accommodation {
         this.reviewCount = reviewCount;
         this.description = description;
         this.name = name;
-        this.mainImgUrl = mainImgUrl;
+        this.mainImageUrl = mainImgUrl;
         this.accommodationAddress = accommodationAddress;
         this.accommodationInfo = accommodationInfo;
 

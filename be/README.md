@@ -133,13 +133,17 @@
 ## 3주차 수요일 리뷰 요청
 
 ### 진행 내용
-#### 애플리케이션(진행 중)
+#### 애플리케이션
 + 숙소 예약 API 기능 구현(완료)
-+ JWT을 통한 로그인 인증 기능 구현(진행 중)
++ 깃허브 OAuth를 통한 로그인 인증, JWT을 통한 `로그인 검증`, `로그아웃`, `액세스 토큰 재발행` 기능 구현(완료)
+  + 로그인 완료 후 클라이언트에 access(응답 헤더로) 및 refresh(쿠키로) 토큰 발급
+    + refresh 토큰은 레디스(redis)에 저장
+  + 로그아웃 요청 시 레디스에 저장된 refresh 토큰을 삭제하고 기존 access 토큰은 레디스에 블랙리스트로 지정(추후 로그인 검증 시 활용)
+  + 액세스 토큰 재발행 요청 시 refresh 토큰 만료 시간 검증 
 + <a href="https://near-snipe-0de.notion.site/API-Description-094e9cd17eaa4c3d89e8c9966fd6d8a5">API 명세서 확인하기(클릭)</a><br/>
 
 #### 인프라 아키텍처
-> ![image](https://user-images.githubusercontent.com/82401504/171793962-6ec7f82a-1fa0-4e57-96a3-e4662d15a4cd.png)
+> ![image](https://user-images.githubusercontent.com/82401504/172436726-a1901a24-2ade-48d3-89a1-0ef7919ad57a.png)
 
 #### 도메인 모델과 테이블 설계
 > ```

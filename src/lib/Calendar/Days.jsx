@@ -2,7 +2,6 @@ import React from "react";
 import {useContext} from "react";
 import styled from "styled-components";
 import {CalendarContext} from "../CalendarContext";
-import {isValidDate} from "../util";
 
 const Days = () => {
     const {date, calendarWidth, dateStyle, hoverDateStyle, clickedDateStyle, dateClickHandler, dateHoverHandler, periodStyle} = useContext(CalendarContext);
@@ -57,8 +56,8 @@ const Days = () => {
 const getWeeks = (year, month) => {
     const WEEK_NUM = 7;
     const weeks = [];
-    const firstDay = new Date(Number(year), Number(month) - 1, 1).getDay();
-    const lastDate = new Date(Number(year), Number(month), 0).getDate();
+    const firstDay = new Date(Number(year), Number(month), 1).getDay();
+    const lastDate = new Date(Number(year), Number(month) + 1, 0).getDate();
     const dates = Array.from({length: lastDate}, (_, ind) => ind + 1);
     weeks.push(dates.slice(0, WEEK_NUM - firstDay));
     for (let idx = WEEK_NUM - firstDay; idx < lastDate; idx += WEEK_NUM) {
@@ -68,35 +67,20 @@ const getWeeks = (year, month) => {
 };
 
 const isDuringPeriod = (periodStart, periodEnd, today) => {
-    try {
-        if (!periodStart || !periodEnd) {
-            return false;
-        }
-        if (isValidDate(periodStart) && isValidDate(periodEnd) && isValidDate(today)) {
-            return (
-                new Date(periodStart.year, periodStart.month - 1, periodStart.date) <= new Date(today.year, today.month - 1, today.date) &&
-                new Date(today.year, today.month - 1, today.date) <= new Date(periodEnd.year, periodEnd.month - 1, periodEnd.date)
-            );
-        }
-        throw new Error();
-    } catch (e) {
-        console.error("Invalid preiod Date");
+    if (!periodStart || !periodEnd) {
         return false;
     }
+    return (
+        new Date(periodStart.year, periodStart.month - 1, periodStart.date) <= new Date(today.year, today.month - 1, today.date) &&
+        new Date(today.year, today.month - 1, today.date) <= new Date(periodEnd.year, periodEnd.month - 1, periodEnd.date)
+    );
 };
 
 const isSameDate = (date1, date2) => {
-    try {
-        if (!date1 || !date2) {
-            return false;
-        }
-        if (isValidDate(date1) && isValidDate(date2)) {
-            return new Date(date1.year, date1.month - 1, date1.date).getTime() === new Date(date2.year, date2.month - 1, date2.date).getTime();
-        }
-    } catch (e) {
-        console.error("Invalid preiod Date");
+    if (!date1 || !date2) {
         return false;
     }
+    return new Date(date1.year, date1.month - 1, date1.date).getTime() === new Date(date2.year, date2.month - 1, date2.date).getTime();
 };
 
 const DateBox = styled.div`

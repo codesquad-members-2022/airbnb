@@ -4,7 +4,6 @@ import {CalendarContext} from "./CalendarContext";
 import Days from "./Calendar/Days";
 import Month from "./Calendar/Month";
 import Week from "./Calendar/Week";
-import {isValidDate} from "./util";
 
 const Calendar = ({
     date = {
@@ -34,24 +33,19 @@ const Calendar = ({
         },
     },
 }) => {
-    try {
-        if (isValidDate(date)) {
-            return (
-                <CalendarContext.Provider
-                    value={{date, calendarWidth, dateStyle, hoverDateStyle, clickedDateStyle, dateClickHandler, dateHoverHandler, periodStyle}}
-                >
-                    <CalendarBox>
-                        <Month />
-                        <Week />
-                        <Days />
-                    </CalendarBox>
-                </CalendarContext.Provider>
-            );
-        }
-        throw new Error();
-    } catch (e) {
-        console.error("Invalid Date");
-    }
+    date = {
+        year: new Date(date.year, date.month - 1).getFullYear(),
+        month: new Date(date.year, date.month - 1).getMonth(),
+    };
+    return (
+        <CalendarContext.Provider value={{date, calendarWidth, dateStyle, hoverDateStyle, clickedDateStyle, dateClickHandler, dateHoverHandler, periodStyle}}>
+            <CalendarBox>
+                <Month />
+                <Week />
+                <Days />
+            </CalendarBox>
+        </CalendarContext.Provider>
+    );
 };
 
 const CalendarBox = styled.div`

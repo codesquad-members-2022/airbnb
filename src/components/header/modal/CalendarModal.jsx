@@ -97,13 +97,13 @@ const CalendarModal = ({isClicked}) => {
 const getNextMonth = (date) => {
     const year = date.year;
     const month = date.month;
-    return {year: month < 12 ? year : year + 1, month: month < 12 ? month + 1 : 1};
+    return {year: year, month: month + 1};
 };
 
 const getPreviousMonth = (date) => {
     const year = date.year;
     const month = date.month;
-    return {year: month > 1 ? year : year - 1, month: month > 1 ? month - 1 : 12};
+    return {year: year, month: month - 1};
 };
 
 const CalendarModalBox = styled(Modal)`

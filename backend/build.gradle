@@ -55,7 +55,7 @@ dependencies {
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
 
     /* proj4 */
-    implementation 'org.webjars.npm:proj4:2.7.5'
+    implementation 'org.locationtech.proj4j:proj4j:1.1.5'
 }
 
 test {

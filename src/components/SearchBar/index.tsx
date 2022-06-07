@@ -20,7 +20,7 @@ const SearchBar = () => {
   const { openedModal } = useSearchModalState();
 
   return (
-    <S.SearchBar>
+    <S.SearchBar openedModal={openedModal}>
       <Period />
       <S.Block />
       <Price />

@@ -11,16 +11,16 @@ import * as S from "./style";
 
 export const Personnel = () => {
   const personnelElement = useRef(null);
+  const { openedModal } = useSearchModalState();
+
   const { onOpenSearchModal, onCloseSearchModal } = useSearchModalDispatch();
 
   return (
-    <>
-      <S.Personnel onClick={() => onOpenSearchModal("PERSONNEL")} ref={personnelElement}>
-        <TextBox label="인원" placeholder="게스트 추가" textContent={null} />
-        {true && <Icon onClick={onCloseSearchModal} data-button="REMOVE" iconName={X_ICON} iconSize="base" />}
-        <SearchButton />
-      </S.Personnel>
-    </>
+    <S.Personnel onClick={() => onOpenSearchModal("PERSONNEL")} openedModal={openedModal} ref={personnelElement}>
+      <TextBox label="인원" placeholder="게스트 추가" textContent={null} />
+      {true && <Icon onClick={onCloseSearchModal} data-button="REMOVE" iconName={X_ICON} iconSize="base" />}
+      <SearchButton />
+    </S.Personnel>
   );
 };
 

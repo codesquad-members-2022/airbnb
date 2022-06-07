@@ -68,13 +68,13 @@ const CalendarProvider = ({ children }: { children?: React.ReactNode }) => {
 
 export const useCalendarState = () => {
   const state = useContext(CalendarStateContext);
-  if (!state) throw new Error("Cannot find CalendarProvider"); //
+  if (!state) throw new Error("Cannot find CalendarProvider");
   return state;
 };
 
 export const useCalendarDispatch = () => {
   const state = useContext(CalendarDispatchContext);
-  if (!state) throw new Error("Cannot find CalendarProvider"); //
+  if (!state) throw new Error("Cannot find CalendarProvider");
   return state;
 };
 

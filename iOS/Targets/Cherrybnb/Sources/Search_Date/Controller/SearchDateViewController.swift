@@ -11,6 +11,7 @@ import UIKit
 struct QueryParameter {
     var dateRange: Range<Date>?
     var place: Place?
+    var priceRange: Range<Int>?
 }
 
 class SearchDateViewController: UIViewController {

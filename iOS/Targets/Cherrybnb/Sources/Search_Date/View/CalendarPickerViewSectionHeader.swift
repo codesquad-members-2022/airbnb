@@ -33,9 +33,9 @@ class CalendarPickerViewSectionHeader: UICollectionReusableView {
         setLayout()
     }
 
-    private var month: CalendarPicker.Month?
+    private var month: Month?
 
-    func setMonth(_ month: CalendarPicker.Month) {
+    func setMonth(_ month: Month) {
         self.month = month
         headerLabel.text = monthFormatter.string(from: month.firstDay)
     }

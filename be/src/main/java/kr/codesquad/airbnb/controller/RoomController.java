@@ -1,6 +1,8 @@
 package kr.codesquad.airbnb.controller;
 
 import kr.codesquad.airbnb.dto.RoomPriceStatisticRequest;
+import kr.codesquad.airbnb.dto.RoomSearchDto;
+import kr.codesquad.airbnb.dto.RoomSearchRequest;
 import kr.codesquad.airbnb.exception.CustomException;
 import kr.codesquad.airbnb.exception.ErrorCode;
 import kr.codesquad.airbnb.response.CommonResponse;
@@ -28,5 +30,21 @@ public class RoomController {
         }
 
         return CommonResponse.okCommonResponse(roomService.findStatisticOfRoomPrice(roomPriceStatisticRequest));
+    }
+
+    /**
+     * 체크인, 체크아웃, 숙박료 최솟값, 숙박료 최댓값, 성인 인원수, 어린이 인원수, 유아 인원수, 좌상단 위도, 좌상단 경도, 우하단 위도, 우하단 경도
+     * 요청으로 전달 된 파라미터 값에 따라 검색 조건을 분기하여 예약 가능한 숙소의 정보를 반환.
+     * 필수 파라미터 값은 없다.
+     */
+    @ResponseBody
+    @GetMapping("/rooms")
+    public CommonResponse findPossibleBookingRooms(@ModelAttribute RoomSearchRequest roomSearchRequest) {
+        RoomSearchDto possibleBookingRooms = roomService.findPossibleBookingRooms(roomSearchRequest);
+        if (possibleBookingRooms.getRooms().isEmpty()) {
+            return CommonResponse.noContentCommonResponse();
+        }
+
+        return CommonResponse.okCommonResponse(possibleBookingRooms);
     }
 }

@@ -6,7 +6,8 @@ import { useSearchModalState } from "@contexts/SearchModalProvider";
 
 import Period from "./Period";
 import Personnel from "./Personnel";
-import Price, { PriceRangeGraph } from "./Price";
+import Price from "./Price";
+import { PriceRangeGraph } from "./Price/PriceRangeGraph";
 import * as S from "./style";
 
 const SEARCH_BAR = {

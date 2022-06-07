@@ -13,27 +13,25 @@ export function useInputDispatch() {
     date: number | string,
   ) {
     const selectedDate = changeLocalDateStr(year, month - 1, date);
-    if (dispatch) {
-      if (!checkIn || compareDate(checkIn, selectedDate)) {
-        dispatch({
-          type: 'INPUT_CHECK_IN',
-          date: selectedDate,
-        });
-      } else {
-        dispatch({
-          type: 'INPUT_CHECK_OUT',
-          date: selectedDate,
-        });
-      }
+    if (!dispatch) throw new Error();
+    if (!checkIn || compareDate(checkIn, selectedDate)) {
+      dispatch({
+        type: 'INPUT_CHECK_IN',
+        date: selectedDate,
+      });
+    } else {
+      dispatch({
+        type: 'INPUT_CHECK_OUT',
+        date: selectedDate,
+      });
     }
   }
 
   function handelResetEvent() {
-    if (dispatch) {
-      dispatch({
-        type: 'RESET_INPUT',
-      });
-    }
+    if (!dispatch) throw new Error();
+    dispatch({
+      type: 'RESET_INPUT',
+    });
   }
   return { handelClickEvent, handelResetEvent };
 }

@@ -12,7 +12,8 @@ function GuestNum({ title, state, setState }) {
   const { setAdultsNum } = useContext(PersonnelSetterContext);
 
   const handleClickMinus = () => {
-    if (state > 0) setState((num) => num - 1);
+    const minCount = 0;
+    if (state > minCount) setState((num) => num - 1);
   };
 
   const handleClickPlus = (title) => {
@@ -21,8 +22,8 @@ function GuestNum({ title, state, setState }) {
         setAdultsNum((num) => num + 1);
       }
     }
-
-    if (state < 8) setState((num) => num + 1);
+    const maxCount = 8;
+    if (state < maxCount) setState((num) => num + 1);
   };
 
   const isDisabledMinusBtn = state === 0;

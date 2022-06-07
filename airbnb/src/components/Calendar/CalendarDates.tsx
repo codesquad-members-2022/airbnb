@@ -7,14 +7,15 @@ import {
 } from 'utility/dateUtil';
 import { useInputState } from 'hooks/useInputState';
 import { useInputDispatch } from 'hooks/useInputDispatch';
+import { theme } from '@chakra-ui/react';
 
-type props = {
+type CalendarDatesProps = {
   date: string | number;
   year: number;
   month: number;
 };
 
-function CalendarDates({ date, year, month }: props) {
+function CalendarDates({ date, year, month }: CalendarDatesProps) {
   const { checkIn, checkOut } = useInputState();
   const { handelClickEvent } = useInputDispatch();
 
@@ -76,13 +77,14 @@ const DateNum = styled.button<{
   color: inherit;
 
   &:disabled {
-    ${({ disabled }) => disabled && `color : #BDBDBD`}
+    color: ${({ disabled, theme }) => disabled && theme.colors.gray4};
   }
 
-  ${({ checkedDate, date }) =>
-    checkedDate && date && ` border-bottom: 3px solid #f00`};
-  ${({ selectedDate, date }) =>
-    selectedDate && date && ` border-bottom: 3px solid #010101`};
+  border-bottom: ${({ checkedDate, date, theme }) =>
+    checkedDate && date && `3px solid ${theme.colors.red}`};
+
+  border-bottom: ${({ selectedDate, date, theme }) =>
+    selectedDate && date && `3px solid ${theme.colors.black}`};
 `;
 
 export default CalendarDates;

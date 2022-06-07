@@ -44,7 +44,7 @@ function PersonnelModal() {
 
 const PersonnelContainer = styled.ul`
   width: 360px;
-  padding: 35px 40px;
+  padding: 35px 20px;
 `;
 
 export default PersonnelModal;

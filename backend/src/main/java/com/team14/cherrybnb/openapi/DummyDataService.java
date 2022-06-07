@@ -15,6 +15,10 @@ import com.team14.cherrybnb.room.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.io.ParseException;
+import org.locationtech.proj4j.BasicCoordinateTransform;
+import org.locationtech.proj4j.CRSFactory;
+import org.locationtech.proj4j.CoordinateReferenceSystem;
+import org.locationtech.proj4j.ProjCoordinate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -109,7 +113,7 @@ public class DummyDataService {
             double x = node.get("X").asDouble();
             double y = node.get("Y").asDouble();
 
-            Point point = GeometryUtils.createPoint(x, y);
+            Point point = tmToWgs84(x, y);
             String[] splited = address.split(" ");
             if(splited.length < 4) {
                 continue;
@@ -177,5 +181,22 @@ public class DummyDataService {
             wishes.add(wish);
         }
         wishRepository.saveAll(wishes);
+    }
+
+    private Point tmToWgs84(double x, double y) throws ParseException {
+
+        CRSFactory crsFactory = new CRSFactory();
+        CoordinateReferenceSystem wgs84 = crsFactory.createFromParameters("EPSG:4326",
+                "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs");
+
+        CoordinateReferenceSystem tm = crsFactory.createFromParameters("EPSG:5174",
+                "+proj=tmerc +lat_0=38 +lon_0=127.0028902777778 +k=1 +x_0=200000 +y_0=500000 +ellps=bessel +units=m +no_defs +towgs84=-115.80,474.99,674.11,1.16,-2.31,-1.63,6.43");
+
+        BasicCoordinateTransform basicCoordinateTransform = new BasicCoordinateTransform(tm, wgs84);
+
+        ProjCoordinate input = new ProjCoordinate(x, y);
+        ProjCoordinate result = new ProjCoordinate();
+        ProjCoordinate transform = basicCoordinateTransform.transform(input, result);
+        return GeometryUtils.createPoint(result.x, result.y);
     }
 }

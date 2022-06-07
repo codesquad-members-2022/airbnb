@@ -1,34 +1,33 @@
-import { useState, useRef } from "react";
+import React from "react";
 
 import Modal from "@components/common/Modal";
 import Calendar from "@components/SearchBar/Period/Calendar";
-import useModal from "@hooks/useModal";
+import { useSearchModalState } from "@contexts/SearchModalProvider";
 
 import Period from "./Period";
 import Personnel from "./Personnel";
 import Price, { PriceRangeGraph } from "./Price";
 import * as S from "./style";
 
-const SearchBar = () => {
-  // const [modal, setModal] = useModal(null, SEARCH_BAR);
-  const [modalOpen, setModalOpen] = useState(null);
+const SEARCH_BAR = {
+  PERIOD: <Calendar />,
+  PRICE: <PriceRangeGraph />,
+  PERSONNEL: "PERSONNEL",
+};
 
-  const SEARCH_BAR = {
-    PERIOD: <Calendar />,
-    PRICE: <PriceRangeGraph />,
-    PERSONNEL: "PERSONNEL",
-  };
+const SearchBar = () => {
+  const { openedModal } = useSearchModalState();
 
   return (
     <S.SearchBar>
-      <Period setModalOpen={setModalOpen} />
+      <Period />
       <S.Block />
-      <Price setModalOpen={setModalOpen} />
+      <Price />
       <S.Block />
-      <Personnel setModalOpen={setModalOpen} />
-      {modalOpen && <Modal setModalOpen={setModalOpen}>{SEARCH_BAR[modalOpen]}</Modal>}
+      <Personnel />
+      {openedModal && <Modal>{SEARCH_BAR[openedModal]}</Modal>}
     </S.SearchBar>
   );
 };
 
-export default SearchBar;
+export default React.memo(SearchBar);

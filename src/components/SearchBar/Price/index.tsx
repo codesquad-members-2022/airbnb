@@ -6,6 +6,7 @@ import X_ICON from "@assets/x-icon.svg";
 import Icon from "@components/common/Icon";
 import Modal from "@components/common/Modal";
 import TextBox from "@components/common/TextBox";
+import { useSearchModalDispatch } from "@contexts/SearchModalProvider";
 
 import * as S from "./style";
 
@@ -14,22 +15,15 @@ interface coordinates {
   y: number;
 }
 
-const Price = ({ setModalOpen }: { setModalOpen: React.Dispatch<React.SetStateAction<string | null>> }) => {
+const Price = () => {
   const priceElement = useRef(null);
-
-  const handleModal = () => {
-    setModalOpen("PRICE");
-  };
-
-  const onClickHandler = () => {
-    console.log("hi");
-  };
+  const { onOpenSearchModal, onCloseSearchModal } = useSearchModalDispatch();
 
   return (
     <>
-      <S.Price onClick={handleModal} ref={priceElement}>
+      <S.Price onClick={() => onOpenSearchModal("PRICE")} ref={priceElement}>
         <TextBox label="요금" placeholder="금액대 설정" textContent={null} />
-        <Icon onClick={onClickHandler} data-button="REMOVE" iconName={X_ICON} iconSize="base" />
+        {true && <Icon onClick={onCloseSearchModal} data-button="REMOVE" iconName={X_ICON} iconSize="base" />}
       </S.Price>
     </>
   );
@@ -285,4 +279,4 @@ const drawGraph = (context: CanvasRenderingContext2D | null, mockArray: coordina
   context.fill();
 };
 
-export default Price;
+export default React.memo(Price);

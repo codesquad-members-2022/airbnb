@@ -1,25 +1,23 @@
-import { useRef } from "react";
+import React, { useRef } from "react";
 
 import SEARCH_ICON from "@assets/search-icon.svg";
 import X_ICON from "@assets/x-icon.svg";
 import Icon from "@components/common/Icon";
 import Modal from "@components/common/Modal";
 import TextBox from "@components/common/TextBox";
+import { useSearchModalDispatch, useSearchModalState } from "@contexts/SearchModalProvider";
 
 import * as S from "./style";
 
-export const Personnel = ({ setModalOpen }: { setModalOpen: React.Dispatch<React.SetStateAction<string | null>> }) => {
+export const Personnel = () => {
   const personnelElement = useRef(null);
-
-  const handleModal = () => {
-    setModalOpen("PERSONNEL");
-  };
+  const { onOpenSearchModal, onCloseSearchModal } = useSearchModalDispatch();
 
   return (
     <>
-      <S.Personnel onClick={handleModal} ref={personnelElement}>
+      <S.Personnel onClick={() => onOpenSearchModal("PERSONNEL")} ref={personnelElement}>
         <TextBox label="인원" placeholder="게스트 추가" textContent={null} />
-        <Icon data-button="REMOVE" iconName={X_ICON} iconSize="base" />
+        {true && <Icon onClick={onCloseSearchModal} data-button="REMOVE" iconName={X_ICON} iconSize="base" />}
         <SearchButton />
       </S.Personnel>
     </>
@@ -34,4 +32,4 @@ const SearchButton = () => {
   );
 };
 
-export default Personnel;
+export default React.memo(Personnel);

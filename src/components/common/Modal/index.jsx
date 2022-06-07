@@ -1,26 +1,30 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line react/prop-types
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
+
+import { useSearchModalDispatch } from "@contexts/SearchModalProvider";
 
 import * as S from "./style";
 
-const Modal = ({ setModalOpen, children }) => {
+const Modal = ({ children }) => {
   const modalRef = useRef(null);
-  const outsideClickHandler = (e) => {
+  const { onCloseSearchModal } = useSearchModalDispatch();
+
+  const outsideClickHandler = useCallback((e) => {
     if (e.target.dataset.button === "REMOVE") {
       return;
     }
 
     if (!modalRef.current?.contains(e.target)) {
-      setModalOpen(null);
+      onCloseSearchModal();
     }
-  };
+  }, []);
 
   useEffect(() => {
-    document.addEventListener("mousedown", outsideClickHandler);
+    document.addEventListener("mouseup", outsideClickHandler);
 
     return () => {
-      document.removeEventListener("mousedown", outsideClickHandler);
+      document.removeEventListener("mouseup", outsideClickHandler);
     };
   }, []);
 

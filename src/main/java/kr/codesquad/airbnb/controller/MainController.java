@@ -15,12 +15,12 @@ public class MainController {
 
     private final MainService mainService;
 
-    @GetMapping("/main/event")
+    @GetMapping("/event")
     public EventResponse getEvent() {
         return mainService.getEvent();
     }
 
-    @GetMapping("/main/nearby")
+    @GetMapping("/nearby")
     public List<RegionResponse> getNearRegions() {
         return mainService.getNearRegions();
     }

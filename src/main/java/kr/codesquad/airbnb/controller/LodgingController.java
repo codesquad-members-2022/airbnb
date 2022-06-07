@@ -20,6 +20,7 @@ public class LodgingController {
     public LodgingDetailResponse getLodging(@PathVariable Long id) {
         return lodgingService.getLodging(id);
     }
+
     @GetMapping("/lodgings")
     public List<LodgingResponse> getLodgingList(SearchLodgingRequest searchLodgingRequest) {
         return lodgingService.getLodgingList(searchLodgingRequest);

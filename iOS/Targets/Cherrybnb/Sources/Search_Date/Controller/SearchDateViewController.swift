@@ -8,19 +8,6 @@
 
 import UIKit
 
-struct QueryParameter {
-    var dateRange: (Date?, Date?)?
-    var place: Place?
-    var priceRange: Range<Decimal>?
-    var people: HeadCount?
-}
-
-struct HeadCount {
-    let adults: Int
-    let child: Int
-    let infant: Int
-}
-
 class SearchDateViewController: UIViewController {
 
     var queryParameter: QueryParameter = QueryParameter() {

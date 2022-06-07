@@ -12,7 +12,7 @@ class SearchDateViewController: UIViewController {
 
     var queryParameter: QueryParameter = QueryParameter() {
         didSet {
-            queryParameterStackView.set(queryParameter)
+            queryParameterStackView.setContent(queryParameter)
         }
     }
 

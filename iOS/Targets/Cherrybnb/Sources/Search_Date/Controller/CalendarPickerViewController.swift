@@ -91,7 +91,7 @@ extension CalendarPickerViewController: UICollectionViewDataSource {
         }
 
         let day = calendarPicker.getDay(monthSection: indexPath.section, dayItem: indexPath.item)
-        cell.setDay(day)
+        cell.setContent(day)
 
         return cell
     }

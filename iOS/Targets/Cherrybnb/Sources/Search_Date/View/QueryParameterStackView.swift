@@ -9,8 +9,9 @@
 import UIKit
 
 class QueryParameterStackView: UIStackView {
-    var queryParameter: QueryParameter?
 
+    // MARK: - Subviews
+    
     lazy var parameterRow: (String, String) -> UIStackView = { keyText, valueText in
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -35,7 +36,13 @@ class QueryParameterStackView: UIStackView {
         label.textColor = .gray
         return label
     }
+    
+    // MARK: - Properties
+    
+    var queryParameter: QueryParameter?
 
+    // MARK: - Public Methods
+    
     init(queryParameter: QueryParameter?) {
         self.queryParameter = queryParameter
         super.init(frame: .zero)
@@ -47,11 +54,13 @@ class QueryParameterStackView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func set(_ queryParameter: QueryParameter) {
+    func setContent(_ queryParameter: QueryParameter) {
         self.queryParameter = queryParameter
         removeSubviews()
         setSubviews()
     }
+    
+    // MARK: - Private (helper) methods
 
     private func removeSubviews() {
         self.subviews.forEach { subview in

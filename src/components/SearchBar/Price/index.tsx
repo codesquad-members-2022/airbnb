@@ -8,7 +8,7 @@ import { useSearchModalDispatch } from "@contexts/SearchModalProvider";
 
 import * as S from "./style";
 
-const Price = ({ setModalOpen }: { setModalOpen: React.Dispatch<React.SetStateAction<string | null>> }) => {
+const Price = () => {
   const priceElement = useRef(null);
   const { onOpenSearchModal, onCloseSearchModal } = useSearchModalDispatch();
 

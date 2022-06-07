@@ -80,6 +80,7 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
     
     @objc func pushNextVC() {
         let nextVC = PriceGraphViewController()
+        nextVC.setModel(SearchInfoTrackingModel())
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }

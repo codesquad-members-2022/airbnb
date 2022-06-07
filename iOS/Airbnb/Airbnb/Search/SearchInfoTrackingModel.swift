@@ -7,7 +7,12 @@
 
 import Foundation
 
-class SearchInfoTrackingModel {
+protocol SearchInfoModel {
+    var searchInfo: SearchInfo { get }
+    func setModelData(using dict: [SearchInfoType: Any])
+}
+
+class SearchInfoTrackingModel: SearchInfoModel {
     
     private(set) var searchInfo = SearchInfo()
     
@@ -18,6 +23,14 @@ class SearchInfoTrackingModel {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_kr")
         formatter.dateFormat = "MM dd"
+        return formatter
+    }()
+    
+    private let numberFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale.current
+        formatter.numberStyle = .currency
+        formatter.roundingMode = .halfDown
         return formatter
     }()
     
@@ -48,11 +61,11 @@ class SearchInfoTrackingModel {
                     
                     let lowerPricePerDay = UInt(highestPrice * percentageRange.lowPercent)
                     searchInfo.lowerPricePerDay = lowerPricePerDay
-                    searchInfo.lowerPricePerDayFormatted = NumberFormatter.localizedString(from: lowerPricePerDay as NSNumber, number: .currency)
+                    searchInfo.lowerPricePerDayFormatted = numberFormatter.string(for: (lowerPricePerDay / 1000) * 1000)
                     
                     let maximumPricePerDay = UInt(highestPrice * percentageRange.highPercent)
                     searchInfo.lowerPricePerDay = maximumPricePerDay
-                    searchInfo.maximumPricePerDayFormatted = NumberFormatter.localizedString(from: maximumPricePerDay as NSNumber, number: .currency)
+                    searchInfo.maximumPricePerDayFormatted = numberFormatter.string(for: (maximumPricePerDay / 1000) * 1000)
                 }
             case .headCount:
                 if let count = dict[key] as? Int {

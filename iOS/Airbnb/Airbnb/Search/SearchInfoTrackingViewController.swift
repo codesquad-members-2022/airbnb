@@ -13,7 +13,7 @@ class SearchInfoTrackingViewController: BackgroundViewController {
     let tableView = UITableView()
     let contentView = UIView()
     private var dataSource = SearchInfoTrackingTableViewDataSource()
-    private let model = SearchInfoTrackingModel()
+    private var model: SearchInfoModel?
     
     private let cellHeight: CGFloat = 44
     
@@ -41,15 +41,20 @@ class SearchInfoTrackingViewController: BackgroundViewController {
         contentView.layoutIfNeeded()
         
         tableView.register(SearchInfoTrackingTableViewCell.self, forCellReuseIdentifier: SearchInfoTrackingTableViewCell.reuseIdentifier)
+        
         tableView.dataSource = dataSource
-        dataSource.model = model
         tableView.rowHeight = cellHeight
+        
+        if let model = model {
+            dataSource.setModel(model)
+        }
+        
         tableView.reloadData()
     }
     
     func setModel(_ model: SearchInfoTrackingModel) {
-        dataSource.model = model
-        tableView.reloadData()
+        self.model = model
+        dataSource.setModel(model)
     }
     
     func setTableViewHidden(_ hidden: Bool = true) {
@@ -59,12 +64,17 @@ class SearchInfoTrackingViewController: BackgroundViewController {
     }
     
     func setPriceRange(_ lowest: UInt, _ highest: UInt) {
-        dataSource.model?.highestPrice = highest
-        dataSource.model?.lowestPrice = lowest
+        guard let model = model as? SearchInfoTrackingModel else {
+            return
+        }
+
+        model.highestPrice = highest
+        model.lowestPrice = lowest
+        tableView.reloadData()
     }
     
     func reloadTableView(dict: [SearchInfoType: Any]) {
-        dataSource.model?.setModelData(using: dict)
+        model?.setModelData(using: dict)
         tableView.reloadData()
     }
 }

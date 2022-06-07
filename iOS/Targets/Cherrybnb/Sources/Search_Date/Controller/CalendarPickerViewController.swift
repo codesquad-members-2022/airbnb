@@ -78,7 +78,6 @@ class CalendarPickerViewController: UIViewController {
     
     func deselectAll() {
         calendarPicker.deselectAll()
-        collectionView.reloadData()
     }
 }
 

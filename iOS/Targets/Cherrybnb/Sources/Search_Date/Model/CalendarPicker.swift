@@ -60,18 +60,19 @@ struct CalendarPicker {
     }
     
     mutating func deselectAll() {
-        if let checkIn = daySelection.checkIn , let checkOut = daySelection.checkOut {
+        switch (daySelection.checkIn, daySelection.checkOut) {
+        case (.some(let checkIn), .some(let checkOut)):
             toggleSelection(of: checkIn)
             toggleSelection(of: checkOut)
             toggleBetweenSelection(from: checkIn, to: checkOut)
-            if let updatedRange = getUpdatedSectionRange(days: [checkIn, checkOut]) {
-                didUpdateMonth?(updatedRange)
-            }
-        } else if let checkIn = daySelection.checkIn {
+            updateSections(including: [checkIn, checkOut])
+            
+        case (.some(let checkIn), nil):
             toggleSelection(of: checkIn)
-            if let updatedRange = getUpdatedSectionRange(days: [checkIn]) {
-                didUpdateMonth?(updatedRange)
-            }
+            updateSections(including: [checkIn])
+            
+        default:
+            break
         }
         
         daySelection = (nil, nil)
@@ -93,10 +94,8 @@ struct CalendarPicker {
             // 새로운 날짜를 On
             toggleSelection(of: selectedDay)
 
-            // 새로운 날짜의 월 섹션을 업데이트
-            if let updatedRange = getUpdatedSectionRange(days: [selectedDay]) {
-                didUpdateMonth?(updatedRange)
-            }
+            // 새로운 출발일 포함 섹션의 범위를 업데이트
+            updateSections(including: [selectedDay])
 
         case (.some(let oldCheckIn), nil) where oldCheckIn.date < selectedDay.date:
 
@@ -110,9 +109,7 @@ struct CalendarPicker {
             toggleBetweenSelection(from: oldCheckIn, to: selectedDay)
 
             // 새로운 날짜 월 섹션, 기존 월 섹션을 업데이트
-            if let updatedRange = getUpdatedSectionRange(days: [oldCheckIn, selectedDay]) {
-                didUpdateMonth?(updatedRange)
-            }
+            updateSections(including: [oldCheckIn, selectedDay])
 
         case (.some(let oldCheckIn), nil) where oldCheckIn.date >= selectedDay.date:
 
@@ -125,10 +122,8 @@ struct CalendarPicker {
             // 기존의 날짜를 Off
             toggleSelection(of: oldCheckIn)
 
-            // 새로운 날짜 월 섹션, 기존 월 섹션 범위를 업데이트
-            if let updatedRange = getUpdatedSectionRange(days: [oldCheckIn, selectedDay]) {
-                didUpdateMonth?(updatedRange)
-            }
+            // 기존 출발, 새로운 출발일 포함 섹션의 범위를 업데이트
+            updateSections(including: [oldCheckIn, selectedDay])
 
         case (.some(let oldCheckIn), .some(let oldCheckOut)):
             // 시작, 도착 날짜가 모두 선택된 상태였을 경우
@@ -148,29 +143,27 @@ struct CalendarPicker {
             // 두 날짜 사이의 Between 셀렉션 off
             toggleBetweenSelection(from: oldCheckIn, to: oldCheckOut)
 
-            // 기존 출발 월, 기존 도착 월, 새로운 출발 월 섹션의 범위를 업데이트
-            if let updatedRange = getUpdatedSectionRange(days: [oldCheckIn, oldCheckOut, selectedDay]) {
-                didUpdateMonth?(updatedRange)
-            }
+            // 기존 출발일, 기존 도착일, 새로운 출발일 포함 섹션의 범위를 업데이트
+            updateSections(including: [oldCheckIn, oldCheckOut, selectedDay])
         default:
             return
         }
 
     }
 
-    private func getUpdatedSectionRange(days: [Day]) -> ClosedRange<Int>? {
-        if days.isEmpty { return nil }
+    private func updateSections(including days: [Day]) {
+        if days.isEmpty { return }
 
-        let updatedSections: [Int] = days.compactMap {
+        let tobeUpdated: [Int] = days.compactMap {
             guard let (m, _) = datePositions[$0.date] else { return nil }
             return m
         }
 
-        guard let min = updatedSections.min(), let max = updatedSections.max() else {
-            return nil
+        guard let min = tobeUpdated.min(), let max = tobeUpdated.max() else {
+            return
         }
 
-        return min...max
+        didUpdateMonth?(min...max)
     }
 
     private mutating func toggleBetweenSelection(from: Day, to: Day) {

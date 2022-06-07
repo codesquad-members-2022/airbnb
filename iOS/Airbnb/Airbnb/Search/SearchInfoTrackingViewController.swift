@@ -13,7 +13,7 @@ class SearchInfoTrackingViewController: BackgroundViewController {
     let tableView = UITableView()
     let contentView = UIView()
     private var dataSource = SearchInfoTrackingTableViewDataSource()
-    private var model: SearchInfoModel?
+    private(set) var model: SearchInfoModel?
     
     private let cellHeight: CGFloat = 44
     
@@ -44,6 +44,7 @@ class SearchInfoTrackingViewController: BackgroundViewController {
         
         tableView.dataSource = dataSource
         tableView.rowHeight = cellHeight
+        tableView.isScrollEnabled = false
         
         if let model = model {
             dataSource.setModel(model)
@@ -52,9 +53,12 @@ class SearchInfoTrackingViewController: BackgroundViewController {
         tableView.reloadData()
     }
     
-    func setModel(_ model: SearchInfoTrackingModel) {
+    func setModel(_ model: SearchInfoModel?) {
         self.model = model
-        dataSource.setModel(model)
+        
+        if let model = model {
+            dataSource.setModel(model)
+        }
     }
     
     func setTableViewHidden(_ hidden: Bool = true) {

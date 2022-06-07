@@ -14,7 +14,7 @@ public class JwtManager {
 
     public void addRefreshTokenByMemberId(String memberId, String refreshToken) {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-        valueOperations.set(memberId, refreshToken, Duration.ofMinutes(30));
+        valueOperations.set(memberId, refreshToken, Duration.ofMinutes(2));
     }
 
     public String getValueByKey(String key) {

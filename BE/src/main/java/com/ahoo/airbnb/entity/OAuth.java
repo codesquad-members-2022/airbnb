@@ -1,4 +1,4 @@
-package com.ahoo.airbnb.oauth;
+package com.ahoo.airbnb.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

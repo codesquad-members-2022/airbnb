@@ -1,6 +1,7 @@
 package com.ahoo.airbnb.oauth;
 
 import com.ahoo.airbnb.entity.Member;
+import com.ahoo.airbnb.entity.OAuth;
 import com.ahoo.airbnb.member.MemberRepository;
 import com.ahoo.airbnb.oauth.dtos.OAuthTokenResponse;
 import com.ahoo.airbnb.oauth.dtos.SignInResponse;

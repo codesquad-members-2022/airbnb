@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-import { DirectionType } from "@utils/calendar";
+import { DirectionType } from "_types/calendar";
 
 export const Calendar = styled.div`
   position: relative;

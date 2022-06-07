@@ -1,25 +1,24 @@
-import { useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
+
+import { DirectionType } from "_types/calendar";
 
 import NEXT_BUTTON from "@assets/nextButton.svg";
 import PREV_BUTTON from "@assets/prevButton.svg";
 import Icon from "@components/common/Icon";
 import CalendarPage from "@components/SearchBar/Period/Calendar/CalendarPage";
 import { CALENDAR_PAGE, HALF_MOVE_POINT } from "@constants/calendar";
-import { useCalendarState } from "@contexts/CalendarProvider";
-import { DirectionType, getDirectionValue } from "@utils/calendar";
+import { getDirectionValue } from "@utils/calendar";
 
 import * as S from "./style";
+
+const today = new Date();
 
 const initSlideInfo: { translateX: number; direction: DirectionType } = {
   translateX: -HALF_MOVE_POINT,
   direction: null,
 };
 
-const today = new Date();
-
 const Calendar = () => {
-  // const { checkIn, checkOut } = useCalendarState();
-
   const todayYear = today.getFullYear();
   const todayMonth = today.getMonth();
 
@@ -64,4 +63,4 @@ const Calendar = () => {
   );
 };
 
-export default Calendar;
+export default React.memo(Calendar);

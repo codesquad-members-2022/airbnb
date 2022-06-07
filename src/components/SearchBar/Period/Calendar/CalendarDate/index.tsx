@@ -1,23 +1,47 @@
-import { DateTarget } from "@constants/calendar";
+import React, { useState } from "react";
+
+import { CalendarInfoType } from "_types/calendar";
+
 import { useCalendarDispatch, useCalendarState } from "@contexts/CalendarProvider";
-import { CalendarInfoType, getDate } from "@utils/calendar";
+import { getDate, isSameTime, isBetweenTime, getStyleDateTarget } from "@utils/calendar";
 
 import * as S from "./style";
 
 const CalendarDate = ({ calendarInfo }: { calendarInfo: CalendarInfoType }) => {
   const { calendarArray, year, month } = calendarInfo;
-  const { checkIn, checkOut } = useCalendarState();
-  const { onCheckIn, onCheckOut, onCheckRemove } = useCalendarDispatch();
+  const { checkIn, checkOut, checkHover } = useCalendarState();
+  const { onCheckIn, onCheckOut, onCheckHover, onCheckRemove } = useCalendarDispatch();
 
-  const handleClickDate = (dateData: Date) => {
-    // TODO 체크인일때, 체크아웃일 때 구분
-    if (!checkIn) {
-      onCheckIn(dateData);
+  const handleCheckDate = (dateData: Date) => {
+    if (isPast(dateData)) {
+      return;
     }
 
-    if (checkIn) {
-      onCheckOut(dateData);
+    switch (true) {
+      case !checkIn:
+        onCheckIn(dateData);
+        break;
+
+      case !!checkIn && dateData < checkIn:
+        onCheckRemove();
+        onCheckIn(dateData);
+        break;
+
+      case !!checkIn:
+        onCheckOut(dateData);
+        break;
+
+      default:
+        throw new Error("Invalid dateClick");
     }
+  };
+
+  const handleHoverDate = (dateData: Date) => {
+    if (!checkIn || checkOut) {
+      return;
+    }
+
+    onCheckHover(dateData);
   };
 
   const isPast = (dateData: number | Date): boolean => {
@@ -25,25 +49,20 @@ const CalendarDate = ({ calendarInfo }: { calendarInfo: CalendarInfoType }) => {
     return dateData < today;
   };
 
-  const getDateTarget = (): DateTarget => {
-    return 0;
-  };
-
   return (
     <S.CalendarDate>
       {calendarArray.map((date: number, index) => {
-        const dateInfo = {
-          date: date,
-          dateData: getDate(year, month, date),
-          dateTarget: getDateTarget(),
-          isPast: date ? isPast(getDate(year, month, date)) : false,
-        };
+        const currDate = getDate(year, month, date);
 
         return (
           <S.DateItem
-            onClick={() => !dateInfo.isPast && handleClickDate(dateInfo.dateData)}
-            key={dateInfo.dateData.getTime() + index}
-            {...dateInfo}
+            onClick={() => date && handleCheckDate(currDate)}
+            onMouseEnter={() => date && handleHoverDate(currDate)}
+            key={currDate.getTime() + index}
+            date={date}
+            dateData={getDate(year, month, date)}
+            dateTarget={getStyleDateTarget({ min: checkIn, currDate: currDate, max: checkOut || checkHover })}
+            isPast={date ? isPast(currDate) : false}
           >
             {date || ""}
           </S.DateItem>
@@ -53,4 +72,4 @@ const CalendarDate = ({ calendarInfo }: { calendarInfo: CalendarInfoType }) => {
   );
 };
 
-export default CalendarDate;
+export default React.memo(CalendarDate);

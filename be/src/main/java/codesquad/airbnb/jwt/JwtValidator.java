@@ -41,15 +41,18 @@ public class JwtValidator {
     }
 
     public long getExpiration(String accessToken) {
-        Date expiration = Jwts.parserBuilder()
-            .setSigningKey(DatatypeConverter.parseBase64Binary(JwtConstant.SECRET_KEY))
-            .build()
-            .parseClaimsJws(accessToken)
-            .getBody()
-            .getExpiration();
-
-        Date currentTime = new Date();
-
-        return expiration.getTime() - currentTime.getTime();
+        try {
+            return Jwts.parserBuilder()
+                .setSigningKey(DatatypeConverter.parseBase64Binary(JwtConstant.SECRET_KEY))
+                .build()
+                .parseClaimsJws(accessToken)
+                .getBody()
+                .getExpiration()
+                .getTime() - (new Date().getTime());
+        } catch (ExpiredJwtException e) {
+            return 0;
+        } catch (JwtException e) {
+            throw new NoSuchElementException("유효하지 않은 토큰입니다.");
+        }
     }
 }

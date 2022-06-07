@@ -1,7 +1,6 @@
 package codesquad.airbnb.interceptor;
 
 import codesquad.airbnb.dto.ResponseMessage;
-import codesquad.airbnb.jwt.JwtConstant;
 import codesquad.airbnb.jwt.JwtManager;
 import codesquad.airbnb.jwt.JwtUtil;
 import codesquad.airbnb.jwt.JwtValidator;
@@ -31,7 +30,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         String accessToken = JwtUtil.getAccessToken(request);
         String isLogout = jwtManager.getValueByKey(accessToken);
-        if (jwtValidator.validateExpirationOfToken(accessToken) && !isLogout.equals(JwtConstant.LOGOUT_FLAG)) {
+        if (jwtValidator.validateExpirationOfToken(accessToken) && isLogout == null) {
             return true;
         }
 

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +22,7 @@ public class AuthController {
     private final OAuthService OAuthService;
     private final TokenService tokenService;
 
-    @GetMapping("/api/login")
+    @PostMapping("/api/login")
     public ResponseEntity<LoginResponse> login(HttpServletResponse response, @RequestParam String code) {
         Long memberId = OAuthService.authorizeForThirdParty(code);
         LoginResponse loginResponse = tokenService.createToken(String.valueOf(memberId));
@@ -40,7 +40,7 @@ public class AuthController {
         return cookie;
     }
 
-    @GetMapping("/api/access-token/reissue")
+    @PostMapping("/api/access-token/reissue")
     public ResponseEntity<ResponseMessage> reissue(HttpServletRequest request, HttpServletResponse response) {
         String refreshToken = JwtUtil.getRefreshToken(request);
         String renewedAccessToken = tokenService.reissueAccessToken(refreshToken);
@@ -51,7 +51,7 @@ public class AuthController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @GetMapping("/api/logout")
+    @PostMapping("/api/logout")
     public ResponseEntity<ResponseMessage> logout(HttpServletRequest request) {
         String accessToken = JwtUtil.getAccessToken(request);
         String refreshToken = JwtUtil.getRefreshToken(request);

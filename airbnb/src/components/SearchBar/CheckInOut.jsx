@@ -7,11 +7,6 @@ function CheckInOut({ onClick, title }) {
   const { checkIn, checkOut } = useInputState();
   const { handelResetEvent } = useInputDispatch();
 
-  let checkPoint;
-  if (title === '체크인') checkPoint = checkIn;
-  else if (title === '체크아웃') checkPoint = checkOut;
-  else checkPoint = '';
-
   const deleteBtn =
     title === '체크아웃' && checkIn && checkOut ? (
       <DeleteIcon
@@ -20,12 +15,17 @@ function CheckInOut({ onClick, title }) {
       />
     ) : undefined;
 
+  function getCheckPoint() {
+    if (title === '체크인' && checkIn) return checkIn;
+    else if (title === '체크아웃' && checkOut) return checkOut;
+    else return '날짜입력';
+  }
   return (
     <>
       <Btn onClick={() => onClick('CHECK_IN_OUT')}>
         <ContentBox>
           <BarTitle>{title}</BarTitle>
-          <BarContent>{checkPoint !== '' ? checkPoint : '날짜입력'}</BarContent>
+          <BarContent>{getCheckPoint()}</BarContent>
         </ContentBox>
       </Btn>
       {deleteBtn}

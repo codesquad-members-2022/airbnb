@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MultiSlider
 
 class PriceSettingView: UIView {
     
@@ -36,6 +37,15 @@ class PriceSettingView: UIView {
         return label
     }()
     
+    private var slider: MultiSlider = {
+        let slider = MultiSlider()
+        slider.orientation = .horizontal
+        slider.addTarget(self, action: #selector(sliderChanged(_:)), for: .valueChanged)
+        slider.translatesAutoresizingMaskIntoConstraints = false
+        return slider
+    }()
+    
+    var didChangedPriceHistogram: ((Price,Price) -> Void)?
     
     override init(frame: CGRect){
         super.init(frame: frame)
@@ -52,6 +62,7 @@ class PriceSettingView: UIView {
         self.addSubview(titleLabel)
         self.addSubview(rangeLabel)
         self.addSubview(averageLabel)
+        self.addSubview(slider)
     }
     
     private func setLayout(){
@@ -73,12 +84,28 @@ class PriceSettingView: UIView {
             averageLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             averageLabel.heightAnchor.constraint(equalToConstant: 16)
         ])
+        
+        NSLayoutConstraint.activate([
+            slider.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
+            slider.centerYAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor),
+            slider.widthAnchor.constraint(equalTo: self.safeAreaLayoutGuide.widthAnchor, constant: -32),
+            slider.heightAnchor.constraint(equalToConstant: 10)
+        ])
 
+    }
+    
+    @objc private func sliderChanged(_ sender: MultiSlider){
+        let min = Price(sender.value[0])
+        let max = Price(sender.value[1])
+        didChangedPriceHistogram?(min,max)
     }
     
     func setContents(_ price: PriceHistogram) {
         rangeLabel.text = "\(price.min) - \(price.max)"
         averageLabel.text = "평균 1박 요금 가격은 \(price.average)원 입니다."
+        slider.minimumValue = CGFloat(price.min)
+        slider.maximumValue = CGFloat(price.max)
+        slider.value = [slider.minimumValue, slider.maximumValue]
     }
 
 }

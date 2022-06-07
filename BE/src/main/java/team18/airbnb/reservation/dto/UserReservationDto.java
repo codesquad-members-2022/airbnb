@@ -4,13 +4,13 @@ import lombok.Getter;
 import team18.airbnb.domain.AccommodationAddress;
 import team18.airbnb.domain.Reservation;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 public class UserReservationDto {
 
-    private final LocalDateTime checkInTime;
-    private final LocalDateTime checkoutTime;
+    private final LocalDate checkInTime;
+    private final LocalDate checkoutTime;
     private final AccommodationAddress accommodationAddress;
     private final String accommodationName;
     private final int nAdult;

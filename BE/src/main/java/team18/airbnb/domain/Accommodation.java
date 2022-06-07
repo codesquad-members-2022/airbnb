@@ -1,11 +1,8 @@
 package team18.airbnb.domain;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,14 +45,6 @@ public class Accommodation {
         this.mainImageUrl = mainImgUrl;
         this.accommodationAddress = accommodationAddress;
         this.accommodationInfo = accommodationInfo;
-
-        if (region != null) {
-            changeRegion(region);
-        }
-    }
-
-    private void changeRegion(Region region) {
         this.region = region;
-        region.getAccommodations().add(this);
     }
 }

@@ -2,12 +2,11 @@ package team18.airbnb.domain;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -20,10 +19,10 @@ public class Reservation {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime checkInTime;
+    private LocalDate checkInTime;
 
     @Column(nullable = false)
-    private LocalDateTime checkoutTime;
+    private LocalDate checkoutTime;
 
     @Column(nullable = false)
     private int adultCount;
@@ -51,8 +50,8 @@ public class Reservation {
     @Embedded
     private ReservationFee reservationFee;
 
-    public Reservation(LocalDateTime checkInTime,
-                       LocalDateTime checkoutTime,
+    public Reservation(LocalDate checkInTime,
+                       LocalDate checkoutTime,
                        int adultCount,
                        int childCount,
                        int infantCount,

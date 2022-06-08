@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.team16.airbnb.data.model.WishData.ResultData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_room_image"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.07" />
+
+        <ImageView
+            android:id="@+id/iv_room_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="328:240"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gl_room_image"
+            app:layout_constraintWidth_percent="0.9"
+            imageUrl="@{item.imageThumnail}"
+            tools:src="@drawable/ic_launcher_background" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_super_badge_line_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_super_badge_line_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.07" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_recommand_line_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9" />
+
+        <CheckBox
+            android:id="@+id/cb_recommand"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:button="@drawable/button_favorite"
+            android:buttonTint="@color/airbnb_Primary"
+            android:strokeWidth="30"
+            android:strokeColor="@color/airbnb_offWhite"
+            android:checked="true"
+            app:layout_constraintEnd_toStartOf="@id/gl_recommand_line_vertical"
+            app:layout_constraintTop_toBottomOf="@id/gl_super_badge_line_horizontal" />
+
+        <TextView
+            android:id="@+id/tv_super_badge"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/badge_frame"
+            android:gravity="center"
+            android:textColor="@color/black"
+            app:layout_constraintHeight_percent="0.08"
+            app:layout_constraintStart_toStartOf="@id/gl_super_badge_line_vertical"
+            app:layout_constraintTop_toBottomOf="@id/gl_super_badge_line_horizontal"
+            app:layout_constraintWidth_percent="0.2"
+            tools:text="슈퍼호스트" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_star_content_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.043" />
+
+        <ImageView
+            android:id="@+id/iv_star"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_star"
+            app:layout_constraintBottom_toBottomOf="@id/tv_star_count"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="@id/gl_star_content_line"
+            app:layout_constraintTop_toTopOf="@id/tv_star_count"
+            android:scaleType="fitXY" />
+
+        <View
+            android:id="@+id/empty_view_1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="360:9"
+            app:layout_constraintTop_toBottomOf="@id/iv_room_image" />
+
+        <TextView
+            android:id="@+id/tv_star_count"
+            style="@style/Text_Black.12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@id/iv_star"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_1"
+            android:text="@{String.valueOf(item.star)}"
+            tools:text="4.80" />
+
+        <TextView
+            android:id="@+id/tv_review_count"
+            style="@style/Text_Grey3.12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_star_count"
+            app:layout_constraintStart_toEndOf="@id/tv_star_count"
+            app:layout_constraintTop_toTopOf="@id/tv_star_count"
+            reviewCount="@{item.review}"
+            tools:text="(후기 127개)" />
+
+        <View
+            android:id="@+id/empty_view_2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="360:9"
+            app:layout_constraintTop_toBottomOf="@id/tv_review_count" />
+
+        <TextView
+            android:id="@+id/tv_room_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_2"
+            app:layout_constraintWidth_percent="0.9"
+            tools:text="Spacious and Comfortable Cozy"
+            android:maxLines="1"
+            android:ellipsize="end"
+            style="@style/Text_Black.19_Bold"
+            android:text="@{item.roomName}"
+            android:gravity="left|center_vertical" />
+
+        <View
+            android:id="@+id/empty_view_3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="360:9"
+            app:layout_constraintTop_toBottomOf="@id/tv_room_name" />
+
+        <TextView
+            android:id="@+id/tv_cost_per_day"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/Text_Black.16"
+            app:layout_constraintWidth_percent="0.9"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_3"
+            moneyFormat="@{item.price}"
+            tools:text="₩82,953 / 박" />
+
+        <View
+            android:id="@+id/empty_view_4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="360:9"
+            app:layout_constraintTop_toBottomOf="@id/tv_cost_per_day" />
+
+        <View
+            android:id="@+id/empty_view_5"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="360:1"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

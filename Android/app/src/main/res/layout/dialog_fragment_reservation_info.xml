@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="pricePerDay"
+            type="Integer" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="400dp"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_v_7"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.07"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_v_93"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.93"/>
+
+        <View
+            android:id="@+id/empty_view_1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintDimensionRatio="343:24"/>
+
+        <TextView
+            android:id="@+id/tv_price_per_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_1"
+            app:layout_constraintStart_toStartOf="@id/gl_v_7"
+            style="@style/Text_Grey1.16"
+            tools:text="₩82,953 /박"
+            moneyFormat="@{pricePerDay}"/>
+
+        <View
+            android:id="@+id/empty_view_2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_price_per_day"
+            app:layout_constraintDimensionRatio="343:16"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_reservation_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_2"
+            app:layout_constraintStart_toStartOf="@id/gl_v_7"
+            app:layout_constraintEnd_toEndOf="@id/gl_v_93"
+            android:background="@drawable/layout_corner_radius_1">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_v_5"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_v_95"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95"/>
+
+            <View
+                android:id="@+id/empty_view_1_1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintDimensionRatio="295:16"/>
+
+            <TextView
+                android:id="@+id/tv_checkin_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="체크인"
+                style="@style/Text_Black.12"
+                app:layout_constraintStart_toStartOf="@id/gl_v_5"
+                app:layout_constraintTop_toBottomOf="@id/empty_view_1_1"/>
+
+            <View
+                android:id="@+id/empty_view_1_2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_checkin_description"
+                app:layout_constraintDimensionRatio="295:4"/>
+
+            <TextView
+                android:id="@+id/tv_checkin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="5월 17일"
+                android:text="5월 17일"
+                style="@style/Text_Black.16"
+                app:layout_constraintStart_toStartOf="@id/gl_v_5"
+                app:layout_constraintTop_toBottomOf="@id/empty_view_1_2"/>
+
+            <View
+                android:id="@+id/empty_view_1_3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_checkin"
+                app:layout_constraintDimensionRatio="295:16"/>
+
+            <View
+                android:id="@+id/divider_1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#BDBDBD"
+                app:layout_constraintTop_toBottomOf="@id/empty_view_1_3"
+                />
+
+            <View
+                android:id="@+id/empty_view_1_4"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/divider_1"
+                app:layout_constraintDimensionRatio="295:16"/>
+
+            <TextView
+                android:id="@+id/tv_person_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="인원"
+                style="@style/Text_Black.12"
+                app:layout_constraintStart_toStartOf="@id/gl_v_5"
+                app:layout_constraintTop_toBottomOf="@id/empty_view_1_4"/>
+
+            <View
+                android:id="@+id/empty_view_1_5"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_person_description"
+                app:layout_constraintDimensionRatio="295:4"/>
+
+            <TextView
+                android:id="@+id/tv_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="게스트 3명"
+                android:text="게스트 3명"
+                style="@style/Text_Black.16"
+                app:layout_constraintStart_toStartOf="@id/gl_v_5"
+                app:layout_constraintTop_toBottomOf="@id/empty_view_1_5"/>
+
+            <View
+                android:id="@+id/empty_view_1_6"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_person"
+                app:layout_constraintDimensionRatio="295:16"/>
+
+
+            <View
+                android:id="@+id/divider_2"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/divider_1"
+                android:background="#BDBDBD"/>
+
+            <View
+                android:id="@+id/empty_view_1_7"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/divider_2"
+                app:layout_constraintWidth_percent="0.05"/>
+
+            <TextView
+                android:id="@+id/tv_checkout_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="체크아웃"
+                style="@style/Text_Black.12"
+                app:layout_constraintStart_toEndOf="@id/empty_view_1_7"
+                app:layout_constraintTop_toBottomOf="@id/empty_view_1_1"/>
+
+            <TextView
+                android:id="@+id/tv_checkout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="6월 4일"
+                android:text="6월 4일"
+                style="@style/Text_Black.16"
+                app:layout_constraintStart_toEndOf="@id/empty_view_1_7"
+                app:layout_constraintTop_toBottomOf="@id/empty_view_1_2"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/empty_view_3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/cl_reservation_info"
+            app:layout_constraintDimensionRatio="343:16"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_reservation"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_3"
+            app:layout_constraintStart_toStartOf="@id/gl_v_7"
+            app:layout_constraintEnd_toEndOf="@id/gl_v_93"
+            app:layout_constraintDimensionRatio="295:52"
+            android:backgroundTint="@color/airbnb_Grey1"
+            android:text="예약하기"
+            android:textColor="@color/white"
+            app:cornerRadius="10dp"/>
+
+        <View
+            android:id="@+id/empty_view_4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/btn_reservation"
+            app:layout_constraintDimensionRatio="343:16"/>
+
+        <TextView
+            android:id="@+id/tv_description_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_4"
+            android:text="예약 확정 전에는 요금이 청구되지 않습니다."
+            android:maxLines="1"
+            android:textSize="10sp"
+            android:textColor="@color/airbnb_Grey2"/>
+
+        <View
+            android:id="@+id/empty_view_5"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_description_1"
+            app:layout_constraintDimensionRatio="343:30"/>
+
+        <TextView
+            android:id="@+id/tv_price_and_day_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text_Grey1.16"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_5"
+            app:layout_constraintStart_toStartOf="@id/gl_v_7"
+            android:text="₩71,466 x 18박"/>
+
+        <TextView
+            android:id="@+id/tv_price_and_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text_Grey1.16"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_5"
+            app:layout_constraintEnd_toEndOf="@id/gl_v_93"
+            android:text="₩1,322,396"/>
+
+        <View
+            android:id="@+id/empty_view_6"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_price_and_day_description"
+            app:layout_constraintDimensionRatio="343:12"/>
+
+        <TextView
+            android:id="@+id/tv_discount_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text_Grey1.16"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_6"
+            app:layout_constraintStart_toStartOf="@id/gl_v_7"
+            android:text="4% 주 단위 요금 할인"/>
+
+        <TextView
+            android:id="@+id/tv_discount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_6"
+            app:layout_constraintEnd_toEndOf="@id/gl_v_93"
+            android:textColor="#118917"
+            android:textSize="16sp"
+            android:text="- ₩55,948"/>
+
+        <View
+            android:id="@+id/empty_view_7"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_discount_description"
+            app:layout_constraintDimensionRatio="343:12"/>
+
+        <TextView
+            android:id="@+id/tv_clean_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text_Grey1.16"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_7"
+            app:layout_constraintStart_toStartOf="@id/gl_v_7"
+            android:text="청소비"/>
+
+        <TextView
+            android:id="@+id/tv_clean"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text_Grey1.16"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_7"
+            app:layout_constraintEnd_toEndOf="@id/gl_v_93"
+            android:text="₩25,996"/>
+
+        <View
+            android:id="@+id/empty_view_8"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_clean_description"
+            app:layout_constraintDimensionRatio="343:12"/>
+
+        <TextView
+            android:id="@+id/tv_service_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text_Grey1.16"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_8"
+            app:layout_constraintStart_toStartOf="@id/gl_v_7"
+            android:text="서비스 수수료"/>
+
+        <TextView
+            android:id="@+id/tv_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text_Grey1.16"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_8"
+            app:layout_constraintEnd_toEndOf="@id/gl_v_93"
+            android:text="₩8,188"/>
+
+        <View
+            android:id="@+id/empty_view_9"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_service_description"
+            app:layout_constraintDimensionRatio="343:12"/>
+
+        <TextView
+            android:id="@+id/tv_fee_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text_Grey1.16"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_9"
+            app:layout_constraintStart_toStartOf="@id/gl_v_7"
+            android:text="숙박세와 수수료"/>
+
+        <TextView
+            android:id="@+id/tv_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text_Grey1.16"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_9"
+            app:layout_constraintEnd_toEndOf="@id/gl_v_93"
+            android:text="₩819"/>
+
+        <View
+            android:id="@+id/empty_view_10"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_fee_description"
+            app:layout_constraintDimensionRatio="343:16"/>
+
+        <View
+            android:id="@+id/divider_3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_10"
+            android:background="@color/airbnb_Grey5"
+            app:layout_constraintWidth_percent="0.9"/>
+
+        <View
+            android:id="@+id/empty_view_11"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/divider_3"
+            app:layout_constraintDimensionRatio="343:16"/>
+
+        <TextView
+            android:id="@+id/tv_total_price_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text_Black.19_Bold"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_11"
+            app:layout_constraintStart_toStartOf="@id/gl_v_7"
+            android:text="합계"/>
+
+        <TextView
+            android:id="@+id/tv_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text_Black.19_Bold"
+            app:layout_constraintTop_toBottomOf="@id/empty_view_11"
+            app:layout_constraintEnd_toEndOf="@id/gl_v_93"
+            android:text="₩1,488,195"/>
+
+        <View
+            android:id="@+id/empty_view_12"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_total_price_description"
+            app:layout_constraintDimensionRatio="343:24"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

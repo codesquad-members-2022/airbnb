@@ -1,5 +1,6 @@
 package com.team16.airbnb.ui.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,18 +10,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.team16.airbnb.R
 import com.team16.airbnb.databinding.FragmentSearchBinding
+import com.team16.airbnb.ui.MainActivity
+import com.team16.airbnb.ui.home.HomeViewModel
+import com.team16.airbnb.ui.search.detail.DetailSearchActivity
+import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchBinding
+    private val viewModel: HomeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         val view = binding.root
         return view
@@ -32,6 +42,7 @@ class SearchFragment : Fragment() {
         setBackButton()
         setEraseButton()
         setEditText()
+        setPopularList()
     }
 
     private fun setBackButton() {
@@ -73,6 +84,26 @@ class SearchFragment : Fragment() {
             }
 
         })
+    }
+
+    private fun setPopularList() {
+
+        val adapter = PopularAdapter{
+           val intent = Intent(requireActivity(), DetailSearchActivity::class.java)
+           // startActivity(intent)
+            (requireActivity() as MainActivity).resultLauncher.launch(intent)
+        }
+
+        binding.rvSearchList.adapter = adapter
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.nearTripList.collect {
+                    adapter.submitList(it)
+                }
+            }
+        }
+
     }
 
 }

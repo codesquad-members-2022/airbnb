@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="pricePerDay"
+            type="Integer" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/cl_bottom"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl_v_4.44"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.0444" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl_v_95.56"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.9556" />
+
+                <FrameLayout
+                    android:id="@+id/fl_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="360:320"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- 이미지 뷰페이저 -->
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/vp_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                    <!-- 이미지 뷰페이저 -->
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/gl1_v_4.44"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.0444" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/gl1_v_95.56"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.9556" />
+
+                        <View
+                            android:id="@+id/empty_view_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintDimensionRatio="360:33"/>
+
+                        <View
+                            android:id="@+id/empty_view_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="360:16"/>
+
+                        <ImageView
+                            android:id="@+id/iv_back"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintStart_toStartOf="@id/gl1_v_4.44"
+                            app:layout_constraintTop_toBottomOf="@id/empty_view_1"
+                            app:layout_constraintWidth_percent="0.12"
+                            app:layout_constraintDimensionRatio="1:1"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_room_detail_back"
+                            />
+
+                        <ImageView
+                            android:id="@+id/iv_wishlist"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintEnd_toEndOf="@id/gl1_v_95.56"
+                            app:layout_constraintTop_toBottomOf="@id/empty_view_1"
+                            app:layout_constraintWidth_percent="0.12"
+                            app:layout_constraintDimensionRatio="1:1"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_room_detail_wishlist"
+                            />
+
+                        <ImageView
+                            android:id="@+id/iv_share"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintEnd_toStartOf="@id/iv_wishlist"
+                            app:layout_constraintTop_toBottomOf="@id/empty_view_1"
+                            app:layout_constraintWidth_percent="0.12"
+                            app:layout_constraintDimensionRatio="1:1"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_room_detail_share"
+                            android:layout_marginEnd="6dp"
+                            />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cv_image_page"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintEnd_toEndOf="@id/gl1_v_95.56"
+                            app:layout_constraintBottom_toTopOf="@id/empty_view_2"
+                            app:layout_constraintWidth_percent="0.2"
+                            app:layout_constraintDimensionRatio="72:32"
+                            android:backgroundTint="#99333333"
+                            app:cardElevation="0dp"
+                            app:shapeAppearanceOverlay="@style/cardViewRadius"
+                            >
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/tv_image_page"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    tools:text="1/18"
+                                    android:gravity="center"
+                                    android:textColor="@color/white"/>
+
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </FrameLayout>
+
+
+                <View
+                    android:id="@+id/empty_view_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/fl_image"
+                    app:layout_constraintDimensionRatio="360:24"/>
+
+                <TextView
+                    android:id="@+id/tv_room_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/gl_v_4.44"
+                    app:layout_constraintEnd_toEndOf="@id/gl_v_95.56"
+                    app:layout_constraintTop_toBottomOf="@id/empty_view_3"
+                    tools:text="Spacious and Comfortable cozy house #4"
+                    style="@style/Text_Black.23_Bold"/>
+
+                <View
+                    android:id="@+id/empty_view_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_room_name"
+                    app:layout_constraintDimensionRatio="360:10"/>
+
+                <ImageView
+                    android:id="@+id/iv_star"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/ic_star"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_star_count"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="@id/gl_v_4.44"
+                    app:layout_constraintTop_toTopOf="@id/tv_star_count"
+                    android:scaleType="fitXY"/>
+
+                <TextView
+                    android:id="@+id/tv_star_count"
+                    style="@style/Text_Grey3.14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center"
+                    app:layout_constraintStart_toEndOf="@id/iv_star"
+                    app:layout_constraintTop_toBottomOf="@id/empty_view_4"
+                    tools:text="4.80" />
+
+                <TextView
+                    android:id="@+id/tv_review_count"
+                    style="@style/Text_Grey3.14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_star_count"
+                    app:layout_constraintStart_toEndOf="@id/tv_star_count"
+                    app:layout_constraintTop_toTopOf="@id/tv_star_count"
+                    tools:text="(후기 127개)" />
+
+
+                <View
+                    android:id="@+id/empty_view_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_star_count"
+                    app:layout_constraintDimensionRatio="360:10"/>
+
+                <TextView
+                    android:id="@+id/tv_room_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/empty_view_5"
+                    app:layout_constraintStart_toStartOf="@id/gl_v_4.44"
+                    style="@style/Text_Grey3.14"
+                    tools:text="서초구, 서울, 한국"/>
+
+                <View
+                    android:id="@+id/empty_view_6"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_room_area"
+                    app:layout_constraintDimensionRatio="360:24"/>
+
+                <View
+                    android:id="@+id/divider_view_1"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/empty_view_6"
+                    android:background="@color/airbnb_Grey5"
+                    app:layout_constraintWidth_percent="0.9"/>
+
+                <View
+                    android:id="@+id/empty_view_7"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/divider_view_1"
+                    app:layout_constraintDimensionRatio="360:24"/>
+
+                <TextView
+                    android:id="@+id/tv_host_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/empty_view_7"
+                    app:layout_constraintStart_toStartOf="@id/gl_v_4.44"
+                    style="@style/Text_Black.19_Bold"
+                    tools:text="레지던스 전체\n호스트 : Jong 님"
+                    />
+
+                <View
+                    android:id="@+id/empty_view_8"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_host_name"
+                    app:layout_constraintDimensionRatio="360:16"/>
+
+                <TextView
+                    android:id="@+id/tv_room_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/empty_view_8"
+                    app:layout_constraintStart_toStartOf="@id/gl_v_4.44"
+                    style="@style/Text_Grey3.16"
+                    tools:text="최대인원 3명∙원룸∙침대 1개∙욕실 1개"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_host_profile"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/empty_view_7"
+                    app:layout_constraintEnd_toEndOf="@id/gl_v_95.56"
+                    app:layout_constraintWidth_percent="0.15"
+                    app:layout_constraintDimensionRatio="1:1"
+                    android:scaleType="fitXY"
+                    tools:src="@drawable/sample_host_profileimage"/>
+
+
+                <View
+                    android:id="@+id/empty_view_9"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_room_info"
+                    app:layout_constraintDimensionRatio="360:24"/>
+
+                <View
+                    android:id="@+id/divider_view_2"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/empty_view_9"
+                    android:background="@color/airbnb_Grey5"
+                    app:layout_constraintWidth_percent="0.9"/>
+
+                <View
+                    android:id="@+id/empty_view_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/divider_view_2"
+                    app:layout_constraintDimensionRatio="360:24"/>
+
+                <TextView
+                    android:id="@+id/tv_room_detail_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/gl_v_4.44"
+                    app:layout_constraintEnd_toEndOf="@id/gl_v_95.56"
+                    app:layout_constraintTop_toBottomOf="@id/empty_view_10"
+                    style="@style/Text_Grey1.16"
+                    android:gravity="left"
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    tools:text="강남역 5번 출구에서 도보로 이동가능합니다 지하철, 버스 노선이 다양하고 맛집, 마트 등 주변 시설이 풍부합니다. 깨끗하고, 아늑한 분위기를 경험하실 수 있을겁니다. 넷플리스 시청 또한 가능합니다."
+                    />
+
+                <View
+                    android:id="@+id/empty_view_11"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_room_detail_description"
+                    app:layout_constraintDimensionRatio="360:13"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_more_decription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/empty_view_11"
+                    app:layout_constraintStart_toStartOf="@id/gl_v_4.44">
+
+                    <TextView
+                        android:id="@+id/tv_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="더보기"
+                        style="@style/Text_Grey1.16"/>
+
+                    <ImageView
+                        android:id="@+id/iv_more"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:src="@drawable/ic_more"
+                        app:layout_constraintStart_toEndOf="@id/tv_more"
+                        android:layout_marginStart="5dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:scaleType="center"
+                        app:layout_constraintDimensionRatio="1:1"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/empty_view_12"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/cl_more_decription"
+                    app:layout_constraintDimensionRatio="360:30"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+        <!-- 하단 영역 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/airbnb_offWhite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="360:82">
+
+            <!-- 정보 입력시 하단 영역 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_info_exist"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl2_v_4.44"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.0444" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl2_v_95.56"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.9556" />
+
+                <View
+                    android:id="@+id/empty_view_2_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintDimensionRatio="360:16"/>
+
+                <TextView
+                    android:id="@+id/tv_price_per_day"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/gl2_v_4.44"
+                    app:layout_constraintTop_toBottomOf="@id/empty_view_2_1"
+                    app:layout_constraintWidth_percent="0.43"
+                    android:gravity="left"
+                    style="@style/Text_Grey1.16"
+                    moneyFormat="@{pricePerDay}"
+                    android:maxLines="1"
+                    tools:text="₩82,953 / 박"/>
+
+                <View
+                    android:id="@+id/empty_view_2_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_price_per_day"
+                    app:layout_constraintDimensionRatio="360:4"/>
+
+                <TextView
+                    android:id="@+id/tv_stay_day"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/gl2_v_4.44"
+                    app:layout_constraintTop_toBottomOf="@id/empty_view_2_2"
+                    app:layout_constraintWidth_percent="0.43"
+                    android:gravity="left"
+                    android:maxLines="1"
+                    style="@style/Text_Grey1.14"
+                    tools:text="5월 25일 - 5월 28일"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_reserve"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintEnd_toEndOf="@id/gl2_v_95.56"
+                    app:layout_constraintTop_toBottomOf="@id/empty_view_2_1"
+                    app:layout_constraintWidth_percent="0.43"
+                    app:layout_constraintDimensionRatio="160:52"
+                    android:backgroundTint="@color/airbnb_Grey1"
+                    android:text="예약하기"
+                    android:textColor="@color/white"
+                    app:cornerRadius="10dp"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <!-- 정보 미입력시 하단 영역 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_info_not_exist"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl3_v_4.44"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.0444" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl3_v_95.56"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.9556" />
+
+                <View
+                    android:id="@+id/empty_view_3_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintDimensionRatio="360:16"/>
+
+                <TextView
+                    android:id="@+id/tv_detail_info_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/gl3_v_4.44"
+                    app:layout_constraintTop_toBottomOf="@id/empty_view_3_1"
+                    app:layout_constraintWidth_percent="0.43"
+                    android:gravity="left"
+                    style="@style/Text_Grey1.16"
+                    android:text="요금을 확인하려면 날짜를\n입력하세요"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_detail_info"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintEnd_toEndOf="@id/gl3_v_95.56"
+                    app:layout_constraintTop_toBottomOf="@id/empty_view_3_1"
+                    app:layout_constraintWidth_percent="0.43"
+                    app:layout_constraintDimensionRatio="160:52"
+                    android:backgroundTint="@color/airbnb_Grey1"
+                    android:text="정보 입력 하기"
+                    android:textColor="@color/white"
+                    app:cornerRadius="10dp"
+                    />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

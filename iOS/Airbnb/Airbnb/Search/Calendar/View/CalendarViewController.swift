@@ -130,7 +130,6 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
         calendarModel.onUpdate = { [weak self] days in
             self?.performQuery(days: days)
         }
-        
     }
     
     private func setUpToolBarItems() -> [UIBarButtonItem] {

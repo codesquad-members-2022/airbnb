@@ -25,6 +25,7 @@
 		008A2062283F4E220095F7BC /* BackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008A2061283F4E220095F7BC /* BackgroundViewController.swift */; };
 		008A2064283F62910095F7BC /* LocationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008A2063283F62910095F7BC /* LocationCollectionViewCell.swift */; };
 		008A20A6283FE3960095F7BC /* HeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008A20A5283FE3960095F7BC /* HeaderReusableView.swift */; };
+		009764A62850885800BA70A7 /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009764A52850885800BA70A7 /* Month.swift */; };
 		00A85F35283B872800EA32E0 /* ReservationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A85F34283B872800EA32E0 /* ReservationModel.swift */; };
 		00A85F38283B873F00EA32E0 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A85F37283B873F00EA32E0 /* SearchViewController.swift */; };
 		00A85F3C283B876A00EA32E0 /* WishListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A85F3B283B876A00EA32E0 /* WishListViewController.swift */; };
@@ -49,8 +50,6 @@
 		1B7EB7F52844E5B10078D4A9 /* NetworkCommonComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7EB7F42844E5B10078D4A9 /* NetworkCommonComponents.swift */; };
 		1B7EB7FD2844F1290078D4A9 /* SearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7EB7FC2844F1290078D4A9 /* SearchUseCase.swift */; };
 		1B7EB7FF2844FB800078D4A9 /* AirbnbSearchUseCaseResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7EB7FE2844FB800078D4A9 /* AirbnbSearchUseCaseResponseTests.swift */; };
-		1B807DCB283F529A00D6815F /* SearchCalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B807DCA283F529A00D6815F /* SearchCalendarModel.swift */; };
-		1B90ED36283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B90ED35283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift */; };
 		1BDEFD23284E203700EBC3DF /* SearchInfoTrackingTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDEFD22284E203700EBC3DF /* SearchInfoTrackingTableViewDataSource.swift */; };
 		1BDEFD25284E207D00EBC3DF /* SearchInfoTrackingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDEFD24284E207D00EBC3DF /* SearchInfoTrackingTableViewCell.swift */; };
 		1BDEFD27284E217A00EBC3DF /* SearchInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDEFD26284E217A00EBC3DF /* SearchInfo.swift */; };
@@ -112,6 +111,7 @@
 		008A2061283F4E220095F7BC /* BackgroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewController.swift; sourceTree = "<group>"; };
 		008A2063283F62910095F7BC /* LocationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCollectionViewCell.swift; sourceTree = "<group>"; };
 		008A20A5283FE3960095F7BC /* HeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderReusableView.swift; sourceTree = "<group>"; };
+		009764A52850885800BA70A7 /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
 		00A85F34283B872800EA32E0 /* ReservationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationModel.swift; sourceTree = "<group>"; };
 		00A85F37283B873F00EA32E0 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		00A85F3B283B876A00EA32E0 /* WishListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListViewController.swift; sourceTree = "<group>"; };
@@ -136,8 +136,6 @@
 		1B7EB7F42844E5B10078D4A9 /* NetworkCommonComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCommonComponents.swift; sourceTree = "<group>"; };
 		1B7EB7FC2844F1290078D4A9 /* SearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUseCase.swift; sourceTree = "<group>"; };
 		1B7EB7FE2844FB800078D4A9 /* AirbnbSearchUseCaseResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirbnbSearchUseCaseResponseTests.swift; sourceTree = "<group>"; };
-		1B807DCA283F529A00D6815F /* SearchCalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCalendarModel.swift; sourceTree = "<group>"; };
-		1B90ED35283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirbnbCalendarModelTests.swift; sourceTree = "<group>"; };
 		1BDEFD22284E203700EBC3DF /* SearchInfoTrackingTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoTrackingTableViewDataSource.swift; sourceTree = "<group>"; };
 		1BDEFD24284E207D00EBC3DF /* SearchInfoTrackingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoTrackingTableViewCell.swift; sourceTree = "<group>"; };
 		1BDEFD26284E217A00EBC3DF /* SearchInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfo.swift; sourceTree = "<group>"; };
@@ -391,6 +389,7 @@
 			isa = PBXGroup;
 			children = (
 				00863C5028474614004E5954 /* Day.swift */,
+				009764A52850885800BA70A7 /* Month.swift */,
 				1BF0618728459A210043FF2F /* Reservations.swift */,
 				1BDEFD26284E217A00EBC3DF /* SearchInfo.swift */,
 			);
@@ -591,6 +590,7 @@
 				00A85F38283B873F00EA32E0 /* SearchViewController.swift in Sources */,
 				005AF791283B775300546D5B /* SceneDelegate.swift in Sources */,
 				00863C5128474614004E5954 /* Day.swift in Sources */,
+				009764A62850885800BA70A7 /* Month.swift in Sources */,
 				1BF0618E2845CFBE0043FF2F /* ColumnGraphView.swift in Sources */,
 				1BDEFD27284E217A00EBC3DF /* SearchInfo.swift in Sources */,
 				1BDEFD29284E2B6400EBC3DF /* SearchInfoTrackingTableViewDelegate.swift in Sources */,

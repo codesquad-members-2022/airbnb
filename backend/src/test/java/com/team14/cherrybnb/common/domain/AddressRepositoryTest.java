@@ -2,8 +2,11 @@ package com.team14.cherrybnb.common.domain;
 
 import com.team14.cherrybnb.common.config.WebConfig;
 import com.team14.cherrybnb.common.util.GeometryUtils;
+import com.team14.cherrybnb.openapi.dummy.Position;
 import org.junit.jupiter.api.Test;
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

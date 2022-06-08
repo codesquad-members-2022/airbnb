@@ -94,7 +94,7 @@ public class RoomRepositoryImpl implements RoomRepositoryCustom {
         }
         QAddress qAddress = new QAddress("qAddress");
 
-        Geometry circle = GeometryUtils.createCircle(longitude, longitude, 50 );
+        Geometry circle = GeometryUtils.createCircle(longitude, longitude, 10 );
         BooleanTemplate booleanTemplate = Expressions.booleanTemplate("function('WITHIN', {0}, {1})", address.coordinate, circle);
 
 

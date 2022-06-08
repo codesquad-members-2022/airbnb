@@ -22,14 +22,14 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplateBuilder()
-                .uriTemplateHandler(new RootUriTemplateHandler("https://apis-navi.kakaomobility.com/v1/directions"))
+                .uriTemplateHandler(new RootUriTemplateHandler("https://apis-navi.kakaomobility.com/v1"))
                 .build();
     }
 
     @Bean
     public WebClient webClient() {
         return WebClient.builder()
-                .baseUrl("https://github.com/login/oauth")
+                .baseUrl("https://api.github.com")
                 .build();
 
     }

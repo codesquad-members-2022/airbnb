@@ -40,9 +40,9 @@ class RoomRepositoryTest {
                 new BigDecimal(0),
                 new BigDecimal(15000),
                 1,
-                126.97857310672501,
-                37.56654037462486
-        );
+                127.014537,
+                37.571912
+        ); // 127.014537 37.571912
     }
 
     @Test

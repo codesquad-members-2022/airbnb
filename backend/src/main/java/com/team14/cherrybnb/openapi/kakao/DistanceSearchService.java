@@ -47,8 +47,8 @@ public class DistanceSearchService {
     }
 
     private DistanceInfo calculateDistanceAndDuration(NaviRequest naviRequest) throws JsonProcessingException {
-        String url = getUrl(naviRequest);
-        ResponseEntity<NaviResponse> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHeaders()), NaviResponse.class);
+
+        ResponseEntity<NaviResponse> response = restTemplate.exchange(naviRequest.getUrl(), HttpMethod.GET, new HttpEntity<>(getHeaders()), NaviResponse.class);
 
         NaviResponse naviResponse = response.getBody();
         assert naviResponse != null;
@@ -68,15 +68,4 @@ public class DistanceSearchService {
         return headers;
     }
 
-    private String getUrl(NaviRequest naviRequest) {
-        String url = "https://apis-navi.kakaomobility.com/v1/directions";
-
-        return UriComponentsBuilder.fromHttpUrl(url)
-                .queryParam("origin", naviRequest.getOrigin())
-                .queryParam("destination", naviRequest.getDestination())
-                .queryParam("summary", naviRequest.isSummary())
-                .encode()
-                .toUriString();
-
-    }
 }

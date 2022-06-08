@@ -7,11 +7,11 @@ import Boundary from "../../Boundary";
 import CalendarModal from "../modal/CalendarModal";
 import PriceModal from "../modal/PriceModal";
 import GuestModal from "../modal/GuestModal";
-import {useClickedTabContext} from "../../../ClickedTabProvider";
-import {size} from "../../../constants";
+import {useSearchBarClickedTabContext} from "../../../contexts/SearchBarClickedTabProvider";
+import {searchBarTab, size} from "../../../helper/constants";
 
 const SearchBar = ({searchBarState}) => {
-    const {clickedTab} = useClickedTabContext();
+    const {searchBarClickedTab} = useSearchBarClickedTabContext();
 
     return (
         <SearchBarBox searchBarState={searchBarState === size.MAXI}>
@@ -20,9 +20,9 @@ const SearchBar = ({searchBarState}) => {
             <PriceBox />
             <Boundary condition={boundaryCondition} />
             <GuestBox />
-            <CalendarModal isClicked={clickedTab === "CheckIn" || clickedTab === "CheckOut"} />
-            <PriceModal isClicked={clickedTab === "PriceBox"} />
-            <GuestModal isClicked={clickedTab === "GuestBox"} />
+            <CalendarModal isClicked={searchBarClickedTab === searchBarTab.CHECKIN || searchBarClickedTab === searchBarTab.CHECKOUT} />
+            <PriceModal isClicked={searchBarClickedTab === searchBarTab.PRICEBOX} />
+            <GuestModal isClicked={searchBarClickedTab === searchBarTab.GUESTBOX} />
         </SearchBarBox>
     );
 };

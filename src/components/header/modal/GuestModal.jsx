@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import Modal from "../../../Modal";
+import Modal from "./Modal";
 import GuestTab from "./GuestTab";
 import Boundary from "../../Boundary";
-import {getRandomKey} from "../../../util";
+import {getRandomKey} from "../../../helper/util";
 
 const GuestModal = ({isClicked}) => {
     return (

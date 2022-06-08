@@ -1,15 +1,13 @@
 import React from "react";
 import {useContext} from "react";
 import styled from "styled-components";
-import {CalendarContext} from "./CalendarContext";
+import {CalendarContext} from "../CalendarContext";
 
 const Month = () => {
     const {date, calendarWidth} = useContext(CalendarContext);
-    const year = date.getFullYear();
-    const month = date.getMonth();
     return (
         <MonthBox calendarWidth={calendarWidth}>
-            {year}년 {month + 1}월
+            {date.year}년 {date.month}월
         </MonthBox>
     );
 };

@@ -1,25 +1,28 @@
 import React from "react";
 import {ThemeProvider} from "styled-components";
-import theme from "./theme";
+import theme from "./helper/theme";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
-import ClickedTabProvider from "./ClickedTabProvider";
-import OptionProvider from "./OptionProvider";
+import SearchBarClickedTabProvider from "./contexts/SearchBarClickedTabProvider";
+import OptionProvider from "./contexts/OptionProvider";
+import PeriodProvider from "./contexts/PeriodProvider";
 
 const App = () => {
     return (
         <ThemeProvider theme={theme}>
-            <ClickedTabProvider>
+            <SearchBarClickedTabProvider>
                 <OptionProvider>
-                    <BrowserRouter>
-                        <Routes>
-                            <Route path="/" element={<Home />}></Route>
-                            <Route path="/search" element={<Search />}></Route>
-                        </Routes>
-                    </BrowserRouter>
+                    <PeriodProvider>
+                        <BrowserRouter>
+                            <Routes>
+                                <Route path="/" element={<Home />}></Route>
+                                <Route path="/search" element={<Search />}></Route>
+                            </Routes>
+                        </BrowserRouter>
+                    </PeriodProvider>
                 </OptionProvider>
-            </ClickedTabProvider>
+            </SearchBarClickedTabProvider>
         </ThemeProvider>
     );
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import CylindricalBox from "./CylindricalBox";
-import {useOptionContext} from "../../../OptionProvider";
+import {useOptionContext} from "../../../contexts/OptionProvider";
+import {searchBarTab} from "../../../helper/constants";
 
 const GuestBox = () => {
     const {guestCount} = useOptionContext();
@@ -23,7 +24,7 @@ const GuestBox = () => {
             title="인원"
             placeHolder="게스트 추가"
             style={guestBoxStyle}
-            partId="GuestBox"
+            partId={searchBarTab.GUESTBOX}
             description={guestText}
             hasSearchButton={true}
         />

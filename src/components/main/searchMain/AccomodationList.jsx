@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Boundary from "../../Boundary";
 import AccomodationListItem from "./AccomodationListItem";
-import accomodationList from "../../../mockData";
+import accomodationList from "../../../helper/mockData";
 
 const AccomodationList = () => {
     const condition = {

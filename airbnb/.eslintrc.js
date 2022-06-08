@@ -36,6 +36,8 @@ module.exports = {
   ],
 
   rules: {
+    'no-param-reassign': 'warn',
+    'react-hooks/exhaustive-deps': 'warn',
     'react/require-default-props': 'off',
     'consistent-return': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],

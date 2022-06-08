@@ -3,7 +3,8 @@ package com.example.airbnb.datasource
 import com.example.airbnb.dto.CityDto
 import kotlinx.coroutines.flow.Flow
 
-interface AirbnbDataSource {
+interface HomeDataSource {
 
-    suspend fun getHomeContents(): CityDto
+    suspend fun getHomeContents(): Flow<CityDto>
+
 }

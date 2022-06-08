@@ -18,9 +18,6 @@
         <argument
             android:name="cityInfoList"
             app:argType="com.example.airbnb.data.CityInfo[]" />
-        <action
-            android:id="@+id/action_searchFragment_to_priceBarFragment"
-            app:destination="@id/priceBarFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -32,32 +29,4 @@
             app:enterAnim="@anim/nav_default_pop_enter_anim"
             app:popUpToInclusive="true" />
     </fragment>
-    <fragment
-        android:id="@+id/googleMap"
-        android:name="com.example.airbnb.ui.map.GoogleMapFragment"
-        android:label="GoogleMap" />
-    <fragment
-        android:id="@+id/residentsCountsFragment"
-        android:name="com.example.airbnb.ui.residents.ResidentsCountsFragment"
-        android:label="fragment_resident_counts"
-        tools:layout="@layout/fragment_resident_counts" >
-        <action
-            android:id="@+id/action_residentsCountsFragment_to_googleMap"
-            app:destination="@id/googleMap" />
-        <action
-            android:id="@+id/action_residentsCountsFragment_to_priceBarFragment"
-            app:destination="@id/priceBarFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/priceBarFragment"
-        android:name="com.example.airbnb.ui.pricebar.PriceBarFragment"
-        android:label="PriceBarFragment" >
-        <action
-            android:id="@+id/action_priceBarFragment_to_residentsCountsFragment"
-            app:destination="@id/residentsCountsFragment" />
-        <action
-            android:id="@+id/action_priceBarFragment_self2"
-            app:destination="@id/priceBarFragment" />
-    </fragment>
-
 </navigation>

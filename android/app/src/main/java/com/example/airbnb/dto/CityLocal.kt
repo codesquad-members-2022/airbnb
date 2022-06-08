@@ -7,20 +7,20 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CityDto(
     @SerialName("cities")
-    val cities: List<Local>?
+    val cities: List<CityLocal>?
 ) {
     @Serializable
-    data class Local(
+    data class CityLocal(
         @SerialName("cityName")
         val cityName: String?,
         @SerialName("coord")
-        val coordinate: Coordinate?,
+        val coord: Coord?,
         @SerialName("image")
         val image: String?
     )
 
     @Serializable
-    data class Coordinate(
+    data class Coord(
         @SerialName("latitude")
         val latitude: Double?,
         @SerialName("longitude")
@@ -36,8 +36,8 @@ fun CityDto.toCity(): List<City> {
             cityName = requireNotNull(cityDto.cityName),
             image = cityDto.image.orEmpty(),
             currentCoordinate = City.Coordinate(
-                cityDto.coordinate?.latitude ?: 0.0,
-                cityDto.coordinate?.longitude ?: 0.0
+                cityDto.coord?.latitude ?: 0.0,
+                cityDto.coord?.longitude ?: 0.0
             )
         )
     }

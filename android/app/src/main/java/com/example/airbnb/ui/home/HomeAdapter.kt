@@ -1,4 +1,4 @@
-package com.example.airbnb.adapters
+package com.example.airbnb.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.airbnb.data.CityInfo
 import com.example.airbnb.databinding.HomeCityItemBinding
 
-class CityItemAdapter(private val onItemClicked: () -> Unit) :
-    ListAdapter<CityInfo, CityItemAdapter.HomeViewHolder>(CityDiffUtil) {
+class HomeAdapter(private val onItemClicked: () -> Unit) :
+    ListAdapter<CityInfo, HomeAdapter.HomeViewHolder>(CityDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         val inflater = LayoutInflater.from(parent.context)

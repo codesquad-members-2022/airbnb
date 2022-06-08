@@ -13,8 +13,8 @@ public class SearchService {
 
     private final SearchRepository searchRepository;
 
-    public List<Accommodation> findTest(LocalDate checkinTime, LocalDate checkoutTime) {
+    public List<Accommodation> findTest(LocalDate checkinTime, LocalDate checkoutTime, int minPrice, int maxPrice, int maxGuest) {
 
-        return searchRepository.findTest(checkinTime, checkoutTime);
+        return searchRepository.findTest(checkinTime, checkoutTime, minPrice, maxPrice, maxGuest);
     }
 }

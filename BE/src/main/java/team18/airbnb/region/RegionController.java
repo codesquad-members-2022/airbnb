@@ -9,9 +9,7 @@ import team18.airbnb.generalDto.LookAroundRegionDto;
 import team18.airbnb.region.dto.AccommodationByConceptDto;
 import team18.airbnb.region.dto.HomeLayoutDto;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api")

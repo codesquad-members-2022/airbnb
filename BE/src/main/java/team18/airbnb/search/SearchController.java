@@ -35,9 +35,12 @@ public class SearchController {
     @GetMapping("/filterSearch")
     public ResponseEntity<List<SearchResultDto>> searchResult(
             @RequestParam("checkinTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkinTime,
-            @RequestParam("checkoutTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkoutTime) {
+            @RequestParam("checkoutTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkoutTime,
+            @RequestParam("minPrice") int minPrice,
+            @RequestParam("maxPrice") int maxPrice,
+            @RequestParam("maxGuest") int maxGuest) {
 
-        List<Accommodation> accommodations = searchService.findTest(checkinTime, checkoutTime);
+        List<Accommodation> accommodations = searchService.findTest(checkinTime, checkoutTime, minPrice, maxPrice, maxGuest);
 
         List<SearchResultDto> searchResultDtos = accommodations.stream()
                 .map(accommodation -> new SearchResultDto(checkinTime, checkoutTime, accommodation))

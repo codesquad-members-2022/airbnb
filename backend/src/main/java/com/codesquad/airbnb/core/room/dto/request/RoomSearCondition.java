@@ -47,8 +47,8 @@ public class RoomSearCondition {
         private final Double vertical;
 
         public Radius(Double horizontal, Double vertical) {
-            this.horizontal = horizontal;
-            this.vertical = vertical;
+            this.horizontal = Objects.isNull(horizontal) ? 1.0 : horizontal;
+            this.vertical = Objects.isNull(vertical) ? 1.0 : vertical;
         }
 
         public boolean isNull() {

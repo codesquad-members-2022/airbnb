@@ -13,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.todo.airbnb.presentation.search.SearchViewModel
@@ -44,69 +43,13 @@ internal fun Fare(
                 lowerThumb = lowerThumb,
                 upperThumb = upperThumb,
                 sliderPosition = sliderPosition,
-                setValue = { setValue(it) }
+                setValue = { setValue(it) },
             )
-            LowestFare(lowerThumb)
-            HighestFare(upperThumb)
+            Spacer(modifier = Modifier.height(59.dp))
+            LowestHighestFare("최저요금", lowerThumb)
+            Spacer(modifier = Modifier.height(13.dp))
+            LowestHighestFare("최고요금", upperThumb)
         }
-    }
-}
-
-@Composable
-private fun HighestFare(upperThumb: Float) {
-    val changeMoney = DecimalFormat("#,###")
-    Column(
-        modifier = Modifier
-            .padding(top = 13.dp)
-            .clip(RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
-            .fillMaxWidth()
-            .height(55.dp)
-            .background(Color(0xffE0E0E0)),
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "최고요금",
-            modifier = Modifier.padding(start = 16.dp),
-            fontSize = 12.sp
-        )
-        if ((upperThumb * 1000000) <= 1000000f) {
-            Text(
-                text = "${changeMoney.format(upperThumb * 1000000)}원",
-                modifier = Modifier.padding(start = 16.dp),
-                fontSize = 16.sp
-            )
-        } else {
-            Text(
-                text = "${changeMoney.format(1000000)}원+",
-                fontSize = 16.sp,
-                modifier = Modifier.padding(start = 16.dp)
-            )
-        }
-    }
-}
-
-@Composable
-private fun LowestFare(lowerThumb: Float) {
-    val changeMoney = DecimalFormat("#,###")
-    Column(
-        modifier = Modifier
-            .padding(top = 59.dp)
-            .clip(RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
-            .fillMaxWidth()
-            .height(55.dp)
-            .background(Color(0xffE0E0E0)),
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "최저요금",
-            modifier = Modifier.padding(start = 16.dp),
-            fontSize = 12.sp
-        )
-        Text(
-            text = "${changeMoney.format(lowerThumb * 1000000)}원",
-            modifier = Modifier.padding(start = 16.dp),
-            fontSize = 16.sp
-        )
     }
 }
 
@@ -121,7 +64,7 @@ private fun Graph(
 ) {
     Box(modifier = Modifier.width(350.dp)) {
         Box(
-            Modifier.graphicsLayer { rotationX = 180f }
+            contentAlignment = Alignment.BottomStart,
         ) {
             for (i in 1..20) {
                 val checkQuantity = checkFare(i, viewModel)
@@ -144,17 +87,20 @@ private fun Graph(
                     activeTrackColor = Color.Gray,
                     inactiveTrackColor = Color.LightGray,
                 ),
-            )
+                steps = 19,
+
+                )
         }
     }
 }
 
 @Composable
 private fun MakeGraph(index: Int, quantity: Int, color: Color) {
+    val height = if (quantity * 15 > 120) 120 else quantity * 15
     Box(
         modifier = Modifier
             .padding(start = (index * 16.5).dp) // 350-(20(좌우 Padding10)) / 20(step 값)
-            .height((quantity * 30).dp)
+            .height(height.dp)
             .width(8.dp)
             .background(color)
     )
@@ -184,4 +130,36 @@ private fun checkColor(index: Int, lowerRange: Float, upperRange: Float): Color 
     }
     //바깥색
     return Color(0xffBDBDBD)
+}
+
+@Composable
+private fun LowestHighestFare(text: String, fare: Float) {
+    val changeMoney = DecimalFormat("#,###")
+    Column(
+        modifier = Modifier
+            .clip(RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
+            .fillMaxWidth()
+            .height(55.dp)
+            .background(Color(0xffE0E0E0)),
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = text,
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+            fontSize = 12.sp
+        )
+        if ((fare * 1000000) <= 1000000f) {
+            Text(
+                text = "${changeMoney.format(fare * 1000000)}원",
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+                fontSize = 16.sp
+            )
+        } else {
+            Text(
+                text = "${changeMoney.format(1000000)}원+",
+                fontSize = 16.sp,
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+            )
+        }
+    }
 }

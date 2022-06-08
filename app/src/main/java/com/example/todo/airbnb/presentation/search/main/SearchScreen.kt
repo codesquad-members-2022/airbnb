@@ -81,7 +81,7 @@ fun SearchMainScreen(navController: NavController, viewModel: SearchViewModel) {
 private fun SearchList(
     navController: NavController,
     travelLocations: List<Travel>,
-    viewModel: SearchViewModel
+    viewModel: SearchViewModel,
 ) {
     LazyColumn(
         modifier = Modifier

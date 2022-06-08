@@ -17,8 +17,9 @@ import com.example.todo.airbnb.presentation.main.components.MainScreen
 import com.example.todo.airbnb.presentation.reservation.ReservationViewModel
 import com.example.todo.airbnb.presentation.search.SearchViewModel
 import com.example.todo.airbnb.ui.theme.AirbnbTheme
+import com.google.accompanist.pager.ExperimentalPagerApi
 
-@RequiresApi(Build.VERSION_CODES.O)
+@ExperimentalPagerApi
 @ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
 
@@ -33,7 +34,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
+@ExperimentalPagerApi
 @ExperimentalMaterialApi
 @Composable
 fun AirbnbTheme(viewModel: SearchViewModel, reservationViewModel: ReservationViewModel) {
@@ -47,6 +48,7 @@ fun AirbnbTheme(viewModel: SearchViewModel, reservationViewModel: ReservationVie
     }
 }
 
+@ExperimentalPagerApi
 @ExperimentalMaterialApi
 @Preview(showBackground = true)
 @Composable

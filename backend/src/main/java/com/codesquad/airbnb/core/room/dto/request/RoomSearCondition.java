@@ -3,11 +3,14 @@ package com.codesquad.airbnb.core.room.dto.request;
 import com.codesquad.airbnb.core.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.core.common.embeddable.Location;
 import com.codesquad.airbnb.core.common.embeddable.StayDate;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
+@Builder
 public class RoomSearCondition {
 
     private Location location;
@@ -23,7 +26,7 @@ public class RoomSearCondition {
         private final Integer max;
 
         public PriceRange(Integer min, Integer max) {
-            if (min != null && max != null && min > max) {
+            if (!isNull() && min > max) {
                 throw new IllegalArgumentException("최소가격이 최대가격보다 클 수 없습니다.");
             }
 
@@ -32,20 +35,24 @@ public class RoomSearCondition {
         }
 
         public boolean isNull() {
-            return min == null && max == null;
+            return Objects.isNull(min) || Objects.isNull(max);
         }
 
     }
 
     @Getter
-    @AllArgsConstructor
     public static class Radius {
 
-        private Double horizontal;
-        private Double vertical;
+        private final Double horizontal;
+        private final Double vertical;
+
+        public Radius(Double horizontal, Double vertical) {
+            this.horizontal = horizontal;
+            this.vertical = vertical;
+        }
 
         public boolean isNull() {
-            return horizontal == null && vertical == null;
+            return Objects.isNull(horizontal) || Objects.isNull(vertical);
         }
     }
 

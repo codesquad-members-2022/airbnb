@@ -36,7 +36,7 @@ public class Location {
     }
 
     public boolean isNull() {
-        return longitude == null && latitude == null;
+        return Objects.isNull(longitude) || Objects.isNull(latitude);
     }
 
 }

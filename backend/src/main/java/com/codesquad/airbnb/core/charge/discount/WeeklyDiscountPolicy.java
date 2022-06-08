@@ -4,6 +4,7 @@ import com.codesquad.airbnb.core.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.core.common.embeddable.StayDate;
 import com.codesquad.airbnb.core.room.entity.Room;
 import java.time.Duration;
+import java.util.Optional;
 
 public class WeeklyDiscountPolicy implements DiscountPolicy {
 
@@ -21,16 +22,21 @@ public class WeeklyDiscountPolicy implements DiscountPolicy {
     }
 
     @Override
-    public DiscountBill execute(Room room, StayDate stayDate, GuestGroup guestGroup) {
+    public Optional<DiscountBill> execute(Room room, StayDate stayDate, GuestGroup guestGroup) {
+        if (canExecute(stayDate, guestGroup)) {
+            return Optional.empty();
+        }
+
         Duration duration = Duration.between(
             stayDate.getCheckinDate().atStartOfDay(),
             stayDate.getCheckoutDate().atStartOfDay()
         );
         int lodgingPrice = room.getPrice().getLodging();
 
-        return new DiscountBill(
+        DiscountBill bill = new DiscountBill(
             DISCOUNT_PERCENTAGE + "% " + NAME,
             (int) (lodgingPrice * duration.toDays() * DISCOUNT_PERCENTAGE / 100)
         );
+        return Optional.of(bill);
     }
 }

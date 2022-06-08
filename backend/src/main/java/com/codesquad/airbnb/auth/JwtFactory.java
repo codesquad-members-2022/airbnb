@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +19,7 @@ public class JwtFactory {
         return Jwts.builder()
             .setHeader(createJwtHeader())
             .setClaims(createJwtClaims(member))
-            .setExpiration(new Date(System.currentTimeMillis() + expiredTime * 1000L))
+            .setExpiration(Date.from(Instant.now().plusSeconds(expiredTime)))
             .signWith(key, SignatureAlgorithm.HS256)
             .compact();
     }

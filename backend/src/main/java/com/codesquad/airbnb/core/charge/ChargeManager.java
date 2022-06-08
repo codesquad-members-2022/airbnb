@@ -8,6 +8,7 @@ import com.codesquad.airbnb.core.room.entity.Room;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -44,14 +45,12 @@ public class ChargeManager {
         return (int) (room.getPrice().getLodging() * TAX_COMMISSION_RATE / 100);
     }
 
-    private List<DiscountBill> createDiscounts(Room room, StayDate stayDate,
-        GuestGroup guestGroup) {
+    private List<DiscountBill> createDiscounts(Room room, StayDate stayDate, GuestGroup guestGroup) {
         List<DiscountBill> discountBills = new ArrayList<>();
 
         for (DiscountPolicy policy : discountPolicies) {
-            if (policy.canExecute(stayDate, guestGroup)) {
-                discountBills.add(policy.execute(room, stayDate, guestGroup));
-            }
+            Optional<DiscountBill> bill = policy.execute(room, stayDate, guestGroup);
+            bill.ifPresent(discountBills::add);
         }
         return discountBills;
     }

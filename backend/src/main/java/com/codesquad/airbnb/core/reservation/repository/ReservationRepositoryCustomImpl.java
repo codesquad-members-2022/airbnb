@@ -16,7 +16,7 @@ public class ReservationRepositoryCustomImpl implements ReservationRepositoryCus
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Reservation> findOverlappedReservations(int roomId, StayDate stayDate) {
+    public List<Reservation> existsOverlappedReservation(int roomId, StayDate stayDate) {
         return queryFactory.selectFrom(reservation)
             .leftJoin(reservation.room, room)
             .where(room.id.eq(roomId),

@@ -2,6 +2,7 @@ package com.codesquad.airbnb.core.common.embeddable;
 
 import com.codesquad.airbnb.exception.ErrorCode;
 import com.codesquad.airbnb.exception.unchecked.NotAvailableException;
+import java.util.Objects;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
@@ -22,7 +23,9 @@ public class GuestGroup {
     private Integer numberInfant;
 
     public boolean isNull() {
-        return numberAdult == null && numberChild == null && numberInfant == null;
+        return Objects.isNull(numberAdult) &&
+            Objects.isNull(numberChild) &&
+            Objects.isNull(numberInfant);
     }
 
     public int getNumberGuest() {

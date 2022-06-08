@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Modal from "./Modal";
 import PriceGraph from "./PriceGraph";
 import {makePriceFormat, fetchData} from "../../../helper/util";
+import RangeSlider from "./RangeSlider";
 
 const PriceModal = ({isClicked}) => {
     const [priceData, setPriceData] = useState(null);
@@ -37,6 +38,7 @@ const PriceModal = ({isClicked}) => {
                 <Average>평균 1박 요금은 ₩{makePriceFormat(average)} 입니다.</Average>
             </FlexBox>
             <PriceGraph priceData={priceData} />
+            <RangeSlider />
         </PriceModalBox>
     );
 };

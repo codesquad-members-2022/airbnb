@@ -1,8 +1,6 @@
 package com.team14.cherrybnb.openapi.dummy;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team14.cherrybnb.auth.domain.Member;
 import com.team14.cherrybnb.auth.domain.MemberRepository;
 import com.team14.cherrybnb.auth.domain.Role;
@@ -108,11 +106,11 @@ public class DummyDataService {
                 String address = dummyInfo.getAddress();
 
                 String[] splited = address.split(" ");
-                if(splited.length < 4) {
+                if (splited.length < 4) {
                     continue;
                 }
                 StringBuilder stringBuilder = new StringBuilder();
-                for (int i = 3; i < splited.length ; i++) {
+                for (int i = 3; i < splited.length; i++) {
                     stringBuilder.append(splited[i]).append(" ");
                 }
 
@@ -130,7 +128,6 @@ public class DummyDataService {
             }
 
         }
-
 
 
     }

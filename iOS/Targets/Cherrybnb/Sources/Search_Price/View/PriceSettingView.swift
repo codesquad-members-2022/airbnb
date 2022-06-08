@@ -47,7 +47,7 @@ class PriceSettingView: UIView {
         return slider
     }()
     
-    var didChangedPriceHistogram: ((Price,Price) -> Void)?
+    var didChangePriceHistogram: ((Price,Price) -> Void)?
     
     override init(frame: CGRect){
         super.init(frame: frame)
@@ -99,14 +99,14 @@ class PriceSettingView: UIView {
     @objc private func sliderChanged(_ sender: MultiSlider){
         let min = Price(sender.value[0])
         let max = Price(sender.value[1])
-        didChangedPriceHistogram?(min,max)
+        didChangePriceHistogram?(min,max)
     }
     
-    func setContents(_ price: PriceHistogram) {
-        rangeLabel.text = "\(price.min)₩ - \(price.max)₩"
-        averageLabel.text = "평균 1박 요금 가격은 \(price.average)원 입니다."
-        slider.minimumValue = CGFloat(price.min)
-        slider.maximumValue = CGFloat(price.max)
+    func setContents(_ priceHistogram: PriceHistogram) {
+        rangeLabel.text = "\(priceHistogram.min)₩ - \(priceHistogram.max)₩"
+        averageLabel.text = "평균 1박 요금 가격은 \(priceHistogram.average)원 입니다."
+        slider.minimumValue = CGFloat(priceHistogram.min)
+        slider.maximumValue = CGFloat(priceHistogram.max)
         slider.value = [slider.minimumValue, slider.maximumValue]
     }
 

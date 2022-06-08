@@ -29,7 +29,7 @@ class PriceSettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let priceSuccessStubRequest = SearchManager(httpService: PriceSuccessStub())
-        priceSuccessStubRequest.searchPriceFrequency(queryComponent: queryParameter) { [weak self] price in
+        priceSuccessStubRequest.searchPriceHistogram(queryComponent: queryParameter) { [weak self] price in
             guard let price = price, let self = self else { return }
             self.priceSettingView.setContents(price)
         }
@@ -70,7 +70,7 @@ class PriceSettingViewController: UIViewController {
     }
     
     private func setPriceSettingHandler() {
-        priceSettingView.didChangedPriceHistogram = { [weak self] (min,max) in
+        priceSettingView.didChangePriceHistogram = { [weak self] (min,max) in
             guard let self = self else { return }
             self.queryParameter.priceRange = (min,max)
         }

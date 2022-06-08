@@ -30,7 +30,7 @@ const SearchBar = ({ size = SEARCH_BAR_SIZE.LARGE }: SearchBarTypes) => {
     <S.Container size={size} onClick={toggleIsActive}>
       {searchBarData && (
         <>
-          <PeriodArea size={size} period={searchBarData.period} />
+          <PeriodArea size={size} />
           <PriceArea size={size} price={searchBarData.price} />
           <PersonnelArea size={size} personnel={searchBarData.personnel} />
         </>

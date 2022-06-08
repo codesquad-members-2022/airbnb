@@ -12,7 +12,8 @@
       "@constants/*": ["constants/*"],
       "@context/*": ["context/*"],
       "@assets/*": ["assets/*"],
-      "@mocks/*": ["mocks/*"]
+      "@mocks/*": ["mocks/*"],
+      "@hoc/*": ["hoc/*"]
     }
   },
   "include": ["src"]

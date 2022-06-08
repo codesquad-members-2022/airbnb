@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import HorizonCalendar
 
 enum HomeSection: Int {
     case banner
@@ -90,7 +91,7 @@ struct HomeLayout: LayoutProvidable {
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                           heightDimension: .fractionalHeight(1.0))
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                   heightDimension: .fractionalHeight(0.73))
+                                                   heightDimension: .fractionalHeight(0.7))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
             let section = NSCollectionLayoutSection(group: group)

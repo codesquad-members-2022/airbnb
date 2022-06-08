@@ -4,8 +4,9 @@ import {ReactComponent as CrossIcon} from "../../../assets/crossIcon.svg";
 import {ReactComponent as SearchIcon} from "../../../assets/searchIcon.svg";
 import {Link} from "react-router-dom";
 import {useSearchBarClickedTabContext} from "../../../contexts/SearchBarClickedTabProvider";
+import {searchBarTab} from "../../../helper/constants";
 
-const CylindricalBox = ({title, placeHolder, style, partId, hasSearchButton, description}) => {
+const CylindricalBox = ({title, placeHolder, style, partId, hasSearchButton, description, crossClickHandler}) => {
     const {searchBarClickedTab, setSearchBarClickedTab} = useSearchBarClickedTabContext();
     const isClicked = partId === searchBarClickedTab;
     const changeClickedTab = (event) => {
@@ -16,7 +17,7 @@ const CylindricalBox = ({title, placeHolder, style, partId, hasSearchButton, des
             setSearchBarClickedTab(partId);
         }
     };
-    const isGuestPart = partId === "GuestBox";
+    const isGuestPart = partId === searchBarTab.GUESTBOX;
 
     return (
         <CylindricalButton isClicked={isClicked} style={style} onClick={changeClickedTab}>
@@ -31,7 +32,7 @@ const CylindricalBox = ({title, placeHolder, style, partId, hasSearchButton, des
                 )}
             </TextBox>
             {isClicked && (
-                <Icon>
+                <Icon onClick={crossClickHandler}>
                     <CrossIcon />
                 </Icon>
             )}

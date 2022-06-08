@@ -3,6 +3,7 @@ package com.ahoo.airbnb.oauth;
 import com.ahoo.airbnb.oauth.dtos.UserProfileResponse;
 import java.util.Arrays;
 import java.util.Map;
+import org.json.JSONObject;
 
 public enum OAuthAttributes {
 	GITHUB("github") {
@@ -20,8 +21,9 @@ public enum OAuthAttributes {
 	KAKAO("kakao") {
 		@Override
 		public UserProfileResponse of(Map<String, Object> attributes) {
-			Map<String, Object> kakaoAccount = Map.of("kakao_account", attributes.get("kakao_account"));
-			Map<String, Object> profile = Map.of("profile", kakaoAccount.get("profile"));
+			JSONObject jsonObject = new JSONObject(attributes);
+			JSONObject kakaoAccount = jsonObject.getJSONObject("kakao_account");
+			JSONObject profile = kakaoAccount.getJSONObject("profile");
 			return new UserProfileResponse(
 				getProviderName(),
 				String.valueOf(attributes.get("id")),
@@ -34,7 +36,8 @@ public enum OAuthAttributes {
 	NAVER("naver") {
 		@Override
 		public UserProfileResponse of(Map<String, Object> attributes) {
-			Map<String, Object> response = Map.of("response", attributes.get("response"));
+			JSONObject jsonObject = new JSONObject(attributes);
+			JSONObject response = jsonObject.getJSONObject("response");
 			return new UserProfileResponse(
 				getProviderName(),
 				String.valueOf(response.get("id")),

@@ -11,16 +11,19 @@ export const PriceRangeGraph = () => {
 
   const [minPrice, setMinPrice] = useState(getInitialMinPrice(priceRange));
   const [maxPrice, setMaxPrice] = useState(getInitialMaxPrice(priceRange));
-  const [average, setAverage] = useState(getAverage(mockArray) >> 0);
-  const [pricePerPixel, setPricePerPixel] = useState(0);
+  const [average, setAverage] = useState(0);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvas = canvasRef.current as HTMLCanvasElement;
   const context = canvas?.getContext("2d");
 
+  const initialMinPrice = Math.min(...mockArray.map(({ x }) => x));
+  const initialPricePerPixel =
+    (Math.max(...mockArray.map(({ x }) => x)) - Math.min(...mockArray.map(({ x }) => x))) / CANVAS_WIDTH;
+
   // TODO: 데이터 받아오면 수정할 부분
   useEffect(() => {
-    setPricePerPixel((maxPrice - minPrice) / CANVAS_WIDTH);
+    setAverage(getAverage(mockArray) >> 0);
   }, []);
 
   return (
@@ -35,7 +38,12 @@ export const PriceRangeGraph = () => {
 
       <S.GraphContainer>
         <MemoizedGraphCanvas context={context} canvasRef={canvasRef} />
-        <Slider minPrice={minPrice} setMinPrice={setMinPrice} setMaxPrice={setMaxPrice} pricePerPixel={pricePerPixel} />
+        <Slider
+          initialMinPrice={initialMinPrice}
+          setMinPrice={setMinPrice}
+          setMaxPrice={setMaxPrice}
+          initialPricePerPixel={initialPricePerPixel}
+        />{" "}
       </S.GraphContainer>
 
       <button
@@ -70,13 +78,13 @@ const GraphCanvas = ({ context, canvasRef }: GraphCanvasProps) => {
 const MemoizedGraphCanvas = React.memo(GraphCanvas);
 
 type SilderProps = {
-  pricePerPixel: number;
-  minPrice: number;
+  initialPricePerPixel: number;
+  initialMinPrice: number;
   setMinPrice: React.Dispatch<React.SetStateAction<number>>;
   setMaxPrice: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const Slider = ({ minPrice, setMinPrice, setMaxPrice, pricePerPixel }: SilderProps) => {
+const Slider = ({ initialMinPrice, initialPricePerPixel, setMinPrice, setMaxPrice }: SilderProps) => {
   const { priceRange } = usePriceState();
 
   const [leftLimit, setLeftLimit] = useState(BUTTON_RADIUS);
@@ -87,7 +95,6 @@ const Slider = ({ minPrice, setMinPrice, setMaxPrice, pricePerPixel }: SilderPro
   const leftFilterRef = useRef<HTMLDivElement | null>(null);
   const rightFilterRef = useRef<HTMLDivElement | null>(null);
   const posX = useRef(0);
-  const initialMinPrice = useRef(minPrice);
 
   //remove ghost image
   useEffect(() => {
@@ -113,7 +120,7 @@ const Slider = ({ minPrice, setMinPrice, setMaxPrice, pricePerPixel }: SilderPro
 
     posX.current = event.clientX;
 
-    setMinPrice((initialMinPrice.current + event.currentTarget.offsetLeft * pricePerPixel) >> 0);
+    setMinPrice((initialMinPrice + event.currentTarget.offsetLeft * initialPricePerPixel) >> 0);
 
     if (leftFilterRef.current !== null) {
       leftFilterRef.current.style.width = event.currentTarget.offsetLeft + BUTTON_RADIUS + "px";
@@ -132,7 +139,7 @@ const Slider = ({ minPrice, setMinPrice, setMaxPrice, pricePerPixel }: SilderPro
 
     posX.current = event.clientX;
 
-    setMaxPrice((initialMinPrice.current + event.currentTarget.offsetLeft * pricePerPixel) >> 0);
+    setMaxPrice((initialMinPrice + event.currentTarget.offsetLeft * initialPricePerPixel) >> 0);
 
     if (rightFilterRef.current !== null) {
       rightFilterRef.current.style.width = CANVAS_WIDTH - event.currentTarget.offsetLeft + BUTTON_RADIUS + "px";
@@ -145,7 +152,6 @@ const Slider = ({ minPrice, setMinPrice, setMaxPrice, pricePerPixel }: SilderPro
     posX.current = event.clientX;
     setLeftLimit(event.currentTarget.offsetLeft + BUTTON_RADIUS);
     document.removeEventListener("dragover", preventDragEvent);
-    console.log(leftButtonRef?.current?.offsetLeft);
   };
 
   const rightButtonDragEndHandler = (event: React.DragEvent<HTMLButtonElement>) => {
@@ -156,12 +162,21 @@ const Slider = ({ minPrice, setMinPrice, setMaxPrice, pricePerPixel }: SilderPro
     document.removeEventListener("dragover", preventDragEvent);
   };
 
-  // useEffect(() => {
-  //   if (priceRange && leftButtonRef.current && rightButtonRef.current) {
-  //     leftButtonRef.current.style.left = priceRange.minPrice / pricePerPixel + "px";
-  //     rightButtonRef.current.style.left = "px";
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (
+      priceRange &&
+      leftButtonRef.current &&
+      rightButtonRef.current &&
+      leftFilterRef.current &&
+      rightFilterRef.current
+    ) {
+      leftButtonRef.current.style.left = priceRange.minPrice / initialPricePerPixel + "px";
+      rightButtonRef.current.style.left = priceRange.maxPrice / initialPricePerPixel + "px";
+      leftFilterRef.current.style.width = priceRange.minPrice / initialPricePerPixel + BUTTON_RADIUS + "px";
+      rightFilterRef.current.style.width =
+        CANVAS_WIDTH - priceRange.maxPrice / initialPricePerPixel + BUTTON_RADIUS + "px";
+    }
+  }, []);
 
   return (
     <>

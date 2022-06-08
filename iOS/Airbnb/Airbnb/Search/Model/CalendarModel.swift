@@ -35,6 +35,7 @@ class CalendarModel {
                     beforeDays[i].fadeState = .none
                 }
             }
+            self.onUpdateBeforeDays(beforeDays)
         }
         didSet {
             guard let beforeDays = beforeDays else { return }
@@ -56,7 +57,7 @@ class CalendarModel {
     }
     
     var onUpdate: ([Day]) -> Void = { _ in }
-
+    var onUpdateBeforeDays: ([Day]) -> Void = { _ in }
     
     let calendar: Calendar = Calendar.current
     

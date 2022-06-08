@@ -13,9 +13,6 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
     let reservationModel: ReservationModel
     let calendarModel: CalendarModel = CalendarModel(baseDate: Date())
     
-    //    private var checkinCell: CalendarViewCell?
-    //    private var checkoutCell: CalendarViewCell?
-    
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
@@ -130,6 +127,10 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
         calendarModel.onUpdate = { [weak self] days in
             self?.performQuery(days: days)
         }
+        
+        calendarModel.onUpdateBeforeDays = { [weak self] days in
+            self?.performQuery(days: days)
+        }
     }
     
     private func setUpToolBarItems() -> [UIBarButtonItem] {
@@ -151,7 +152,7 @@ extension CalendarViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? CalendarViewCell,
-              cell.day?.isBeforeToday == false else { return }
+              cell.day?.isWithInDisplayedMonth == true else { return }
         
         calendarModel.validateCheckDate(at: indexPath)
     }

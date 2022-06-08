@@ -1,9 +1,10 @@
 package kr.codesquad.airbnb.service;
 
-import kr.codesquad.airbnb.dto.RoomPriceStatistic;
+import kr.codesquad.airbnb.domain.Location;
+import kr.codesquad.airbnb.domain.Room;
 import kr.codesquad.airbnb.dto.RoomPriceStatisticDto;
 import kr.codesquad.airbnb.dto.RoomPriceStatisticRequest;
-import kr.codesquad.airbnb.repository.RoomRepository;
+import kr.codesquad.airbnb.repository.CustomRoomRepositoryImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +13,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -20,7 +23,7 @@ import static org.mockito.Mockito.when;
 class RoomServiceTest {
 
     @Mock
-    private RoomRepository roomRepository;
+    private CustomRoomRepositoryImpl roomRepository;
 
     @InjectMocks
     private RoomService roomService;
@@ -36,148 +39,32 @@ class RoomServiceTest {
                 .checkOut(checkOut)
                 .build();
 
-        RoomPriceStatistic stubRoomPriceStatistic = getStubRoomPriceStatistic();
+        List<Room> stubRooms = getStubPossibleBookingRooms();
 
-        when(roomRepository.findStatisticOfRoomPrice(checkIn, checkOut)).thenReturn(stubRoomPriceStatistic);
+        when(roomRepository.findPossibleBookingRooms(checkIn, checkOut)).thenReturn(stubRooms);
 
         //when
         RoomPriceStatisticDto statisticOfRoomPrice = roomService.findStatisticOfRoomPrice(roomPriceStatisticRequest);
 
         //then
-        assertThat(statisticOfRoomPrice.getMinPricePerNight()).isEqualTo(10000);
-        assertThat(statisticOfRoomPrice.getMaxPricePerNight()).isEqualTo(500000);
-        assertThat(statisticOfRoomPrice.getAvgPricePerNight()).isEqualTo(133557);
-        assertThat(statisticOfRoomPrice.getCountOfCategorizedPricePerNight()).isEqualTo(stubRoomPriceStatistic.getCountOfCategorizedPricePerNight());
+        assertThat(statisticOfRoomPrice.getMinPricePerNight()).isEqualTo(58929);
+        assertThat(statisticOfRoomPrice.getMaxPricePerNight()).isEqualTo(158929);
+        assertThat(statisticOfRoomPrice.getAvgPricePerNight()).isEqualTo(98929);
+        assertThat(statisticOfRoomPrice.getCountOfCategorizedPricePerNight().get(0).getEndOfRange()).isEqualTo(59999);
+        assertThat(statisticOfRoomPrice.getCountOfCategorizedPricePerNight().get(4).getEndOfRange()).isEqualTo(159999);
     }
 
-    private RoomPriceStatistic getStubRoomPriceStatistic() {
-        RoomPriceStatistic roomPriceStatistic = new RoomPriceStatistic() {
-            @Override
-            public Integer getMinPricePerNight() {
-                return 10000;
-            }
-
-            @Override
-            public Integer getMaxPricePerNight() {
-                return 500000;
-            }
-
-            @Override
-            public Integer getAvgPricePerNight() {
-                return 133557;
-            }
-
-            @Override
-            public Integer get0to50000() {
-                return 5;
-            }
-
-            @Override
-            public Integer get50001to100000() {
-                return 20;
-            }
-
-            @Override
-            public Integer get100001to150000() {
-                return 13;
-            }
-
-            @Override
-            public Integer get150001to200000() {
-                return 15;
-            }
-
-            @Override
-            public Integer get200001to250000() {
-                return 3;
-            }
-
-            @Override
-            public Integer get250001to300000() {
-                return 5;
-            }
-
-            @Override
-            public Integer get300001to350000() {
-                return 6;
-            }
-
-            @Override
-            public Integer get350001to400000() {
-                return 7;
-            }
-
-            @Override
-            public Integer get400001to450000() {
-                return 9;
-            }
-
-            @Override
-            public Integer get450001to500000() {
-                return 2;
-            }
-
-            @Override
-            public Integer get500001to550000() {
-                return 0;
-            }
-
-            @Override
-            public Integer get550001to600000() {
-                return 0;
-            }
-
-            @Override
-            public Integer get600001to650000() {
-                return 0;
-            }
-
-            @Override
-            public Integer get650001to700000() {
-                return 0;
-            }
-
-            @Override
-            public Integer get700001to750000() {
-                return 0;
-            }
-
-            @Override
-            public Integer get750001to800000() {
-                return 0;
-            }
-
-            @Override
-            public Integer get800001to850000() {
-                return 0;
-            }
-
-            @Override
-            public Integer get850001to900000() {
-                return 0;
-            }
-
-            @Override
-            public Integer get900001to950000() {
-                return 0;
-            }
-
-            @Override
-            public Integer get950001to1000000() {
-                return 0;
-            }
-
-            @Override
-            public Integer get1000001to1050000() {
-                return 0;
-            }
-
-            @Override
-            public Integer get1050001to1100000() {
-                return 0;
+    private List<Room> getStubPossibleBookingRooms() {
+        List<Room> stubRooms = new ArrayList<>() {
+            {
+                add(new Room(1L, "서울 근교 이천시의 감성 힐링 숙소1", "https://a0.muscache.com/im/pictures/d0e3bb05-a96a-45cf-af92-980269168096.jpg?im_w=720", 78929, 2, 1.0, 1.0, 1.0, new Location("Sindun-myeon, Icheon-si, 경기도, 한국", 37.3062084, 127.4040411)));
+                add(new Room(2L, "서울 근교 이천시의 감성 힐링 숙소2", "https://a0.muscache.com/im/pictures/d0e3bb05-a96a-45cf-af92-980269168096.jpg?im_w=720", 88929, 2, 1.0, 1.0, 1.0, new Location("Sindun-myeon, Icheon-si, 경기도, 한국", 37.3062084, 127.4040411)));
+                add(new Room(3L, "서울 근교 이천시의 감성 힐링 숙소3", "https://a0.muscache.com/im/pictures/d0e3bb05-a96a-45cf-af92-980269168096.jpg?im_w=720", 58929, 2, 1.0, 1.0, 1.0, new Location("Sindun-myeon, Icheon-si, 경기도, 한국", 37.3062084, 127.4040411)));
+                add(new Room(4L, "서울 근교 이천시의 감성 힐링 숙소4", "https://a0.muscache.com/im/pictures/d0e3bb05-a96a-45cf-af92-980269168096.jpg?im_w=720", 108929, 2, 1.0, 1.0, 1.0, new Location("Sindun-myeon, Icheon-si, 경기도, 한국", 37.3062084, 127.4040411)));
+                add(new Room(5L, "서울 근교 이천시의 감성 힐링 숙소5", "https://a0.muscache.com/im/pictures/d0e3bb05-a96a-45cf-af92-980269168096.jpg?im_w=720", 158929, 2, 1.0, 1.0, 1.0, new Location("Sindun-myeon, Icheon-si, 경기도, 한국", 37.3062084, 127.4040411)));
             }
         };
 
-        return roomPriceStatistic;
+        return stubRooms;
     }
 }

@@ -1,9 +1,15 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import CalendarProvider from "@contexts/CalendarProvider";
+import PriceProvider from "@contexts/PriceProvider";
+import SearchModalProvider from "@contexts/SearchModalProvider";
 import Main from "@pages/Main";
 import NotFound from "@pages/NotFound";
 import SearchResult from "@pages/SearchResult";
+
+import { ComposedProvider } from "./utils";
+
+const Providers = [CalendarProvider, PriceProvider];
 
 function App() {
   return (

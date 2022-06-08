@@ -1,12 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { BUTTON_RADIUS, CANVAS_HEIGHT, CANVAS_WIDTH } from "@constants/calendar";
+import { BUTTON_RADIUS, CANVAS_HEIGHT, CANVAS_WIDTH } from "@constants/constants";
+import { usePriceDispatch, PriceTypes, usePriceState } from "@contexts/PriceProvider";
 
 import * as S from "./style";
 
 export const PriceRangeGraph = () => {
-  const [minPrice, setMinPrice] = useState(Math.min(...mockArray.map(({ x }) => x)));
-  const [maxPrice, setMaxPrice] = useState(Math.max(...mockArray.map(({ x }) => x)));
+  const { priceRange } = usePriceState();
+  const { setPriceRange } = usePriceDispatch();
+
+  const [minPrice, setMinPrice] = useState(getInitialMinPrice(priceRange));
+  const [maxPrice, setMaxPrice] = useState(getInitialMaxPrice(priceRange));
   const [average, setAverage] = useState(getAverage(mockArray) >> 0);
   const [pricePerPixel, setPricePerPixel] = useState(0);
 
@@ -18,8 +22,6 @@ export const PriceRangeGraph = () => {
   useEffect(() => {
     setPricePerPixel((maxPrice - minPrice) / CANVAS_WIDTH);
   }, []);
-
-  // drawGraph(context, mockArray);
 
   return (
     <>
@@ -33,11 +35,19 @@ export const PriceRangeGraph = () => {
 
       <S.GraphContainer>
         <MemoizedGraphCanvas context={context} canvasRef={canvasRef} />
-        {/* <S.CanvasContainer>
-          <canvas width={CANVAS_WIDTH} height={CANVAS_HEIGHT} ref={canvasRef} />
-        </S.CanvasContainer> */}
         <Slider minPrice={minPrice} setMinPrice={setMinPrice} setMaxPrice={setMaxPrice} pricePerPixel={pricePerPixel} />
       </S.GraphContainer>
+
+      <button
+        onClick={() => {
+          const newPriceRange = { ...priceRange, minPrice: minPrice, maxPrice: maxPrice };
+          if (setPriceRange) {
+            setPriceRange(newPriceRange);
+          }
+        }}
+      >
+        입력
+      </button>
     </>
   );
 };
@@ -67,9 +77,13 @@ type SilderProps = {
 };
 
 const Slider = ({ minPrice, setMinPrice, setMaxPrice, pricePerPixel }: SilderProps) => {
+  const { priceRange } = usePriceState();
+
   const [leftLimit, setLeftLimit] = useState(BUTTON_RADIUS);
   const [rightLimit, setRightLimit] = useState(CANVAS_WIDTH - BUTTON_RADIUS);
 
+  const leftButtonRef = useRef<HTMLButtonElement | null>(null);
+  const rightButtonRef = useRef<HTMLButtonElement | null>(null);
   const leftFilterRef = useRef<HTMLDivElement | null>(null);
   const rightFilterRef = useRef<HTMLDivElement | null>(null);
   const posX = useRef(0);
@@ -131,6 +145,7 @@ const Slider = ({ minPrice, setMinPrice, setMaxPrice, pricePerPixel }: SilderPro
     posX.current = event.clientX;
     setLeftLimit(event.currentTarget.offsetLeft + BUTTON_RADIUS);
     document.removeEventListener("dragover", preventDragEvent);
+    console.log(leftButtonRef?.current?.offsetLeft);
   };
 
   const rightButtonDragEndHandler = (event: React.DragEvent<HTMLButtonElement>) => {
@@ -141,6 +156,13 @@ const Slider = ({ minPrice, setMinPrice, setMaxPrice, pricePerPixel }: SilderPro
     document.removeEventListener("dragover", preventDragEvent);
   };
 
+  useEffect(() => {
+    if (priceRange && leftButtonRef.current && rightButtonRef.current) {
+      leftButtonRef.current.style.left = priceRange.minPrice / pricePerPixel + "px";
+      rightButtonRef.current.style.left = "px";
+    }
+  }, []);
+
   return (
     <>
       <S.LeftFilter ref={leftFilterRef} />
@@ -150,12 +172,14 @@ const Slider = ({ minPrice, setMinPrice, setMaxPrice, pricePerPixel }: SilderPro
           onDragStart={dragStartHandler}
           onDrag={leftButtonDragHandler}
           onDragEnd={leftButtonDragEndHandler}
+          ref={leftButtonRef}
         />
         <S.RightButton
           draggable
           onDragStart={dragStartHandler}
           onDrag={rightButtonDragHandler}
           onDragEnd={rightButtonDragEndHandler}
+          ref={rightButtonRef}
         />
       </S.Slider>
       <S.RightFilter ref={rightFilterRef} />
@@ -194,6 +218,20 @@ const mockArray = [
   // { x: 900000, y: 10 },
   // { x: 1000000, y: 1 },
 ];
+
+const getInitialMinPrice = (priceRange: PriceTypes | null | undefined): number => {
+  if (!priceRange) {
+    return Math.min(...mockArray.map(({ x }) => x));
+  }
+  return priceRange.minPrice;
+};
+
+const getInitialMaxPrice = (priceRange: PriceTypes | null | undefined): number => {
+  if (!priceRange) {
+    return Math.max(...mockArray.map(({ x }) => x));
+  }
+  return priceRange.maxPrice;
+};
 
 interface coordinates {
   x: number;

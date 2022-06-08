@@ -1,4 +1,4 @@
-package com.team14.cherrybnb.openapi;
+package com.team14.cherrybnb.openapi.dummy;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -49,7 +49,7 @@ public class DummyDataService {
 
     private final WishRepository wishRepository;
 
-    //@PostConstruct
+    @PostConstruct
     private void initDummy() throws ParseException, JsonProcessingException {
         createHost();
         createGeneral();
@@ -94,47 +94,45 @@ public class DummyDataService {
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
 
-        ResponseEntity<String> response = new RestTemplate()
-                .exchange(url, HttpMethod.GET, new HttpEntity<>(headers), String.class);
+        ResponseEntity<DummyData> response = new RestTemplate()
+                .exchange(url, HttpMethod.GET, new HttpEntity<>(headers), DummyData.class);
 
-        String body = response.getBody();
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(body);
-        JsonNode localdata_031101 = jsonNode.get("LOCALDATA_031101");
-        JsonNode row = localdata_031101.get("row");
-
-        List<Member> hosts = memberRepository.findAll();
-
+        DummyData dummyData = response.getBody();
+        assert dummyData != null;
+        List<DummyInfo> dummyInfos = dummyData.getDummies().getDummyInfos();
+        List<Member> hosts = memberRepository.findByRole(Role.HOST);
         int idx = 0;
-        for (JsonNode node : row) {
+        for (DummyInfo dummyInfo : dummyInfos) {
+            if (!dummyInfo.getAddress().isEmpty() && dummyInfo.getX() != null) {
+                Point point = tmToWgs84(dummyInfo.getX(), dummyInfo.getY());
+                String address = dummyInfo.getAddress();
 
-            String address = node.get("RDNWHLADDR").asText();
-            String name =node.get("BPLCNM").asText();
-            double x = node.get("X").asDouble();
-            double y = node.get("Y").asDouble();
+                String[] splited = address.split(" ");
+                if(splited.length < 4) {
+                    continue;
+                }
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 3; i < splited.length ; i++) {
+                    stringBuilder.append(splited[i]).append(" ");
+                }
 
-            Point point = tmToWgs84(x, y);
-            String[] splited = address.split(" ");
-            if(splited.length < 4) {
-                continue;
+                String zipcode = stringBuilder.substring(0, stringBuilder.lastIndexOf(" "));
+                Address location = new Address(address, splited[0], splited[1], splited[2], zipcode, point);
+                Room dummyRoom = new Room(
+                        dummyInfo.getName(), new RoomInfo((int) (Math.random() * 11) + 1, 10, 5, 2),
+                        "dummy room",
+                        RoomPriceCondition.of(new BigDecimal(1000), new BigDecimal(2000), new BigDecimal("0.04"), new BigDecimal(14000)),
+                        location,
+                        hosts.get(idx++ % hosts.size())
+                );
+
+                roomRepository.save(dummyRoom);
             }
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 3; i <splited.length ; i++) {
-                stringBuilder.append(splited[i]).append(" ");
-            }
 
-            String zipcode = stringBuilder.substring(0, stringBuilder.lastIndexOf(" "));
-            Address location = new Address(address, splited[0], splited[1], splited[2], zipcode, point);
-            Room dummyRoom = new Room(
-                    name, new RoomInfo((int) (Math.random() * 11) + 1, 10, 5, 2),
-                    "dummy room",
-                    RoomPriceCondition.of(new BigDecimal(1000), new BigDecimal(2000), new BigDecimal("0.04"), new BigDecimal(14000)),
-                    location,
-                    hosts.get(idx++ % hosts.size())
-            );
-
-            roomRepository.save(dummyRoom);
         }
+
+
+
     }
 
     private void createDummyReservation() {

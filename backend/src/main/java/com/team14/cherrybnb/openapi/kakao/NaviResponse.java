@@ -16,4 +16,8 @@ public class NaviResponse {
 
     @JsonProperty("routes")
     private List<NaviInfo> infos;
+
+    public NaviInfo getInfo() {
+        return infos.get(0);
+    }
 }

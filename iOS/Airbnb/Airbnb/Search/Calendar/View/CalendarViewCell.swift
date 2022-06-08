@@ -37,7 +37,7 @@ class CalendarViewCell: UICollectionViewCell {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
-        view.backgroundColor = UIColor.getGrayScale(.Grey3)
+        view.backgroundColor = UIColor.getGrayScale(.Grey6)
         return view
     }()
     
@@ -65,6 +65,7 @@ class CalendarViewCell: UICollectionViewCell {
         contentView.addSubview(fadeStateView)
         contentView.addSubview(selectionBackgroundView)
         contentView.addSubview(numberLabel)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -93,7 +94,7 @@ class CalendarViewCell: UICollectionViewCell {
         ])
         
         fadeStateView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.edges.equalToSuperview().inset(-1)
         }
         
         selectionBackgroundView.layer.cornerRadius = size / 2
@@ -164,5 +165,7 @@ private extension CalendarViewCell {
     
     private func applyFadeStyle() {
         fadeStateView.isHidden = false
+        numberLabel.textColor = .label
+        selectionBackgroundView.isHidden = true
     }
 }

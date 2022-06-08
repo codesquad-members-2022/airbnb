@@ -17,7 +17,7 @@ export const TextBox = styled.div<{ styles?: string }>`
 `;
 
 export const TextBoxLabel = styled.div`
-  font-size: ${({ theme }) => theme.fontSize.smaller};
+  font-size: ${({ theme }) => theme.fontSize.small};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   color: ${({ theme }) => theme.color.black};
 `;
@@ -25,6 +25,9 @@ export const TextBoxLabel = styled.div`
 export const TextBoxText = styled.div<{ textContent?: string | null }>`
   font-size: ${({ theme }) => theme.fontSize.base};
   color: ${({ theme }) => theme.color.gray2};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   ${({ textContent }) =>
     textContent &&

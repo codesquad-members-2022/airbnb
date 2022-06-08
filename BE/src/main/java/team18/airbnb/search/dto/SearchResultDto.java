@@ -1,10 +1,9 @@
 package team18.airbnb.search.dto;
 
-import lombok.Getter;
-
-import team18.airbnb.domain.Accommodation;
-
 import java.time.LocalDate;
+
+import lombok.Getter;
+import team18.airbnb.domain.Accommodation;
 
 @Getter
 public class SearchResultDto {

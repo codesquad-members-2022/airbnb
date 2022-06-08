@@ -32,11 +32,15 @@ public class RegionService {
         return accommodations;
     }
 
-        public List<LookAroundRegionDto> createLookAroundRegionDto() {
-            List<Region> allRegion = regionRepository.findAll();
+    public List<LookAroundRegionDto> createLookAroundRegionDto() {
+        List<Region> allRegion = regionRepository.findAll();
 
-            return allRegion.stream()
-                    .map(LookAroundRegionDto::new)
+        return allRegion.stream()
+                .map(LookAroundRegionDto::new)
                 .collect(Collectors.toList());
+    }
+
+    public Region findRegionByRegionName(String name) {
+        return regionRepository.findRegionByRegionName(name);
     }
 }

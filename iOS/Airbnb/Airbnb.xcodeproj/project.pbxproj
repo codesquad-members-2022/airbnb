@@ -50,7 +50,6 @@
 		1B7EB7FD2844F1290078D4A9 /* SearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7EB7FC2844F1290078D4A9 /* SearchUseCase.swift */; };
 		1B7EB7FF2844FB800078D4A9 /* AirbnbSearchUseCaseResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7EB7FE2844FB800078D4A9 /* AirbnbSearchUseCaseResponseTests.swift */; };
 		1B807DCB283F529A00D6815F /* SearchCalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B807DCA283F529A00D6815F /* SearchCalendarModel.swift */; };
-		1B90ED34283F547600E45FE8 /* SearchDayDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B90ED33283F547600E45FE8 /* SearchDayDTO.swift */; };
 		1B90ED36283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B90ED35283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift */; };
 		1BDEFD23284E203700EBC3DF /* SearchInfoTrackingTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDEFD22284E203700EBC3DF /* SearchInfoTrackingTableViewDataSource.swift */; };
 		1BDEFD25284E207D00EBC3DF /* SearchInfoTrackingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDEFD24284E207D00EBC3DF /* SearchInfoTrackingTableViewCell.swift */; };
@@ -138,7 +137,6 @@
 		1B7EB7FC2844F1290078D4A9 /* SearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUseCase.swift; sourceTree = "<group>"; };
 		1B7EB7FE2844FB800078D4A9 /* AirbnbSearchUseCaseResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirbnbSearchUseCaseResponseTests.swift; sourceTree = "<group>"; };
 		1B807DCA283F529A00D6815F /* SearchCalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCalendarModel.swift; sourceTree = "<group>"; };
-		1B90ED33283F547600E45FE8 /* SearchDayDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDayDTO.swift; sourceTree = "<group>"; };
 		1B90ED35283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirbnbCalendarModelTests.swift; sourceTree = "<group>"; };
 		1BDEFD22284E203700EBC3DF /* SearchInfoTrackingTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoTrackingTableViewDataSource.swift; sourceTree = "<group>"; };
 		1BDEFD24284E207D00EBC3DF /* SearchInfoTrackingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoTrackingTableViewCell.swift; sourceTree = "<group>"; };
@@ -596,7 +594,6 @@
 				1BF0618E2845CFBE0043FF2F /* ColumnGraphView.swift in Sources */,
 				1BDEFD27284E217A00EBC3DF /* SearchInfo.swift in Sources */,
 				1BDEFD29284E2B6400EBC3DF /* SearchInfoTrackingTableViewDelegate.swift in Sources */,
-				1B90ED34283F547600E45FE8 /* SearchDayDTO.swift in Sources */,
 				1BF061902845F31E0043FF2F /* CommonColors.swift in Sources */,
 				1B18F7F52848A71D005B1CAF /* SearchHeadCountViewController.swift in Sources */,
 				1BDEFD25284E207D00EBC3DF /* SearchInfoTrackingTableViewCell.swift in Sources */,

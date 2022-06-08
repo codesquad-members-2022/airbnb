@@ -32,7 +32,7 @@ class WeekdayView: UIView {
             let weekdayLabel: UILabel = {
                 let label = UILabel()
                 label.font = .systemFont(ofSize: 12, weight: .thin)
-                label.textColor = .gray3
+                label.textColor = UIColor.getGrayScale(.Grey3)
                 label.textAlignment = .center
                 return label
             }()

@@ -7,11 +7,8 @@
 
 import UIKit
 
-<<<<<<< HEAD
+
 class CalendarViewController: SearchInfoTrackingViewController, CommonViewControllerProtocol {
-=======
-class CalendarViewController: BackgroundViewController, CommonViewControllerProtocol {
->>>>>>> dfddfe9e (fix: snapshot 으로 checkin, checkout 까지는 구현, .fill 은 아직 구현하지 못함)
     
     let reservationModel: ReservationModel
     let calendarModel: CalendarModel = CalendarModel(baseDate: Date())

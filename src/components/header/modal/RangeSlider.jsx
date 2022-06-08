@@ -1,10 +1,8 @@
-import React, {useState, useRef} from "react";
+import React, {useRef} from "react";
 import styled from "styled-components";
 import {ReactComponent as PointerIcon} from "../../../assets/pause.svg";
 
-const RangeSlider = () => {
-    const min = 0;
-    const max = 100;
+const RangeSlider = ({min, max, minValue, setMinValue, maxValue, setMaxValue}) => {
     const width = 465;
     const pointerWidth = 20;
 
@@ -12,9 +10,6 @@ const RangeSlider = () => {
     const rightInput = useRef(null);
     const leftPointer = useRef(null);
     const rightPointer = useRef(null);
-
-    const [minValue, setMinValue] = useState(min);
-    const [maxValue, setMaxValue] = useState(max);
 
     const moveLeftPointer = (event) => {
         const value = Number(event.target.value);
@@ -109,7 +104,7 @@ const LeftPointer = styled(Pointer)`
 `;
 
 const RightPointer = styled(Pointer)`
-    right: 0%;
+    right: 3%;
     transform: translate(22px);
 `;
 

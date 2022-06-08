@@ -9,6 +9,11 @@ const PriceModal = ({isClicked}) => {
     const [priceData, setPriceData] = useState(null);
     const [range, setRange] = useState({min: 0, max: 0});
 
+    const min = 0;
+    const max = 100;
+    const [minValue, setMinValue] = useState(min);
+    const [maxValue, setMaxValue] = useState(max);
+
     useEffect(() => {
         const getPriceData = async () => {
             const result = await fetchData("http://localhost:3000/price");
@@ -28,6 +33,7 @@ const PriceModal = ({isClicked}) => {
     }
 
     const average = getAverage(priceData, range);
+
     return (
         <PriceModalBox isClicked={isClicked}>
             <Title>가격 범위</Title>
@@ -37,8 +43,15 @@ const PriceModal = ({isClicked}) => {
                 </RangeText>
                 <Average>평균 1박 요금은 ₩{makePriceFormat(average)} 입니다.</Average>
             </FlexBox>
-            <PriceGraph priceData={priceData} />
-            <RangeSlider />
+            <PriceGraph priceData={priceData} minValue={minValue} maxValue={maxValue} />
+            <RangeSlider
+                min={min}
+                max={max}
+                minValue={minValue}
+                setMinValue={setMinValue}
+                maxValue={maxValue}
+                setMaxValue={setMaxValue}
+            />
         </PriceModalBox>
     );
 };

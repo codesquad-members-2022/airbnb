@@ -114,7 +114,7 @@ private fun ResultContent(
         ) {
             item {
                 Text(
-                    text = "${accommodations.size / 10 * 10}개 이상의 숙소",
+                    text = if (accommodations.size < 10) "10개 이하의 숙소" else "${accommodations.size / 10 * 10}개 이상의 숙소",
                     style = MaterialTheme.typography.h5
                 )
                 Spacer(modifier = Modifier.height(16.dp))
@@ -159,13 +159,14 @@ private fun AccommodationItem(
         modifier = Modifier
             .clickable { onNavigate() }
     ) {
-        Box() {
+        Box {
             LoadImage(imageURL = accommodation.image)
-            Box(modifier = Modifier
-                .padding(top = 15.dp, start = 8.36.dp)
-                .clip(RoundedCornerShape(size = 10.dp))
-                .align(Alignment.TopStart)
-                .background(Color.White)
+            Box(
+                modifier = Modifier
+                    .padding(top = 15.dp, start = 8.36.dp)
+                    .clip(RoundedCornerShape(size = 10.dp))
+                    .align(Alignment.TopStart)
+                    .background(Color.White)
             ) {
                 Text(
                     text = "슈퍼 호스트",
@@ -174,7 +175,8 @@ private fun AccommodationItem(
             }
             Image(
                 painter = if (accommodation.isFavorite.value) painterResource(id = R.drawable.ic_favorite_selected) else painterResource(
-                    id = R.drawable.ic_favorite),
+                    id = R.drawable.ic_favorite
+                ),
                 contentDescription = "favorite",
                 modifier = Modifier
                     .padding(top = 15.dp, end = 8.36.dp)
@@ -209,7 +211,6 @@ private fun AccommodationItem(
         Text(text = "총액 W${decimalFormat.format(accommodation.total)}")
     }
 }
-
 
 @Composable
 private fun LoadImage(imageURL: String?) {

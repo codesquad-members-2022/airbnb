@@ -110,26 +110,26 @@ private fun FareTopAppBar(
                 )
             }
         }
-        MakeFareText(lowerThumb, upperThumb)
+        FareTopAppBarText(lowerThumb, upperThumb)
     }
 }
 
 @Composable
-private fun MakeFareText(lowerThumb: Float, upperThumb: Float) {
-    Column() {
+private fun FareTopAppBarText(lowerThumb: Float, upperThumb: Float) {
+    Column {
         Text(
             text = "가격 범위",
             fontSize = 10.sp
         )
         val changeMoney = DecimalFormat("#,###")
-        if ((upperThumb * 1000000) >= 1000000f) {
+        if ((lowerThumb * 1000000 <= 1000000f) && (upperThumb * 1000000 >= 1000000f)) {
             Text(
                 text = "${changeMoney.format(lowerThumb * 1000000)}원 - " +
                         "${changeMoney.format(1000000)}원+",
             )
         } else if ((lowerThumb * 1000000 > 1000000f) && (upperThumb * 1000000 > 1000000f)) {
             Text(
-                text = "${changeMoney.format(1000000)}원+" +
+                text = "${changeMoney.format(1000000)}원+ - " +
                         "${changeMoney.format(1000000)}원+",
             )
         } else {

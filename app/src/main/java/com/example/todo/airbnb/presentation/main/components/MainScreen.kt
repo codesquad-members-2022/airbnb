@@ -5,13 +5,14 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.todo.airbnb.presentation.reservation.ReservationViewModel
 import com.example.todo.airbnb.presentation.search.SearchViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 @ExperimentalPagerApi
 @ExperimentalMaterialApi
 @Composable
-fun MainScreen(viewModel: SearchViewModel) {
+fun MainScreen(viewModel: SearchViewModel, reservationViewModel: ReservationViewModel) {
 
     val navController = rememberNavController()
     val bottomBarTabs = listOf(HomeSections.Search, HomeSections.WishList, HomeSections.Reservation)
@@ -29,6 +30,6 @@ fun MainScreen(viewModel: SearchViewModel) {
             }
         }
     ) {
-        BottomNavGraph(navController, viewModel)
+        BottomNavGraph(navController, viewModel, reservationViewModel)
     }
 }

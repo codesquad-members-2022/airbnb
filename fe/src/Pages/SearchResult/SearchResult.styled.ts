@@ -59,7 +59,8 @@ export const SearchResultHeader = styled.header`
 
 export const SearchResultHeaderContainer = styled.div`
   ${({ isMini }: SearchResultContainerType) => `height:${!isMini ? "120" : "240"}px`};
-  border-bottom: 1px solid #000;
+  box-shadow: 0px 0px 4px rgba(204, 204, 204, 0.5), 0px 2px 4px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
 `;
 
 export const SearchResultHeaderArea = styled.div`
@@ -74,11 +75,39 @@ export const SearchResultArea = styled.div`
 export const Tourist = styled.div`
   flex: 1;
   height: 1024px;
-  background-color: blue;
+  background-color: white;
+  overflow: auto;
 `;
 
 export const Map = styled.div`
   flex: 1;
   height: 1024px;
   background-color: green;
+`;
+
+export const accommodationStyle = `
+  width:732px;
+  height:248px;
+  padding:24px;
+  border-bottom:1px solid #E0E0E0;
+`;
+
+export const photoStyle = `
+  width:330px;
+  height:200px;
+  margin-right:24px;
+`;
+
+export const SearchConditions = styled.div<FlexType>`
+  margin: 32px 0 8px 24px;
+  div {
+    font-size: 0.75rem;
+  }
+  ${({ flex }) => applyFlex({ flex })};
+`;
+
+export const Title = styled.div`
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 32px 24px;
 `;

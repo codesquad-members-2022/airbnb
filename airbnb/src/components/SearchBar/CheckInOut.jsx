@@ -1,11 +1,11 @@
 import { Btn, ContentBox, BarTitle, BarContent } from './SearchBar_styled.jsx';
-import { useInputState } from 'hooks/useInputState.tsx';
-import { useInputDispatch } from 'hooks/useInputDispatch.tsx';
+import { useCalendarInputState } from 'hooks/useCalendarInputState.tsx';
+import { useCalendarInputDispatch } from 'hooks/useCalendarInputDispatch.tsx';
 import { ReactComponent as DeleteIcon } from 'assets/svg/deleteBtn.svg';
 
 function CheckInOut({ onClick, title }) {
-  const { checkIn, checkOut } = useInputState();
-  const { handelResetEvent } = useInputDispatch();
+  const { checkIn, checkOut } = useCalendarInputState();
+  const { handelResetEvent } = useCalendarInputDispatch();
 
   const deleteBtn =
     title === '체크아웃' && checkIn && checkOut ? (

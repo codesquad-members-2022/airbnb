@@ -1,7 +1,7 @@
-import { CalendarContext } from 'contexts/CalendarProvider';
 import { useContext } from 'react';
+import { CalendarContext } from 'contexts/CalendarProvider';
 
-export function useInputState() {
+export function useCalendarInputState() {
   const inputState = useContext(CalendarContext);
   if (!inputState) throw new Error();
 

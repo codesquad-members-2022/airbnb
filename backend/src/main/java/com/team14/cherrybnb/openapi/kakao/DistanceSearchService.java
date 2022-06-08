@@ -37,7 +37,7 @@ public class DistanceSearchService {
 
         for (District district : districts) {
             NaviRequest naviRequest = NaviRequest.of(position.getX(), position.getY(), district.getLongitude(), district.getLatitude());
-            DistanceInfo distanceInfo = caculateDistanceAndDuration(naviRequest);
+            DistanceInfo distanceInfo = calculateDistanceAndDuration(naviRequest);
             String distance = String.valueOf(distanceInfo.getDistance());
             String duration = String.valueOf(distanceInfo.getDuration());
             distanceInfoResponses.add(new DistanceInfoResponse(district.name(), distance, duration));
@@ -46,7 +46,7 @@ public class DistanceSearchService {
         return distanceInfoResponses;
     }
 
-    public DistanceInfo caculateDistanceAndDuration(NaviRequest naviRequest) throws JsonProcessingException {
+    private DistanceInfo calculateDistanceAndDuration(NaviRequest naviRequest) throws JsonProcessingException {
         String url = getUrl(naviRequest);
         ResponseEntity<NaviResponse> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHeaders()), NaviResponse.class);
 

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ public class WishService {
         this.roomRepository = roomRepository;
     }
 
+    @Transactional(readOnly = true)
     public Page<WishCardResponse> getWishes(Pageable pageable, Member member) {
         Page<Wish> wishes = wishRepository.findAllByMemberId(pageable, member);
         List<WishCardResponse> wishCardResponses = wishes.getContent()
@@ -35,7 +37,8 @@ public class WishService {
 
         return new PageImpl<>(wishCardResponses, pageable, wishes.getTotalElements());
     }
-    
+
+    @Transactional
     public void addWish(Member member, WishRequest wishRequest) {
         Room room = roomRepository.findById(wishRequest.getRoomId())
                 .orElseThrow(RuntimeException::new);
@@ -43,6 +46,7 @@ public class WishService {
         wishRepository.save(Wish.of(member, room));
     }
 
+    @Transactional
     public void removeWish(Long wishId, Member loginMember) {
         Wish wish = wishRepository.findById(wishId).orElseThrow(RuntimeException::new);
         if (!loginMember.isSame(wish.getMember())) {

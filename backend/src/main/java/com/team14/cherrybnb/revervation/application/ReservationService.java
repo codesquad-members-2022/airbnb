@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +29,7 @@ public class ReservationService {
         this.roomRepository = roomRepository;
     }
 
+    @Transactional
     public void bookRoom(Member loginMember, ReservationRequest reservationRequest) {
         Long roomId = reservationRequest.getRoomId();
         Room room = roomRepository.findById(roomId)
@@ -37,6 +39,7 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
+    @Transactional
     public void cancelReservation(Member loginMember, Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(RuntimeException::new);
@@ -49,6 +52,7 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
+    @Transactional(readOnly = true)
     public Page<ReservationCardResponse> searchReservations(Pageable pageable, Member member) {
         Page<Reservation> reservations = reservationRepository.findByMember(pageable, member);
 
@@ -60,6 +64,7 @@ public class ReservationService {
         return new PageImpl<>(cardResponses, pageable, reservations.getTotalElements());
     }
 
+    @Transactional(readOnly = true)
     public ReservationDetailResponse showReservationDetail(Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(RuntimeException::new);

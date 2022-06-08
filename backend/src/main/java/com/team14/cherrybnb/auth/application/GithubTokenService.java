@@ -1,6 +1,5 @@
 package com.team14.cherrybnb.auth.application;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,6 +15,5 @@ public class GithubTokenService {
     private String clientId;
     @Value("${github.secrets}")
     private String clientSecret;
-
 
 }

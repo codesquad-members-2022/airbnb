@@ -1,18 +1,17 @@
-import {
-  PersonnelContext,
-  PersonnelSetterContext,
-} from 'contexts/PersonnelProvider';
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PersonnelItem from './PersonnelItem';
 
-function PersonnelModal() {
-  const { adultsNum, childrenNum, babiesNum } = useContext(PersonnelContext);
-  const { setAdultsNum, setChildrenNum, setBabiesNum } = useContext(
-    PersonnelSetterContext,
-  );
+import { usePersonnelNumState } from 'hooks/usePersonnelNumState';
+import { usePersonnelNumSetter } from 'hooks/usePersonnelNumSetter';
+import { GuestInfosType } from './personnelType';
 
-  const guestInfos = [
+function PersonnelModal() {
+  const { adultsNum, childrenNum, babiesNum } = usePersonnelNumState();
+  const { setAdultsNum, setChildrenNum, setBabiesNum } =
+    usePersonnelNumSetter();
+
+  const guestInfos: GuestInfosType = [
     {
       title: '성인',
       desc: '만 13세 이상',

@@ -5,9 +5,8 @@ import {
   changeTimeDate,
   compareDate,
 } from 'utility/dateUtil';
-import { useInputState } from 'hooks/useInputState';
-import { useInputDispatch } from 'hooks/useInputDispatch';
-import { theme } from '@chakra-ui/react';
+import { useCalendarInputState } from 'hooks/useCalendarInputState';
+import { useCalendarInputDispatch } from 'hooks/useCalendarInputDispatch';
 
 type CalendarDatesProps = {
   date: string | number;
@@ -16,8 +15,8 @@ type CalendarDatesProps = {
 };
 
 function CalendarDates({ date, year, month }: CalendarDatesProps) {
-  const { checkIn, checkOut } = useInputState();
-  const { handelClickEvent } = useInputDispatch();
+  const { checkIn, checkOut } = useCalendarInputState();
+  const { handelClickEvent } = useCalendarInputDispatch();
 
   const nowDate: string = changeLocalDateStr(year, month - 1, date);
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { GuestAgeProps } from './personnelType';
 
-function GuestInfo({ title, desc }) {
+function GuestAge({ title, desc }: GuestAgeProps) {
   return (
     <AgeBox>
       <AgeCategory>{title}</AgeCategory>
@@ -21,4 +22,4 @@ const AgeDescription = styled.div`
   color: ${({ theme }) => theme.colors.gray3};
 `;
 
-export default GuestInfo;
+export default GuestAge;

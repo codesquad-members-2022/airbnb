@@ -1,6 +1,6 @@
-import { PersonnelContext } from 'contexts/PersonnelProvider.jsx';
 import React, { useContext } from 'react';
 import { Btn, ContentBox, BarTitle, BarContent } from './SearchBar_styled.jsx';
+import { PersonnelContext } from 'contexts/PersonnelProvider.tsx';
 
 function Personnel({ onClick }) {
   const { adultsNum, childrenNum, babiesNum } = useContext(PersonnelContext);

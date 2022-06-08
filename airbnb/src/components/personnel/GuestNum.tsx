@@ -1,29 +1,28 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { usePersonnelNumState } from 'hooks/usePersonnelNumState';
+import { usePersonnelNumSetter } from 'hooks/usePersonnelNumSetter';
 import { ReactComponent as PlusIcon } from 'assets/svg/plusBtn.svg';
 import { ReactComponent as MinusIcon } from 'assets/svg/minusBtn.svg';
-import {
-  PersonnelContext,
-  PersonnelSetterContext,
-} from 'contexts/PersonnelProvider';
+import { GuestNumProps } from './personnelType';
 
-function GuestNum({ title, state, setState }) {
-  const { adultsNum, childrenNum, babiesNum } = useContext(PersonnelContext);
-  const { setAdultsNum } = useContext(PersonnelSetterContext);
+function GuestNum({ title, state, setState }: GuestNumProps) {
+  const { adultsNum, childrenNum, babiesNum } = usePersonnelNumState();
+  const { setAdultsNum } = usePersonnelNumSetter();
 
   const handleClickMinus = () => {
     const minCount = 0;
-    if (state > minCount) setState((num) => num - 1);
+    if (state > minCount) setState((num: number) => num - 1);
   };
 
-  const handleClickPlus = (title) => {
+  const handleClickPlus = (title: string) => {
     if (!adultsNum && title !== '성인') {
       if (!childrenNum || !babiesNum) {
         setAdultsNum((num) => num + 1);
       }
     }
     const maxCount = 8;
-    if (state < maxCount) setState((num) => num + 1);
+    if (state < maxCount) setState((num: number) => num + 1);
   };
 
   const isDisabledMinusBtn = state === 0;

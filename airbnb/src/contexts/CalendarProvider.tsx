@@ -1,11 +1,11 @@
 import React, { createContext, Dispatch, useReducer } from 'react';
 
-type ContextType = {
+type CalendarContextTypes = {
   checkIn: string;
   checkOut: string;
 };
 
-type ContextDispatchType = Dispatch<ActionType>;
+type CalendarContextDispatchTypes = Dispatch<ActionType>;
 
 type ActionType =
   | {
@@ -15,12 +15,12 @@ type ActionType =
   | { type: 'INPUT_CHECK_OUT'; date: string }
   | { type: 'RESET_INPUT' };
 
-export const CalendarContext = createContext<ContextType | null>(null);
+export const CalendarContext = createContext<CalendarContextTypes | null>(null);
 
 export const CalendarDispatchContext =
-  createContext<ContextDispatchType | null>(null);
+  createContext<CalendarContextDispatchTypes | null>(null);
 
-function inputDateReducer(state: ContextType, action: ActionType) {
+function inputDateReducer(state: CalendarContextTypes, action: ActionType) {
   switch (action.type) {
     case 'INPUT_CHECK_IN':
       return { ...state, checkIn: action.date };
@@ -36,7 +36,7 @@ function inputDateReducer(state: ContextType, action: ActionType) {
   }
 }
 
-const initialCalendar: ContextType = {
+const initialCalendar: CalendarContextTypes = {
   checkIn: '',
   checkOut: '',
 };

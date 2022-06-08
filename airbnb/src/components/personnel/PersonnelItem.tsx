@@ -2,13 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import { flexBetween } from 'style/mixins';
 
-import GuestInfo from './GuestInfo';
+import GuestAge from './GuestAge';
 import GuestNum from './GuestNum';
+import { GuestItemProps } from './personnelType';
 
-function PersonnelItem({ guestInfo: { title, desc, state, setState } }) {
+function PersonnelItem({
+  guestInfo: { title, desc, state, setState },
+}: {
+  guestInfo: GuestItemProps;
+}) {
   return (
     <GuestItem>
-      <GuestInfo title={title} desc={desc} />
+      <GuestAge title={title} desc={desc} />
       <GuestNum title={title} state={state} setState={setState} />
     </GuestItem>
   );

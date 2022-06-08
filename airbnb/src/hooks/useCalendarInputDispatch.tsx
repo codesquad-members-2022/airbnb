@@ -1,11 +1,11 @@
 import { CalendarDispatchContext } from 'contexts/CalendarProvider';
 import { useContext } from 'react';
 import { changeLocalDateStr, compareDate } from 'utility/dateUtil';
-import { useInputState } from './useInputState';
+import { useCalendarInputState } from './useCalendarInputState';
 
-export function useInputDispatch() {
+export function useCalendarInputDispatch() {
   const dispatch = useContext(CalendarDispatchContext);
-  const { checkIn } = useInputState();
+  const { checkIn } = useCalendarInputState();
 
   function handelClickEvent(
     year: number,

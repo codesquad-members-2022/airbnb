@@ -6,7 +6,7 @@ import CheckInOut from './CheckInOut';
 import Personnel from './Personnel';
 import PriceRange from './PriceRange';
 import CalendarProvider from 'contexts/CalendarProvider.tsx';
-import PersonnelProvider from 'contexts/PersonnelProvider';
+import PersonnelProvider from 'contexts/PersonnelProvider.tsx';
 import RenderModal from 'components/Modal/RenderModal';
 
 import { ReactComponent as SearchIcon } from 'assets/svg/searchBtn.svg';

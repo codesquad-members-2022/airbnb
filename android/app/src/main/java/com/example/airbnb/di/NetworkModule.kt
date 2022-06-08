@@ -1,6 +1,6 @@
 package com.example.airbnb.di
 
-import com.example.airbnb.network.AirbnbApi
+import com.example.airbnb.network.HomeApi
 import com.example.airbnb.network.TmapApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -38,17 +38,23 @@ object NetworkModule {
     @OptIn(ExperimentalSerializationApi::class)
     @Provides
     @Singleton
-    fun provideAirbnbApi(
+    fun provideHomeContentsApi(
         okHttpClient: OkHttpClient
-    ): AirbnbApi {
+    ): HomeApi {
         val contentType = "application/json".toMediaType()
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(Json.asConverterFactory(contentType))
             .build()
-            .create(AirbnbApi::class.java)
+            .create(HomeApi::class.java)
     }
+
+//    @OptIn(ExperimentalSerializationApi::class)
+//    private val json = Json {
+//        explicitNulls = false
+//        ignoreUnknownKeys = true
+//    }
 
     @OptIn(ExperimentalSerializationApi::class)
     @Provides
@@ -59,6 +65,7 @@ object NetworkModule {
             ignoreUnknownKeys = true
         }
     }
+
 
     @OptIn(ExperimentalSerializationApi::class)
     @Provides

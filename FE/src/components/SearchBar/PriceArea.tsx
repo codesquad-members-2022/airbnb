@@ -8,16 +8,15 @@ import { PriceProvider } from '@context/price/Provider';
 import { defaultPrice } from '@data';
 import WithProvider from '@hoc/WithProvider';
 import { usePriceState } from '@lib/hooks/useContext';
-import useModal from '@lib/hooks/useModal';
 import { formatPrice } from '@lib/utils';
 
 export interface PriceAreaTypes {
   size: string;
+  element: HTMLElement;
 }
 
-const PriceArea = ({ size }: PriceAreaTypes) => {
+const PriceArea = ({ size, element }: PriceAreaTypes) => {
   const [isPriceModalOpen, setIsPriceModalOpen] = useState(false);
-  const [containerRef, element] = useModal();
   const modalRef = useRef<HTMLDivElement>(null);
 
   const { minPrice, maxPrice } = usePriceState();
@@ -32,7 +31,6 @@ const PriceArea = ({ size }: PriceAreaTypes) => {
   return (
     <>
       <S.PriceArea
-        ref={containerRef as React.RefObject<HTMLDivElement>}
         onClick={toggleIsPriceModalOpen}
       >
         {size === SEARCH_BAR_SIZE.LARGE ? (

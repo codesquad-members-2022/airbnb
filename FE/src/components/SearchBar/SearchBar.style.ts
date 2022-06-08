@@ -134,9 +134,6 @@ export const PriceArea = styled.div`
 
   width: 280px;
 
-  &:hover {
-  }
-
   ${ContentContainer} {
     min-width: 185px;
   }

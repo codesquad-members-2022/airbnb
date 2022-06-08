@@ -20,5 +20,7 @@ public class SearchCondition {
 
     private Integer guestCount;
 
-    private String location;
+    private Double longitude;
+
+    private Double latitude;
 }

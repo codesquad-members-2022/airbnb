@@ -1,12 +1,14 @@
 package com.team14.cherrybnb.room.domain;
 
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.core.types.dsl.*;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.team14.cherrybnb.common.domain.QAddress;
+import com.team14.cherrybnb.common.util.GeometryUtils;
 import com.team14.cherrybnb.revervation.domain.QReservation;
 import com.team14.cherrybnb.room.dto.SearchCondition;
 import lombok.RequiredArgsConstructor;
+import org.locationtech.jts.geom.Geometry;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.team14.cherrybnb.room.domain.QRoom.*;
+import static com.team14.cherrybnb.common.domain.QAddress.*;
 import static com.team14.cherrybnb.revervation.domain.QReservation.*;
 
 @Repository
@@ -32,13 +35,16 @@ public class RoomRepositoryImpl implements RoomRepositoryCustom {
         List<Room> rooms = jpaQueryFactory
                 .selectFrom(room)
 
+                .join(room.address, address)
                 .leftJoin(reservation) // 일정
                 .on(reservation.room.eq(room))
 
                 .where(
+                        withinCircle(searchCondition.getLongitude(), searchCondition.getLatitude()),
                         isReservable(searchCondition.getCheckIn(), searchCondition.getCheckOut()),
                         betweenPrice(searchCondition.getMinPrice(), searchCondition.getMaxPrice()), // 가격
                         isAcceptableGuestCount(searchCondition.getGuestCount()) // 인원
+
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -62,7 +68,7 @@ public class RoomRepositoryImpl implements RoomRepositoryCustom {
             return null;
         }
 
-        return room.roomInfo.capacity.loe(guestCount);
+        return room.roomInfo.capacity.goe(guestCount);
     }
 
     private BooleanExpression isReservable(LocalDateTime checkIn, LocalDateTime checkOut) {
@@ -72,13 +78,30 @@ public class RoomRepositoryImpl implements RoomRepositoryCustom {
 
         QReservation qReservation = new QReservation("qReservation");
 
-        return reservation.id.in(
+        return reservation.id.notIn(
                 JPAExpressions
                         .select(qReservation.id)
                         .from(qReservation)
                         .where(
-                                qReservation.checkIn.gt(checkOut).or(qReservation.checkOut.lt(checkIn))
+                                qReservation.checkIn.loe(checkOut).and(qReservation.checkOut.goe(checkIn))
                         )
+        );
+    }
+
+    private BooleanExpression withinCircle(Double longitude, Double latitude) {
+        if (longitude == null || latitude == null) {
+            return null;
+        }
+        QAddress qAddress = new QAddress("qAddress");
+
+        Geometry circle = GeometryUtils.createCircle(longitude, longitude, 50 );
+        BooleanTemplate booleanTemplate = Expressions.booleanTemplate("function('WITHIN', {0}, {1})", address.coordinate, circle);
+
+
+        return address.id.in(
+                JPAExpressions.select(qAddress.id)
+                        .from(qAddress)
+                        .where(booleanTemplate.isTrue())
         );
     }
 }

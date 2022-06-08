@@ -8,15 +8,20 @@ const MAX_ACCOMMODATIONS_COUNT = 100;
 
 interface PriceChartType {
   priceChartStyle?: string;
+  minRatio: number;
+  maxRatio: number;
 }
 
-export default function PriceChart({ priceChartStyle }: PriceChartType) {
+export default function PriceChart({ priceChartStyle, minRatio, maxRatio }: PriceChartType) {
+  const minX = PRICE_CHART_WIDTH * minRatio;
+  const maxX = PRICE_CHART_WIDTH * maxRatio;
+
   return (
     <PriceChartSVG priceChartStyle={priceChartStyle}>
       <mask id="mask">
         <rect x="0" y="0" width={PRICE_CHART_WIDTH} height="300" fill="grey" />
-        <rect x="150" y="0" width={PRICE_CHART_WIDTH} height="300" fill="white" />
-        <rect x="170" y="0" width={PRICE_CHART_WIDTH} height="300" fill="grey" />
+        <rect x={minX} y="0" width={PRICE_CHART_WIDTH} height="300" fill="white" />
+        <rect x={maxX} y="0" width={PRICE_CHART_WIDTH} height="300" fill="grey" />
       </mask>
       <path
         mask="url(#mask)"

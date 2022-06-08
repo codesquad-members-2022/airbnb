@@ -7,8 +7,8 @@ const FooterContent = () => {
       {footerContent.map(({ id, title, subtitle }: FooterContentTypes) => (
         <S.ServieWrapper key={id}>
           <S.ServiceTitle>{title}</S.ServiceTitle>
-          {subtitle.map((subtitle) => (
-            <S.ServiceContent key={subtitle}>{subtitle}</S.ServiceContent>
+          {subtitle.map((content) => (
+            <S.ServiceContent key={content}>{content}</S.ServiceContent>
           ))}
         </S.ServieWrapper>
       ))}

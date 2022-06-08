@@ -9,20 +9,20 @@ interface MainSectionType {
 const MainSection = ({ data }: MainSectionType) => {
   const getContentSection = () => {
     if (data.type === 'city') {
-      return data.content.map((content) => (
-        <S.SectionItem key={content.id} size={IMG_SIZE.SMALL}>
-          <S.ImgWrapper src={content.image} />
+      return data.content.map(({ id, image, name, description }) => (
+        <S.SectionItem key={id} size={IMG_SIZE.SMALL}>
+          <S.ImgWrapper src={image} />
           <div>
-            <S.Name>{content.name}</S.Name>
-            <S.Description>{content.description}</S.Description>
+            <S.Name>{name}</S.Name>
+            <S.Description>{description}</S.Description>
           </div>
         </S.SectionItem>
       ));
     } else {
-      return data.content.map((content) => (
-        <S.SectionItem key={content.id} size={IMG_SIZE.LARGE}>
-          <S.ImgWrapper src={content.image} />
-          <S.Description>{content.name}</S.Description>
+      return data.content.map(({ id, image, name }) => (
+        <S.SectionItem key={id} size={IMG_SIZE.LARGE}>
+          <S.ImgWrapper src={image} />
+          <S.Description>{name}</S.Description>
         </S.SectionItem>
       ));
     }

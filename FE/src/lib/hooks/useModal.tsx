@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-function useModal<T extends HTMLElement>() {
+const useModal = <T extends HTMLElement>() => {
 
   const ref = useRef<T>(null);
   const [element, setElement] = useState<T | null>(null);

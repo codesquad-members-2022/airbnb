@@ -26,4 +26,14 @@ public class Members {
     private String githubId;
     private String imageUrl;
 
+    @Override
+    public String toString() {
+        return "Members{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", email='" + email + '\'' +
+            ", githubId='" + githubId + '\'' +
+            ", imageUrl='" + imageUrl + '\'' +
+            '}';
+    }
 }

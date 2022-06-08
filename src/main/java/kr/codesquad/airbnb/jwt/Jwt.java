@@ -7,4 +7,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Jwt {
     private final String jwt;
+
+    @Override
+    public String toString() {
+        return "Jwt{" +
+            "jwt='" + jwt + '\'' +
+            '}';
+    }
 }

@@ -2,19 +2,19 @@ import styled from 'styled-components';
 
 import CalendarDates from './CalendarDates';
 
-function CalendarBody({ totalDate, year, month }) {
-  const lastDate = totalDate.indexOf(1);
-  const firstDate = totalDate.indexOf(1, 7);
+type CalendarBodyProps = {
+  totalDate: number[] | string[];
+  year: number;
+  month: number;
+};
 
+function CalendarBody({ totalDate, year, month }: CalendarBodyProps) {
   return (
     <DateContainer>
-      {totalDate.map((date, idx) => {
+      {totalDate.map((date: string | number, idx: number) => {
         return (
           <CalendarDates
             key={`${month}-${date}-${idx}`}
-            lastDate={lastDate}
-            firstDate={firstDate}
-            idx={idx}
             year={year}
             month={month}
             date={date}

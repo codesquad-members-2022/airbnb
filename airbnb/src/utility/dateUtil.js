@@ -3,7 +3,6 @@ export const makeDate = (year, month) => {
   const localThisMonthDate = new Date(year, month, 0);
 
   //이전 날짜
-  const PVLastDate = localLastMonthDate.getDate();
   const PVLastDay = localLastMonthDate.getDay();
 
   //다음 날짜
@@ -14,19 +13,17 @@ export const makeDate = (year, month) => {
   const PREVIOUSDATE_ARR = [];
   if (PVLastDay !== 6) {
     for (let i = 0; i < PVLastDay + 1; i++) {
-      PREVIOUSDATE_ARR.unshift(PVLastDate - i);
+      PREVIOUSDATE_ARR.unshift('');
     }
   }
 
   //다음 날짜 만들기
   let NEXTDATE_ARR = [];
   if (ThisLastDay === 6) {
-    NEXTDATE_ARR = Array(7)
-      .fill()
-      .map((el, idx) => idx + 1);
+    NEXTDATE_ARR = Array(7).fill('');
   } else {
     for (let i = 1; i < 7 - ThisLastDay; i++) {
-      NEXTDATE_ARR.push(i);
+      NEXTDATE_ARR.push('');
     }
   }
 
@@ -42,4 +39,23 @@ export function compareDate(firstDate, secondDate) {
 
   if (date1 >= date2) return true;
   else return false;
+}
+
+export function changeLocalDateStr(year, month, date) {
+  return new Date(year, month, date).toLocaleDateString();
+}
+
+export function changeTimeDate(date) {
+  return new Date(date).getTime();
+}
+
+export function checkMonth(nowMonth) {
+  const totalMonth = 11;
+  if (nowMonth === 13) return nowMonth - 1 - totalMonth;
+  else return nowMonth;
+}
+
+export function checkYear(nowYear, nowMonth) {
+  if (nowMonth === 13) return nowYear + 1;
+  else return nowYear;
 }

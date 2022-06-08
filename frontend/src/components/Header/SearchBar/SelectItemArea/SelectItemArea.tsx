@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import { Grid } from "@mui/material";
 
+import { SearchBarStateContext } from "contexts/contexts";
 import Link from "router/Link";
 
 import ButtonArea from "./ButtonArea/ButtonArea";
@@ -22,6 +23,10 @@ const initialPrice = {
 };
 
 const SelectItemArea = (): JSX.Element => {
+  const { isSearchBarFullSize, setIsSearchBarFullSize } = useContext(
+    SearchBarStateContext
+  )!;
+
   const [anchorEl, setAnchorEl] = useState<AnchorEl>(null);
   const [price, setPrice] = useState({
     min: initialPrice.minPrice,
@@ -32,8 +37,16 @@ const SelectItemArea = (): JSX.Element => {
     setAnchorEl(e.currentTarget);
   };
 
-  const handleClose = () => {
+  const setAnchorNullEl = () => {
     setAnchorEl(null);
+  };
+
+  const handleFullSizeSearchBarClick = () => {
+    setIsSearchBarFullSize(false);
+  };
+
+  const handleMiniSearchBarClick = () => {
+    setIsSearchBarFullSize(true);
   };
 
   return (
@@ -41,26 +54,34 @@ const SelectItemArea = (): JSX.Element => {
       <CheckInOut
         setAnchorEl={setAnchorEl}
         anchorEl={anchorEl}
-        onClose={handleClose}
+        onClose={setAnchorNullEl}
       />
       <ReservationFee
         anchorEl={anchorEl}
-        onClose={handleClose}
+        onClose={setAnchorNullEl}
         onClick={handleClick}
         stateData={{ state: price, setState: setPrice }}
         initialPrice={initialPrice}
       />
       <PeopleCount
         anchorEl={anchorEl}
-        onClose={handleClose}
+        onClose={setAnchorNullEl}
         onClick={handleClick}
       />
       <Grid item xs={1} sx={searchButtonWrapperStyle}>
-        <Link to="searchResult" onClick={handleClose}>
+        <Link
+          to="searchResult"
+          onClick={
+            isSearchBarFullSize
+              ? handleFullSizeSearchBarClick
+              : handleMiniSearchBarClick
+          }
+        >
           <ButtonArea
             icon="search"
-            isFocused={Boolean(anchorEl)}
+            isFocused={isSearchBarFullSize && Boolean(anchorEl)}
             ariaLabel="설정한 정보로 검색하기"
+            xs={12}
           />
         </Link>
       </Grid>

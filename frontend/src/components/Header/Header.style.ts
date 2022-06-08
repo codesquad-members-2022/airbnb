@@ -1,24 +1,44 @@
-import { Container, ContainerProps } from "@mui/material";
+import { Container, ContainerProps, Theme } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 import heroImage from "assets/hero-img.png";
+import theme from "styles/theme";
 
-// TODO: 검색결과 화면으로 변경시 다른 스타일이 적용되어야 함
-const indexHeaderStyle = {
+const defaultHeaderStyle = {
   maxwidth: "1440px",
-  height: "640px",
+};
+
+const indexHeaderStyle = {
+  ...defaultHeaderStyle,
+  height: theme.elementSize.header.index.height,
   backgroundImage: `url(${heroImage})`,
   backgroundRepeat: "no-repeat",
   backgroundPosition: "center bottom",
   backgroundSize: "cover",
 };
 
+const miniHeaderStyle = {
+  ...defaultHeaderStyle,
+  height: theme.elementSize.header.others.height,
+  backgroundColor: ({ palette }: Theme) => palette.white.main,
+};
+
+const miniHeaderWithFullSizeSearchBar = {
+  ...miniHeaderStyle,
+  height: "190px",
+};
+
 const HeaderContainer = styled(Container)<ContainerProps>(
   ({ theme: { elementSize, style, whiteSpace } }) => `
-  height: ${elementSize.navBarHeight};
+  height: ${elementSize.header.others.height};
   margin: ${style.alignCenter.margin};
   padding: 0 ${whiteSpace.inner} !important;
 `
 );
 
-export { indexHeaderStyle, HeaderContainer };
+export {
+  indexHeaderStyle,
+  HeaderContainer,
+  miniHeaderStyle,
+  miniHeaderWithFullSizeSearchBar,
+};

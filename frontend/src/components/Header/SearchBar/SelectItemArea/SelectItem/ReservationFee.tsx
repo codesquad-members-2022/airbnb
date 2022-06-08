@@ -1,7 +1,7 @@
 import { useState, useContext, useMemo } from "react";
 
-import { QueryContexts } from "contexts/QueryContexts";
-import { PriceRangeContext } from "contexts/contexts";
+import { PriceRangeContext, SearchBarStateContext } from "contexts/contexts";
+import { LocationContext } from "router/Contexts";
 import numToWon from "utils/utils";
 
 import PriceSelectArea from "../../ModalInnerItems/ReservationFeeModal/PriceSelectArea";
@@ -23,7 +23,10 @@ const ReservationFee = ({
   initialPrice,
 }: ReservationFeeProps): JSX.Element => {
   const { state: price, setState: setPrice } = stateData!;
-  const queryData = useContext(QueryContexts);
+  const { queryData } = useContext(LocationContext)!;
+  const { isSearchBarFullSize, setIsSearchBarFullSize } = useContext(
+    SearchBarStateContext
+  )!;
 
   const [percentage, setPercentage] = useState({
     min: INITIAL_PRICE_PERCENTAGE.min,
@@ -37,7 +40,7 @@ const ReservationFee = ({
     !isQueryDataIncludesPriceRange &&
     percentage.min === INITIAL_PRICE_PERCENTAGE.min &&
     percentage.max === INITIAL_PRICE_PERCENTAGE.max
-      ? "금액대 설정"
+      ? "금액 설정"
       : `${numToWon(price.min)}~${numToWon(price.max)}`;
 
   const isOpen = anchorEl?.id === buttonId;
@@ -59,16 +62,27 @@ const ReservationFee = ({
       )}
     >
       <SelectItem
-        gridStyle={{
-          xs: 2,
-          pl: 2,
-        }}
+        gridStyle={
+          isSearchBarFullSize
+            ? {
+                xs: 2,
+                pl: 2,
+              }
+            : { xs: 3, pl: 1 }
+        }
         buttonId={buttonId}
         buttonAreaLabel="숙박요금 설정"
         title="요금"
         desc={description}
         open={isOpen}
-        handleClick={onClick}
+        handleClick={
+          isSearchBarFullSize
+            ? onClick
+            : () => {
+                setIsSearchBarFullSize(true);
+                // reservationFee모달도 open상태로 되면 좋음.
+              }
+        }
         handleClose={onClose}
         createNewPopup
         anchorEl={anchorEl}

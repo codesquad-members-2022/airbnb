@@ -34,15 +34,15 @@ const menuIconStyle = {
   marginRight: ({
     elementSize,
   }: {
-    elementSize: { userMenuButton: { width: string } };
-  }) => elementSize.userMenuButton.width,
+    elementSize: { smallRoundButton: { width: string } };
+  }) => elementSize.smallRoundButton.width,
 };
 
 const UserAvatar = styled(Avatar)(
   ({ theme: { palette, elementSize } }) => `
   background-color: ${palette.grey3.main};
-  width: ${elementSize.userMenuButton.width};
-  height: ${elementSize.userMenuButton.height};
+  width: ${elementSize.smallRoundButton.width};
+  height: ${elementSize.smallRoundButton.height};
   position: absolute;
   right: 0;
   );`

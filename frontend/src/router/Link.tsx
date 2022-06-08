@@ -1,11 +1,11 @@
 import { useContext } from "react";
 
-import RouterContext from "./Contexts";
+import { RouterContext } from "./Contexts";
 
 const { history, location } = window;
 
 const pushHistory = ({ path, state }: PushHistoryProps): void => {
-  // history.pushState(state, title, url)
+  // history.pushState(state, title, url);
   history.pushState(state, path, `${location.origin}${path}`);
 };
 
@@ -17,13 +17,13 @@ const Link = ({
 }: LinkProps): JSX.Element => {
   const { setPage } = useContext(RouterContext);
 
-  const href = `/${to}`;
+  const href = to === "index" ? `/` : `/${to}`;
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     onClick?.();
-    pushHistory({ path: href, state: params });
     setPage?.(to);
+    pushHistory({ path: href, state: params });
   };
 
   return (

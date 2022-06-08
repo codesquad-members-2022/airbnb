@@ -1,4 +1,4 @@
-import { SetStateAction } from "react";
+import { SetStateAction, useContext } from "react";
 
 import {
   Button,
@@ -7,6 +7,9 @@ import {
   PopoverProps,
   Typography,
 } from "@mui/material";
+
+import { SearchBarStateContext } from "contexts/contexts";
+import { LocationContext } from "router/Contexts";
 
 import {
   ModalTemplate,
@@ -31,6 +34,9 @@ const SelectItem = ({ ...props }: SelectItemDataProps): JSX.Element => {
     createNewPopup,
   } = props;
 
+  const { queryData } = useContext(LocationContext)!;
+  const { isSearchBarFullSize } = useContext(SearchBarStateContext)!;
+
   return (
     <SelectItemTemplate xs={xs} pl={pl}>
       <Button
@@ -42,8 +48,17 @@ const SelectItem = ({ ...props }: SelectItemDataProps): JSX.Element => {
         onClick={handleClick}
         sx={itemStyles.button}
       >
-        <Typography sx={itemStyles.title}>{title}</Typography>
-        <Typography sx={itemStyles.desc}>{desc}</Typography>
+        {isSearchBarFullSize && (
+          <Typography sx={itemStyles.title}>{title}</Typography>
+        )}
+        {/* 쿼리데이터가 없는 경우 표시 */}
+        {!Object.entries(queryData).length && (
+          <Typography
+            sx={isSearchBarFullSize ? itemStyles.desc : itemStyles.miniSizeDesc}
+          >
+            {desc}
+          </Typography>
+        )}
       </Button>
       {(createNewPopup && (
         <ModalTemplate
@@ -76,7 +91,7 @@ export interface SelectItemDataProps extends PopoverProps {
   };
   buttonId: string;
   buttonAreaLabel: string;
-  title: string;
+  title?: string;
   desc: string;
   modalAnchorStyle?: {
     horizontal: "center" | "left" | "right" | number;
@@ -101,7 +116,7 @@ export interface SelectItemProps {
 
 export type AnchorEl = null | HTMLDivElement | (EventTarget & HTMLElement);
 
-interface RangeType {
+export interface RangeType {
   min: number;
   max: number;
 }

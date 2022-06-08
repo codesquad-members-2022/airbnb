@@ -4,6 +4,9 @@ export const PriceRangeContext = createContext<PriceRangeContextType | null>(
   null
 );
 
+export const SearchBarStateContext =
+  createContext<SearchBarStateContextType | null>(null);
+
 interface RangeType {
   min: number;
   max: number;
@@ -21,4 +24,10 @@ interface PriceRangeContextType {
     setPrice: React.Dispatch<React.SetStateAction<RangeType>>;
     setPercentage: React.Dispatch<React.SetStateAction<RangeType>>;
   };
+}
+
+interface SearchBarStateContextType {
+  // isSearchBarFullSize: React.MutableRefObject<boolean>;
+  isSearchBarFullSize: boolean;
+  setIsSearchBarFullSize: React.Dispatch<React.SetStateAction<boolean>>;
 }

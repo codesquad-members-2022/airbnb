@@ -1,24 +1,37 @@
 import { useMemo, useState } from "react";
 
-import RouterContext from "./Contexts";
+import { RouterContext, LocationContext } from "./Contexts";
 import { pages } from "./pages";
-
-const { location } = window;
 
 const FIRST_INDEX = 0;
 const FIRST_SLASH_COUNT = 1;
 
-const getCurrentPath = () => {
-  return (
-    location.pathname.slice(FIRST_SLASH_COUNT).split("/")[FIRST_INDEX] ||
-    "index"
-  );
-};
+const Router = (): React.ReactElement => {
+  const { location } = window;
+  const queryData: { [key: string]: string } = useMemo(() => ({}), []);
+  location.search
+    .slice(1)
+    .split("&")
+    .map((item) => item.split("="))
+    .forEach(([key, val]) => {
+      if (key.length) {
+        queryData[key] = val;
+      }
+    });
 
-const Router = ({ children }: RouterProps): React.ReactElement => {
+  const getCurrentPath = () => {
+    return (
+      location.pathname.slice(FIRST_SLASH_COUNT).split("/")[FIRST_INDEX] ||
+      "index"
+    );
+  };
+
   const currentPath = getCurrentPath();
 
-  const [page, setPage] = useState(pages[currentPath] ? "index" : "notFound");
+  // 이부분이 잘못됨, 무조건 존재하면 index로 연결
+  const [page, setPage] = useState(
+    pages[currentPath] ? currentPath : "notFound"
+  );
 
   onpopstate = (/* e: PopStateEvent */) => {
     const poppedPath = getCurrentPath();
@@ -36,12 +49,19 @@ const Router = ({ children }: RouterProps): React.ReactElement => {
     <RouterContext.Provider
       value={useMemo(() => ({ page, setPage }), [page, setPage])}
     >
-      {children}
+      <LocationContext.Provider
+        value={useMemo(
+          () => ({
+            queryData,
+            pathname: location.pathname,
+          }),
+          [location.pathname, queryData]
+        )}
+      >
+        <div style={{ position: "relative" }}>{pages[page]}</div>
+      </LocationContext.Provider>
     </RouterContext.Provider>
   );
 };
-interface RouterProps {
-  children: React.ReactNode;
-}
 
 export default Router;

@@ -124,7 +124,7 @@ const PriceChart = () => {
   useEffect(() => {
     drawChart();
     fillChart(percentage.min, percentage.max);
-  }, [percentage]);
+  }, [percentage.min, percentage.max]);
 
   return (
     <PriceChartCanvas

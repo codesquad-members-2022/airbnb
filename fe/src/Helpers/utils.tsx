@@ -46,3 +46,9 @@ export const composeProvider = (providers: any) => {
     );
   });
 };
+
+export const getRandomNumber = (minNum: number, maxNum: number) => {
+  return Math.round(Math.random() * (maxNum - minNum) + minNum);
+};
+
+export const getWonTemplate = (num: number) => `${num.toLocaleString()}원`;

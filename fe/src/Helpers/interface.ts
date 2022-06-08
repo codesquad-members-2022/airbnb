@@ -21,5 +21,5 @@ export interface FlexType extends FlexBoxPropertyType {
 }
 
 export interface SearchBarContainerType extends FlexType {
-  searchBarStyle?: string | undefined;
+  searchBarStyle?: string;
 }

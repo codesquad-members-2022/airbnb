@@ -13,7 +13,5 @@ export const CalendarContainer = styled.div<CalendarContainerType>`
 
   grid-template-rows: repeat(1, 1fr);
   grid-auto-rows: 1fr;
-  ${({ calendarStyle }) => {
-    return calendarStyle ? calendarStyle : "";
-  }};
+  ${({ calendarStyle = "" }) => calendarStyle};
 `;

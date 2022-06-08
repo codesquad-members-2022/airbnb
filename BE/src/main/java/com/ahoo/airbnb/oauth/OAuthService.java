@@ -85,6 +85,8 @@ public class OAuthService {
 		formData.add("code", code);
 		formData.add("grant_type", "authorization_code");
 		formData.add("redirect_uri", oAuth.getUserRedirectUri());
+		formData.add("client_id", oAuth.getUserClientId());
+		formData.add("client_secret", oAuth.getUserClientSecret());
 		return formData;
 	}
 }

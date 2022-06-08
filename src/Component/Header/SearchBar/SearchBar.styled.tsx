@@ -4,7 +4,20 @@ interface IStyledSearchBarChild {
 	name: string;
 }
 
-const StyledSearchBar = styled.div`
+interface IStyledSearchBar {
+	searchBarIsHidden: boolean;
+	miniBarIsClicked: boolean;
+}
+
+const StyledSearchBar = styled.div<IStyledSearchBar>`
+	${({ searchBarIsHidden }) =>
+		searchBarIsHidden
+			? css`
+					visibility: hidden;
+			  `
+			: css`
+					visibility: visible;
+			  `}
 	${({ theme: { width, height, colors } }) => css`
 		display: flex;
 		align-items: center;
@@ -17,6 +30,30 @@ const StyledSearchBar = styled.div`
 		border-radius: 60px;
 		background-color: ${colors.white};
 	`}
+
+	${({ miniBarIsClicked }) =>
+		miniBarIsClicked &&
+		css`
+			position: absolute;
+			top: 30px;
+			left: 26%;
+			animation-duration: 1s;
+			animation-name: slide;
+			animation-fill-mode: forwards;
+			transition-timing-function: ease-out;
+		`}}
+
+		@keyframes slide {
+			from {
+				margin-top: 23px;
+				transform: scale(0.5);
+			}
+			to {
+				margin-top: 90px;
+				transform: scale(1.0);
+			}
+		}
+	
 `;
 
 const StyledSearchBarChild = styled.div<IStyledSearchBarChild>`

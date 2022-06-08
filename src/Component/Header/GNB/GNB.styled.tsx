@@ -1,6 +1,11 @@
 import styled, { css } from "styled-components";
 import logoSrc from "util/logo.png";
 
+interface IStyledGNBNav {
+	isLocationSearch: boolean;
+	miniBarIsClicked: boolean;
+}
+
 const StyledGNB = styled.div`
 	${({ theme: { width, height } }) => css`
 		margin: 0 auto;
@@ -14,24 +19,36 @@ const StyledGNB = styled.div`
 `;
 
 const StyledNavList = styled.ul`
-	${({ theme: { fontSize, fontWeight } }) => css`
-		display: flex;
-		> li {
-			cursor: pointer;
-			font-size: ${fontSize.medium};
-			font-weight: ${fontWeight.small};
-			padding-bottom: 2px;
-			border-bottom: 1px solid transparent;
-
-			:not(:last-child) {
-				margin-right: 24px;
-			}
-			:hover {
+	${({ theme: { fontSize, fontWeight } }) =>
+		css`
+			display: flex;
+			> li {
+				cursor: pointer;
+				font-size: ${fontSize.medium};
+				font-weight: ${fontWeight.small};
 				padding-bottom: 2px;
-				border-bottom: 1px solid;
+				border-bottom: 1px solid transparent;
+
+				:not(:last-child) {
+					margin-right: 24px;
+				}
+				:hover {
+					padding-bottom: 2px;
+					border-bottom: 1px solid;
+				}
 			}
-		}
-	`}
+		`}
+`;
+
+const StyledGNBNav = styled.div<IStyledGNBNav>`
+	${({ isLocationSearch, miniBarIsClicked }) =>
+		isLocationSearch && !miniBarIsClicked
+			? css`
+					display: none;
+			  `
+			: css`
+					visivility: visible;
+			  `}
 `;
 
 const GNBImg = styled.img.attrs({
@@ -60,4 +77,4 @@ const GNBAccountMenu = styled.div`
 	`}
 `;
 
-export { StyledGNB, GNBImg, StyledNavList, GNBAccountMenu };
+export { StyledGNB, GNBImg, StyledNavList, GNBAccountMenu, StyledGNBNav };

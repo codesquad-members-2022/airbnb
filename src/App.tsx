@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+// import { Outlet } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import theme from "Styles/theme";
 
@@ -12,7 +12,7 @@ const App = () => {
 				<GlobalStyle />
 				<Router />
 
-				<Outlet />
+				{/* <Outlet /> */}
 				{/* 추후 Main part 생성 후 적용 */}
 			</ThemeProvider>
 		</div>

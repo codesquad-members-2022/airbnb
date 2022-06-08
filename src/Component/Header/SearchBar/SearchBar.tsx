@@ -6,9 +6,14 @@ import { StyledSearchBar, SearchIcon } from "./SearchBar.styled";
 import Price from "./Price/Price";
 import Guest from "./Guest/Guest";
 
-const SearchBar = () => {
+interface ISearchBarProps {
+	searchBarIsHidden: boolean;
+	miniBarIsClicked: boolean;
+}
+
+const SearchBar = ({ searchBarIsHidden, miniBarIsClicked }: ISearchBarProps) => {
 	return (
-		<StyledSearchBar>
+		<StyledSearchBar searchBarIsHidden={searchBarIsHidden} miniBarIsClicked={miniBarIsClicked}>
 			<Schedule />
 			<Price />
 			<Guest />

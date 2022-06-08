@@ -31,6 +31,9 @@ const width = {
 	guest: "192px",
 	guestChild: "114px",
 	guestModal: "400px",
+	miniScheduleChild: "133px",
+	miniPriceChild: "149px",
+	miniGuestChild: "86px",
 };
 
 const height = {

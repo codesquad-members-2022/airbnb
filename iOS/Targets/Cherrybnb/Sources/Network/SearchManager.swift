@@ -8,15 +8,15 @@
 
 import Foundation
 
-protocol PriceFrequencySearching {
-    func searchPriceFrequency(queryComponent: QueryParameter, complete: @escaping (PriceHistogram?) -> Void)
+protocol PriceHistogramSearching {
+    func searchPriceHistogram(queryComponent: QueryParameter, complete: @escaping (PriceHistogram?) -> Void)
 }
 
-struct SearchManager: PriceFrequencySearching {
+struct SearchManager: PriceHistogramSearching {
     
     let httpService: HTTPSearchService
     
-    func searchPriceFrequency(queryComponent: QueryParameter, complete: @escaping (PriceHistogram?) -> Void) {
+    func searchPriceHistogram(queryComponent: QueryParameter, complete: @escaping (PriceHistogram?) -> Void) {
         httpService.searchPrice(for: queryComponent) { price in
             complete(price)
         }

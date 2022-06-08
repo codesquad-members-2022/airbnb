@@ -11,7 +11,7 @@ import Foundation
 typealias Price = Int
 
 struct PriceHistogram {
-    let min: Int
-    let max: Int
-    let average: Int
+    let min: Price
+    let max: Price
+    let average: Price 
 }

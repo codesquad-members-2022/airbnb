@@ -1,10 +1,16 @@
 PODS:
+  - AvailableHapticFeedback (1.0.2)
+  - MultiSlider (1.12.2):
+    - AvailableHapticFeedback
+    - SweeterSwift
   - Nimble (10.0.0)
   - Quick (5.0.1)
+  - SweeterSwift (1.2.1)
   - SwiftLint (0.47.1)
   - Swinject (2.8.1)
 
 DEPENDENCIES:
+  - MultiSlider
   - Nimble
   - Quick
   - SwiftLint
@@ -12,17 +18,23 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AvailableHapticFeedback
+    - MultiSlider
     - Nimble
     - Quick
+    - SweeterSwift
     - SwiftLint
     - Swinject
 
 SPEC CHECKSUMS:
+  AvailableHapticFeedback: 9b21b9f6d3e4566015988b5de35b40abefe6c09a
+  MultiSlider: f42f0f928bb1a79474d39d734ef90eea15f5a450
   Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
   Quick: 749aa754fd1e7d984f2000fe051e18a3a9809179
+  SweeterSwift: 61baeda1c0c27d1dc57c8112c3d6a82e5aff3139
   SwiftLint: f80f1be7fa96d30e0aa68e58d45d4ea1ccaac519
   Swinject: 97112918bd7e0785dc2df7036213f3c8cbba6586
 
-PODFILE CHECKSUM: fdc677cc489aa6e97539c19d8396e16e91c9030d
+PODFILE CHECKSUM: ca3ae5513d24b3ea145b38a5f2211070e7b27d3a
 
 COCOAPODS: 1.11.3

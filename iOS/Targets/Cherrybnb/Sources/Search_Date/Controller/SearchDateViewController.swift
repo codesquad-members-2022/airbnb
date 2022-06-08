@@ -81,9 +81,11 @@ extension SearchDateViewController {
 
     private func setToolbarHandler() {
         toolbar.didTouchNext = { [weak self] in
-            let nextVC = UIViewController()
-            // TODO: query 파라미터 주입
-            self?.navigationController?.pushViewController(nextVC, animated: true)
+            guard let self = self else { return }
+            let nextVC = PriceSettingViewController()
+            nextVC.queryParameter = self.queryParameter
+            self.navigationController?.pushViewController(nextVC, animated: true)
+            
         }
 
         toolbar.didTouchSkip = { [weak self] in

@@ -11,7 +11,7 @@ import Foundation
 struct QueryParameter {
     var dateRange: (Date?, Date?)
     var place: Place?
-    var priceRange: Range<Decimal>?
+    var priceRange: (Price?, Price?)
     var people: HeadCount?
 }
 

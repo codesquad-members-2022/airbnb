@@ -11,15 +11,16 @@ import UIKit
 class PriceSettingViewController: UIViewController {
     
     private var priceSettingView = PriceSettingView()
-    var queryParameter: QueryParameter?
     
-    // TODO: Merge 후 QueryParameterStackView 로 변경
-    lazy var queryParameterView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemGray
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    var queryParameter: QueryParameter = QueryParameter() {
+        didSet {
+            queryParameterStackView.setContent(queryParameter)
+        }
+    }
+    
+    private lazy var toolbar = SearchNavigationToolbar()
+    
+    private lazy var queryParameterStackView = QueryParameterStackView(queryParameter: queryParameter)
 
     override func viewWillAppear(_ animated: Bool) {
         view.backgroundColor = .white
@@ -28,34 +29,51 @@ class PriceSettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let priceSuccessStubRequest = SearchManager(httpService: PriceSuccessStub())
-        priceSuccessStubRequest.searchPriceFrequency(queryComponent: queryParameter ?? QueryParameter()) { [weak self] price in
+        priceSuccessStubRequest.searchPriceHistogram(queryComponent: queryParameter) { [weak self] price in
             guard let price = price, let self = self else { return }
             self.priceSettingView.setContents(price)
         }
         setSubviews()
         setLayout()
+        setPriceSettingHandler()
     }
 
     private func setSubviews() {
         view.addSubview(priceSettingView)
-        view.addSubview(queryParameterView)
+        view.addSubview(queryParameterStackView)
+        view.addSubview(toolbar)
     }
 
     private func setLayout() {
+        
+        NSLayoutConstraint.activate([
+            toolbar.bottomAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.bottomAnchor, multiplier: 0),
+            toolbar.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 0),
+            toolbar.trailingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.trailingAnchor, multiplier: 0)
+        ])
+        
+        NSLayoutConstraint.activate([
+            queryParameterStackView.bottomAnchor.constraint(equalTo: toolbar.topAnchor),
+            queryParameterStackView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
+            queryParameterStackView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
+            queryParameterStackView.heightAnchor.constraint(equalToConstant: 44*4)
+        ])
+        
         priceSettingView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             priceSettingView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             priceSettingView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             priceSettingView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            priceSettingView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.7)
+            priceSettingView.bottomAnchor.constraint(equalTo: queryParameterStackView.topAnchor, constant: -16)
         ])
-
-        NSLayoutConstraint.activate([
-            queryParameterView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            queryParameterView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            queryParameterView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            queryParameterView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.25)
-        ])
+    }
+    
+    private func setPriceSettingHandler() {
+        priceSettingView.didChangePriceHistogram = { [weak self] (min,max) in
+            guard let self = self else { return }
+            self.queryParameter.priceRange = (min,max)
+        }
     }
 
 }

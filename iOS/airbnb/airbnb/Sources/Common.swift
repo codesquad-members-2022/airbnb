@@ -62,14 +62,14 @@ enum Layout {
         return section
     }()
     
-    static let calendarLayout: NSCollectionLayoutSection = {
+    static let calendarLayout: UICollectionViewCompositionalLayout = {
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1.3)))
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.5)), subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets.bottom = 150
-        return section
+        return UICollectionViewCompositionalLayout(section: section)
     }()
     
     static func createLayout() -> UICollectionViewCompositionalLayout {
@@ -77,12 +77,6 @@ enum Layout {
             if sectionNumber == 0 {
                 return HeroImageLayout
             } else { return travelDestinationLayout }
-        }
-    }
-    
-    static func calendar() -> UICollectionViewCompositionalLayout {
-        return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
-            return calendarLayout
         }
     }
 }

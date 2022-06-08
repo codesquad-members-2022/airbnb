@@ -22,6 +22,7 @@
 		73571FD82840605D002F411F /* RecommendedTravelDestinationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73571FD72840605D002F411F /* RecommendedTravelDestinationCell.swift */; };
 		736ADC61284F1936000B5609 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736ADC60284F1936000B5609 /* CalendarViewController.swift */; };
 		736ADC65284F3744000B5609 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736ADC64284F3744000B5609 /* CalendarCell.swift */; };
+		7374B81C285044B500BAB4F4 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 7374B81B285044B500BAB4F4 /* FSCalendar */; };
 		7388ABE128488D690036D8CE /* HomeCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7388ABE028488D690036D8CE /* HomeCollectionViewDataSource.swift */; };
 		7388ABEB2848ED230036D8CE /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7388ABEA2848ED230036D8CE /* LocationTableViewCell.swift */; };
 		738CB7EB284EFD8C0009B17D /* HorizonCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 738CB7EA284EFD8C0009B17D /* HorizonCalendar */; };
@@ -101,6 +102,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				738CB7EB284EFD8C0009B17D /* HorizonCalendar in Frameworks */,
+				7374B81C285044B500BAB4F4 /* FSCalendar in Frameworks */,
 				CB4B17F8D1F87148B26CE515 /* Pods_airbnb.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -146,10 +148,10 @@
 			children = (
 				73B579C2284098C50043465D /* CollectionHeaderView.swift */,
 				73571FC5283E0CEF002F411F /* HeroImageCell.swift */,
-				736ADC64284F3744000B5609 /* CalendarCell.swift */,
 				73571FD72840605D002F411F /* RecommendedTravelDestinationCell.swift */,
 				73202EF52844B79A006D53AE /* CityViewCell.swift */,
 				7388ABEA2848ED230036D8CE /* LocationTableViewCell.swift */,
+				736ADC64284F3744000B5609 /* CalendarCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -293,6 +295,7 @@
 			name = airbnb;
 			packageProductDependencies = (
 				738CB7EA284EFD8C0009B17D /* HorizonCalendar */,
+				7374B81B285044B500BAB4F4 /* FSCalendar */,
 			);
 			productName = airbnb;
 			productReference = 73B9A763283C7EE8003A8C25 /* airbnb.app */;
@@ -371,6 +374,7 @@
 			mainGroup = 73B9A75A283C7EE8003A8C25;
 			packageReferences = (
 				738CB7E9284EFD8C0009B17D /* XCRemoteSwiftPackageReference "HorizonCalendar" */,
+				7374B81A285044B500BAB4F4 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 			);
 			productRefGroup = 73B9A764283C7EE8003A8C25 /* Products */;
 			projectDirPath = "";
@@ -893,6 +897,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7374B81A285044B500BAB4F4 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.3;
+			};
+		};
 		738CB7E9284EFD8C0009B17D /* XCRemoteSwiftPackageReference "HorizonCalendar" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/HorizonCalendar.git";
@@ -904,6 +916,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7374B81B285044B500BAB4F4 /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7374B81A285044B500BAB4F4 /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
+		};
 		738CB7EA284EFD8C0009B17D /* HorizonCalendar */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 738CB7E9284EFD8C0009B17D /* XCRemoteSwiftPackageReference "HorizonCalendar" */;

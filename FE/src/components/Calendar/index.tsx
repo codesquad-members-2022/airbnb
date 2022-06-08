@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 
-import * as S from '@components/Calender/Calender.style';
-import RenderCalender from '@components/Calender/RenderCalender';
+import * as S from '@components/Calendar/Calendar.style';
+import RenderCalendar from '@components/Calendar/RenderCalendar';
 import Icon, { ICON_NAME, ICON_SIZE } from '@components/common/Icon';
 
-export interface Calendertypes {
+export interface CalendarTypes {
   year: number;
   month: number;
 }
 
-const Calender = () => {
+const Calendar = () => {
   const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth();
@@ -41,8 +41,8 @@ const Calender = () => {
         <S.Btn onClick={prevBtn}>
           <Icon iconName={ICON_NAME.PREV} iconSize={ICON_SIZE.SMALL} />
         </S.Btn>
-        <RenderCalender year={currentYear} month={currentMonth} />
-        <RenderCalender year={currentYear} month={currentMonth + 1} />
+        <RenderCalendar year={currentYear} month={currentMonth} />
+        <RenderCalendar year={currentYear} month={currentMonth + 1} />
         <S.Btn onClick={nextBtn}>
           <Icon iconName={ICON_NAME.NEXT} iconSize={ICON_SIZE.SMALL} />
         </S.Btn>
@@ -51,4 +51,4 @@ const Calender = () => {
   );
 };
 
-export default Calender;
+export default Calendar;

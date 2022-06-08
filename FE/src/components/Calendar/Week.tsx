@@ -1,4 +1,4 @@
-import * as S from '@components/Calender/Calender.style';
+import * as S from '@components/Calendar/Calendar.style';
 const Week = () => {
   return (
     <S.Week>

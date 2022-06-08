@@ -1,13 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
-import { CalendarContext, CalenderContextTypes } from '@context/Provider';
+import { CalendarTypes } from '@components/Calendar';
+import { useCalendarState } from '@lib/hooks/useContext';
 
-export interface Calendertypes {
-  year: number;
-  month: number;
-}
-
-const Day = ({ year, month }: Calendertypes) => {
+const Day = ({ year, month }: CalendarTypes) => {
   const date = new Date();
   const lastDay = new Date(year, month + 1, 0).getDate();
   const firstDayIndex = new Date(year, month, 1).getDay();
@@ -16,7 +12,7 @@ const Day = ({ year, month }: Calendertypes) => {
 
   const [isCheckIn, setIsCheckIn] = useState(false);
 
-  const { setCheckIn, setCheckOut } = useContext<CalenderContextTypes>(CalendarContext);
+  const { setCheckIn, setCheckOut } = useCalendarState();
 
   const [isSelected, setIsSelected] = useState(false);
 

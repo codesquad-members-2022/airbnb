@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export interface CalenderContextTypes {
+export interface CalendarContextTypes {
   checkIn: string;
   setCheckIn: React.Dispatch<React.SetStateAction<string>>;
   checkOut: string;
@@ -11,9 +11,7 @@ interface CalendarProviderTypes {
   children: JSX.Element;
 }
 
-export const CalendarContext = React.createContext<CalenderContextTypes>(
-  {} as CalenderContextTypes,
-);
+export const CalendarContext = React.createContext<CalendarContextTypes | null>(null);
 
 export const CalendarProvider = ({ children }: CalendarProviderTypes) => {
   const [checkIn, setCheckIn] = useState('');

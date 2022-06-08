@@ -1,20 +1,18 @@
-import { useContext } from 'react';
-
-import Calender from '@components/Calender';
+import Calendar from '@components/Calendar';
 import * as S from '@components/SearchBar/SearchBar.style';
 import { AREA_TYPE, NO_CONTENT, SEARCH_BAR_SIZE } from '@components/SearchBar/constants';
 import Icon, { ICON_NAME, ICON_SIZE } from '@components/common/Icon';
-import { CalendarContext, CalenderContextTypes } from '@context/Provider';
-import { CalendarProvider } from '@context/Provider';
+import { CalendarProvider } from '@context/calendar/Provider';
 import { defaultPeriod } from '@data';
 import WithProvider from '@hoc/WithProvider';
+import { useCalendarState } from '@lib/hooks/useContext';
 
 export interface PeriodAreaTypes {
   size: string;
 }
 
 const PeriodArea = ({ size }: PeriodAreaTypes) => {
-  const { checkIn, checkOut } = useContext<CalenderContextTypes>(CalendarContext);
+  const { checkIn, checkOut } = useCalendarState();
 
   const isCheckInExist = checkIn !== defaultPeriod.checkIn;
   const isCheckOutExist = checkOut !== defaultPeriod.checkOut;
@@ -42,7 +40,7 @@ const PeriodArea = ({ size }: PeriodAreaTypes) => {
               <Icon iconName={ICON_NAME.CLOSE_BTN} iconSize={ICON_SIZE.LARGE} />
             </S.CloseButton>
           )}
-          <Calender />
+          <Calendar />
         </>
       ) : (
         <S.Content isContentExist={isCheckInExist && isCheckOutExist}>{periodContent}</S.Content>

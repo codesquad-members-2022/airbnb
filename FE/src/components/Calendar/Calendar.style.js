@@ -21,7 +21,7 @@ export const Wrapper = styled.div`
   gap: 30px;
 `;
 
-export const CalenderWrapper = styled.div`
+export const CalendarWrapper = styled.div`
   width: 40%;
 `;
 

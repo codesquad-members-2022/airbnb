@@ -1,11 +1,4 @@
-import {
-  useEffect,
-  useState,
-  createContext,
-  useContext,
-  Children,
-} from 'react';
-import styled, { css } from 'styled-components';
+import { useEffect, useState } from 'react';
 import BarChart from './Canvas';
 import { Box, Slider } from '@mui/material';
 import {
@@ -124,7 +117,7 @@ function PriceRangeModal() {
         <Box
           sx={{
             position: 'absolute',
-            top: 298,
+            top: 310,
             width: 300,
           }}
         >

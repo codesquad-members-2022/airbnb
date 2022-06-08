@@ -1,5 +1,4 @@
 import { useRef, useEffect } from 'react';
-import styled from 'styled-components';
 
 function BarChart(props) {
   const canvasRef = useRef(null);
@@ -25,7 +24,6 @@ function BarChart(props) {
         Math.floor(255 - 4.25 * i) +
         ')';
       ctx.fillRect(positionX, positionY, graphWidth, graphHeight);
-      console.log(positionX, positionY, graphWidth, graphHeight); // 결과값 출력테스트
     }
   };
 

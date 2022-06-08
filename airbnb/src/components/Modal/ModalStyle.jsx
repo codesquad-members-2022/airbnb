@@ -6,8 +6,8 @@ const calendarModalStyle = css`
 `;
 
 const priceRangeModalStyle = css`
-  width: 300px;
-  height: 200px;
+  width: 350px;
+  height: 300px;
   padding: 30px;
 `;
 

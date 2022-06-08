@@ -21,11 +21,12 @@ import com.example.todo.airbnb.presentation.search.detail.DetailScreen
 import com.example.todo.airbnb.presentation.search.fare.components.FareScreen
 import com.example.todo.airbnb.presentation.search.main.SearchScreen
 import com.example.todo.airbnb.presentation.search.personnel.components.PersonnelScreen
-import com.example.todo.airbnb.presentation.search.searchmap.SearchMapScreen
+import com.example.todo.airbnb.presentation.search.searchmap.components.SearchMapScreen
 import com.example.todo.airbnb.presentation.search.searchresult.components.SearchResultScreen
 import com.example.todo.airbnb.presentation.search.serachcondition.SearchConditionScreen
 import com.example.todo.airbnb.presentation.wishlist.components.WishListScreen
 import com.example.todo.airbnb.ui.theme.Gray
+import com.google.accompanist.pager.ExperimentalPagerApi
 
 object Destinations {
     const val search = "search"
@@ -87,6 +88,7 @@ fun BottomBar(
     }
 }
 
+@ExperimentalPagerApi
 @ExperimentalMaterialApi
 @Composable
 fun BottomNavGraph(navController: NavHostController, viewModel: SearchViewModel) {
@@ -101,6 +103,7 @@ fun BottomNavGraph(navController: NavHostController, viewModel: SearchViewModel)
     }
 }
 
+@ExperimentalPagerApi
 @ExperimentalMaterialApi
 private fun NavGraphBuilder.airbnbNavGraph(
     navController: NavController,
@@ -128,8 +131,11 @@ private fun NavGraphBuilder.airbnbNavGraph(
             viewModel
         )
     }
-    composable(route = Destinations.searchMap) { SearchMapScreen(navController = navController) }
-    composable(route = Destinations.searchCondition) { SearchConditionScreen(navController = navController) }
+    composable(route = Destinations.searchMap) { SearchMapScreen() }
+    composable(route = Destinations.searchCondition) {
+        SearchConditionScreen(navController = navController,
+            viewModel)
+    }
     composable(route = Destinations.detail) { DetailScreen(navController = navController) }
 }
 

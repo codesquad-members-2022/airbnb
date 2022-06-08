@@ -14,7 +14,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.todo.airbnb.presentation.main.components.MainScreen
 import com.example.todo.airbnb.presentation.search.SearchViewModel
 import com.example.todo.airbnb.ui.theme.AirbnbTheme
+import com.google.accompanist.pager.ExperimentalPagerApi
 
+@ExperimentalPagerApi
 @ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
 
@@ -28,6 +30,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalPagerApi
 @ExperimentalMaterialApi
 @Composable
 fun AirbnbTheme(viewModel: SearchViewModel) {
@@ -41,6 +44,7 @@ fun AirbnbTheme(viewModel: SearchViewModel) {
     }
 }
 
+@ExperimentalPagerApi
 @ExperimentalMaterialApi
 @Preview(showBackground = true)
 @Composable

@@ -6,6 +6,7 @@ import org.springframework.boot.web.client.RootUriTemplateHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.persistence.EntityManager;
@@ -23,5 +24,13 @@ public class WebConfig implements WebMvcConfigurer {
         return new RestTemplateBuilder()
                 .uriTemplateHandler(new RootUriTemplateHandler("https://apis-navi.kakaomobility.com/v1/directions"))
                 .build();
+    }
+
+    @Bean
+    public WebClient webClient() {
+        return WebClient.builder()
+                .baseUrl("https://github.com/login/oauth")
+                .build();
+
     }
 }

@@ -151,8 +151,10 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
 extension CalendarViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? CalendarViewCell,
-              cell.day?.isWithInDisplayedMonth == true else { return }
+        guard
+            let cell = collectionView.cellForItem(at: indexPath) as? CalendarViewCell,
+            cell.day?.isWithInDisplayedMonth == true,
+            cell.day?.isBeforeToday == false else { return }
         
         calendarModel.validateCheckDate(at: indexPath)
     }

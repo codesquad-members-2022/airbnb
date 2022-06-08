@@ -70,9 +70,9 @@ class PriceSettingViewController: UIViewController {
     }
     
     private func setPriceSettingHandler() {
-        priceSettingView.didChangedPriceHistogram = { [weak self] (a,b) in
+        priceSettingView.didChangedPriceHistogram = { [weak self] (min,max) in
             guard let self = self else { return }
-            self.queryParameter.priceRange = (a,b)
+            self.queryParameter.priceRange = (min,max)
         }
     }
 

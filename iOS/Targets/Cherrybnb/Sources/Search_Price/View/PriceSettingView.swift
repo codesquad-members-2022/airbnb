@@ -101,7 +101,7 @@ class PriceSettingView: UIView {
     }
     
     func setContents(_ price: PriceHistogram) {
-        rangeLabel.text = "\(price.min) - \(price.max)"
+        rangeLabel.text = "\(price.min)₩ - \(price.max)₩"
         averageLabel.text = "평균 1박 요금 가격은 \(price.average)원 입니다."
         slider.minimumValue = CGFloat(price.min)
         slider.maximumValue = CGFloat(price.max)

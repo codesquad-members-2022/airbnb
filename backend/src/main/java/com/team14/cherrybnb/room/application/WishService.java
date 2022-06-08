@@ -1,6 +1,8 @@
 package com.team14.cherrybnb.room.application;
 
 import com.team14.cherrybnb.auth.domain.Member;
+import com.team14.cherrybnb.common.exception.BusinessException;
+import com.team14.cherrybnb.common.exception.ErrorCode;
 import com.team14.cherrybnb.room.domain.Room;
 import com.team14.cherrybnb.room.domain.RoomRepository;
 import com.team14.cherrybnb.room.domain.Wish;
@@ -15,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.team14.cherrybnb.common.exception.ErrorCode.*;
 
 @Service
 public class WishService {
@@ -41,16 +45,18 @@ public class WishService {
     @Transactional
     public void addWish(Member member, WishRequest wishRequest) {
         Room room = roomRepository.findById(wishRequest.getRoomId())
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(() -> new BusinessException(NO_SUCH_ROOM));
 
         wishRepository.save(Wish.of(member, room));
     }
 
     @Transactional
     public void removeWish(Long wishId, Member loginMember) {
-        Wish wish = wishRepository.findById(wishId).orElseThrow(RuntimeException::new);
+        Wish wish = wishRepository.findById(wishId)
+                .orElseThrow(() -> new BusinessException(NO_SUCH_WISH));
+
         if (!loginMember.isSame(wish.getMember())) {
-            throw new RuntimeException();
+            throw new BusinessException(NO_SUCH_MEMBER);
         }
         wishRepository.delete(wish);
     }

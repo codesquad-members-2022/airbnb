@@ -1,6 +1,8 @@
 package com.team14.cherrybnb.revervation.application;
 
 import com.team14.cherrybnb.auth.domain.Member;
+import com.team14.cherrybnb.common.exception.BusinessException;
+import com.team14.cherrybnb.common.exception.ErrorCode;
 import com.team14.cherrybnb.revervation.domain.Reservation;
 import com.team14.cherrybnb.revervation.domain.ReservationRepository;
 import com.team14.cherrybnb.revervation.dto.ReservationCardResponse;
@@ -16,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.team14.cherrybnb.common.exception.ErrorCode.*;
 
 @Service
 public class ReservationService {
@@ -33,7 +37,7 @@ public class ReservationService {
     public void bookRoom(Member loginMember, ReservationRequest reservationRequest) {
         Long roomId = reservationRequest.getRoomId();
         Room room = roomRepository.findById(roomId)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(() -> new BusinessException(NO_SUCH_ROOM));
 
         Reservation reservation = reservationRequest.toEntity(loginMember, room);
         reservationRepository.save(reservation);
@@ -42,10 +46,10 @@ public class ReservationService {
     @Transactional
     public void cancelReservation(Member loginMember, Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(() -> new BusinessException(NO_SUCH_RESERVATION));
 
         if (!loginMember.isSame(reservation.getMember())) {
-            throw new RuntimeException();
+            throw new BusinessException(NO_SUCH_MEMBER);
         }
 
         reservation.cancel();
@@ -67,7 +71,7 @@ public class ReservationService {
     @Transactional(readOnly = true)
     public ReservationDetailResponse showReservationDetail(Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(() -> new BusinessException(NO_SUCH_RESERVATION));
 
         return new ReservationDetailResponse(reservation);
     }

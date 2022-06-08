@@ -7,7 +7,9 @@ import RangeSlider from "./RangeSlider";
 
 const PriceModal = ({isClicked}) => {
     const [priceData, setPriceData] = useState(null);
-    const [range, setRange] = useState({min: 0, max: 0});
+    const [priceMinIdx, setPriceMinIdx] = useState(0);
+    const [priceMaxIdx, setPriceMaxIdx] = useState(0);
+    const [maximumPrice, setMaximumPrice] = useState(0);
 
     const min = 0;
     const max = 100;
@@ -17,9 +19,11 @@ const PriceModal = ({isClicked}) => {
     useEffect(() => {
         const getPriceData = async () => {
             const result = await fetchData("http://localhost:3000/price");
-            const sortedReuslt = result.sort();
-            setPriceData(sortedReuslt.map((data) => data.price));
-            setRange({min: 0, max: result.length - 1});
+            const sortedResult = result.map((data) => data.price).sort((a, b) => a - b);
+            setPriceData(sortedResult);
+            setPriceMinIdx(0);
+            setPriceMaxIdx(result.length - 1);
+            setMaximumPrice(sortedResult[result.length - 1]);
         };
         getPriceData();
     }, []);
@@ -32,15 +36,14 @@ const PriceModal = ({isClicked}) => {
         );
     }
 
-    const average = getAverage(priceData, range);
+    const average = getAverage(priceData, priceMinIdx, priceMaxIdx);
+    const rangeText = getRangeText(priceData, priceMinIdx, priceMaxIdx, maximumPrice);
 
     return (
         <PriceModalBox isClicked={isClicked}>
             <Title>가격 범위</Title>
             <FlexBox>
-                <RangeText>
-                    ₩{makePriceFormat(priceData[range.min])} - ₩{makePriceFormat(priceData[range.max])}
-                </RangeText>
+                <RangeText>{rangeText}</RangeText>
                 <Average>평균 1박 요금은 ₩{makePriceFormat(average)} 입니다.</Average>
             </FlexBox>
             <PriceGraph priceData={priceData} minValue={minValue} maxValue={maxValue} />
@@ -51,15 +54,26 @@ const PriceModal = ({isClicked}) => {
                 setMinValue={setMinValue}
                 maxValue={maxValue}
                 setMaxValue={setMaxValue}
+                setPriceMinIdx={setPriceMinIdx}
+                setPriceMaxIdx={setPriceMaxIdx}
+                dataLength={priceData.length}
             />
         </PriceModalBox>
     );
 };
 
-const getAverage = (data, range) => {
-    const slicedData = data.slice(range.min, range.max + 1);
+const getRangeText = (priceData, minIdx, maxIdx, maximumPrice) => {
+    const minimumPriceInRange = makePriceFormat(priceData[minIdx]);
+    const maximumPriceInRange = makePriceFormat(priceData[maxIdx]);
+    const isMaximumPrice = priceData[maxIdx] === maximumPrice;
+
+    return `₩${minimumPriceInRange} - ₩${maximumPriceInRange}${isMaximumPrice ? "+" : ""}`;
+};
+
+const getAverage = (data, minIdx, maxIdx) => {
+    const slicedData = data.slice(minIdx, maxIdx + 1);
     const sum = slicedData.reduce((acc, cur) => acc + cur, 0);
-    const average = sum / (range.max - range.min + 1);
+    const average = sum / (maxIdx - minIdx + 1);
 
     return Math.ceil(average);
 };

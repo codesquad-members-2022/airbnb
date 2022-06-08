@@ -149,7 +149,7 @@ extension FilterViewController {
     }
 
     @objc func didTapFirstToolItem() {
-        guard let currentField = filterViewModel?.toolBarStatus.value.currentField else {return showNextChildViewController()}
+        guard let currentField = filterViewModel?.toolBarStatus.value.currentField else {return showNextViewController()}
         if isFilled(field: currentField) {
             switch currentField {
             case .location:
@@ -165,30 +165,41 @@ extension FilterViewController {
                 filterViewModel?.occupants.value = nil
             }
         } else {
-            showNextChildViewController()
+            showNextViewController()
         }
 
     }
 
     @objc func didTapSecondToolItem() {
-        showNextChildViewController()
+        showNextViewController()
     }
 
-    private func showNextChildViewController() {
-        removeFirstChildViewController()
-        filterViewModel?.resetToolBarStatus()
-        DispatchQueue.main.async {
-            self.filterForm?.reloadData()
+    private func showNextViewController() {
+        if removeFirstChildViewController() {
+            filterViewModel?.resetToolBarStatus()
+            DispatchQueue.main.async {
+                self.filterForm?.reloadData()
+            }
+        } else {
+            showResultViewController()
         }
     }
 
-    private func removeFirstChildViewController() {
+    private func removeFirstChildViewController() -> Bool {
         if self.children.count > 1 {
             let viewControllers: [UIViewController] = self.children
             viewControllers.first?.willMove(toParent: nil)
             viewControllers.first?.removeFromParent()
             viewControllers.first?.view.removeFromSuperview()
+            return true
         }
+        return false
+    }
+
+    private func showResultViewController() {
+        guard let filterViewModel = filterViewModel else {return}
+        let filterSelection = FilterSelection(location: filterViewModel.location.value, period: filterViewModel.period.value, priceRange: filterViewModel.price.value, occupants: filterViewModel.occupants.value)
+
     }
 }
 

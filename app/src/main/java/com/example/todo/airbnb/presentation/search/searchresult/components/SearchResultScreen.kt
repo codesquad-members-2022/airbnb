@@ -9,7 +9,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Place
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -130,13 +133,14 @@ private fun AccommodationItem() {
         "https://a0.muscache.com/im/pictures/2f13349d-879d-43c6-83e3-8e5679291d53.jpg?im_w=480"
 
     Column {
-        Box() {
+        Box {
             LoadImage(imageURL = dummyImage)
-            Box(modifier = Modifier
-                .padding(top = 15.dp, start = 8.36.dp)
-                .clip(RoundedCornerShape(size = 10.dp))
-                .align(Alignment.TopStart)
-                .background(Color.White)
+            Box(
+                modifier = Modifier
+                    .padding(top = 15.dp, start = 8.36.dp)
+                    .clip(RoundedCornerShape(size = 10.dp))
+                    .align(Alignment.TopStart)
+                    .background(Color.White)
             ) {
                 Text(
                     text = "슈퍼 호스트",
@@ -145,7 +149,8 @@ private fun AccommodationItem() {
             }
             Image(
                 painter = if (isClick.value) painterResource(id = R.drawable.ic_favorite_selected) else painterResource(
-                    id = R.drawable.ic_favorite),
+                    id = R.drawable.ic_favorite
+                ),
                 contentDescription = "favorite",
                 modifier = Modifier
                     .padding(top = 15.dp, end = 8.36.dp)
@@ -182,7 +187,6 @@ private fun AccommodationItem() {
         Text(text = "총액 W1,493,154")
     }
 }
-
 
 @Composable
 private fun LoadImage(imageURL: String?) {

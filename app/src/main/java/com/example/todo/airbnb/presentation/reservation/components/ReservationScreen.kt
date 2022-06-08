@@ -33,17 +33,18 @@ fun ReservationScreen(
     viewModel: ReservationViewModel,
 ) {
     val reservation = viewModel.reservation.collectAsState().value
+    val index = viewModel.itemIndex.value
     Scaffold(
         topBar = {
             ReservationTopAppBar(
                 itemIndexNullCheck = {
-                    if (viewModel.itemIndex.value == null) navController.navigateUp()
+                    if (index == null) navController.navigateUp()
                     else viewModel.clearItemIndex()
                 }
             )
         },
     ) {
-        if (viewModel.itemIndex.value == null) {
+        if (index == null) {
             LazyColumn(
                 modifier = Modifier
                     .padding(start = 16.dp, end = 16.dp, bottom = 70.dp)
@@ -61,9 +62,8 @@ fun ReservationScreen(
                 }
             }
         } else {
-            val index = viewModel.itemIndex.value
             DetailedReservationScreen(
-                reservation[index!!],
+                reservation[index],
                 onClear = {
                     viewModel.clearReservationList(index)
                     viewModel.clearItemIndex()
@@ -116,7 +116,8 @@ private fun ReservationItem(
     reservation: Reservation,
     updateItemIndex: () -> Unit
 ) {
-    fun dateTextConverter(text: String) = text.split(" ").let { "${it[0]} ${it[1]} ${it[2]}" }
+    fun dateTextConverter(text: String) =
+        text.split(" ").let { "${it[0]} ${it[1]} ${it[2]}" }
     Column(
         modifier = Modifier
             .padding(top = 12.dp)

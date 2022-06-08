@@ -23,7 +23,7 @@ const color = {
 };
 
 const drawGraph = ({context, width, bottom, unit, priceData, minValue, maxValue}) => {
-    const unitOfWidth = Math.ceil(width / unit);
+    const unitOfWidth = width / unit;
     let height = bottom;
 
     const minPrice = Math.min(...priceData);
@@ -46,10 +46,13 @@ const drawGraph = ({context, width, bottom, unit, priceData, minValue, maxValue}
 
         context.lineTo(currentX, bottom);
         context.fill();
+
         if (minValue * unitOfWidth <= currentX && currentX <= maxValue * unitOfWidth) {
             context.fillStyle = color.in;
+            context.strokeStyle = color.in;
         } else {
             context.fillStyle = color.out;
+            context.strokeStyle = color.out;
         }
         context.beginPath();
         context.moveTo(currentX, bottom);

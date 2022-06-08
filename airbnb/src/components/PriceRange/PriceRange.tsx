@@ -1,4 +1,10 @@
-import { useEffect, useState } from 'react';
+import {
+  useEffect,
+  useState,
+  createContext,
+  useContext,
+  Children,
+} from 'react';
 import styled, { css } from 'styled-components';
 import BarChart from './Canvas';
 import { Box, Slider } from '@mui/material';
@@ -7,7 +13,7 @@ import {
   PriceRangeTitle,
   PriceRangePrice,
   PriceRangeCaption,
-} from './PriceRange_styled';
+} from './PriceRange.styled';
 const sampleData = [
   { percentage: 0, price: 10500, number: 100 },
   { percentage: 0, price: 20000, number: 20 },
@@ -28,6 +34,10 @@ function PriceRangeModal() {
   const [value, setValue] = useState([0, 100]); // Range Slider의 percentage 계산.
   const [price, setPrice] = useState([0, 100]);
   const [newAverage, setNewAverage] = useState(0);
+  const [userInput, setUserInput] = useState({
+    minPrice: 0,
+    maxPrice: 100,
+  });
 
   let sortedList: any[] = sampleData.sort((pre, cur) =>
     pre.price > cur.price ? 1 : pre.price < cur.price ? -1 : 0,

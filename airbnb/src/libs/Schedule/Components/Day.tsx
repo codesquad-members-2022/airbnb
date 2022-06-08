@@ -1,11 +1,11 @@
-import { useScheduleContext } from '../Hooks/ScheduleHooks';
-import * as S from './Schedule.style';
 import {
   isBetweenSelected,
   isStartDate,
   isEndDate,
   isSelected,
 } from '@/Services/Date';
+import * as S from './Schedule.style';
+import { useScheduleContext } from '../Hooks/ScheduleHooks';
 
 interface DayProps {
   day: Date | null;

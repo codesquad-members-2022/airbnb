@@ -8,6 +8,7 @@ import {
   CalenderAction,
 } from '@/Contexts/Searching';
 import { ModalStateContext, ModalDispatchContext } from '@/Contexts/Modal';
+import { PriceGraph } from '@/Components/PriceGraph';
 import { Modal } from '../Modal/Modal';
 import * as S from './SearchBar.style';
 import { SearchBarItem } from './Item';
@@ -43,7 +44,7 @@ export function SearchBar() {
         setEndDate={dateDispatch(getEndDateAction)}
       />
     ),
-    가격: '가격',
+    가격: <PriceGraph />,
     사람: '사람',
   };
 

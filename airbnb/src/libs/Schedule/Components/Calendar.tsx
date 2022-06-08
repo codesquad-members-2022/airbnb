@@ -1,8 +1,8 @@
+import { getMonthDate } from '@/Services/Date';
 import * as S from './Schedule.style';
 import { CalendarHeader } from './CalendarHeader';
 import { BaseWeekend } from './BaseWeekend';
 import { CalendarDate } from './CalendarDate';
-import { getMonthDate } from '@/Services/Date';
 
 // TODO: 상수 리팩토링, 달력 관련 util 함수 분리
 const WEEKDAY: string[] = ['일', '월', '화', '수', '목', '금', '토'];

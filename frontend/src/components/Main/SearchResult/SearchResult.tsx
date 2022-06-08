@@ -9,7 +9,6 @@ import Wrapper from "./SearchResult.style";
 
 const SearchResult = (): JSX.Element => {
   const { queryData } = useContext(LocationContext)!;
-  console.log(Object.entries(queryData).length, "Data");
 
   return (
     <Wrapper>

@@ -6,7 +6,11 @@ import numToWon from "utils/utils";
 
 import PriceSelectArea from "../../ModalInnerItems/ReservationFeeModal/PriceSelectArea";
 import ButtonArea from "../ButtonArea/ButtonArea";
-import SelectItem, { WhiteSpace, SelectItemProps } from "./SelectItem";
+import SelectItem, {
+  WhiteSpace,
+  SelectItemProps,
+  RangeType,
+} from "./SelectItem";
 
 const buttonId = "reservation-fee-button";
 
@@ -22,8 +26,11 @@ const ReservationFee = ({
   stateData,
   initialPrice,
 }: ReservationFeeProps): JSX.Element => {
-  const { state: price, setState: setPrice } = stateData!;
-  const { queryData } = useContext(LocationContext)!;
+  const { state: price, setState: setPrice } = stateData as {
+    state: RangeType;
+    setState: React.Dispatch<React.SetStateAction<RangeType>>;
+  };
+  const { queryData } = { ...useContext(LocationContext) };
   const { isSearchBarFullSize, setIsSearchBarFullSize } = useContext(
     SearchBarStateContext
   )!;
@@ -34,7 +41,7 @@ const ReservationFee = ({
   });
 
   const isQueryDataIncludesPriceRange =
-    queryData.minPrice || queryData.maxPrice;
+    queryData?.minPrice || queryData?.maxPrice;
 
   const description =
     !isQueryDataIncludesPriceRange &&

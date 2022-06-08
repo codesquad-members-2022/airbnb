@@ -1,40 +1,43 @@
 import { useMemo, useState } from "react";
 
+import { LinkPath } from "router";
+
 import { RouterContext, LocationContext } from "./Contexts";
-import { pages } from "./pages";
+import pages from "./pages";
 
 const FIRST_INDEX = 0;
 const FIRST_SLASH_COUNT = 1;
 
 const Router = (): React.ReactElement => {
   const { location } = window;
-  const queryData: { [key: string]: string } = useMemo(() => ({}), []);
-  location.search
+  // const queryData: { [key: string]: string } = useMemo(() => ({}), []);
+  const queryData = location.search
     .slice(1)
     .split("&")
     .map((item) => item.split("="))
-    .forEach(([key, val]) => {
+    .reduce((prev, [key, val]) => {
       if (key.length) {
-        queryData[key] = val;
+        return { ...prev, [key]: val };
       }
-    });
+      return { ...prev };
+    }, {});
 
-  const getCurrentPath = () => {
-    return (
+  const getCurrentPath = (): LinkPath => {
+    const currentPath =
       location.pathname.slice(FIRST_SLASH_COUNT).split("/")[FIRST_INDEX] ||
-      "index"
-    );
+      "index";
+
+    return currentPath as LinkPath;
   };
 
-  const currentPath = getCurrentPath();
+  const currentPath: LinkPath = getCurrentPath();
 
-  // 이부분이 잘못됨, 무조건 존재하면 index로 연결
-  const [page, setPage] = useState(
+  const [page, setPage] = useState<LinkPath>(
     pages[currentPath] ? currentPath : "notFound"
   );
 
   onpopstate = (/* e: PopStateEvent */) => {
-    const poppedPath = getCurrentPath();
+    const poppedPath: LinkPath = getCurrentPath();
     // TODO: e.state 이용하여 뒤로가기 시 검색결과
 
     if (!pages[poppedPath]) {

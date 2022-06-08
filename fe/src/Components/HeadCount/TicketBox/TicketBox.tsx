@@ -49,6 +49,8 @@ export default function TicketBox({ contents, handleClick, headCountState }: Tic
           flex={true}
           justify="center"
           align="center"
+          buttonType="MINUS"
+          currentState={currentState}
           onClick={({ currentTarget }: React.SyntheticEvent<HTMLButtonElement>) => {
             const { buttontype: type, buttontarget: target } = currentTarget.dataset;
             handleClick && handleClick({ type, target });
@@ -63,6 +65,8 @@ export default function TicketBox({ contents, handleClick, headCountState }: Tic
           flex={true}
           justify="center"
           align="center"
+          buttonType="PLUS"
+          currentState={currentState}
           onClick={({ currentTarget }: React.SyntheticEvent<HTMLButtonElement>) => {
             const { buttontype: type, buttontarget: target } = currentTarget.dataset;
             handleClick && handleClick({ type, target });

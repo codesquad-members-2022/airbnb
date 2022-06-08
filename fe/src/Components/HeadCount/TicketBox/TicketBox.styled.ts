@@ -2,6 +2,11 @@ import { FlexType } from "Helpers/interface";
 import { applyFlex } from "Helpers/utils";
 import styled from "styled-components";
 
+interface ButtonType extends FlexType {
+  buttonType: "PLUS" | "MINUS";
+  currentState?: string | number;
+}
+
 export const TicketContainer = styled.div<FlexType>`
   ${({ flex, justify }) => applyFlex({ flex, justify })};
   padding: 24px 0;
@@ -34,7 +39,7 @@ export const CountArea = styled.div<FlexType>`
   ${({ flex, align }) => applyFlex({ flex, align })};
 `;
 
-export const Button = styled.button<FlexType>`
+export const Button = styled.button<ButtonType>`
   ${({ flex, justify, align }) => applyFlex({ flex, justify, align })};
   padding: 10px;
   width: 30px;
@@ -44,6 +49,7 @@ export const Button = styled.button<FlexType>`
   font-size: 20px;
   font-weight: 700;
   cursor: pointer;
+  ${({ flex, buttonType, currentState }) => applyButtonActive({ flex, buttonType, currentState })};
 `;
 
 export const Count = styled.div`
@@ -52,3 +58,12 @@ export const Count = styled.div`
   margin: 0 19px;
   font-weight: 700;
 `;
+
+const applyButtonActive = ({ buttonType, currentState }: ButtonType) => {
+  if (buttonType === "MINUS" && Number(currentState) === 0) {
+    return `color:#bdbdbd`;
+  }
+  if (buttonType === "PLUS" && Number(currentState) === 8) {
+    return `color:#bdbdbd`;
+  }
+};

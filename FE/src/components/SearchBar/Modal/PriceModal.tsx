@@ -11,16 +11,32 @@ interface PriceModalTypes {
   modalRef: RefObject<HTMLDivElement>;
 }
 
+const RANGE_INTERVAL = 10000;
+
 const PriceModal = ({ element, modalRef }: PriceModalTypes) => {
-  const { minPrice, maxPrice } = usePriceState();
+  const { minPrice, maxPrice, priceRange, defaultMinPrice } = usePriceState();
   const priceContent = `${formatPrice(minPrice)} ~ ${formatPrice(maxPrice)}`;
+
+  const getAveragePrice = () => {
+    let minIndex = Math.floor((minPrice - defaultMinPrice) / RANGE_INTERVAL);
+    const maxIndex = Math.floor((maxPrice - defaultMinPrice) / RANGE_INTERVAL);
+
+    const targetPriceRange = priceRange.slice(minIndex, maxIndex + 1)
+    const countSum = targetPriceRange.reduce((total, price) => total + price, 0);
+
+    const weightedAveragePrice = targetPriceRange.reduce((total, priceCount) => {
+      return total + (RANGE_INTERVAL * minIndex++ + 5000) * (priceCount / countSum);
+    }, 0);
+
+    return Math.round(weightedAveragePrice);
+  };
 
   return (
     <Modal element={element} position={MODAL_POSITION.CENTER}>
       <S.PriceModal ref={modalRef}>
         <S.Title>가격 범위</S.Title>
         <S.PriceRange>{priceContent}</S.PriceRange>
-        <S.AverageDescription>평균 1박 요금은 W165,556입니다.</S.AverageDescription>
+        <S.AverageDescription>평균 1박 요금은 ${formatPrice(getAveragePrice())}입니다.</S.AverageDescription>
         <RangeSlider />
       </S.PriceModal>
     </Modal>

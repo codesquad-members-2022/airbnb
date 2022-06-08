@@ -22,7 +22,7 @@ class SearchInfoTrackingModel: SearchInfoModel {
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_kr")
-        formatter.dateFormat = "MM dd"
+        formatter.dateFormat = "M월 dd일"
         return formatter
     }()
     

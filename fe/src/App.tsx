@@ -1,5 +1,6 @@
 import CalendarProvider from "Context/CalendarProvider";
 import HeadCountProvider from "Context/HeadCountProvider";
+import PriceModalProvider from "Context/PriceProvider";
 import GlobalStyle from "Helpers/globalStyle";
 import { composeProvider } from "Helpers/utils";
 import Home from "Pages/Home/Home";
@@ -7,7 +8,7 @@ import NotFound from "Pages/NotFound/NotFound";
 import SearchResult from "Pages/SearchResult/SearchResult";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-const providerList = [CalendarProvider, HeadCountProvider];
+const providerList = [CalendarProvider, HeadCountProvider, PriceModalProvider];
 
 const Provider = composeProvider(providerList);
 
@@ -19,7 +20,7 @@ function App() {
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/searchResult" element={<SearchResult />} />
+            <Route path="/search-result" element={<SearchResult />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

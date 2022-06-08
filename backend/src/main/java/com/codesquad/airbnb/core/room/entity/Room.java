@@ -87,10 +87,6 @@ public class Room {
         this.review = review;
     }
 
-    public Integer getLodging() {
-        return price.getLodging();
-    }
-
     public StayTime getStayTime() {
         return detail.getStayTime();
     }

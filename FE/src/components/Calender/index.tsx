@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 
 import * as S from '@components/Calender/Calender.style';
-// import Days from '@components/Calender/Days';
-// import Month from '@components/Calender/Month';
-import Week from '@components/Calender/Week';
+import RenderCalender from '@components/Calender/RenderCalender';
 import Icon, { ICON_NAME, ICON_SIZE } from '@components/common/Icon';
 
-interface Calendertypes {
+export interface Calendertypes {
   year: number;
   month: number;
 }
@@ -18,67 +16,6 @@ const Calender = () => {
 
   const [currentYear, setCurrentYear] = useState(year);
   const [currentMonth, setCurrentMonth] = useState(month);
-
-  //년월
-  const renderMonth = ({ year, month }: Calendertypes) => {
-    return (
-      <S.Month>
-        <S.Date>
-          <h1>
-            {year}년 {month + 1}월
-          </h1>
-        </S.Date>
-      </S.Month>
-    );
-  };
-
-  //Week가져오기
-
-  //days 모아서 div 만들기
-  const getMonthDays = ({ year, month }: Calendertypes) => {
-    const lastDay = new Date(year, month + 1, 0).getDate(); //이번달마지막날
-    //const prevlastDay = new Date(year, month, 0).getDate(); //지난달마지막날
-    const firstDayIndex = new Date(year, month, 1).getDay(); //이번달1일 요일
-    const lastDayIndex = new Date(date.getFullYear(), month + 1, 0).getDay(); //이번달마지막요일
-    const nextDays = 7 - lastDayIndex - 1;
-
-    const onClick = ({ target }: any) => {
-      console.log(year, month + 1, Number(target.innerText));
-    };
-
-    //수정예정
-    const result: (string | number)[] = [];
-
-    for (let prev = firstDayIndex; prev > 0; prev--) {
-      result.push('');
-    }
-
-    for (let i = 1; i <= lastDay; i++) {
-      result.push(i);
-    }
-
-    for (let j = 1; j <= nextDays; j++) {
-      result.push('');
-    }
-
-    return result.map((day, index) => (
-      <div key={index} onClick={onClick}>
-        {day}
-      </div>
-    ));
-  };
-
-  const RenderCalender = ({ year, month }: Calendertypes) => {
-    return (
-      <>
-        <S.CalenderWrapper>
-          <S.Calendar>{renderMonth({ year, month })}</S.Calendar>
-          <Week />
-          <S.Days>{getMonthDays({ year, month })}</S.Days>
-        </S.CalenderWrapper>
-      </>
-    );
-  };
 
   const prevBtn = () => {
     if (currentMonth - 1 < 0) {

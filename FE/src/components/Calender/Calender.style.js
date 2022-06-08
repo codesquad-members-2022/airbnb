@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   width: 916px;
   height: auto;
-  background: #fff;
+  background: ${({ theme }) => theme.color.white};
   border-radius: 40px;
   padding-top: 30px;
   padding-bottom: 30px;
@@ -11,7 +11,7 @@ export const Container = styled.div`
 
   // 모달창 positon 추후 삭제 예정
   position: absolute;
-  top: 30%;
+  top: 200%;
 `;
 
 export const Wrapper = styled.div`
@@ -20,9 +20,11 @@ export const Wrapper = styled.div`
   justify-content: center;
   gap: 30px;
 `;
+
 export const CalenderWrapper = styled.div`
   width: 40%;
 `;
+
 export const Calendar = styled.div`
   display: flex;
 `;
@@ -37,7 +39,7 @@ export const Month = styled.div`
   text-align: center;
   h1 {
     font-size: 1.6rem;
-    font-weight: 400;
+    font-weight: ${({ theme }) => theme.fontWeight.regular};
     letter-spacing: 0.2rem;
   }
 `;
@@ -47,8 +49,8 @@ export const Date = styled.div`
   justify-content: center;
   align-items: center;
   h1 {
-    font-size: 16px;
-    font-weight: 700;
+    font-size: ${({ theme }) => theme.fontSize.medium};
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
   }
 `;
 
@@ -60,14 +62,14 @@ export const Week = styled.div`
   align-items: center;
 
   div {
-    font-size: 12px;
-    font-weight: 400;
+    font-size: ${({ theme }) => theme.fontSize.small};
+    font-weight: ${({ theme }) => theme.fontWeight.regular};
     letter-spacing: 0.1rem;
     width: calc(40rem / 7);
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #828282;
+    color: ${({ theme }) => theme.color.grey3};
   }
 `;
 
@@ -77,17 +79,21 @@ export const Days = styled.div`
   flex-wrap: wrap;
   padding: 0.1rem;
 
-  div {
-    font-size: 12px;
+  button {
+    font-size: ${({ theme }) => theme.fontSize.xSmall};
     width: calc(22.5rem / 7);
     height: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: background-color 0.2s;
-    color: #333333;
-    font-weight: 700;
-  }
+    
+    color: ${({ theme }) => theme.color.grey1};
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
+    &:active {
+      background:#000;
+      color:#fff;
+      border-radius:50%;
+    }
 `;
 
 export const Btn = styled.div`

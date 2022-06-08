@@ -15,6 +15,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class RoomSearchResponse {
 
+    private Integer id;
     private String name;
     private String address;
     private String imagePath;
@@ -43,6 +44,7 @@ public class RoomSearchResponse {
         RoomOption roomOption = detail.getOption();
 
         return new RoomSearchResponse(
+            room.getId(),
             room.getName(),
             room.getDistrict().getAddress(),
             room.getImagePath(),

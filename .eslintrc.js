@@ -39,6 +39,7 @@ module.exports = {
     "react-hooks/exhaustive-deps": "warn",
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-var-requires": 0,
     "import/no-unresolved": "off",
     "prettier/prettier": [

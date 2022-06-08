@@ -6,10 +6,13 @@ import java.util.List;
 import kr.codesquad.airbnb.domain.Images;
 import kr.codesquad.airbnb.domain.Lodging;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+
 
 @Getter
 @AllArgsConstructor
+@Builder
 public class LodgingResponse {
 
     private Long id;
@@ -36,18 +39,6 @@ public class LodgingResponse {
         this.imageUrls = initMainImageUrl(lodging);
     }
 
-    public LodgingResponse(Lodging lodging, int totalPrice) {
-        this.id = lodging.getId();
-        this.Name = lodging.getName();
-        this.rating = lodging.getRating();
-        this.review = lodging.getReview();
-        this.price = lodging.getPrice();
-        this.totalPrice = totalPrice;
-//        this.wish = lodging.get
-        this.latitude = lodging.getLatitude();
-        this.longitude = lodging.getLongitude();
-        this.imageUrls = initMainImageUrl(lodging);
-    }
 
     private List<String> initMainImageUrl(Lodging lodging) {
         List<String> imageUrls = new ArrayList<>();

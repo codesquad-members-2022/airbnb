@@ -25,10 +25,13 @@ INSERT INTO lodging (id, bathroom_count, bed_count, bedroom_count, place_type, l
                      lodging_name, property_type, price, rating, review, region_id)
     VALUES (1,1,2,3,'ENTIRE_PLACE','설명',
     '김길동','호스트이미지 url',100,100,3,
-    '좋은 숙소','HOUSE',1000,4.7,2,1),
+    '좋은 숙소','HOUSE',10000,4.7,2,1),
            (2,2,2,2,'ENTIRE_PLACE','설명',
             '김길동','호스트이미지 url2',100,100,3,
-            '안좋은 숙소','HOUSE',1000,4.7,2,1);
+            '안좋은 숙소','HOUSE',21000,4.7,2,1),
+           (3,3,3,3,'ENTIRE_PLACE','설명',
+            '테스터','호스트이미지 url3',100,100,3,
+            '테스트 숙소','HOUSE',25000,4.7,2,1);
 
 INSERT INTO images (id, image_url, lodging_id, is_main_image)
 VALUES (1, 'https://a0.muscache.com/im/pictures/monet/Select-34444025/original/944d56fa-e9a6-48fb-a9c5-e4e3778042d7?im_w=720', 1, true),
@@ -40,7 +43,8 @@ VALUES (1, 'https://a0.muscache.com/im/pictures/monet/Select-34444025/original/9
 
 INSERT INTO address (id, lodging_id, country, city, town, village)
 VALUES (1, 1,'한국', '서울시', '강남구', '삼성동'),
-       (2, 2,'한국', '서울시', '강남구', '세곡동');
+       (2, 2,'한국', '서울시', '강남구', '세곡동'),
+       (3, 3,'한국', '서울시', '강남구', '삼성동');
 
 INSERT INTO members (id, email, github_id, image_url, name) VALUE (1, null, 'test1', 'test1image', 'tester');
 

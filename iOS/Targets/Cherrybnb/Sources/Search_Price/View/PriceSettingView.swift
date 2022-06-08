@@ -42,6 +42,8 @@ class PriceSettingView: UIView {
         slider.orientation = .horizontal
         slider.addTarget(self, action: #selector(sliderChanged(_:)), for: .valueChanged)
         slider.translatesAutoresizingMaskIntoConstraints = false
+        slider.outerTrackColor = .systemGray
+        slider.tintColor = .blue
         return slider
     }()
     

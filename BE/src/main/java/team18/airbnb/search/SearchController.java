@@ -29,7 +29,11 @@ public class SearchController {
 
     @GetMapping("/search")
     public ResponseEntity<List<LookAroundRegionDto>> searchRegion() {
-        return ResponseEntity.ok(regionService.createLookAroundRegionDto());
+        List<Region> regions = regionService.createLookAroundRegion();
+        List<LookAroundRegionDto> lookAroundRegionDtos = regions.stream()
+                .map(LookAroundRegionDto::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(lookAroundRegionDtos);
     }
 
     @GetMapping("/filterSearch")

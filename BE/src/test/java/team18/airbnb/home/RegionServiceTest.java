@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-import team18.airbnb.generalDto.LookAroundRegionDto;
+
+import team18.airbnb.domain.Region;
 import team18.airbnb.region.RegionService;
 
 import java.util.List;
@@ -26,8 +27,8 @@ class RegionServiceTest {
     void createRegion() {
 
         // when
-        List<LookAroundRegionDto> homeRegions = regionService.createLookAroundRegionDto();
-        List<LookAroundRegionDto> searchRegions = regionService.createLookAroundRegionDto();
+        List<Region> homeRegions = regionService.createLookAroundRegion();
+        List<Region> searchRegions = regionService.createLookAroundRegion();
 
         // then
         assertThat(homeRegions.size()).isEqualTo(8);

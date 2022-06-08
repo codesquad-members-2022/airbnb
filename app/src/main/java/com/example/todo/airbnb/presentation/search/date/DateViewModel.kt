@@ -1,6 +1,5 @@
 package com.example.todo.airbnb.presentation.search.date
 
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf

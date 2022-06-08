@@ -8,5 +8,5 @@ data class Reservation(
     val checkOut: String,
     val host: String,
     val maximumPeople: Int,
-    val accommodationsFee: Int
+    val accommodationsFee: Int,
 )

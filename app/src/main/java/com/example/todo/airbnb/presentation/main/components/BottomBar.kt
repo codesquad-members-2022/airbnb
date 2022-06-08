@@ -5,9 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
+import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -95,7 +93,7 @@ fun BottomBar(
 fun BottomNavGraph(
     navController: NavHostController,
     viewModel: SearchViewModel,
-    reservationViewModel: ReservationViewModel
+    reservationViewModel: ReservationViewModel,
 ) {
     NavHost(
         navController = navController,
@@ -114,7 +112,7 @@ fun BottomNavGraph(
 private fun NavGraphBuilder.airbnbNavGraph(
     navController: NavController,
     viewModel: SearchViewModel,
-    reservationViewModel: ReservationViewModel
+    reservationViewModel: ReservationViewModel,
 ) {
     navigation(
         route = Destinations.search,
@@ -138,17 +136,21 @@ private fun NavGraphBuilder.airbnbNavGraph(
         PersonnelScreen(navController = navController, viewModel)
     }
     composable(route = Destinations.searchResult) {
-        SearchResultScreen(
-            navController = navController,
-            viewModel
-        )
+        SearchResultScreen(navController = navController, viewModel)
     }
     composable(route = Destinations.searchMap) { SearchMapScreen() }
     composable(route = Destinations.searchCondition) {
-        SearchConditionScreen(navController = navController,
-            viewModel)
+        SearchConditionScreen(navController = navController, viewModel)
     }
-    composable(route = Destinations.detail) { DetailScreen(navController = navController) }
+    composable(
+        route = "${Destinations.detail}/{id}",
+        arguments = listOf(navArgument("id") { type = NavType.IntType })
+    ) { entry ->
+        val id = entry.arguments?.getInt("id")
+        id?.let {
+            DetailScreen(navController = navController, searchViewModel = viewModel, id = id)
+        }
+    }
 }
 
 private fun selectNavigation(

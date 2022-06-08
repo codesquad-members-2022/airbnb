@@ -66,7 +66,11 @@ fun PersonnelScreen(
             BottomScreen(
                 title = bottomBarText(uiState.personnel),
                 onRemove = { viewModel.clearPersonnel() },
-                onSkip = { navController.navigate(Destinations.searchResult) }
+                onSkip = {
+                    val reservation = searchViewModel.searchUiState.value
+                    searchViewModel.addReservation(reservation.copy(guest = Personnel.defaultOf()))
+                    navController.navigate(Destinations.searchResult)
+                }
             )
         }
     ) {

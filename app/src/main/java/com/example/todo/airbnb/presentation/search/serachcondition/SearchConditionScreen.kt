@@ -65,7 +65,7 @@ private fun Content(
         ConditionText("요금", "W${minPrice} - W${maxPrice}", onClick = {})
         ConditionText(
             "인원",
-            "성인 ${if (guest.adult == Search.DEFAULT_GUEST) "0" else guest.adult}, 어린이 ${if (guest.child == Search.DEFAULT_GUEST) "0" else guest.child}, 유아  ${if (guest.baby == Search.DEFAULT_GUEST) "0" else guest.baby}",
+            "성인 ${if (guest.adult == Personnel.DEFAULT_GUEST) "0" else guest.adult}, 어린이 ${if (guest.child == Personnel.DEFAULT_GUEST) "0" else guest.child}, 유아  ${if (guest.baby == Personnel.DEFAULT_GUEST) "0" else guest.baby}",
             onClick = {}
         )
     }

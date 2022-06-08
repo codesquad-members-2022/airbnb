@@ -9,6 +9,13 @@ data class Search(
     val guest: Personnel,
 ) {
 
+    fun isDefault(): Boolean {
+        return location == DEFAULT_LOCATION ||
+                checkIn == DEFAULT_CHECKIN || checkOut == DEFAULT_CHECKOUT ||
+                minPrice == DEFAULT_MINPRICE || maxPrice == DEFAULT_MAXPRICE ||
+                guest.isDefault()
+    }
+
     companion object {
 
         const val DEFAULT_LOCATION = ""
@@ -16,7 +23,6 @@ data class Search(
         const val DEFAULT_CHECKOUT = "2999-01-01"
         const val DEFAULT_MINPRICE = 0
         const val DEFAULT_MAXPRICE = Int.MAX_VALUE
-        const val DEFAULT_GUEST = Int.MAX_VALUE
 
         fun defaultOf() =
             Search(DEFAULT_LOCATION,
@@ -24,6 +30,7 @@ data class Search(
                 DEFAULT_CHECKOUT,
                 DEFAULT_MINPRICE,
                 DEFAULT_MAXPRICE,
-                Personnel(DEFAULT_GUEST, DEFAULT_GUEST, DEFAULT_GUEST))
+                Personnel.defaultOf()
+            )
     }
 }

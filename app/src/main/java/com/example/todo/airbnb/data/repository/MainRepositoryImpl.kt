@@ -1,5 +1,6 @@
 package com.example.todo.airbnb.data.repository
 
+import androidx.compose.runtime.mutableStateOf
 import com.example.todo.airbnb.data.Accommodations
 import com.example.todo.airbnb.data.Travel
 import com.example.todo.airbnb.domain.model.AccommodationResult
@@ -106,17 +107,49 @@ class MainRepositoryImpl : MainRepository {
 
     private val filterAccommodationResultList = listOf(
         AccommodationResult(
-            1, dummyImage,
+            1,
+            dummyImage,
             4.80F,
             127,
             "강남구청역",
             15322,
-            222211
+            222211,
+            "강남구청역",
+            10,
+            4,
+            5,
+            3,
+            "강남구청역은 강남의중심입니다.",
+            mutableStateOf(false)
         ),
-        AccommodationResult(2, dummyImage, 3.2F, 14, "선정릉역", 300214, 8838282),
-        AccommodationResult(3, dummyImage, 4.8F, 123, "선릉역", 3214, 38282),
-        AccommodationResult(4, dummyImage, 2.2F, 72, "역삼역", 2004, 824182),
-        AccommodationResult(5, dummyImage, 5.1F, 862, "휘문고등학교", 6214, 68282)
+        AccommodationResult(2, dummyImage, 3.2F, 14, "선정릉역", 300214, 8838282, "강남구청역",
+            5,
+            2,
+            2,
+            1,
+            "선정릉역입니다..",
+            mutableStateOf(false)),
+        AccommodationResult(3, dummyImage, 4.8F, 123, "선릉역", 3214, 38282, "강남구청역",
+            4,
+            2,
+            1,
+            2,
+            "선릉역입니다.",
+            mutableStateOf(false)),
+        AccommodationResult(4, dummyImage, 2.2F, 72, "역삼역", 2004, 824182, "강남구청역",
+            3,
+            1,
+            3,
+            2,
+            "역삼역은 강남 근처의 역입니다.",
+            mutableStateOf(false)),
+        AccommodationResult(5, dummyImage, 5.1F, 862, "휘문고등학교", 6214, 68282, "강남구청역",
+            20,
+            3,
+            3,
+            5,
+            "강남구청 내의 큰 숙소입니다.",
+            mutableStateOf(false))
     )
 
     override fun getSearchWordList(searchWord: String): Flow<List<Travel>> = flow {
@@ -146,5 +179,10 @@ class MainRepositoryImpl : MainRepository {
         with(filterAccommodationResultList[index]) {
             isFavorite.value = !isFavorite.value
         }
+    }
+
+    override fun getDetailAccommodation(id: Int): Flow<AccommodationResult> = flow {
+        val accommodation = filterAccommodationResultList.find { id == it.id }
+        if (accommodation != null) emit(accommodation)
     }
 }

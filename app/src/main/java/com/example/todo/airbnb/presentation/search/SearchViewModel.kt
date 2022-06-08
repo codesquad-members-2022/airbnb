@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.todo.airbnb.data.Accommodations
 import com.example.todo.airbnb.data.Travel
 import com.example.todo.airbnb.data.repository.MainRepositoryImpl
-import com.example.todo.airbnb.domain.model.Personnel
 import com.example.todo.airbnb.domain.model.Search
 import com.example.todo.airbnb.domain.repository.MainRepository
 import com.example.todo.airbnb.presentation.search.main.SearchWidgetState

@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.util.toRange
 import androidx.navigation.NavController
-import com.example.todo.airbnb.domain.model.Search
 import com.example.todo.airbnb.presentation.main.components.Destinations
 import com.example.todo.airbnb.presentation.search.SearchViewModel
 import com.example.todo.airbnb.presentation.search.components.common.BottomScreen

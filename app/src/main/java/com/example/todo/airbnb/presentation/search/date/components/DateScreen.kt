@@ -1,6 +1,5 @@
 package com.example.todo.airbnb.presentation.search.date.components
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons

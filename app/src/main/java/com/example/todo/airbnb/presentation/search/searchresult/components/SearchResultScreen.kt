@@ -56,7 +56,7 @@ fun SearchResultScreen(
         }
     ) {
         ResultContent(
-            onNavigateDetail = { navController.navigate(Destinations.detail) },
+            onNavigateDetail = { id -> navController.navigate("${Destinations.detail}/${id}") },
             onNavigateMap = { navController.navigate(Destinations.searchMap) },
             accommodations = resultViewModel.result.value,
             onClickFavorite = { resultViewModel.onClickFavorite(it) }
@@ -86,7 +86,7 @@ fun ResultTopBar(
         }
 
         Text(
-            text = "${if (search.location == Search.DEFAULT_LOCATION) "" else search.location} ${if (search.checkIn == Search.DEFAULT_CHECKIN) "" else search.checkIn} ${if (search.checkOut == Search.DEFAULT_CHECKOUT) "" else search.checkOut} 게스트 ${if (search.guest.adult == Search.DEFAULT_GUEST) "" else search.guest.toString()}"
+            text = "${if (search.location == Search.DEFAULT_LOCATION) "" else search.location} ${if (search.checkIn == Search.DEFAULT_CHECKIN) "" else search.checkIn} ${if (search.checkOut == Search.DEFAULT_CHECKOUT) "" else search.checkOut} 게스트 ${if (search.guest.isDefault()) "" else search.guest.toString()}"
         )
 
         IconButton(onClick = { onNavigateSearch() }) {
@@ -101,7 +101,7 @@ fun ResultTopBar(
 
 @Composable
 private fun ResultContent(
-    onNavigateDetail: () -> Unit,
+    onNavigateDetail: (Int) -> Unit,
     onNavigateMap: () -> Unit,
     accommodations: List<AccommodationResult>,
     onClickFavorite: (Int) -> Unit,
@@ -122,7 +122,7 @@ private fun ResultContent(
             itemsIndexed(accommodations) { index, it ->
                 AccommodationItem(
                     it,
-                    onNavigate = { onNavigateDetail() },
+                    onNavigate = { onNavigateDetail(it.id) },
                     onClick = { onClickFavorite(index) }
                 )
             }

@@ -46,7 +46,7 @@ public class CustomLodgingRepositoryImpl implements CustomLodgingRepository {
 
     private BooleanExpression checkInout(LocalDate checkIn, LocalDate checkOut) {
         return ((checkIn != null) && (checkOut != null)) ?
-                reservation.checkOut.loe(checkIn).or(reservation.checkIn.goe(checkOut)) : null;
+                lodging.reservationList.isEmpty().or(reservation.checkOut.loe(checkIn).or(reservation.checkIn.goe(checkOut))): null;
     }
 
     private BooleanExpression checkAddress(String region) {

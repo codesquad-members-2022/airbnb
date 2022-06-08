@@ -1,6 +1,7 @@
 import * as S from '@components/ChartSlider/Chart/Chart.style';
 import { CHART_TYPE } from '@components/SearchBar/constants';
 import useCanvas from '@lib/hooks/useCanvas';
+import { usePriceState } from '@lib/hooks/useContext';
 
 export interface ChartTypes {
   type: string;
@@ -10,6 +11,9 @@ export interface ChartTypes {
 }
 
 const Chart = ({ type, rangeData, canvasWidth, canvasHeight }: ChartTypes) => {
+
+  const { minPrice, maxPrice, defaultMaxPrice, defaultMinPrice } = usePriceState();
+
   const getCoordinates = () => {
     const divider = type === CHART_TYPE.LINE ? rangeData.length + 1 : rangeData.length;
     const intervalX = canvasWidth / divider;
@@ -70,8 +74,22 @@ const Chart = ({ type, rangeData, canvasWidth, canvasHeight }: ChartTypes) => {
     }
   };
 
+  const drawUnselectedArea = (ctx: CanvasRenderingContext2D) => {
+    const minWidth = ((minPrice - defaultMinPrice) / defaultMaxPrice) * canvasWidth;
+    const maxWidth = ((defaultMaxPrice - maxPrice - defaultMinPrice) / defaultMaxPrice) * canvasWidth;
+    const maxPosX = canvasWidth - maxWidth;
+
+    if (ctx) {
+      ctx.globalCompositeOperation = 'source-atop';
+      ctx.fillStyle = '#e5e5e5';
+      ctx.fillRect(0, 0, minWidth, canvasHeight);
+      ctx.fillRect(maxPosX, 0, maxWidth, canvasHeight);
+    }
+  }
+
   const animate = (ctx: CanvasRenderingContext2D) => {
     type === CHART_TYPE.LINE ? drawLineChart(ctx) : drawBarChart(ctx);
+    drawUnselectedArea(ctx);
   };
 
   const canvasRef = useCanvas({ canvasWidth, canvasHeight, animate });

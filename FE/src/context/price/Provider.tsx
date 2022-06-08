@@ -8,6 +8,8 @@ export interface PriceContextTypes {
   setMinPrice: React.Dispatch<React.SetStateAction<number>>;
   maxPrice: number;
   setMaxPrice: React.Dispatch<React.SetStateAction<number>>;
+  defaultMinPrice: number;
+  defaultMaxPrice: number;
   avgPrice: number;
   priceRange: number[];
 }
@@ -35,6 +37,8 @@ export const PriceProvider = ({ children }: PriceProviderTypes) => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
   const [avgPrice, setAvgPrice] = useState(0);
+  const [defaultMinPrice, setDefaultMinPrice] = useState(0);
+  const [defaultMaxPrice, setDefaultMaxPrice] = useState(0);
   const [priceRange, setPriceRange] = useState<number[]>([]);
 
   const [{ response }] = useAxios<PriceInfoTypes>({
@@ -63,10 +67,21 @@ export const PriceProvider = ({ children }: PriceProviderTypes) => {
       setMaxPrice(maxPricePerNight);
       setAvgPrice(avgPricePerNight);
       setPriceRange(priceRange);
+      setDefaultMinPrice(defaultMinPrice || minPricePerNight);
+      setDefaultMaxPrice(defaultMaxPrice || maxPricePerNight);
     }
   }, [response]);
 
-  const value = { minPrice, setMinPrice, maxPrice, setMaxPrice, avgPrice, priceRange };
+  const value = {
+    minPrice,
+    setMinPrice,
+    maxPrice,
+    setMaxPrice,
+    defaultMinPrice,
+    defaultMaxPrice,
+    avgPrice,
+    priceRange,
+  };
 
   return <PriceContext.Provider value={value}>{children}</PriceContext.Provider>;
 };

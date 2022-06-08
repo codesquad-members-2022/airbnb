@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import * as S from '@components/ChartSlider/RangeSlider/RangeSlider.style';
 import Icon, { ICON_NAME, ICON_SIZE } from '@components/common/Icon';
@@ -7,10 +7,7 @@ import { usePriceState } from '@lib/hooks/useContext';
 const MIN_RANGE = 100000;
 
 const RangeSlider = () => {
-  const [defaultMinPrice, setDefaultMinPrice] = useState(0);
-  const [defaultMaxPrice, setDefaultMaxPrice] = useState(0);
-
-  const { minPrice, setMinPrice, maxPrice, setMaxPrice } = usePriceState();
+  const { minPrice, setMinPrice, maxPrice, setMaxPrice, defaultMaxPrice, defaultMinPrice } = usePriceState();
 
   const leftThumbRef = useRef<HTMLButtonElement>(null);
   const rightThumbRef = useRef<HTMLButtonElement>(null);
@@ -44,8 +41,6 @@ const RangeSlider = () => {
       leftThumbRef.current.style.left = '0%';
       rightThumbRef.current.style.left = '100%';
     }
-    setDefaultMinPrice(defaultMinPrice || minPrice);
-    setDefaultMaxPrice(defaultMaxPrice || maxPrice);
   }, []);
 
   return (

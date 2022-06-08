@@ -26,11 +26,8 @@ const useCanvas = ({ canvasWidth, canvasHeight, animate }: useCanvasTypes) => {
       }
     };
     setCanvas();
-
-    if (ctx) {
-      animate(ctx);
-    }
-  }, [canvasWidth, canvasHeight]);
+    ctx && animate(ctx);
+  });
 
   return canvasRef;
 };

@@ -48,6 +48,8 @@ export const GuestController = styled.div`
   gap: 19px;
 
   span {
+    width: 25px;
+    text-align: center;
     font-size: ${({ theme }) => theme.fontSize.larger};
     font-weight: ${({ theme }) => theme.fontWeight.bold};
     color: ${({ theme }) => theme.color.gray1};

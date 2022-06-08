@@ -29,7 +29,7 @@ export const DateItem = styled.div<DateItemProps>`
         return css`
           border: 1px ${({ theme }) => theme.color.black} solid;
           border-radius: 30px;
-          color: ${({ theme }) => theme.color.white};
+          color: ${({ theme }) => theme.color.white} !important ;
           background-color: ${({ theme }) => theme.color.black};
           z-index: 1;
         `;

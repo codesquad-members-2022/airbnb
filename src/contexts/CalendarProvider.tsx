@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useReducer, useCallback } from "react";
+import useEffect, { createContext, useContext, useMemo, useReducer, useCallback } from "react";
 
 import { CalendarState, CalendarActionType, CalendarDispatches, CalendarTypes } from "_types/calendar";
 

@@ -20,7 +20,7 @@ export type PriceTypes = {
 
 export type PriceContextProps = {
   priceRange?: null | PriceTypes;
-  setPriceRange?: (priceRange: PriceTypes) => void | PriceTypes;
+  setPriceRange?: (priceRange: PriceTypes | null) => void;
 };
 
 export const usePriceState = () => {

@@ -16,10 +16,9 @@ const Period = () => {
   const { onCheckRemove } = useCalendarDispatch();
 
   const { openedModal } = useSearchModalState();
-  const { onOpenSearchModal, onCloseSearchModal } = useSearchModalDispatch();
+  const { onOpenSearchModal } = useSearchModalDispatch();
 
   const handleCloseSearchModal = () => {
-    onCloseSearchModal();
     onCheckRemove();
   };
 
@@ -27,11 +26,9 @@ const Period = () => {
     <S.Period onClick={() => onOpenSearchModal("PERIOD")} openedModal={openedModal} ref={periodElement}>
       <TextBox label="체크인" placeholder="날짜 입력" textContent={getCheckInTemplate(checkIn)} />
       <TextBox label="체크아웃" placeholder="날짜 입력" textContent={getCheckInTemplate(checkOut)} />
-      {checkIn && (
-        <Icon onClick={() => handleCloseSearchModal()} data-button="REMOVE" iconName={X_ICON} iconSize="base" />
-      )}
+      {checkIn && <Icon onClick={handleCloseSearchModal} data-button="REMOVE" iconName={X_ICON} iconSize="base" />}
     </S.Period>
   );
 };
 
-export default React.memo(Period);
+export default Period;

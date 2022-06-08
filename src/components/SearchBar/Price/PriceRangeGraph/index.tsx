@@ -156,12 +156,12 @@ const Slider = ({ minPrice, setMinPrice, setMaxPrice, pricePerPixel }: SilderPro
     document.removeEventListener("dragover", preventDragEvent);
   };
 
-  useEffect(() => {
-    if (priceRange && leftButtonRef.current && rightButtonRef.current) {
-      leftButtonRef.current.style.left = priceRange.minPrice / pricePerPixel + "px";
-      rightButtonRef.current.style.left = "px";
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (priceRange && leftButtonRef.current && rightButtonRef.current) {
+  //     leftButtonRef.current.style.left = priceRange.minPrice / pricePerPixel + "px";
+  //     rightButtonRef.current.style.left = "px";
+  //   }
+  // }, []);
 
   return (
     <>

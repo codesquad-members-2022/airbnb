@@ -6,7 +6,7 @@ export const Price = styled.div<{ openedModal?: SearchModalType | null }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 257px;
+  width: 250px;
   height: 74px;
   padding: 0 24px;
   border-radius: 60px;

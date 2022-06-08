@@ -6,6 +6,7 @@ import {
   headCountStyle,
   HomeContainer,
   NearbyTravel,
+  priceChartStyle,
   searchBarStyle,
   WhereverTravel,
 } from "./Home.styled";
@@ -21,6 +22,7 @@ export default function Home() {
               searchBarStyle={searchBarStyle}
               headCountStyle={headCountStyle}
               calendarStyle={calendarStyle}
+              priceChartStyle={priceChartStyle}
             />
           </div>
         </HomeContainer>

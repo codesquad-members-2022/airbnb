@@ -1,3 +1,4 @@
+import { PRICE_CHART_WIDTH } from "Helpers/constant";
 import styled from "styled-components";
 
 interface HomeType {
@@ -28,13 +29,18 @@ export const NearbyTravel = styled.div``;
 export const WhereverTravel = styled.div``;
 
 export const searchBarStyle = `
-width: 916px;
-height: 76px;
-margin-top: 110px;
-margin-left: 262px;
-background-color: #fff;
-border-radius: 30px;
-padding: 16px;
+  width: 916px;
+  height: 76px;
+  margin-top: 110px;
+  margin-left: 262px;
+  background-color: #fff;
+  border-radius: 30px;
+  padding: 16px;
+`;
+
+export const priceChartStyle = `
+  width: ${PRICE_CHART_WIDTH};
+  height:100px;
 `;
 
 export const headCountStyle = `
@@ -42,15 +48,16 @@ export const headCountStyle = `
   height:355px;
   background-color:#fff;
   border-radius:40px;
-  margin-top:16px;
+  margin-top:40px;
   margin-left:778px;
   padding:64px;
 `;
+
 export const calendarStyle = `
-background-color:#fff;
-width: 916px;
-margin-left: 262px;
-margin-top: 40px;
-padding: 88px;
-border-radius: 40px;
+  background-color:#fff;
+  width: 916px;
+  margin-left: 262px;
+  margin-top: 40px;
+  padding: 88px;
+  border-radius: 40px;
 `;

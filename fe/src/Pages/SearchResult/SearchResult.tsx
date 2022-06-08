@@ -1,8 +1,11 @@
 import Gnb from "Components/Gnb/Gnb";
 import MiniSearchBar from "Components/SearchBar/MiniSearchBar";
+import { DispatchCalendarContext } from "Context/CalendarProvider";
+import { DispatchHeadCountContext } from "Context/HeadCountProvider";
+import { DispatchPriceModalContext } from "Context/PriceProvider";
 import { useOutsideClick } from "Hook/useOutsideClick";
 import SearchView from "Pages/Common/SearchView";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import {
   calendarStyle,
   headCountStyle,
@@ -14,14 +17,21 @@ import {
   SearchResultArea,
   Tourist,
   Map,
+  priceChartStyle,
 } from "./SearchResult.styled";
 
 export default function SearchResult() {
   const [isMiniSearchBar, setIsMiniSearchBar] = useState(false);
+  const dispatchCalendar = useContext(DispatchCalendarContext);
+  const dispatchPrice = useContext(DispatchPriceModalContext);
+  const dispatchHeadCount = useContext(DispatchHeadCountContext);
   const searchRef = useRef([]);
 
   const handleClick = () => {
     setIsMiniSearchBar(true);
+    dispatchCalendar({ type: "CLOSE" });
+    dispatchPrice({ type: "CLOSE" });
+    dispatchHeadCount({ type: "CLOSE" });
   };
 
   const handleOutsideClick = () => {
@@ -46,6 +56,7 @@ export default function SearchResult() {
                   searchRef={searchRef}
                   searchBarStyle={searchBarStyle}
                   calendarStyle={calendarStyle}
+                  priceChartStyle={priceChartStyle}
                   headCountStyle={headCountStyle}
                 />
               </>

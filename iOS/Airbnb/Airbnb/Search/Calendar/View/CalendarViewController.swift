@@ -84,14 +84,9 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
     
     
     
-    func performQuery(indexes: [IndexPath]? = nil, days: [Day]? = nil) {
+    func performQuery(days: [Day]? = nil) {
         var snapshot = NSDiffableDataSourceSnapshot<Int, Day>()
-        if let indexes = indexes,
-           let days = days {
-//            indexes.enumerated().forEach { index, value in
-    //            guard let cell = dataSource.collectionView(collectionView, cellForItemAt: value) as? CalendarViewCell else { return }
-    //            cell.day = days[index]
-//            }
+        if let days = days {
             var newSnapshot = dataSource.snapshot()
             newSnapshot.reloadItems(days)
             dataSource.apply(newSnapshot, animatingDifferences: false)
@@ -135,8 +130,8 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
     }
     
     func bind() {
-        calendarModel.onUpdate = { [weak self] days, indexes in
-            self?.performQuery(indexes: indexes, days: days)
+        calendarModel.onUpdate = { [weak self] days in
+            self?.performQuery(days: days)
         }
         
     }
@@ -161,33 +156,6 @@ extension CalendarViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? CalendarViewCell,
               cell.day?.isBeforeToday == false else { return }
-        
-        //        calendarModel.onUpdateCheckinDay = { selectedDay in
-        //            if let beforeCell = self.checkinCell {
-        //                guard let beforeDay = beforeCell.day else { return }
-        //                beforeDay.isSelected = false
-        //                beforeCell.tabGenerated(for: beforeDay)
-        //            }
-        //            day.isSelected = true
-        //            cell.tabGenerated(for: day)
-        //            self.checkinCell = cell
-        //        }
-        //
-        //
-        //        calendarModel.onUpdateCheckoutDay = { selectedDay in
-        //            if let beforeCell = self.checkoutCell {
-        //                guard let beforeDay = beforeCell.day else { return }
-        //                beforeDay.isSelected = false
-        //                beforeCell.tabGenerated(for: beforeDay)
-        //            }
-        //            day.isSelected = true
-        //            cell.tabGenerated(for: day)
-        //            self.checkoutCell = cell
-        //        }
-        
-        //        calendarModel.onUpdate = { [weak self] beforeDays, afterDays, beforeIndex, afterIndex in
-        //
-        //        }
         
         calendarModel.validateCheckDate(at: indexPath)
     }

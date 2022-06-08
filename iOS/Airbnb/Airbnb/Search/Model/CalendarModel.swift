@@ -12,8 +12,9 @@ class CalendarModel {
     var checkinDayIndex: IndexPath? {
         didSet {
             guard let checkinDayIndex = checkinDayIndex else { return }
-            let result = getDays(fromIndex: checkinDayIndex, toIndex: checkoutDayIndex)
-            return self.onUpdate(result.days, result.indexes)
+            let currentDays = getDays(fromIndex: checkinDayIndex, toIndex: checkoutDayIndex)
+//            self.beforeDays = result
+            return self.onUpdate(currentDays)
         }
     }
     
@@ -21,11 +22,14 @@ class CalendarModel {
         didSet {
             guard let checkinDayIndex = checkinDayIndex else { return }
             guard let checkoutDayIndex = checkoutDayIndex else { return }
-            let result = getDays(fromIndex: checkinDayIndex, toIndex: checkoutDayIndex)
-            return self.onUpdate(result.days, result.indexes)
+            let currentDays = getDays(fromIndex: checkinDayIndex, toIndex: checkoutDayIndex)
+//            self.beforeDays = result
+            return self.onUpdate(currentDays)
         }
     }
     
+//    private var beforeDays: [Day]?
+
     
     private var baseDate: Date {
         didSet {
@@ -39,7 +43,7 @@ class CalendarModel {
         calendar.range(of: .weekOfMonth, in: .month, for: baseDate)?.count ?? 0
     }
     
-    var onUpdate: (_ days: [Day], _ indexes: [IndexPath]) -> Void = { _, _ in }
+    var onUpdate: ([Day]) -> Void = { _ in }
     
     let calendar: Calendar = Calendar.current
     
@@ -90,7 +94,7 @@ class CalendarModel {
                                    for: firstDayOfMonth,
                                    isWithinDisplayedMonth: isWithinDisplayedMonth)
             }
-            return Month(metadata: metadata, result: days)
+            return Month(result: days)
         case .failure(let error):
             fatalError("failed making month ==> \(dump(error))")
         }
@@ -156,47 +160,24 @@ extension CalendarModel {
         } else {
             self.checkinDayIndex = indexPath
         }
-        //        day.isSelected = true
-        //        let date = day.date
-        //        if let checkinDate = checkinDay?.date {
-        //            /// 체크인 날짜 앞뒤로 크기 판별
-        //            if checkinDate < date {
-        //                day.fadeState = .right
-        //                self.checkoutDay = day
-        //                onUpdateCheckoutDay(day)
-        //            }
-        //            else if  checkinDate > date {
-        //                day.fadeState = .left
-        //                self.checkinDay = day
-        //                onUpdateCheckinDay(day)
-        //            }
-        //            else if checkinDate == date {
-        //                day.fadeState = .right
-        //                self.checkoutDay = day
-        //                onUpdateCheckoutDay(day)
-        //            }
-        //        } else {
-        //            ///  없으면 체크인 데이를 업데이트
-        //            day.fadeState = .left
-        //            self.checkinDay = day
-        //            onUpdateCheckinDay(day)
-        //        }
     }
 }
 
 struct Month {
-    let metadata: MonthMetadata
     let result: [Day]
+    var count: Int {
+        result.count
+    }
 }
 
 private extension CalendarModel {
-    func getDays(fromIndex: IndexPath, toIndex: IndexPath? = nil) -> (days: [Day], indexes: [IndexPath]) {
+    func getDays(fromIndex: IndexPath, toIndex: IndexPath? = nil) -> [Day] {
         let indexes = generateIndexes(fromIndex: fromIndex, toIndex: toIndex)
         let days = indexes.compactMap {
             month[$0.section].result[$0.row]
         }
-        let drawingDays = drawingDays(days: days)
-        return (drawingDays, indexes)
+
+        return drawingDays(days: days)
     }
     
     func generateIndexes(fromIndex: IndexPath, toIndex: IndexPath? = nil) -> [IndexPath] {
@@ -210,14 +191,14 @@ private extension CalendarModel {
                 var result: [IndexPath] = []
 
                 sections.enumerated().forEach { offset, value in
-                    let metadata = month[value].metadata
+                    let numberOfDays = month[value].count
                     switch offset {
                     case 0:
-                        (fromIndex.row..<metadata.numberOfDays).forEach { num in
+                        (fromIndex.row..<numberOfDays).forEach { num in
                             result.append(IndexPath(row: num, section: value))
                         }
                     case 1..<sections.count - 1:
-                        (0..<metadata.numberOfDays).forEach { num in
+                        (0..<numberOfDays).forEach { num in
                             result.append(IndexPath(row: num, section: value))
                         }
                     case sections.count - 1:
@@ -225,7 +206,7 @@ private extension CalendarModel {
                             result.append(IndexPath(row: num, section: value))
                         }
                     default:
-                        print(metadata)
+                        print(numberOfDays)
                     }
                 }
                 return result

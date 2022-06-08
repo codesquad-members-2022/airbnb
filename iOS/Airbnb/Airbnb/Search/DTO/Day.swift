@@ -47,3 +47,9 @@ extension Day: Hashable {
         hasher.combine(self.date)
     }
 }
+
+extension Day: NSCopying {
+    func copy(with zone: NSZone? = nil) -> Any {
+        return Day(date: self.date, number: self.number, isSelected: self.isSelected, isWithInDisplayedMonth: self.isWithInDisplayedMonth)
+    }
+}

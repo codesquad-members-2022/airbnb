@@ -258,17 +258,13 @@
 		005AF7C2283B843700546D5B /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				1B49852F2850390A00A23FF4 /* SearchIfnoTracking */,
 				1BF061892845CF310043FF2F /* Graph */,
 				002972972844B45C0033437E /* Calendar */,
 				00A85F36283B872E00EA32E0 /* View */,
 				00A85F33283B871900EA32E0 /* Model */,
 				1B807DCD283F540500D6815F /* DTO */,
 				008A2061283F4E220095F7BC /* BackgroundViewController.swift */,
-				1B756E6F2848533B003AC0EA /* SearchInfoTrackingViewController.swift */,
-				1B7CBD81284F02C5008C31F1 /* SearchInfoTrackingModel.swift */,
-				1BDEFD28284E2B6400EBC3DF /* SearchInfoTrackingTableViewDelegate.swift */,
-				1BDEFD22284E203700EBC3DF /* SearchInfoTrackingTableViewDataSource.swift */,
-				1BDEFD24284E207D00EBC3DF /* SearchInfoTrackingTableViewCell.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -368,6 +364,18 @@
 				008A20A5283FE3960095F7BC /* HeaderReusableView.swift */,
 			);
 			path = SubView;
+			sourceTree = "<group>";
+		};
+		1B49852F2850390A00A23FF4 /* SearchIfnoTracking */ = {
+			isa = PBXGroup;
+			children = (
+				1B756E6F2848533B003AC0EA /* SearchInfoTrackingViewController.swift */,
+				1B7CBD81284F02C5008C31F1 /* SearchInfoTrackingModel.swift */,
+				1BDEFD28284E2B6400EBC3DF /* SearchInfoTrackingTableViewDelegate.swift */,
+				1BDEFD22284E203700EBC3DF /* SearchInfoTrackingTableViewDataSource.swift */,
+				1BDEFD24284E207D00EBC3DF /* SearchInfoTrackingTableViewCell.swift */,
+			);
+			path = SearchIfnoTracking;
 			sourceTree = "<group>";
 		};
 		1B7EB7F12844E5990078D4A9 /* Network */ = {

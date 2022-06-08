@@ -3,6 +3,7 @@ package kr.codesquad.airbnb.controller;
 import java.util.List;
 import kr.codesquad.airbnb.dto.LodgingResponse;
 import kr.codesquad.airbnb.dto.LodgingDetailResponse;
+import kr.codesquad.airbnb.dto.SearchLodgingsResponse;
 import kr.codesquad.airbnb.request.SearchLodgingRequest;
 import kr.codesquad.airbnb.service.LodgingService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class LodgingController {
     }
 
     @GetMapping("/lodgings")
-    public List<LodgingResponse> getLodgingList(SearchLodgingRequest searchLodgingRequest) {
+    public SearchLodgingsResponse getLodgingList(SearchLodgingRequest searchLodgingRequest) {
         return lodgingService.getLodgingList(searchLodgingRequest);
     }
 

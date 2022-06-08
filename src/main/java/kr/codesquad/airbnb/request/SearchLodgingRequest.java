@@ -8,10 +8,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
-@Builder
 @Getter
 @Setter
-@AllArgsConstructor
 public class SearchLodgingRequest {
 
     private String region;

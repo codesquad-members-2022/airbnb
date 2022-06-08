@@ -42,6 +42,10 @@
 		1B27E237283CA5A900FCB990 /* SearchCellCommonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B27E236283CA5A900FCB990 /* SearchCellCommonType.swift */; };
 		1B69F369283CD506001A2860 /* MultipleRowsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B69F368283CD506001A2860 /* MultipleRowsCollectionViewController.swift */; };
 		1B69F36B283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B69F36A283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift */; };
+		1B6E8D0E2850543E00F165B8 /* HeadCountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D0A2850543D00F165B8 /* HeadCountCell.swift */; };
+		1B6E8D0F2850543E00F165B8 /* HeadCountDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D0B2850543D00F165B8 /* HeadCountDataSource.swift */; };
+		1B6E8D102850543E00F165B8 /* HeadCountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D0C2850543D00F165B8 /* HeadCountModel.swift */; };
+		1B6E8D112850543E00F165B8 /* HeadCountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D0D2850543D00F165B8 /* HeadCountViewController.swift */; };
 		1B756E702848533B003AC0EA /* SearchInfoTrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B756E6F2848533B003AC0EA /* SearchInfoTrackingViewController.swift */; };
 		1B756E72284855CE003AC0EA /* CustomRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B756E71284855CE003AC0EA /* CustomRangeSlider.swift */; };
 		1B7CBD82284F02C5008C31F1 /* SearchInfoTrackingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7CBD81284F02C5008C31F1 /* SearchInfoTrackingModel.swift */; };
@@ -49,8 +53,6 @@
 		1B7EB7F52844E5B10078D4A9 /* NetworkCommonComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7EB7F42844E5B10078D4A9 /* NetworkCommonComponents.swift */; };
 		1B7EB7FD2844F1290078D4A9 /* SearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7EB7FC2844F1290078D4A9 /* SearchUseCase.swift */; };
 		1B7EB7FF2844FB800078D4A9 /* AirbnbSearchUseCaseResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7EB7FE2844FB800078D4A9 /* AirbnbSearchUseCaseResponseTests.swift */; };
-		1B807DCB283F529A00D6815F /* SearchCalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B807DCA283F529A00D6815F /* SearchCalendarModel.swift */; };
-		1B90ED36283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B90ED35283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift */; };
 		1BDEFD23284E203700EBC3DF /* SearchInfoTrackingTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDEFD22284E203700EBC3DF /* SearchInfoTrackingTableViewDataSource.swift */; };
 		1BDEFD25284E207D00EBC3DF /* SearchInfoTrackingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDEFD24284E207D00EBC3DF /* SearchInfoTrackingTableViewCell.swift */; };
 		1BDEFD27284E217A00EBC3DF /* SearchInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDEFD26284E217A00EBC3DF /* SearchInfo.swift */; };
@@ -129,6 +131,10 @@
 		1B27E236283CA5A900FCB990 /* SearchCellCommonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCellCommonType.swift; sourceTree = "<group>"; };
 		1B69F368283CD506001A2860 /* MultipleRowsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleRowsCollectionViewController.swift; sourceTree = "<group>"; };
 		1B69F36A283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleRowsCollectionViewContainerCell.swift; sourceTree = "<group>"; };
+		1B6E8D0A2850543D00F165B8 /* HeadCountCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadCountCell.swift; sourceTree = "<group>"; };
+		1B6E8D0B2850543D00F165B8 /* HeadCountDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadCountDataSource.swift; sourceTree = "<group>"; };
+		1B6E8D0C2850543D00F165B8 /* HeadCountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadCountModel.swift; sourceTree = "<group>"; };
+		1B6E8D0D2850543D00F165B8 /* HeadCountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadCountViewController.swift; sourceTree = "<group>"; };
 		1B756E6F2848533B003AC0EA /* SearchInfoTrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoTrackingViewController.swift; sourceTree = "<group>"; };
 		1B756E71284855CE003AC0EA /* CustomRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRangeSlider.swift; sourceTree = "<group>"; };
 		1B7CBD81284F02C5008C31F1 /* SearchInfoTrackingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoTrackingModel.swift; sourceTree = "<group>"; };
@@ -136,8 +142,6 @@
 		1B7EB7F42844E5B10078D4A9 /* NetworkCommonComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCommonComponents.swift; sourceTree = "<group>"; };
 		1B7EB7FC2844F1290078D4A9 /* SearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUseCase.swift; sourceTree = "<group>"; };
 		1B7EB7FE2844FB800078D4A9 /* AirbnbSearchUseCaseResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirbnbSearchUseCaseResponseTests.swift; sourceTree = "<group>"; };
-		1B807DCA283F529A00D6815F /* SearchCalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCalendarModel.swift; sourceTree = "<group>"; };
-		1B90ED35283F5B4A00E45FE8 /* AirbnbCalendarModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirbnbCalendarModelTests.swift; sourceTree = "<group>"; };
 		1BDEFD22284E203700EBC3DF /* SearchInfoTrackingTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoTrackingTableViewDataSource.swift; sourceTree = "<group>"; };
 		1BDEFD24284E207D00EBC3DF /* SearchInfoTrackingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoTrackingTableViewCell.swift; sourceTree = "<group>"; };
 		1BDEFD26284E217A00EBC3DF /* SearchInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfo.swift; sourceTree = "<group>"; };
@@ -261,6 +265,7 @@
 				1B49852F2850390A00A23FF4 /* SearchIfnoTracking */,
 				1BF061892845CF310043FF2F /* Graph */,
 				002972972844B45C0033437E /* Calendar */,
+				1B6E8D092850543D00F165B8 /* HeadCount */,
 				00A85F36283B872E00EA32E0 /* View */,
 				00A85F33283B871900EA32E0 /* Model */,
 				1B807DCD283F540500D6815F /* DTO */,
@@ -375,6 +380,17 @@
 				1BDEFD24284E207D00EBC3DF /* SearchInfoTrackingTableViewCell.swift */,
 			);
 			path = SearchIfnoTracking;
+			sourceTree = "<group>";
+		};
+		1B6E8D092850543D00F165B8 /* HeadCount */ = {
+			isa = PBXGroup;
+			children = (
+				1B6E8D0A2850543D00F165B8 /* HeadCountCell.swift */,
+				1B6E8D0B2850543D00F165B8 /* HeadCountDataSource.swift */,
+				1B6E8D0C2850543D00F165B8 /* HeadCountModel.swift */,
+				1B6E8D0D2850543D00F165B8 /* HeadCountViewController.swift */,
+			);
+			path = HeadCount;
 			sourceTree = "<group>";
 		};
 		1B7EB7F12844E5990078D4A9 /* Network */ = {
@@ -559,12 +575,14 @@
 				0014C47D28485C3F00241415 /* WeekdayView.swift in Sources */,
 				00863C5328474792004E5954 /* MonthMetadata.swift in Sources */,
 				00A85F3E283B877700EA32E0 /* WishModel.swift in Sources */,
+				1B6E8D0F2850543E00F165B8 /* HeadCountDataSource.swift in Sources */,
 				1B27E233283CA14900FCB990 /* SearchOneInARowCollectionViewCell.swift in Sources */,
 				1B18F7EF28488456005B1CAF /* CustomRangeSliderThumbLayer.swift in Sources */,
 				0029729628445B8D0033437E /* LocationModel.swift in Sources */,
 				00863C4F2847452F004E5954 /* CalendarModel.swift in Sources */,
 				1B27E231283CA14200FCB990 /* SearchTwoInARowCollectionViewCell.swift in Sources */,
 				00A85F35283B872800EA32E0 /* ReservationModel.swift in Sources */,
+				1B6E8D102850543E00F165B8 /* HeadCountModel.swift in Sources */,
 				00A85F3C283B876A00EA32E0 /* WishListViewController.swift in Sources */,
 				1BDEFD23284E203700EBC3DF /* SearchInfoTrackingTableViewDataSource.swift in Sources */,
 				1B7CBD82284F02C5008C31F1 /* SearchInfoTrackingModel.swift in Sources */,
@@ -590,9 +608,11 @@
 				00F1345A2845F20A0087A83C /* CalendarViewCell.swift in Sources */,
 				00A85F38283B873F00EA32E0 /* SearchViewController.swift in Sources */,
 				005AF791283B775300546D5B /* SceneDelegate.swift in Sources */,
+				1B6E8D0E2850543E00F165B8 /* HeadCountCell.swift in Sources */,
 				00863C5128474614004E5954 /* Day.swift in Sources */,
 				1BF0618E2845CFBE0043FF2F /* ColumnGraphView.swift in Sources */,
 				1BDEFD27284E217A00EBC3DF /* SearchInfo.swift in Sources */,
+				1B6E8D112850543E00F165B8 /* HeadCountViewController.swift in Sources */,
 				1BDEFD29284E2B6400EBC3DF /* SearchInfoTrackingTableViewDelegate.swift in Sources */,
 				1BF061902845F31E0043FF2F /* CommonColors.swift in Sources */,
 				1B18F7F52848A71D005B1CAF /* SearchHeadCountViewController.swift in Sources */,

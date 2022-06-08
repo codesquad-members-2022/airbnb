@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import Modal from "./Modal";
 import styled from "styled-components";
-import Calendar from "../../../lib/Calendar";
+import Calendar from "owl-calendar/dist/Calendar";
 import {usePeriodContext} from "../../../contexts/PeriodProvider";
 import {ReactComponent as LeftIcon} from "../../../assets/leftArrow.svg";
 import {ReactComponent as RightIcon} from "../../../assets/rightArrow.svg";

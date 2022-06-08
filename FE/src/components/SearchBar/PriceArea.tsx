@@ -5,7 +5,6 @@ import * as S from '@components/SearchBar/SearchBar.style';
 import { AREA_TYPE, NO_CONTENT, SEARCH_BAR_SIZE } from '@components/SearchBar/constants';
 import Icon, { ICON_NAME, ICON_SIZE } from '@components/common/Icon';
 import { PriceProvider } from '@context/price/Provider';
-import { defaultPrice } from '@data';
 import WithProvider from '@hoc/WithProvider';
 import { usePriceState } from '@lib/hooks/useContext';
 import { formatPrice } from '@lib/utils';
@@ -19,8 +18,9 @@ const PriceArea = ({ size, element }: PriceAreaTypes) => {
   const [isPriceModalOpen, setIsPriceModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const { minPrice, maxPrice } = usePriceState();
-  const isPriceExist = minPrice !== defaultPrice.min || maxPrice !== defaultPrice.max;
+  const { minPrice, maxPrice, defaultMinPrice, defaultMaxPrice, setMinPrice, setMaxPrice } =
+    usePriceState();
+  const isPriceExist = minPrice !== defaultMinPrice || maxPrice !== defaultMaxPrice;
 
   const priceContent = isPriceExist
     ? `${formatPrice(minPrice)} ~ ${formatPrice(maxPrice)}`
@@ -28,11 +28,14 @@ const PriceArea = ({ size, element }: PriceAreaTypes) => {
 
   const toggleIsPriceModalOpen = () => setIsPriceModalOpen(() => true);
 
+  const setDefaultPrice = () => {
+    setMinPrice(defaultMinPrice);
+    setMaxPrice(defaultMaxPrice);
+  };
+
   return (
     <>
-      <S.PriceArea
-        onClick={toggleIsPriceModalOpen}
-      >
+      <S.PriceArea onClick={toggleIsPriceModalOpen}>
         {size === SEARCH_BAR_SIZE.LARGE ? (
           <>
             <S.ContentContainer>
@@ -40,7 +43,7 @@ const PriceArea = ({ size, element }: PriceAreaTypes) => {
               <S.Content isContentExist={isPriceExist}>{priceContent}</S.Content>
             </S.ContentContainer>
             {isPriceExist && (
-              <S.CloseButton>
+              <S.CloseButton onClick={setDefaultPrice}>
                 <Icon iconName={ICON_NAME.CLOSE_BTN} iconSize={ICON_SIZE.LARGE} />
               </S.CloseButton>
             )}

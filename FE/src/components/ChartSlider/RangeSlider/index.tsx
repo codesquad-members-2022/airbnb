@@ -7,7 +7,8 @@ import { usePriceState } from '@lib/hooks/useContext';
 const MIN_RANGE = 100000;
 
 const RangeSlider = () => {
-  const { minPrice, setMinPrice, maxPrice, setMaxPrice, defaultMaxPrice, defaultMinPrice } = usePriceState();
+  const { minPrice, setMinPrice, maxPrice, setMaxPrice, defaultMaxPrice, defaultMinPrice } =
+    usePriceState();
 
   const leftThumbRef = useRef<HTMLButtonElement>(null);
   const rightThumbRef = useRef<HTMLButtonElement>(null);
@@ -36,12 +37,18 @@ const RangeSlider = () => {
     }
   };
 
-  useEffect(() => {
+  const setDefaultStyle = () => {
     if (leftThumbRef.current && rightThumbRef.current) {
       leftThumbRef.current.style.left = '0%';
       rightThumbRef.current.style.left = '100%';
     }
-  }, []);
+  };
+
+  useEffect(() => {
+    if (minPrice === defaultMinPrice && maxPrice === defaultMaxPrice) {
+      setDefaultStyle();
+    }
+  }, [minPrice, maxPrice]);
 
   return (
     <S.Container>

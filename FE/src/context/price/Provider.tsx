@@ -41,13 +41,14 @@ export const PriceProvider = ({ children }: PriceProviderTypes) => {
   const [defaultMaxPrice, setDefaultMaxPrice] = useState(0);
   const [priceRange, setPriceRange] = useState<number[]>([]);
 
+  // TODO: 체크인, 체크아웃 날짜 담아서 요청 보내기
   const [{ response }] = useAxios<PriceInfoTypes>({
     method: 'get',
     url: API.PRICE_INFO,
     config: {
       params: {
-        checkIn: '2022-06-07',
-        checkOut: '2022-06-08',
+        checkIn: new Date(),
+        checkOut: new Date(),
       },
     },
   });

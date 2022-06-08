@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useContext, useState } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import { Description } from '@components/Modal/index.style';
 import { COLOR, MAX_PRICE_RANGE } from '@/constants';
 import Portal from '@components/Modal';
@@ -6,27 +6,27 @@ import { Title, PriceGraph } from '@components/Modal/PriceModal.style';
 import { ReservationInfoContext } from '@contexts/ReservationInfoProvider';
 import { addCommasToNumber } from '@utils/util';
 
-const STICK_LENGTH = 30;
-const CANVAS_WIDTH = 360;
-const CANVAS_HEIGHT = 100;
+const STICK_LENGTH = 50;
+const CANVAS_WIDTH = 720;
+const CANVAS_HEIGHT = 200;
+const GAP_BETWEEN_STICK = 1;
 
 function PriceModal() {
-  const [priceRange] = useState({ min: 0, max: 0, average: 0 });
   const { reservationInfo } = useContext(ReservationInfoContext);
 
   const calcPricePerStick = () => {
-    const pricePerStick = Math.floor(
-      (reservationInfo.price.max - reservationInfo.price.min) / STICK_LENGTH
-    );
+    const maxPrice =
+      reservationInfo.price.max > MAX_PRICE_RANGE ? MAX_PRICE_RANGE : reservationInfo.price.max;
+    const pricePerStick = Math.floor((maxPrice - reservationInfo.price.min) / STICK_LENGTH);
 
     return pricePerStick;
   };
 
-  const getAccommodationLengthPerStick = () => {
+  const calcAccommodationLengthPerStick = () => {
     const pricePerStick = calcPricePerStick();
     const accommodationLengthPerStick = new Array(STICK_LENGTH).fill(0);
     reservationInfo.price.averages.forEach(average => {
-      let stickIndex = Math.floor((average - priceRange.min) / pricePerStick);
+      let stickIndex = Math.floor((average - reservationInfo.price.min) / pricePerStick);
       if (stickIndex >= STICK_LENGTH) stickIndex = STICK_LENGTH - 1;
       accommodationLengthPerStick[stickIndex] += 1;
     });
@@ -34,8 +34,8 @@ function PriceModal() {
     return accommodationLengthPerStick;
   };
 
-  const getHeightOfSticks = () => {
-    const accommodationLengthPerStick = getAccommodationLengthPerStick();
+  const calcHeightOfSticks = () => {
+    const accommodationLengthPerStick = calcAccommodationLengthPerStick();
     const maxLength = Math.max(...accommodationLengthPerStick);
     const heightOfSticks = accommodationLengthPerStick.map(length =>
       Math.round((length / maxLength) * CANVAS_HEIGHT)
@@ -56,31 +56,37 @@ function PriceModal() {
     if (!context) return;
     context.strokeStyle = COLOR.BLACK;
 
-    const initialValue = { x: 0, width: CANVAS_WIDTH / STICK_LENGTH - 1 };
-    const heightOfSticks = getHeightOfSticks();
+    const initialValue = { x: 0, width: CANVAS_WIDTH / STICK_LENGTH - GAP_BETWEEN_STICK };
+    const heightOfSticks = calcHeightOfSticks();
     heightOfSticks.reduce(({ x, width }, height) => {
-      context.fillRect(x, 100 - height, width, height);
-      return { x: x + width + 1, width };
+      context.fillRect(x, CANVAS_HEIGHT - height, width, height);
+      return { x: x + width + GAP_BETWEEN_STICK, width };
     }, initialValue);
   };
 
   const calcAveragePrice = () => {
-    const avergePrice =
+    const avergePrice = Math.round(
       reservationInfo.price.averages.reduce((acc, cur) => acc + cur, 0) /
-      reservationInfo.price.averages.length;
+        reservationInfo.price.averages.length
+    );
 
-    return avergePrice;
+    return addCommasToNumber(avergePrice) || 0;
   };
 
   useEffect(drawStickChartAboutPrice, []);
+
+  const changeMaxPriceWithinRange = (maxPrice: number) => {
+    if (reservationInfo.price.max > MAX_PRICE_RANGE)
+      return `${addCommasToNumber(MAX_PRICE_RANGE)}+`;
+    return addCommasToNumber(maxPrice);
+  };
 
   return (
     <Portal>
       <Title>가격 범위</Title>
       <div>
-        ₩ <span> {addCommasToNumber(priceRange.min)} </span> - ₩
-        <span> {addCommasToNumber(priceRange.max)} </span>
-        {priceRange.max > MAX_PRICE_RANGE ? '+' : ''}
+        ₩&nbsp;<span>{addCommasToNumber(reservationInfo.price.min)} </span>&nbsp; - &nbsp;₩&nbsp;
+        <span>{changeMaxPriceWithinRange(reservationInfo.price.max)} </span>
       </div>
       <Description>
         평균 1박 요금은 <span>₩ {calcAveragePrice()}</span> 입니다.

@@ -4,29 +4,30 @@ import { COLOR, FONT } from '@/constants';
 const Container = styled.div`
   display: flex;
   flex-grow: 1;
-  gap: 16px;
-  padding-left: ${({ hasBorderLeft }: { hasBorderLeft: boolean }) =>
-    hasBorderLeft ? '24px' : '0'};
-  border-left: ${({ hasBorderLeft }: { hasBorderLeft: boolean }) =>
-    hasBorderLeft ? `1px solid ${COLOR.GREY[500]}` : '0'};
-  &:first-child {
-    max-width: 145px;
+  justify-content: space-between;
+  border-radius: 40px;
+  padding: 0 8px 0 24px;
+  &:hover {
+    background: ${COLOR.GREY[600]};
   }
+  box-shadow: ${({ focus }: { focus: boolean }) =>
+    focus ? `0px 4px 10px rgba(51, 51, 51, 0.1), 0px 0px 4px rgba(51, 51, 51, 0.05);` : ``};
 `;
 
 const InputButton = styled.button`
+  width: calc(100% - 40px);
   border-radius: 40px;
   text-align: left;
   min-width: 120px;
-  &:focus > span {
-    font-weight: ${FONT.WEIGHT.BOLD};
-  }
+  padding: 16px 0;
 `;
 
 const Label = styled.span`
   margin: 0 0 8px;
   font-size: ${FONT.SIZE.X_SMALL};
-  font-weight: ${FONT.WEIGHT.MEDIUM};
+  font-weight: ${({ focus }: { focus: boolean }) =>
+    focus ? `${FONT.WEIGHT.BOLD}` : `${FONT.WEIGHT.MEDIUM}`};
+  color: ${({ focus }: { focus: boolean }) => (focus ? `${COLOR.PRIMARY}` : `${COLOR.BLACK}`)};
 `;
 
 const PlaceHolder = styled.span`

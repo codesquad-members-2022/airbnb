@@ -16,6 +16,33 @@ public enum OAuthAttributes {
 				String.valueOf(attributes.get("avatar_url"))
 			);
 		}
+	},
+	KAKAO("kakao") {
+		@Override
+		public UserProfileResponse of(Map<String, Object> attributes) {
+			Map<String, Object> kakaoAccount = Map.of("kakao_account", attributes.get("kakao_account"));
+			Map<String, Object> profile = Map.of("profile", kakaoAccount.get("profile"));
+			return new UserProfileResponse(
+				getProviderName(),
+				String.valueOf(attributes.get("id")),
+				String.valueOf(kakaoAccount.get("email")),
+				String.valueOf(profile.get("nickname")),
+				String.valueOf(profile.get("profile_image_url"))
+				);
+		}
+	},
+	NAVER("naver") {
+		@Override
+		public UserProfileResponse of(Map<String, Object> attributes) {
+			Map<String, Object> response = Map.of("response", attributes.get("response"));
+			return new UserProfileResponse(
+				getProviderName(),
+				String.valueOf(response.get("id")),
+				String.valueOf(response.get("email")),
+				String.valueOf(response.get("name")),
+				String.valueOf(response.get("profile_image"))
+			);
+		}
 	};
 
 	private final String providerName;

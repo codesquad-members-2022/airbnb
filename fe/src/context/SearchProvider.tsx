@@ -1,31 +1,7 @@
 import React, { useContext, createContext, useReducer, Dispatch } from 'react';
-import { PeriodType, PriceType, PersonnelType } from 'components/SearchBar/types';
+import { SearchType, addSearchType } from 'components/SearchBar/types';
 
-interface SearchType {
-  period: PeriodType;
-  price: PriceType;
-  personnel: PersonnelType;
-}
-
-type ActionType =
-  | {
-    type: 'SET_PERIOD';
-    value: PeriodType;
-  }
-  | {
-    type: 'SET_PRICE';
-    value: PriceType;
-  }
-  | {
-    type: 'SET_PERSONNEL';
-    value: PersonnelType;
-  }
-  | {
-    type: 'INIT_VALUE';
-    value: string;
-  };
-
-function searchReducer(searches: SearchType, action: ActionType): SearchType {
+function searchReducer(searches: SearchType, action: addSearchType): SearchType {
   const { type, value } = action;
   switch (type) {
     case 'INIT_VALUE':
@@ -59,7 +35,7 @@ function searchReducer(searches: SearchType, action: ActionType): SearchType {
   }
 }
 
-type DispatchType = Dispatch<ActionType>;
+type DispatchType = Dispatch<addSearchType>;
 
 export const SearchContext = createContext<SearchType | null>(null);
 export const AddSearchContext = createContext<DispatchType | null>(null);
@@ -80,7 +56,7 @@ const initSearch = {
   },
 };
 
-export function SearchProvider({ children }: { children: React.ReactNode }) {
+export function SearchProvider({ children }: { children: React.ReactNode }): JSX.Element {
   const [searches, addSearch] = useReducer(searchReducer, initSearch);
   return (
     <SearchContext.Provider value={searches}>

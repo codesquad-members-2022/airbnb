@@ -4,7 +4,7 @@ import { useActiveModal, useContentModal, useSetActiveModal, useSetContentModal 
 import DeleteButton from 'components/SearchBar/SearchList/DeleteButton';
 import Modal from 'components/Modal/Modal';
 import ModalPortal from 'Portal';
-import { SectionProps } from 'components/SearchBar/types';
+import { PeriodType, PersonnelType, PriceType, SectionProps } from 'components/SearchBar/types';
 
 import info from 'helpers/constant';
 
@@ -12,9 +12,9 @@ export default function SearchList({
   Element,
   id,
 }: {
-  Element: React.ComponentType<SectionProps<any>>;
+  Element: React.ComponentType<SectionProps<PeriodType & PriceType & PersonnelType>>;
   id: string;
-}): React.ReactElement {
+}): JSX.Element {
   // 검색 필터 입력된 값
   const search = useSearch();
   const addSearch = useAddSearch();
@@ -27,19 +27,19 @@ export default function SearchList({
   const content = useContentModal();
   const setContent = useSetContentModal();
 
-  const handleModalClose = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleModalClose = (event: { stopPropagation: () => void }) => {
     setActiveModal(false);
     setContent('');
     event.stopPropagation();
   };
 
-  const hasValue = () => Object.values(search[id]).filter((e) => e).length > 0;
+  const hasValue = () => Object.values(search?.[id]).filter((e) => e).length > 0;
   const initValue = () => addSearch({ type: 'INIT_VALUE', value: id });
   const isCurrentActive = () => content === id;
 
   return (
     <>
-      <Element search={search[id]} info={info[id]} />
+      <Element search={search?.[id]} info={info?.[id]} />
       {hasValue() && <DeleteButton initValue={initValue} />}
       {isCurrentActive() && (
         <ModalPortal>

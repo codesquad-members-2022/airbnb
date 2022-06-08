@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export default styled.div`
+export const StyledSearchBar = styled.div`
   display: grid;
   place-items: center;
   width: fit-content;
@@ -45,4 +45,29 @@ export default styled.div`
       color: #4f4f4f;
     }
   }
+`;
+
+export const SplitLine = styled.div`
+  width: 1px;
+  height: 44px;
+  background: #e0e0e0;
+`;
+
+export const StyledLi = styled.li`
+  padding-left: 10px;
+  width: ${({ width }) => width}px;
+  max-width: 290px;
+  section {
+    width: 112px;
+  }
+  button {
+    margin-left: auto;
+  }
+  position: relative;
+  ${({ isActive }) =>
+    isActive &&
+    `
+  background-color:#fff;
+  box-shadow: 0px 0px 10px 3px #ebebeb;
+  `}
 `;

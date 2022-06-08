@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Main, NotFound, Search } from 'pages';
 
-export default function Routers() {
+export default function Routers(): JSX.Element {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>

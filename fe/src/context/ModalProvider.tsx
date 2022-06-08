@@ -10,7 +10,7 @@ export const SetActiveContext = createContext<DispatchActiveType>(() => false);
 export const ContentContext = createContext<ContentState>('');
 export const SetContentContext = createContext<DispatchContentType>(() => '');
 
-export function ModalProvider({ children }: { children: React.ReactNode }) {
+export function ModalProvider({ children }: { children: React.ReactNode }): JSX.Element {
   const [show, setShow] = useState<ActiveState>(false);
   const [content, setContent] = useState<ContentState>('');
 

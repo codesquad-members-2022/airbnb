@@ -12,7 +12,7 @@ const Header = styled.header`
   background-repeat: no-repeat;
 `;
 
-export default function Main() {
+export default function Main(): JSX.Element {
   return (
     <main>
       <Header>

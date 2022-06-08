@@ -1,75 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
-import Section from 'components/common/Section';
+import Section from 'components/common/Section/Section';
 import { ModalProps, PersonnelType } from 'components/SearchBar/types';
 import { ReactComponent as MinusIcon } from 'img/svg/minus-circle.svg';
 import { ReactComponent as PlusIcon } from 'img/svg/plus-circle.svg';
 import info from 'helpers/constant';
+import {
+  StyledPersonnel,
+  StyledSection,
+  PersonnelController,
+  MinusButton,
+  PlusButton,
+  SplitLine,
+} from './Personnel.styled';
 
-const StyledPersonnel = styled.div`
-  & + & {
-    margin-top: 24px;
-  }
-`;
-
-const StyledSection = styled.div`
-  display: flex;
-
-  section {
-    width: 80px;
-    margin: 0px 80px 0px 0px;
-    h3 {
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 23px;
-      color: #010101;
-    }
-    p {
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
-      color: #828282;
-    }
-  }
-`;
-
-const PersonnelController = styled.div`
-  display: flex;
-  width: 116px;
-  align-items: center;
-  p {
-    margin: 0px 19px;
-  }
-  button {
-    padding: 0;
-    background: transparent;
-    border: none;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-`;
-
-const MinusButton = styled.button`
-  path {
-    ${({ count, min }) => (count || 0) === min && `stroke: #e0e0e0;`}
-  }
-`;
-
-const PlusButton = styled.button`
-  path {
-    ${({ count, max }) => count === max && `stroke: #e0e0e0;`}
-  }
-`;
-
-const SplitLine = styled.div`
-  width: 272px;
-  height: 1px;
-  background: #e0e0e0;
-  margin-top: 24px;
-`;
-
-export default function Personnel({ search, addSearch }: ModalProps<PersonnelType>) {
+export default function Personnel({ search, addSearch }: ModalProps<PersonnelType>): JSX.Element {
   const titleArray = Object.keys(search);
   const handlePersonnel = (e: string, type: string) => {
     const current = search[e] || 0;

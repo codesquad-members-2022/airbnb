@@ -1,7 +1,7 @@
 import React from 'react';
 import StyledMenu from 'components/GNB/Menu/Menu.styled';
 
-export default function Menu() {
+export default function Menu(): JSX.Element {
   return (
     <StyledMenu>
       <ul>

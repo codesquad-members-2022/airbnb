@@ -1,8 +1,8 @@
 import React from 'react';
-import SearchSection from 'components/common/Section';
+import SearchSection from 'components/common/Section/Section';
 import { PeriodType, SectionProps } from 'components/SearchBar/types';
 
-export default function Period({ info, search }: SectionProps<PeriodType>) {
+export default function Period({ info, search }: SectionProps<PeriodType>): JSX.Element {
   const { checkIn, checkOut } = search;
   const [checkInTitle, checkOutTitle] = info.title;
   const getMonth = (date: string): number => Number(date.slice(-4, -2));

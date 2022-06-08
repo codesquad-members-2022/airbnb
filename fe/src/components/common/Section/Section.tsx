@@ -5,7 +5,7 @@ interface SectionType {
   value: string | number;
 }
 
-export default function Section(section: SectionType) {
+export default function Section(section: SectionType): JSX.Element {
   const { title, value } = section;
 
   return (

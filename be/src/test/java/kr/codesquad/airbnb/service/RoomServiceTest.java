@@ -4,7 +4,7 @@ import kr.codesquad.airbnb.domain.Location;
 import kr.codesquad.airbnb.domain.Room;
 import kr.codesquad.airbnb.dto.RoomPriceStatisticDto;
 import kr.codesquad.airbnb.dto.RoomPriceStatisticRequest;
-import kr.codesquad.airbnb.repository.RoomQueryRepository;
+import kr.codesquad.airbnb.repository.CustomRoomRepositoryImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 class RoomServiceTest {
 
     @Mock
-    private RoomQueryRepository roomRepository;
+    private CustomRoomRepositoryImpl roomRepository;
 
     @InjectMocks
     private RoomService roomService;

@@ -1,9 +1,7 @@
 package kr.codesquad.airbnb.domain;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import kr.codesquad.airbnb.dto.BookingRoomRequest;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class Booking {
 
     @Id
@@ -36,4 +35,14 @@ public class Booking {
 
     private Integer totalPrice;
     private LocalDateTime createdAt;
+
+    public Booking(Member member, Room room, BookingRoomRequest bookingRoomRequest) {
+        this.member = member;
+        this.room = room;
+        checkIn = bookingRoomRequest.getCheckIn();
+        checkOut = bookingRoomRequest.getCheckOut();
+        guest = new Guest(bookingRoomRequest.getAdults(), bookingRoomRequest.getChildren(), bookingRoomRequest.getInfants());
+        totalPrice = bookingRoomRequest.getTotalPrice();
+        createdAt = LocalDateTime.now();
+    }
 }

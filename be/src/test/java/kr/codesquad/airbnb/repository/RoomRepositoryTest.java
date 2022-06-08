@@ -17,11 +17,11 @@ class RoomRepositoryTest {
 
     @Autowired
     private EntityManager em;
-    private RoomQueryRepository roomQueryRepository;
+    private CustomRoomRepositoryImpl customRoomRepositoryImpl;
 
     @BeforeEach
     public void init() {
-        roomQueryRepository = new RoomQueryRepository(new JPAQueryFactory(em));
+        customRoomRepositoryImpl = new CustomRoomRepositoryImpl(new JPAQueryFactory(em));
     }
 
     @Test
@@ -32,7 +32,7 @@ class RoomRepositoryTest {
         LocalDate checkOut = LocalDate.now().plusDays(1L);
 
         //when
-        List<Room> possibleBookingRooms = roomQueryRepository.findPossibleBookingRooms(checkIn, checkOut);
+        List<Room> possibleBookingRooms = customRoomRepositoryImpl.findPossibleBookingRooms(checkIn, checkOut);
 
         //then
 

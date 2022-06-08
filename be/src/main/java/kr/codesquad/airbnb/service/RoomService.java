@@ -2,7 +2,9 @@ package kr.codesquad.airbnb.service;
 
 import kr.codesquad.airbnb.domain.Room;
 import kr.codesquad.airbnb.dto.*;
-import kr.codesquad.airbnb.repository.RoomQueryRepository;
+import kr.codesquad.airbnb.exception.CustomException;
+import kr.codesquad.airbnb.exception.ErrorCode;
+import kr.codesquad.airbnb.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoomService {
 
-    private final RoomQueryRepository roomRepository;
+    private final RoomRepository roomRepository;
 
     public RoomPriceStatisticDto findStatisticOfRoomPrice(RoomPriceStatisticRequest roomPriceStatisticRequest) {
         List<Room> possibleBookingRooms = roomRepository.findPossibleBookingRooms(roomPriceStatisticRequest.getCheckIn(), roomPriceStatisticRequest.getCheckOut());
@@ -29,5 +31,10 @@ public class RoomService {
         }
 
         return roomSearchDto;
+    }
+
+    public Room findRoom(Long id) {
+        return roomRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXIST_ROOM));
     }
 }

@@ -16,12 +16,13 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class RoomQueryRepository {
+public class CustomRoomRepositoryImpl implements CustomRoomRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
     private final QRoom room = QRoom.room;
     private final QBooking booking = QBooking.booking;
 
+    @Override
     public List<Room> findPossibleBookingRooms(LocalDate checkIn, LocalDate checkOut) {
         return jpaQueryFactory.selectFrom(room)
                 .leftJoin(room.bookings, booking)
@@ -55,6 +56,7 @@ public class RoomQueryRepository {
                 .not(); // [checkIn ~ checkOut]이 BookingPeriod와 겹치는 기간의 반대는, 예약 가능한 날짜
     }
 
+    @Override
     public List<Room> findPossibleBookingRooms(RoomSearchRequest roomSearchRequest) {
         return jpaQueryFactory.selectFrom(room)
                 .leftJoin(room.bookings, booking).fetchJoin()

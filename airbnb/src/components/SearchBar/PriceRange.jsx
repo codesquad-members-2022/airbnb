@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Btn, ContentBox, BarTitle, BarContent } from './SearchBar_styled.jsx';
+import PriceRangeModal from '../PriceRange/PriceRange';
 
 function PriceRange({ onClick }) {
   return (

@@ -130,6 +130,8 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
                 self?.reloadTableView(dict: [.date: CheckInOutRange(checkIn: days.first?.date, checkOut: days.last?.date)])
             }
             else if days.count == 1 {
+                /// 1인경우 두가지 --> checkIn만 있는 경우와 checkIn, checkout 이 같은 경우
+                /// 저 사람 키보드 소리가 예사롭지 않다. 무접점 소리도 좋긴 하네 ㅎㅎ;; 
                 self?.reloadTableView(dict: [.date: CheckInOutRange(checkIn: days.first?.date, checkOut: nil)])
             }
         }

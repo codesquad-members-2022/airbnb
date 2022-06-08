@@ -24,7 +24,7 @@ import java.text.DecimalFormat
 @Composable
 fun DetailedReservationScreen(
     reservation: Reservation,
-    onClear: () -> Unit
+    onClear: () -> Unit,
 ) {
     Column(
         modifier = Modifier

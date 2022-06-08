@@ -1,7 +1,8 @@
 package com.example.todo.airbnb.presentation.search.date.components
 
 import com.example.todo.airbnb.data.model.date.CalendarYear
-import com.example.todo.airbnb.presentation.search.date.components.DaySelected.Companion.DaySelectedEmpty
+import com.example.todo.airbnb.data.model.date.DaySelected
+import com.example.todo.airbnb.data.model.date.DaySelected.Companion.DaySelectedEmpty
 
 data class DatesSelectedState(
     val year: CalendarYear,
@@ -15,5 +16,9 @@ data class DatesSelectedState(
             output += " - $to"
         }
         return output
+    }
+
+    companion object {
+        const val DEFAULT_DAY = "0월 0일"
     }
 }

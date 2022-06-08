@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.todo.airbnb.domain.model.Personnel
+import com.example.todo.airbnb.domain.model.Search
 import com.example.todo.airbnb.presentation.search.SearchViewModel
 
 @Composable
@@ -33,12 +34,12 @@ fun ConditionContent(navController: NavController, viewModel: SearchViewModel) {
         topBar = { ConditionTopBar(onBack = { navController.navigateUp() }) }
     ) {
         Content(
-            location = viewModel.search.value?.location ?: "",
-            checkIn = viewModel.search.value?.checkIn ?: "",
-            checkOut = viewModel.search.value?.checkOut ?: "",
-            minPrice = viewModel.search.value?.minPrice,
-            maxPrice = viewModel.search.value?.maxPrice,
-            guest = viewModel.search.value?.guest
+            location = viewModel.searchUiState.value.location,
+            checkIn = if (viewModel.searchUiState.value.checkIn == Search.DEFAULT_CHECKIN) "" else viewModel.searchUiState.value.checkIn,
+            checkOut = if (viewModel.searchUiState.value.checkOut == Search.DEFAULT_CHECKOUT) "" else viewModel.searchUiState.value.checkOut,
+            minPrice = if (viewModel.searchUiState.value.minPrice == Search.DEFAULT_MINPRICE) 0 else viewModel.searchUiState.value.minPrice,
+            maxPrice = if (viewModel.searchUiState.value.maxPrice == Search.DEFAULT_MAXPRICE) 0 else viewModel.searchUiState.value.maxPrice,
+            guest = viewModel.searchUiState.value.guest
         )
     }
 }
@@ -48,9 +49,9 @@ private fun Content(
     location: String,
     checkIn: String,
     checkOut: String,
-    minPrice: Float?,
-    maxPrice: Float?,
-    guest: Personnel?,
+    minPrice: Int,
+    maxPrice: Int,
+    guest: Personnel,
 ) {
     Column(
         modifier = Modifier
@@ -61,13 +62,10 @@ private fun Content(
     ) {
         ConditionText("위치", location, onClick = {})
         ConditionText("체크인/체크아웃", "$checkIn - $checkOut", onClick = {})
-        ConditionText("요금",
-            if (minPrice == null || maxPrice == null) "" else "W${minPrice} - W${maxPrice}",
-            onClick = {}
-        )
+        ConditionText("요금", "W${minPrice} - W${maxPrice}", onClick = {})
         ConditionText(
             "인원",
-            "성인 ${guest?.adult ?: "0"}, 어린이 ${guest?.child ?: "0"}, 유아  ${guest?.baby ?: "0"}",
+            "성인 ${if (guest.adult == Search.DEFAULT_GUEST) "0" else guest.adult}, 어린이 ${if (guest.child == Search.DEFAULT_GUEST) "0" else guest.child}, 유아  ${if (guest.baby == Search.DEFAULT_GUEST) "0" else guest.baby}",
             onClick = {}
         )
     }

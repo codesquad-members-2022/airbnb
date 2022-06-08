@@ -38,11 +38,8 @@ class SearchViewModel(
     private val _accommodations = MutableStateFlow<List<Accommodations>>(emptyList())
     val accommodations: StateFlow<List<Accommodations>> = _accommodations.asStateFlow()
 
-    private var _search: MutableState<Search?> = mutableStateOf(null)
-    val search: State<Search?> = _search
-
-    private val _personnel: MutableState<Personnel> = mutableStateOf(Personnel(0, 0, 0))
-    val personnel: State<Personnel> = _personnel
+    private val _searchUiState = mutableStateOf(Search.defaultOf())
+    val searchUiState: State<Search> get() = _searchUiState
 
     init {
         getTravelLocations()
@@ -51,7 +48,14 @@ class SearchViewModel(
     }
 
     fun addReservation(newSearch: Search) {
-        _search.value = newSearch
+        _searchUiState.value = newSearch
+    }
+
+    fun addReservation(checkIn: String, checkOut: String) {
+        _searchUiState.value = _searchUiState.value.copy(
+            checkIn = checkIn,
+            checkOut = checkOut
+        )
     }
 
     fun updateSearchWidgetState(newValue: SearchWidgetState) {
@@ -73,10 +77,6 @@ class SearchViewModel(
                 _searchLocations.value = it
             }
         }
-    }
-
-    fun updatePersonnelText(newPersonnel: Personnel) {
-        _personnel.value = newPersonnel
     }
 
     private fun getTravelLocations() {

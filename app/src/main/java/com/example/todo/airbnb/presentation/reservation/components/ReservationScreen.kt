@@ -76,7 +76,7 @@ fun ReservationScreen(
 
 @Composable
 private fun ReservationTopAppBar(
-    itemIndexNullCheck: () -> Unit
+    itemIndexNullCheck: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -114,7 +114,7 @@ private fun ReservationTopAppBar(
 @Composable
 private fun ReservationItem(
     reservation: Reservation,
-    updateItemIndex: () -> Unit
+    updateItemIndex: () -> Unit,
 ) {
     fun dateTextConverter(text: String) =
         text.split(" ").let { "${it[0]} ${it[1]} ${it[2]}" }

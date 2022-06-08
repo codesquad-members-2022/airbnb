@@ -51,7 +51,7 @@ fun SearchResultScreen(
                         popUpTo(HomeSections.Search.route) { inclusive = true }
                     }
                 },
-                search = viewModel.search.value
+                search = viewModel.searchUiState.value
             )
         }
     ) {
@@ -68,7 +68,7 @@ fun SearchResultScreen(
 fun ResultTopBar(
     onNavigateCondition: () -> Unit,
     onNavigateSearch: () -> Unit,
-    search: Search?,
+    search: Search,
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -86,7 +86,7 @@ fun ResultTopBar(
         }
 
         Text(
-            text = "${search?.location ?: ""} ${search?.checkIn ?: ""} ${search?.checkOut ?: ""} 게스트 ${search?.guest ?: ""}"
+            text = "${if (search.location == Search.DEFAULT_LOCATION) "" else search.location} ${if (search.checkIn == Search.DEFAULT_CHECKIN) "" else search.checkIn} ${if (search.checkOut == Search.DEFAULT_CHECKOUT) "" else search.checkOut} 게스트 ${if (search.guest.adult == Search.DEFAULT_GUEST) "" else search.guest.toString()}"
         )
 
         IconButton(onClick = { onNavigateSearch() }) {

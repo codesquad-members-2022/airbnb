@@ -12,9 +12,6 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.todo.airbnb.R
 import com.example.todo.airbnb.common.components.ToastMessage
@@ -30,22 +28,21 @@ import com.example.todo.airbnb.domain.model.Search
 import com.example.todo.airbnb.presentation.main.components.Destinations
 import com.example.todo.airbnb.presentation.search.SearchViewModel
 import com.example.todo.airbnb.presentation.search.components.common.BottomScreen
+import com.example.todo.airbnb.presentation.search.personnel.PersonnelViewModel
 
 @Composable
 fun PersonnelScreen(
     navController: NavController,
-    viewModel: SearchViewModel,
+    searchViewModel: SearchViewModel,
 ) {
-    var adultPersonnelText by rememberSaveable { mutableStateOf(0) }
-    var childPersonnelText by rememberSaveable { mutableStateOf(0) }
-    var babyPersonnelText by rememberSaveable { mutableStateOf(0) }
+    val viewModel = viewModel<PersonnelViewModel>()
+    val uiState by viewModel.personnelUiState
 
-    val personnel = Personnel(adultPersonnelText, childPersonnelText, babyPersonnelText)
-    viewModel.updatePersonnelText(personnel)
-
-    if (adultPersonnelText == 0 && ((childPersonnelText >= 1) || (babyPersonnelText >= 1))) {
-        ToastMessage(LocalContext.current, " 유아 및 어린이는 성인과 함께 동반하셔야 됩니다.")
-        adultPersonnelText++
+    if (uiState.showAlertMessage) {
+        ToastMessage(
+            context = LocalContext.current,
+            text = "유아 및 어린이는 성인과 함께 동반하셔야 됩니다."
+        )
     }
 
     Scaffold(
@@ -55,18 +52,20 @@ fun PersonnelScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                PersonnelTopAppBar(navController, viewModel.personnel.value, viewModel)
-                TotalPersonnelText(viewModel.personnel.value)
+                PersonnelTopAppBar(
+                    personnel = uiState.personnel,
+                    reservation = searchViewModel.searchUiState.value,
+                    onAddReservation = { searchViewModel.addReservation(it) },
+                    onBackButtonClicked = { navController.navigateUp() },
+                    onCheckButtonClicked = { navController.navigate(Destinations.searchResult) }
+                )
+                TotalPersonnelText(personnel = uiState.personnel)
             }
         },
         bottomBar = {
             BottomScreen(
-                title = bottomBarText(personnel),
-                onRemove = {
-                    adultPersonnelText = 0
-                    childPersonnelText = 0
-                    babyPersonnelText = 0
-                },
+                title = bottomBarText(uiState.personnel),
+                onRemove = { viewModel.clearPersonnel() },
                 onSkip = { navController.navigate(Destinations.searchResult) }
             )
         }
@@ -77,25 +76,25 @@ fun PersonnelScreen(
                 .fillMaxWidth()
         ) {
             PersonnelItem(
-                PersonnelText = adultPersonnelText,
-                countPlus = { adultPersonnelText++ },
-                countMinus = { adultPersonnelText-- },
+                PersonnelText = uiState.personnel.adult,
+                countPlus = { viewModel.increaseAdultPersonnel() },
+                countMinus = { viewModel.decreaseAdultPersonnel() },
                 lifeCycle = "성인",
                 ageLimit = "만 13세 이상"
             )
             CustomSpacer()
             PersonnelItem(
-                PersonnelText = childPersonnelText,
-                countPlus = { childPersonnelText++ },
-                countMinus = { childPersonnelText-- },
+                PersonnelText = uiState.personnel.child,
+                countPlus = { viewModel.increaseChildPersonnel() },
+                countMinus = { viewModel.decreaseChildPersonnel() },
                 lifeCycle = "어린이",
                 ageLimit = "만 2~12세"
             )
             CustomSpacer()
             PersonnelItem(
-                PersonnelText = babyPersonnelText,
-                countPlus = { babyPersonnelText++ },
-                countMinus = { babyPersonnelText-- },
+                PersonnelText = uiState.personnel.baby,
+                countPlus = { viewModel.increaseBabyPersonnel() },
+                countMinus = { viewModel.decreaseBabyPersonnel() },
                 lifeCycle = "유아",
                 ageLimit = "만 2세 미만"
             )
@@ -105,9 +104,11 @@ fun PersonnelScreen(
 
 @Composable
 private fun PersonnelTopAppBar(
-    navController: NavController,
     personnel: Personnel,
-    viewModel: SearchViewModel
+    reservation: Search,
+    onAddReservation: (Search) -> Unit,
+    onBackButtonClicked: () -> Unit,
+    onCheckButtonClicked: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -120,9 +121,7 @@ private fun PersonnelTopAppBar(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ) {
-            IconButton(
-                onClick = { navController.navigateUp() }
-            ) {
+            IconButton(onClick = { onBackButtonClicked() }) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = "Back Icon",
@@ -130,14 +129,9 @@ private fun PersonnelTopAppBar(
                 )
             }
             IconButton(
-
                 onClick = {
-                    val reservation = viewModel.search.value
-                    val priceReservation = reservation?.copy(
-                        guest = personnel
-                    ) ?: Search()
-                    viewModel.addReservation(priceReservation)
-                    navController.navigate(Destinations.searchResult)
+                    onAddReservation(reservation.copy(guest = personnel))
+                    onCheckButtonClicked()
                 },
                 enabled = checkButtonEnabled(personnel)
             ) {
@@ -151,14 +145,12 @@ private fun PersonnelTopAppBar(
     }
 }
 
-@Composable
 private fun checkButtonEnabled(personnel: Personnel): Boolean {
     if (personnel.adult == 0 && personnel.child == 0 && personnel.baby == 0)
         return false
     return true
 }
 
-@Composable
 private fun checkButtonColor(personnel: Personnel): Color {
     if (personnel.adult == 0 && personnel.child == 0 && personnel.baby == 0)
         return Color(0xffBDBDBD)
@@ -167,7 +159,7 @@ private fun checkButtonColor(personnel: Personnel): Color {
 
 @Composable
 private fun TotalPersonnelText(
-    personnel: Personnel
+    personnel: Personnel,
 ) {
     Column(
         modifier = Modifier
@@ -198,7 +190,7 @@ private fun PersonnelItem(
     countPlus: () -> Unit,
     countMinus: () -> Unit,
     lifeCycle: String,
-    ageLimit: String
+    ageLimit: String,
 ) {
     Row(
         modifier = Modifier
@@ -252,13 +244,11 @@ private fun PersonnelItem(
     }
 }
 
-@Composable
 private fun minusButtonColors(PersonnelText: Int): Color {
     if (PersonnelText == 0) return Color(0xffBDBDBD)
     return Color(0xff333333)
 }
 
-@Composable
 private fun plusButtonColors(PersonnelText: Int): Color {
     if (PersonnelText == 8) return Color(0xffBDBDBD)
     return Color(0xff333333)
@@ -274,7 +264,6 @@ private fun CustomSpacer() {
     )
 }
 
-@Composable
 private fun bottomBarText(personnel: Personnel): String {
     if (personnel.adult + personnel.child + personnel.baby == 0) return ""
     return "0이아님"

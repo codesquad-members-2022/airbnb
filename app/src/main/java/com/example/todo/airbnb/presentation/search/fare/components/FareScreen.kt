@@ -91,13 +91,10 @@ private fun FareTopAppBar(
 
             IconButton(
                 onClick = {
-                    val reservation = viewModel.search.value
-                    val priceReservation = reservation?.copy(
-                        minPrice = lowerThumb * 1000000,
-                        maxPrice = upperThumb * 1000000
-                    ) ?: Search(
-                        minPrice = lowerThumb * 1000000,
-                        maxPrice = upperThumb * 1000000
+                    val reservation = viewModel.searchUiState.value
+                    val priceReservation = reservation.copy(
+                        minPrice = (lowerThumb * 1000000).toInt(),
+                        maxPrice = (upperThumb * 1000000).toInt()
                     )
                     viewModel.addReservation(priceReservation)
                     navController.navigate(Destinations.personnel)

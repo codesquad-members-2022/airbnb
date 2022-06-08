@@ -22,10 +22,6 @@ class PriceSettingViewController: UIViewController {
     
     private lazy var queryParameterStackView = QueryParameterStackView(queryParameter: queryParameter)
 
-    override func viewWillAppear(_ animated: Bool) {
-        view.backgroundColor = .white
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         let priceSuccessStubRequest = SearchManager(httpService: PriceSuccessStub())
@@ -33,6 +29,7 @@ class PriceSettingViewController: UIViewController {
             guard let price = price, let self = self else { return }
             self.priceSettingView.setContents(price)
         }
+        view.backgroundColor = .white
         setSubviews()
         setLayout()
         setPriceSettingHandler()

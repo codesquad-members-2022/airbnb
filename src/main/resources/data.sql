@@ -55,4 +55,6 @@ INSERT INTO reservation(id, canceled, check_in, check_out, guests, price, lodgin
 VALUES (1,0,'2022-03-03', '2022-04-04', 2, 11, 1, 1),
        (2,0,'2022-04-05', '2022-04-10',2, 11, 2, 1);
 
-
+INSERT INTO wish(id, lodging_id, members_id)
+VALUES (1,1,1),
+       (2,2,1);

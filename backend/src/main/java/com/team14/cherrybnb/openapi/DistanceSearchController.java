@@ -2,6 +2,9 @@ package com.team14.cherrybnb.openapi;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.team14.cherrybnb.openapi.dummy.DistanceInfoResponse;
+import com.team14.cherrybnb.openapi.dummy.Position;
+import com.team14.cherrybnb.openapi.kakao.DistanceSearchService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

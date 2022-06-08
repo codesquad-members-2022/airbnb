@@ -1,8 +1,13 @@
-package com.team14.cherrybnb.openapi;
+package com.team14.cherrybnb.openapi.kakao;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.team14.cherrybnb.openapi.District;
+import com.team14.cherrybnb.openapi.dummy.DistanceInfo;
+import com.team14.cherrybnb.openapi.dummy.DistanceInfoResponse;
+import com.team14.cherrybnb.openapi.dummy.Position;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -19,17 +24,20 @@ import java.util.List;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class DistanceSearchService {
 
     @Value("${kakao.rest.api.key}")
     private String kakaoKey;
+    private final RestTemplate restTemplate;
 
     public List<DistanceInfoResponse> searchDistrictInfo(Position position) throws JsonProcessingException {
         District[] districts = District.values();
         ArrayList<DistanceInfoResponse> distanceInfoResponses = new ArrayList<>();
 
         for (District district : districts) {
-            DistanceInfo distanceInfo = caculateDistanceAndDuration(position, district.getLongitude(), district.getLatitude());
+            NaviRequest naviRequest = NaviRequest.of(position.getX(), position.getY(), district.getLongitude(), district.getLatitude());
+            DistanceInfo distanceInfo = calculateDistanceAndDuration(naviRequest);
             String distance = String.valueOf(distanceInfo.getDistance());
             String duration = String.valueOf(distanceInfo.getDuration());
             distanceInfoResponses.add(new DistanceInfoResponse(district.name(), distance, duration));
@@ -38,25 +46,18 @@ public class DistanceSearchService {
         return distanceInfoResponses;
     }
 
-    public DistanceInfo caculateDistanceAndDuration(Position position, double destinationX, double destinationY) throws JsonProcessingException {
-        RestTemplate restTemplate = new RestTemplate();
-        String url = getUrl(position.getX(), position.getY(), destinationX, destinationY);
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHeaders()), String.class);
+    private DistanceInfo calculateDistanceAndDuration(NaviRequest naviRequest) throws JsonProcessingException {
+        String url = getUrl(naviRequest);
+        ResponseEntity<NaviResponse> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(getHeaders()), NaviResponse.class);
 
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        JsonNode body = objectMapper.readTree(response.getBody());
-        JsonNode routes = body.get("routes");
-        JsonNode route = routes.get(0);
-        int result_code = route.get("result_code").asInt();
-        if (result_code != 0) {
+        NaviResponse naviResponse = response.getBody();
+        assert naviResponse != null;
+        NaviInfo info = naviResponse.getInfo();
+        if (info.getCode() != 0) {
             return new DistanceInfo(-999,-999);
         }
-        JsonNode summary = route.get("summary");
-        double distance = summary.get("distance").asDouble();
-        double duration = summary.get("duration").asDouble();
-
-        return new DistanceInfo(distance, duration);
+        Summary summary = info.getSummary();
+        return new DistanceInfo(summary.getDistance(), summary.getDuration());
     }
 
     private MultiValueMap<String, String> getHeaders() {
@@ -67,14 +68,13 @@ public class DistanceSearchService {
         return headers;
     }
 
-    private String getUrl(double originX, double originY, double destinationX, double destinationY) {
+    private String getUrl(NaviRequest naviRequest) {
         String url = "https://apis-navi.kakaomobility.com/v1/directions";
-        String origin = originX + "," + originY;
-        String destination = destinationX + "," + destinationY;
+
         return UriComponentsBuilder.fromHttpUrl(url)
-                .queryParam("origin", origin)
-                .queryParam("destination", destination)
-                .queryParam("summary", true)
+                .queryParam("origin", naviRequest.getOrigin())
+                .queryParam("destination", naviRequest.getDestination())
+                .queryParam("summary", naviRequest.isSummary())
                 .encode()
                 .toUriString();
 

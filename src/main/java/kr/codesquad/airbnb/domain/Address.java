@@ -1,9 +1,7 @@
 package kr.codesquad.airbnb.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 import lombok.Getter;
 
 @Entity
@@ -13,6 +11,10 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @JoinColumn
+    @OneToOne(fetch = FetchType.LAZY)
+    private Lodging lodging;
 
     private String country;
     private String city;

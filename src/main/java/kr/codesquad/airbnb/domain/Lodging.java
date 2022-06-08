@@ -18,9 +18,9 @@ public class Lodging {
     @Column(name = "lodging_name")
     private String name;
 
-    @JoinColumn
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "lodging")
     private Address address;
+
     private Double rating;
     private int review;
 

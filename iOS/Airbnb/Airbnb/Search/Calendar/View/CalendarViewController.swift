@@ -83,7 +83,7 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
         if let days = days {
             var newSnapshot = dataSource.snapshot()
             newSnapshot.reloadItems(days)
-            dataSource.apply(newSnapshot, animatingDifferences: false)
+            dataSource.apply(newSnapshot, animatingDifferences: true)
         }
         //MARK: - 초기 설정
         else {
@@ -93,7 +93,7 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
                 snapshot.appendSections([$0])
                 snapshot.appendItems(month[$0].result)
             }
-            dataSource.apply(snapshot, animatingDifferences: false)
+            dataSource.apply(snapshot, animatingDifferences: true)
         }
     }
     
@@ -126,6 +126,12 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
     func bind() {
         calendarModel.onUpdate = { [weak self] days in
             self?.performQuery(days: days)
+            if days.count > 1 {
+                self?.reloadTableView(dict: [.date: CheckInOutRange(checkIn: days.first?.date, checkOut: days.last?.date)])
+            }
+            else if days.count == 1 {
+                self?.reloadTableView(dict: [.date: CheckInOutRange(checkIn: days.first?.date, checkOut: nil)])
+            }
         }
         
         calendarModel.onUpdateBeforeDays = { [weak self] days in
@@ -155,7 +161,7 @@ extension CalendarViewController: UICollectionViewDelegate {
             let cell = collectionView.cellForItem(at: indexPath) as? CalendarViewCell,
             cell.day?.isWithInDisplayedMonth == true,
             cell.day?.isBeforeToday == false else { return }
-        
+//        self.model?.setModelData(using: [.date])
         calendarModel.validateCheckDate(at: indexPath)
     }
     

@@ -134,6 +134,7 @@ class CalendarViewCell: UICollectionViewCell {
 }
 
 // MARK: - Appearance
+// TODO: - Refactorying으로 중복되는 코드를 줄일 수 있으면 줄이자.
 private extension CalendarViewCell {
     
     func updateSelectionStatus() {

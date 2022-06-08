@@ -12,9 +12,9 @@ function App() {
     <CalendarProvider>
       <PriceProvider>
         <InputGuestProvider>
-          <BrowserRouter>
-            <Routes basename={process.env.PUBLIC_URL}>
-              <Route index element={<Main />} />
+          <BrowserRouter basename={process.env.PUBLIC_URL}>
+            <Routes>
+              <Route index exact path="/" element={<Main />} />
               <Route path="/searchResult" element={<SearchResult />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

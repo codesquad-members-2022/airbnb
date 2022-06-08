@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CalendarViewController: BackgroundViewController, CommonViewControllerProtocol {
+class CalendarViewController: SearchInfoTrackingViewController, CommonViewControllerProtocol {
     
     let reservationModel: ReservationModel
     let calendarModel: CalendarModel = CalendarModel(baseDate: Date())
@@ -47,7 +47,7 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
     }
     
     func attribute() {
-        view.backgroundColor = .systemBackground
+        contentView.backgroundColor = .systemBackground
         navigationItem.title = "숙소 찾기"
         navigationController?.isToolbarHidden = false
         self.toolbarItems = setUpToolBarItems()
@@ -80,6 +80,7 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
     
     @objc func pushNextVC() {
         let nextVC = PriceGraphViewController()
+        nextVC.setModel(model)
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }

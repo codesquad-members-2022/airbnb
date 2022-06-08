@@ -2,30 +2,46 @@ import { useContext } from "react";
 
 import { LinkPath } from "router";
 
-import { RouterContext } from "./Contexts";
+import RouterContext from "./Contexts";
 
 const { history, location } = window;
 
-const pushHistory = ({ path, state }: PushHistoryProps): void => {
+// TODO:state를 url에 추가하는 함수 추가하기
+const queryDataToUrlString = (query: { [key: string]: string }) => {
+  return JSON.stringify(query)
+    .replace(/["{}]/g, "")
+    .split(",")
+    .reduce((prev, cur) => `${prev}${cur.split(":").join("=")}&`, "");
+};
+
+const pushHistory = ({ path, state, query }: PushHistoryProps): void => {
   // history.pushState(state, title, url);
-  history.pushState(state, path, `${location.origin}${path}`);
+  const url = `${location.origin}${path}${
+    (query && `?${queryDataToUrlString(query)}`) || ""
+  }`;
+
+  history.pushState(state, path, url);
 };
 
 const Link = ({
   to,
-  params = {},
+  state,
   children,
   onClick,
+  query,
 }: LinkProps): JSX.Element => {
   const { setPage } = useContext(RouterContext);
 
-  const href = to === "index" ? `/` : `/${to}`;
+  const href =
+    to === "index"
+      ? `/`
+      : `/${to}${(query && queryDataToUrlString(query)) || ""}`;
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     onClick?.();
     setPage?.(to as LinkPath);
-    pushHistory({ path: href, state: params });
+    pushHistory({ path: href, state, query });
   };
 
   return (
@@ -42,11 +58,13 @@ interface PushHistoryProps {
   state?: {
     [key: string]: string;
   };
+  query?: { [key: string]: string };
 }
 
 interface LinkProps {
   to: string;
   children: React.ReactNode;
-  params?: { [key: string]: string }; // TODO: key 값 추후에 지정하기
+  state?: { [key: string]: string };
+  query?: { [key: string]: string };
   onClick?: () => void;
 }

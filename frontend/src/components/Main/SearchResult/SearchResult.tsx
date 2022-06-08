@@ -1,6 +1,7 @@
 import { useContext } from "react";
 
-import { LocationContext } from "router/Contexts";
+import NotFound from "components/NotFound/NotFound";
+import RouterContext from "router/Contexts";
 
 import Filter from "./AccomodationsList/Filter/Filter";
 import ListItemCard from "./AccomodationsList/ListItemCard/ListItemCard";
@@ -8,14 +9,19 @@ import MapArea from "./MapArea/MapArea";
 import Wrapper from "./SearchResult.style";
 
 const SearchResult = (): JSX.Element => {
-  const { queryData } = useContext(LocationContext)!;
+  // const { queryData } = useContext(LocationContext)!;
+  // const { state: params } = window.history;
+
+  const { queryData } = { ...useContext(RouterContext) };
+
+  // console.log("확인", Object.entries(params));
 
   return (
     <Wrapper>
-      {(Object.entries(queryData).length && (
+      {(queryData && (
         <>
           <div className="accomodations-list-area">
-            <Filter />
+            {queryData && <Filter />}
             <h2 className="title">지도에서 선택한 지역의 숙소</h2>
             <ul className="accomodations-list">
               {[
@@ -68,8 +74,7 @@ const SearchResult = (): JSX.Element => {
           </div>
           <MapArea />
         </>
-      )) ||
-        "올바른 경로로 접속되지 않았습니다."}
+      )) || <NotFound />}
     </Wrapper>
   );
 };

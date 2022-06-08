@@ -5,6 +5,7 @@
 export type LinkPath = "index" | "searchResult" | "notFound";
 
 export interface RouterContextType {
+  queryData: { [key: string]: string } | null;
   page: LinkPath;
   setPage: React.Dispatch<React.SetStateAction<LinkPath>>;
 }

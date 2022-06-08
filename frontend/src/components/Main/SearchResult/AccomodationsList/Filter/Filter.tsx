@@ -1,12 +1,12 @@
 import { useContext } from "react";
 
-import { LocationContext } from "router/Contexts";
+import RouterContext from "router/Contexts";
 
 import Item from "./Item";
 
 // count: 0, // 숙소 개수. <-- 결과에서 가져와야함. length로?
 
-const getQueryDataFilterList = (data: { [key: string]: string }) => {
+const getDataListFromQueryData = (data: { [key: string]: string }) => {
   const result = [];
   if (data.NumAdult || data.numChild) {
     const guestCount = `게스트 ${
@@ -46,13 +46,18 @@ const getQueryDataFilterList = (data: { [key: string]: string }) => {
 };
 
 const Filter = () => {
-  const { queryData } = useContext(LocationContext)!;
+  // const { queryData } = useContext(LocationContext)!;
+  // const { state: params } = window.history;
+
+  const { queryData } = { ...useContext(RouterContext) };
 
   return (
-    <Item
-      // count={count} // api응답으로 온 데이터
-      queryDataList={getQueryDataFilterList(queryData)}
-    />
+    queryData && (
+      <Item
+        // count={count} // api응답으로 온 데이터
+        queryDataList={getDataListFromQueryData(queryData)}
+      />
+    )
   );
 };
 

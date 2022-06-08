@@ -14,7 +14,7 @@ public interface SearchRepository extends JpaRepository<Accommodation, Long> {
 
     @Query(value = "select * " +
             "from accommodation as a " +
-            "where a.accommodation_id NOT IN " +
+            "where a.id NOT IN " +
             "(select accommodation_id " +
             " from schedule where stay_date between :checkinTime and :checkoutTime)" +
             " and a.region_id = :regionId" +

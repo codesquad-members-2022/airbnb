@@ -1,10 +1,10 @@
 package team18.airbnb.reservation.dto;
 
+import java.time.LocalDate;
+
 import lombok.Getter;
 import team18.airbnb.domain.AccommodationAddress;
 import team18.airbnb.domain.Reservation;
-
-import java.time.LocalDate;
 
 @Getter
 public class UserReservationDto {

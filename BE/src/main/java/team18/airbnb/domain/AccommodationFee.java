@@ -1,13 +1,14 @@
 package team18.airbnb.domain;
 
-import lombok.Getter;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+
+import lombok.Getter;
 
 @Embeddable
 @Getter

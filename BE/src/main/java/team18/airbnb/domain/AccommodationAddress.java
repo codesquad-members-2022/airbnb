@@ -1,8 +1,8 @@
 package team18.airbnb.domain;
 
-import lombok.Getter;
-
 import javax.persistence.Embeddable;
+
+import lombok.Getter;
 
 @Embeddable
 @Getter

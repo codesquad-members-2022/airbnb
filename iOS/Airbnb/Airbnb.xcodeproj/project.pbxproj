@@ -46,6 +46,7 @@
 		1B6E8D0F2850543E00F165B8 /* HeadCountDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D0B2850543D00F165B8 /* HeadCountDataSource.swift */; };
 		1B6E8D102850543E00F165B8 /* HeadCountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D0C2850543D00F165B8 /* HeadCountModel.swift */; };
 		1B6E8D112850543E00F165B8 /* HeadCountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D0D2850543D00F165B8 /* HeadCountViewController.swift */; };
+		1B6E8D152850769A00F165B8 /* HeadCountDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D142850769A00F165B8 /* HeadCountDTO.swift */; };
 		1B756E702848533B003AC0EA /* SearchInfoTrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B756E6F2848533B003AC0EA /* SearchInfoTrackingViewController.swift */; };
 		1B756E72284855CE003AC0EA /* CustomRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B756E71284855CE003AC0EA /* CustomRangeSlider.swift */; };
 		1B7CBD82284F02C5008C31F1 /* SearchInfoTrackingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7CBD81284F02C5008C31F1 /* SearchInfoTrackingModel.swift */; };
@@ -135,6 +136,7 @@
 		1B6E8D0B2850543D00F165B8 /* HeadCountDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadCountDataSource.swift; sourceTree = "<group>"; };
 		1B6E8D0C2850543D00F165B8 /* HeadCountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadCountModel.swift; sourceTree = "<group>"; };
 		1B6E8D0D2850543D00F165B8 /* HeadCountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadCountViewController.swift; sourceTree = "<group>"; };
+		1B6E8D142850769A00F165B8 /* HeadCountDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadCountDTO.swift; sourceTree = "<group>"; };
 		1B756E6F2848533B003AC0EA /* SearchInfoTrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoTrackingViewController.swift; sourceTree = "<group>"; };
 		1B756E71284855CE003AC0EA /* CustomRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRangeSlider.swift; sourceTree = "<group>"; };
 		1B7CBD81284F02C5008C31F1 /* SearchInfoTrackingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoTrackingModel.swift; sourceTree = "<group>"; };
@@ -385,12 +387,28 @@
 		1B6E8D092850543D00F165B8 /* HeadCount */ = {
 			isa = PBXGroup;
 			children = (
-				1B6E8D0A2850543D00F165B8 /* HeadCountCell.swift */,
-				1B6E8D0B2850543D00F165B8 /* HeadCountDataSource.swift */,
-				1B6E8D0C2850543D00F165B8 /* HeadCountModel.swift */,
-				1B6E8D0D2850543D00F165B8 /* HeadCountViewController.swift */,
+				1B6E8D13285074DB00F165B8 /* Model */,
+				1B6E8D12285074D300F165B8 /* View */,
 			);
 			path = HeadCount;
+			sourceTree = "<group>";
+		};
+		1B6E8D12285074D300F165B8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1B6E8D0A2850543D00F165B8 /* HeadCountCell.swift */,
+				1B6E8D0D2850543D00F165B8 /* HeadCountViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1B6E8D13285074DB00F165B8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1B6E8D0B2850543D00F165B8 /* HeadCountDataSource.swift */,
+				1B6E8D0C2850543D00F165B8 /* HeadCountModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		1B7EB7F12844E5990078D4A9 /* Network */ = {
@@ -409,6 +427,7 @@
 				00863C5028474614004E5954 /* Day.swift */,
 				1BF0618728459A210043FF2F /* Reservations.swift */,
 				1BDEFD26284E217A00EBC3DF /* SearchInfo.swift */,
+				1B6E8D142850769A00F165B8 /* HeadCountDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -620,6 +639,7 @@
 				1BF0618C2845CF8D0043FF2F /* PriceGraphViewController.swift in Sources */,
 				1B7EB7F32844E5A70078D4A9 /* NetworkServices.swift in Sources */,
 				00A85F44283B87B900EA32E0 /* MyInfoModel.swift in Sources */,
+				1B6E8D152850769A00F165B8 /* HeadCountDTO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

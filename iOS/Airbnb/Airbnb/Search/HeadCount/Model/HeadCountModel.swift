@@ -9,11 +9,11 @@ import Foundation
 
 class HeadCountModel {
     
+    private(set) var currentHeadCount = HeadCountDTO(adults: 0, children: 0, infants: 0)
+    
     //TODO: 성인, 어린이, 유아 입력에 대응하여 DTO를 업데이트 하는 로직 만들기. 반환은 뷰 컨트롤러에 결과로 반환할 구조체.
     
     
     
 }
-//TODO: 성인, 어린이, 유아 입력을 뜻하는 타입 만들기
-
 //TODO: 뷰 컨트롤러에 반환할 구조체. 성인, 어린이, 유아 인원수만 존재함.

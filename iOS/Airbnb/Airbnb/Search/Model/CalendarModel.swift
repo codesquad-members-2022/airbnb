@@ -226,3 +226,13 @@ private extension CalendarModel {
         }
     }
 }
+
+extension CalendarModel {
+    func getLastDate(at path: IndexPath) -> Date? {
+        return month[path.section].result.last?.date
+    }
+    
+    func getADay(at path: IndexPath) -> Day {
+        return month[path.section].result[path.row]
+    }
+}

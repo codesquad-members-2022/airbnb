@@ -89,7 +89,7 @@ class CalendarViewCell: UICollectionViewCell {
         
         let size = traitCollection.horizontalSizeClass == .compact ?
         min(min(frame.width, frame.height) - 10, 60) : 45
-    
+        
         numberLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
@@ -125,12 +125,11 @@ class CalendarViewCell: UICollectionViewCell {
     }
     
     func tabGenerated(for day: Day) {
-        if !day.isBeforeToday {
-            prepareForReuse()
-            self.day = day
-        }
+        guard !day.isBeforeToday else { return }
+        prepareForReuse()
+        self.day = day
     }
-
+    
 }
 
 // MARK: - Appearance

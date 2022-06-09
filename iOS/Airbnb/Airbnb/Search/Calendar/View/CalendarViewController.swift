@@ -28,6 +28,7 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
     
     private let weekdayView: UIView = WeekdayView()
     
+    // MARK: - setUpToolBar 와 비교 하면서 백이랑 토론
 //    private let spacing: UIBarButtonItem = { UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil) }()
 //    private let skipButton: UIBarButtonItem = {
 //        let buttonItem = UIBarButtonItem(title: "건너뛰기", style: .plain, target: self, action: #selector(pushNextVC))
@@ -57,7 +58,7 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
         collectionView.delegate = self
         let cellRegistration = UICollectionView.CellRegistration<CalendarViewCell, Day> {
             [weak self] (cell, indexPath, identifier) in
-            guard let day = self?.calendarModel.month[indexPath.section].result[indexPath.row] else { return }
+            guard let day = self?.calendarModel.getADay(at: indexPath) else { return }
             cell.day = day
         }
         
@@ -65,14 +66,17 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
             elementKind: UICollectionView.elementKindSectionHeader) {
                 [weak self] (supplementaryView, elementKind, indexPath) in
                 DispatchQueue.main.async {
-                    supplementaryView.baseDate = self?.calendarModel.month[indexPath.section].result.last?.date
+                    supplementaryView.baseDate = self?.calendarModel.getLastDate(at: indexPath)
                 }
             }
         
         dataSource = UICollectionViewDiffableDataSource<Int, Day>(
             collectionView: collectionView,
             cellProvider: { collectionView, indexPath, itemIdentifier in
-                collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
+                collectionView.dequeueConfiguredReusableCell(
+                    using: cellRegistration,
+                    for: indexPath,
+                    item: itemIdentifier)
             })
         
         dataSource.supplementaryViewProvider = { (_, _, index) in

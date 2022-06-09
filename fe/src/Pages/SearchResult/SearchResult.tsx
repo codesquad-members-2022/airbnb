@@ -1,5 +1,6 @@
 import Accommodation from "Components/Accommodation/Accommodation";
 import Gnb from "Components/Gnb/Gnb";
+import Map from "Components/Map/Map";
 import MiniSearchBar from "Components/SearchBar/MiniSearchBar";
 import { DispatchCalendarContext } from "Context/CalendarProvider";
 import { DispatchHeadCountContext } from "Context/HeadCountProvider";
@@ -18,7 +19,7 @@ import {
   SearchResultHeaderContainer,
   SearchResultArea,
   Tourist,
-  Map,
+  MapArea,
   priceChartStyle,
   accommodationStyle,
   photoStyle,
@@ -88,13 +89,10 @@ export default function SearchResult() {
               />
             );
           })}
-          {/* <Accommodation accommodationStyle={accommodationStyle} photoStyle={photoStyle} />
-          <Accommodation accommodationStyle={accommodationStyle} photoStyle={photoStyle} />
-          <Accommodation accommodationStyle={accommodationStyle} photoStyle={photoStyle} />
-          <Accommodation accommodationStyle={accommodationStyle} photoStyle={photoStyle} />
-          <Accommodation accommodationStyle={accommodationStyle} photoStyle={photoStyle} /> */}
         </Tourist>
-        <Map></Map>
+        <MapArea>
+          <Map />
+        </MapArea>
       </SearchResultArea>
     </>
   );

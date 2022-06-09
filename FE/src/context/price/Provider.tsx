@@ -47,8 +47,8 @@ export const PriceProvider = ({ children }: PriceProviderTypes) => {
     url: API.PRICE_INFO,
     config: {
       params: {
-        checkIn: new Date(),
-        checkOut: new Date(),
+        checkIn: '2022-06-10',
+        checkOut: '2022-06-11',
       },
     },
   });

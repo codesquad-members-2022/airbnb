@@ -12,16 +12,7 @@ final class CalendarViewController: UIViewController {
 
     private lazy var calendarView = CalendarView(initialContent: makeContent())
     private lazy var calendar = Calendar.current
-    private lazy var dayDateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.calendar = calendar
-        dateFormatter.locale = calendar.locale
-        dateFormatter.dateFormat = DateFormatter.dateFormat(
-            fromTemplate: "EEEE, MMM d, yyyy",
-            options: 0,
-            locale: calendar.locale ?? Locale.current)
-        return dateFormatter
-    }()
+
     var periodSelectionHandler: ((Period?) -> Void)?
 
     private enum CalendarSelection {
@@ -85,19 +76,15 @@ final class CalendarViewController: UIViewController {
         .verticalDayMargin(8)
         .horizontalDayMargin(8)
 
-        .dayItemProvider { [calendar, dayDateFormatter] day in
+        .dayItemProvider { [calendar] day in
 
             let date = calendar.date(from: day.components)
             if self.isDayDisabled(day) {
-                var InvariantViewProperties = DayView.InvariantViewProperties.baseNonInteractive
-                InvariantViewProperties.textColor = .gray4 ?? .darkGray
-                return CalendarItemModel<DayView>(
-                    invariantViewProperties: InvariantViewProperties,
-                    viewModel: .init(
-                        dayText: "\(day.day)",
-                        accessibilityLabel: date.map { dayDateFormatter.string(from: $0) },
-                        accessibilityHint: nil))
+                var invariantViewProperties = DayView.InvariantViewProperties.baseNonInteractive
+                invariantViewProperties.textColor = .gray4 ?? .darkGray
+                return CalendarItemModel<DayView>.setItemModel(date: date, day: day, viewProperty: invariantViewProperties)
             } else {
+
                 var invariantViewProperties = DayView.InvariantViewProperties.baseInteractive
                 let isSelectedStyle: Bool
                 switch calendarSelection {
@@ -113,12 +100,7 @@ final class CalendarViewController: UIViewController {
                     invariantViewProperties.backgroundShapeDrawingConfig.fillColor = .gray1 ?? .black
                     invariantViewProperties.textColor = .white
                 }
-                return CalendarItemModel<DayView>(
-                    invariantViewProperties: invariantViewProperties,
-                    viewModel: .init(
-                        dayText: "\(day.day)",
-                        accessibilityLabel: date.map { dayDateFormatter.string(from: $0) },
-                        accessibilityHint: nil))
+                return CalendarItemModel<DayView>.setItemModel(date: date, day: day, viewProperty: invariantViewProperties)
             }
         }
 
@@ -138,5 +120,17 @@ final class CalendarViewController: UIViewController {
     func resetCalendar() {
         calendarSelection = .none
         calendarView.setContent(makeContent())
+    }
+}
+
+extension CalendarItemModel {
+
+    static func setItemModel (date: Date?, day: Day, viewProperty: DayView.InvariantViewProperties) -> CalendarItemModel<DayView> {
+        return CalendarItemModel<DayView>(
+            invariantViewProperties: viewProperty,
+            viewModel: .init(
+                dayText: "\(day.day)",
+                accessibilityLabel: date.map {MyDateFormatter.shared.calendarDateString(from: $0)},
+                accessibilityHint: nil))
     }
 }

@@ -15,8 +15,8 @@ final class ResultViewModel {
     init(selectionResult: FilterSelection) {
         filterSelection = Observable<FilterSelection>(selectionResult)
     }
-    
-    func load(){
+
+    func load() {
         testNetwork.request(path: "/rooms?", completion: { result in
             switch result {
             case .failure(let error):

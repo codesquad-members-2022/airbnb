@@ -8,6 +8,7 @@
 import Foundation
 
 struct SearchAccomadationResponseDTO: Decodable {
+
     enum rentType: String, Decodable {
         case unit = "WHOLE_RESIDENCE"
     }

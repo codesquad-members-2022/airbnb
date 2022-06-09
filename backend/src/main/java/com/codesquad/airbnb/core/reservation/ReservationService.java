@@ -7,15 +7,14 @@ import com.codesquad.airbnb.core.common.embeddable.StayDate;
 import com.codesquad.airbnb.core.member.Member;
 import com.codesquad.airbnb.core.member.MemberRepository;
 import com.codesquad.airbnb.core.reservation.Reservation.ReservationState;
+import com.codesquad.airbnb.core.reservation.dto.ReservationDetailResponse;
+import com.codesquad.airbnb.core.reservation.dto.ReservationListResponse;
+import com.codesquad.airbnb.core.reservation.repository.ReservationRepository;
 import com.codesquad.airbnb.core.room.entity.Room;
-import com.codesquad.airbnb.core.room.entity.RoomDetail;
 import com.codesquad.airbnb.core.room.repository.RoomRepository;
 import com.codesquad.airbnb.exception.ErrorCode;
 import com.codesquad.airbnb.exception.unchecked.NotAvailableException;
 import com.codesquad.airbnb.exception.unchecked.NotFoundException;
-import com.codesquad.airbnb.core.reservation.dto.ReservationDetailResponse;
-import com.codesquad.airbnb.core.reservation.dto.ReservationListResponse;
-import com.codesquad.airbnb.core.reservation.repository.ReservationRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -48,8 +47,7 @@ public class ReservationService {
     @Transactional
     public Reservation makeReservation(Integer memberId, Integer roomId, StayDate stayDate,
         GuestGroup guestGroup) {
-        // 해당 날짜에 숙소에 예약이 이미 있는지 확인
-        validateStayDate(roomId, stayDate);
+        checkOverlappedReservation(roomId, stayDate);
 
         Member member = memberRepository.findById(memberId)
             .orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
@@ -57,14 +55,13 @@ public class ReservationService {
         Room room = roomRepository.findByIdWithDetail(roomId)
             .orElseThrow(() -> new NotFoundException(ErrorCode.ROOM_NOT_FOUND));
 
-        RoomDetail detail = room.getDetail();
-        detail.validateGuestGroup(guestGroup);
+        room.validateGuestGroup(guestGroup);
 
         ChargeBill bill = chargeManager.createBill(room, stayDate, guestGroup);
 
         return reservationRepository.save(
             new Reservation(member, room, bill.getTotalPrice(), guestGroup, stayDate,
-                detail.getStayTime(), ReservationState.BOOKED));
+                room.getStayTime(), ReservationState.BOOKED));
     }
 
     @Transactional
@@ -76,8 +73,8 @@ public class ReservationService {
         return reservation;
     }
 
-    private void validateStayDate(Integer roomId, StayDate stayDate) {
-        List<Reservation> reservations = reservationRepository.findOverlappedReservations(
+    private void checkOverlappedReservation(Integer roomId, StayDate stayDate) {
+        List<Reservation> reservations = reservationRepository.existsOverlappedReservation(
             roomId, stayDate);
 
         if (reservations.size() > 0) {

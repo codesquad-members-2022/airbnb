@@ -31,7 +31,7 @@ public class DistrictController {
         value = "주변의 인기있는 여행지 조회",
         notes = "사용자의 현재 위치를 바탕으로 특정 반경 이내의 인기있는 여행지 목록을 반환한다."
     )
-    @GetMapping("/nearby")
+    @GetMapping
     public List<DistrictResponse> getPopularDistricts(
         @ApiParam(value = "사용자 현재 위치의 경도", required = true)
         @RequestParam("longitude") Double longitude,

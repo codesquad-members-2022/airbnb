@@ -9,6 +9,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ChargeBill {
 
+    private static final int DEFAULT_DISCOUNT_PRICE = 0;
+
     private int nights;
     private int lodgingPrice;
     private int cleaningPrice;
@@ -30,7 +32,7 @@ public class ChargeBill {
         return discounts.stream()
             .map(DiscountBill::getDiscountPrice)
             .reduce(Integer::sum)
-            .orElse(0);
+            .orElse(DEFAULT_DISCOUNT_PRICE);
     }
 
 }

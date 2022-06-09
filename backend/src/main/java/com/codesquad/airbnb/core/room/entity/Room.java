@@ -1,7 +1,9 @@
 package com.codesquad.airbnb.core.room.entity;
 
+import com.codesquad.airbnb.core.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.core.common.embeddable.Location;
 import com.codesquad.airbnb.core.common.embeddable.ReviewStat;
+import com.codesquad.airbnb.core.common.embeddable.StayTime;
 import com.codesquad.airbnb.core.district.District;
 import com.codesquad.airbnb.core.member.Member;
 import com.codesquad.airbnb.core.reservation.Reservation;
@@ -83,6 +85,14 @@ public class Room {
         this.location = location;
         this.price = price;
         this.review = review;
+    }
+
+    public StayTime getStayTime() {
+        return detail.getStayTime();
+    }
+
+    public void validateGuestGroup(GuestGroup guestGroup) {
+        detail.validateGuestGroup(guestGroup);
     }
 
 }

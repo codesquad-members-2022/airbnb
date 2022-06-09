@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ReservationRepositoryCustom {
 
-    List<Reservation> findOverlappedReservations(int roomId, StayDate stayDate);
+    List<Reservation> existsOverlappedReservation(int roomId, StayDate stayDate);
 
 }

@@ -66,6 +66,7 @@ class ReservationServiceTest {
         );
 
         Member host = new Member("Miller",
+            "rxdcxdrnine",
             "https://avatars.githubusercontent.com/u/50660684?v=4",
             false,
             MemberRole.USER
@@ -92,6 +93,7 @@ class ReservationServiceTest {
         );
 
         guest = new Member(
+            "BB-choi",
             "BB-choi",
             "https://avatars.githubusercontent.com/u/78826879?v=4",
             false,

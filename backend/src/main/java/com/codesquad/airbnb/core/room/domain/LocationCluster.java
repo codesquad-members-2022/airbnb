@@ -1,13 +1,14 @@
 package com.codesquad.airbnb.core.room.domain;
 
 import com.codesquad.airbnb.core.common.embeddable.Location;
-import com.codesquad.airbnb.core.room.dto.request.RoomSearCondition.Radius;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 
 @AllArgsConstructor
 @ToString
 public class LocationCluster {
+
+    private static final double EARTH_RADIUS = 6371.01;
 
     private final Location north;
     private final Location south;
@@ -44,7 +45,7 @@ public class LocationCluster {
         double radianLatitude = toRadian(location.getLatitude());
         double radianLongitude = toRadian(location.getLongitude());
         double radianAngle = toRadian(direction.getBearing());
-        double distanceRadius = distance / 6371.01; // earth radius
+        double distanceRadius = distance / EARTH_RADIUS; // earth radius
 
         double newLatitude = Math.asin(sin(radianLatitude) * cos(distanceRadius) +
             cos(radianLatitude) * sin(distanceRadius) * cos(radianAngle));

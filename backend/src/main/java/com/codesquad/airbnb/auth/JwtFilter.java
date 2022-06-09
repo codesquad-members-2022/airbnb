@@ -65,7 +65,8 @@ public class JwtFilter implements Filter {
             if (authorization == null || !authorization.startsWith(BEARER)) {
                 throw new NotFoundException(ErrorCode.TOKEN_NOT_FOUND);
             }
-            String token = authorization.substring(BEARER.length());
+
+            String token = getToken(authorization);
 
             // JWT 를 사이닝 키와 만료 날짜를 비교해 검증
             Claims claims = Jwts.parserBuilder()
@@ -109,6 +110,15 @@ public class JwtFilter implements Filter {
         }
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(object);
+    }
+
+    private String getToken(String authorization) {
+        String[] split = authorization.split(" ");
+
+        if (split.length != 2) {
+            throw new NotFoundException(ErrorCode.TOKEN_NOT_FOUND);
+        }
+        return split[1];
     }
 
 }

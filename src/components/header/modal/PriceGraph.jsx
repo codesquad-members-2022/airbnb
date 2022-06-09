@@ -17,13 +17,9 @@ const PriceGraph = ({priceData, minValue, maxValue}) => {
     return <canvas ref={graphRef}></canvas>;
 };
 
-const color = {
-    out: "#E5E5E5",
-    in: "#333333",
-};
-
 const drawGraph = ({context, width, bottom, unit, priceData, minValue, maxValue}) => {
     const unitOfWidth = width / unit;
+    const [minInRange, maxInRange] = [minValue * unitOfWidth, maxValue * unitOfWidth];
     let height = bottom;
 
     const minPrice = Math.min(...priceData);
@@ -31,8 +27,7 @@ const drawGraph = ({context, width, bottom, unit, priceData, minValue, maxValue}
     const unitOfPrice = (maxPrice - minPrice) / unit;
 
     let range = {min: minPrice, max: minPrice + unitOfPrice};
-    context.beginPath();
-    context.moveTo(0, bottom);
+    startDrawing(context, 0, height, bottom);
 
     for (let i = 0; i < unit; i++) {
         const currentX = i * unitOfWidth;
@@ -44,28 +39,45 @@ const drawGraph = ({context, width, bottom, unit, priceData, minValue, maxValue}
         const targetX = currentX + unitOfWidth;
         const targetY = cp2y;
 
-        context.lineTo(currentX, bottom);
-        context.fill();
-
-        if (minValue * unitOfWidth <= currentX && currentX <= maxValue * unitOfWidth) {
-            context.fillStyle = color.in;
-            context.strokeStyle = color.in;
-        } else {
-            context.fillStyle = color.out;
-            context.strokeStyle = color.out;
-        }
-        context.beginPath();
-        context.moveTo(currentX, bottom);
-        context.lineTo(currentX, height);
+        endDrawing(context, currentX, bottom);
+        changeColor(context, currentX, minInRange, maxInRange);
+        startDrawing(context, currentX - 1, height, bottom);
         context.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, targetX, targetY);
         range = {min: range.max, max: range.max + unitOfPrice};
         height = bottom - count;
     }
 
-    context.lineTo(width, bottom);
+    endDrawing(context, width, bottom);
+};
+
+const startDrawing = (context, x, y, bottom) => {
+    context.beginPath();
+    context.moveTo(x, bottom);
+    context.lineTo(x, y);
+};
+
+const endDrawing = (context, x, bottom) => {
+    context.lineTo(x, bottom);
     context.fill();
-    context.stroke();
-    context.closePath();
+};
+
+const isValueInRange = (value, min, max) => {
+    return min <= value && value <= max;
+};
+
+const changeColor = (context, value, min, max) => {
+    const color = {
+        out: "#E5E5E5",
+        in: "#333333",
+    };
+
+    if (isValueInRange(value, min, max)) {
+        context.fillStyle = color.in;
+        context.strokeStyle = color.in;
+    } else {
+        context.fillStyle = color.out;
+        context.strokeStyle = color.out;
+    }
 };
 
 const getCount = (range, priceData, bottom) => {

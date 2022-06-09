@@ -26,7 +26,7 @@ public class AccommodationController {
     private final AccommodationService accommodationService;
     private final JwtValidator jwtValidator;
 
-    @GetMapping("/api/accommodations/price")
+    @GetMapping("/api/accommodation/prices")
     public AccommodationPriceListDto prices(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate in,
                                             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate out,
                                             @RequestParam Double latitude,

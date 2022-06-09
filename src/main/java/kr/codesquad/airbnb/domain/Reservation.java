@@ -9,10 +9,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import kr.codesquad.airbnb.request.BookingRequest;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,4 +35,14 @@ public class Reservation {
     private Long price;
     private int guests;
     private boolean canceled;
+
+    public Reservation(Members member, Lodging lodging, BookingRequest request) {
+        this.members = member;
+        this.lodging = lodging;
+        this.checkIn = request.getCheckIn();
+        this.checkOut = request.getCheckOut();
+        this.guests = request.getGuests();
+        this.price = request.getPrice();
+        this.canceled = false;
+    }
 }

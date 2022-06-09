@@ -3,10 +3,6 @@ import { FlexType } from "Helpers/interface";
 import { applyFlex } from "Helpers/utils";
 import styled from "styled-components";
 
-interface SearchResultContainerType {
-  isMini?: boolean;
-}
-
 export const miniSearchBarStyle = `
   width: 700px;
   height: 50px;
@@ -28,6 +24,7 @@ export const searchBarStyle = `
 `;
 
 export const calendarStyle = `
+  position:absolute;
   background-color:#fff;
   box-shadow: 0px 4px 10px rgba(51, 51, 51, 0.1), 0px 0px 4px rgba(51, 51, 51, 0.05);
   width: 916px;
@@ -35,6 +32,7 @@ export const calendarStyle = `
   margin-top: 40px;
   padding: 88px;
   border-radius: 40px;
+  z-index:1;
 `;
 
 export const priceChartStyle = `
@@ -43,6 +41,7 @@ export const priceChartStyle = `
 `;
 
 export const headCountStyle = `
+  position:absolute;
   width:400px;
   height:355px;
   background-color:#fff;
@@ -51,18 +50,24 @@ export const headCountStyle = `
   margin-top:40px;
   margin-left:778px;
   padding:64px;
+
 `;
 
-export const SearchResultHeader = styled.header`
-  height: 30px;
-  display: flex;
-  flex-direction: column;
+export const SearchResultContainer = styled.div`
+  min-width: 1440px;
+  width: 100%;
 `;
 
 export const SearchResultHeaderContainer = styled.div`
-  ${({ isMini }: SearchResultContainerType) => `height:${!isMini ? "120" : "240"}px`};
   box-shadow: 0px 0px 4px rgba(204, 204, 204, 0.5), 0px 2px 4px rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(4px);
+  position: relative;
+  z-index: 1;
+`;
+
+export const SearchResultHeader = styled.header`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const SearchResultHeaderArea = styled.div`
@@ -79,14 +84,13 @@ export const Tourist = styled.div`
   height: 1024px;
   background-color: white;
   overflow: auto;
-  z-index: -1;
 `;
 
 export const MapArea = styled.div`
   flex: 3;
   height: 1024px;
   background-color: green;
-  z-index: -1;
+  z-index: 0;
 `;
 
 export const accommodationStyle = `

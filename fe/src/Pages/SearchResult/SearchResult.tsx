@@ -5,6 +5,7 @@ import MiniSearchBar from "Components/SearchBar/MiniSearchBar";
 import { DispatchCalendarContext } from "Context/CalendarProvider";
 import { DispatchHeadCountContext } from "Context/HeadCountProvider";
 import { DispatchPriceModalContext } from "Context/PriceProvider";
+import { MODAL_REF_IDX } from "Helpers/constant";
 import { getRandomNumber } from "Helpers/utils";
 import { useOutsideClick } from "Hook/useOutsideClick";
 import SearchView from "Pages/Common/SearchView";
@@ -25,6 +26,7 @@ import {
   photoStyle,
   Title,
   SearchConditions,
+  SearchResultContainer,
 } from "./SearchResult.styled";
 
 export default function SearchResult() {
@@ -32,7 +34,7 @@ export default function SearchResult() {
   const dispatchCalendar = useContext(DispatchCalendarContext);
   const dispatchPrice = useContext(DispatchPriceModalContext);
   const dispatchHeadCount = useContext(DispatchHeadCountContext);
-  const searchRef = useRef([]);
+  const searchRef: React.MutableRefObject<HTMLElement[] | null[] | never[]> = useRef([]);
 
   const handleClick = () => {
     setIsMiniSearchBar(true);
@@ -48,8 +50,8 @@ export default function SearchResult() {
   useOutsideClick(searchRef, handleOutsideClick);
 
   return (
-    <>
-      <SearchResultHeaderContainer isMini={isMiniSearchBar}>
+    <SearchResultContainer>
+      <SearchResultHeaderContainer ref={(el) => searchRef && (searchRef.current[MODAL_REF_IDX] = el)}>
         <SearchResultHeaderArea>
           <SearchResultHeader>
             {!isMiniSearchBar ? (
@@ -60,7 +62,6 @@ export default function SearchResult() {
               <>
                 <Gnb />
                 <SearchView
-                  searchRef={searchRef}
                   searchBarStyle={searchBarStyle}
                   calendarStyle={calendarStyle}
                   priceChartStyle={priceChartStyle}
@@ -94,7 +95,7 @@ export default function SearchResult() {
           <Map />
         </MapArea>
       </SearchResultArea>
-    </>
+    </SearchResultContainer>
   );
 }
 

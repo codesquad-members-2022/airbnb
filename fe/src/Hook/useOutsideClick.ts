@@ -9,7 +9,7 @@ export function useOutsideClick(
       if (!elements) {
         return;
       }
-      for (let element of elements.current) {
+      for (const element of elements.current) {
         // undefined: 모달은 활성화 되어 있지만, 버튼은 비활성화 상태일때는 함수를 탈출하지 않는다.
         if (element === undefined) {
           continue;

@@ -145,30 +145,6 @@ enum CalendarDateError: Error {
 }
 
 extension CalendarModel {
-    func shinghaSayMakeDays(for baseDate: Date) -> [Date?] {
-        let component = calendar.dateComponents([.year, .month], from: baseDate)
-        guard let firstDate = calendar.date(from: component),
-              let nextMonthDate = calendar.date(byAdding: .month, value: 1, to: firstDate), // 7월 1일
-              let lastDate = calendar.date(byAdding: .day, value: -1, to: nextMonthDate) else {
-                  return []
-              }
-        let startComponent = calendar.dateComponents([.day, .weekday], from: firstDate)
-        let lastComponent = calendar.dateComponents([.day, .weekday], from: lastDate)
-        guard let lastday = lastComponent.day,
-              let startWeekDay = startComponent.weekday,
-              let lastWeekDay = lastComponent.weekday else {
-                  return []
-              }
-        var dates: [Date?] = (0..<lastday).map { addDay in
-            calendar.date(byAdding: .day, value: addDay, to: firstDate)
-        }
-        (0..<startWeekDay - 1).forEach { _ in dates.insert(nil, at: 0) }
-        (lastWeekDay - 1..<6).forEach { _ in dates.append(nil) }
-        return dates
-    }
-}
-
-extension CalendarModel {
     func validateCheckDate(at indexPath: IndexPath) {
         if let checkinDayIndex = checkinDayIndex {
             if checkinDayIndex <= indexPath {

@@ -28,9 +28,13 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
     
     private let weekdayView: UIView = WeekdayView()
     
-//    let skipButton =  UIBarButtonItem(title: "건너뛰기", style: .plain, target: self, action: #selector(pushNextVC))
-//    let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: nil)
-//    let clearButton = UIBarButtonItem(title: "지우기", style: .plain, target: self, action: #selector(clearReservationField))
+//    private let spacing: UIBarButtonItem = { UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil) }()
+//    private let skipButton: UIBarButtonItem = {
+//        let buttonItem = UIBarButtonItem(title: "건너뛰기", style: .plain, target: self, action: #selector(pushNextVC))
+//        return buttonItem
+//    }()
+//    private let nextButton: UIBarButtonItem = { UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(pushNextVC)) }()
+//    private let clearButton: UIBarButtonItem = { UIBarButtonItem(title: "지우기", style: .plain, target: self, action: #selector(clearReservationField)) }()
     
     init(reservationModel: ReservationModel) {
         self.reservationModel = reservationModel
@@ -164,7 +168,7 @@ extension CalendarViewController {
     private func setUpToolBarItems(isEmpty: Bool) -> [UIBarButtonItem] {
         let spacing = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let skipButton =  UIBarButtonItem(title: "건너뛰기", style: .plain, target: self, action: #selector(pushNextVC))
-        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: nil)
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(pushNextVC))
         let clearButton = UIBarButtonItem(title: "지우기", style: .plain, target: self, action: #selector(clearReservationField))
         if isEmpty {
             nextButton.isEnabled = false

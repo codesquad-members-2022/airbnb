@@ -32,9 +32,9 @@ const miniHeaderWithFullSizeSearchBar = {
 
 const HeaderLayer = emotionStyled.div`
   position: absolute;
-  top: 0;
+  top: ${theme.elementSize.header.others.height};
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - ${theme.elementSize.header.others.height});
 `;
 
 const HeaderContainer = styled(Container)<ContainerProps>(

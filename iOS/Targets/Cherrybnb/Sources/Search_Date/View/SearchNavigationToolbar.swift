@@ -48,11 +48,11 @@ class SearchNavigationToolbar: UIToolbar {
     }
 
     func enableNextButton() {
-        items?[2].isEnabled = true
+        nextButton.isEnabled = true
     }
 
     func disableNextButton() {
-        items?[2].isEnabled = false
+        nextButton.isEnabled = false
     }
 
     func showResetButton() {
@@ -62,5 +62,4 @@ class SearchNavigationToolbar: UIToolbar {
     func showSkipButton() {
         items?[0] = skipButton
     }
-
 }

@@ -44,7 +44,7 @@
 		1B69F36B283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B69F36A283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift */; };
 		1B6E8D0E2850543E00F165B8 /* HeadCountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D0A2850543D00F165B8 /* HeadCountCell.swift */; };
 		1B6E8D0F2850543E00F165B8 /* HeadCountDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D0B2850543D00F165B8 /* HeadCountDataSource.swift */; };
-		1B6E8D102850543E00F165B8 /* HeadCountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D0C2850543D00F165B8 /* HeadCountModel.swift */; };
+		1B6E8D102850543E00F165B8 /* HeadCountThreePersonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D0C2850543D00F165B8 /* HeadCountThreePersonModel.swift */; };
 		1B6E8D112850543E00F165B8 /* HeadCountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D0D2850543D00F165B8 /* HeadCountViewController.swift */; };
 		1B6E8D152850769A00F165B8 /* HeadCountDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D142850769A00F165B8 /* HeadCountDTO.swift */; };
 		1B756E702848533B003AC0EA /* SearchInfoTrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B756E6F2848533B003AC0EA /* SearchInfoTrackingViewController.swift */; };
@@ -134,7 +134,7 @@
 		1B69F36A283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleRowsCollectionViewContainerCell.swift; sourceTree = "<group>"; };
 		1B6E8D0A2850543D00F165B8 /* HeadCountCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadCountCell.swift; sourceTree = "<group>"; };
 		1B6E8D0B2850543D00F165B8 /* HeadCountDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadCountDataSource.swift; sourceTree = "<group>"; };
-		1B6E8D0C2850543D00F165B8 /* HeadCountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadCountModel.swift; sourceTree = "<group>"; };
+		1B6E8D0C2850543D00F165B8 /* HeadCountThreePersonModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadCountThreePersonModel.swift; sourceTree = "<group>"; };
 		1B6E8D0D2850543D00F165B8 /* HeadCountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadCountViewController.swift; sourceTree = "<group>"; };
 		1B6E8D142850769A00F165B8 /* HeadCountDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadCountDTO.swift; sourceTree = "<group>"; };
 		1B756E6F2848533B003AC0EA /* SearchInfoTrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInfoTrackingViewController.swift; sourceTree = "<group>"; };
@@ -406,7 +406,7 @@
 			isa = PBXGroup;
 			children = (
 				1B6E8D0B2850543D00F165B8 /* HeadCountDataSource.swift */,
-				1B6E8D0C2850543D00F165B8 /* HeadCountModel.swift */,
+				1B6E8D0C2850543D00F165B8 /* HeadCountThreePersonModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -601,7 +601,7 @@
 				00863C4F2847452F004E5954 /* CalendarModel.swift in Sources */,
 				1B27E231283CA14200FCB990 /* SearchTwoInARowCollectionViewCell.swift in Sources */,
 				00A85F35283B872800EA32E0 /* ReservationModel.swift in Sources */,
-				1B6E8D102850543E00F165B8 /* HeadCountModel.swift in Sources */,
+				1B6E8D102850543E00F165B8 /* HeadCountThreePersonModel.swift in Sources */,
 				00A85F3C283B876A00EA32E0 /* WishListViewController.swift in Sources */,
 				1BDEFD23284E203700EBC3DF /* SearchInfoTrackingTableViewDataSource.swift in Sources */,
 				1B7CBD82284F02C5008C31F1 /* SearchInfoTrackingModel.swift in Sources */,

@@ -9,6 +9,9 @@ import UIKit
 
 class HeadCountCell: UITableViewCell {
     
+    weak var dataSource: UITableViewDataSource?
+    var headType: HeadCountType?
+    
     static var reuseIdentifier: String {
         return String(describing: HeadCountCell.self)
     }
@@ -49,7 +52,6 @@ class HeadCountCell: UITableViewCell {
     
     private let minusButton: ManageButton = {
         let button = ManageButton()
-//        button.contentMode = .scaleAspectFit
         button.imageView?.contentMode = .scaleAspectFit
         button.setImage(UIImage(named: "MinusCircle"), for: .normal)
         button.tintColor = UIColor.getGrayScale(.Grey1)
@@ -74,6 +76,7 @@ class HeadCountCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         setLayout()
+        setHandler()
     }
     
     func setLayout() {
@@ -120,31 +123,58 @@ class HeadCountCell: UITableViewCell {
         contentView.setNeedsDisplay()
     }
     
+    func setHandler() {
+        plusButton.addTarget(self, action: #selector(plusButtonTouchUpInside(_:)), for: .touchUpInside)
+        minusButton.addTarget(self, action: #selector(minusButtonTouchUpInside(_:)), for: .touchUpInside)
+    }
+    
     func setTitle(_ title: String) {
-        self.titleLabel.text = title
+        titleLabel.text = title
     }
     
     func setDescription(_ description: String) {
-        self.descriptionLabel.text = description
+        descriptionLabel.text = description
     }
     
-    func setNumber(_ number: Int) {
-        self.numberLabel.text = "\(number)"
+    func setNumber(_ number: Int, maxNumber: Int) {
+        numberLabel.text = "\(number)"
+        
+        minusButton.isEnabled = true; plusButton.isEnabled = true
+        
+        if number == 0 {
+            minusButton.isEnabled = false
+        } else if number == maxNumber {
+            plusButton.isEnabled = false
+        }
     }
     
     func buttonEnableState(_ button: HeadCountButton, isEnable: Bool) {
         var targetButton: UIButton
         
         switch button {
-        case .minus: targetButton = self.minusButton
-        case .plus: targetButton = self.plusButton
+        case .minus:
+            targetButton = minusButton
+        case .plus:
+            targetButton = plusButton
         }
         
         targetButton.isEnabled = isEnable
     }
     
     func clearSeparatorView() {
-        self.separatorLineView.backgroundColor = .clear
+        separatorLineView.backgroundColor = .clear
+    }
+    
+    @objc private func plusButtonTouchUpInside(_ sender: UIButton) {
+        guard let dataSource = dataSource as? HeadCountDataSource, let headType = headType else { return }
+        print("haha")
+        dataSource.setHeadCount(headType: headType, inputType: .plus)
+    }
+    
+    @objc private func minusButtonTouchUpInside(_ sender: UIButton) {
+        guard let dataSource = dataSource as? HeadCountDataSource, let headType = headType else { return }
+        print("haha")
+        dataSource.setHeadCount(headType: headType, inputType: .minus)
     }
     
     enum HeadCountButton {
@@ -170,14 +200,10 @@ class HeadCountCell: UITableViewCell {
         
         override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             
-            guard actionTouchEnable == false else {
-                return
-            }
+            guard actionTouchEnable == false else { return }
             
             actionTouchEnable = true
-            
             super.touchesBegan(touches, with: event)
-            
             actionTouchEnable = false
         }
     }

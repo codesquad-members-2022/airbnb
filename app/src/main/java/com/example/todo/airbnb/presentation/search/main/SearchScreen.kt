@@ -64,11 +64,12 @@ fun SearchMainScreen(navController: NavController, viewModel: SearchViewModel) {
                         navController,
                         travelLocations,
                         onAddReservation = { locationName ->
-                            viewModel.addReservation(Search
-                                .defaultOf()
-                                .copy(
-                                    location = locationName
-                                )
+                            viewModel.addReservation(
+                                Search
+                                    .defaultOf()
+                                    .copy(
+                                        location = locationName
+                                    )
                             )
                         }
                     )
@@ -76,11 +77,12 @@ fun SearchMainScreen(navController: NavController, viewModel: SearchViewModel) {
                         navController,
                         searchLocations,
                         onAddReservation = { locationName ->
-                            viewModel.addReservation(Search
-                                .defaultOf()
-                                .copy(
-                                    location = locationName
-                                )
+                            viewModel.addReservation(
+                                Search
+                                    .defaultOf()
+                                    .copy(
+                                        location = locationName
+                                    )
                             )
                         }
                     )

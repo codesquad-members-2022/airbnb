@@ -20,5 +20,4 @@ interface MainRepository {
     fun onClickFavorite(index: Int)
 
     fun getDetailAccommodation(id: Int): Flow<AccommodationResult>
-
 }

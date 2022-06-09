@@ -25,7 +25,8 @@ data class Search(
         const val DEFAULT_MAXPRICE = Int.MAX_VALUE
 
         fun defaultOf() =
-            Search(DEFAULT_LOCATION,
+            Search(
+                DEFAULT_LOCATION,
                 DEFAULT_CHECKIN,
                 DEFAULT_CHECKOUT,
                 DEFAULT_MINPRICE,

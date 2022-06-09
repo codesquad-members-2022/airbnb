@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 import HorizonCalendar
 
 final class CalendarViewController: UIViewController {
@@ -71,39 +72,22 @@ final class CalendarViewController: UIViewController {
             calendar: calendar,
             visibleDateRange: startDate...endDate,
             monthsLayout: .vertical(options: VerticalMonthsLayoutOptions(pinDaysOfWeekToTop: true, alwaysShowCompleteBoundaryMonths: true)))
-
         .interMonthSpacing(24)
         .verticalDayMargin(8)
         .horizontalDayMargin(8)
-
         .dayItemProvider { [calendar] day in
-
-            let date = calendar.date(from: day.components)
+          let date = calendar.date(from: day.components)
             if self.isDayDisabled(day) {
-                var invariantViewProperties = DayView.InvariantViewProperties.baseNonInteractive
-                invariantViewProperties.textColor = .gray4 ?? .darkGray
-                return CalendarItemModel<DayView>.setItemModel(date: date, day: day, viewProperty: invariantViewProperties)
+                return CalendarItemModel<DayView>.setItemModel(date: date, day: day, viewProperty: DayView.disabledInvariantViewProperties)
             } else {
-
                 var invariantViewProperties = DayView.InvariantViewProperties.baseInteractive
-                let isSelectedStyle: Bool
-                switch calendarSelection {
-                case .singleDay(let selectedDay):
-                    isSelectedStyle = day == selectedDay
-                case .dayRange(let selectedDayRange):
-                    isSelectedStyle = day == selectedDayRange.lowerBound || day == selectedDayRange.upperBound
-                case .none:
-                    isSelectedStyle = false
-                }
-
-                if isSelectedStyle {
+                if self.isSelected(day) {
                     invariantViewProperties.backgroundShapeDrawingConfig.fillColor = .gray1 ?? .black
                     invariantViewProperties.textColor = .white
                 }
                 return CalendarItemModel<DayView>.setItemModel(date: date, day: day, viewProperty: invariantViewProperties)
             }
         }
-
         .dayRangeItemProvider(for: dateRanges) { dayRangeLayoutContext in
             CalendarItemModel<DayRangeIndicatorView>(
                 invariantViewProperties: .init(),
@@ -117,15 +101,45 @@ final class CalendarViewController: UIViewController {
         return date < Date() ? true : false
     }
 
+    private func isSelected(_ day: Day) -> Bool {
+        switch calendarSelection {
+        case .singleDay(let selectedDay):
+            return day == selectedDay
+        case .dayRange(let selectedDayRange):
+            return day == selectedDayRange.lowerBound || day == selectedDayRange.upperBound
+        case .none:
+            return false
+        }
+    }
+
     func resetCalendar() {
         calendarSelection = .none
         calendarView.setContent(makeContent())
     }
+
 }
 
+extension DayView {
+
+    static var disabledInvariantViewProperties: InvariantViewProperties {
+
+        var invariantViewProperties = DayView.InvariantViewProperties.baseNonInteractive
+        invariantViewProperties.textColor = .gray4 ?? .darkGray
+        return invariantViewProperties
+    }
+
+    static var activeInvariantViewProperties: InvariantViewProperties {
+
+        var invariantViewProperties = DayView.InvariantViewProperties.baseInteractive
+        invariantViewProperties.backgroundShapeDrawingConfig.fillColor = .gray1 ?? .black
+        invariantViewProperties.textColor = .white
+        return invariantViewProperties
+    }
+
+}
 extension CalendarItemModel {
 
-    static func setItemModel (date: Date?, day: Day, viewProperty: DayView.InvariantViewProperties) -> CalendarItemModel<DayView> {
+    static func setItemModel(date: Date?, day: Day, viewProperty: DayView.InvariantViewProperties) -> CalendarItemModel<DayView> {
         return CalendarItemModel<DayView>(
             invariantViewProperties: viewProperty,
             viewModel: .init(

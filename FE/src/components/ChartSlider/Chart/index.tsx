@@ -3,14 +3,14 @@ import { CHART_TYPE } from '@components/SearchBar/constants';
 import useCanvas from '@lib/hooks/useCanvas';
 import { usePriceState } from '@lib/hooks/useContext';
 
-export interface ChartTypes {
+export interface ChartPropsTypes {
   type: string;
   rangeData: number[];
   canvasWidth: number;
   canvasHeight: number;
 }
 
-const Chart = ({ type, rangeData, canvasWidth, canvasHeight }: ChartTypes) => {
+const Chart = ({ type, rangeData, canvasWidth, canvasHeight }: ChartPropsTypes) => {
 
   const { minPrice, maxPrice, defaultMaxPrice, defaultMinPrice } = usePriceState();
 

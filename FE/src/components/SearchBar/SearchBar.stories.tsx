@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import SearchBar, { SearchBarTypes } from '@components/SearchBar';
+import SearchBar, { SearchBarPropsTypes } from '@components/SearchBar';
 import { SEARCH_BAR_SIZE } from '@components/SearchBar/constants';
 
 export default {
@@ -19,6 +19,6 @@ export default {
   },
 } as ComponentMeta<typeof SearchBar>;
 
-export const Default: ComponentStory<typeof SearchBar> = (args: SearchBarTypes) => (
+export const Default: ComponentStory<typeof SearchBar> = (args: SearchBarPropsTypes) => (
   <SearchBar {...args} />
 );

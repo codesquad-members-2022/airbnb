@@ -6,13 +6,13 @@ import Modal, { MODAL_POSITION } from '@components/common/Modal';
 import { usePriceState } from '@lib/hooks/useContext';
 import { formatPrice } from '@lib/utils';
 
-interface PriceModalTypes {
+interface PriceModalPropsTypes {
   modalRef: RefObject<HTMLDivElement>;
 }
 
 const RANGE_INTERVAL = 10000;
 
-const PriceModal = ({ modalRef }: PriceModalTypes) => {
+const PriceModal = ({ modalRef }: PriceModalPropsTypes) => {
   const { minPrice, maxPrice, priceRange, defaultMinPrice } = usePriceState();
   const priceContent = `${formatPrice(minPrice)} ~ ${formatPrice(maxPrice)}`;
 

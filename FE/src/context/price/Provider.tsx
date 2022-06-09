@@ -14,7 +14,7 @@ export interface PriceContextTypes {
   priceRange: number[];
 }
 
-interface PriceProviderTypes {
+interface PriceProviderPropsTypes {
   children: JSX.Element;
 }
 
@@ -33,7 +33,7 @@ interface PriceInfoTypes {
 
 export const PriceContext = React.createContext<PriceContextTypes | null>(null);
 
-export const PriceProvider = ({ children }: PriceProviderTypes) => {
+export const PriceProvider = ({ children }: PriceProviderPropsTypes) => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
   const [avgPrice, setAvgPrice] = useState(0);
@@ -84,5 +84,5 @@ export const PriceProvider = ({ children }: PriceProviderTypes) => {
     priceRange,
   };
 
-  return <PriceContext.Provider value={value}>{children}</PriceContext.Provider>;
+  return <PriceContext.Provider {...{value}}>{children}</PriceContext.Provider>;
 };

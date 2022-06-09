@@ -1,6 +1,7 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import PeriodModal from '@components/SearchBar/Modal/PeriodModal';
+import { AreaPropsTypes } from '@components/SearchBar/PriceArea';
 import * as S from '@components/SearchBar/SearchBar.style';
 import { AREA_TYPE, NO_CONTENT, SEARCH_BAR_SIZE } from '@components/SearchBar/constants';
 import Icon, { ICON_NAME, ICON_SIZE } from '@components/common/Icon';
@@ -9,11 +10,7 @@ import { defaultPeriod } from '@data';
 import WithProvider from '@hoc/WithProvider';
 import { useCalendarState } from '@lib/hooks/useContext';
 
-export interface PeriodAreaTypes {
-  size: string;
-}
-
-const PeriodArea = ({ size }: PeriodAreaTypes) => {
+const PeriodArea = ({ size }: AreaPropsTypes) => {
   const [isPeriodModalOpen, setIsPeriodModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const { checkIn, setCheckIn, checkOut, setCheckOut } = useCalendarState();

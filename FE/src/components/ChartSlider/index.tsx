@@ -4,7 +4,6 @@ import { CANVAS_SIZE, CHART_TYPE } from '@components/SearchBar/constants';
 import { usePriceState } from '@lib/hooks/useContext';
 
 const ChartSlider = () => {
-
   const { priceRange } = usePriceState();
 
   return (

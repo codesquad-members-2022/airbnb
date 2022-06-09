@@ -18,7 +18,7 @@ const GNB = () => {
   const currentPath = pathname === '/' ? GNB_TYPE.MAIN : GNB_TYPE.RESULT;
 
   return (
-    <S.Container currentPath={currentPath}>
+    <S.Container {...{currentPath}}>
       <S.Wrapper>
         <Logo />
         <Navigation />

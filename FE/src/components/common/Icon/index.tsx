@@ -19,12 +19,12 @@ export const ICON_SIZE: { [key: string]: string } = {
   SMALL: 'SMALL',
 };
 
-export interface IconTypes {
+export interface IconPropsTypes {
   iconName: string;
   iconSize: string;
 }
 
-const Icon = ({ iconName, iconSize }: IconTypes) => {
+const Icon = ({ iconName, iconSize }: IconPropsTypes) => {
   return <S.Icon src={Icons[iconName]} size={iconSize} />;
 };
 

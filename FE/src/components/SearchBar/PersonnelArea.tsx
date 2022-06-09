@@ -1,11 +1,8 @@
+import { AreaPropsTypes } from '@components/SearchBar/PriceArea';
 import * as S from '@components/SearchBar/SearchBar.style';
 import { AREA_TYPE, NO_CONTENT, SEARCH_BAR_SIZE } from '@components/SearchBar/constants';
 import Icon, { ICON_NAME, ICON_SIZE } from '@components/common/Icon';
 import { PersonnelTypes, defaultPersonnel } from '@data';
-
-interface PersonnelAreaTypes {
-  size: string;
-}
 
 const getPersonnelContent = (personnel: PersonnelTypes) => {
   return Object.entries(personnel)
@@ -16,7 +13,7 @@ const getPersonnelContent = (personnel: PersonnelTypes) => {
     .join(', ');
 };
 
-const PersonnelArea = ({ size }: PersonnelAreaTypes) => {
+const PersonnelArea = ({ size }: AreaPropsTypes) => {
   const { guest, kid } = defaultPersonnel;
   const isPersonnelExist = guest !== defaultPersonnel.guest || kid !== defaultPersonnel.kid;
 

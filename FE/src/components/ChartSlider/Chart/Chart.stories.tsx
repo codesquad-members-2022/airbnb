@@ -1,4 +1,4 @@
-import Chart, { ChartTypes } from '@components/ChartSlider/Chart';
+import Chart, { ChartPropsTypes } from '@components/ChartSlider/Chart';
 import { CANVAS_SIZE, CHART_TYPE } from '@components/SearchBar/constants';
 import { rangeData } from '@data';
 
@@ -21,4 +21,4 @@ export default {
   },
 };
 
-export const Default = (args: ChartTypes) => <Chart {...args} />;
+export const Default = (args: ChartPropsTypes) => <Chart {...args} />;

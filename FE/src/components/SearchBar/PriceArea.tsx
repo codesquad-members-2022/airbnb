@@ -9,11 +9,11 @@ import WithProvider from '@hoc/WithProvider';
 import { usePriceState } from '@lib/hooks/useContext';
 import { formatPrice } from '@lib/utils';
 
-export interface PriceAreaTypes {
-  size: string;
+export interface AreaPropsTypes {
+  size?: string;
 }
 
-const PriceArea = ({ size }: PriceAreaTypes) => {
+const PriceArea = ({ size }: AreaPropsTypes) => {
   const [isPriceModalOpen, setIsPriceModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 

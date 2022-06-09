@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Modal, { MODAL_POSITION, ModalTypes } from '@components/common/Modal';
+import Modal, { MODAL_POSITION, ModalPropsTypes } from '@components/common/Modal';
 import * as S from '@components/common/Modal/Modal.style';
 
 export default {
@@ -19,7 +19,7 @@ export default {
   },
 };
 
-export const Default = (args: ModalTypes) => {
+export const Default = (args: ModalPropsTypes) => {
   const element = document.getElementById('root') as HTMLElement;
   element.style.position = 'relative';
 

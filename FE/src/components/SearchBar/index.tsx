@@ -7,11 +7,11 @@ import * as S from '@components/SearchBar/SearchBar.style';
 import SearchButton from '@components/SearchBar/SearchButton';
 import { SEARCH_BAR_SIZE } from '@components/SearchBar/constants';
 
-export interface SearchBarTypes {
+export interface SearchBarPropsTypes {
   size?: string;
 }
 
-const SearchBar = ({ size = SEARCH_BAR_SIZE.LARGE }: SearchBarTypes) => {
+const SearchBar = ({ size = SEARCH_BAR_SIZE.LARGE }: SearchBarPropsTypes) => {
   const [isActive, setIsActive] = useState(false);
 
   const toggleIsActive = () => setIsActive(true);

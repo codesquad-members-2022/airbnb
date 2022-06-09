@@ -2,17 +2,7 @@ import React, {useRef} from "react";
 import styled from "styled-components";
 import {ReactComponent as PointerIcon} from "../../../assets/pause.svg";
 
-const RangeSlider = ({
-    min,
-    max,
-    minValue,
-    setMinValue,
-    maxValue,
-    setMaxValue,
-    setPriceMinIdx,
-    setPriceMaxIdx,
-    dataLength,
-}) => {
+const RangeSlider = ({min, max, minValue, setMinValue, maxValue, setMaxValue, changePriceRange}) => {
     const width = 465;
     const pointerWidth = 20;
 
@@ -26,8 +16,8 @@ const RangeSlider = ({
         const minVal = Math.min(value, maxValue - 1);
         const percent = (minVal / width) * (width - pointerWidth);
         setMinValue(minVal);
-        setPriceMinIdx(Math.floor((minVal * dataLength) / 100));
         leftPointer.current.style.left = `${percent}%`;
+        changePriceRange("min", minVal);
     };
 
     const moveRightPointer = (event) => {
@@ -35,8 +25,8 @@ const RangeSlider = ({
         const maxVal = Math.max(value, minValue + 1);
         const percent = (maxVal / width) * (width - pointerWidth);
         setMaxValue(maxVal);
-        setPriceMaxIdx(Math.min(Math.floor((maxVal * dataLength) / 100), 99));
         rightPointer.current.style.right = `${100 - percent}%`;
+        changePriceRange("max", maxVal);
     };
 
     return (

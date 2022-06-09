@@ -73,10 +73,12 @@ fun DetailContent(
             .padding(bottom = 100.dp)
     ) {
         Box {
-            LoadImage(accommodation.image,
+            LoadImage(
+                accommodation.image,
                 Modifier
                     .fillMaxWidth()
-                    .height(375.dp))
+                    .height(375.dp)
+            )
             Row(
                 modifier = Modifier
                     .padding(start = 10.dp, top = 20.dp, end = 10.dp)
@@ -87,7 +89,9 @@ fun DetailContent(
                 Row {
                     CircleButton(Icons.Default.Share, "share", onClick = {})
                     Spacer(modifier = Modifier.width(10.dp))
-                    CircleButton(Icons.Default.Favorite, "favorite", onClick = {})
+                    CircleButton(Icons.Default.Favorite, "favorite",
+                        onClick = {}
+                    )
                 }
             }
         }
@@ -114,10 +118,11 @@ fun DetailContent(
             Text(text = accommodation.address)
 
             Spacer(modifier = Modifier.height(8.dp))
-            Spacer(modifier = Modifier
-                .height(1.dp)
-                .fillMaxWidth()
-                .background(Color.Gray)
+            Spacer(
+                modifier = Modifier
+                    .height(1.dp)
+                    .fillMaxWidth()
+                    .background(Color.Gray)
             )
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -129,20 +134,23 @@ fun DetailContent(
                     Text(text = "레지던스 전체")
                     Text(text = "호스트: Jong님")
                 }
-                LoadImage(accommodation.image,
+                LoadImage(
+                    accommodation.image,
                     Modifier
                         .clip(RoundedCornerShape(50.dp))
                         .height(50.dp)
-                        .width(50.dp))
+                        .width(50.dp)
+                )
             }
 
             Text(text = "최대인원 ${accommodation.maxPerson}명 원룸 ${accommodation.onRoom}개 침대 ${accommodation.bed}개 욕실 ${accommodation.bathRoom}개")
 
             Spacer(modifier = Modifier.height(8.dp))
-            Spacer(modifier = Modifier
-                .height(1.dp)
-                .fillMaxWidth()
-                .background(Color.Gray)
+            Spacer(
+                modifier = Modifier
+                    .height(1.dp)
+                    .fillMaxWidth()
+                    .background(Color.Gray)
             )
             Spacer(modifier = Modifier.height(8.dp))
 

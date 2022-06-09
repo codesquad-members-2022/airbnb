@@ -21,6 +21,7 @@ import com.example.todo.airbnb.presentation.search.fare.components.FareScreen
 import com.example.todo.airbnb.presentation.search.main.SearchScreen
 import com.example.todo.airbnb.presentation.search.personnel.components.PersonnelScreen
 import com.example.todo.airbnb.presentation.search.searchmap.components.SearchMapScreen
+import com.example.todo.airbnb.presentation.search.searchresult.ResultViewModel
 import com.example.todo.airbnb.presentation.search.searchresult.components.SearchResultScreen
 import com.example.todo.airbnb.presentation.search.serachcondition.SearchConditionScreen
 import com.example.todo.airbnb.presentation.wishlist.components.WishListScreen
@@ -92,8 +93,9 @@ fun BottomBar(
 @Composable
 fun BottomNavGraph(
     navController: NavHostController,
-    viewModel: SearchViewModel,
+    searchViewModel: SearchViewModel,
     reservationViewModel: ReservationViewModel,
+    searchResultViewModel: ResultViewModel
 ) {
     NavHost(
         navController = navController,
@@ -101,8 +103,9 @@ fun BottomNavGraph(
     ) {
         airbnbNavGraph(
             navController = navController,
-            viewModel = viewModel,
-            reservationViewModel = reservationViewModel
+            searchViewModel = searchViewModel,
+            reservationViewModel = reservationViewModel,
+            searchResultViewModel = searchResultViewModel
         )
     }
 }
@@ -111,15 +114,21 @@ fun BottomNavGraph(
 @ExperimentalMaterialApi
 private fun NavGraphBuilder.airbnbNavGraph(
     navController: NavController,
-    viewModel: SearchViewModel,
+    searchViewModel: SearchViewModel,
     reservationViewModel: ReservationViewModel,
+    searchResultViewModel: ResultViewModel
 ) {
     navigation(
         route = Destinations.search,
         startDestination = HomeSections.Search.route
     ) {
-        composable(HomeSections.Search.route) { SearchScreen(viewModel, navController) }
-        composable(HomeSections.WishList.route) { WishListScreen() }
+        composable(HomeSections.Search.route) { SearchScreen(searchViewModel, navController) }
+        composable(HomeSections.WishList.route) {
+            WishListScreen(
+                searchResultViewModel,
+                navController
+            )
+        }
         composable(HomeSections.Reservation.route) {
             ReservationScreen(
                 navController,
@@ -129,18 +138,23 @@ private fun NavGraphBuilder.airbnbNavGraph(
     }
 
     composable(route = Destinations.calendar) {
-        DateScreen(navController = navController, viewModel)
+        DateScreen(navController = navController, searchViewModel)
     }
-    composable(route = Destinations.fare) { FareScreen(navController = navController, viewModel) }
+    composable(route = Destinations.fare) {
+        FareScreen(
+            navController = navController,
+            searchViewModel
+        )
+    }
     composable(route = Destinations.personnel) {
-        PersonnelScreen(navController = navController, viewModel)
+        PersonnelScreen(navController = navController, searchViewModel)
     }
     composable(route = Destinations.searchResult) {
-        SearchResultScreen(navController = navController, viewModel)
+        SearchResultScreen(navController = navController, searchViewModel, searchResultViewModel)
     }
     composable(route = Destinations.searchMap) { SearchMapScreen() }
     composable(route = Destinations.searchCondition) {
-        SearchConditionScreen(navController = navController, viewModel)
+        SearchConditionScreen(navController = navController, searchViewModel)
     }
     composable(
         route = "${Destinations.detail}/{id}",
@@ -148,7 +162,7 @@ private fun NavGraphBuilder.airbnbNavGraph(
     ) { entry ->
         val id = entry.arguments?.getInt("id")
         id?.let {
-            DetailScreen(navController = navController, searchViewModel = viewModel, id = id)
+            DetailScreen(navController = navController, searchViewModel = searchViewModel, id = id)
         }
     }
 }

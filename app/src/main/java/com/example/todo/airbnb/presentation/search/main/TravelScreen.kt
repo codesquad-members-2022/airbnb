@@ -48,11 +48,12 @@ fun TravelScreen(viewModel: SearchViewModel, navController: NavController) {
                     travelLocations,
                     navController,
                     onAddReservation = { locationName ->
-                        viewModel.addReservation(Search
-                            .defaultOf()
-                            .copy(
-                                location = locationName
-                            )
+                        viewModel.addReservation(
+                            Search
+                                .defaultOf()
+                                .copy(
+                                    location = locationName
+                                )
                         )
                     }
                 )

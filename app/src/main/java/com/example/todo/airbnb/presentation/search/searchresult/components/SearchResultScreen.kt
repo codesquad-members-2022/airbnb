@@ -38,10 +38,9 @@ import java.text.DecimalFormat
 @Composable
 fun SearchResultScreen(
     navController: NavController,
-    viewModel: SearchViewModel,
-    resultViewModel: ResultViewModel = ResultViewModel(),
+    searchViewModel: SearchViewModel,
+    resultViewModel: ResultViewModel
 ) {
-
     Scaffold(
         topBar = {
             ResultTopBar(
@@ -51,15 +50,14 @@ fun SearchResultScreen(
                         popUpTo(HomeSections.Search.route) { inclusive = true }
                     }
                 },
-                search = viewModel.searchUiState.value
+                search = searchViewModel.searchUiState.value
             )
         }
     ) {
         ResultContent(
             onNavigateDetail = { id -> navController.navigate("${Destinations.detail}/${id}") },
             onNavigateMap = { navController.navigate(Destinations.searchMap) },
-            accommodations = resultViewModel.result.value,
-            onClickFavorite = { resultViewModel.onClickFavorite(it) }
+            accommodations = resultViewModel.result.value
         )
     }
 }
@@ -103,8 +101,7 @@ fun ResultTopBar(
 private fun ResultContent(
     onNavigateDetail: (Int) -> Unit,
     onNavigateMap: () -> Unit,
-    accommodations: List<AccommodationResult>,
-    onClickFavorite: (Int) -> Unit,
+    accommodations: List<AccommodationResult>
 ) {
     Box {
         LazyColumn(
@@ -119,14 +116,14 @@ private fun ResultContent(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
             }
-            itemsIndexed(accommodations) { index, it ->
+            itemsIndexed(accommodations) { _, it ->
                 AccommodationItem(
                     it,
-                    onNavigate = { onNavigateDetail(it.id) },
-                    onClick = { onClickFavorite(index) }
+                    onNavigate = { onNavigateDetail(it.id) }
                 )
             }
         }
+
         Button(
             onClick = { onNavigateMap() },
             colors = ButtonDefaults.buttonColors(
@@ -152,7 +149,6 @@ private fun ResultContent(
 private fun AccommodationItem(
     accommodation: AccommodationResult,
     onNavigate: () -> Unit,
-    onClick: () -> Unit,
 ) {
     val decimalFormat = DecimalFormat("#,###")
     Column(
@@ -174,42 +170,45 @@ private fun AccommodationItem(
                 )
             }
             Image(
-                painter = if (accommodation.isFavorite.value) painterResource(id = R.drawable.ic_favorite_selected) else painterResource(
-                    id = R.drawable.ic_favorite
-                ),
+                painter =
+                if (accommodation.isFavorite.value) {
+                    painterResource(id = R.drawable.ic_favorite_selected)
+                } else {
+                    painterResource(id = R.drawable.ic_favorite)
+                },
                 contentDescription = "favorite",
                 modifier = Modifier
                     .padding(top = 15.dp, end = 8.36.dp)
                     .align(Alignment.TopEnd)
-                    .clickable { onClick() }
+                    .clickable { accommodation.isFavorite.value = !accommodation.isFavorite.value }
             )
         }
-
-        Spacer(modifier = Modifier.height(8.5.dp))
-
-        Row {
-            Image(
-                imageVector = Icons.Default.Star,
-                contentDescription = "star image",
-                colorFilter = ColorFilter.tint(Color.Red)
-            )
-            Spacer(modifier = Modifier.width(5.5.dp))
-            Text(text = accommodation.starRate.toString())
-            Spacer(modifier = Modifier.width(4.dp))
-            Text(text = "후기 ${accommodation.reviewCount}개")
-        }
-        Spacer(modifier = Modifier.height(8.5.dp))
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = accommodation.name,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "W${decimalFormat.format(accommodation.fee)} / 박")
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "총액 W${decimalFormat.format(accommodation.total)}")
     }
+
+    Spacer(modifier = Modifier.height(8.5.dp))
+
+    Row {
+        Image(
+            imageVector = Icons.Default.Star,
+            contentDescription = "star image",
+            colorFilter = ColorFilter.tint(Color.Red)
+        )
+        Spacer(modifier = Modifier.width(5.5.dp))
+        Text(text = accommodation.starRate.toString())
+        Spacer(modifier = Modifier.width(4.dp))
+        Text(text = "후기 ${accommodation.reviewCount}개")
+    }
+    Spacer(modifier = Modifier.height(8.5.dp))
+    Text(
+        modifier = Modifier.fillMaxWidth(),
+        text = accommodation.name,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
+    )
+    Spacer(modifier = Modifier.height(8.dp))
+    Text(text = "W${decimalFormat.format(accommodation.fee)} / 박")
+    Spacer(modifier = Modifier.height(8.dp))
+    Text(text = "총액 W${decimalFormat.format(accommodation.total)}")
 }
 
 @Composable

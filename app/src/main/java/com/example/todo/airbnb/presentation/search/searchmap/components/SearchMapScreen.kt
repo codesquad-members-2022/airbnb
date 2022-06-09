@@ -134,18 +134,20 @@ private fun Item(
     onClick: () -> Unit,
 ) {
     Row {
-        Box(modifier = Modifier
-            .clip(RoundedCornerShape(size = 10.dp))
-            .background(Color.White)
-            .width(112.5.dp)
-            .height(120.dp)
+        Box(
+            modifier = Modifier
+                .clip(RoundedCornerShape(size = 10.dp))
+                .background(Color.White)
+                .width(112.5.dp)
+                .height(120.dp)
         ) {
             LoadImage(accommodation.image)
-            Surface(modifier = Modifier
-                .padding(top = 10.dp, start = 8.36.dp)
-                .clip(RoundedCornerShape(size = 10.dp))
-                .align(Alignment.TopStart)
-                .background(Color.White)
+            Surface(
+                modifier = Modifier
+                    .padding(top = 10.dp, start = 8.36.dp)
+                    .clip(RoundedCornerShape(size = 10.dp))
+                    .align(Alignment.TopStart)
+                    .background(Color.White)
             ) {
                 Text(
                     text = "슈퍼 호스트",
@@ -174,7 +176,8 @@ private fun Item(
                 Text(text = "(${accommodation.reviewCount})")
                 Image(
                     painter = if (accommodation.isFavorite.value) painterResource(id = R.drawable.ic_favorite_selected) else painterResource(
-                        id = R.drawable.ic_favorite),
+                        id = R.drawable.ic_favorite
+                    ),
                     contentDescription = "favorite",
                     modifier = Modifier.clickable { onClick() }
                 )

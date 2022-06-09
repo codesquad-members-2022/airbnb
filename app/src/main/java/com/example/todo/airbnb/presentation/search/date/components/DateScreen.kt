@@ -30,9 +30,12 @@ fun DateScreen(navController: NavController, viewModel: SearchViewModel) {
         selectedDates = dateViewModel.dates.value,
         calendarYear = dateState.year,
         onDayClicked = { calendarDay, calendarMonth ->
-            dateViewModel.onDaySelected(DaySelected(calendarDay.value.toInt(),
-                calendarMonth,
-                dateState.year)
+            dateViewModel.onDaySelected(
+                DaySelected(
+                    calendarDay.value.toInt(),
+                    calendarMonth,
+                    dateState.year
+                )
             )
         },
         onClear = { dateViewModel.onClear() },

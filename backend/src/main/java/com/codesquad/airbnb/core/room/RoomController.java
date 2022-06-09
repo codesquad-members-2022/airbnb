@@ -4,11 +4,12 @@ import com.codesquad.airbnb.core.charge.ChargeBill;
 import com.codesquad.airbnb.core.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.core.common.embeddable.Location;
 import com.codesquad.airbnb.core.common.embeddable.StayDate;
+import com.codesquad.airbnb.core.room.domain.PriceRange;
+import com.codesquad.airbnb.core.room.domain.Radius;
 import com.codesquad.airbnb.core.room.dto.request.ChargeRequest;
 import com.codesquad.airbnb.core.room.dto.request.RoomSearCondition;
-import com.codesquad.airbnb.core.room.dto.request.RoomSearCondition.PriceRange;
-import com.codesquad.airbnb.core.room.dto.request.RoomSearCondition.Radius;
 import com.codesquad.airbnb.core.room.dto.request.RoomSearchRequest;
+import com.codesquad.airbnb.core.room.dto.response.PriceRangeResponse;
 import com.codesquad.airbnb.core.room.dto.response.RoomDetailResponse;
 import com.codesquad.airbnb.core.room.dto.response.RoomSearchResponse;
 import io.swagger.annotations.Api;
@@ -20,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = "Room API")
@@ -48,13 +50,13 @@ public class RoomController {
                     request.getNumChild(),
                     request.getNumInfant()
                 ),
-                new PriceRange(
-                    request.getMinPrice(),
-                    request.getMaxPrice()
-                ),
                 new StayDate(
                     request.getCheckIn(),
                     request.getCheckOut()
+                ),
+                new PriceRange(
+                    request.getMinPrice(),
+                    request.getMaxPrice()
                 )
             )
         );
@@ -87,6 +89,35 @@ public class RoomController {
                 request.getNumChild(),
                 request.getNumInfant())
         );
+    }
+
+    @ApiOperation(value = "숙소 가격 범위 조회", notes = "숙소의 가격 범위를 조회한다.")
+    @GetMapping("/prices")
+    public PriceRangeResponse showPriceRange(
+        @Valid RoomSearchRequest request,
+        @RequestParam(value = "interval", defaultValue = "1000", required = false) Integer interval
+    ) {
+        return roomService.showPriceRange(
+            new RoomSearCondition(
+                new Location(
+                    request.getLongitude(),
+                    request.getLatitude()
+                ),
+                new Radius(
+                    request.getHorizontalRadius(),
+                    request.getVerticalRadius()
+                ),
+                new GuestGroup(
+                    request.getNumAdult(),
+                    request.getNumChild(),
+                    request.getNumInfant()
+                ),
+                new StayDate(
+                    request.getCheckIn(),
+                    request.getCheckOut()
+                )
+            ),
+            interval);
     }
 
 }

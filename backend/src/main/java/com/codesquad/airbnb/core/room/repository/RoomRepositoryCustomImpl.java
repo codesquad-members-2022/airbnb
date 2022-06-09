@@ -8,12 +8,12 @@ import static com.codesquad.airbnb.core.room.entity.QRoomDetail.roomDetail;
 import com.codesquad.airbnb.core.common.embeddable.GuestGroup;
 import com.codesquad.airbnb.core.common.embeddable.Location;
 import com.codesquad.airbnb.core.common.embeddable.StayDate;
-import com.codesquad.airbnb.core.room.domain.LocationCluster;
-import com.codesquad.airbnb.core.room.dto.request.RoomSearCondition;
-import com.codesquad.airbnb.core.room.dto.request.RoomSearCondition.PriceRange;
-import com.codesquad.airbnb.core.room.dto.request.RoomSearCondition.Radius;
-import com.codesquad.airbnb.core.room.entity.Room;
 import com.codesquad.airbnb.core.reservation.Reservation.ReservationState;
+import com.codesquad.airbnb.core.room.domain.LocationCluster;
+import com.codesquad.airbnb.core.room.domain.PriceRange;
+import com.codesquad.airbnb.core.room.domain.Radius;
+import com.codesquad.airbnb.core.room.dto.request.RoomSearCondition;
+import com.codesquad.airbnb.core.room.entity.Room;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -40,15 +40,23 @@ public class RoomRepositoryCustomImpl implements RoomRepositoryCustom {
                 priceBetween(condition.getPriceRange()))
             .distinct();
 
-        return checkReservation(query, condition.getStayDate()).fetch();
+        return checkReservation(query, condition.getStayDate(), true).fetch();
     }
 
-    private JPAQuery<Room> checkReservation(JPAQuery<Room> query, StayDate stayDate) {
+    public List<Integer> searchPriceWithCondition(RoomSearCondition condition) {
+        JPAQuery<Integer> query = queryFactory.select(room.price.lodging).from(room)
+            .where(locationContained(condition.getLocation(), condition.getRadius()),
+                guestGroupGoe(condition.getGuestGroup()));
+
+        return checkReservation(query, condition.getStayDate(), false).fetch();
+    }
+
+    private <T> JPAQuery<T> checkReservation(JPAQuery<T> query, StayDate stayDate, boolean detail) {
         if (stayDate.isNull()) {
             return query;
         }
 
-        return query.leftJoin(room.reservations, reservation)
+        JPAQuery<T> joinQuery = query.leftJoin(room.reservations, reservation)
             .on(reservation.state.eq(ReservationState.BOOKED),
                 reservation.stayDate.checkinDate.goe(stayDate.getCheckinDate())
                     .and(reservation.stayDate.checkinDate.lt(stayDate.getCheckoutDate()))
@@ -56,9 +64,12 @@ public class RoomRepositoryCustomImpl implements RoomRepositoryCustom {
                         .and(reservation.stayDate.checkoutDate.loe(stayDate.getCheckoutDate())))
                     .or(reservation.stayDate.checkinDate.loe(stayDate.getCheckinDate())
                         .and(reservation.stayDate.checkoutDate.goe(stayDate.getCheckoutDate()))))
-            // sql_mode=only_full_group_by 에러 해결을 위해 roomDetail 의 id 도 GROUP BY 절에 포함
-            .groupBy(room.id, roomDetail.id)
             .having(reservation.count().eq(0L));
+
+        if (detail) {
+            return joinQuery.groupBy(room.id, room.detail.id);
+        }
+        return joinQuery.groupBy(room.id);
     }
 
     private BooleanExpression locationContained(Location location, Radius radius) {

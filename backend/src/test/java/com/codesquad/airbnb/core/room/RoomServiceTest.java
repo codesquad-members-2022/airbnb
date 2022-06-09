@@ -15,9 +15,9 @@ import com.codesquad.airbnb.core.member.Member;
 import com.codesquad.airbnb.core.member.Member.MemberRole;
 import com.codesquad.airbnb.core.reservation.Reservation;
 import com.codesquad.airbnb.core.reservation.Reservation.ReservationState;
+import com.codesquad.airbnb.core.room.domain.PriceRange;
+import com.codesquad.airbnb.core.room.domain.Radius;
 import com.codesquad.airbnb.core.room.dto.request.RoomSearCondition;
-import com.codesquad.airbnb.core.room.dto.request.RoomSearCondition.PriceRange;
-import com.codesquad.airbnb.core.room.dto.request.RoomSearCondition.Radius;
 import com.codesquad.airbnb.core.room.dto.response.RoomSearchResponse;
 import com.codesquad.airbnb.core.room.entity.Room;
 import com.codesquad.airbnb.core.room.entity.Room.RoomType;
@@ -130,8 +130,8 @@ class RoomServiceTest {
             new Location(127.0286, 37.4953),
             new Radius(1.0, 1.0),
             new GuestGroup(2, 1, 0),
-            new PriceRange(60000, 80000),
-            new StayDate(null, null)
+            new StayDate(null, null),
+            new PriceRange(60000, 80000)
         ));
 
         // then
@@ -147,8 +147,8 @@ class RoomServiceTest {
             new Location(127.0286, 37.4953),
             new Radius(1.0, 1.0),
             new GuestGroup(2, 1, 0),
-            new PriceRange(7000, 80000),
-            new StayDate(LocalDate.of(2022, 5, 29), LocalDate.of(2022, 5, 31))
+            new StayDate(LocalDate.of(2022, 5, 29), LocalDate.of(2022, 5, 31)),
+            new PriceRange(7000, 80000)
         ));
 
         // then
@@ -164,8 +164,8 @@ class RoomServiceTest {
             new Location(127.0286, 37.4953),
             new Radius(1.0, 1.0),
             new GuestGroup(2, 1, 0),
-            new PriceRange(7000, 80000),
-            new StayDate(LocalDate.of(2022, 5, 29), LocalDate.of(2022, 5, 30))
+            new StayDate(LocalDate.of(2022, 5, 29), LocalDate.of(2022, 5, 30)),
+            new PriceRange(7000, 80000)
         ));
 
         // then
@@ -181,8 +181,8 @@ class RoomServiceTest {
             new Location(127.0286, 37.4953),
             new Radius(1.0, 1.0),
             new GuestGroup(2, 1, 0),
-            new PriceRange(7000, 80000),
-            new StayDate(LocalDate.of(2022, 6, 1), LocalDate.of(2022, 6, 3))
+            new StayDate(LocalDate.of(2022, 6, 1), LocalDate.of(2022, 6, 3)),
+            new PriceRange(7000, 80000)
         ));
 
         // then
@@ -198,8 +198,8 @@ class RoomServiceTest {
             new Location(127.0286, 37.4953),
             new Radius(1.0, 1.0),
             new GuestGroup(2, 1, 0),
-            new PriceRange(7000, 80000),
-            new StayDate(LocalDate.of(2022, 6, 2), LocalDate.of(2022, 6, 3))
+            new StayDate(LocalDate.of(2022, 6, 2), LocalDate.of(2022, 6, 3)),
+            new PriceRange(7000, 80000)
         ));
 
         // then
@@ -215,8 +215,8 @@ class RoomServiceTest {
             new Location(127.0286, 37.4953),
             new Radius(1.0, 1.0),
             new GuestGroup(2, 1, 0),
-            new PriceRange(7000, 80000),
-            new StayDate(LocalDate.of(2022, 5, 31), LocalDate.of(2022, 6, 1))
+            new StayDate(LocalDate.of(2022, 5, 31), LocalDate.of(2022, 6, 1)),
+            new PriceRange(7000, 80000)
         ));
 
         // then
@@ -233,8 +233,8 @@ class RoomServiceTest {
             new Location(127.0286, 37.4953),
             new Radius(1.0, 1.0),
             new GuestGroup(2, 1, 0),
-            new PriceRange(7000, 80000),
-            new StayDate(LocalDate.of(2022, 5, 29), LocalDate.of(2022, 6, 3))
+            new StayDate(LocalDate.of(2022, 5, 29), LocalDate.of(2022, 6, 3)),
+            new PriceRange(7000, 80000)
         ));
 
         // then

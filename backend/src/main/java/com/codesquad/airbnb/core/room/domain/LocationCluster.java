@@ -1,7 +1,6 @@
 package com.codesquad.airbnb.core.room.domain;
 
 import com.codesquad.airbnb.core.common.embeddable.Location;
-import com.codesquad.airbnb.core.room.dto.request.RoomSearCondition.Radius;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 

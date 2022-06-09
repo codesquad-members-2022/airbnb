@@ -8,4 +8,6 @@ public interface RoomRepositoryCustom {
 
     List<Room> searchWithCondition(RoomSearCondition condition);
 
+    List<Integer> searchPriceWithCondition(RoomSearCondition condition);
+
 }

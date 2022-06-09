@@ -12,6 +12,10 @@ struct HeadCountDTO {
     private(set) var children: Int
     private(set) var infants: Int
     
+    var allCount: Int {
+        return adults + children + infants
+    }
+    
     func getHeadCount(_ type: HeadCountType) -> Int {
         switch type {
         case .adult:
@@ -23,7 +27,9 @@ struct HeadCountDTO {
         }
     }
     
-    mutating func addHeadCount(_ type: HeadCountType, value: Int) {
+    mutating func addHeadCount(_ type: HeadCountType, inputType: HeadCountInputType) {
+        let value = inputType == .plus ? 1 : -1
+        
         switch type {
         case .adult:
             adults += value

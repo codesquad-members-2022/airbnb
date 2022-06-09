@@ -47,7 +47,10 @@ class HeadCountViewController: SearchInfoTrackingViewController, CommonViewContr
     func bind() {
         dataSource?.onUpdate = { [weak self] dto in
             self?.headCountTableView.reloadData()
-            self?.model?.setModelData(using: [.headCount: 0])
+            
+            if let model = self?.dataSource?.headCountModel {
+                self?.reloadTableView(dict: [.headCount: model])
+            }
         }
     }
 }

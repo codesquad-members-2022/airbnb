@@ -60,7 +60,12 @@ module.exports = {
             position: "before",
           },
           {
-            pattern: ["@*/**", "_*/**"],
+            pattern: "@*/**",
+            group: "internal",
+            position: "after",
+          },
+          {
+            pattern: "_*/**",
             group: "internal",
             position: "after",
           },

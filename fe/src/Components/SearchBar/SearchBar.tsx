@@ -114,7 +114,15 @@ export default function SearchBar({
             <InActiveContent>금액대 설정</InActiveContent>
           )}
         </ContentContainer>
-        {activePrice && <Img src={cancelButton} width="20px" height="20px" margin="0 33px 0 0" />}
+        {activePrice && (
+          <Img
+            src={cancelButton}
+            width="20px"
+            height="20px"
+            margin="0 33px 0 0"
+            onClick={() => handleReset(dispatchPriceChart)}
+          />
+        )}
       </PriceArea>
       <HeadCountArea
         ref={(el) => headCountRef && (headCountRef.current[SEARCH_BAR_REF_IDX] = el)}

@@ -7,10 +7,14 @@
 
 import UIKit
 
-class CalendarViewController: BackgroundViewController, CommonViewControllerProtocol {
+
+class CalendarViewController: SearchInfoTrackingViewController, CommonViewControllerProtocol {
     
     let reservationModel: ReservationModel
     let calendarModel: CalendarModel = CalendarModel(baseDate: Date())
+    
+    //    private var checkinCell: CalendarViewCell?
+    //    private var checkoutCell: CalendarViewCell?
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -23,6 +27,10 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
         return collectionView
     }()
     
+    var dataSource: UICollectionViewDiffableDataSource<Int, Day>!
+    
+    private let weekdayView: UIView = WeekdayView()
+    
     init(reservationModel: ReservationModel) {
         self.reservationModel = reservationModel
         super.init(nibName: nil, bundle: nil)
@@ -31,7 +39,7 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         attribute()
@@ -40,14 +48,61 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
     }
     
     private func setUpCollectionViewDelegates() {
-        collectionView.register(CalendarViewCell.self, forCellWithReuseIdentifier: CalendarViewCell.reuseIdentifier)
-        collectionView.register(CalendarHearderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CalendarHearderView.reuseIdentifier)
+        
         collectionView.delegate = self
-        collectionView.dataSource = self
+        let cellRegistration = UICollectionView.CellRegistration<CalendarViewCell, Day> {
+            [weak self] (cell, indexPath, identifier) in
+            guard let day = self?.calendarModel.month[indexPath.section].result[indexPath.row] else { return }
+            cell.day = day
+        }
+        
+        let headerRegister = UICollectionView.SupplementaryRegistration<CalendarHearderView>(
+            elementKind: UICollectionView.elementKindSectionHeader) {
+                [weak self] (supplementaryView, elementKind, indexPath) in
+                DispatchQueue.main.async {
+                    supplementaryView.baseDate = self?.calendarModel.month[indexPath.section].result.last?.date
+                }
+            }
+        
+        dataSource = UICollectionViewDiffableDataSource<Int, Day>(
+            collectionView: collectionView,
+            cellProvider: { collectionView, indexPath, itemIdentifier in
+                collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
+            })
+        
+        dataSource.supplementaryViewProvider = { (_, _, index) in
+            return self.collectionView.dequeueConfiguredReusableSupplementary(
+                using: headerRegister, for: index)
+        }
+        
+        // initail date
+        performQuery()
     }
     
+    
+    
+    func performQuery(days: [Day]? = nil) {
+        var snapshot = NSDiffableDataSourceSnapshot<Int, Day>()
+        if let days = days {
+            var newSnapshot = dataSource.snapshot()
+            newSnapshot.reloadItems(days)
+            dataSource.apply(newSnapshot, animatingDifferences: false)
+        }
+        //MARK: - 초기 설정
+        else {
+            let month = calendarModel.month
+            let sections = Array(0..<month.count)
+            sections.forEach {
+                snapshot.appendSections([$0])
+                snapshot.appendItems(month[$0].result)
+            }
+            dataSource.apply(snapshot, animatingDifferences: false)
+        }
+    }
+    
+    
     func attribute() {
-        view.backgroundColor = .systemBackground
+        contentView.backgroundColor = .systemBackground
         navigationItem.title = "숙소 찾기"
         navigationController?.isToolbarHidden = false
         self.toolbarItems = setUpToolBarItems()
@@ -55,19 +110,26 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
     }
     
     func layout() {
+        view.addSubview(weekdayView)
         view.addSubview(collectionView)
         
+        weekdayView.snp.makeConstraints {
+            $0.leading.trailing.equalTo(view.readableContentGuide)
+            $0.top.equalTo(view.readableContentGuide).offset(32)
+        }
+        
         collectionView.snp.makeConstraints {
-            $0.top.leading.trailing.equalTo(view.readableContentGuide)
+            $0.leading.trailing.equalTo(weekdayView)
+            $0.top.equalTo(weekdayView.snp.bottom)
             $0.height.equalTo(view.snp.height).multipliedBy(0.5)
         }
+        
     }
     
     func bind() {
-        calendarModel.onUpdate = { [weak self] in
-            self?.collectionView.reloadData()
+        calendarModel.onUpdate = { [weak self] days in
+            self?.performQuery(days: days)
         }
-//
     }
     
     private func setUpToolBarItems() -> [UIBarButtonItem] {
@@ -80,43 +142,18 @@ class CalendarViewController: BackgroundViewController, CommonViewControllerProt
     
     @objc func pushNextVC() {
         let nextVC = PriceGraphViewController()
+        nextVC.setModel(model)
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
 
-extension CalendarViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return calendarModel.month[section].result.count
-    }
+extension CalendarViewController: UICollectionViewDelegate {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        calendarModel.month.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: CalendarViewCell.reuseIdentifier, for: indexPath) as? CalendarViewCell else { return UICollectionViewCell() }
-        let day = calendarModel.month[indexPath.section].result[indexPath.row]
-        cell.day = day
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch kind {
-        case UICollectionView.elementKindSectionHeader:
-            guard
-                let headerView = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier:  CalendarHearderView.reuseIdentifier,
-                    for: indexPath) as? CalendarHearderView
-            else { return UICollectionReusableView() }
-            
-            let date = calendarModel.month[indexPath.section]
-                .result.last?.date
-            headerView.baseDate = date
-            return headerView
-        default:
-            return UICollectionReusableView()
-        }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CalendarViewCell,
+              cell.day?.isBeforeToday == false else { return }
+        
+        calendarModel.validateCheckDate(at: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -124,6 +161,7 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
         let height: CGFloat = 60
         return CGSize(width: width, height: height)
     }
+    
 }
 
 extension CalendarViewController: UICollectionViewDelegateFlowLayout {

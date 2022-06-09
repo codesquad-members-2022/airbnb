@@ -10,6 +10,8 @@ import SnapKit
 
 class CalendarHearderView: UICollectionReusableView {
     
+    static let sectionHeaderElementKind = "section-header-element-kind"
+    
     var baseDate: Date? {
         didSet {
             guard let date = baseDate else { return }

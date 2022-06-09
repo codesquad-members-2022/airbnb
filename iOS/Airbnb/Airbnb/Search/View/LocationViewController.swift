@@ -142,12 +142,14 @@ extension LocationViewController: UICollectionViewDelegateFlowLayout, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? LocationCollectionViewCell else {
-            return
-        }
+        guard let cell = collectionView.cellForItem(at: indexPath)
+                as? LocationCollectionViewCell else { return }
         let reservationModel = ReservationModel()
         reservationModel.location = cell.cityName.text
         let nextVC = CalendarViewController(reservationModel: reservationModel)
+        let model = SearchInfoTrackingModel()
+        model.setModelData(using: [.location: cell.cityName.text ?? ""])
+        nextVC.setModel(model)
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     

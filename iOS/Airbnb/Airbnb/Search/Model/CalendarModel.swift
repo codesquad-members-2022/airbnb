@@ -9,36 +9,66 @@ import Foundation
 
 class CalendarModel {
     
-    let selectedDateChaged: (Date) -> Void = { _ in }
+    var checkinDayIndex: IndexPath? {
+        didSet {
+            guard let checkinDayIndex = checkinDayIndex else { return }
+            let currentDays = getDays(fromIndex: checkinDayIndex, toIndex: checkoutDayIndex)
+            self.beforeDays = currentDays
+        }
+    }
     
-    var selectedDate: Date?
+    var checkoutDayIndex: IndexPath? {
+        didSet {
+            guard let checkinDayIndex = checkinDayIndex else { return }
+            guard let checkoutDayIndex = checkoutDayIndex else { return }
+            let currentDays = getDays(fromIndex: checkinDayIndex, toIndex: checkoutDayIndex)
+            self.beforeDays = currentDays
+        }
+    }
+
+    private var beforeDays: [Day]? {
+        willSet {
+            guard let beforeDays = beforeDays else { return }
+            guard let newValue = newValue else { return }
+            if newValue.count < beforeDays.count {
+                for i in newValue.count..<beforeDays.count {
+                    beforeDays[i].fadeState = .none
+                }
+            }
+        }
+        didSet {
+            guard let beforeDays = beforeDays else { return }
+            self.onUpdate(beforeDays)
+        }
+    }
+
     
     private var baseDate: Date {
         didSet {
             month = generate12month(for: baseDate)
-            self.onUpdate()
         }
     }
     
     lazy var month = generate12month(for: baseDate)
     
     var numberOfWeeksInBaseDate: Int {
-      calendar.range(of: .weekOfMonth, in: .month, for: baseDate)?.count ?? 0
+        calendar.range(of: .weekOfMonth, in: .month, for: baseDate)?.count ?? 0
     }
     
-    var onUpdate: () -> Void = { }
+    var onUpdate: ([Day]) -> Void = { _ in }
+
     
     let calendar: Calendar = Calendar.current
     
     private lazy var dateFormatter: DateFormatter = {
-      let dateFormatter = DateFormatter()
-      dateFormatter.dateFormat = "d"
-      return dateFormatter
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d"
+        return dateFormatter
     }()
     
     init(baseDate: Date) {
         self.baseDate = baseDate
-
+        
     }
     
     func generate12month(for baseDate: Date) -> [Month] {
@@ -49,7 +79,7 @@ class CalendarModel {
                 year.append(generateDaysInMonth(for: month))
             }
         }
-        // 그 이중 배열을 내보냄 근데 그 기준일이 언제임, 그 기준일을 가지고 제일 처음에 보여줄 달을 짜는 로직도 힘겹겠네.. 가장 처음 지금 있는 달이 나와야 할테니까...
+        
         return year
     }
     
@@ -77,7 +107,7 @@ class CalendarModel {
                                    for: firstDayOfMonth,
                                    isWithinDisplayedMonth: isWithinDisplayedMonth)
             }
-            return Month(date: baseDate, result: days)
+            return Month(result: days)
         case .failure(let error):
             fatalError("failed making month ==> \(dump(error))")
         }
@@ -89,18 +119,12 @@ class CalendarModel {
         let date = calendar.date(byAdding: .day,
                                  value: dayOffset,
                                  to: baseDate) ?? baseDate
-        if let selectedDate = selectedDate {
-            return Day(date: date,
-                       number: dateFormatter.string(from: date),
-                       isSelected: calendar.isDate(date,
-                                                   inSameDayAs: selectedDate),
-                        isWithInDisplayedMonth: isWithinDisplayedMonth)
-        } else {
-            return Day(date: date,
-                       number: dateFormatter.string(from: date),
-                       isSelected: false,
-                       isWithInDisplayedMonth: isWithinDisplayedMonth)
-        }
+        
+        return Day(date: date,
+                   number: dateFormatter.string(from: date),
+                   isSelected: false,
+                   isWithInDisplayedMonth: isWithinDisplayedMonth)
+        
     }
 }
 
@@ -132,7 +156,85 @@ extension CalendarModel {
     }
 }
 
-struct Month {
-    let date: Date
-    let result: [Day]
+extension CalendarModel {
+    func validateCheckDate(at indexPath: IndexPath) {
+        if let checkinDayIndex = checkinDayIndex {
+            if checkinDayIndex <= indexPath {
+                self.checkoutDayIndex = indexPath
+            }
+            if checkinDayIndex > indexPath {
+                self.checkinDayIndex = indexPath
+            }
+        }
+        else if let checkoutDayIndex = checkoutDayIndex {
+            if checkoutDayIndex > indexPath || checkoutDayIndex < indexPath {
+                self.checkoutDayIndex = indexPath
+            }
+        } else {
+            self.checkinDayIndex = indexPath
+        }
+    }
+}
+
+private extension CalendarModel {
+    func getDays(fromIndex: IndexPath, toIndex: IndexPath? = nil) -> [Day] {
+        let indexes = generateIndexes(fromIndex: fromIndex, toIndex: toIndex)
+        let days = indexes.compactMap {
+            month[$0.section].result[$0.row]
+        }
+
+        return drawingDays(days: days)
+    }
+    
+    func generateIndexes(fromIndex: IndexPath, toIndex: IndexPath? = nil) -> [IndexPath] {
+        if let toIndex = toIndex {
+            if fromIndex.section == toIndex.section {
+                return (fromIndex.row...toIndex.row).compactMap {
+                    return IndexPath(row: $0, section: fromIndex.section)
+                }
+            } else {
+                let sections = Array(fromIndex.section...toIndex.section)
+                var result: [IndexPath] = []
+
+                sections.enumerated().forEach { offset, value in
+                    let numberOfDays = month[value].count
+                    switch offset {
+                    case 0:
+                        (fromIndex.row..<numberOfDays).forEach { num in
+                            result.append(IndexPath(row: num, section: value))
+                        }
+                    case 1..<sections.count - 1:
+                        (0..<numberOfDays).forEach { num in
+                            result.append(IndexPath(row: num, section: value))
+                        }
+                    case sections.count - 1:
+                        (0...toIndex.row).forEach { num in
+                            result.append(IndexPath(row: num, section: value))
+                        }
+                    default:
+                        print(numberOfDays)
+                    }
+                }
+                return result
+            }
+        } else {
+            return [fromIndex]
+        }
+    }
+    
+    func drawingDays(days: [Day]) -> [Day] {
+        return days.enumerated().map {
+            switch $0.offset {
+            case 0:
+                $0.element.fadeState = .left
+            case 1..<days.count - 1:
+                $0.element.fadeState = .fill
+            case days.count - 1:
+                $0.element.fadeState = .right
+            default:
+                $0.element.fadeState = .none
+            }
+            return $0.element
+        }
+    }
 }

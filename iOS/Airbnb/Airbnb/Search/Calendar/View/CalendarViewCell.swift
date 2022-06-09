@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class CalendarViewCell: UICollectionViewCell {
     
@@ -18,6 +19,7 @@ class CalendarViewCell: UICollectionViewCell {
                 updateSelectionStatus()
             } else {
                 selectionBackgroundView.isHidden = true
+                fadeStateView.isHidden = true
             }
         }
     }
@@ -28,6 +30,14 @@ class CalendarViewCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
         view.backgroundColor = UIColor.getGrayScale(.Grey1)
+        return view
+    }()
+    
+    private var fadeStateView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.clipsToBounds = true
+        view.backgroundColor = UIColor.getGrayScale(.Grey6)
         return view
     }()
     
@@ -52,8 +62,10 @@ class CalendarViewCell: UICollectionViewCell {
         
         isAccessibilityElement = true
         accessibilityTraits = .button
+        contentView.addSubview(fadeStateView)
         contentView.addSubview(selectionBackgroundView)
         contentView.addSubview(numberLabel)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -81,6 +93,10 @@ class CalendarViewCell: UICollectionViewCell {
                 .constraint(equalTo: selectionBackgroundView.widthAnchor)
         ])
         
+        fadeStateView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(-1)
+        }
+        
         selectionBackgroundView.layer.cornerRadius = size / 2
         
     }
@@ -88,7 +104,17 @@ class CalendarViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         numberLabel.text = nil
+        selectionBackgroundView.isHidden = true
+        fadeStateView.isHidden = true
     }
+    
+    func tabGenerated(for day: Day) {
+        if !day.isBeforeToday {
+            prepareForReuse()
+            self.day = day
+        }
+    }
+
 }
 
 // MARK: - Appearance
@@ -97,9 +123,14 @@ private extension CalendarViewCell {
     func updateSelectionStatus() {
         guard let day = day else { return }
         
-        if day.isSelected {
+        switch day.fadeState {
+        case .left:
+            fallthrough
+        case .right:
             applySelectedStyle()
-        } else {
+        case .fill:
+            applyFadeStyle()
+        case .none:
             applyDefaultStyle()
         }
     }
@@ -113,20 +144,28 @@ private extension CalendarViewCell {
         return isCompact && (smallWidth || widthGreaterThanHeight)
     }
     
-    func applySelectedStyle() {
+    private func applySelectedStyle() {
         accessibilityTraits.insert(.selected)
         accessibilityHint = nil
         
         numberLabel.textColor = isSmallScreenSize ? .systemRed : .white
         selectionBackgroundView.isHidden = isSmallScreenSize
+        fadeStateView.isHidden = true
     }
     
-    func applyDefaultStyle() {
+    private func applyDefaultStyle() {
+        guard let day = day else { return }
         accessibilityTraits.remove(.selected)
         accessibilityHint = "Tap to select"
         
+        numberLabel.textColor = day.isBeforeToday ? .secondaryLabel : .label
+        selectionBackgroundView.isHidden = true
+        fadeStateView.isHidden = true
+    }
+    
+    private func applyFadeStyle() {
+        fadeStateView.isHidden = false
         numberLabel.textColor = .label
         selectionBackgroundView.isHidden = true
     }
-    
 }

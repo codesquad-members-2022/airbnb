@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class PriceGraphViewController: BackgroundViewController, CommonViewControllerProtocol {
+class PriceGraphViewController: SearchInfoTrackingViewController, CommonViewControllerProtocol {
     
     private let viewPadding: CGFloat = 16
     
@@ -31,6 +31,10 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
         return view
     }()
     
+    private let lowestPrice: UInt = 100000
+    private let highestPrice: UInt = 1000000
+    private let distribution: [Float] = [0.3, 0.4, 0.9, 0.65, 1, 0.65, 0.8, 0.8, 0.75, 0.8, 0.25, 0.5, 0.2, 0.05, 0.23, 0.4, 0.2, 0.0, 0.5, 0.1]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         attribute()
@@ -39,15 +43,21 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
     }
     
     func attribute() {
-        graph.drawGraph(distribution: [0.3, 0.4, 0.9, 0.65, 1, 0.65, 0.8, 0.8, 0.75, 0.8, 0.25, 0.5, 0.2, 0.05, 0.23, 0.4, 0.2, 0.0, 0.5, 0.1])
+        setPriceRange(lowestPrice, highestPrice)
+        graph.drawGraph(distribution: distribution)
         view.backgroundColor = .systemBackground
         navigationItem.title = "숙소 찾기"
         self.toolbarItems = setUpToolBarItems()
     }
     
     func layout() {
+        
+        let localizedDecimal: (UInt) -> String = {
+            "₩\(NumberFormatter.localizedString(from: $0 as NSNumber, number: .decimal))"
+        }
+        
         let titleLabel = priceLabel("가격 범위")
-        let priceRangeLabel = priceLabel("₩\(NumberFormatter.localizedString(from: 11000, number: .decimal)) - ₩\(NumberFormatter.localizedString(from: 1000000, number: .decimal))")
+        let priceRangeLabel = priceLabel(localizedDecimal(lowestPrice) + " - " + localizedDecimal(highestPrice) + "+")
         
         let labelFont: (CGFloat) -> UIFont? = { size in
             UIFont(name: titleLabel.font.fontName, size: size)
@@ -57,9 +67,9 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
         priceRangeLabel.font = labelFont(17)
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).inset(32)
-            make.leading.equalTo(self.view.safeAreaLayoutGuide).offset(viewPadding)
-            make.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(viewPadding)
+            make.top.equalTo(self.contentView).inset(32)
+            make.leading.equalTo(self.contentView).offset(viewPadding)
+            make.trailing.equalTo(self.contentView).inset(viewPadding)
         }
         
         priceRangeLabel.snp.makeConstraints { make in
@@ -75,11 +85,11 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
             make.leading.trailing.equalTo(titleLabel)
         }
         
-        view.addSubview(graph)
+        contentView.addSubview(graph)
         graph.addSubview(lightGrayView)
         graph.addSubview(semanticGrayView)
         
-        view.addSubview(slider)
+        contentView.addSubview(slider)
         
         graph.snp.makeConstraints { make in
             make.top.equalTo(descriptionLabel.snp.bottom).offset(48)
@@ -104,6 +114,7 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
             make.leading.trailing.equalTo(graph)
             make.height.equalTo(20)
         }
+        
         slider.layoutIfNeeded()
         slider.updateLayerFrames()
     }
@@ -122,7 +133,7 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
         label.textColor = UIColor.getGrayScale(.Grey1)
         label.textAlignment = .left
         label.adjustsFontSizeToFitWidth = true
-        view.addSubview(label)
+        contentView.addSubview(label)
         return label
     }
     
@@ -135,9 +146,16 @@ class PriceGraphViewController: BackgroundViewController, CommonViewControllerPr
     }
     
     @objc func sliderValueChanged(_ sender: CustomRangeSlider) {
-        self.editableLeading?.update(inset: sender.lowerValue * graph.frame.width)
-        self.editableTrailing?.update(inset: (sender.maximumValue - sender.upperValue) * graph.frame.width)
-        super.updateViewConstraints()
+        
+        let lowerSliderValue = Float(sender.lowerValue)
+        let upperSliderValue = Float(sender.upperValue)
+        
+        editableLeading?.update(inset: sender.lowerValue * graph.frame.width)
+        editableTrailing?.update(inset: (sender.maximumValue - sender.upperValue) * graph.frame.width)
+        
+        reloadTableView(dict: [.price: PricePercentageRange(lowPercent: lowerSliderValue, highPercent: upperSliderValue)])
+        
+        updateViewConstraints()
     }
     
     @objc func nextButtonTouchUpInside(_ sender: UIBarButtonItem) {

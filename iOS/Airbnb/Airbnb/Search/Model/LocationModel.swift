@@ -42,7 +42,6 @@ class LocationModel {
     
     init() {
         popularDTO = make8CitiesInfo()
-        nearbyDTO = makeTenNearbyCitiesInfo()
     }
     
     func changeMode(_ mode: LocationViewMode) {
@@ -68,15 +67,8 @@ class LocationModel {
         }
     }
     
-    private func makeTenNearbyCitiesInfo() -> [NearbyCityInformation] {
-        let locations: [String] = [
-            "양재동, 서초구, 서울특별시", "양재역 사거리, 양재1동", "서울특별시 양재2동 시민의숲앞", "서울특별시 양재2동 양재IC", "영국 런던 스미스씨 댁",
-            "대구", "울산", "대전", "부천시", "의정부 부대찌개 거리"
-        ]
-        
-        return locations.map {
-            NearbyCityInformation(destination: $0)
-        }
+    func makeTenNearbyCitiesInfo(nearby locations: [String]) {
+        self.nearbyDTO = locations.map { NearbyCityInformation(destination: $0) }
     }
     
     enum LocationViewMode {

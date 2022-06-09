@@ -159,7 +159,8 @@ class PriceGraphViewController: SearchInfoTrackingViewController, CommonViewCont
     }
     
     @objc func nextButtonTouchUpInside(_ sender: UIBarButtonItem) {
-        let nextVC = SearchHeadCountViewController()
+        let nextVC = HeadCountViewController()
+        nextVC.setModel(model)
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }

@@ -36,6 +36,7 @@ struct SearchInfo {
     
     /// 숙박인원
     var headCount: UInt?
+    var headCountFormatted: String?
 }
 
 enum PriceUnit: String {

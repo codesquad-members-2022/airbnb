@@ -19,10 +19,13 @@ const ContentBox = styled.div`
 
 const BarTitle = styled.span`
   font-weight: bold;
-  font-size: 12px;
-  line-height: 17px;
+  font-size: ${({ theme }) => theme.fontSizes.s};
+  line-height: 22px;
 `;
 
-const BarContent = styled.span``;
+const BarContent = styled.span`
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  color: ${({ theme }) => theme.colors.gray3};
+`;
 
 export { Btn, ContentBox, BarTitle, BarContent };

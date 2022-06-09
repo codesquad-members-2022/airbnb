@@ -1,16 +1,11 @@
 import { Btn, ContentBox, BarTitle, BarContent } from './SearchBar_styled.jsx';
-import { useInputState } from 'hooks/useInputState.tsx';
-import { useInputDispatch } from 'hooks/useInputDispatch.tsx';
+import { useCalendarInputState } from 'hooks/useCalendarInputState.tsx';
+import { useCalendarInputDispatch } from 'hooks/useCalendarInputDispatch.tsx';
 import { ReactComponent as DeleteIcon } from 'assets/svg/deleteBtn.svg';
 
 function CheckInOut({ onClick, title }) {
-  const { checkIn, checkOut } = useInputState();
-  const { handelResetEvent } = useInputDispatch();
-
-  let checkPoint;
-  if (title === '체크인') checkPoint = checkIn;
-  else if (title === '체크아웃') checkPoint = checkOut;
-  else checkPoint = '';
+  const { checkIn, checkOut } = useCalendarInputState();
+  const { handelResetEvent } = useCalendarInputDispatch();
 
   const deleteBtn =
     title === '체크아웃' && checkIn && checkOut ? (
@@ -20,12 +15,17 @@ function CheckInOut({ onClick, title }) {
       />
     ) : undefined;
 
+  function getCheckPoint() {
+    if (title === '체크인' && checkIn) return checkIn;
+    else if (title === '체크아웃' && checkOut) return checkOut;
+    else return '날짜입력';
+  }
   return (
     <>
       <Btn onClick={() => onClick('CHECK_IN_OUT')}>
         <ContentBox>
           <BarTitle>{title}</BarTitle>
-          <BarContent>{checkPoint !== '' ? checkPoint : '날짜입력'}</BarContent>
+          <BarContent>{getCheckPoint()}</BarContent>
         </ContentBox>
       </Btn>
       {deleteBtn}

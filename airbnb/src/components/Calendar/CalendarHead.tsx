@@ -1,7 +1,8 @@
 import { Dispatch } from 'react';
 import styled from 'styled-components';
+import { checkMonth, checkYear } from 'utility/dateUtil';
 
-type props = {
+type CalendarHeadProps = {
   year: number;
   month: number;
   setYear: Dispatch<number>;
@@ -11,11 +12,18 @@ type props = {
 
 const DAY: string[] = ['일', '월', '화', '수', '목', '금', '토'];
 
-function CalendarHead({ year, month, setYear, setMonth, position }: props) {
+function CalendarHead({
+  year,
+  month,
+  setYear,
+  setMonth,
+  position,
+}: CalendarHeadProps) {
   function slideLeftDirection() {
     if (month - 1 === 0) {
+      const totalMonth: number = 11;
       setYear(year - 1);
-      setMonth((month: number) => month + 11);
+      setMonth((month: number) => month + totalMonth);
       return;
     }
     setMonth((month: number) => month - 1);
@@ -23,8 +31,9 @@ function CalendarHead({ year, month, setYear, setMonth, position }: props) {
 
   function slideRightDirection() {
     if (month + 1 > 12) {
+      const totalMonth: number = 11;
       setYear(year + 1);
-      setMonth((month: number) => month - 10);
+      setMonth((month: number) => month + 1 - totalMonth);
       return;
     }
     setMonth((month: number) => month + 1);
@@ -39,8 +48,9 @@ function CalendarHead({ year, month, setYear, setMonth, position }: props) {
           </ArrowBtn>
         )}
         <Year>
-          {year}년 {month}월
+          {checkYear(year, month)}년 {checkMonth(month)}월
         </Year>
+
         {position === 'rightBtn' && (
           <ArrowBtn onClick={slideRightDirection} position={position}>
             &gt;

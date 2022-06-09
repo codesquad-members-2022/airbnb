@@ -18,7 +18,13 @@ function CalendarModal() {
 
   useEffect(() => {
     setEarlyTotalDate(makeDate(year, month));
-    setLastTotalDate(makeDate(year, month + 1));
+
+    if (month === 12) {
+      const totalMonth: number = 11;
+      setLastTotalDate(makeDate(year + 1, month - totalMonth));
+    } else {
+      setLastTotalDate(makeDate(year, month + 1));
+    }
   }, [month]);
 
   return (

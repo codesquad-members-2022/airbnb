@@ -39,11 +39,6 @@ export const defaultPeriod = {
   checkOut: null,
 };
 
-export const defaultPrice = {
-  min: 100000,
-  max: 1000000,
-};
-
 export const defaultPersonnel = {
   guest: 0,
   kid: 0,

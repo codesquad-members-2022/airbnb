@@ -1,15 +1,18 @@
+import Calendar from '@components/Calendar';
 import * as S from '@components/SearchBar/SearchBar.style';
 import { AREA_TYPE, NO_CONTENT, SEARCH_BAR_SIZE } from '@components/SearchBar/constants';
 import Icon, { ICON_NAME, ICON_SIZE } from '@components/common/Icon';
-import { PeriodTypes, defaultPeriod } from '@data';
+import { CalendarProvider } from '@context/calendar/Provider';
+import { defaultPeriod } from '@data';
+import WithProvider from '@hoc/WithProvider';
+import { useCalendarState } from '@lib/hooks/useContext';
 
-interface PeriodAreaTypes {
+export interface PeriodAreaTypes {
   size: string;
-  period: PeriodTypes;
 }
 
-const PeriodArea = ({ size, period }: PeriodAreaTypes) => {
-  const { checkIn, checkOut } = period;
+const PeriodArea = ({ size }: PeriodAreaTypes) => {
+  const { checkIn, checkOut } = useCalendarState();
 
   const isCheckInExist = checkIn !== defaultPeriod.checkIn;
   const isCheckOutExist = checkOut !== defaultPeriod.checkOut;
@@ -17,9 +20,8 @@ const PeriodArea = ({ size, period }: PeriodAreaTypes) => {
   const checkInContent = checkIn || NO_CONTENT[AREA_TYPE.PERIOD];
   const checkOutContent = checkOut || NO_CONTENT[AREA_TYPE.PERIOD];
 
-  const periodContent = isCheckInExist && isCheckOutExist
-    ? `${checkIn} ~ ${checkOut}`
-    : NO_CONTENT[AREA_TYPE.PERIOD];
+  const periodContent =
+    isCheckInExist && isCheckOutExist ? `${checkIn} ~ ${checkOut}` : NO_CONTENT[AREA_TYPE.PERIOD];
 
   return (
     <S.PeriodArea>
@@ -38,6 +40,7 @@ const PeriodArea = ({ size, period }: PeriodAreaTypes) => {
               <Icon iconName={ICON_NAME.CLOSE_BTN} iconSize={ICON_SIZE.LARGE} />
             </S.CloseButton>
           )}
+          <Calendar />
         </>
       ) : (
         <S.Content isContentExist={isCheckInExist && isCheckOutExist}>{periodContent}</S.Content>
@@ -46,4 +49,7 @@ const PeriodArea = ({ size, period }: PeriodAreaTypes) => {
   );
 };
 
-export default PeriodArea;
+export default WithProvider({
+  Component: PeriodArea,
+  Provider: CalendarProvider,
+});

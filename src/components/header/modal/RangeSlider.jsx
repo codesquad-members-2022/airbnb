@@ -1,31 +1,38 @@
 import React, {useRef} from "react";
 import styled from "styled-components";
 import {ReactComponent as PointerIcon} from "../../../assets/pause.svg";
+import {usePriceContext} from "../../../contexts/PriceProvider";
 
-const RangeSlider = ({min, max, minValue, setMinValue, maxValue, setMaxValue, changePriceRange}) => {
+const RangeSlider = ({minValue, setMinValue, maxValue, setMaxValue, changePriceRange}) => {
+    const {leftPointerPercent, setLeftPointerPercent, rightPointerPercent, setRightPointerPercent} = usePriceContext();
+
     const width = 465;
     const pointerWidth = 20;
 
     const leftInput = useRef(null);
     const rightInput = useRef(null);
-    const leftPointer = useRef(null);
-    const rightPointer = useRef(null);
+
+    const getPercent = (value, width, pointerWidth) => {
+        const percent = (value / width) * (width - pointerWidth);
+
+        return percent;
+    };
 
     const moveLeftPointer = (event) => {
         const value = Number(event.target.value);
         const minVal = Math.min(value, maxValue - 1);
-        const percent = (minVal / width) * (width - pointerWidth);
+        const percent = getPercent(minVal, width, pointerWidth);
         setMinValue(minVal);
-        leftPointer.current.style.left = `${percent}%`;
+        setLeftPointerPercent(percent);
         changePriceRange("min", minVal);
     };
 
     const moveRightPointer = (event) => {
         const value = Number(event.target.value);
         const maxVal = Math.max(value, minValue + 1);
-        const percent = (maxVal / width) * (width - pointerWidth);
+        const percent = getPercent(maxVal, width, pointerWidth);
         setMaxValue(maxVal);
-        rightPointer.current.style.right = `${100 - percent}%`;
+        setRightPointerPercent(100 - percent);
         changePriceRange("max", maxVal);
     };
 
@@ -36,24 +43,24 @@ const RangeSlider = ({min, max, minValue, setMinValue, maxValue, setMaxValue, ch
                     ref={leftInput}
                     onChange={moveLeftPointer}
                     type="range"
-                    min={min}
-                    max={max}
+                    min="0"
+                    max="100"
                     value={minValue}
                 />
                 <RangeInput
                     ref={rightInput}
                     onChange={moveRightPointer}
                     type="range"
-                    min={min}
-                    max={max}
+                    min="0"
+                    max="100"
                     value={maxValue}
                 />
             </RangeBox>
             <Slider>
-                <LeftPointer ref={leftPointer}>
+                <LeftPointer percent={leftPointerPercent}>
                     <PointerIcon />
                 </LeftPointer>
-                <RightPointer ref={rightPointer}>
+                <RightPointer percent={rightPointerPercent}>
                     <PointerIcon />
                 </RightPointer>
             </Slider>
@@ -102,11 +109,11 @@ const Pointer = styled.div`
 `;
 
 const LeftPointer = styled(Pointer)`
-    left: 0%;
+    left: ${({percent}) => `${percent}%`};
 `;
 
 const RightPointer = styled(Pointer)`
-    right: 3%;
+    right: ${({percent}) => `${percent}%`};
     transform: translate(22px);
 `;
 

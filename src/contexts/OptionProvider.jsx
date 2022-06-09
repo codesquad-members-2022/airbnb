@@ -8,10 +8,7 @@ const OptionProvider = ({children}) => {
     const [guestCount, setGuestCount] = useState(initialGuestState);
     const guestCountProps = {guestCount, setGuestCount};
 
-    const [priceRange, setPriceRange] = useState({min: 0, max: 0});
-    const priceRangeProps = {priceRange, setPriceRange};
-
-    const optionProps = {guestCountProps, priceRangeProps};
+    const optionProps = {guestCountProps};
 
     return <OptionContext.Provider value={optionProps}>{children}</OptionContext.Provider>;
 };

@@ -4,28 +4,34 @@ import Modal from "./Modal";
 import PriceGraph from "./PriceGraph";
 import {makePriceFormat, fetchData, stopPropagation} from "../../../helper/util";
 import RangeSlider from "./RangeSlider";
-import {useOptionContext} from "../../../contexts/OptionProvider";
+import {usePriceContext} from "../../../contexts/PriceProvider";
 
 const PriceModal = ({isClicked}) => {
-    const {priceRangeProps} = useOptionContext();
-    const {priceRange, setPriceRange} = priceRangeProps;
+    const {
+        priceRange,
+        setPriceRange,
+        minValue,
+        setMinValue,
+        maxValue,
+        setMaxValue,
+        priceMinIdx,
+        setPriceMinIdx,
+        priceMaxIdx,
+        setPriceMaxIdx,
+        priceDataLength,
+        setPriceDataLength,
+    } = usePriceContext();
 
     const [priceData, setPriceData] = useState(null);
-    const [priceMinIdx, setPriceMinIdx] = useState(0);
-    const [priceMaxIdx, setPriceMaxIdx] = useState(0);
     const [minimumPrice, setMinimumPrice] = useState(0);
     const [maximumPrice, setMaximumPrice] = useState(0);
-
-    const min = 0;
-    const max = 100;
-    const [minValue, setMinValue] = useState(min);
-    const [maxValue, setMaxValue] = useState(max);
 
     useEffect(() => {
         const getPriceData = async () => {
             const result = await fetchData("http://localhost:3000/price");
             const sortedResult = result.map((data) => data.price).sort((a, b) => a - b);
             setPriceData(sortedResult);
+            setPriceDataLength(result.length);
             setPriceMinIdx(0);
             setPriceMaxIdx(result.length - 1);
             setMinimumPrice(sortedResult[0]);
@@ -43,7 +49,7 @@ const PriceModal = ({isClicked}) => {
     }
 
     const changePriceRange = (type, valueInRangeInput) => {
-        const dataLength = priceData.length;
+        const dataLength = priceDataLength;
         switch (type) {
             case "min": {
                 const idx = Math.floor((valueInRangeInput * dataLength) / 100);
@@ -72,8 +78,6 @@ const PriceModal = ({isClicked}) => {
             </FlexBox>
             <PriceGraph priceData={priceData} minValue={minValue} maxValue={maxValue} />
             <RangeSlider
-                min={min}
-                max={max}
                 minValue={minValue}
                 setMinValue={setMinValue}
                 maxValue={maxValue}
@@ -81,7 +85,7 @@ const PriceModal = ({isClicked}) => {
                 changePriceRange={changePriceRange}
                 setPriceMinIdx={setPriceMinIdx}
                 setPriceMaxIdx={setPriceMaxIdx}
-                dataLength={priceData.length}
+                dataLength={priceDataLength}
             />
         </PriceModalBox>
     );

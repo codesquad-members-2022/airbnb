@@ -1,13 +1,32 @@
 import React from "react";
-import {useOptionContext} from "../../../contexts/OptionProvider";
+import {usePriceContext} from "../../../contexts/PriceProvider";
 import {searchBarTab} from "../../../helper/constants";
 import {makePriceFormat} from "../../../helper/util";
 import CylindricalBox from "./CylindricalBox";
 
 const PriceBox = () => {
-    const {priceRangeProps} = useOptionContext();
-    const {priceRange} = priceRangeProps;
+    const {
+        priceRange,
+        setPriceRange,
+        setMinValue,
+        setMaxValue,
+        setLeftPointerPercent,
+        setRightPointerPercent,
+        setPriceMinIdx,
+        setPriceMaxIdx,
+        priceDataLength,
+    } = usePriceContext();
     const priceDescription = `${makePriceFormat(priceRange.min)} ~ ${makePriceFormat(priceRange.max)}`;
+    const resetPriceRange = (e) => {
+        setPriceRange({min: 0, max: 0});
+        setMinValue(0);
+        setMaxValue(100);
+        setLeftPointerPercent(0);
+        setRightPointerPercent(3);
+        setPriceMinIdx(0);
+        setPriceMaxIdx(priceDataLength - 1);
+        e.stopPropagation();
+    };
 
     return (
         <CylindricalBox
@@ -16,6 +35,7 @@ const PriceBox = () => {
             style={priceBoxStyle}
             partId={searchBarTab.PRICEBOX}
             description={priceRange.min + priceRange.max && priceDescription}
+            crossClickHandler={resetPriceRange}
         />
     );
 };

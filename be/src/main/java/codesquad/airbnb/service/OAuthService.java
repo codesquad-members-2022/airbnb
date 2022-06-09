@@ -19,7 +19,6 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class OAuthService {
 
-    private static final String CLIENT_ID = "bc6ce8b1d104602ca988";
     private static final String GITHUB_AUTHORIZATION_SERVER_URL = "https://github.com/login/oauth/access_token";
     private static final String SCOPE = "user/emails";
     private static final String GITHUB_EMAIL_API_ACCEPT_HEADER = "application/vnd.github.v3+json";
@@ -55,7 +54,7 @@ public class OAuthService {
 
     private MultiValueMap<String, String> getRequestPayload(String code) {
         MultiValueMap<String, String> requestPayload = new LinkedMultiValueMap<>();
-        requestPayload.set("client_id", CLIENT_ID);
+        requestPayload.set("client_id", System.getenv("CLIENT_ID"));
         requestPayload.set("client_secret", System.getenv("CLIENT_SECRET"));
         requestPayload.set("code", code);
         return requestPayload;

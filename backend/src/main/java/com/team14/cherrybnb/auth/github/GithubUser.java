@@ -1,4 +1,4 @@
-package com.team14.cherrybnb.auth.application;
+package com.team14.cherrybnb.auth.github;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -14,5 +14,7 @@ public class GithubUser {
 
     @JsonProperty("avatar_url")
     private String imagePath;
+
+
 
 }

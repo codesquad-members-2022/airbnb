@@ -1,4 +1,4 @@
-package com.team14.cherrybnb.auth.application;
+package com.team14.cherrybnb.auth.github;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

@@ -47,7 +47,7 @@ public class DummyDataService {
 
     private final WishRepository wishRepository;
 
-    @PostConstruct
+    //@PostConstruct
     private void initDummy() throws ParseException, JsonProcessingException {
         createHost();
         createGeneral();

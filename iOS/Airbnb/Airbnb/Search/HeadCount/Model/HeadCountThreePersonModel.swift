@@ -11,7 +11,7 @@ protocol HeadCountModel {
     var currentHeadCount: HeadCountDTO { get }
     var minValue: Int { get }
     var maxValue: Int { get }
-    func handleCurrentHeadCount(headType: HeadCountType, input: HeadCountInputType)
+    func handleCurrentHeadCount(headType: HeadCountType, inputType: HeadCountInputType)
     var descriptionHeadCount: String { get }
 }
 
@@ -40,22 +40,22 @@ class HeadCountThreePersonModel: HeadCountModel {
     }
     
     //TODO: 성인, 어린이, 유아 입력에 대응하여 DTO를 업데이트 하는 로직 만들기. 반환은 뷰 컨트롤러에 결과로 반환할 구조체.
-    func handleCurrentHeadCount(headType: HeadCountType, input: HeadCountInputType) {
-        let compareValue = input == .plus ? maxValue : minValue
+    func handleCurrentHeadCount(headType: HeadCountType, inputType: HeadCountInputType) {
+        let compareValue = inputType == .plus ? maxValue : minValue
         
         guard currentHeadCount.getHeadCount(headType) != compareValue else { return }
         
-        let kidsExist = currentHeadCount.children > 0 || currentHeadCount.infants > 0
-        
-        // 성인이 0인데 아이들이 입력되면 성인 자동으로 1명 세팅
-        // 아이들이 있는데 성인이 1명이고 성인에 대한 minus input이 입력되면 모델 수정 막음
-        if kidsExist == false, currentHeadCount.adults == 0, headType != .adult {
-            currentHeadCount.addHeadCount(.adult, inputType: .plus)
-        } else if kidsExist, currentHeadCount.adults == 1, headType == .adult, input == .minus {
-            return
+        if headType != .adult {
+            adultCheck()
         }
         
-        currentHeadCount.addHeadCount(headType, inputType: input)
+        currentHeadCount.addHeadCount(headType, inputType: inputType)
+    }
+    
+    private func adultCheck() {
+        if currentHeadCount.adults == 0 {
+            currentHeadCount.addHeadCount(.adult, inputType: .plus)
+        }
     }
 }
 

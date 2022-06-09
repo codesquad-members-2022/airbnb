@@ -68,9 +68,9 @@ class SearchInfoTrackingModel: SearchInfoModel {
                     searchInfo.maximumPricePerDayFormatted = numberFormatter.string(for: (maximumPricePerDay / 1000) * 1000)
                 }
             case .headCount:
-                if let model = dict[key] as? HeadCountModel { 
-                    searchInfo.headCount = UInt(model.currentHeadCount.allCount)
-                    searchInfo.headCountFormatted = model.descriptionHeadCount
+                if let count = dict[key] as? HeadCountModel { 
+                    searchInfo.headCount = UInt(count.currentHeadCount.allCount)
+                    searchInfo.headCountFormatted = count.descriptionHeadCount
                 }
             }
         }

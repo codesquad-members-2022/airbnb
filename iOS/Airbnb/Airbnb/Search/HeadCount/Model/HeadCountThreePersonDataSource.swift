@@ -10,7 +10,7 @@ import UIKit
 protocol HeadCountDataSource: UITableViewDataSource {
     var headCountModel: HeadCountModel { get set }
     var onUpdate: ((HeadCountDTO) -> Void)? { get set }
-    func setHeadCount(headType: HeadCountType, input: HeadCountInputType)
+    func setHeadCount(headType: HeadCountType, inputType: HeadCountInputType)
 }
 
 class HeadCountThreePersonDataSource: NSObject, HeadCountDataSource {
@@ -60,8 +60,8 @@ class HeadCountThreePersonDataSource: NSObject, HeadCountDataSource {
         return cell
     }
     
-    func setHeadCount(headType: HeadCountType, input: HeadCountInputType) {
-        headCountModel.handleCurrentHeadCount(headType: headType, input: input)
+    func setHeadCount(headType: HeadCountType, inputType: HeadCountInputType) {
+        headCountModel.handleCurrentHeadCount(headType: headType, inputType: inputType)
         onUpdate?(headCountModel.currentHeadCount)
     }
 }

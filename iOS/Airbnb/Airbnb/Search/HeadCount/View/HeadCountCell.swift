@@ -167,7 +167,7 @@ class HeadCountCell: UITableViewCell {
         }
         
         if let headType = headType, let input = inputType {
-            dataSource?.setHeadCount(headType: headType, input: input)
+            dataSource?.setHeadCount(headType: headType, inputType: input)
         }
     }
     

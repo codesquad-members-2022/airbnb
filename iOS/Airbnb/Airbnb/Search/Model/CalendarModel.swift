@@ -13,8 +13,7 @@ class CalendarModel {
         didSet {
             guard let checkinDayIndex = checkinDayIndex else { return }
             let currentDays = getDays(fromIndex: checkinDayIndex, toIndex: checkoutDayIndex)
-//            self.beforeDays = result
-            return self.onUpdate(currentDays)
+            self.beforeDays = currentDays
         }
     }
     
@@ -23,12 +22,25 @@ class CalendarModel {
             guard let checkinDayIndex = checkinDayIndex else { return }
             guard let checkoutDayIndex = checkoutDayIndex else { return }
             let currentDays = getDays(fromIndex: checkinDayIndex, toIndex: checkoutDayIndex)
-//            self.beforeDays = result
-            return self.onUpdate(currentDays)
+            self.beforeDays = currentDays
         }
     }
-    
-//    private var beforeDays: [Day]?
+
+    private var beforeDays: [Day]? {
+        willSet {
+            guard let beforeDays = beforeDays else { return }
+            guard let newValue = newValue else { return }
+            if newValue.count < beforeDays.count {
+                for i in newValue.count..<beforeDays.count {
+                    beforeDays[i].fadeState = .none
+                }
+            }
+        }
+        didSet {
+            guard let beforeDays = beforeDays else { return }
+            self.onUpdate(beforeDays)
+        }
+    }
 
     
     private var baseDate: Date {
@@ -44,6 +56,7 @@ class CalendarModel {
     }
     
     var onUpdate: ([Day]) -> Void = { _ in }
+
     
     let calendar: Calendar = Calendar.current
     
@@ -160,13 +173,6 @@ extension CalendarModel {
         } else {
             self.checkinDayIndex = indexPath
         }
-    }
-}
-
-struct Month {
-    let result: [Day]
-    var count: Int {
-        result.count
     }
 }
 

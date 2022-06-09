@@ -18,15 +18,31 @@ import lombok.NoArgsConstructor;
 @Table(name = "member")
 public class Member extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String name;
-    private String email;
-    private String password;
-    private String profileImageUrl;
+	private String name;
+	private String email;
+	private String password;
+	private String profileImageUrl;
+	private String providerName;
+	private String oauthId;
+	private String accessToken;
+	private String refreshToken;
 
-    @Enumerated(EnumType.STRING)
-    private MemberType type;
+	@Enumerated(EnumType.STRING)
+	private MemberType type;
+
+	public Member updateProfile(String email, String name, String profileImageUrl) {
+		this.email = email;
+		this.name = name;
+		this.profileImageUrl = profileImageUrl;
+		return this;
+	}
+
+	public void updateToken(String accessToken, String refreshToken) {
+		this.accessToken = accessToken;
+		this.refreshToken = refreshToken;
+	}
 }

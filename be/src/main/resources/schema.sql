@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS accommodation_facility;
 
 CREATE TABLE member (
     member_id INT NOT NULL AUTO_INCREMENT,
-    email     VARCHAR(32),
+    email     VARCHAR(255),
     PRIMARY KEY (member_id)
 );
 

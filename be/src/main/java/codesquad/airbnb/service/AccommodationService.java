@@ -36,7 +36,7 @@ public class AccommodationService {
 
     public AccommodationPriceListDto getPricesByStayDate(LocalDate checkInDate, LocalDate checkOutDate, Double latitude, Double longitude) {
         Long stayDays = checkInDate.until(checkOutDate, ChronoUnit.DAYS) + 1;
-        String point = String.format("POINT(%s %s)", latitude, longitude);
+        String point = String.format("POINT(%s %s)", longitude, latitude);
 
         List<Integer> prices = accommodationRepository.findPricesByStayDate(checkInDate, checkOutDate.plusDays(1), stayDays, point);
 
@@ -57,7 +57,7 @@ public class AccommodationService {
 
     public AccommodationListDto getAccommodationInfoByCriteria(LocalDate checkInDate, LocalDate checkOutDate, Integer minimumMoney, Integer maximumMoney, Integer personnel, Double latitude, Double longitude) {
         long stayDays = checkInDate.until(checkOutDate, ChronoUnit.DAYS) + 1;
-        String point = String.format("POINT(%s %s)", latitude, longitude);
+        String point = String.format("POINT(%s %s)", longitude, latitude);
 
         List<AccommodationDto> accommodation = accommodationRepository.findAllByCriteria(
             point, checkInDate, checkOutDate.plusDays(1), minimumMoney, maximumMoney, personnel, stayDays);

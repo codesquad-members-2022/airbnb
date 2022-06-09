@@ -9,7 +9,7 @@ import UIKit
 
 class HeadCountCell: UITableViewCell {
     
-    weak var dataSource: UITableViewDataSource?
+    weak var dataSource: HeadCountDataSource?
     var headType: HeadCountType?
     
     static var reuseIdentifier: String {
@@ -124,8 +124,8 @@ class HeadCountCell: UITableViewCell {
     }
     
     func setHandler() {
-        plusButton.addTarget(self, action: #selector(plusButtonTouchUpInside(_:)), for: .touchUpInside)
-        minusButton.addTarget(self, action: #selector(minusButtonTouchUpInside(_:)), for: .touchUpInside)
+        plusButton.addTarget(self, action: #selector(manageHeadCountButtonTouchUpInside(_:)), for: .touchUpInside)
+        minusButton.addTarget(self, action: #selector(manageHeadCountButtonTouchUpInside(_:)), for: .touchUpInside)
     }
     
     func setTitle(_ title: String) {
@@ -148,16 +148,8 @@ class HeadCountCell: UITableViewCell {
         }
     }
     
-    func buttonEnableState(_ button: HeadCountButton, isEnable: Bool) {
-        var targetButton: UIButton
-        
-        switch button {
-        case .minus:
-            targetButton = minusButton
-        case .plus:
-            targetButton = plusButton
-        }
-        
+    func buttonEnableState(_ buttonType: HeadCountButton, isEnable: Bool) {
+        let targetButton: UIButton = buttonType == .minus ? minusButton : plusButton
         targetButton.isEnabled = isEnable
     }
     
@@ -165,16 +157,18 @@ class HeadCountCell: UITableViewCell {
         separatorLineView.backgroundColor = .clear
     }
     
-    @objc private func plusButtonTouchUpInside(_ sender: UIButton) {
-        guard let dataSource = dataSource as? HeadCountDataSource, let headType = headType else { return }
-        print("haha")
-        dataSource.setHeadCount(headType: headType, inputType: .plus)
-    }
-    
-    @objc private func minusButtonTouchUpInside(_ sender: UIButton) {
-        guard let dataSource = dataSource as? HeadCountDataSource, let headType = headType else { return }
-        print("haha")
-        dataSource.setHeadCount(headType: headType, inputType: .minus)
+    @objc private func manageHeadCountButtonTouchUpInside(_ sender: UIButton) {
+        var inputType: HeadCountInputType?
+        
+        if sender == plusButton {
+            inputType = .plus
+        } else if sender == minusButton {
+            inputType = .minus
+        }
+        
+        if let headType = headType, let input = inputType {
+            dataSource?.setHeadCount(headType: headType, inputType: input)
+        }
     }
     
     enum HeadCountButton {

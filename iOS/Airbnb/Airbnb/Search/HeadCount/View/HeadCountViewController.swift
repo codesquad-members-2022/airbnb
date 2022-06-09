@@ -16,7 +16,7 @@ class HeadCountViewController: SearchInfoTrackingViewController, CommonViewContr
         return tableview
     }()
     
-    private var headCountDataSource: HeadCountDataSource?
+    private var dataSource: HeadCountDataSource?
     private let headCountRowHeight: CGFloat = 84
     
     override func viewDidLoad() {
@@ -27,8 +27,8 @@ class HeadCountViewController: SearchInfoTrackingViewController, CommonViewContr
     }
     
     func attribute() {
-        self.headCountDataSource = HeadCountDataSource()
-        headCountTableView.dataSource = self.headCountDataSource
+        dataSource = HeadCountThreePersonDataSource()
+        headCountTableView.dataSource = self.dataSource
         headCountTableView.register(HeadCountCell.self, forCellReuseIdentifier: HeadCountCell.reuseIdentifier)
     }
     
@@ -45,7 +45,7 @@ class HeadCountViewController: SearchInfoTrackingViewController, CommonViewContr
     }
     
     func bind() {
-        headCountDataSource?.onUpdate = { [weak self] dto in
+        dataSource?.onUpdate = { [weak self] dto in
             self?.headCountTableView.reloadData()
             self?.model?.setModelData(using: [.headCount: 0])
         }

@@ -43,7 +43,7 @@
 		1B69F369283CD506001A2860 /* MultipleRowsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B69F368283CD506001A2860 /* MultipleRowsCollectionViewController.swift */; };
 		1B69F36B283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B69F36A283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift */; };
 		1B6E8D0E2850543E00F165B8 /* HeadCountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D0A2850543D00F165B8 /* HeadCountCell.swift */; };
-		1B6E8D0F2850543E00F165B8 /* HeadCountDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D0B2850543D00F165B8 /* HeadCountDataSource.swift */; };
+		1B6E8D0F2850543E00F165B8 /* HeadCountThreePersonDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D0B2850543D00F165B8 /* HeadCountThreePersonDataSource.swift */; };
 		1B6E8D102850543E00F165B8 /* HeadCountThreePersonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D0C2850543D00F165B8 /* HeadCountThreePersonModel.swift */; };
 		1B6E8D112850543E00F165B8 /* HeadCountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D0D2850543D00F165B8 /* HeadCountViewController.swift */; };
 		1B6E8D152850769A00F165B8 /* HeadCountDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E8D142850769A00F165B8 /* HeadCountDTO.swift */; };
@@ -133,7 +133,7 @@
 		1B69F368283CD506001A2860 /* MultipleRowsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleRowsCollectionViewController.swift; sourceTree = "<group>"; };
 		1B69F36A283D0D9C001A2860 /* MultipleRowsCollectionViewContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleRowsCollectionViewContainerCell.swift; sourceTree = "<group>"; };
 		1B6E8D0A2850543D00F165B8 /* HeadCountCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadCountCell.swift; sourceTree = "<group>"; };
-		1B6E8D0B2850543D00F165B8 /* HeadCountDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadCountDataSource.swift; sourceTree = "<group>"; };
+		1B6E8D0B2850543D00F165B8 /* HeadCountThreePersonDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadCountThreePersonDataSource.swift; sourceTree = "<group>"; };
 		1B6E8D0C2850543D00F165B8 /* HeadCountThreePersonModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadCountThreePersonModel.swift; sourceTree = "<group>"; };
 		1B6E8D0D2850543D00F165B8 /* HeadCountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadCountViewController.swift; sourceTree = "<group>"; };
 		1B6E8D142850769A00F165B8 /* HeadCountDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadCountDTO.swift; sourceTree = "<group>"; };
@@ -405,7 +405,7 @@
 		1B6E8D13285074DB00F165B8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1B6E8D0B2850543D00F165B8 /* HeadCountDataSource.swift */,
+				1B6E8D0B2850543D00F165B8 /* HeadCountThreePersonDataSource.swift */,
 				1B6E8D0C2850543D00F165B8 /* HeadCountThreePersonModel.swift */,
 			);
 			path = Model;
@@ -594,7 +594,7 @@
 				0014C47D28485C3F00241415 /* WeekdayView.swift in Sources */,
 				00863C5328474792004E5954 /* MonthMetadata.swift in Sources */,
 				00A85F3E283B877700EA32E0 /* WishModel.swift in Sources */,
-				1B6E8D0F2850543E00F165B8 /* HeadCountDataSource.swift in Sources */,
+				1B6E8D0F2850543E00F165B8 /* HeadCountThreePersonDataSource.swift in Sources */,
 				1B27E233283CA14900FCB990 /* SearchOneInARowCollectionViewCell.swift in Sources */,
 				1B18F7EF28488456005B1CAF /* CustomRangeSliderThumbLayer.swift in Sources */,
 				0029729628445B8D0033437E /* LocationModel.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  HeadCountDataSource.swift
+//  HeadCountThreePersonDataSource.swift
 //  Airbnb
 //
 //  Created by 백상휘 on 2022/06/08.
@@ -7,9 +7,15 @@
 
 import UIKit
 
-class HeadCountDataSource: NSObject, UITableViewDataSource {
+protocol HeadCountDataSource: UITableViewDataSource {
+    var headCountModel: HeadCountModel { get set }
+    var onUpdate: ((HeadCountDTO) -> Void)? { get set }
+    func setHeadCount(headType: HeadCountType, inputType: HeadCountInputType)
+}
+
+class HeadCountThreePersonDataSource: NSObject, HeadCountDataSource {
     
-    var headCountModel = HeadCountThreePersonModel()
+    var headCountModel: HeadCountModel = HeadCountThreePersonModel()
     var onUpdate: ((HeadCountDTO) -> Void)?
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

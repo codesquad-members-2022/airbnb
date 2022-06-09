@@ -8,9 +8,9 @@
 import Foundation
 
 struct HeadCountDTO {
-    var adults: Int
-    var children: Int
-    var infants: Int
+    private(set) var adults: Int
+    private(set) var children: Int
+    private(set) var infants: Int
     
     func getHeadCount(_ type: HeadCountType) -> Int {
         switch type {
@@ -20,6 +20,17 @@ struct HeadCountDTO {
             return children
         case .infant:
             return infants
+        }
+    }
+    
+    mutating func addHeadCount(_ type: HeadCountType, value: Int) {
+        switch type {
+        case .adult:
+            adults += value
+        case .child:
+            children += value
+        case .infant:
+            infants += value
         }
     }
 }

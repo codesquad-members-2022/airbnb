@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +40,14 @@ public class WishController {
         } catch (RuntimeException e) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/wish/{id}")
+    public ResponseEntity deleteWish(@PathVariable Long id, HttpServletRequest request) {
+        Members member = (Members) request.getAttribute("Members");
+        log.info("[member] : {}", member);
+        wishService.deleteWish(member.getGithubId(), id);
         return new ResponseEntity(HttpStatus.OK);
     }
 

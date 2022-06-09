@@ -27,4 +27,12 @@ public class Wish {
         this.lodging = lodging;
     }
 
+    @Override
+    public String toString() {
+        return "Wish{" +
+            "id=" + id +
+            ", members=" + members +
+            ", lodging=" + lodging +
+            '}';
+    }
 }

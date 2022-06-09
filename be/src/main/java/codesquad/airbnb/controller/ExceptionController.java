@@ -1,7 +1,6 @@
 package codesquad.airbnb.controller;
 
 import codesquad.airbnb.dto.ResponseMessage;
-import java.util.NoSuchElementException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,10 +18,10 @@ public class ExceptionController {
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<ResponseMessage> handleJwtException(NoSuchElementException exception) {
-        ResponseMessage message = new ResponseMessage(HttpStatus.FORBIDDEN, exception.getMessage());
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ResponseMessage> handleJwtException(IllegalArgumentException exception) {
+        ResponseMessage message = new ResponseMessage(HttpStatus.UNAUTHORIZED, exception.getMessage());
 
-        return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
     }
 }

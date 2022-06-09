@@ -27,9 +27,11 @@ public class AuthController {
     public ResponseEntity<LoginResponse> login(HttpServletResponse response, @RequestParam String code) {
         Long memberId = OAuthService.authorizeForThirdParty(code);
         LoginResponse loginResponse = tokenService.createToken(String.valueOf(memberId));
+        String refreshToken = loginResponse.getRefreshToken();
+        tokenService.saveRefreshTokenAtRedis(memberId, refreshToken);
 
         response.addHeader("access_token", loginResponse.getAccessToken());
-        response.addCookie(createCookieWithRefreshToken(loginResponse.getRefreshToken()));
+        response.addCookie(createCookieWithRefreshToken(refreshToken));
 
         return new ResponseEntity<>(loginResponse, HttpStatus.OK);
     }

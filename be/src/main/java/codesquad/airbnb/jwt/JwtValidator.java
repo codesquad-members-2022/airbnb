@@ -36,7 +36,7 @@ public class JwtValidator {
         } catch (ExpiredJwtException e) {
             return e.getClaims().getSubject();
         } catch (JwtException e) {
-            throw new NoSuchElementException("유효하지 않은 토큰입니다.");
+            throw new IllegalArgumentException("유효하지 않은 토큰입니다.");
         }
     }
 
@@ -52,7 +52,7 @@ public class JwtValidator {
         } catch (ExpiredJwtException e) {
             return 0;
         } catch (JwtException e) {
-            throw new NoSuchElementException("유효하지 않은 토큰입니다.");
+            throw new IllegalArgumentException("유효하지 않은 토큰입니다.");
         }
     }
 }

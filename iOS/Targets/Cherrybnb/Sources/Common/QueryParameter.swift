@@ -12,7 +12,7 @@ struct QueryParameter {
     var dateRange: (Date?, Date?)
     var place: Place?
     var priceRange: (Price?, Price?)
-    var people: HeadCount?
+    var headCount: HeadCount?
 }
 
 struct HeadCount {

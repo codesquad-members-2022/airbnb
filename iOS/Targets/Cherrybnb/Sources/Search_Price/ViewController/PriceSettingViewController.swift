@@ -18,21 +18,30 @@ class PriceSettingViewController: UIViewController {
         }
     }
     
-    private lazy var toolbar = SearchNavigationToolbar()
+    private var toolbar = SearchNavigationToolbar()
     
-    private lazy var queryParameterStackView = QueryParameterStackView(queryParameter: queryParameter)
+    private lazy var queryParameterStackView: QueryParameterStackView = {
+       return QueryParameterStackView(queryParameter: queryParameter)
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let priceSuccessStubRequest = SearchManager(httpService: PriceSuccessStub())
-        priceSuccessStubRequest.searchPriceHistogram(queryComponent: queryParameter) { [weak self] price in
-            guard let price = price, let self = self else { return }
-            self.priceSettingView.setContents(price)
-        }
         view.backgroundColor = .white
+        
         setSubviews()
         setLayout()
         setPriceSettingHandler()
+        searchPriceHistrgram()
+    }
+    
+    private func searchPriceHistrgram() {
+        let priceSuccessStub = PriceSuccessStub()
+        let searchManager = SearchManager(httpService: priceSuccessStub)
+        
+        searchManager.searchPriceHistogram(queryComponent: queryParameter) { [weak self] price in
+            guard let price = price, let self = self else { return }
+            self.priceSettingView.setContents(price)
+        }
     }
 
     private func setSubviews() {

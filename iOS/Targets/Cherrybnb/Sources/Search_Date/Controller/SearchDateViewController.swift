@@ -16,15 +16,18 @@ class SearchDateViewController: UIViewController {
         }
     }
 
-    private lazy var toolbar = SearchNavigationToolbar()
+    private var toolbar = SearchNavigationToolbar()
 
-    private lazy var calendarPickerVC = CalendarPickerViewController(baseDate: Date(), numOfMonths: CalendarPickerViewController.defaultNumberOfMonths)
+    private var calendarPickerVC = CalendarPickerViewController(baseDate: Date(), numOfMonths: CalendarPickerViewController.defaultNumberOfMonths)
 
-    private lazy var queryParameterStackView = QueryParameterStackView(queryParameter: queryParameter)
+    private lazy var queryParameterStackView: QueryParameterStackView = {
+        return QueryParameterStackView(queryParameter: queryParameter)
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
         setSubviews()
         setLayout()
         setCalendarPickerHandler()

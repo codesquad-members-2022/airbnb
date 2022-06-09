@@ -40,7 +40,7 @@ class PriceSettingView: UIView {
     private var slider: MultiSlider = {
         let slider = MultiSlider()
         slider.orientation = .horizontal
-        slider.addTarget(self, action: #selector(sliderChanged(_:)), for: .valueChanged)
+        slider.addTarget(slider, action: #selector(sliderChanged(_:)), for: .valueChanged)
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.outerTrackColor = .systemGray
         slider.tintColor = .blue
@@ -59,7 +59,6 @@ class PriceSettingView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-
     private func setSubviews(){
         self.addSubview(titleLabel)
         self.addSubview(rangeLabel)
@@ -68,7 +67,6 @@ class PriceSettingView: UIView {
     }
     
     private func setLayout(){
-        
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 32),
             titleLabel.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
@@ -93,7 +91,6 @@ class PriceSettingView: UIView {
             slider.widthAnchor.constraint(equalTo: self.safeAreaLayoutGuide.widthAnchor, constant: -32),
             slider.heightAnchor.constraint(equalToConstant: 10)
         ])
-
     }
     
     @objc private func sliderChanged(_ sender: MultiSlider){
@@ -109,5 +106,4 @@ class PriceSettingView: UIView {
         slider.maximumValue = CGFloat(priceHistogram.max)
         slider.value = [slider.minimumValue, slider.maximumValue]
     }
-
 }

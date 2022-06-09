@@ -21,7 +21,7 @@ public class LoginController {
     @GetMapping("/github/callback")
     public ResponseEntity<Void> login(String code) {
         String jwt = loginService.login(code);
-        log.info("{}", code);
+        log.info("code={}", code);
         return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, jwt)
                 .build();

@@ -1,6 +1,7 @@
 package com.team14.cherrybnb.auth.github;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -12,6 +13,7 @@ import java.net.URI;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class GithubTokenService {
 
     private final String ACCESS_TOKEN_URL = "https://github.com/login/oauth/access_token";
@@ -24,6 +26,7 @@ public class GithubTokenService {
 
 
     public GithubToken getAccessToken(String code) {
+
         return webClient.post().uri(URI.create(ACCESS_TOKEN_URL))
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(new GithubTokenRequest(clientId, clientSecret, code))
@@ -33,11 +36,12 @@ public class GithubTokenService {
     }
 
     public GithubUser getUserInfo(String accessToken) {
-        return WebClient.create()
-                .get()
+
+        log.info("{}", accessToken);
+
+        return webClient.get()
                 .uri("/user")
-                .header(HttpHeaders.ACCEPT, "application/vnd.github.v3+json")
-                .header(HttpHeaders.AUTHORIZATION, "token " + accessToken)
+                .header(HttpHeaders.AUTHORIZATION, accessToken)
                 .retrieve()
                 .bodyToMono(GithubUser.class)
                 .block();

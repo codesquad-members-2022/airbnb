@@ -11,10 +11,9 @@ import { formatPrice } from '@lib/utils';
 
 export interface PriceAreaTypes {
   size: string;
-  element: HTMLElement;
 }
 
-const PriceArea = ({ size, element }: PriceAreaTypes) => {
+const PriceArea = ({ size }: PriceAreaTypes) => {
   const [isPriceModalOpen, setIsPriceModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -52,7 +51,7 @@ const PriceArea = ({ size, element }: PriceAreaTypes) => {
           <S.Content isContentExist={isPriceExist}>{priceContent}</S.Content>
         )}
       </S.PriceArea>
-      {isPriceModalOpen && <PriceModal element={element} modalRef={modalRef} />}
+      {isPriceModalOpen && <PriceModal modalRef={modalRef} />}
     </>
   );
 };

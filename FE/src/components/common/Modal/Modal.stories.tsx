@@ -20,14 +20,13 @@ export default {
 };
 
 export const Default = (args: ModalTypes) => {
-
   const element = document.getElementById('root') as HTMLElement;
   element.style.position = 'relative';
 
   return (
     <S.StoryContainer>
       Element
-      <Modal {...args} element={element} />
+      <Modal {...args} />
     </S.StoryContainer>
   );
 };

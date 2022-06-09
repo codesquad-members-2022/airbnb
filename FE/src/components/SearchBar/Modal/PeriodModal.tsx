@@ -6,7 +6,6 @@ import Icon, { ICON_NAME, ICON_SIZE } from '@components/common/Icon';
 import Modal, { MODAL_POSITION } from '@components/common/Modal';
 
 interface PriceModalTypes {
-  element: HTMLElement;
   modalRef: RefObject<HTMLDivElement>;
 }
 
@@ -14,7 +13,7 @@ export interface CalendarTypes {
   year: number;
   month: number;
 }
-const PeriodModal = ({ element, modalRef }: PriceModalTypes) => {
+const PeriodModal = ({ modalRef }: PriceModalTypes) => {
   const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth();
@@ -40,7 +39,7 @@ const PeriodModal = ({ element, modalRef }: PriceModalTypes) => {
     }
   };
   return (
-    <Modal element={element} position={MODAL_POSITION.LEFT}>
+    <Modal position={MODAL_POSITION.LEFT}>
       <S.Container ref={modalRef}>
         <S.Wrapper>
           <S.Btn onClick={prevBtn}>

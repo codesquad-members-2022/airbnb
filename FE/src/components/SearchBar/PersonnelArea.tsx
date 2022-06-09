@@ -5,7 +5,6 @@ import { PersonnelTypes, defaultPersonnel } from '@data';
 
 interface PersonnelAreaTypes {
   size: string;
-  personnel: PersonnelTypes;
 }
 
 const getPersonnelContent = (personnel: PersonnelTypes) => {
@@ -17,12 +16,12 @@ const getPersonnelContent = (personnel: PersonnelTypes) => {
     .join(', ');
 };
 
-const PersonnelArea = ({ size, personnel }: PersonnelAreaTypes) => {
-  const { guest, kid } = personnel;
+const PersonnelArea = ({ size }: PersonnelAreaTypes) => {
+  const { guest, kid } = defaultPersonnel;
   const isPersonnelExist = guest !== defaultPersonnel.guest || kid !== defaultPersonnel.kid;
 
   const personnelContent = isPersonnelExist
-    ? getPersonnelContent(personnel)
+    ? getPersonnelContent(defaultPersonnel)
     : NO_CONTENT[AREA_TYPE.PERSONNEL];
 
   return (

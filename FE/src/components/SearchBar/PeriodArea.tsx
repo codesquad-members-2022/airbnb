@@ -11,10 +11,9 @@ import { useCalendarState } from '@lib/hooks/useContext';
 
 export interface PeriodAreaTypes {
   size: string;
-  element: HTMLElement;
 }
 
-const PeriodArea = ({ size, element }: PeriodAreaTypes) => {
+const PeriodArea = ({ size }: PeriodAreaTypes) => {
   const [isPeriodModalOpen, setIsPeriodModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const { checkIn, setCheckIn, checkOut, setCheckOut } = useCalendarState();
@@ -57,7 +56,7 @@ const PeriodArea = ({ size, element }: PeriodAreaTypes) => {
           <S.Content isContentExist={isCheckInExist && isCheckOutExist}>{periodContent}</S.Content>
         )}
       </S.PeriodArea>
-      {isPeriodModalOpen && <PeriodModal element={element} modalRef={modalRef} />}
+      {isPeriodModalOpen && <PeriodModal modalRef={modalRef} />}
     </>
   );
 };

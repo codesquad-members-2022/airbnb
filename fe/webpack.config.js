@@ -32,7 +32,7 @@ module.exports = (env) => {
       fallback: { fs: false, path: false },
       alias: {
         '@': path.resolve(__dirname, 'src'),
-        '@Utils': path.resolve(__dirname, 'src/utils'),
+        '~': path.resolve(__dirname, 'public'),
       },
       extensions: ['.js', '.ts', '.jsx', '.tsx'],
     },
@@ -41,6 +41,17 @@ module.exports = (env) => {
     },
     module: {
       rules: [
+        {
+          test: /\.(png|jpe?g|gif|svg)$/i,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[name].[ext]',
+              },
+            },
+          ],
+        },
         {
           test: /\.(ts|tsx|js|jsx)$/,
           loader: 'babel-loader',
@@ -55,7 +66,6 @@ module.exports = (env) => {
                   },
                   useBuiltIns: 'usage',
                   corejs: { version: 3, proposals: true },
-                  debug: true,
                 },
               ],
               '@babel/preset-react',

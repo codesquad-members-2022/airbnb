@@ -1,60 +1,85 @@
+import { useDatePickGetter } from '@bcad1591/react-date-picker';
 import React, { useEffect } from 'react';
 
-import { pricesURL } from '@/apis/accommodation';
+import { getPrices } from '@/apis/accommodation';
 import Chart from '@/components/Chart';
 import { useAccommodationDispatch, useAccommodation, parseAction } from '@/contexts/Accommodation';
-import { useFetch } from '@/hooks/useFetch/useFetch';
+import { useGeoLocationGetter } from '@/contexts/GeoLocation';
+import useAsync from '@/hooks/useAsync';
 
 import * as S from './style';
 
-interface IAccommodation {
-  price: number;
-  count: number;
-}
-
 const prefix = '₩';
+function PricePicker({ dateUnitToString }) {
+  const {
+    pickedDateUnits: { firstPickedDateUnit: checkIn, secondPickedDateUnit: checkOut },
+  } = useDatePickGetter();
+  const { latitude, longitude } = useGeoLocationGetter();
 
-function PricePicker() {
-  const { data: accommodationData, isLoading } = useFetch<IAccommodation[]>(pricesURL);
+  const [state] = useAsync(
+    () =>
+      getPrices({
+        in: dateUnitToString(checkIn),
+        out: dateUnitToString(checkOut),
+        latitude,
+        longitude,
+      }),
+    [],
+  );
+
+  const { data, loading: isLoading, error } = state;
 
   const accommodationDispatch = useAccommodationDispatch();
-  const { maxPrice, minPrice, maxCount, averageNightlyPrice, chartData, canvasWidth } =
-    useAccommodation();
+  const {
+    initialMaxPrice,
+    initialMinPrice,
+    maxCount,
+    averageNightlyPrice,
+    chartData,
+    canvasWidth,
+  } = useAccommodation();
 
   useEffect(() => {
-    if (!accommodationData) {
+    if (!data?.accommodationPrices) {
       return;
     }
-    accommodationDispatch(parseAction(accommodationData));
-  }, [accommodationData]);
+    accommodationDispatch(parseAction(data?.accommodationPrices));
+  }, [data?.accommodationPrices]);
 
   return (
     <S.PricePickerLayer>
-      <S.Header>
-        <S.Title>가격 범위</S.Title>
-      </S.Header>
-      <S.PriceInfo>
-        {isLoading ? (
-          'Loading...'
-        ) : (
-          <>
-            <S.Price>
-              {`${prefix}${minPrice.toLocaleString()}`} - {`${prefix}${maxPrice.toLocaleString()}`}
-            </S.Price>
-            <S.Average>
-              평균 1박 요금은 {prefix}
-              {averageNightlyPrice.toLocaleString()} 입니다.
-            </S.Average>
-          </>
-        )}
-      </S.PriceInfo>
-      <S.ChartLayer>
-        {isLoading ? (
-          'Loading...'
-        ) : (
-          <Chart chartData={chartData} width={canvasWidth} height={maxCount} />
-        )}
-      </S.ChartLayer>
+      {error ? (
+        <S.Error>에러</S.Error>
+      ) : (
+        <>
+          <S.Header>
+            <S.Title>가격 범위</S.Title>
+          </S.Header>
+          <S.PriceInfo>
+            {isLoading ? (
+              'Loading...'
+            ) : (
+              <>
+                <S.Price>
+                  {`${prefix}${initialMinPrice?.toLocaleString()}`} -{' '}
+                  {`${prefix}${initialMaxPrice?.toLocaleString()}`}
+                </S.Price>
+                <S.Average>
+                  평균 1박 요금은 {prefix}
+                  {averageNightlyPrice.toLocaleString()} 입니다.
+                </S.Average>
+              </>
+            )}
+          </S.PriceInfo>
+          <S.ChartLayer>
+            {isLoading ? (
+              'Loading...'
+            ) : (
+              <Chart chartData={chartData} width={canvasWidth} height={maxCount} />
+            )}
+          </S.ChartLayer>
+        </>
+      )}
     </S.PricePickerLayer>
   );
 }

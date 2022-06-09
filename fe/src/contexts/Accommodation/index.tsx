@@ -17,8 +17,8 @@ interface AccommodationState {
   offset: number;
   canvasWidth: number;
   maxCount: number;
-  maxPrice: number;
-  minPrice: number;
+  initialMaxPrice: number;
+  initialMinPrice: number;
   chartData: Point[];
 }
 
@@ -28,14 +28,14 @@ type AccommodationAction =
 type AccommodationDispatch = React.Dispatch<AccommodationAction>;
 
 const initialState: AccommodationState = {
-  scaleFactor: 1_000,
+  scaleFactor: 100,
   accommodationData: [],
   averageNightlyPrice: 0,
   offset: 0,
   canvasWidth: 0,
-  maxCount: 0,
-  maxPrice: 0,
-  minPrice: 0,
+  maxCount: 100,
+  initialMaxPrice: 0,
+  initialMinPrice: 0,
   chartData: [],
 };
 
@@ -57,11 +57,11 @@ const accommodationReducer = (state: AccommodationState, action: AccommodationAc
       });
 
       const { length } = fetchData;
-      const { price: minPrice } = fetchData[0];
-      const { price: maxPrice } = fetchData[length - 1];
-      const offset = minPrice;
+      const { price: initialMinPrice } = fetchData[0];
+      const { price: initialMaxPrice } = fetchData[length - 1];
+      const offset = initialMinPrice;
 
-      let maxCount = 0;
+      let maxCount = 100;
       const sumOfPrices = fetchData.reduce((acc, { price, count }) => {
         if (maxCount < count) {
           maxCount = count;
@@ -85,8 +85,8 @@ const accommodationReducer = (state: AccommodationState, action: AccommodationAc
         offset,
         canvasWidth,
         maxCount,
-        minPrice,
-        maxPrice,
+        initialMinPrice,
+        initialMaxPrice,
         chartData,
       };
     }
@@ -144,4 +144,17 @@ export const useAccommodationDispatch = () => {
   }
 
   return dispatch;
+};
+
+export const useAccommodationReset = () => {
+  const dispatch = useContext(AccommodationDispatchContext);
+
+  if (dispatch === null) {
+    throw Error('Accommodation dispatch Error');
+  }
+  const reset = () => {
+    dispatch(resetAction());
+  };
+
+  return reset;
 };

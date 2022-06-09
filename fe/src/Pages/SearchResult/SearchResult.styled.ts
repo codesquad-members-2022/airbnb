@@ -29,6 +29,7 @@ export const searchBarStyle = `
 
 export const calendarStyle = `
   background-color:#fff;
+  box-shadow: 0px 4px 10px rgba(51, 51, 51, 0.1), 0px 0px 4px rgba(51, 51, 51, 0.05);
   width: 916px;
   margin-left: 262px;
   margin-top: 40px;
@@ -45,6 +46,7 @@ export const headCountStyle = `
   width:400px;
   height:355px;
   background-color:#fff;
+  box-shadow: 0px 4px 10px rgba(51, 51, 51, 0.1), 0px 0px 4px rgba(51, 51, 51, 0.05);
   border-radius:40px;
   margin-top:40px;
   margin-left:778px;
@@ -73,16 +75,18 @@ export const SearchResultArea = styled.div`
 `;
 
 export const Tourist = styled.div`
-  flex: 1;
+  flex: 2;
   height: 1024px;
   background-color: white;
   overflow: auto;
+  z-index: -1;
 `;
 
-export const Map = styled.div`
-  flex: 1;
+export const MapArea = styled.div`
+  flex: 3;
   height: 1024px;
   background-color: green;
+  z-index: -1;
 `;
 
 export const accommodationStyle = `

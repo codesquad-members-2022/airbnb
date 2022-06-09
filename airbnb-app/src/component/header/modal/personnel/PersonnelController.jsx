@@ -3,7 +3,7 @@ import styled, { useTheme } from 'styled-components';
 import { PERSONNEL_MIN as MIN, PERSONNEL_MAX as MAX } from '@/constants/PersonnelText';
 import { isMax, isMin } from '@/utils/utils';
 import { PersonnelContext } from '@/context/PersonnelProvider';
-import { AddButton, RemoveButton } from '@personnel/ControllerButtons';
+import { PersonnelSetButton } from '@personnel/ControllerButtons';
 
 function PersonnelController({ title }) {
   const theme = useTheme();
@@ -21,14 +21,16 @@ function PersonnelController({ title }) {
 
   return (
     <>
-      <RemoveButton
+      <PersonnelSetButton
+        type={'remove'}
         onClick={() => {
           removePerson(title);
         }}
         style={removeBtnStyle}
       />
       <SelectedNum>{personnel[title]}</SelectedNum>
-      <AddButton
+      <PersonnelSetButton
+        type={'add'}
         onClick={() => {
           addPerson(title);
         }}

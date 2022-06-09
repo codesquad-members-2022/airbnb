@@ -6,13 +6,15 @@ import SearchInputModal from './SearchInputModal';
 import { SearchBarContext } from '@/context/SearchBarProvider';
 import { CalenderDateContext } from '@/context/CalenderDateProvider';
 import { PersonnelContext } from '@/context/PersonnelProvider';
+import { PriceContext } from '@/context/PriceProvider';
 
 const searchInputText = Object.entries(SEARCH_INPUT_TEXT);
 
 function SearchBar() {
-  const { isFocus, resetFocusState } = useContext(SearchBarContext);
+  const { isFocus } = useContext(SearchBarContext);
   const { checkInValue, checkOutValue, resetCurDate, resetCalenderInfos } = useContext(CalenderDateContext);
   const { personnelValue, resetPersonnel } = useContext(PersonnelContext);
+  const { priceValue, resetPrice } = useContext(PriceContext);
 
   const inputProps = {
     체크인: {
@@ -24,8 +26,8 @@ function SearchBar() {
       resetBtnHandler: resetCalenderInfos,
     },
     요금: {
-      value: `~`,
-      resetBtnHandler: () => {},
+      value: priceValue,
+      resetBtnHandler: resetPrice,
     },
     인원: {
       value: personnelValue,
@@ -34,7 +36,6 @@ function SearchBar() {
   };
 
   function handleBlur() {
-    resetFocusState();
     resetCurDate();
   }
 

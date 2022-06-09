@@ -9,12 +9,7 @@ function Calender({ page = 1 }) {
   const [calenderPosition, setCalenderPosition] = useState(0);
 
   return (
-    <StyledContainer
-      page={page}
-      onMouseDown={e => {
-        e.preventDefault();
-      }}
-    >
+    <StyledContainer page={page}>
       <PrevButton calenderPosition={calenderPosition} setCalenderPosition={setCalenderPosition} />
       <NextButton calenderPosition={calenderPosition} setCalenderPosition={setCalenderPosition} />
       <CalenderCarousel page={page} calenderPosition={calenderPosition} setCalenderPosition={setCalenderPosition} />
@@ -24,7 +19,6 @@ function Calender({ page = 1 }) {
 
 const StyledContainer = styled(ModalContainer)`
   position: relative;
-  margin-top: 30px;
   ${({ page }) =>
     `width: ${page === 1 ? 370 : 818}px;
     height: ${382 * Math.ceil(page / 2)}px;

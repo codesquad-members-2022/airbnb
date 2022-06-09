@@ -14,8 +14,8 @@ struct Location {
 }
 
 struct Period {
-    let start: String
-    let end: String
+    let start: Date
+    let end: Date
 }
 
 struct PriceRange {

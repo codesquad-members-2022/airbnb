@@ -1,8 +1,9 @@
 package team15.airbnb.user.domain;
 
+import java.util.Objects;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import team15.airbnb.accommodation.domain.Accommodation;
 import team15.airbnb.common.domain.BaseEntity;
 import team15.airbnb.accommodation.domain.Review;
 import team15.airbnb.reservation.domain.Reservation;
@@ -40,7 +41,7 @@ public class User extends BaseEntity {
 
 	private String profileImage;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Favorite> favorites = new ArrayList<>();
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
@@ -48,4 +49,12 @@ public class User extends BaseEntity {
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<Reservation> reservations = new ArrayList<>();
+
+	public Favorite cancelFavorite(Long accommodationId) {
+		Favorite favorite = favorites.stream()
+			.filter(s -> Objects.equals(s.getAccommodation().getId(), accommodationId))
+			.findAny().orElseThrow(()  -> new IllegalStateException("삭제하려는 숙소가 존재하지 않습니다."));
+		favorites.remove(favorite);
+		return favorite;
+	}
 }

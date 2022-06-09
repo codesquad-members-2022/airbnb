@@ -29,12 +29,13 @@ export const PriceRangeGraph = () => {
   return (
     <>
       {/* TODO: Description 컴포넌트로 변경 */}
-      <div>가격 범위</div>
+      {/* <div>가격 범위</div>
       <div>
         {minPrice} - {maxPrice}
       </div>
-      <div>평균 1박 요금은 {average}원 입니다.</div>
+      <div>평균 1박 요금은 {average}원 입니다.</div> */}
       {/* TODO: Description 컴포넌트로 변경 */}
+      <GraphDescription minPrice={minPrice} maxPrice={maxPrice} average={average} />
 
       <S.GraphContainer>
         <MemoizedGraphCanvas context={context} canvasRef={canvasRef} />
@@ -46,7 +47,7 @@ export const PriceRangeGraph = () => {
         />{" "}
       </S.GraphContainer>
 
-      <button
+      <S.applyButton
         onClick={() => {
           const newPriceRange = { ...priceRange, minPrice: minPrice, maxPrice: maxPrice };
           if (setPriceRange) {
@@ -54,8 +55,26 @@ export const PriceRangeGraph = () => {
           }
         }}
       >
-        입력
-      </button>
+        적용
+      </S.applyButton>
+    </>
+  );
+};
+
+type DescriptionTypes = {
+  minPrice: number;
+  maxPrice: number;
+  average: number;
+};
+
+const GraphDescription = ({ minPrice, maxPrice, average }: DescriptionTypes) => {
+  return (
+    <>
+      <S.GraphTitle>가격 범위</S.GraphTitle>
+      <S.GraphRangeDesc>
+        {minPrice} - {maxPrice}
+      </S.GraphRangeDesc>
+      <S.GraphAverageDesc>평균 1박 요금은 {average}원 입니다.</S.GraphAverageDesc>
     </>
   );
 };

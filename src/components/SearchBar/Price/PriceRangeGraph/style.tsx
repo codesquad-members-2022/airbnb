@@ -57,3 +57,37 @@ export const RightFilter = styled.div`
   z-index: 100;
   background-color: rgba(255, 255, 255, 0.5);
 `;
+
+export const applyButton = styled.button`
+  display: block;
+  padding: 5px 10px;
+  opacity: 0.8;
+  color: ${({ theme }) => theme.color.white};
+  background-color: ${({ theme }) => theme.color.black};
+  border-radius: 10px;
+  margin: auto;
+  font-size: ${({ theme }) => theme.fontSize.base};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  cursor: pointer;
+  :hover {
+    opacity: 1;
+  }
+`;
+
+export const GraphTitle = styled.div`
+  font-size: ${({ theme }) => theme.fontSize.base};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  margin-bottom: 16px;
+`;
+
+export const GraphRangeDesc = styled.div`
+  font-size: ${({ theme }) => theme.fontSize.large};
+  color: ${({ theme }) => theme.color.gray1};
+  margin-bottom: 4px;
+`;
+
+export const GraphAverageDesc = styled.div`
+  font-size: ${({ theme }) => theme.fontSize.small};
+  color: ${({ theme }) => theme.color.gray3};
+  margin-bottom: 8px;
+`;

@@ -33,6 +33,6 @@ export const TextBoxText = styled.div<{ textContent?: string | null }>`
     textContent &&
     css`
       color: ${({ theme }) => theme.color.black};
-      font-weight: ${({ theme }) => theme.fontWeight.bold};
+      font-weight: ${({ theme }) => theme.fontWeight.base};
     `};
 `;

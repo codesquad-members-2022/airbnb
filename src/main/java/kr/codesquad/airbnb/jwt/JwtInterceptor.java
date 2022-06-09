@@ -1,18 +1,19 @@
 package kr.codesquad.airbnb.jwt;
 
+import static kr.codesquad.airbnb.jwt.OauthUtils.GITHUB_AVATAR_URL;
+import static kr.codesquad.airbnb.jwt.OauthUtils.GITHUB_EMAIL;
+import static kr.codesquad.airbnb.jwt.OauthUtils.GITHUB_ID;
+import static kr.codesquad.airbnb.jwt.OauthUtils.GITHUB_NAME;
+
 import com.auth0.jwt.interfaces.DecodedJWT;
-import kr.codesquad.airbnb.controller.WishController;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import kr.codesquad.airbnb.domain.Members;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import static kr.codesquad.airbnb.jwt.OauthUtils.*;
 
 @Component
 @RequiredArgsConstructor

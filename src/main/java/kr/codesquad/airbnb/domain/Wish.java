@@ -3,9 +3,11 @@ package kr.codesquad.airbnb.domain;
 import javax.persistence.*;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Wish {
 
     @Id
@@ -19,4 +21,10 @@ public class Wish {
     @JoinColumn
     @ManyToOne(fetch = FetchType.LAZY)
     private Lodging lodging;
+
+    public Wish(Members members, Lodging lodging) {
+        this.members = members;
+        this.lodging = lodging;
+    }
+
 }

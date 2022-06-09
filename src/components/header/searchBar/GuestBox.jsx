@@ -4,7 +4,8 @@ import {useOptionContext} from "../../../contexts/OptionProvider";
 import {searchBarTab} from "../../../helper/constants";
 
 const GuestBox = () => {
-    const {guestCount} = useOptionContext();
+    const {guestCountProps} = useOptionContext();
+    const {guestCount} = guestCountProps;
     const getGuestText = () => {
         const guest = guestCount.adult + guestCount.children;
         const infant = guestCount.infant;

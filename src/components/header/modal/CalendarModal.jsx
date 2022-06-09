@@ -6,6 +6,7 @@ import {usePeriodContext} from "../../../contexts/PeriodProvider";
 import {ReactComponent as LeftIcon} from "../../../assets/leftArrow.svg";
 import {ReactComponent as RightIcon} from "../../../assets/rightArrow.svg";
 import {searchBarTab} from "../../../helper/constants";
+import {stopPropagation} from "../../../helper/util";
 import {useSearchBarClickedTabContext} from "../../../contexts/SearchBarClickedTabProvider";
 
 const CalendarModal = ({isClicked}) => {
@@ -71,30 +72,28 @@ const CalendarModal = ({isClicked}) => {
     };
 
     return (
-        <>
-            <CalendarModalBox isClicked={isClicked}>
-                <IconBox>
-                    <LeftIcon onClick={() => setPreviousMonth(date)} />
-                    <RightIcon onClick={() => setNextMonth(date)} />
-                </IconBox>
-                <CalendarContentBox>
-                    <Calendar
-                        calendarWidth={336}
-                        date={date.firstCalendar}
-                        dateClickHandler={dateClickHandler}
-                        hoverDateStyle={hoverDateStyle}
-                        periodStyle={periodStyle}
-                    />
-                    <Calendar
-                        calendarWidth={336}
-                        date={date.secondCalendar}
-                        dateClickHandler={dateClickHandler}
-                        hoverDateStyle={hoverDateStyle}
-                        periodStyle={periodStyle}
-                    />
-                </CalendarContentBox>
-            </CalendarModalBox>
-        </>
+        <CalendarModalBox isClicked={isClicked} onClick={stopPropagation}>
+            <IconBox>
+                <LeftIcon onClick={() => setPreviousMonth(date)} />
+                <RightIcon onClick={() => setNextMonth(date)} />
+            </IconBox>
+            <CalendarContentBox>
+                <Calendar
+                    calendarWidth={336}
+                    date={date.firstCalendar}
+                    dateClickHandler={dateClickHandler}
+                    hoverDateStyle={hoverDateStyle}
+                    periodStyle={periodStyle}
+                />
+                <Calendar
+                    calendarWidth={336}
+                    date={date.secondCalendar}
+                    dateClickHandler={dateClickHandler}
+                    hoverDateStyle={hoverDateStyle}
+                    periodStyle={periodStyle}
+                />
+            </CalendarContentBox>
+        </CalendarModalBox>
     );
 };
 

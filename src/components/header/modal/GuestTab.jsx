@@ -5,7 +5,8 @@ import {ReactComponent as PlusIcon} from "../../../assets/plus.svg";
 import {useOptionContext} from "../../../contexts/OptionProvider";
 
 const GuestTab = ({typeName, type, detail}) => {
-    const {guestCount, setGuestCount} = useOptionContext();
+    const {guestCountProps} = useOptionContext();
+    const {guestCount, setGuestCount} = guestCountProps;
     const Detail = type === "companionAnimal" ? CompanionAnimalDetail : GuestDetail;
     const disabled = (() => {
         if (guestCount[type] === 0) {

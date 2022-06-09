@@ -9,5 +9,3 @@ const RouterContext = createContext<RouterContextType>({
 });
 
 export default RouterContext;
-
-// export const LocationContext = createContext<LocationContextType | null>(null);

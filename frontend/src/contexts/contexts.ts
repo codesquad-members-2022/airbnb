@@ -27,7 +27,6 @@ interface PriceRangeContextType {
 }
 
 interface SearchBarStateContextType {
-  // isSearchBarFullSize: React.MutableRefObject<boolean>;
   isSearchBarFullSize: boolean;
   setIsSearchBarFullSize: React.Dispatch<React.SetStateAction<boolean>>;
 }

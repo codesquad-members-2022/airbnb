@@ -1,3 +1,5 @@
+import numToWon from "utils/utils";
+
 const ListItemCard = ({
   name,
   address,
@@ -42,14 +44,14 @@ const ListItemCard = ({
           <div className="info-wish-button">🧡</div>
         </div>
         <div className="info-price-wrap">
-          <p className="info-price">₩{Number(price).toLocaleString()} / 박</p>
+          <p className="info-price">₩{numToWon(Number(price))} / 박</p>
           <div className="info-review-total-area">
             <div className="info-review item">
               ⭐ {reviewScore}
               <span className="info-review-count">(후기 {reviewCount}개)</span>
             </div>
             <div className="info-total-price item">
-              ₩{Number(price).toLocaleString()}
+              ₩{numToWon(Number(price))}
             </div>
           </div>
         </div>

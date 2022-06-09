@@ -5,17 +5,19 @@ import { LinkPath } from "router";
 import RouterContext from "./Contexts";
 
 const { history, location } = window;
+const FIRST_INDEX = 0;
+const DELETE_COUNT = 1;
 
-// TODO:state를 url에 추가하는 함수 추가하기
 const queryDataToUrlString = (query: { [key: string]: string }) => {
   return JSON.stringify(query)
     .replace(/["{}]/g, "")
     .split(",")
-    .reduce((prev, cur) => `${prev}${cur.split(":").join("=")}&`, "");
+    .reduce((prev, cur) => `${prev}${cur.split(":").join("=")}&`, "")
+    .slice(FIRST_INDEX, DELETE_COUNT * -1);
 };
 
 const pushHistory = ({ path, state, query }: PushHistoryProps): void => {
-  // history.pushState(state, title, url);
+  // NOTE: history.pushState(state, title, url);
   const url = `${location.origin}${path}${
     (query && `?${queryDataToUrlString(query)}`) || ""
   }`;
@@ -32,10 +34,7 @@ const Link = ({
 }: LinkProps): JSX.Element => {
   const { setPage } = useContext(RouterContext);
 
-  const href =
-    to === "index"
-      ? `/`
-      : `/${to}${(query && queryDataToUrlString(query)) || ""}`;
+  const href = to === "index" ? `/` : `/${to}`;
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();

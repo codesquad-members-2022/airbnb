@@ -1,11 +1,11 @@
 import { useContext } from "react";
 
 import RouterContext from "router/Contexts";
+import numToWon from "utils/utils";
 
 import Item from "./Item";
 
-// count: 0, // 숙소 개수. <-- 결과에서 가져와야함. length로?
-
+// NOTE: count: 0, // 숙소 개수. <-- 결과에서 가져와야함. length로?
 const getDataListFromQueryData = (data: { [key: string]: string }) => {
   const result = [];
   if (data.NumAdult || data.numChild) {
@@ -30,15 +30,15 @@ const getDataListFromQueryData = (data: { [key: string]: string }) => {
   }
 
   if (data.minPrice) {
-    let priceRange = `${Number(data.minPrice).toLocaleString()} ~`;
+    let priceRange = `${numToWon(Number(data.minPrice))} ~`;
     if (data.maxPrice) {
-      priceRange += ` ${Number(data.maxPrice).toLocaleString()}`;
+      priceRange += ` ${numToWon(Number(data.maxPrice))}`;
     }
     result.push(["priceRange", priceRange]);
   }
 
   if (!data.minPrice && data.maxPrice) {
-    const priceRange = `${Number(data.maxPrice).toLocaleString} 까지`;
+    const priceRange = `${numToWon(Number(data.maxPrice))} 까지`;
     result.push(["priceRange", priceRange]);
   }
 
@@ -46,15 +46,13 @@ const getDataListFromQueryData = (data: { [key: string]: string }) => {
 };
 
 const Filter = () => {
-  // const { queryData } = useContext(LocationContext)!;
-  // const { state: params } = window.history;
 
   const { queryData } = { ...useContext(RouterContext) };
 
   return (
     queryData && (
       <Item
-        // count={count} // api응답으로 온 데이터
+        // count={count} // NOTE: api응답으로 온 데이터
         queryDataList={getDataListFromQueryData(queryData)}
       />
     )

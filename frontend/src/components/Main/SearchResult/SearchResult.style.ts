@@ -1,16 +1,20 @@
-import styled from "@emotion/styled";
+import { Container, ContainerProps } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
-import theme from "styles/theme";
-
-const Wrapper = styled.div`
+const Wrapper = styled(Container)<ContainerProps>(
+  ({ theme: { elementSize, whiteSpace } }) => `
   display: flex;
   position: absolute;
   z-index: -1;
-  top: ${theme.elementSize.header.others.height};
+  top: ${elementSize.header.others.height};
+  left : 50%;
+  transform: translateX(-50%);
   width: 100%;
   height: calc(
-    100vh - ${parseInt(theme.elementSize.header.others.height, 10)}px
+    100vh - ${parseInt(elementSize.header.others.height, 10)}px
   );
+  padding:  0 ${whiteSpace.inner} !important;
+
   .map-area {
     background-color: #999;
     flex: 55;
@@ -18,7 +22,7 @@ const Wrapper = styled.div`
 
   .accomodations-list-area {
     flex: 45;
-    padding: 32px 24px;
+    padding: 12px 24px 0 0;
 
     .title {
       font-size: 24px;
@@ -29,7 +33,7 @@ const Wrapper = styled.div`
 
   .accomodations-list {
     height: calc(
-      100vh - ${theme.elementSize.header.others.height} - (32 * 2) px
+      100vh - ${elementSize.header.others.height} - (32 * 2) px
     );
     overflow-y: auto;
   }
@@ -97,6 +101,7 @@ const Wrapper = styled.div`
       text-decoration: underline;
     }
   }
-`;
+`
+);
 
 export default Wrapper;

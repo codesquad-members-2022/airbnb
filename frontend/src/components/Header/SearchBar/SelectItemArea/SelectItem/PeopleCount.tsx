@@ -1,6 +1,7 @@
 import { useContext } from "react";
 
 import { SearchBarStateContext } from "contexts/contexts";
+import RouterContext from "router/Contexts";
 
 import ButtonArea from "../ButtonArea/ButtonArea";
 import SelectItem, { SelectItemProps, WhiteSpace } from "./SelectItem";
@@ -15,6 +16,7 @@ const PeopleCount = ({
   const { isSearchBarFullSize, setIsSearchBarFullSize } = useContext(
     SearchBarStateContext
   )!;
+  const { page } = { ...useContext(RouterContext) };
 
   const isOpen = anchorEl?.id === buttonId;
 
@@ -22,7 +24,7 @@ const PeopleCount = ({
     <>
       <SelectItem
         gridStyle={
-          isSearchBarFullSize
+          isSearchBarFullSize || page === "index"
             ? {
                 xs: 2,
                 pl: 2,
@@ -35,14 +37,16 @@ const PeopleCount = ({
         buttonId={buttonId}
         buttonAreaLabel="숙박 인원 설정"
         title="인원"
-        desc={isSearchBarFullSize ? "게스트 추가" : "인원 입력"}
+        desc={
+          isSearchBarFullSize || page === "index" ? "게스트 추가" : "인원 입력"
+        }
         open={isOpen}
         handleClick={
-          isSearchBarFullSize
+          isSearchBarFullSize || page === "index"
             ? onClick
             : () => {
                 setIsSearchBarFullSize(true);
-                // peoplecount모달도 open상태로 되면 좋음.
+                // NOTE: peoplecount모달도 open상태로 되면 좋음.
               }
         }
         anchorEl={anchorEl}

@@ -3,6 +3,7 @@ import { useContext, useRef } from "react";
 import { Grid } from "@mui/material";
 
 import { SearchBarStateContext } from "contexts/contexts";
+import RouterContext from "router/Contexts";
 
 import ButtonArea from "../ButtonArea/ButtonArea";
 import { ModalTemplate } from "../SelectItemTemplate/SelectItemTemplate";
@@ -18,6 +19,7 @@ const CheckInOut = ({
   const { isSearchBarFullSize, setIsSearchBarFullSize } = useContext(
     SearchBarStateContext
   )!;
+  const { page } = { ...useContext(RouterContext) };
 
   const $wrap = useRef<HTMLDivElement>(null);
   const isOpen = anchorEl?.id === wrapperId;
@@ -30,12 +32,12 @@ const CheckInOut = ({
     <Grid
       item
       container
-      xs={isSearchBarFullSize ? 5 : 3}
+      xs={isSearchBarFullSize || page === "index" ? 5 : 3}
       component="div"
       id={wrapperId}
       ref={$wrap}
     >
-      {(isSearchBarFullSize && (
+      {((isSearchBarFullSize || page === "index") && (
         <>
           <SelectItem
             gridStyle={{

@@ -14,8 +14,8 @@ const MapArea = () => {
   useEffect(() => {
     const mapContainer = $mapArea.current;
 
+    // TODO: new Lint오류로 임시로 ref이용, 추후 개선
     map.current = new kakao.maps.Map(mapContainer, mapOption);
-    // console.log(map);
   }, []);
 
   return <div className="map-area" ref={$mapArea} />;

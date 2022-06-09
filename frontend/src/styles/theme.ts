@@ -107,7 +107,7 @@ const theme = createTheme({
     },
   },
   whiteSpace: {
-    inner: "80px",
+    inner: "40px",
     searchBarPadding: "64px",
   },
   components: {

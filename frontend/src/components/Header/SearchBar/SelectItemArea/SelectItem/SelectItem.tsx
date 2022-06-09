@@ -10,7 +10,6 @@ import {
 
 import { SearchBarStateContext } from "contexts/contexts";
 import RouterContext from "router/Contexts";
-// import { LocationContext } from "router/Contexts";
 
 import {
   ModalTemplate,
@@ -35,11 +34,8 @@ const SelectItem = ({ ...props }: SelectItemDataProps): JSX.Element => {
     createNewPopup,
   } = props;
 
-  // const { queryData } = useContext(LocationContext)!;
-  // const { state: params } = window.history;
-
-  const { queryData } = { ...useContext(RouterContext) };
   const { isSearchBarFullSize } = { ...useContext(SearchBarStateContext) };
+  const { page } = { ...useContext(RouterContext) };
 
   return (
     <SelectItemTemplate xs={xs} pl={pl}>
@@ -52,17 +48,19 @@ const SelectItem = ({ ...props }: SelectItemDataProps): JSX.Element => {
         onClick={handleClick}
         sx={itemStyles.button}
       >
-        {isSearchBarFullSize && (
+        {(isSearchBarFullSize || page === "index") && (
           <Typography sx={itemStyles.title}>{title}</Typography>
         )}
         {/* 쿼리데이터가 없는 경우 표시 */}
-        {!queryData && (
-          <Typography
-            sx={isSearchBarFullSize ? itemStyles.desc : itemStyles.miniSizeDesc}
-          >
-            {desc}
-          </Typography>
-        )}
+        <Typography
+          sx={
+            isSearchBarFullSize || page === "index"
+              ? itemStyles.desc
+              : itemStyles.miniSizeDesc
+          }
+        >
+          {desc}
+        </Typography>
       </Button>
       {(createNewPopup && (
         <ModalTemplate

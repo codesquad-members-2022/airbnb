@@ -1,6 +1,4 @@
-// cycle 오류로 인한 type, interface 분리
-
-// import pages from "./pages";
+// NOTE: cycle 오류로 인한 type, interface 분리
 
 export type LinkPath = "index" | "searchResult" | "notFound";
 

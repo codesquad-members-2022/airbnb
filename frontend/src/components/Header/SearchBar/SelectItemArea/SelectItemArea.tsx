@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { Grid } from "@mui/material";
 
 import { SearchBarStateContext } from "contexts/contexts";
+import RouterContext from "router/Contexts";
 import Link from "router/Link";
 
 import ButtonArea from "./ButtonArea/ButtonArea";
@@ -26,6 +27,7 @@ const SelectItemArea = (): JSX.Element => {
   const { isSearchBarFullSize, setIsSearchBarFullSize } = useContext(
     SearchBarStateContext
   )!;
+  const { page } = { ...useContext(RouterContext) };
 
   const [anchorEl, setAnchorEl] = useState<AnchorEl>(null);
   const [price, setPrice] = useState({
@@ -72,12 +74,12 @@ const SelectItemArea = (): JSX.Element => {
         <Link
           to="searchResult"
           onClick={
-            isSearchBarFullSize
+            isSearchBarFullSize || page === "index"
               ? handleFullSizeSearchBarClick
               : handleMiniSearchBarClick
           }
           query={{
-            hi: "hello",
+            test: "test1", // 쿼리 테스트용
           }}
         >
           <ButtonArea

@@ -1,3 +1,4 @@
+import emotionStyled from "@emotion/styled";
 import { Container, ContainerProps, Theme } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
@@ -21,6 +22,7 @@ const miniHeaderStyle = {
   ...defaultHeaderStyle,
   height: theme.elementSize.header.others.height,
   backgroundColor: ({ palette }: Theme) => palette.white.main,
+  boxShadow: `0px 9px 15px -3px rgba(0,0,0,0.1)`,
 };
 
 const miniHeaderWithFullSizeSearchBar = {
@@ -28,11 +30,18 @@ const miniHeaderWithFullSizeSearchBar = {
   height: "190px",
 };
 
+const HeaderLayer = emotionStyled.div`
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+`;
+
 const HeaderContainer = styled(Container)<ContainerProps>(
   ({ theme: { elementSize, style, whiteSpace } }) => `
   height: ${elementSize.header.others.height};
   margin: ${style.alignCenter.margin};
-  padding: 0 ${whiteSpace.inner} !important;
+padding: 0 ${whiteSpace.inner} !important;
 `
 );
 
@@ -41,4 +50,5 @@ export {
   HeaderContainer,
   miniHeaderStyle,
   miniHeaderWithFullSizeSearchBar,
+  HeaderLayer,
 };

@@ -19,19 +19,6 @@ const parseQueryStringToObject = (
 
 const Router = (): React.ReactElement => {
   const { location } = window;
-  // const queryData: { [key: string]: string } = useMemo(() => ({}), []);
-
-  // Object.fromEntries
-  // const queryData = location.search
-  //   .slice(1)
-  //   .split("&")
-  //   .map((item) => item.split("="))
-  //   .reduce((prev, [key, val]) => {
-  //     if (key.length) {
-  //       return { ...prev, [key]: val };
-  //     }
-  //     return { ...prev };
-  //   }, {});
 
   const getCurrentPath = (): LinkPath => {
     const currentPath =
@@ -42,19 +29,18 @@ const Router = (): React.ReactElement => {
   };
 
   const currentPath: LinkPath = getCurrentPath();
-  const { search: queryString } = location;
-  const queryData = parseQueryStringToObject(queryString);
 
-  // console.log(currentPath);
-  console.log(queryString, "queryString");
-  console.log(queryData, "queryData");
+  const { search: queryString } = location;
+
+  let queryData = parseQueryStringToObject(queryString);
 
   const [page, setPage] = useState<LinkPath>(
     pages[currentPath] ? currentPath : "notFound"
   );
 
-  onpopstate = (/* e: PopStateEvent */) => {
+  onpopstate = () => {
     const poppedPath: LinkPath = getCurrentPath();
+    queryData = parseQueryStringToObject(queryString);
 
     if (!pages[poppedPath]) {
       setPage("notFound");
@@ -72,17 +58,7 @@ const Router = (): React.ReactElement => {
         [queryData, page, setPage]
       )}
     >
-      {/* <LocationContext.Provider
-        value={useMemo(
-          () => ({
-            queryData,
-            pathname: location.pathname,
-          }),
-          [location.pathname, queryData]
-        )}
-      > */}
       <div style={{ position: "relative" }}>{pages[page]}</div>
-      {/* </LocationContext.Provider> */}
     </RouterContext.Provider>
   );
 };

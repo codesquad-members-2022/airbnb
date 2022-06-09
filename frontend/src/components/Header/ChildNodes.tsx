@@ -4,6 +4,7 @@ import { Grid } from "@mui/material";
 
 import { SearchBarStateContext } from "contexts/contexts";
 import MENUS from "mockData/menus";
+import RouterContext from "router/Contexts";
 import Link from "router/Link";
 
 import GNB from "./GNB/GNB";
@@ -11,14 +12,10 @@ import SearchBar from "./SearchBar/SearchBar";
 import UserMenu from "./UserMenu/UserMenu";
 
 const LogoArea = () => {
-  const { setIsSearchBarFullSize } = useContext(SearchBarStateContext)!;
-
   return (
     <Grid container item xs={2} justifyContent="left">
       <h1 style={{ margin: "auto 0" }}>
-        <Link to="index" onClick={() => setIsSearchBarFullSize(true)}>
-          LOGO
-        </Link>
+        <Link to="index">LOGO</Link>
       </h1>
     </Grid>
   );
@@ -47,7 +44,8 @@ const headerMiddleItem = {
 };
 
 const ChildNodes = () => {
-  const { isSearchBarFullSize } = useContext(SearchBarStateContext)!;
+  const { isSearchBarFullSize } = { ...useContext(SearchBarStateContext) };
+  const { page } = { ...useContext(RouterContext) };
 
   return (
     <>
@@ -58,12 +56,12 @@ const ChildNodes = () => {
         sx={{ height: ({ elementSize }) => elementSize.fullSize }}
       >
         <LogoArea />
-        {isSearchBarFullSize
+        {isSearchBarFullSize || page === "index"
           ? headerMiddleItem.fullSize
           : headerMiddleItem.miniSize}
         <UserMenu />
       </Grid>
-      {isSearchBarFullSize && <SearchBar />}
+      {(isSearchBarFullSize || page === "index") && <SearchBar />}
     </>
   );
 };

@@ -48,13 +48,11 @@ public class AccommodationController {
     }
 
     @PostMapping("/api/accommodations")
-    public ResponseEntity<ResponseMessage> reserve(HttpServletRequest request, @RequestBody ReservationForm reservationForm) {
+    public ResponseMessage reserve(HttpServletRequest request, @RequestBody ReservationForm reservationForm) {
         String accessToken = JwtUtil.getAccessToken(request);
         String memberId = jwtValidator.getMemberId(accessToken);
         accommodationService.reserveAccommodation(Long.parseLong(memberId), reservationForm);
 
-        ResponseMessage message = new ResponseMessage(HttpStatus.OK, "예약이 처리되었습니다.");
-
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        return new ResponseMessage(HttpStatus.OK, "예약이 처리되었습니다.");
     }
 }

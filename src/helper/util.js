@@ -20,4 +20,8 @@ const getRandomKey = () => {
     return uuid();
 };
 
-export {makePriceFormat, fetchData, getRandomKey};
+const stopPropagation = (event) => {
+    event.stopPropagation();
+};
+
+export {makePriceFormat, fetchData, getRandomKey, stopPropagation};

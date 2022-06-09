@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import Modal from "./Modal";
 import PriceGraph from "./PriceGraph";
-import {makePriceFormat, fetchData} from "../../../helper/util";
+import {makePriceFormat, fetchData, stopPropagation} from "../../../helper/util";
 import RangeSlider from "./RangeSlider";
 import {useOptionContext} from "../../../contexts/OptionProvider";
 
@@ -64,7 +64,7 @@ const PriceModal = ({isClicked}) => {
     const rangeText = getRangeText(priceData, priceMinIdx, priceMaxIdx, maximumPrice);
 
     return (
-        <PriceModalBox isClicked={isClicked}>
+        <PriceModalBox isClicked={isClicked} onClick={stopPropagation}>
             <Title>가격 범위</Title>
             <FlexBox>
                 <RangeText>{rangeText}</RangeText>

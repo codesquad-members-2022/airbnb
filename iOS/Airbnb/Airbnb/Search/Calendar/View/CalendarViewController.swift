@@ -156,6 +156,7 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
         //TODO: 여기서 Value 값에 쓰일 타입이 뭔지 몰라도 값만 넘기면 알아서 타입이 생성되게끔 하는 로직 고민
         /// 현재 CheckInOutRange 라는 타입을 개발자가 알고 있어야 하는데 그냥 Date 만 두개 넘기면 되게끔 수정하면 좋을까? 백과 상의 해보자
         reloadTableView(dict: [.date: CheckInOutRange(checkIn: nil, checkOut: nil)])
+        self.toolbarItems = setUpToolBarItems(isEmpty: true)
     }
 }
 

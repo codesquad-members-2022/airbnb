@@ -116,7 +116,7 @@ private fun NavGraphBuilder.airbnbNavGraph(
     navController: NavController,
     searchViewModel: SearchViewModel,
     reservationViewModel: ReservationViewModel,
-    searchResultViewModel: ResultViewModel
+    searchResultViewModel: ResultViewModel,
 ) {
     navigation(
         route = Destinations.search,
@@ -162,7 +162,13 @@ private fun NavGraphBuilder.airbnbNavGraph(
     ) { entry ->
         val id = entry.arguments?.getInt("id")
         id?.let {
-            DetailScreen(navController = navController, searchViewModel = searchViewModel, id = id)
+            DetailScreen(
+                navController = navController,
+                searchViewModel = searchViewModel,
+                searchResultViewModel = searchResultViewModel,
+                reservationViewModel = reservationViewModel,
+                id = id
+            )
         }
     }
 }

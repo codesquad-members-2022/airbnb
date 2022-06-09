@@ -1,6 +1,5 @@
 package com.example.todo.airbnb.presentation.search.detail
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -19,7 +18,6 @@ class DetailViewModel(
 
     fun getDetailAccommodation(id: Int) = viewModelScope.launch {
         repository.getDetailAccommodation(id).collectLatest {
-            Log.d("test", "getDetailAccommodation: $it")
             _detailUiState.value = DetailUiState.DetailAccommodation(it)
         }
     }

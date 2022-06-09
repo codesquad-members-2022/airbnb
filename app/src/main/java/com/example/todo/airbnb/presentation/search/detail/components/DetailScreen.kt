@@ -1,9 +1,12 @@
 package com.example.todo.airbnb.presentation.search.detail
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
@@ -13,7 +16,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,11 +37,22 @@ import com.example.todo.airbnb.common.components.ToastMessage
 import com.example.todo.airbnb.domain.model.AccommodationResult
 import com.example.todo.airbnb.domain.model.Search
 import com.example.todo.airbnb.presentation.main.components.Destinations
+import com.example.todo.airbnb.presentation.main.components.HomeSections
+import com.example.todo.airbnb.presentation.reservation.ReservationViewModel
 import com.example.todo.airbnb.presentation.search.SearchViewModel
+import com.example.todo.airbnb.presentation.search.detail.components.CustomDialog
+import com.example.todo.airbnb.presentation.search.detail.components.DialogContent
+import com.example.todo.airbnb.presentation.search.searchresult.ResultViewModel
 import java.text.DecimalFormat
 
 @Composable
-fun DetailScreen(navController: NavController, searchViewModel: SearchViewModel, id: Int) {
+fun DetailScreen(
+    navController: NavController,
+    searchViewModel: SearchViewModel,
+    searchResultViewModel: ResultViewModel,
+    reservationViewModel: ReservationViewModel,
+    id: Int,
+) {
     val viewModel = viewModel<DetailViewModel>()
     viewModel.getDetailAccommodation(id)
     when (val state = viewModel.detailUiState.value) {
@@ -51,7 +65,14 @@ fun DetailScreen(navController: NavController, searchViewModel: SearchViewModel,
                     navController.navigate(Destinations.calendar) {
                         popUpTo(Destinations.calendar) { inclusive = true }
                     }
-                }
+                },
+                onOrder = {
+                    reservationViewModel.addReservation(searchViewModel.searchUiState.value, state.detailAccommodations)
+                    navController.navigate(HomeSections.Reservation.route) {
+                        popUpTo(Destinations.calendar) { inclusive = true }
+                    }
+                },
+                onButtonClickFavorite = { searchResultViewModel.onClickFavorite(it - 1) }
             )
         }
         is DetailUiState.Loading -> {
@@ -66,6 +87,8 @@ fun DetailContent(
     reservation: Search,
     onBack: () -> Unit,
     onClick: () -> Unit,
+    onOrder: () -> Unit,
+    onButtonClickFavorite: (Int) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -90,7 +113,7 @@ fun DetailContent(
                     CircleButton(Icons.Default.Share, "share", onClick = {})
                     Spacer(modifier = Modifier.width(10.dp))
                     CircleButton(Icons.Default.Favorite, "favorite",
-                        onClick = {}
+                        onClick = { onButtonClickFavorite(accommodation.id) }
                     )
                 }
             }
@@ -165,7 +188,8 @@ fun DetailContent(
         accommodation,
         reservation,
         text = if (reservation.isDefault()) "정보 입력하기" else "예약하기",
-        onClick = { onClick() }
+        onClick = { onClick() },
+        onOrder = { onOrder() }
     )
 }
 
@@ -215,6 +239,7 @@ fun BottomReservation(
     reservation: Search,
     text: String,
     onClick: () -> Unit,
+    onOrder: () -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Row(
@@ -227,7 +252,7 @@ fun BottomReservation(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column(
-                modifier = Modifier.padding(start = 10.dp)
+                modifier = Modifier.padding(start = 5.dp)
             ) {
                 if (text == "예약하기") {
                     Text(text = "w${DecimalFormat("#,###").format(accommodation.fee)} / 박")
@@ -237,32 +262,54 @@ fun BottomReservation(
                     Text(text = "요금을 확인하려면\n날짜를 입력해주세요.")
                 }
             }
-            BlackButton(text, reservation, onClick = { onClick() })
+
+            var dialogState by remember { mutableStateOf(false) }
+            BlackButton(
+                name = text,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(10.dp))
+                    .padding(vertical = 8.dp, horizontal = 5.dp),
+                onClick = {
+                    if (text == "예약하기") {
+                        dialogState = true
+                    } else {
+                        if (reservation.isDefault()) {
+                            onClick()
+                        }
+                    }
+                }
+            ) {
+                CustomDialog(
+                    dialogState = dialogState,
+                    onDismissRequest = { dialogState = !it },
+                    content = {
+                        DialogContent(dialogState, accommodation, reservation,
+                            onDismissRequest = { dialogState = !it },
+                            onOrder = { onOrder() }
+                        )
+                    }
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun BlackButton(name: String, reservation: Search, onClick: () -> Unit) {
+fun BlackButton(
+    name: String,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    showDialog: @Composable (() -> Unit) = {},
+) {
     Button(
-        onClick = { },
+        onClick = { onClick() },
         colors = ButtonDefaults.buttonColors(
             backgroundColor = Color.Black,
             contentColor = Color.White
         ),
-        modifier = Modifier
-            .clip(RoundedCornerShape(10.dp))
-            .padding(vertical = 8.dp, horizontal = 5.dp)
+        modifier = modifier
     ) {
-        Text(
-            text = name,
-            modifier = Modifier.clickable {
-                if (name == "예약하기") {
-                    // TODO 예약하기로
-                } else {
-                    if (reservation.isDefault()) onClick()
-                }
-            }
-        )
+        Text(text = name)
     }
+    showDialog()
 }

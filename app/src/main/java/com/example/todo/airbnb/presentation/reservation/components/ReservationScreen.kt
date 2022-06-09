@@ -32,6 +32,7 @@ fun ReservationScreen(
     navController: NavController,
     viewModel: ReservationViewModel,
 ) {
+    viewModel.getReservationList()
     val reservation = viewModel.reservation.collectAsState().value
     val index = viewModel.itemIndex.value
     Scaffold(

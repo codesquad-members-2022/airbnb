@@ -11,14 +11,16 @@ data class DatesSelectedState(
 ) {
     override fun toString(): String {
         if (from == DaySelectedEmpty && to == DaySelectedEmpty) return ""
-        var output = from.toString()
+        val fromSplit = from.toString().split(" ")
+        var output = fromSplit.subList(1, fromSplit.size).joinToString(" ")
         if (to != DaySelectedEmpty) {
-            output += " - $to"
+            val toSplit = to.toString().split(" ")
+            output += " - ${toSplit.subList(1, toSplit.size).joinToString(" ")}"
         }
         return output
     }
 
     companion object {
-        const val DEFAULT_DAY = "0월 0일"
+        const val DEFAULT_DAY = "년 0월 0일"
     }
 }

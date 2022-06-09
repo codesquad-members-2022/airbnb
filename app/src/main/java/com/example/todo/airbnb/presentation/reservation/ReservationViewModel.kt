@@ -5,7 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todo.airbnb.data.repository.MainRepositoryImpl
+import com.example.todo.airbnb.domain.model.AccommodationResult
 import com.example.todo.airbnb.domain.model.Reservation
+import com.example.todo.airbnb.domain.model.Search
 import com.example.todo.airbnb.domain.repository.MainRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,16 +25,18 @@ class ReservationViewModel(
     private val _itemIndex = mutableStateOf<Int?>(null)
     val itemIndex: State<Int?> = _itemIndex
 
-    init {
-        getReservationList()
-    }
-
-    private fun getReservationList() {
+    fun getReservationList() {
         viewModelScope.launch {
             val reservation = repository.getReservationList()
             reservation.collect {
                 _reservation.value = it
             }
+        }
+    }
+
+    fun addReservation(reservation: Search, accommodationResult: AccommodationResult) {
+        viewModelScope.launch {
+            repository.addReservation(reservation, accommodationResult)
         }
     }
 

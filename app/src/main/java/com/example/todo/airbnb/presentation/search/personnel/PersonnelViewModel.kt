@@ -60,10 +60,16 @@ class PersonnelViewModel : ViewModel() {
     fun decreaseAdultPersonnel() {
         val personnelUiState = _personnelUiState.value
         val personnel = personnelUiState.personnel
-        _personnelUiState.value = personnelUiState.copy(
-            showAlertMessage = false,
-            personnel = personnel.copy(adult = personnel.adult - 1)
-        )
+        if ((personnel.child >= 1 || personnel.baby >= 1) && personnel.adult == 1) {
+            _personnelUiState.value = personnelUiState.copy(
+                showAlertMessage = true
+            )
+        } else {
+            _personnelUiState.value = personnelUiState.copy(
+                showAlertMessage = false,
+                personnel = personnel.copy(adult = personnel.adult - 1)
+            )
+        }
     }
 
     fun decreaseChildPersonnel() {

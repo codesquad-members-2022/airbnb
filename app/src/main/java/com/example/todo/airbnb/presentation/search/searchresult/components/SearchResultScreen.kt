@@ -57,7 +57,8 @@ fun SearchResultScreen(
         ResultContent(
             onNavigateDetail = { id -> navController.navigate("${Destinations.detail}/${id}") },
             onNavigateMap = { navController.navigate(Destinations.searchMap) },
-            accommodations = resultViewModel.result.value
+            accommodations = resultViewModel.result.value,
+            onButtonClickFavorite = { resultViewModel.onClickFavorite(it) }
         )
     }
 }
@@ -84,7 +85,9 @@ fun ResultTopBar(
         }
 
         Text(
-            text = "${if (search.location == Search.DEFAULT_LOCATION) "" else search.location} ${if (search.checkIn == Search.DEFAULT_CHECKIN) "" else search.checkIn} ${if (search.checkOut == Search.DEFAULT_CHECKOUT) "" else search.checkOut} 게스트 ${if (search.guest.isDefault()) "" else search.guest.toString()}"
+            text = "${if (search.location == Search.DEFAULT_LOCATION) "" else search.location} ${
+                if (search.checkIn == Search.DEFAULT_CHECKIN) "" else search.checkIn.substring(6)
+            } ${if (search.checkOut == Search.DEFAULT_CHECKOUT) "" else search.checkOut.substring(6)} 게스트 ${if (search.guest.isDefault()) "" else search.guest.toString()}"
         )
 
         IconButton(onClick = { onNavigateSearch() }) {
@@ -101,7 +104,8 @@ fun ResultTopBar(
 private fun ResultContent(
     onNavigateDetail: (Int) -> Unit,
     onNavigateMap: () -> Unit,
-    accommodations: List<AccommodationResult>
+    accommodations: List<AccommodationResult>,
+    onButtonClickFavorite: (Int) -> Unit
 ) {
     Box {
         LazyColumn(
@@ -119,7 +123,14 @@ private fun ResultContent(
             itemsIndexed(accommodations) { _, it ->
                 AccommodationItem(
                     it,
-                    onNavigate = { onNavigateDetail(it.id) }
+                    onNavigate = { onNavigateDetail(it.id) },
+                    onButtonClickFavorite = { accommodation ->
+                        val findAccommodation = accommodations.find { it == accommodation }
+                        if (findAccommodation != null) {
+                            val index = accommodations.indexOf(findAccommodation)
+                            onButtonClickFavorite(index)
+                        }
+                    }
                 )
             }
         }
@@ -149,6 +160,7 @@ private fun ResultContent(
 private fun AccommodationItem(
     accommodation: AccommodationResult,
     onNavigate: () -> Unit,
+    onButtonClickFavorite: (AccommodationResult) -> Unit,
 ) {
     val decimalFormat = DecimalFormat("#,###")
     Column(
@@ -180,7 +192,7 @@ private fun AccommodationItem(
                 modifier = Modifier
                     .padding(top = 15.dp, end = 8.36.dp)
                     .align(Alignment.TopEnd)
-                    .clickable { accommodation.isFavorite.value = !accommodation.isFavorite.value }
+                    .clickable { onButtonClickFavorite(accommodation) }
             )
         }
     }

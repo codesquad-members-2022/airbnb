@@ -1,5 +1,9 @@
 package com.example.todo.airbnb.domain.model
 
+import android.annotation.SuppressLint
+import java.text.SimpleDateFormat
+
+@SuppressLint("SimpleDateFormat")
 data class Search(
     val location: String,
     val checkIn: String,
@@ -8,6 +12,17 @@ data class Search(
     val maxPrice: Int,
     val guest: Personnel,
 ) {
+
+    fun getStay(): Long {
+        val formatter = SimpleDateFormat("yyyy년 M월 d일")
+        val checkInDate = formatter.parse(checkIn)
+        if (checkOut != "년 0월 0일") {
+            val checkOutDate = formatter.parse(checkOut)
+            val diffSec = (checkOutDate.time - checkInDate.time) / 1000
+            return (diffSec / (24 * 60 * 60))
+        }
+        return 1
+    }
 
     fun isDefault(): Boolean {
         return location == DEFAULT_LOCATION ||

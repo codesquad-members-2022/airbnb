@@ -5,6 +5,7 @@ import com.example.todo.airbnb.data.Accommodations
 import com.example.todo.airbnb.data.Travel
 import com.example.todo.airbnb.domain.model.AccommodationResult
 import com.example.todo.airbnb.domain.model.Reservation
+import com.example.todo.airbnb.domain.model.Search
 import com.example.todo.airbnb.domain.repository.MainRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -54,56 +55,7 @@ class MainRepositoryImpl : MainRepository {
         Accommodations(dummyImage, "독특한 공간", 150000),
     )
 
-    private val reservationTestList1 = Reservation(
-        "https://a0.muscache.com/im/pictures/2f13349d-879d-43c6-83e3-8e5679291d53.jpg?im_w=480",
-        "1번 숙박집",
-        "아주아주좋은 고오급 숙박집",
-        "2021년 1월 2일 오후 4:00",
-        "2021년 3월 2일 오후 12:00",
-        "Jung Park",
-        4,
-        1000000
-    )
-
-    private val reservationTestList2 = Reservation(
-        "https://a0.muscache.com/im/pictures/2f13349d-879d-43c6-83e3-8e5679291d53.jpg?im_w=480",
-        "2번 숙박집",
-        "조금좋은 숙박집",
-        "2021년 4월 5일 오후 4:00",
-        "2021년 5월 5일 오후 12:00",
-        "Jung Hwan",
-        2,
-        1500000
-    )
-
-    private val reservationTestList3 = Reservation(
-        "https://a0.muscache.com/im/pictures/2f13349d-879d-43c6-83e3-8e5679291d53.jpg?im_w=480",
-        "3번 숙박집",
-        "중간 숙박집",
-        "2021년 5월 17일 오후 4:00",
-        "2021년 6월 4일 오후 12:00",
-        "Jung Hwan",
-        6,
-        1500000
-    )
-
-    private val reservationTestList4 = Reservation(
-        "https://a0.muscache.com/im/pictures/2f13349d-879d-43c6-83e3-8e5679291d53.jpg?im_w=480",
-        "4번 숙박집",
-        "럭셔리 숙박집",
-        "2021년 8월 17일 오후 4:00",
-        "2021년 11월 4일 오후 12:00",
-        "Jung Hwan",
-        8,
-        450000
-    )
-
-    private val reservationList = mutableListOf(
-        reservationTestList1,
-        reservationTestList2,
-        reservationTestList3,
-        reservationTestList4
-    )
+    private val reservationList = mutableListOf<Reservation>()
 
     private val filterAccommodationResultList = listOf(
         AccommodationResult(
@@ -111,7 +63,7 @@ class MainRepositoryImpl : MainRepository {
             dummyImage,
             4.80F,
             127,
-            "호텔",
+            "신분당역",
             15322,
             222211,
             "강남구청역",
@@ -119,11 +71,11 @@ class MainRepositoryImpl : MainRepository {
             4,
             5,
             3,
-            "강남구청역은 강남의중심입니다.",
+            "신분당역 최신식입니다.",
             mutableStateOf(false)
         ),
         AccommodationResult(
-            2, dummyImage, 3.2F, 14, "민박집", 300214, 8838282, "강남구청역",
+            2, dummyImage, 3.2F, 14, "선정릉 모텔", 300214, 8838282, "선정릉역",
             5,
             2,
             2,
@@ -132,7 +84,7 @@ class MainRepositoryImpl : MainRepository {
             mutableStateOf(false)
         ),
         AccommodationResult(
-            3, dummyImage, 4.8F, 123, "콘도", 3214, 38282, "강남구청역",
+            3, dummyImage, 4.8F, 123, "강남구청 콘도", 3214, 38282, "강남구청역",
             4,
             2,
             1,
@@ -141,7 +93,7 @@ class MainRepositoryImpl : MainRepository {
             mutableStateOf(false)
         ),
         AccommodationResult(
-            4, dummyImage, 2.2F, 72, "모텔", 2004, 824182, "강남구청역",
+            4, dummyImage, 2.2F, 72, "역삼역 호텔", 2004, 824182, "역삼역",
             3,
             1,
             3,
@@ -150,12 +102,12 @@ class MainRepositoryImpl : MainRepository {
             mutableStateOf(false)
         ),
         AccommodationResult(
-            5, dummyImage, 5.1F, 862, "숙소", 6214, 68282, "강남구청역",
+            5, dummyImage, 5.1F, 862, "분당 숙소", 6214, 68282, "분당역",
             20,
             3,
             3,
             5,
-            "강남구청 내의 큰 숙소입니다.",
+            "IT의 도시 분당입니다.",
             mutableStateOf(false)
         )
     )
@@ -192,5 +144,19 @@ class MainRepositoryImpl : MainRepository {
     override fun getDetailAccommodation(id: Int): Flow<AccommodationResult> = flow {
         val accommodation = filterAccommodationResultList.find { id == it.id }
         if (accommodation != null) emit(accommodation)
+    }
+
+    override fun addReservation(reservation: Search, accommodationResult: AccommodationResult) {
+        val order = Reservation(
+            image = accommodationResult.image,
+            locationName = accommodationResult.name,
+            shortDescription = accommodationResult.description,
+            checkIn = reservation.checkIn,
+            checkOut = reservation.checkOut,
+            host = "나",
+            maximumPeople = accommodationResult.maxPerson,
+            accommodationsFee = accommodationResult.fee
+        )
+        reservationList.add(order)
     }
 }

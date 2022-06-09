@@ -13,7 +13,7 @@ data class DaySelected(
         val month =
             if (month.monthNumber in (1..9)) "0${month.monthNumber}" else "${month.monthNumber}"
         val day = if (day in (1..9)) "0${day}" else "$day"
-        return "${month}월 ${day}일"
+        return "${this.month.year}년 ${month}월 ${day}일"
     }
 
     operator fun compareTo(other: DaySelected): Int {

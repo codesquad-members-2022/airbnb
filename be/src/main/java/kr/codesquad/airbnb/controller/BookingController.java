@@ -5,10 +5,7 @@ import kr.codesquad.airbnb.response.CommonResponse;
 import kr.codesquad.airbnb.service.BookingService;
 import kr.codesquad.airbnb.util.Validator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,7 +18,7 @@ public class BookingController {
      * 요청에 필요한 파라미터들은 모두 필수값
      */
     @PostMapping("/booking/room")
-    public CommonResponse bookingRoom(@ModelAttribute BookingRoomRequest bookingRoomRequest) {
+    public CommonResponse bookingRoom(@RequestBody BookingRoomRequest bookingRoomRequest) {
         Validator.validateCheckOutIsAfterCheckIn(bookingRoomRequest.getCheckIn(), bookingRoomRequest.getCheckOut());
 
         return CommonResponse.okCommonResponse(bookingService.bookingRoom(bookingRoomRequest));

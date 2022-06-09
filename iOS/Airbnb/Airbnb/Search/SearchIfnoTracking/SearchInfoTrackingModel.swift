@@ -50,6 +50,12 @@ class SearchInfoTrackingModel: SearchInfoModel {
                             searchInfo.checkOutDate = checkInDate
                         }
                         searchInfo.checkInFormatted = dateFormatter.string(from: checkInDate)
+                    } else {
+                        /// checkin nil 들어왔을 때 처리
+                        searchInfo.checkInDate = nil
+                        searchInfo.checkInDate = nil
+                        searchInfo.checkInFormatted = nil
+                        searchInfo.checkOutFormatted = nil
                     }
                     searchInfo.checkInDate = dateRange.checkIn
                     if let checkOutDate = dateRange.checkOut {

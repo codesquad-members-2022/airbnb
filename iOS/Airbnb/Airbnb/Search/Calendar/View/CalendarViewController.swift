@@ -28,6 +28,10 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
     
     private let weekdayView: UIView = WeekdayView()
     
+//    let skipButton =  UIBarButtonItem(title: "건너뛰기", style: .plain, target: self, action: #selector(pushNextVC))
+//    let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: nil)
+//    let clearButton = UIBarButtonItem(title: "지우기", style: .plain, target: self, action: #selector(clearReservationField))
+    
     init(reservationModel: ReservationModel) {
         self.reservationModel = reservationModel
         super.init(nibName: nil, bundle: nil)
@@ -102,7 +106,7 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
         contentView.backgroundColor = .systemBackground
         navigationItem.title = "숙소 찾기"
         navigationController?.isToolbarHidden = false
-        self.toolbarItems = setUpToolBarItems()
+        self.toolbarItems = setUpToolBarItems(isEmpty: true)
         setUpCollectionViewDelegates()
     }
     
@@ -126,6 +130,7 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
     func bind() {
         calendarModel.onUpdate = { [weak self] days in
             self?.performQuery(days: days)
+            self?.toolbarItems = self?.setUpToolBarItems(isEmpty: false)
             if days.count > 1 {
                 self?.reloadTableView(dict: [.date: CheckInOutRange(checkIn: days.first?.date, checkOut: days.last?.date)])
             }
@@ -139,19 +144,36 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
         }
     }
     
-    private func setUpToolBarItems() -> [UIBarButtonItem] {
-        let spacing = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        let skipButton = UIBarButtonItem(title: "건너뛰기", style: .plain, target: self, action: #selector(pushNextVC))
-        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: nil)
-        nextButton.isEnabled = false
-        return [skipButton, spacing, nextButton]
-    }
-    
     @objc func pushNextVC() {
         let nextVC = PriceGraphViewController()
         nextVC.setModel(model)
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
+    
+    @objc func clearReservationField() {
+        calendarModel.checkinDayIndex = nil
+        calendarModel.checkoutDayIndex = nil
+        //TODO: 여기서 Value 값에 쓰일 타입이 뭔지 몰라도 값만 넘기면 알아서 타입이 생성되게끔 하는 로직 고민
+        /// 현재 CheckInOutRange 라는 타입을 개발자가 알고 있어야 하는데 그냥 Date 만 두개 넘기면 되게끔 수정하면 좋을까? 백과 상의 해보자
+        reloadTableView(dict: [.date: CheckInOutRange(checkIn: nil, checkOut: nil)])
+    }
+}
+
+extension CalendarViewController {
+    private func setUpToolBarItems(isEmpty: Bool) -> [UIBarButtonItem] {
+        let spacing = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let skipButton =  UIBarButtonItem(title: "건너뛰기", style: .plain, target: self, action: #selector(pushNextVC))
+        let nextButton = UIBarButtonItem(title: "다음", style: .plain, target: self, action: nil)
+        let clearButton = UIBarButtonItem(title: "지우기", style: .plain, target: self, action: #selector(clearReservationField))
+        if isEmpty {
+            nextButton.isEnabled = false
+            return [skipButton, spacing, nextButton]
+        } else {
+            nextButton.isEnabled = true
+            return [clearButton, spacing, nextButton]
+        }
+    }
+    
 }
 
 extension CalendarViewController: UICollectionViewDelegate {
@@ -161,7 +183,6 @@ extension CalendarViewController: UICollectionViewDelegate {
             let cell = collectionView.cellForItem(at: indexPath) as? CalendarViewCell,
             cell.day?.isWithInDisplayedMonth == true,
             cell.day?.isBeforeToday == false else { return }
-//        self.model?.setModelData(using: [.date])
         calendarModel.validateCheckDate(at: indexPath)
     }
     

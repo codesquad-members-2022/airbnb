@@ -11,7 +11,13 @@ class CalendarModel {
     
     var checkinDayIndex: IndexPath? {
         didSet {
-            guard let checkinDayIndex = checkinDayIndex else { return }
+            guard let checkinDayIndex = checkinDayIndex else {
+                guard let beforeDays = beforeDays else { return }
+                beforeDays.forEach {
+                    $0.fadeState = .none
+                }
+                return self.onUpdateBeforeDays(beforeDays)
+            }
             let currentDays = getDays(fromIndex: checkinDayIndex, toIndex: checkoutDayIndex)
             self.beforeDays = currentDays
         }
@@ -33,6 +39,11 @@ class CalendarModel {
             if newValue.count < beforeDays.count {
                 for i in newValue.count..<beforeDays.count {
                     beforeDays[i].fadeState = .none
+                }
+            }
+            else if newValue.count == 1 {
+                beforeDays.forEach {
+                    $0.fadeState = .none
                 }
             }
             self.onUpdateBeforeDays(beforeDays)

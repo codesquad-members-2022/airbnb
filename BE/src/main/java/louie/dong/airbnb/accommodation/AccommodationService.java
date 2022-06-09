@@ -1,6 +1,13 @@
 package louie.dong.airbnb.accommodation;
 
+import static louie.dong.airbnb.accommodation.DiscountPolicy.MONTHLY;
+import static louie.dong.airbnb.accommodation.DiscountPolicy.NONE;
+import static louie.dong.airbnb.accommodation.DiscountPolicy.WEEKLY;
+import static louie.dong.airbnb.accommodation.DiscountPolicy.YEARLY;
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,31 +54,30 @@ public class AccommodationService {
 
     public AccommodationSearchResponse findAccommodations(
         AccommodationSearchRequest accommodationSearchRequest) {
-        List<Accommodation> accommodations = accommodationRepository.searchAccommodations(
-            accommodationSearchRequest.getCountry(),
-            accommodationSearchRequest.getCheckInWithTime(),
-            accommodationSearchRequest.getCheckOutWithTime(),
-            accommodationSearchRequest.getMinPrice(), accommodationSearchRequest.getMaxPrice(),
-            accommodationSearchRequest.getGuestCount());
+		LocalDate checkIn = accommodationSearchRequest.getCheckIn();
+		LocalDate checkOut = accommodationSearchRequest.getCheckOut();
 
-        List<AccommodationResponse> accommodationResponses = createAccommodationResponses(
-            accommodations, accommodationSearchRequest.getCheckIn(),
-            accommodationSearchRequest.getCheckOut());
-        return new AccommodationSearchResponse(accommodations.size(), accommodationResponses);
+		List<Accommodation> accommodations = accommodationRepository.
+			searchAccommodations(accommodationSearchRequest);
+
+        validAccommodations(accommodations);
+
+        int nights = (int) ChronoUnit.DAYS.between(checkIn, checkOut);
+        return new AccommodationSearchResponse(accommodations, nights);
     }
 
-    private List<AccommodationResponse> createAccommodationResponses(
-        List<Accommodation> accommodations, LocalDate checkIn, LocalDate checkOut) {
-        int stayNight = (int) ChronoUnit.DAYS.between(checkIn, checkOut);
-        return accommodations.stream()
-            .map(accommodation -> new AccommodationResponse(accommodation,
-                stayNight * accommodation.getPrice(), accommodation.existsWish()))
-            .collect(Collectors.toList());
-    }
-
-    private Accommodation getAccommodationOrThrow(Long id) {
+    public Accommodation getAccommodationOrThrow(Long id) {
         return accommodationRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 id입니다."));
+
+    }
+
+    private void validAccommodations(List<Accommodation> accommodations) {
+        for (Accommodation accommodation : accommodations) {
+            if (accommodation.notExistsImage()) {
+                throw new IllegalStateException("숙소의 메인 이미지가 존재하지 않습니다");
+            }
+        }
     }
 
     private int calculateAverage(List<Integer> prices) {

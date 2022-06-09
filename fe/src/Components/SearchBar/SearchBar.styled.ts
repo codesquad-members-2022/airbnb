@@ -10,6 +10,7 @@ export const Container = styled.div`
   ${({ flex, justify }: SearchBarContainerType) => applyFlex({ flex, justify })};
   position: relative;
   ${({ searchBarStyle }: SearchBarContainerType) => searchBarStyle};
+  margin-bottom: 20px;
 `;
 
 export const DateArea = styled.div`
@@ -38,6 +39,8 @@ export const SearchButton = styled.div`
 `;
 
 export const ActiveContent = styled.div`
+  width: 150%;
+  font-size: 0.85rem;
   color: #010101;
 `;
 export const InActiveContent = styled.div`

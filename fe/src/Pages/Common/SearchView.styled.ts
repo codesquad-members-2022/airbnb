@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SearchViewContainer = styled.div`
-  width: 916px;
+  position: relative;
   margin-top: 20px;
   z-index: 1;
 `;

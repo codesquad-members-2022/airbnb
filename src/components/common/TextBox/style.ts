@@ -28,6 +28,7 @@ export const TextBoxText = styled.div<{ textContent?: string | null }>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-top: 1px;
 
   ${({ textContent }) =>
     textContent &&

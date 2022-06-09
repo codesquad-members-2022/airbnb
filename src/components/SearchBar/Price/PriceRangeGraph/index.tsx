@@ -72,7 +72,7 @@ const GraphDescription = ({ minPrice, maxPrice, average }: DescriptionTypes) => 
     <>
       <S.GraphTitle>가격 범위</S.GraphTitle>
       <S.GraphRangeDesc>
-        {minPrice} - {maxPrice}
+        ￦{minPrice} - ￦{maxPrice}
       </S.GraphRangeDesc>
       <S.GraphAverageDesc>평균 1박 요금은 {average}원 입니다.</S.GraphAverageDesc>
     </>

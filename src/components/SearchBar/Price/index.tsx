@@ -22,7 +22,7 @@ const Price = () => {
     if (!priceRange) {
       return null;
     }
-    return `\\${priceRange?.minPrice} ~ \\${priceRange?.maxPrice}`;
+    return `￦${priceRange?.minPrice} ~ ￦${priceRange?.maxPrice}`;
   }, [priceRange]);
 
   return (

@@ -1,8 +1,6 @@
 package kr.codesquad.airbnb.controller;
 
-import kr.codesquad.airbnb.dto.RoomPriceStatisticRequest;
-import kr.codesquad.airbnb.dto.RoomSearchDto;
-import kr.codesquad.airbnb.dto.RoomSearchRequest;
+import kr.codesquad.airbnb.dto.*;
 import kr.codesquad.airbnb.response.CommonResponse;
 import kr.codesquad.airbnb.service.RoomService;
 import kr.codesquad.airbnb.util.Validator;
@@ -13,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,11 +38,15 @@ public class RoomController {
      */
     @GetMapping("/rooms")
     public CommonResponse findPossibleBookingRooms(@ModelAttribute RoomSearchRequest roomSearchRequest) {
-        RoomSearchDto possibleBookingRooms = roomService.findPossibleBookingRooms(roomSearchRequest);
-        if (possibleBookingRooms.getRooms().isEmpty()) {
+        List<RoomDto> roomDtos = roomService.findPossibleBookingRooms(roomSearchRequest);
+        if (roomDtos.isEmpty()) {
             return CommonResponse.noContentCommonResponse();
         }
 
-        return CommonResponse.okCommonResponse(possibleBookingRooms);
+        List<RoomSearchResponse> roomSearchResponses = roomDtos.stream()
+                .map(roomDto -> new RoomSearchResponse(roomDto, roomSearchRequest))
+                .collect(Collectors.toList());
+
+        return CommonResponse.okCommonResponse(roomSearchResponses);
     }
 }

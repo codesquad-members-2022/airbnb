@@ -17,9 +17,6 @@ import {
 import mockPhoto from "Asset/mockPhoto.svg";
 import heartImg from "Asset/heart.svg";
 import { getWonTemplate } from "Helpers/utils";
-import { useContext } from "react";
-import { CalendarContext } from "Context/CalendarProvider";
-import { DateType } from "Helpers/interface";
 
 interface AccommodationDataType {
   src: string;
@@ -38,20 +35,12 @@ interface AccommodationType {
   accommodationData: AccommodationDataType;
 }
 
-interface CalendarStateType {
-  checkIn: DateType;
-  checkOut: DateType;
-}
-
 export default function Accommodation({
   accommodationStyle,
   photoStyle,
   accommodationData,
 }: AccommodationType) {
-  const calendarState = useContext(CalendarContext);
-
-  const { checkIn, checkOut }: any = calendarState;
-  const { src, rocation, title, description, grade, heart, reviewCnt, oneDayPrice } = accommodationData;
+  const { rocation, title, description, grade, heart, reviewCnt, oneDayPrice } = accommodationData;
 
   return (
     <AccommodationContainer flex accommodationStyle={accommodationStyle} justify="space-between">

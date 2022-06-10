@@ -6,7 +6,7 @@ import { DispatchCalendarContext } from "Context/CalendarProvider";
 import { DispatchHeadCountContext } from "Context/HeadCountProvider";
 import { DispatchPriceModalContext } from "Context/PriceProvider";
 import { MODAL_REF_IDX } from "Helpers/constant";
-import { getRandomNumber } from "Helpers/utils";
+import { createKey, getRandomNumber } from "Helpers/utils";
 import { useOutsideClick } from "Hook/useOutsideClick";
 import SearchView from "Pages/Common/SearchView";
 import { useContext, useRef, useState } from "react";
@@ -81,9 +81,11 @@ export default function SearchResult() {
             <div>게스트 n명</div>
           </SearchConditions>
           <Title>지도에서 선택한 지역의 숙소</Title>
-          {accommodationDataList.map((accommodationData) => {
+          {accommodationDataList.map((accommodationData, idx) => {
+            const key = createKey(accommodationData.title, idx);
             return (
               <Accommodation
+                key={key}
                 accommodationStyle={accommodationStyle}
                 photoStyle={photoStyle}
                 accommodationData={accommodationData}

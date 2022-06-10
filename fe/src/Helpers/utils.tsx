@@ -56,8 +56,6 @@ export const getWonTemplate = (num: number) => `${num.toLocaleString()}원`;
 export async function fetchData(url: string, { method, bodyData }: any = {}) {
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
-    accessToken:
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqd3RUb2tlbiIsImlkIjoiNiIsImV4cCI6MTY1NDgzMDAxNn0.oOS0hGyvcnFbPNleaxcf0A57bYjDc01JtJZVwIed2wc",
   };
   const body = JSON.stringify(bodyData);
   const fetchParams = { method, headers, body };

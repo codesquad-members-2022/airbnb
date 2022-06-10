@@ -3,6 +3,7 @@ package kr.codesquad.airbnb.service;
 import kr.codesquad.airbnb.domain.Lodging;
 import kr.codesquad.airbnb.domain.Members;
 import kr.codesquad.airbnb.domain.Reservation;
+import kr.codesquad.airbnb.dto.BookingDetailResponse;
 import kr.codesquad.airbnb.dto.BookingResponse;
 import kr.codesquad.airbnb.repository.BookingRepository;
 import kr.codesquad.airbnb.repository.LodgingRepository;
@@ -34,5 +35,9 @@ public class BookingService {
     public List<BookingResponse> getReservations(String githubId) {
         return bookingRepository.findByMembers_GithubId(githubId)
                 .stream().map(BookingResponse::new).collect(Collectors.toList());
+    }
+
+    public BookingDetailResponse getReservationDetail(Long reservationId, String githubId){
+        return new BookingDetailResponse(bookingRepository.findByIdAndMembers_GithubId(reservationId, githubId));
     }
 }

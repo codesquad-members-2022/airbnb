@@ -54,14 +54,12 @@ const MapArea = () => {
       <div className="zoom-button float-item">
         <IconButton
           aria-label="지도 확대하기"
-          component="span"
           onClick={() => map.current?.setLevel(map.current.getLevel() - 1)}
         >
           <AddIcon />
         </IconButton>
         <IconButton
           aria-label="지도 축소하기"
-          component="span"
           onClick={() => map.current?.setLevel(map.current.getLevel() + 1)}
         >
           <RemoveIcon />

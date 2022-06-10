@@ -28,14 +28,14 @@ class CalendarPickerViewSectionHeader: UICollectionReusableView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .systemYellow
+        backgroundColor = .white
         setSubviews()
         setLayout()
     }
 
-    private var month: CalendarPicker.Month?
+    private var month: Month?
 
-    func setMonth(_ month: CalendarPicker.Month) {
+    func setMonth(_ month: Month) {
         self.month = month
         headerLabel.text = monthFormatter.string(from: month.firstDay)
     }

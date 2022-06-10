@@ -34,10 +34,10 @@ class CalendarPickerViewController: UIViewController {
 
     var calendarPicker: CalendarPicker
 
-    init(baseDate: Date, numOfMonths: Int,
-         didSelectDate: ((DaySelection) -> Void)? = nil) {
+    init(baseDate: Date, numOfMonths: Int) {
         self.calendarPicker = CalendarPicker(baseDate: baseDate, numOfMonths: numOfMonths)
         super.init(nibName: nil, bundle: nil)
+        self.view.translatesAutoresizingMaskIntoConstraints = false
     }
 
     required init?(coder: NSCoder) {
@@ -71,6 +71,14 @@ class CalendarPickerViewController: UIViewController {
             }
         }
     }
+
+    func didSelectDate(completion: ((DaySelection) -> Void)?) {
+        calendarPicker.didSelectDate = completion
+    }
+
+    func deselectAll() {
+        calendarPicker.deselectAll()
+    }
 }
 
 extension CalendarPickerViewController: UICollectionViewDataSource {
@@ -88,7 +96,7 @@ extension CalendarPickerViewController: UICollectionViewDataSource {
         }
 
         let day = calendarPicker.getDay(monthSection: indexPath.section, dayItem: indexPath.item)
-        cell.setDay(day)
+        cell.setContent(day)
 
         return cell
     }
@@ -115,4 +123,12 @@ extension CalendarPickerViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         calendarPicker.select(newMonthSection: indexPath.section, newDayItem: indexPath.item)
     }
+}
+
+extension CalendarPickerViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = Int(collectionView.frame.width / 7)
+        return CGSize(width: width, height: width)
+    }
+
 }

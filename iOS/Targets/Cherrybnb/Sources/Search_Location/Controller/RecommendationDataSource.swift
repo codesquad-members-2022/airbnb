@@ -10,9 +10,8 @@ import UIKit
 
 class RecommendationDataSource: NSObject, UICollectionViewDataSource {
 
-    
     private(set) var recommendationData = [Place]()
-    
+
     private var didLoadData: () -> Void
 
     init(didLoadData: @escaping () -> Void) {
@@ -23,10 +22,8 @@ class RecommendationDataSource: NSObject, UICollectionViewDataSource {
         let location = Location.makeRandomInKR()
         let recommendSuccessStubRequest = DefaultRecommendator(httpService: ResponseSuccessStub())
 
-        
         recommendSuccessStubRequest.recommend(for: location) { [weak self] place in
-            guard let self = self else { return }
-            guard let place = place else { return }
+            guard let self = self, let place = place else { return }
             self.recommendationData = place
             didLoadData()
         }

@@ -10,6 +10,7 @@ import UIKit
 
 extension UIFont {
     static let cherrybnbBody = UIFont.systemFont(ofSize: 17)
+    static let cherrybnbBoldBody = UIFont.boldSystemFont(ofSize: 17)
 }
 
 extension UIImage {

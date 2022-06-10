@@ -10,25 +10,25 @@ import Foundation
 import UIKit
 
 class RecommandationDelegate: NSObject, UICollectionViewDelegate {
-    
+
     let navigationController: UINavigationController?
     let collectionView: UICollectionView?
-    
-    init(navigation: UINavigationController, collectionView: UICollectionView){
+
+    init(navigation: UINavigationController, collectionView: UICollectionView) {
         self.navigationController = navigation
         self.collectionView = collectionView
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let searchDateVC = SearchDateViewController()
-        
+
         guard let datasource = self.collectionView?.dataSource as? RecommendationDataSource else { return }
-        
+
         let place = datasource.recommendationData[indexPath.item]
-        searchDateVC.queryParameter?.place = place
+        searchDateVC.queryParameter.place = place
         self.navigationController?.pushViewController(searchDateVC, animated: true)
     }
-        
+
 }
 
 extension RecommandationDelegate: UICollectionViewDelegateFlowLayout {

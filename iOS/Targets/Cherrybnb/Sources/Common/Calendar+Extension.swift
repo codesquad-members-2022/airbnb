@@ -20,6 +20,12 @@ extension Calendar {
         return date(from: baseDateComponents) ?? baseDate
     }
 
+    func getLastDayOfMonth(for baseDate: Date) -> Date {
+        let firstDay = getFirstDayOfMonth(for: baseDate)
+        let firstDayOfNextMonth = date(byAdding: .month, value: 1, to: firstDay) ?? baseDate
+        return date(byAdding: .day, value: -1, to: firstDayOfNextMonth) ?? baseDate
+    }
+
     func getFirstDayOfMonthAfter(for baseDate: Date, offsetBy: Int) -> Date {
         // 첫번째 날짜의 다음 달은 반드시 존재하므로 nil이 return 되지 않음을 확신할 수 있음.
         return date(byAdding: .month, value: offsetBy, to: getFirstDayOfMonth(for: baseDate)) ?? baseDate

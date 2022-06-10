@@ -16,15 +16,30 @@ interface DateTypes {
 
 const Days = ({ year, month, day, index }: DayTypes) => {
   const { checkIn, setCheckIn, checkOut, setCheckOut } = useCalendarState();
+  const clickedDate = { year, month, day };
+
+  const today = new Date();
+  const dayInMonth = (year: number, month: number, day: number) => {
+    return new Date(year, month, day).toLocaleDateString();
+  };
+  const comparedDay = dayInMonth(year, month, day);
+
+  const getPrevDay = (today: Date, comparedDay: string) => {
+    const daysInMonth = new Date(today);
+    const prevDaysInMonth = new Date(comparedDay);
+    if (daysInMonth >= prevDaysInMonth) return true;
+    else return false;
+  };
+  const isDisabledDay = getPrevDay(today, comparedDay);
 
   const handleCalendar = () => {
-    const test = changeTypeCheckIn(checkIn);
-    const dem = test <= new Date(year, month + 1, day).getTime();
+    const strDay = getDaySize(checkIn);
+    const isCompareDay = strDay <= new Date(year, month + 1, day).getTime();
 
     if (!checkIn) {
       setCheckIn(`${year}-${month + 1}-${day}`);
     }
-    if (dem) {
+    if (isCompareDay) {
       setCheckOut(`${year}-${month + 1}-${day}`);
     } else {
       setCheckIn(`${year}-${month + 1}-${day}`);
@@ -32,15 +47,15 @@ const Days = ({ year, month, day, index }: DayTypes) => {
     }
   };
 
-  const changeTypeCheckIn = (date: string) => {
-    const test = date.split('-');
-    const wek = new Date(+test[0], +test[1], +test[2]).getTime();
-    return wek;
+  const getDaySize = (date: string) => {
+    const strDay = date.split('-');
+    const strDaySize = new Date(+strDay[0], +strDay[1], +strDay[2]).getTime();
+    return strDaySize;
   };
 
   //리턴
   return day ? (
-    <S.Day key={index} onClick={handleCalendar}>
+    <S.Day key={index} onClick={handleCalendar} disabled={isDisabledDay}>
       {day}
     </S.Day>
   ) : (

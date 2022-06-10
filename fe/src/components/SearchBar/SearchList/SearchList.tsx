@@ -5,7 +5,6 @@ import DeleteButton from 'components/SearchBar/SearchList/DeleteButton';
 import Modal from 'components/Modal/Modal';
 import ModalPortal from 'Portal';
 import { PeriodType, PersonnelType, PriceType, SectionProps } from 'components/SearchBar/types';
-
 import info from 'helpers/constant';
 
 export default function SearchList({
@@ -27,10 +26,9 @@ export default function SearchList({
   const content = useContentModal();
   const setContent = useSetContentModal();
 
-  const handleModalClose = (event: { stopPropagation: () => void }) => {
+  const handleModalClose = () => {
     setActiveModal(false);
     setContent('');
-    event.stopPropagation();
   };
 
   const hasValue = () => Object.values(search?.[id]).filter((e) => e).length > 0;

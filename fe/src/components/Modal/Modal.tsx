@@ -3,7 +3,7 @@ import ModalPortal from 'Portal';
 import Personnel from 'components/Modal/Personnel/Personnel';
 import { useAddSearch, useSearch } from 'context/SearchProvider';
 import Period from 'components/Modal/Period/Period';
-import Price from 'components/SearchBar/Price/Price';
+import Price from 'components/Modal/Price/Price';
 import { BackGround, ModalBlock } from './Modal.styled';
 
 export default function Modal({
@@ -12,12 +12,15 @@ export default function Modal({
   content,
 }: {
   shown: boolean;
-  onClose: (event: { stopPropagation: () => void }) => void;
+  onClose: () => void;
   content: string;
 }): JSX.Element {
-  const blockEvent = (event: { stopPropagation: () => void }) => event.stopPropagation();
   const search = useSearch();
   const addSearch = useAddSearch();
+
+  const stopMouseEventPropagation = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+  };
 
   const modal = {
     period: { size: { width: 916 }, element: Period },
@@ -30,8 +33,16 @@ export default function Modal({
   return (
     <ModalPortal>
       {shown && (
-        <BackGround role="button" tabIndex={0} className="ModalBackGround" onClick={onClose} onKeyDown={onClose}>
-          <ModalBlock onClick={blockEvent} width={modal[content].size.width}>
+        <BackGround
+          role="button"
+          tabIndex={0}
+          className="ModalBackGround"
+          onClick={(event) => {
+            onClose();
+            stopMouseEventPropagation(event);
+          }}
+        >
+          <ModalBlock onClick={stopMouseEventPropagation} width={modal[content].size.width}>
             <Element search={search[content]} addSearch={addSearch} />
           </ModalBlock>
         </BackGround>

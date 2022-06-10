@@ -20,7 +20,10 @@ function searchReducer(searches: SearchType, action: addSearchType): SearchType 
     case 'SET_PRICE':
       return {
         ...searches,
-        price: { minPrice: value.minPrice, maxPrice: value.maxPrice },
+        price: {
+          ...searches.price,
+          ...value,
+        },
       };
     case 'SET_PERSONNEL':
       return {
@@ -46,8 +49,8 @@ const initSearch = {
     checkOut: undefined,
   },
   price: {
-    minPrice: undefined,
-    maxPrice: undefined,
+    min: undefined,
+    max: undefined,
   },
   personnel: {
     adult: undefined,

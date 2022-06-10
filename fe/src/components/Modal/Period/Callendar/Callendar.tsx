@@ -24,7 +24,7 @@ export default function Callendar({ callendarNum, checkIn, checkOut, addSearch }
   const [year, month, today] = getToday();
   const [currentMonth, setCurrentMonth] = useState(month);
 
-  const setdaysArray = (newYear, newMonth) => {
+  const setdaysArray = (newYear: number, newMonth: number) => {
     let dayCount = 1;
     const daysArray: number[][] = [];
     const lastDate = new Date(newYear, newMonth, 0).getDate();
@@ -49,13 +49,13 @@ export default function Callendar({ callendarNum, checkIn, checkOut, addSearch }
     return daysArray;
   };
 
-  const getPeriod = (selectedYear, selectedMonth, selectedDay) => {
+  const getPeriod = (selectedYear: number, selectedMonth: number, selectedDay: number) => {
     const numToString = (num) => (num < 10 ? `0${num.toString()}` : num.toString());
     const period = Number(numToString(selectedYear) + numToString(selectedMonth) + numToString(selectedDay));
     return period;
   };
 
-  const checkPeriod = (callendarYear, callendarMonth, day, type) => {
+  const checkPeriod = (callendarYear: number, callendarMonth: number, day: number, type: string) => {
     const currentPeriod = getPeriod(callendarYear, callendarMonth, day);
 
     switch (type) {
@@ -68,7 +68,7 @@ export default function Callendar({ callendarNum, checkIn, checkOut, addSearch }
     }
   };
 
-  const isPastDay = (index, callendarYear, callendarMonth, day) => {
+  const isPastDay = (index: number, callendarYear: number, callendarMonth: number, day: number) => {
     const isPreviousMonth = index === 0 && day > firstWeekMaxNum;
     const isBeforeToday = getPeriod(callendarYear, callendarMonth, day) < getPeriod(year, month, today);
     return isPreviousMonth || isBeforeToday;
@@ -80,7 +80,7 @@ export default function Callendar({ callendarNum, checkIn, checkOut, addSearch }
     return dowRow;
   };
 
-  const handlePeriod = (callendarYear, callendarMonth, day) => {
+  const handlePeriod = (callendarYear: number, callendarMonth: number, day: number) => {
     const period = getPeriod(callendarYear, callendarMonth, day).toString();
     const isBeforeCheckIn = (newPeriod) => checkIn > Number(newPeriod);
     const type = !checkIn || isBeforeCheckIn(period) ? 'checkIn' : 'checkOut';
@@ -93,7 +93,7 @@ export default function Callendar({ callendarNum, checkIn, checkOut, addSearch }
     });
   };
 
-  const seperateDay = (index, callendarYear, callendarMonth, day) => {
+  const seperateDay = (index: number, callendarYear: number, callendarMonth: number, day: number) => {
     if (isPastDay(index, callendarYear, callendarMonth, day)) return <PastDay key={day}>{day}</PastDay>;
     return (
       <FutureDay
@@ -107,10 +107,10 @@ export default function Callendar({ callendarNum, checkIn, checkOut, addSearch }
     );
   };
 
-  const getCallendarArray = (num) => {
+  const getCallendarArray = (num: number) => {
     const initArray = new Array(num).fill(true);
 
-    const getCallendarDate = (newMonth) => {
+    const getCallendarDate = (newMonth: number) => {
       const newDate = new Date(year, newMonth);
       const callendarMonth = newDate.getMonth() || 12;
       const callendarYear = callendarMonth === 12 ? newDate.getFullYear() - 1 : newDate.getFullYear();
@@ -123,7 +123,7 @@ export default function Callendar({ callendarNum, checkIn, checkOut, addSearch }
 
   const callendarArray = getCallendarArray(callendarNum);
 
-  const handleCallendar = (type) => {
+  const handleCallendar = (type: string) => {
     const newMonth = type === 'prev' ? currentMonth - callendarNum : currentMonth + callendarNum;
     setCurrentMonth(newMonth);
   };

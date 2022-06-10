@@ -15,11 +15,11 @@ import {
 
 export default function Personnel({ search, addSearch }: ModalProps<PersonnelType>): JSX.Element {
   const titleArray = Object.keys(search);
-  const handlePersonnel = (e: string, type: string) => {
-    const current = search[e] || 0;
+  const handlePersonnel = (title: string, type: string) => {
+    const current = search[title] || 0;
     const surplus = type === 'increment' ? +1 : -1;
-    const value = { [e]: current + surplus };
-    const needProtector = type === 'increment' && e !== 'adult' && !search.adult;
+    const value = { [title]: current + surplus };
+    const needProtector = type === 'increment' && title !== 'adult' && !search.adult;
 
     addSearch({
       type: 'SET_PERSONNEL',

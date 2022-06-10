@@ -6,8 +6,8 @@ export type PeriodType = {
 };
 
 export type PriceType = {
-  minPrice?: number;
-  maxPrice?: number;
+  min?: number;
+  max?: number;
 };
 
 export type PersonnelType = {
@@ -17,7 +17,7 @@ export type PersonnelType = {
 };
 
 export interface InfoType {
-  title: string & string[];
+  title: string;
   defaultValue: string;
   value?: object;
 }

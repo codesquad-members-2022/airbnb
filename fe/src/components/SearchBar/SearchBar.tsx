@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useContentModal, ActiveContext, useSetActiveModal, useSetContentModal } from 'context/ModalProvider';
 
 import Period from 'components/SearchBar/Period/Period';
@@ -12,9 +13,15 @@ import { ReactComponent as SearchTextIcon } from 'img/svg/search-text-icon.svg';
 import { StyledSearchBar, StyledLi, SplitLine } from './SearchBar.styled';
 
 function SearchButton() {
+  const navigate = useNavigate();
   const isActiveModal = useContext(ActiveContext);
+
+  const moveSearchPage = () => navigate('/search');
+
   return (
-    <Button style={{ backgroundColor: 'transparent' }}>{isActiveModal ? <SearchTextIcon /> : <SearchIcon />}</Button>
+    <Button style={{ backgroundColor: 'transparent' }} onClick={moveSearchPage}>
+      {isActiveModal ? <SearchTextIcon /> : <SearchIcon />}
+    </Button>
   );
 }
 

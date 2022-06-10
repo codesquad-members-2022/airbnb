@@ -10,13 +10,9 @@ import com.team14.cherrybnb.room.domain.WishRepository;
 import com.team14.cherrybnb.room.dto.wish.WishCardResponse;
 import com.team14.cherrybnb.room.dto.wish.WishRequest;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.team14.cherrybnb.common.exception.ErrorCode.*;
 
@@ -34,12 +30,8 @@ public class WishService {
     @Transactional(readOnly = true)
     public Page<WishCardResponse> getWishes(Pageable pageable, Member member) {
         Page<Wish> wishes = wishRepository.findAllByMemberId(pageable, member);
-        List<WishCardResponse> wishCardResponses = wishes.getContent()
-                .stream()
-                .map(WishCardResponse::new)
-                .collect(Collectors.toList());
 
-        return new PageImpl<>(wishCardResponses, pageable, wishes.getTotalElements());
+        return wishes.map(WishCardResponse::new);
     }
 
     @Transactional

@@ -60,12 +60,7 @@ public class ReservationService {
     public Page<ReservationCardResponse> searchReservations(Pageable pageable, Member member) {
         Page<Reservation> reservations = reservationRepository.findByMember(pageable, member);
 
-        List<ReservationCardResponse> cardResponses = reservations.getContent()
-                .stream()
-                .map(ReservationCardResponse::new)
-                .collect(Collectors.toList());
-
-        return new PageImpl<>(cardResponses, pageable, reservations.getTotalElements());
+        return reservations.map(ReservationCardResponse::new);
     }
 
     @Transactional(readOnly = true)

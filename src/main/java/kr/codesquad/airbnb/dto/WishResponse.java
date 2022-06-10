@@ -10,7 +10,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class WishResponse {
 
-    private Long wishId;
+    private Long lodgingId;
     private String name;
     private Double rating;
     private int review;
@@ -18,7 +18,7 @@ public class WishResponse {
     private String imageUrl;
 
     public WishResponse(Wish wish) {
-        this.wishId = wish.getId();
+        this.lodgingId = wish.getLodging().getId();
         this.name = wish.getLodging().getName();
         this.rating = wish.getLodging().getRating();
         this.review = wish.getLodging().getReview();

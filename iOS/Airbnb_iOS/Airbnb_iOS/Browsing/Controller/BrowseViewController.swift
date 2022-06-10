@@ -9,8 +9,7 @@ import UIKit
 import MapKit
 
 class BrowseViewController: UIViewController {
-
-    private let findAccomodationVC = FindAccomodationViewController()
+    
     private let famousSpotDataSource = FamousSpotCollectionDataSource()
     private let browsingSpotDataSource = BrowsingSpotCollectionDataSource()
     private lazy var browsingSpotCollectionView = BorwsingSpotCollectionView(frame: view.frame)
@@ -29,6 +28,15 @@ class BrowseViewController: UIViewController {
 
     private var searchDataManager = MKDataManager()
 
+    init(famousSpotData: [HomeViewComponentsData.AroundSpotData]) {
+        super.init(nibName: nil, bundle: nil)
+        famousSpotDataSource.data = famousSpotData
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureAllInitialSettings()
@@ -95,9 +103,9 @@ extension BrowseViewController: UICollectionViewDelegate {
                     let locationData = AccomodationData.location(.init(name: locationName, latitude: coordinate.latitude, longitude: coordinate.longitude))
 
                     DispatchQueue.main.async {
-                        guard let nextViewController = self?.findAccomodationVC else { return }
-                        nextViewController.setLocationData(locationData)
-                        self?.navigationController?.pushViewController(nextViewController, animated: true)
+                        let decidingOptionsVC = DecidingOptionsViewController()
+                        decidingOptionsVC.setLocationData(locationData)
+                        self?.navigationController?.pushViewController(decidingOptionsVC, animated: true)
                     }
                 case .failure(let error):
                     print(error)
@@ -121,7 +129,7 @@ private extension BrowseViewController {
     
     func setNavigationItem() {
         self.navigationItem.title = "숙소 찾기"
-        self.navigationItem.backButtonTitle = "뒤로"
+        navigationController?.navigationBar.topItem?.backButtonTitle = "뒤로"
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationController?.hidesBarsOnSwipe = false
     }

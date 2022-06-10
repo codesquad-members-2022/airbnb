@@ -20,8 +20,16 @@ extension String {
         return attributedString
     }
 
-    static func calculateHeaderHeight(fontSize: CGFloat, weight: UIFont.Weight) -> CGFloat {
-        let textForCalculatingHeight: NSString = "년월"
+    func underLine() -> NSAttributedString {
+        let attributedString = NSMutableAttributedString(string: self)
+
+        attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(0..<attributedString.length))
+
+        return attributedString
+    }
+
+    static func calculateLabelHeight(targetString: String = "년월", fontSize: CGFloat, weight: UIFont.Weight) -> CGFloat {
+        let textForCalculatingHeight = NSString(string: targetString)
         let fittedHeight = textForCalculatingHeight
             .size(withAttributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize, weight: weight)])
             .height

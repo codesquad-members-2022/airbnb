@@ -6,7 +6,17 @@ target 'Airbnb_iOS' do
   use_frameworks!
 
   pod 'SwiftLint'
+  pod 'Alamofire'
 
   # Pods for Airbnb_iOS
+
+end
+
+target 'Airbnb_iOSTests' do
+  use_frameworks!
+
+  pod 'Alamofire'
+
+  # Pods for Airbnb_iOSTests
 
 end

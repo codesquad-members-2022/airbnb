@@ -14,4 +14,18 @@ extension Int {
         let price = numberFormatter.string(from: self as NSNumber) ?? ""
         return "\(price)원"
     }
+
+    func toKRWWithCurrencyMark() -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        let price = numberFormatter.string(from: self as NSNumber) ?? ""
+        return "₩\(price)"
+    }
+
+    func toKM() -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        let distanceInKm = numberFormatter.string(from: self as NSNumber) ?? ""
+        return "\(distanceInKm) km"
+    }
 }

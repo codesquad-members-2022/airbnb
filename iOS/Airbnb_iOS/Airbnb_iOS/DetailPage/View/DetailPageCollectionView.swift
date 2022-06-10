@@ -1,27 +1,26 @@
 //
-//  HomeView.swift
+//  DetailPageCollectionView.swift
 //  Airbnb_iOS
 //
-//  Created by 김한솔 on 2022/05/25.
+//  Created by juntaek.oh on 2022/06/06.
 //
 
 import UIKit
 
-final class HomeView: UIView {
-    private lazy var collectionView: UICollectionView = {
+class DetailPageCollectionView: UIView {
+    
+    private(set) lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.getCollectionViewLayout())
         collectionView.isScrollEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.clipsToBounds = true
 
-        collectionView.register(HeroImageCell.self, forCellWithReuseIdentifier: HeroImageCell.identifier)
-        collectionView.register(AroundSpotCell.self, forCellWithReuseIdentifier: AroundSpotCell.identifier)
-        collectionView.register(ThemeSpotCell.self, forCellWithReuseIdentifier: ThemeSpotCell.identifier)
-
-        collectionView.register(CollectionHeaderView.self,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: CollectionHeaderView.identifier)
+        collectionView.register(ThumbnailImageCell.self, forCellWithReuseIdentifier: ThumbnailImageCell.identifier)
+        collectionView.register(TitleTextCell.self, forCellWithReuseIdentifier: TitleTextCell.identifier)
+        collectionView.register(HostTextCell.self, forCellWithReuseIdentifier: HostTextCell.identifier)
+        collectionView.register(DetailTextCell.self, forCellWithReuseIdentifier: DetailTextCell.identifier)
+        collectionView.register(CollectionFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: CollectionFooterView.identifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -29,7 +28,7 @@ final class HomeView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
-        setUpLayout()
+        setConstraint()
     }
 
     @available(*, unavailable)
@@ -40,20 +39,12 @@ final class HomeView: UIView {
     func setDataSource(_ dataSource: UICollectionViewDataSource) {
         collectionView.dataSource = dataSource
     }
-
-    func reloadCollectionViewCell() {
-        collectionView.reloadData()
-    }
-
-    func reloadCollectionViewCell(sectionNumber: Int) {
-        collectionView.reloadSections([sectionNumber])
-    }
 }
 
-private extension HomeView {
+private extension DetailPageCollectionView {
 
-    func setUpLayout() {
-        addSubview(collectionView)
+    func setConstraint() {
+        self.addSubview(collectionView)
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -64,7 +55,7 @@ private extension HomeView {
 
     func getCollectionViewLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { (section, _) -> NSCollectionLayoutSection? in
-            return HomeViewCollectionLayout(section: section).create()
+            return DetailPageCollectionLayout(section: section).create()
         }
     }
 }

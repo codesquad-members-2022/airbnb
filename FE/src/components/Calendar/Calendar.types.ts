@@ -1,16 +1,14 @@
-export interface DateInfosInterface {
-  id: number;
-  year?: number;
-  month?: number;
-  date?: number;
-}
-
-export interface DateInfoInterface {
+export interface ICalendarInfo {
   year: number;
   month: number;
 }
 
-export interface CalendarPropsInterface {
-  dateInfo: DateInfoInterface;
+export interface ICalendarInfos extends ICalendarInfo {
+  id: number;
+  date: number;
+}
+
+export interface ICalendarProps {
+  calendarInfo: ICalendarInfo;
   calendarClickCount: { current: number };
 }

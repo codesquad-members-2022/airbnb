@@ -1,4 +1,17 @@
 import { createContext } from 'react';
-import { checkContextInterface } from 'contexts/checkcontext/checkContext.types';
+import { ICheckContext } from 'contexts/checkcontext/checkContext.types';
 
-export const CheckContext = createContext<checkContextInterface | null>(null);
+export const CheckContext = createContext<ICheckContext>({
+  checkIn: '',
+  checkOut: '',
+  mouseOverCheckOut: '',
+  setCheckIn: () => {
+    return '';
+  },
+  setCheckOut: () => {
+    return '';
+  },
+  setMouseOverCheckOut: () => {
+    return '';
+  },
+});

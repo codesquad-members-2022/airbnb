@@ -8,7 +8,8 @@ declare module 'styled-components' {
       md: '1.6rem';
       lg: '1.8rem';
       xl: '2rem';
-      xxl: '3.2rem';
+      xxl: '2.4rem';
+      xxxl: '3.2rem';
     };
 
     fontWeights: {
@@ -23,6 +24,7 @@ declare module 'styled-components' {
       base: '2.3rem';
       tall: '2.6rem';
       taller: '2.9rem';
+      long: '3.5rem';
       logo: '4.6rem';
     };
 

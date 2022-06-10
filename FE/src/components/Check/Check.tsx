@@ -6,48 +6,56 @@ import { CalendarModal } from 'components/CalendarModal';
 import { CHECK_INFOS } from 'constant';
 
 import { CheckContext } from 'contexts/checkcontext/checkContext';
+import { SearchContext } from 'contexts/searchcontext/searchContext';
 import { CheckContainer, CheckClearBtn } from './Check.styled';
 
 export function Check(): JSX.Element {
   const calendarClickCount = useRef<number>(0);
-  const checkContext = useContext(CheckContext);
-  const [show, setShow] = useState<boolean>(false);
+  const { checkIn, checkOut, setCheckIn, setCheckOut } =
+    useContext(CheckContext);
+  const [isShowing, setIsShowing] = useState<boolean>(false);
+  const { isSearchShowing } = useContext(SearchContext);
 
-  const checkMenu = CHECK_INFOS.map(el =>
+  const bigCheckMenu = CHECK_INFOS.map(el =>
     el.id === 1 ? (
-      <InputText key={el.id} info={el} check={checkContext?.checkIn} />
+      <InputText key={el.id} info={el} value={checkIn} />
     ) : (
-      <InputText key={el.id} info={el} check={checkContext?.checkOut} />
+      <InputText key={el.id} info={el} value={checkOut} />
     ),
   );
 
-  const handleClickShow = () => {
-    setShow(prev => !prev);
-  };
+  const smallCheckMenu = <InputText value={`${checkIn} - ${checkOut}`} />;
 
-  const handleClickCheckClearBtn = () => {
-    checkContext?.setCheckIn('');
-    checkContext?.setCheckOut('');
+  const handleClickShow = () => setIsShowing(prev => !prev);
+
+  const handleClickCheckClearBtn = () => clearInutCheckTextAndClearBtn();
+
+  const clearInutCheckTextAndClearBtn = () => {
+    setIsShowing(true);
+    setCheckIn('');
+    setCheckOut('');
     calendarClickCount.current = 0;
   };
 
   return (
     <>
       <CheckContainer onClick={handleClickShow}>
-        {checkMenu}
-        <CheckClearBtn
-          type="button"
-          onClick={handleClickCheckClearBtn}
-          checkIn={checkContext?.checkIn}
-        >
-          <img
-            src="./assets/images/x-circle.svg"
-            alt="체크인, 체크아웃 초기화 버튼"
-          />
-        </CheckClearBtn>
+        {isSearchShowing ? smallCheckMenu : bigCheckMenu}
+        {!isSearchShowing && (
+          <CheckClearBtn
+            type="button"
+            onClick={handleClickCheckClearBtn}
+            checkIn={checkIn}
+          >
+            <img
+              src="./assets/images/x-circle.svg"
+              alt="체크인, 체크아웃 초기화 버튼"
+            />
+          </CheckClearBtn>
+        )}
       </CheckContainer>
       <CalendarModal
-        show={show}
+        isShowing={isShowing}
         handleClickShow={handleClickShow}
         calendarClickCount={calendarClickCount}
       />

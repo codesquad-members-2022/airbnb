@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
-export interface checkContextInterface {
+export interface ICheckContext {
   checkIn: string;
   checkOut: string;
   mouseOverCheckOut: string;

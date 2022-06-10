@@ -2,6 +2,8 @@ import React, { useReducer, useState, useRef } from 'react';
 
 import ModalPortal from 'common/portal';
 import { Calendar } from 'components/Calendar';
+import { CalendarModalBtns } from 'components/CalendarModalBtns';
+
 import {
   initialCalendarState,
   calendarReducer,
@@ -9,32 +11,34 @@ import {
 
 import { CALENDAR_BUTTON_INFOS } from 'constant';
 
-import {
-  Backdrop,
-  Modal,
-  Carousel,
-  CarouselItemContainer,
-  Button,
-} from './CalendarModal.styled';
+import { Backdrop } from 'common/util.styled';
+import { Modal, Carousel, CarouselItemContainer } from './CalendarModal.styled';
 
-import { CalendarProps } from './CalendarModal.types';
+import { ICalendarProps } from './CalendarModal.types';
 
 export function CalendarModal({
-  show,
+  isShowing,
   handleClickShow,
   calendarClickCount,
-}: CalendarProps): JSX.Element {
+}: ICalendarProps): JSX.Element {
   const carouselCounter = useRef<number>(1);
   const [carouselXPos, setCarouselXPos] = useState<number>(0);
   const [calendarState, calendarDispatch] = useReducer(
     calendarReducer,
     initialCalendarState,
   );
+  const { carouselCountGreaterThanOne, carouselCountEqualToOne } = {
+    carouselCountGreaterThanOne: carouselCounter.current > 1,
+    carouselCountEqualToOne: carouselCounter.current === 1,
+  };
 
   const moveNextCarousel = (carouselUnit: number): void => {
     setCarouselXPos(prev => prev + carouselUnit);
     carouselCounter.current += 1;
+    addCarouselItem();
+  };
 
+  const addCarouselItem = () => {
     if (calendarState.length === carouselCounter.current)
       calendarDispatch({ type: 'ADD_CALENDAR' });
   };
@@ -44,35 +48,37 @@ export function CalendarModal({
     carouselCounter.current -= 1;
   };
 
-  const handleClickButton = (carouselUnit: number): void => {
-    if (carouselCounter.current > 1) {
-      if (carouselUnit < 0) moveNextCarousel(carouselUnit);
+  const handleClickButton = (carouselUnit: number): void =>
+    selectCarouselDirection(carouselUnit);
+
+  const selectCarouselDirection = (carouselUnit: number) => {
+    const carouselUnitLessThanZero = carouselUnit < 0;
+
+    if (carouselCountGreaterThanOne) {
+      if (carouselUnitLessThanZero) moveNextCarousel(carouselUnit);
       else movePrevCarousel(carouselUnit);
-    } else if (carouselCounter.current === 1) {
-      if (carouselUnit < 0) moveNextCarousel(carouselUnit);
+    } else if (carouselCountEqualToOne) {
+      if (carouselUnitLessThanZero) moveNextCarousel(carouselUnit);
     }
   };
 
-  const calendars = calendarState.map(el => (
+  const calendars = calendarState.map(calendar => (
     <Calendar
-      key={el.id}
-      dateInfo={el}
+      key={calendar.id}
+      calendarInfo={calendar}
       calendarClickCount={calendarClickCount}
     />
   ));
 
-  const buttons = CALENDAR_BUTTON_INFOS.map(el => (
-    <Button
-      key={el.id}
-      type="button"
-      className={el.className}
-      onClick={() => handleClickButton(el.carouselUnit)}
-    >
-      <img src={el.src} alt={el.alt} />
-    </Button>
+  const buttons = CALENDAR_BUTTON_INFOS.map(btn => (
+    <CalendarModalBtns
+      key={btn.id}
+      btn={btn}
+      handleClickButton={() => handleClickButton(btn.carouselUnit)}
+    />
   ));
 
-  if (show) {
+  if (isShowing) {
     return (
       <ModalPortal>
         <>

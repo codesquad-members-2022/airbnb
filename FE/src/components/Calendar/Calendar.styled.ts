@@ -33,7 +33,7 @@ export const WeekCell = styled.li`
   color: ${({ theme: { colors } }) => colors.grey3};
 `;
 
-export const Dates = styled.ul`
+export const DatesContainer = styled.ul`
   display: flex;
   flex-wrap: wrap;
   width: 33.6rem;

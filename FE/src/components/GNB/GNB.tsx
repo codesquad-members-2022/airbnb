@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-import { GNB_TEXTS } from 'constant';
+import { GNBS } from 'constant';
+
+import { SearchContext } from 'contexts/searchcontext/searchContext';
 
 import { GNBMenu, GNBBtn } from './GNB.styled';
 
 export function GNB(): JSX.Element {
-  const gnb = GNB_TEXTS.map(el => <GNBBtn key={el.id}>{el.text}</GNBBtn>);
+  const { isSearchShowing } = useContext(SearchContext);
+  const gnbBtns = GNBS.map(gnb => <GNBBtn key={gnb.id}>{gnb.text}</GNBBtn>);
 
-  return <GNBMenu>{gnb}</GNBMenu>;
+  return <GNBMenu isSearchShowing={isSearchShowing}>{gnbBtns}</GNBMenu>;
 }

@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
 import { BtnBackgroundBorderRemove } from 'common/util.styled';
-import { MenuBtnProps } from 'components/Menu/Menu.types';
 
 export const UserMenu = styled.menu`
   display: flex;
@@ -11,7 +10,7 @@ export const UserMenu = styled.menu`
   border-radius: 3rem;
 `;
 
-export const MenuBtn = styled.button<MenuBtnProps>`
+export const MenuBtn = styled.button<{ num: number }>`
   ${BtnBackgroundBorderRemove}
 
   ${({ num }) =>

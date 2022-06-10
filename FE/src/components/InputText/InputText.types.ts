@@ -1,8 +1,8 @@
-export interface InputTextProps {
-  info: {
+export interface IInputTextProps {
+  info?: {
     title: string;
     label: string;
     placeHolder: string;
   };
-  check?: string;
+  value: string;
 }

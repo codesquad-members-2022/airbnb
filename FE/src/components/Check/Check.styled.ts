@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
-import { BtnBackgroundBorderRemove } from 'common/util.styled';
-import { CheckClearBtnInterface } from './Check.types';
+import { ClearBtn } from 'common/util.styled';
 
 export const CheckContainer = styled.div`
   position: relative;
@@ -9,18 +8,12 @@ export const CheckContainer = styled.div`
   cursor: pointer;
 `;
 
-export const CheckClearBtn = styled.button<CheckClearBtnInterface>`
+export const CheckClearBtn = styled.button<{ checkIn: string }>`
   display: none;
 
   ${({ checkIn }) =>
     checkIn &&
     css`
-      display: block;
-      position: absolute;
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
-      ${BtnBackgroundBorderRemove}
-      cursor: pointer;
+      ${ClearBtn}
     `}
 `;

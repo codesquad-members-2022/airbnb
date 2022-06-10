@@ -1,10 +1,17 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const GNBMenu = styled.menu`
-  display: flex;
-  gap: 2.4rem;
-  font-weight: ${({ theme: { fontWeights } }) => fontWeights.normal};
-  line-height: ${({ theme: { lineHeights } }) => lineHeights.base};
+export const GNBMenu = styled.menu<{ isSearchShowing: boolean }>`
+  ${({ isSearchShowing }) =>
+    isSearchShowing
+      ? css`
+          display: none;
+        `
+      : css`
+          display: flex;
+          gap: 2.4rem;
+          font-weight: ${({ theme: { fontWeights } }) => fontWeights.normal};
+          line-height: ${({ theme: { lineHeights } }) => lineHeights.base};
+        `};
 `;
 
 export const GNBBtn = styled.button`

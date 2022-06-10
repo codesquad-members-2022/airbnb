@@ -1,25 +1,32 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import {
+  Container,
   SearchBarTitle,
   SearchBarInputText,
 } from 'components/InputText/InputText.styled';
 
-import { InputTextProps } from 'components/InputText/InputText.types';
+import { IInputTextProps } from 'components/InputText/InputText.types';
+import { SearchContext } from 'contexts/searchcontext/searchContext';
 
-export function InputText({ info, check }: InputTextProps): JSX.Element {
+export function InputText({ info, value }: IInputTextProps): JSX.Element {
+  const { isSearchShowing } = useContext(SearchContext);
+
   return (
-    <section>
-      <label htmlFor={info.label}>
-        <SearchBarTitle>{info.title}</SearchBarTitle>
+    <Container isSearchShowing={isSearchShowing}>
+      <label htmlFor={info?.label}>
+        <SearchBarTitle isSearchShowing={isSearchShowing}>
+          {info?.title}
+        </SearchBarTitle>
       </label>
       <SearchBarInputText
         type="text"
-        id={info.label}
-        placeholder={info.placeHolder}
+        id={info?.label}
+        placeholder={info?.placeHolder}
         readOnly
-        value={check}
+        value={value}
+        isSearchShowing={isSearchShowing}
       />
-    </section>
+    </Container>
   );
 }

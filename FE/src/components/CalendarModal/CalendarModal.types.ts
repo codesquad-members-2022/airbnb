@@ -1,19 +1,11 @@
-export interface CalendarProps {
-  show: boolean;
+export interface ICalendarProps {
+  isShowing: boolean;
   handleClickShow: () => void;
   calendarClickCount: { current: number };
 }
 
-export interface CalendarInterface {
+export interface ICalendar {
   id: number;
   year: number;
   month: number;
-}
-
-export interface CalendarActionInterface {
-  type: string;
-}
-
-export interface CarouselItemContainerProps {
-  pos: number;
 }

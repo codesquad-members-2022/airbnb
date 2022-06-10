@@ -9,7 +9,7 @@ export const Nav = styled.nav`
 export const Logo = styled.h1`
   cursor: pointer;
   font-weight: ${({ theme: { fontWeights } }) => fontWeights.black};
-  font-size: ${({ theme: { fontSizes } }) => fontSizes.xxl};
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.xxxl};
   line-height: ${({ theme: { lineHeights } }) => lineHeights.logo};
   letter-spacing: ${({ theme: { letterSpacings } }) => letterSpacings.tighter};
 `;

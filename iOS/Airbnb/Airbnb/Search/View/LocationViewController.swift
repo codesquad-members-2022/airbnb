@@ -7,10 +7,17 @@
 
 import UIKit
 import SnapKit
+import MapKit
 
 class LocationViewController: BackgroundViewController, CommonViewControllerProtocol {
      
     let model = LocationModel()
+    
+    private var searchCompleter: MKLocalSearchCompleter?
+    
+    private var searchResults = [MKLocalSearchCompletion]()
+    
+    private var searchRegion: MKCoordinateRegion = MKCoordinateRegion(MKMapRect.world)
     
     private let searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -43,6 +50,7 @@ class LocationViewController: BackgroundViewController, CommonViewControllerProt
     
     func attribute() {
         setUpDelegates()
+        startProvidingCompletions()
         navigationController?.isToolbarHidden = true
         navigationItem.searchController = searchController
         navigationItem.title = "숙소 찾기"
@@ -87,14 +95,14 @@ extension LocationViewController: UISearchBarDelegate, UITextFieldDelegate, UISe
 {
     func updateSearchResults(for searchController: UISearchController) {
         guard let query = searchController.searchBar.text else { return }
-        dump(query)
-        self.nearbyLoactionView.reloadData()
+        searchCompleter?.queryFragment = query
     }
     
     @objc func clearSearchField(_ sender: Any) {
         searchController.searchBar.text = nil
         self.navigationItem.rightBarButtonItem = nil
         model.changeMode(.popular)
+        nearbyLoactionView.reloadData()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -109,7 +117,13 @@ extension LocationViewController: UISearchBarDelegate, UITextFieldDelegate, UISe
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let searchTextIsEnable = !searchText.isEmpty
         navigationItem.rightBarButtonItem = searchTextIsEnable ? searchInitializeButton : nil
-        model.changeMode(searchTextIsEnable ? .nearby : .popular)
+
+        if searchTextIsEnable {
+            model.changeMode(.nearby)
+        } else {
+            model.changeMode(.popular)
+            nearbyLoactionView.reloadData()
+        }
     }
 }
 
@@ -125,7 +139,7 @@ extension LocationViewController: UICollectionViewDelegateFlowLayout, UICollecti
         guard let item = model[indexPath.row] else {
             return UICollectionViewCell()
         }
-        
+
         cell.updateInfomation(item)
         return cell
     }
@@ -162,5 +176,26 @@ extension LocationViewController: UICollectionViewDelegateFlowLayout, UICollecti
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         let headerViewHeight: CGFloat = ((model[0] as? PopularCityInfomation) == nil ? 0 : 78)
         return CGSize(width: 0, height: headerViewHeight)
+    }
+}
+
+extension LocationViewController: MKLocalSearchCompleterDelegate {
+    private func startProvidingCompletions() {
+        searchCompleter = MKLocalSearchCompleter()
+        searchCompleter?.delegate = self
+        searchCompleter?.region = searchRegion
+    }
+    
+    private func stopProvidingCompletions() {
+        searchCompleter = nil
+    }
+    
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        searchResults = completer.results
+        let nearbyAddress: [String] = searchResults.map {
+            $0.title
+        }
+        model.makeTenNearbyCitiesInfo(nearby: nearbyAddress)
+        nearbyLoactionView.reloadData()
     }
 }

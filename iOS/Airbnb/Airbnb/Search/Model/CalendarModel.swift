@@ -11,7 +11,13 @@ class CalendarModel {
     
     var checkinDayIndex: IndexPath? {
         didSet {
-            guard let checkinDayIndex = checkinDayIndex else { return }
+            guard let checkinDayIndex = checkinDayIndex else {
+                guard let beforeDays = beforeDays else { return }
+                beforeDays.forEach {
+                    $0.fadeState = .none
+                }
+                return self.onUpdateBeforeDays(beforeDays)
+            }
             let currentDays = getDays(fromIndex: checkinDayIndex, toIndex: checkoutDayIndex)
             self.beforeDays = currentDays
         }
@@ -35,6 +41,12 @@ class CalendarModel {
                     beforeDays[i].fadeState = .none
                 }
             }
+            else if newValue.count == 1 {
+                beforeDays.forEach {
+                    $0.fadeState = .none
+                }
+            }
+            self.onUpdateBeforeDays(beforeDays)
         }
         didSet {
             guard let beforeDays = beforeDays else { return }
@@ -56,7 +68,7 @@ class CalendarModel {
     }
     
     var onUpdate: ([Day]) -> Void = { _ in }
-
+    var onUpdateBeforeDays: ([Day]) -> Void = { _ in }
     
     let calendar: Calendar = Calendar.current
     
@@ -130,30 +142,6 @@ class CalendarModel {
 
 enum CalendarDateError: Error {
     case monthMetadataError
-}
-
-extension CalendarModel {
-    func shinghaSayMakeDays(for baseDate: Date) -> [Date?] {
-        let component = calendar.dateComponents([.year, .month], from: baseDate)
-        guard let firstDate = calendar.date(from: component),
-              let nextMonthDate = calendar.date(byAdding: .month, value: 1, to: firstDate), // 7월 1일
-              let lastDate = calendar.date(byAdding: .day, value: -1, to: nextMonthDate) else {
-                  return []
-              }
-        let startComponent = calendar.dateComponents([.day, .weekday], from: firstDate)
-        let lastComponent = calendar.dateComponents([.day, .weekday], from: lastDate)
-        guard let lastday = lastComponent.day,
-              let startWeekDay = startComponent.weekday,
-              let lastWeekDay = lastComponent.weekday else {
-                  return []
-              }
-        var dates: [Date?] = (0..<lastday).map { addDay in
-            calendar.date(byAdding: .day, value: addDay, to: firstDate)
-        }
-        (0..<startWeekDay - 1).forEach { _ in dates.insert(nil, at: 0) }
-        (lastWeekDay - 1..<6).forEach { _ in dates.append(nil) }
-        return dates
-    }
 }
 
 extension CalendarModel {
@@ -236,5 +224,15 @@ private extension CalendarModel {
             }
             return $0.element
         }
+    }
+}
+
+extension CalendarModel {
+    func getLastDate(at path: IndexPath) -> Date? {
+        return month[path.section].result.last?.date
+    }
+    
+    func getADay(at path: IndexPath) -> Day {
+        return month[path.section].result[path.row]
     }
 }

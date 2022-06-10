@@ -28,7 +28,7 @@ class WeekdayView: UIView {
     }
     
     private func generateWeekday() {
-        (1...7).forEach { weekdayNumber in
+        Weekday.allCases.forEach { weekday in
             let weekdayLabel: UILabel = {
                 let label = UILabel()
                 label.font = .systemFont(ofSize: 12, weight: .thin)
@@ -37,30 +37,19 @@ class WeekdayView: UIView {
                 return label
             }()
             
-            weekdayLabel.text = getWeekdayText(for: weekdayNumber)
+            weekdayLabel.text = weekday.rawValue
             weekdayStackView.addArrangedSubview(weekdayLabel)
         }
     }
     
-    private func getWeekdayText(for weekdayNumber: Int) -> String {
-        var text: String = ""
-        switch weekdayNumber {
-        case 1:
-            text = "일"
-        case 2:
-            text = "월"
-        case 3:
-            text = "화"
-        case 4:
-            text = "수"
-        case 5:
-            text = "목"
-        case 6:
-            text = "금"
-        default:
-            text = "토"
-        }
-        return text
+    enum Weekday: String, CaseIterable {
+        case sunday = "일"
+        case monday = "월"
+        case tuesday = "화"
+        case wednesday = "수"
+        case thursday = "목"
+        case friday = "금"
+        case saturday = "토"
     }
     
     override func layoutSubviews() {

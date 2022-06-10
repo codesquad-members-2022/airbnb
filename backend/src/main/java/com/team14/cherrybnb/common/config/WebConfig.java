@@ -69,11 +69,4 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/error");
     }
-
-    @Bean
-    public ObjectMapper jacksonBuilder() {
-        Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder = new Jackson2ObjectMapperBuilder();
-        jackson2ObjectMapperBuilder.propertyNamingStrategy(PropertyNamingStrategy.);
-        return jackson2ObjectMapperBuilder.build();
-    }
 }

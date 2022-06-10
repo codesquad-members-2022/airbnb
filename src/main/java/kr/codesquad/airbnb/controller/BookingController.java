@@ -1,6 +1,7 @@
 package kr.codesquad.airbnb.controller;
 
 import kr.codesquad.airbnb.domain.Members;
+import kr.codesquad.airbnb.dto.BookingDetailResponse;
 import kr.codesquad.airbnb.dto.BookingResponse;
 import kr.codesquad.airbnb.request.BookingRequest;
 import kr.codesquad.airbnb.service.BookingService;
@@ -32,5 +33,12 @@ public class BookingController {
         Members member = (Members) request.getAttribute("Members");
         String githubId = member.getGithubId();
         return bookingService.getReservations(githubId);
+    }
+
+    @GetMapping("/reservations/{reservationId}")
+    public BookingDetailResponse getReservationDetail(@PathVariable Long reservationId, HttpServletRequest request){
+        Members member = (Members) request.getAttribute("Members");
+        String githubId = member.getGithubId();
+        return bookingService.getReservationDetail(reservationId, githubId);
     }
 }

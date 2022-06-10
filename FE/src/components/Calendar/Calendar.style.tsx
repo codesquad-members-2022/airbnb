@@ -8,10 +8,6 @@ export const Container = styled.div`
   padding-top: 30px;
   padding-bottom: 30px;
   box-shadow: 0px 4px 10px rgba(51, 51, 51, 0.1), 0px 0px 4px rgba(51, 51, 51, 0.05);
-
-  // 모달창 positon 추후 삭제 예정
-  position: absolute;
-  top: 200%;
 `;
 
 export const Wrapper = styled.div`

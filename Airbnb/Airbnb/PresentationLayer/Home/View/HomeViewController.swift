@@ -12,22 +12,13 @@ final class HomeViewController: UIViewController, UISearchBarDelegate {
     private var searchController: UISearchController!
     private var homeCollectionView: UICollectionView!
     private var homeViewModel = HomeViewModel()
-    var testNetwork  = NetworkManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDisplay()
         configureConstraints()
         homeViewModel.loadAllCategories()
-        testNetwork.request(path: "/rooms?", completion: { result in
-            switch result {
-            case .failure(let error):
-                print(error)
-            case .success(let data):
-                print(data)
-                return
-            }
-        })
+
     }
 
     private func configureDisplay() {

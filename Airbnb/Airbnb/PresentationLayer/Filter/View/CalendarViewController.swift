@@ -97,7 +97,9 @@ final class CalendarViewController: UIViewController {
     }
 
     private func isDayDisabled(_ day: Day) -> Bool {
-        guard let date = calendar.date(from: day.components) else {return true}
+        guard let date = calendar.date(from: day.components) else {
+            return true
+        }
         return date < Date() ? true : false
     }
 

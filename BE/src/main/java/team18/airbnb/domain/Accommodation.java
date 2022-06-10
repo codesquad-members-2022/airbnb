@@ -1,11 +1,14 @@
 package team18.airbnb.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,18 +20,13 @@ public class Accommodation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "accommodation_id")
     private Long id;
 
     private float startPoint;
     private int reviewCount;
     private String description;
     private String name;
-    private String mainImgUrl;
-
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "accommodation")
-    private List<Reservation> reservation = new ArrayList<>();
+    private String mainImageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id")
@@ -40,26 +38,23 @@ public class Accommodation {
     @Embedded
     private AccommodationInfo accommodationInfo;
 
-    public Accommodation(float startPoint, int reviewCount, String description, String name, String mainImgUrl,
+    @Embedded
+    private AccommodationFee accommodationFee;
+
+    public Accommodation(float startPoint, int reviewCount, String description, String name, String mainImageUrl,
                          AccommodationAddress accommodationAddress,
                          AccommodationInfo accommodationInfo,
+                         AccommodationFee accommodationFee,
                          Region region) {
 
         this.startPoint = startPoint;
         this.reviewCount = reviewCount;
         this.description = description;
         this.name = name;
-        this.mainImgUrl = mainImgUrl;
+        this.mainImageUrl = mainImageUrl;
         this.accommodationAddress = accommodationAddress;
         this.accommodationInfo = accommodationInfo;
-
-        if (region != null) {
-            changeRegion(region);
-        }
-    }
-
-    private void changeRegion(Region region) {
+        this.accommodationFee = accommodationFee;
         this.region = region;
-        region.getAccommodations().add(this);
     }
 }

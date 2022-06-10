@@ -1,14 +1,15 @@
 package team18.airbnb.reservation;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import team18.airbnb.domain.Reservation;
-import team18.airbnb.reservation.dto.UserReservationDto;
 
 import java.util.List;
+
+import lombok.RequiredArgsConstructor;
+import team18.airbnb.domain.Reservation;
+import team18.airbnb.reservation.dto.UserReservationDto;
 
 @RestController
 @RequestMapping("/api")

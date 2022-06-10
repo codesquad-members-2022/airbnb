@@ -1,34 +1,34 @@
 package team18.airbnb.reservation.dto;
 
+import java.time.LocalDate;
+
 import lombok.Getter;
 import team18.airbnb.domain.AccommodationAddress;
 import team18.airbnb.domain.Reservation;
 
-import java.time.LocalDateTime;
-
 @Getter
 public class UserReservationDto {
 
-    private final LocalDateTime checkInTime;
-    private final LocalDateTime checkoutTime;
+    private final LocalDate checkinDate;
+    private final LocalDate checkoutDate;
     private final AccommodationAddress accommodationAddress;
     private final String accommodationName;
-    private final int nAdult;
-    private final int nChild;
-    private final int nInfant;
-    private final int totalAmountOfReservation;
+    private final int adultCount;
+    private final int childCount;
+    private final int infantCount;
+    private final double totalAmount;
     private final int totalGuest;
 
     public UserReservationDto(Reservation reservation) {
-        this.checkInTime = reservation.getCheckInTime();
-        this.checkoutTime = reservation.getCheckoutTime();
+        this.checkinDate = reservation.getCheckinDate();
+        this.checkoutDate = reservation.getCheckoutDate();
         this.accommodationAddress = reservation.getAccommodation().getAccommodationAddress();
         this.accommodationName = reservation.getAccommodation().getName();
-        this.nAdult = reservation.getAdultCount();
-        this.nChild = reservation.getChildCount();
-        this.nInfant = reservation.getInfantCount();
-        this.totalAmountOfReservation = reservation.getReservationFee().getTotalAmountOfReservation();
-        this.totalGuest = getNAdult() + getNChild() + getNInfant();
+        this.adultCount = reservation.getAdultCount();
+        this.childCount = reservation.getChildCount();
+        this.infantCount = reservation.getInfantCount();
+        this.totalAmount = reservation.getTotalAmount();
+        this.totalGuest = getAdultCount() + getChildCount() + getInfantCount();
     }
 }
 

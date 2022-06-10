@@ -21,7 +21,7 @@ public class AccommodationSubImg {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String subImg;
+    private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accommodation_id")

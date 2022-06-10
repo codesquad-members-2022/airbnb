@@ -4,11 +4,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
 import team18.airbnb.domain.Region;
-import team18.airbnb.generalDto.LookAroundRegionDto;
 import team18.airbnb.region.dto.AccommodationByConceptDto;
 
 @Service
@@ -32,11 +30,13 @@ public class RegionService {
         return accommodations;
     }
 
-        public List<LookAroundRegionDto> createLookAroundRegionDto() {
-            List<Region> allRegion = regionRepository.findAll();
+    public List<Region> createLookAroundRegion() {
+        List<Region> allRegion = regionRepository.findAll();
 
-            return allRegion.stream()
-                    .map(LookAroundRegionDto::new)
-                .collect(Collectors.toList());
+        return allRegion;
+    }
+
+    public Region findRegionByRegionName(String name) {
+        return regionRepository.findRegionByRegionName(name);
     }
 }

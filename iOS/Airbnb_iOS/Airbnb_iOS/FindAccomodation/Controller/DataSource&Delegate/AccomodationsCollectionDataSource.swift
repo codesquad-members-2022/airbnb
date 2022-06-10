@@ -8,15 +8,10 @@
 import UIKit
 
 final class AccomodationsCollectionDataSource: NSObject {
-    // 임시로 데이터를 가지고 있도록 구현
     var data: [AccomodationsViewComponentsData] = [
         .accomodationOptionSection(nil),
-        .countAccomodationsSection(count: 3),
-        .accomodationsSection([
-            .init(imageData: UIImage(named: "LivingImage")?.pngData() ?? Data(), grade: 5.0, countReview: 178, name: "Spacious and Comfortable cozy House", pricePerDay: 82953, finalPrice: 1493157),
-            .init(imageData: UIImage(named: "LivingImage")?.pngData() ?? Data(), grade: 5.0, countReview: 178, name: "Spacious and Comfortable cozy House", pricePerDay: 82953, finalPrice: 1493157),
-            .init(imageData: UIImage(named: "LivingImage")?.pngData() ?? Data(), grade: 5.0, countReview: 178, name: "Spacious and Comfortable cozy House", pricePerDay: 82953, finalPrice: 1493157)
-        ])
+        .countAccomodationsSection(count: 0),
+        .accomodationsSection([])
     ]
 }
 
@@ -58,12 +53,26 @@ extension AccomodationsCollectionDataSource: UICollectionViewDataSource {
                 return UICollectionViewCell()
             }
 
-            cell.configure(imageData: item.imageData,
-                           grade: item.grade,
-                           countReview: item.countReview,
-                           name: item.name,
-                           pricePerDay: item.pricePerDay,
-                           finalPrice: item.finalPrice)
+            var imageData: Data
+            
+            if item.imageData.count > 0 {
+                imageData = item.imageData
+            } else {
+                imageData = Data()
+            }
+
+            var distanceOfDate = 0
+
+            if case let AccomodationsViewComponentsData.accomodationOptionSection(option) = data[0] {
+                distanceOfDate = Calendar.current.dateComponents([.day], from: option?.dateRange?.lowerBound ?? Date(), to: option?.dateRange?.upperBound ?? Date()).day ?? 0
+            }
+            
+            cell.configure(imageData: imageData,
+                           grade: Double(item.averageGrade),
+                           countReview: item.numberOfReviews,
+                           name: item.title,
+                           pricePerDay: item.price,
+                           finalPrice: item.price * distanceOfDate)
 
             return cell
         }

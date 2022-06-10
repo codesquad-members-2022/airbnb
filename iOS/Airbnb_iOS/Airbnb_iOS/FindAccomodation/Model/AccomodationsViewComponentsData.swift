@@ -18,11 +18,10 @@ enum AccomodationsViewComponentsData {
     }
 
     struct AccomodationInfo {
+        let id: Int
+        let title: String
+        let averageGrade, numberOfReviews: Int
         let imageData: Data
-        let grade: Double
-        let countReview: Int
-        let name: String
-        let pricePerDay: Int
-        let finalPrice: Int
+        let price: Int
     }
 }

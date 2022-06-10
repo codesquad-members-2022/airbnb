@@ -14,9 +14,8 @@ class HomeViewController: UIViewController {
     private let dataSource = HomeViewCollectionDataSource()
 
     private let homeViewDataManager = HomeDataManager()
-
-    private let locationManager = LocationManager()
-    private var currentLocation = CLLocation()
+    private var accessCase: LocationManager.AceessCase
+    private(set) var nowLocation: CLLocation?
 
     let searchBar: UISearchBar = {
         let searcher = UISearchBar()
@@ -24,7 +23,8 @@ class HomeViewController: UIViewController {
         return searcher
     }()
 
-    init() {
+    init(locationAccess: LocationManager.AceessCase) {
+        self.accessCase = locationAccess
         super.init(nibName: nil, bundle: nil)
         setHomeDataManagerDelegate()
     }
@@ -36,6 +36,8 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureSettings()
+        self.getHomeViewComponents()
+        self.alertLocationAccessNeeded(isDenied: self.accessCase)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -45,7 +47,27 @@ class HomeViewController: UIViewController {
     }
 
     func getHomeViewComponents() {
-        homeViewDataManager.getHomeViewComponents(currentLocation: currentLocation)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNotification), name: NSNotification.Name("location"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataForLocation), name: NSNotification.Name("repository"), object: nil)
+    }
+    
+    @objc
+    func didReceiveNotification(_ notification: Notification) {
+        guard let location = notification.userInfo?["location"] as? CLLocation else { return }
+
+        self.nowLocation = location
+        homeViewDataManager.getHomeViewComponents(currentLocation: location)
+    }
+    
+    @objc
+    func reloadDataForLocation() {
+        DispatchQueue.main.async {
+            self.homeView.reloadCollectionViewCell()
+        }
+    }
+    
+    func setNowLocation(location: CLLocation) {
+        self.nowLocation = location
     }
 }
 
@@ -54,7 +76,6 @@ private extension HomeViewController {
     func configureSettings() {
         self.setHomeView()
         self.setSearchBar()
-        self.setLocationAccess()
     }
 
     func setHomeView() {
@@ -65,11 +86,6 @@ private extension HomeViewController {
     func setSearchBar() {
         searchBar.delegate = self
         self.navigationItem.titleView = searchBar
-    }
-
-    func setLocationAccess() {
-        self.locationManager.locationManager.delegate = self
-        self.alertLocationAccessNeeded(isDenied: self.locationManager.setLocationAccess())
     }
 
     func setHomeDataManagerDelegate() {
@@ -121,38 +137,6 @@ extension HomeViewController: UISearchBarDelegate {
     }
 }
 
-extension HomeViewController: CLLocationManagerDelegate {
-
-    @available(iOS 14, *)
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        switch manager.authorizationStatus {
-        case .authorizedAlways, .authorizedWhenInUse:
-            manager.startUpdatingLocation()
-        case .denied:
-            self.alertLocationAccessNeeded(isDenied: .denied)
-        default:
-            return
-        }
-    }
-
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        switch status {
-        case .authorizedAlways, .authorizedWhenInUse:
-            manager.startUpdatingLocation()
-        case .denied:
-            self.alertLocationAccessNeeded(isDenied: .denied)
-        default:
-            return
-        }
-    }
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.first else { return }
-
-        self.currentLocation = location
-    }
-}
-
 extension HomeViewController: HomeDataManagerDelegate {
     func updateHomeComponents(_ homeComponentsData: [HomeViewComponentsData]) {
         dataSource.data = homeComponentsData
@@ -170,11 +154,21 @@ extension HomeViewController: HomeDataManagerDelegate {
 
     func updateAroundSpotData(_ aroundSpotData: HomeViewComponentsData.AroundSpotData) {
         if case let HomeViewComponentsData.secondSection(previousData) = dataSource.data[1] {
-            let updatedData = (previousData + [aroundSpotData]).sorted {
-                $0.distance < $1.distance
+
+            // 이미 추가된 AroundSpotCell인지 구별해주는 Bool 상수
+            let isAlreadyAdded = previousData.allSatisfy {
+                $0.title != aroundSpotData.title
             }
-            dataSource.data[1] = .secondSection(updatedData)
-            homeView.reloadCollectionViewCell(sectionNumber: 1)
+
+            if isAlreadyAdded {
+                let updatedData = (previousData + [aroundSpotData]).sorted {
+                    $0.time < $1.time
+                }
+
+                dataSource.data[1] = .secondSection(updatedData)
+                homeView.reloadCollectionViewCell(sectionNumber: 1)
+            }
+            
         }
     }
 

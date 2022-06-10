@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 protocol HomeRepositoryDelegate: AnyObject {
     func didFetchHeroImageData(_ heroImageData: HomeViewComponentsData.HeroImageData)
@@ -19,11 +20,11 @@ struct HomeRepository {
     func fetchData(currentLocation: (latitude: Double, longitude: Double)) {
         let baseURL = "http://144.24.86.236/home"
         let param = [
-            "x": currentLocation.latitude,
-            "y": currentLocation.longitude
+            "x": currentLocation.longitude,
+            "y": currentLocation.latitude
         ]
 
-        AlamofireNet().connectNetwork(url: baseURL, method: .get, param: param) { result in
+        AlamofireNet().connectNetwork(url: baseURL, method: .get, param: param, encode: .queryString) { result in
             switch result {
             case .success(let data):
                 guard let decodedData: HomeDto = JSONConverter.decodeJsonObject(data: data) else {
@@ -51,6 +52,8 @@ private extension HomeRepository {
         DTO.themeSpotDto.forEach { eachThemeSpotDto in
             convertToThemeSpotData(DTO: eachThemeSpotDto)
         }
+        
+        self.postNotification()
     }
 
     func convertToHeroImageData(DTO: MainEventDto) {
@@ -62,6 +65,8 @@ private extension HomeRepository {
                 buttonTitle: DTO.buttonText)
             delegate?.didFetchHeroImageData(heroImageData)
         }
+        
+        self.postNotification()
     }
 
     func convertToAroundSpotData(DTO: AroundSpotDto) {
@@ -69,9 +74,11 @@ private extension HomeRepository {
             let aroundSpotData = HomeViewComponentsData.AroundSpotData.init(
                 imageData: imageData,
                 title: DTO.title,
-                distance: DTO.distance)
+                time: Int(DTO.time) ?? 0)
             delegate?.didFetchAroundSpotData(aroundSpotData)
         }
+        
+        self.postNotification()
     }
 
     func convertToThemeSpotData(DTO: ThemeSpotDto) {
@@ -81,10 +88,12 @@ private extension HomeRepository {
                 title: DTO.title)
             delegate?.didFetchThemeSpotData(themeSpotData)
         }
+        
+        self.postNotification()
     }
 
     func fetchImage(url: String, handler: @escaping (Data) -> Void) {
-        AlamofireNet().connectNetwork(url: url, method: .get, param: nil) { result in
+        AlamofireNet().connectNetwork(url: url, method: .get, param: nil, encode: .default) { result in
             switch result {
             case .success(let data):
                 handler(data)
@@ -92,5 +101,9 @@ private extension HomeRepository {
                 print(error)
             }
         }
+    }
+    
+    func postNotification() {
+        NotificationCenter.default.post(name: NSNotification.Name("repository"), object: self)
     }
 }

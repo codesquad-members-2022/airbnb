@@ -1,4 +1,4 @@
-package team18.airbnb.region;
+package team18.airbnb.home;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,13 +11,14 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import team18.airbnb.domain.Region;
 import team18.airbnb.generalDto.LookAroundRegionDto;
+import team18.airbnb.region.RegionService;
 import team18.airbnb.region.dto.AccommodationByConceptDto;
-import team18.airbnb.region.dto.HomeLayoutDto;
+import team18.airbnb.home.dto.HomeLayoutDto;
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class RegionController {
+public class HomeController {
 
     private final RegionService regionService;
 

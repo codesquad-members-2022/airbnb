@@ -39,8 +39,8 @@ public class SearchController {
     @GetMapping("/filterSearch")
     public ResponseEntity<List<SearchResultDto>> searchResult(
             @RequestParam("region") String regionName,
-            @RequestParam("checkinTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkinTime,
-            @RequestParam("checkoutTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkoutTime,
+            @RequestParam("checkinDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkinDate,
+            @RequestParam("checkoutDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkoutDate,
             @RequestParam("minPrice") int minPrice,
             @RequestParam("maxPrice") int maxPrice,
             @RequestParam("maxGuest") int maxGuest) {
@@ -50,10 +50,10 @@ public class SearchController {
 
         Long regionId = regionNameDto.getId();
 
-        List<Accommodation> accommodations = searchService.findTest(regionId, checkinTime, checkoutTime, minPrice, maxPrice, maxGuest);
+        List<Accommodation> accommodations = searchService.findAccommodationBy(regionId, checkinDate, checkoutDate, minPrice, maxPrice, maxGuest);
 
         List<SearchResultDto> searchResultDtos = accommodations.stream()
-                .map(accommodation -> new SearchResultDto(checkinTime, checkoutTime, accommodation))
+                .map(accommodation -> new SearchResultDto(checkinDate, checkoutDate, accommodation))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(searchResultDtos);

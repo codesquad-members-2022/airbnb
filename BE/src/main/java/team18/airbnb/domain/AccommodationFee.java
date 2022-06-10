@@ -30,26 +30,20 @@ public class AccommodationFee {
     private int roomCharge;
 
     // 총 예약 확정 금액
-    private int totalAmountOfReservation;
+    private int totalAmount;
 
     // 주 단위 요금 할인
     @Enumerated(EnumType.STRING)
     private DiscountPolicy discountPolicy;
 
-    public double calculationTotalAmountOfDay(LocalDate checkinTime, LocalDate checkoutTime, Accommodation accommodation) {
-        LocalDateTime checkin = checkinTime.atStartOfDay();
-        LocalDateTime checkout = checkoutTime.atStartOfDay();
+    public double calculateTotalAmountOfDay(LocalDate checkinDate, LocalDate checkoutDate) {
+        LocalDateTime checkin = checkinDate.atStartOfDay();
+        LocalDateTime checkout = checkoutDate.atStartOfDay();
 
         Duration diff = Duration.between(checkin, checkout);
         long stayDays = diff.toDays();
 
-        AccommodationFee accommodationFee = accommodation.getAccommodationFee();
-        double discountPolicyOfWeek = DiscountPolicy.WEEK.getDiscountPolicy();
-
-        int amountOfDay = accommodationFee.getAmountOfDay();
-        int cleaningFee = accommodationFee.getCleaningFee();
-        int serviceFee = accommodationFee.getServiceFee();
-        int roomCharge = accommodationFee.getRoomCharge();
+        double discountPolicyOfWeek = DiscountPolicy.WEEK.getDiscountRate();
 
         return ((stayDays * amountOfDay) + (cleaningFee + serviceFee + roomCharge)) * discountPolicyOfWeek;
     }

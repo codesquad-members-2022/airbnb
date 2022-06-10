@@ -41,7 +41,7 @@ public class Accommodation {
     @Embedded
     private AccommodationFee accommodationFee;
 
-    public Accommodation(float startPoint, int reviewCount, String description, String name, String mainImgUrl,
+    public Accommodation(float startPoint, int reviewCount, String description, String name, String mainImageUrl,
                          AccommodationAddress accommodationAddress,
                          AccommodationInfo accommodationInfo,
                          AccommodationFee accommodationFee,
@@ -51,7 +51,7 @@ public class Accommodation {
         this.reviewCount = reviewCount;
         this.description = description;
         this.name = name;
-        this.mainImageUrl = mainImgUrl;
+        this.mainImageUrl = mainImageUrl;
         this.accommodationAddress = accommodationAddress;
         this.accommodationInfo = accommodationInfo;
         this.accommodationFee = accommodationFee;

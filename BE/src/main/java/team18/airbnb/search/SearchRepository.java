@@ -16,14 +16,14 @@ public interface SearchRepository extends JpaRepository<Accommodation, Long> {
             "from accommodation as a " +
             "where a.id NOT IN " +
             "(select accommodation_id " +
-            " from schedule where stay_date between :checkinTime and :checkoutTime)" +
+            " from schedule where stay_date between :checkinDate and :checkoutDate)" +
             " and a.region_id = :regionId" +
             " and a.amount_of_day between :minPrice and :maxPrice" +
             " and a.max_guest <= :maxGuest ", nativeQuery = true)
-    List<Accommodation> findFilterResultAccommodations(
+    List<Accommodation> findAccommodationBy(
             @Param("regionId") Long regionId,
-            @Param("checkinTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkinTime,
-            @Param("checkoutTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkoutTime,
+            @Param("checkinDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkinDate,
+            @Param("checkoutDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkoutDate,
             @Param("minPrice") int minPrice,
             @Param("maxPrice") int maxPrice,
             @Param("maxGuest") int maxGuest

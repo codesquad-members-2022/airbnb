@@ -14,8 +14,8 @@ public class SearchService {
 
     private final SearchRepository searchRepository;
 
-    public List<Accommodation> findTest(Long regionId, LocalDate checkinTime, LocalDate checkoutTime, int minPrice, int maxPrice, int maxGuest) {
+    public List<Accommodation> findAccommodationBy(Long regionId, LocalDate checkinDate, LocalDate checkoutDate, int minPrice, int maxPrice, int maxGuest) {
 
-        return searchRepository.findFilterResultAccommodations(regionId, checkinTime, checkoutTime, minPrice, maxPrice, maxGuest);
+        return searchRepository.findAccommodationBy(regionId, checkinDate, checkoutDate, minPrice, maxPrice, maxGuest);
     }
 }

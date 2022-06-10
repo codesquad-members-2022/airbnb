@@ -127,3 +127,20 @@ private void changeRegion(Region region) {
 - [x] homeController에서 데이터 반환용으로 사용중인 map을 객체로 변경
 
 </details>
+
+<details>
+<summary>📌3주차 리뷰</summary>
+
+### 3주차 리뷰 수정내용
+
+- [x] 축약된 파라미터 변수명 변경
+- [] AccomodationFee에 있으면 안될 데이터 정리
+- [x] 어색한 함수명과 필드명 변경
+- [] DiscountPolicy가 어떤 용도로 사용중인지 직관적부로 보이게끔 변경
+- [] 하드코딩으로 구현되어 있는(총 금액 계산 로직) 부분 수정
+- [x] 동사로 시작하지 않는 메서드명 수정
+- [x] RegionController클래스 이름 변경
+- [] search API에서 사용중인 데이터 조회 로직 수정
+- [] queryDSL 공부
+
+</details>

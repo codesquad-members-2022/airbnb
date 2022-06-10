@@ -18,10 +18,10 @@ public class Reservation {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDate checkinTime;
+    private LocalDate checkinDate;
 
     @Column(nullable = false)
-    private LocalDate checkoutTime;
+    private LocalDate checkoutDate;
 
     @Column(nullable = false)
     private int adultCount;
@@ -33,7 +33,7 @@ public class Reservation {
     private int infantCount;
 
     @Column(nullable = false)
-    private double totalAmountReservation;
+    private double totalAmount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accommodation_id")
@@ -43,21 +43,21 @@ public class Reservation {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Reservation(LocalDate checkinTime,
-                       LocalDate checkoutTime,
+    public Reservation(LocalDate checkinDate,
+                       LocalDate checkoutDate,
                        int adultCount,
                        int childCount,
                        int infantCount,
                        Accommodation accommodation
     ) {
 
-        this.checkinTime = checkinTime;
-        this.checkoutTime = checkoutTime;
+        this.checkinDate = checkinDate;
+        this.checkoutDate = checkoutDate;
         this.adultCount = adultCount;
         this.childCount = childCount;
         this.infantCount = infantCount;
-        this.totalAmountReservation =
-                accommodation.getAccommodationFee().calculationTotalAmountOfDay(checkinTime, checkoutTime, accommodation);
+        this.totalAmount =
+                accommodation.getAccommodationFee().calculateTotalAmountOfDay(checkinDate, checkoutDate);
         this.accommodation = accommodation;
     }
 }

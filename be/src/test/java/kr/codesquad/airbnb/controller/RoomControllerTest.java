@@ -2,6 +2,7 @@ package kr.codesquad.airbnb.controller;
 
 import kr.codesquad.airbnb.domain.Location;
 import kr.codesquad.airbnb.domain.Room;
+import kr.codesquad.airbnb.domain.RoomPriceStatistic;
 import kr.codesquad.airbnb.dto.RoomPriceStatisticDto;
 import kr.codesquad.airbnb.dto.RoomPriceStatisticRequest;
 import kr.codesquad.airbnb.service.RoomService;
@@ -131,6 +132,6 @@ class RoomControllerTest {
             }
         };
 
-        return new RoomPriceStatisticDto().of(stubRooms);
+        return new RoomPriceStatisticDto(new RoomPriceStatistic(stubRooms));
     }
 }

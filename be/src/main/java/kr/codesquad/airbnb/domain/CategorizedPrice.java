@@ -1,4 +1,4 @@
-package kr.codesquad.airbnb.dto;
+package kr.codesquad.airbnb.domain;
 
 import lombok.Getter;
 
@@ -15,6 +15,11 @@ public class CategorizedPrice implements Comparable<CategorizedPrice> {
         this.tag = priceTag;
         this.endOfRange = priceTag + RANGE_OF_PRICE - 1;
         this.count = count;
+    }
+
+    // RANGE_OF_PRICE 설정 기준으로 숙박 가격의 priceTag 계산.
+    public static int makePriceTag(int roomPrice) {
+        return roomPrice / CategorizedPrice.RANGE_OF_PRICE * CategorizedPrice.RANGE_OF_PRICE;
     }
 
     public void addRoomCount() {

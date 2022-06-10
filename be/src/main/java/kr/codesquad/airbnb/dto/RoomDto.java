@@ -1,5 +1,6 @@
 package kr.codesquad.airbnb.dto;
 
+import kr.codesquad.airbnb.domain.RoomDiscountTaxDetail;
 import kr.codesquad.airbnb.domain.Location;
 import kr.codesquad.airbnb.domain.Room;
 import lombok.Getter;
@@ -14,15 +15,15 @@ public class RoomDto {
     private final Long id;
     private final String name;
     private final String image;
-    private final Integer maxNumberOfGuest;
+    private final int maxNumberOfGuest;
     private final Double bedroom;
     private final Double bed;
     private final Double bathroom;
     private final List<String> roomAmenities = new ArrayList<>();
     private final Location location;
-    private final List<DiscountTaxDto> discountTaxes = new ArrayList<>();
-    private final Integer pricePerNight;
-    private final Integer priceForNights;
+    private final List<RoomDiscountTaxDetail> discountTaxes = new ArrayList<>();
+    private final int pricePerNight;
+    private final int priceForNights;
     private int totalPrice;
 
     public RoomDto(Room room, RoomSearchRequest roomSearchRequest) {
@@ -39,7 +40,7 @@ public class RoomDto {
 
         addRoomAmenities(room);
         addDiscountTaxes(room, roomSearchRequest);
-        setTotalPrice();
+        totalPrice = calculateTotalPrice(priceForNights);
     }
 
     private void addDiscountTaxes(Room room, RoomSearchRequest roomSearchRequest) {
@@ -47,13 +48,12 @@ public class RoomDto {
         int countOfWeekends = calculateCountOfWeekendsBetweenDates(roomSearchRequest);
 
         room.getRoomDiscountTaxes().stream()
-                .forEach(discountTax -> discountTaxes.add(new DiscountTaxDto(discountTax, countOfIntervalBetweenDates, countOfWeekends, room.getPricePerNight())));
+                .forEach(discountTax -> discountTaxes.add(new RoomDiscountTaxDetail(discountTax.getDiscountTax(), countOfIntervalBetweenDates, countOfWeekends, room.getPricePerNight())));
     }
 
-    private void setTotalPrice() {
-        totalPrice = priceForNights;
-        discountTaxes.stream()
-                .forEach(discountTaxDto -> totalPrice += discountTaxDto.getPrice());
+    private int calculateTotalPrice(int priceForNights) {
+        return priceForNights += discountTaxes.stream()
+                .mapToInt(RoomDiscountTaxDetail::getPrice).sum();
     }
 
     private int calculateCountOfIntervalBetweenDates(RoomSearchRequest roomSearchRequest) {

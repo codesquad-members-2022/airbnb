@@ -1,6 +1,7 @@
 package kr.codesquad.airbnb.service;
 
 import kr.codesquad.airbnb.domain.Room;
+import kr.codesquad.airbnb.domain.RoomPriceStatistic;
 import kr.codesquad.airbnb.dto.*;
 import kr.codesquad.airbnb.exception.CustomException;
 import kr.codesquad.airbnb.exception.ErrorCode;
@@ -18,8 +19,9 @@ public class RoomService {
 
     public RoomPriceStatisticDto findStatisticOfRoomPrice(RoomPriceStatisticRequest roomPriceStatisticRequest) {
         List<Room> possibleBookingRooms = roomRepository.findPossibleBookingRooms(roomPriceStatisticRequest.getCheckIn(), roomPriceStatisticRequest.getCheckOut());
+        RoomPriceStatistic roomPriceStatistic = new RoomPriceStatistic(possibleBookingRooms);
 
-        return new RoomPriceStatisticDto().of(possibleBookingRooms);
+        return new RoomPriceStatisticDto(roomPriceStatistic);
     }
 
     public RoomSearchDto findPossibleBookingRooms(RoomSearchRequest roomSearchRequest) {

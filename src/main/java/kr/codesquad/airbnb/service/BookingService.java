@@ -11,6 +11,9 @@ import kr.codesquad.airbnb.request.BookingRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -26,5 +29,10 @@ public class BookingService {
         Reservation reservation = new Reservation(members, lodging, bookingRequest);
         Reservation save = bookingRepository.save(reservation);
         return new BookingResponse(bookingRepository.findById(save.getId()).orElseThrow());
+    }
+
+    public List<BookingResponse> getReservations(String githubId) {
+        return bookingRepository.findByMembers_GithubId(githubId)
+                .stream().map(BookingResponse::new).collect(Collectors.toList());
     }
 }

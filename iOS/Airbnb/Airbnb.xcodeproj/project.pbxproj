@@ -194,6 +194,7 @@
 		002972972844B45C0033437E /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				009764A72852D75F00BA70A7 /* New Group */,
 				002972982844B4770033437E /* View */,
 			);
 			path = Calendar;
@@ -276,6 +277,13 @@
 				008A2061283F4E220095F7BC /* BackgroundViewController.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		009764A72852D75F00BA70A7 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		00A85F31283B86FC00EA32E0 /* WishList */ = {

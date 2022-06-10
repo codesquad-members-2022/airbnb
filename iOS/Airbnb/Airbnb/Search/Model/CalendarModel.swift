@@ -72,11 +72,7 @@ class CalendarModel {
     
     let calendar: Calendar = Calendar.current
     
-    private lazy var dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d"
-        return dateFormatter
-    }()
+    private lazy var dateFormatter = DateFormatter.formatting(from: "d")
     
     init(baseDate: Date) {
         self.baseDate = baseDate
@@ -234,5 +230,13 @@ extension CalendarModel {
     
     func getADay(at path: IndexPath) -> Day {
         return month[path.section].result[path.row]
+    }
+}
+
+extension DateFormatter {
+    static func formatting(from text: String) -> DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = text
+        return dateFormatter
     }
 }

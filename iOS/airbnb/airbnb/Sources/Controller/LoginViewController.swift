@@ -11,24 +11,34 @@ import SnapKit
 final class LoginViewController: UIViewController {
     
     private let gitHubLoginButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("", for: <#T##UIControl.State#>)
-        return button
-    }()
-    
-    let googleLoginButton: UIButton = {
         var config = UIButton.Configuration.bordered()
         config.baseBackgroundColor = .white
         config.cornerStyle = .capsule
         config.background.cornerRadius = 20
-        config.background.strokeColor = .grey3
-        config.title = "구글 로그인"
+        config.background.strokeColor = .line
+        config.baseForegroundColor = .black
+        config.image = UIImage(named: "GitHub_Logo")
+        config.imagePadding = 10
+        config.imagePlacement = .leading
+        
+        let button = UIButton(configuration: config)
+        button.addTarget(self, action: #selector(didTabGithubLogin(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    private let googleLoginButton: UIButton = {
+        var config = UIButton.Configuration.bordered()
+        config.baseBackgroundColor = .white
+        config.cornerStyle = .capsule
+        config.background.cornerRadius = 20
+        config.background.strokeColor = .line
         config.baseForegroundColor = .black
         config.image = UIImage(named: "Google_Logo")
         config.imagePadding = 10
         config.imagePlacement = .leading
-       
+        
         let button = UIButton(configuration: config)
+        button.addTarget(self, action: #selector(didTabGithubLogin(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -48,10 +58,30 @@ final class LoginViewController: UIViewController {
     
     private func layout() {
         view.addSubview(UIComponents.navigationBarUnderLineView)
+        view.addSubview(gitHubLoginButton)
+        view.addSubview(googleLoginButton)
         
         UIComponents.navigationBarUnderLineView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(1)
         }
+        
+        gitHubLoginButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-40)
+            $0.width.equalTo(300)
+            $0.height.equalTo(60)
+        }
+        
+        googleLoginButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(40)
+            $0.width.equalTo(300)
+            $0.height.equalTo(60)
+        }
+    }
+    
+    @objc func didTabGithubLogin(_ sender: Any) {
+        LoginManager.shared.requestCode()
     }
 }

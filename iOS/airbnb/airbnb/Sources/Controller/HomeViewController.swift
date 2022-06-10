@@ -73,9 +73,8 @@ final class HomeViewController: UIViewController {
     }
     
     @objc func didTabLoginButton(_ sender: Any) {
-        let nextViewController = SearchViewController()
+        let nextViewController = LoginViewController()
         navigationController?.pushViewController(nextViewController, animated: true)
-//        LoginManager.shared.requestCode()
     }
 }
 
@@ -83,7 +82,7 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        let nextViewController = LoginViewController()
+        let nextViewController = SearchViewController()
         navigationController?.pushViewController(nextViewController, animated: true)
     }
 }

@@ -59,8 +59,8 @@ extension HomeViewController: UISearchBarDelegate {
   func searchBarTextDidBeginEditing(_: UISearchBar) {
     searchBar.resignFirstResponder()
 
-    DispatchQueue.main.async { [weak self] in
-      self?.navigationController?.pushViewController(LocationSearchController(), animated: true)
+    DispatchQueue.main.async {
+      self.viewModel?.action.showLocationSearch()
     }
   }
 }

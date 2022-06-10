@@ -8,7 +8,7 @@
 import Foundation
 
 protocol DataTransferService {
-  func request(with url: URL)
+  func request(_ request: URLRequest)
 }
 
 final class DefaultImageRepository: ImageRepository {

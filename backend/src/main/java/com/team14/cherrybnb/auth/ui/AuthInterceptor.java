@@ -2,7 +2,6 @@ package com.team14.cherrybnb.auth.ui;
 
 import com.team14.cherrybnb.auth.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 

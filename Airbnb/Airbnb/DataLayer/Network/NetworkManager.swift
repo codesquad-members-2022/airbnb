@@ -9,19 +9,13 @@ import Foundation
 
 struct NetworkManager {
 
-    let config = URLSessionConfiguration.default
     let session = URLSession.shared
-    let url = "http://13.124.91.193:8080"
 
-    func request (path: String, completion: @escaping (Result<[SearchAccomadationResponseDTO], NetworkError>) -> Void) {
-        guard var urlComponent = URLComponents(string: url + path) else {return}
-        let latitude = URLQueryItem(name: "latitute", value: "37.4953")
-        let longitude = URLQueryItem(name: "longitude", value: "127.0286")
-        urlComponent.queryItems?.append(latitude)
-        urlComponent.queryItems?.append(longitude)
-        guard let requestURL = urlComponent.url else {return}
+    func request (path: String, item: FilterSelection, completion: @escaping (Result<[SearchAccomadationResponseDTO], NetworkError>) -> Void) {
 
-        session.dataTask(with: requestURL) { (data, response, Error) in
+        let request = EndPoint.searchAccomadation(for: path, filteredSelection: item)
+        print(request.url)
+        session.dataTask(with: request.url) { (data, response, Error) in
             if let Error = Error {
                 completion(.failure(.transportError(Error)))
             }

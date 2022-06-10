@@ -6,22 +6,14 @@
 //
 
 import UIKit
+
 import HorizonCalendar
 
 final class CalendarViewController: UIViewController {
 
     private lazy var calendarView = CalendarView(initialContent: makeContent())
     private lazy var calendar = Calendar.current
-    private lazy var dayDateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.calendar = calendar
-        dateFormatter.locale = calendar.locale
-        dateFormatter.dateFormat = DateFormatter.dateFormat(
-            fromTemplate: "EEEE, MMM d, yyyy",
-            options: 0,
-            locale: calendar.locale ?? Locale.current)
-        return dateFormatter
-    }()
+
     var periodSelectionHandler: ((Period?) -> Void)?
 
     private enum CalendarSelection {
@@ -80,48 +72,22 @@ final class CalendarViewController: UIViewController {
             calendar: calendar,
             visibleDateRange: startDate...endDate,
             monthsLayout: .vertical(options: VerticalMonthsLayoutOptions(pinDaysOfWeekToTop: true, alwaysShowCompleteBoundaryMonths: true)))
-
         .interMonthSpacing(24)
         .verticalDayMargin(8)
         .horizontalDayMargin(8)
-
-        .dayItemProvider { [calendar, dayDateFormatter] day in
-
-            let date = calendar.date(from: day.components)
+        .dayItemProvider { [calendar] day in
+          let date = calendar.date(from: day.components)
             if self.isDayDisabled(day) {
-                var InvariantViewProperties = DayView.InvariantViewProperties.baseNonInteractive
-                InvariantViewProperties.textColor = .gray4 ?? .darkGray
-                return CalendarItemModel<DayView>(
-                    invariantViewProperties: InvariantViewProperties,
-                    viewModel: .init(
-                        dayText: "\(day.day)",
-                        accessibilityLabel: date.map { dayDateFormatter.string(from: $0) },
-                        accessibilityHint: nil))
+                return CalendarItemModel<DayView>.setItemModel(date: date, day: day, viewProperty: DayView.disabledInvariantViewProperties)
             } else {
                 var invariantViewProperties = DayView.InvariantViewProperties.baseInteractive
-                let isSelectedStyle: Bool
-                switch calendarSelection {
-                case .singleDay(let selectedDay):
-                    isSelectedStyle = day == selectedDay
-                case .dayRange(let selectedDayRange):
-                    isSelectedStyle = day == selectedDayRange.lowerBound || day == selectedDayRange.upperBound
-                case .none:
-                    isSelectedStyle = false
-                }
-
-                if isSelectedStyle {
+                if self.isSelected(day) {
                     invariantViewProperties.backgroundShapeDrawingConfig.fillColor = .gray1 ?? .black
                     invariantViewProperties.textColor = .white
                 }
-                return CalendarItemModel<DayView>(
-                    invariantViewProperties: invariantViewProperties,
-                    viewModel: .init(
-                        dayText: "\(day.day)",
-                        accessibilityLabel: date.map { dayDateFormatter.string(from: $0) },
-                        accessibilityHint: nil))
+                return CalendarItemModel<DayView>.setItemModel(date: date, day: day, viewProperty: invariantViewProperties)
             }
         }
-
         .dayRangeItemProvider(for: dateRanges) { dayRangeLayoutContext in
             CalendarItemModel<DayRangeIndicatorView>(
                 invariantViewProperties: .init(),
@@ -131,12 +97,56 @@ final class CalendarViewController: UIViewController {
     }
 
     private func isDayDisabled(_ day: Day) -> Bool {
-        guard let date = calendar.date(from: day.components) else {return true}
+        guard let date = calendar.date(from: day.components) else {
+            return true
+        }
         return date < Date() ? true : false
+    }
+
+    private func isSelected(_ day: Day) -> Bool {
+        switch calendarSelection {
+        case .singleDay(let selectedDay):
+            return day == selectedDay
+        case .dayRange(let selectedDayRange):
+            return day == selectedDayRange.lowerBound || day == selectedDayRange.upperBound
+        case .none:
+            return false
+        }
     }
 
     func resetCalendar() {
         calendarSelection = .none
         calendarView.setContent(makeContent())
+    }
+
+}
+
+extension DayView {
+
+    static var disabledInvariantViewProperties: InvariantViewProperties {
+
+        var invariantViewProperties = DayView.InvariantViewProperties.baseNonInteractive
+        invariantViewProperties.textColor = .gray4 ?? .darkGray
+        return invariantViewProperties
+    }
+
+    static var activeInvariantViewProperties: InvariantViewProperties {
+
+        var invariantViewProperties = DayView.InvariantViewProperties.baseInteractive
+        invariantViewProperties.backgroundShapeDrawingConfig.fillColor = .gray1 ?? .black
+        invariantViewProperties.textColor = .white
+        return invariantViewProperties
+    }
+
+}
+extension CalendarItemModel {
+
+    static func setItemModel(date: Date?, day: Day, viewProperty: DayView.InvariantViewProperties) -> CalendarItemModel<DayView> {
+        return CalendarItemModel<DayView>(
+            invariantViewProperties: viewProperty,
+            viewModel: .init(
+                dayText: "\(day.day)",
+                accessibilityLabel: date.map {MyDateFormatter.shared.calendarDateString(from: $0)},
+                accessibilityHint: nil))
     }
 }

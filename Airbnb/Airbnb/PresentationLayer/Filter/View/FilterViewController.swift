@@ -199,7 +199,8 @@ extension FilterViewController {
     private func showResultViewController() {
         guard let filterViewModel = filterViewModel else {return}
         let filterSelection = FilterSelection(location: filterViewModel.location.value, period: filterViewModel.period.value, priceRange: filterViewModel.price.value, occupants: filterViewModel.occupants.value)
-
+         let resultVC = SearchResultViewController(filterSelection: filterSelection)
+        navigationController?.pushViewController(resultVC, animated: true)
     }
 }
 

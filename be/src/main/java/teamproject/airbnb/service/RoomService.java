@@ -42,7 +42,7 @@ public class RoomService {
 				r,
 				roomSearchInfoRequestDto.getCheckIn(),
 				roomSearchInfoRequestDto.getCheckOut(),
-				roomSearchInfoRequestDto.getWishList()))
+				roomSearchInfoRequestDto.getMemberId()))
 			.collect(Collectors.toList());
 	}
 }

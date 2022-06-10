@@ -9,9 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @Entity
 public class Member {
 
@@ -27,5 +30,12 @@ public class Member {
 	@NotEmpty
 	private String name;
 
-	private List<Long> wishList = new ArrayList<>();
+	// TODO
+	//  wishList 를 지니는 것 만으로 오류가 발생한다.
+	// 다대일 관계 때문인 것으로 예측되며, 그래서 wishList 를 따로 엔티티를 만드는게 좋을듯.
+	//private List<Long> wishList = new ArrayList<>();
+
+	public boolean isSameId(int memberId) {
+		return getId().equals(memberId);
+	}
 }

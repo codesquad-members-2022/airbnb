@@ -3,8 +3,10 @@ package teamproject.airbnb.service;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import teamproject.airbnb.domain.Reservation;
 import teamproject.airbnb.domain.Review;
 import teamproject.airbnb.domain.Room;
 
@@ -16,21 +18,24 @@ public class RoomSimpleInfoDto {
 	private String address;
 	private String description;
 	private String furnitureDescription;
-	private Integer averageRating;
-	private Long reviewNumber;
-	private Long price;
-	private Long totalPrice;
-	private Boolean isBookmark;
+	private double averageRating;
+	private long reviewNumber;
+	private long price;
+	private long totalPrice;
+	private boolean isBookmark;
 
 	public static RoomSimpleInfoDto of(Room room, LocalDate checkIn, LocalDate checkOut,
-		List<Long> wishList) {
+		int memberId) {
 
-		Integer averageRating =
-			room.getReviews().stream().mapToInt(Review::getRating).sum() / room.getReviews()
+		double averageRating =
+			room.getReviews().stream().mapToDouble(Review::getRating).sum() / room.getReviews()
 				.size();
 
 		Period period = Period.between(checkIn, checkOut);
 		Long totalPrice = room.getPrice() * period.getDays();
+
+		boolean isBookmark = room.getReservations().stream()
+			.anyMatch(r -> r.isSameMemberId(memberId));
 
 		return new RoomSimpleInfoDto(
 			room.getName(),
@@ -38,9 +43,9 @@ public class RoomSimpleInfoDto {
 			room.getDescription(),
 			room.getFurnitureDescription(),
 			averageRating,
-			Long.valueOf(room.getReviews().size()),
+			(long) room.getReviews().size(),
 			room.getPrice(),
 			totalPrice,
-			wishList.contains(room.getId()));
+			isBookmark);
 	}
 }

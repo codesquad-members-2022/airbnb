@@ -12,9 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @Entity
 public class Room {
 
@@ -45,15 +47,14 @@ public class Room {
 	private String address;
 	private String description;
 	private String furnitureDescription;
-	private Long price;
-	private Long maximumRoomCount;
-	private Long remainingRoomCount;
-	private Long reviewNumber;
-	private Integer discount;
-	private Long cleaningFee;
-	private Long serviceCharge;
-	private Long lodgingTax;
-
+	private long price;
+	private int maximumRoomCount;
+	private int remainingRoomCount;
+	private int discount;
+	private long reviewNumber;
+	private long cleaningFee;
+	private long serviceCharge;
+	private long lodgingTax;
 
 	public Boolean isReservationAvailable(LocalDate checkIn) {
 		// 잔여룸이 있을 경우 true

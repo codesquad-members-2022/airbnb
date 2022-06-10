@@ -1,0 +1,17 @@
+oauth2:
+  user:
+    github:
+      client-id: 570b91088b027f1483e0
+      client-secret: ${d76697a14a05b43678d5575f2095858480829752}
+      redirect-uri: http://localhost:8080/redirect/oauth
+    google:
+      client-id: http://924989504237-ev5bm9mm13jcs47vb04jh5niapa7t33j.apps.googleusercontent.com/
+      client-secret: ${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}
+      redirect-uri: http://localhost:8080/redirect/oauth
+  provider:
+    github:
+      token-uri: https://github.com/login/oauth/access_token
+      user-info-uri: https://api.github.com/user
+    google:
+      token-uri: https://www.googleapis.com/oauth2/v4/token
+      user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo

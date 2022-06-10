@@ -13,7 +13,7 @@ import teamproject.airbnb.service.MemberService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/members")
 public class MemberController {
 
 	private final MemberService memberService;

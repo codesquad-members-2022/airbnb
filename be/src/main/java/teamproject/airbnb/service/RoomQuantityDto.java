@@ -11,8 +11,8 @@ import teamproject.airbnb.domain.Room;
 @AllArgsConstructor
 public class RoomQuantityDto {
 
-	private Long minimumPrice;
-	private Long maximumPrice;
+	private long minimumPrice;
+	private long maximumPrice;
 	private List<Long> priceList;
 
 	public static RoomQuantityDto from(List<Room> rooms) {

@@ -7,9 +7,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @Entity
 public class Review {
 
@@ -22,5 +24,5 @@ public class Review {
 	@JoinColumn(name = "ROOM_ID")
 	private Room room;
 
-	private Integer Rating;
+	private double Rating;
 }

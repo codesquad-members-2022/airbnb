@@ -9,8 +9,8 @@ import teamproject.airbnb.service.RoomQuantityDto;
 @AllArgsConstructor
 public class RoomQuantityResponseDto {
 
-	private Long minimumPrice;
-	private Long maximumPrice;
+	private long minimumPrice;
+	private long maximumPrice;
 	private List<Long> priceList;
 
 	public static RoomQuantityResponseDto from(RoomQuantityDto roomQuantityDto) {

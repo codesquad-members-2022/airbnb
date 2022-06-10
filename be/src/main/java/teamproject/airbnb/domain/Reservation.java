@@ -8,9 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @Entity
 public class Reservation {
 
@@ -30,9 +32,13 @@ public class Reservation {
 	private LocalDate checkIn;
 	private LocalDate checkOut;
 	private String hostName;
-	private Long guest;
-	private Long kid;
-	private Long payment;
+	private int guest;
+	private int kid;
+	private long payment;
+
+	public boolean isSameMemberId(int memberId) {
+		return member.isSameId(memberId);
+	}
 
 	// TODO
 	public Boolean isExist(LocalDate checkIn, LocalDate checkOut) {

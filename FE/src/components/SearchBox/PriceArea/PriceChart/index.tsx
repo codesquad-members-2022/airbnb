@@ -1,20 +1,15 @@
 import { useState } from 'react';
 
-import Chart from '@/components/PriceChart/Chart';
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from '@/components/PriceChart/constants';
-import MultiRangerSlider from '@/components/PriceChart/MultiRangerSlider';
-import PriceInfo from '@/components/PriceChart/PriceInfo';
+import Chart from '@/components/SearchBox/PriceArea/PriceChart/Chart';
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from '@/components/SearchBox/PriceArea/PriceChart/constants';
+import MultiRangerSlider from '@/components/SearchBox/PriceArea/PriceChart/MultiRangerSlider';
+import PriceInfo from '@/components/SearchBox/PriceArea/PriceChart/PriceInfo';
+import { PriceChartDataProps } from '@/data/chartData';
 
 import * as S from './style';
 
-interface RoomCapacityType {
-  [index: string]: number;
-  range: number;
-  count: number;
-}
-
 interface PriceChartProps {
-  chartInfo: RoomCapacityType[];
+  chartInfo: PriceChartDataProps[];
   axis: { x: string; y: string };
   xStep: number;
   yStep: number;

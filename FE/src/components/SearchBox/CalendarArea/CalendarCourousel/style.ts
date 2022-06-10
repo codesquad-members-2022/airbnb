@@ -1,9 +1,6 @@
-/* eslint-disable prettier/prettier */
 import styled from 'styled-components';
 
 export const CalendarContainer = styled.div`
-  width: 784px;
-  height: 382px;
   display: 'flex';
   gap: '12px';
 `;

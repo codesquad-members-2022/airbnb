@@ -72,7 +72,7 @@ export default function PriceModal({ priceModalRef, priceChartStyle }: PriceModa
     isPriceModalOpen && (
       <PriceModalContainer
         ref={(el) => priceModalRef && (priceModalRef.current[MODAL_REF_IDX] = el)}
-        flex={true}
+        flex
         direction="column"
       >
         <PriceChartInfoArea>

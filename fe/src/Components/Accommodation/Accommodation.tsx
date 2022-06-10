@@ -54,22 +54,22 @@ export default function Accommodation({
   const { src, rocation, title, description, grade, heart, reviewCnt, oneDayPrice } = accommodationData;
 
   return (
-    <AccommodationContainer flex={true} accommodationStyle={accommodationStyle} justify="space-between">
+    <AccommodationContainer flex accommodationStyle={accommodationStyle} justify="space-between">
       <Photo src={mockPhoto} photoStyle={photoStyle} />
-      <InfoContainer flex={true} direction="column" justify="space-between">
+      <InfoContainer flex direction="column" justify="space-between">
         <InfoTop>
           <Rocation>{rocation}</Rocation>
           <Title>{title}</Title>
           <Description>{description}</Description>
           <Heart src={heartImg}></Heart>
         </InfoTop>
-        <InfoBottom flex={true} justify="space-between">
-          <GradeArea flex={true} align="center">
+        <InfoBottom flex justify="space-between">
+          <GradeArea flex align="center">
             <div>⭐</div>
             <div>{grade}</div>
             <Review>후기 {reviewCnt}개</Review>
           </GradeArea>
-          <PriceArea flex={true} direction="column">
+          <PriceArea flex direction="column">
             <OneDayPrice>{`${getWonTemplate(oneDayPrice)} / 1박`}</OneDayPrice>
             {heart && <TotalPrice>전체 총액 (if 체크인,체크아웃 true)</TotalPrice>}
           </PriceArea>

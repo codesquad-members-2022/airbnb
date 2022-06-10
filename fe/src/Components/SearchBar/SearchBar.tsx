@@ -67,10 +67,10 @@ export default function SearchBar({
   };
 
   return (
-    <Container flex={true} justify="space-between" searchBarStyle={searchBarStyle}>
+    <Container flex justify="space-between" searchBarStyle={searchBarStyle}>
       <DateArea
         ref={(el) => calendarRef && (calendarRef.current[SEARCH_BAR_REF_IDX] = el)}
-        flex={true}
+        flex
         justify="space-between"
         align="center"
       >
@@ -102,7 +102,7 @@ export default function SearchBar({
       </DateArea>
       <PriceArea
         ref={(el) => priceModalRef && (priceModalRef.current[SEARCH_BAR_REF_IDX] = el)}
-        flex={true}
+        flex
         justify="space-between"
         align="center"
       >
@@ -126,7 +126,7 @@ export default function SearchBar({
       </PriceArea>
       <HeadCountArea
         ref={(el) => headCountRef && (headCountRef.current[SEARCH_BAR_REF_IDX] = el)}
-        flex={true}
+        flex
         justify="space-between"
         align="center"
       >

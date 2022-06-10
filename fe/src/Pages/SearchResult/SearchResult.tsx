@@ -72,9 +72,9 @@ export default function SearchResult() {
           </SearchResultHeader>
         </SearchResultHeaderArea>
       </SearchResultHeaderContainer>
-      <SearchResultArea flex={true}>
+      <SearchResultArea flex>
         <Tourist>
-          <SearchConditions flex={true}>
+          <SearchConditions flex>
             <div>숙소몇개</div>
             <div>체크인~체크아웃</div>
             <div>최소가격~최대가격</div>

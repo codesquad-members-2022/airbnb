@@ -37,16 +37,16 @@ export default function TicketBox({ contents, handleClick, headCountState }: Tic
   const currentState = headCountState && headCountState[classification];
 
   return (
-    <TicketContainer flex={true} justify="space-between">
-      <ContentArea flex={true} direction="column">
+    <TicketContainer flex justify="space-between">
+      <ContentArea flex direction="column">
         <ContentTitle>{title}</ContentTitle>
         <ContentDescription>{description}</ContentDescription>
       </ContentArea>
-      <CountArea flex={true} align="center">
+      <CountArea flex align="center">
         <Button
           data-buttontarget={classification}
           data-buttontype="MINUS"
-          flex={true}
+          flex
           justify="center"
           align="center"
           buttonType="MINUS"
@@ -62,7 +62,7 @@ export default function TicketBox({ contents, handleClick, headCountState }: Tic
         <Button
           data-buttontarget={classification}
           data-buttontype="PLUS"
-          flex={true}
+          flex
           justify="center"
           align="center"
           buttonType="PLUS"

@@ -10,8 +10,8 @@ import UIKit
 final class SearchResultViewController: UIViewController {
 
     private var filterSelection: FilterSelection
-    private var resultViewModel: ResultViewModel {
-        ResultViewModel(selectionResult: filterSelection)
+    private var resultViewModel: SearchResultViewModel {
+        SearchResultViewModel(selectionResult: filterSelection)
     }
 
     init(filterSelection: FilterSelection) {
@@ -25,6 +25,10 @@ final class SearchResultViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        resultViewModel.fetchResult()
+        resultViewModel.searchResult.bind { _ in
+            // TODO: Update View
+        }
     }
 
 }

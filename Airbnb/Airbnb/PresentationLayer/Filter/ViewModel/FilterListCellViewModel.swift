@@ -19,7 +19,7 @@ struct FilterListCellViewModel {
     init(model: Period?) {
         fieldTitle = FilterFields.period.description
         if let model = model {
-            fieldValue = "\(CustomDateFormatter.PeriodFieldFormatter.string(from: model.start)) - \(CustomDateFormatter.PeriodFieldFormatter.string(from: model.end))"
+            fieldValue = "\(MyDateFormatter.shared.periodDateString(from: model.start)) - \(MyDateFormatter.shared.periodDateString(from: model.end))"
         } else {
             fieldValue = nil
         }

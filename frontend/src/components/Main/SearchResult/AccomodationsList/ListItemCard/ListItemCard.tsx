@@ -1,4 +1,4 @@
-import numToWon from "utils/utils";
+import { numToWon } from "utils/utils";
 
 const ListItemCard = ({
   name,

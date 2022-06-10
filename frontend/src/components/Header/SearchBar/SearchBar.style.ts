@@ -15,7 +15,7 @@ const SearchBarContainer = styled(Container, {
       `
       : `
         width: ${elementSize.searchBar.miniSize.width};
-        height: ${elementSize.searchBar.miniSize.height};
+        min-height: ${elementSize.searchBar.miniSize.height};
         padding: ${elementSize.searchBar.miniSize.padding};
       `;
 

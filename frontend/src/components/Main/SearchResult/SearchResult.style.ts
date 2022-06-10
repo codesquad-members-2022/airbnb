@@ -15,11 +15,6 @@ const Wrapper = styled(Container)<ContainerProps>(
   );
   padding:  0 ${whiteSpace.inner} !important;
 
-  .map-area {
-    background-color: #999;
-    flex: 55;
-  }
-
   .accomodations-list-area {
     flex: 45;
     padding: 12px 24px 0 0;
@@ -100,6 +95,7 @@ const Wrapper = styled(Container)<ContainerProps>(
       color: #828282;
       text-decoration: underline;
     }
+
   }
 `
 );

@@ -10,6 +10,7 @@ import {
 
 import { SearchBarStateContext } from "contexts/contexts";
 import RouterContext from "router/Contexts";
+import theme from "styles/theme";
 
 import {
   ModalTemplate,
@@ -32,6 +33,7 @@ const SelectItem = ({ ...props }: SelectItemDataProps): JSX.Element => {
     anchorEl,
     children,
     createNewPopup,
+    isDiscriptionFiltered,
   } = props;
 
   const { isSearchBarFullSize } = { ...useContext(SearchBarStateContext) };
@@ -51,13 +53,13 @@ const SelectItem = ({ ...props }: SelectItemDataProps): JSX.Element => {
         {(isSearchBarFullSize || page === "index") && (
           <Typography sx={itemStyles.title}>{title}</Typography>
         )}
-        {/* 쿼리데이터가 없는 경우 표시 */}
         <Typography
-          sx={
-            isSearchBarFullSize || page === "index"
+          sx={{
+            ...(isSearchBarFullSize || page === "index"
               ? itemStyles.desc
-              : itemStyles.miniSizeDesc
-          }
+              : itemStyles.miniSizeDesc),
+            ...(isDiscriptionFiltered && { color: theme.palette.black.main }),
+          }}
         >
           {desc}
         </Typography>
@@ -103,6 +105,7 @@ export interface SelectItemDataProps extends PopoverProps {
   handleClick?: (event: React.MouseEvent<HTMLElement>) => void;
   handleClose?: () => void;
   createNewPopup?: boolean;
+  isDiscriptionFiltered?: boolean;
 }
 
 export interface SelectItemProps {

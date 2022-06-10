@@ -4,6 +4,7 @@ import { Grid } from "@mui/material";
 
 import { SearchBarStateContext } from "contexts/contexts";
 import RouterContext from "router/Contexts";
+import { getFormattedDate } from "utils/utils";
 
 import ButtonArea from "../ButtonArea/ButtonArea";
 import { ModalTemplate } from "../SelectItemTemplate/SelectItemTemplate";
@@ -19,7 +20,7 @@ const CheckInOut = ({
   const { isSearchBarFullSize, setIsSearchBarFullSize } = useContext(
     SearchBarStateContext
   )!;
-  const { page } = { ...useContext(RouterContext) };
+  const { queryData, page } = { ...useContext(RouterContext) };
 
   const $wrap = useRef<HTMLDivElement>(null);
   const isOpen = anchorEl?.id === wrapperId;
@@ -27,6 +28,21 @@ const CheckInOut = ({
   const handleClick = () => {
     setAnchorEl?.($wrap.current);
   };
+
+  const isQueryDataIncludesDateRange =
+    !!queryData?.checkIn || !!queryData?.checkOut;
+
+  const checkInDesc =
+    (!!queryData?.checkIn && `${getFormattedDate(queryData.checkIn)}`) || "";
+
+  const checkOutDesc =
+    (!!queryData?.checkOut && `${getFormattedDate(queryData.checkOut)}`) || "";
+
+  const description =
+    isQueryDataIncludesDateRange && page !== "index"
+      ? `${checkInDesc} - 
+      ${checkOutDesc}`
+      : "일정입력";
 
   return (
     <Grid
@@ -46,7 +62,7 @@ const CheckInOut = ({
             buttonId="check-in-date-button"
             buttonAreaLabel="체크인 날짜 설정"
             title="체크인"
-            desc="날짜입력"
+            desc={checkInDesc || "날짜입력"}
             handleClick={handleClick}
             open={isOpen}
           />
@@ -58,7 +74,7 @@ const CheckInOut = ({
             buttonId="check-out-date-button"
             buttonAreaLabel="체크아웃 날짜 설정"
             title="체크아웃"
-            desc="체크아웃 영역"
+            desc={checkOutDesc || "날짜 입력"}
             handleClick={handleClick}
             open={isOpen}
           />
@@ -74,7 +90,8 @@ const CheckInOut = ({
           buttonId="check-in-out-date-button"
           buttonAreaLabel="체크인, 체크아웃 날짜 설정"
           title="체크인"
-          desc="일정입력"
+          desc={description}
+          isDiscriptionFiltered={isQueryDataIncludesDateRange}
           open={isOpen}
           anchorEl={anchorEl}
           handleClick={() => {

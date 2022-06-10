@@ -81,7 +81,7 @@ const theme = createTheme({
         padding: `16px 16px 16px 40px !important`,
       },
       miniSize: {
-        width: "298px",
+        width: "450px",
         height: "48px",
         padding: "8px 8px 8px 24px !important",
       },
@@ -357,6 +357,12 @@ declare module "@mui/material/Button" {
     black: true;
     white: true;
     grey4: true;
+  }
+}
+
+declare module "@mui/material/Checkbox" {
+  interface CheckboxPropsColorOverrides {
+    grey2: true;
   }
 }
 

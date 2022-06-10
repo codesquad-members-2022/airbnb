@@ -10,16 +10,34 @@ import ListItemCard from "./AccomodationsList/ListItemCard/ListItemCard";
 import MapArea from "./MapArea/MapArea";
 import Wrapper from "./SearchResult.style";
 
+const requiredQueryKeys = [
+  "checkIn",
+  "checkOut",
+  "maxPrice",
+  "minPrice",
+  "numAdult",
+  "numChild",
+  "numInfant",
+];
+
 const SearchResult = (): JSX.Element => {
   const { queryData } = { ...useContext(RouterContext) };
+
+  const isQueryDataIncludesKey = (keyName: string) => {
+    return queryData?.[keyName];
+  };
+
+  const isQueryDataIncludesRequiredQueryKeys = requiredQueryKeys.some(
+    isQueryDataIncludesKey
+  );
 
   return (
     <Box component="main">
       <Wrapper maxWidth="xl">
-        {(queryData && (
+        {(isQueryDataIncludesRequiredQueryKeys && (
           <>
             <div className="accomodations-list-area">
-              {queryData && <Filter />}
+              <Filter />
               <h2 className="title">지도에서 선택한 지역의 숙소</h2>
               <ul className="accomodations-list">
                 {

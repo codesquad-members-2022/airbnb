@@ -8,13 +8,27 @@ import pages from "./pages";
 const FIRST_INDEX = 0;
 const FIRST_CHAR_COUNT = 1;
 
+// const queryKeysForSearchBarFilter = [
+//   "checkIn",
+//   "checkOut",
+//   "maxPrice",
+//   "minPrice",
+//   "numAdult",
+//   "numChild",
+// ];
+
 const parseQueryStringToObject = (
   queryString: string
 ): { [key: string]: string } | null => {
   if (!queryString.length) {
     return null;
   }
-  return Object.fromEntries(queryString.split("&").map((s) => s.split("=")));
+  return Object.fromEntries(
+    queryString
+      .slice(FIRST_CHAR_COUNT)
+      .split("&")
+      .map((s) => s.split("="))
+  );
 };
 
 const Router = (): React.ReactElement => {

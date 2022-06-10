@@ -79,7 +79,14 @@ const SelectItemArea = (): JSX.Element => {
               : handleMiniSearchBarClick
           }
           query={{
-            test: "test1", // 쿼리 테스트용
+            // 테스트용 데이터
+            checkIn: "2022-01-01",
+            checkOut: "2022-03-01",
+            maxPrice: "500000",
+            minPrice: "80000",
+            numAdult: "2",
+            numChild: "0",
+            numInfant: "1",
           }}
         >
           <ButtonArea

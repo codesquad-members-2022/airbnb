@@ -21,7 +21,6 @@
 		73571FD4283F4621002F411F /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73571FD3283F4621002F411F /* Common.swift */; };
 		73571FD82840605D002F411F /* RecommendedTravelDestinationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73571FD72840605D002F411F /* RecommendedTravelDestinationCell.swift */; };
 		736ADC61284F1936000B5609 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736ADC60284F1936000B5609 /* CalendarViewController.swift */; };
-		736ADC65284F3744000B5609 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736ADC64284F3744000B5609 /* CalendarCell.swift */; };
 		7374B81C285044B500BAB4F4 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 7374B81B285044B500BAB4F4 /* FSCalendar */; };
 		7388ABE128488D690036D8CE /* HomeCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7388ABE028488D690036D8CE /* HomeCollectionViewDataSource.swift */; };
 		7388ABEB2848ED230036D8CE /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7388ABEA2848ED230036D8CE /* LocationTableViewCell.swift */; };
@@ -74,7 +73,6 @@
 		73571FD3283F4621002F411F /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		73571FD72840605D002F411F /* RecommendedTravelDestinationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedTravelDestinationCell.swift; sourceTree = "<group>"; };
 		736ADC60284F1936000B5609 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
-		736ADC64284F3744000B5609 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		7388ABE028488D690036D8CE /* HomeCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		7388ABEA2848ED230036D8CE /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		73B579C2284098C50043465D /* CollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionHeaderView.swift; sourceTree = "<group>"; };
@@ -151,7 +149,6 @@
 				73571FD72840605D002F411F /* RecommendedTravelDestinationCell.swift */,
 				73202EF52844B79A006D53AE /* CityViewCell.swift */,
 				7388ABEA2848ED230036D8CE /* LocationTableViewCell.swift */,
-				736ADC64284F3744000B5609 /* CalendarCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -549,7 +546,6 @@
 				73571FC6283E0CEF002F411F /* HeroImageCell.swift in Sources */,
 				73571FD4283F4621002F411F /* Common.swift in Sources */,
 				7388ABE128488D690036D8CE /* HomeCollectionViewDataSource.swift in Sources */,
-				736ADC65284F3744000B5609 /* CalendarCell.swift in Sources */,
 				73B9A769283C7EE8003A8C25 /* SceneDelegate.swift in Sources */,
 				73202EF02844B63B006D53AE /* SearchViewController.swift in Sources */,
 				73571FCB283E16A0002F411F /* HomeViewController.swift in Sources */,

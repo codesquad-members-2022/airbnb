@@ -11,6 +11,8 @@ import SnapKit
 final class HomeViewController: UIViewController {
 
     private let dataSource = HomeCollectionViewDataSource()
+    
+    private lazy var loginButton = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: self, action: #selector(didTabLoginButton))
 
     private let searchBarController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -47,7 +49,9 @@ final class HomeViewController: UIViewController {
         navigationItem.searchController = searchBarController
         navigationItem.titleView = logoImageView
         navigationItem.backBarButtonItem = UIComponents.backButton
+        navigationItem.rightBarButtonItem = loginButton
         navigationItem.hidesSearchBarWhenScrolling = false
+        loginButton.tintColor = .black
         
         searchBarController.searchBar.delegate = self
     }
@@ -62,10 +66,16 @@ final class HomeViewController: UIViewController {
     
     private func layout() {
         view.addSubview(collectionView)
-
+        
         collectionView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+    
+    @objc func didTabLoginButton(_ sender: Any) {
+        let nextViewController = SearchViewController()
+        navigationController?.pushViewController(nextViewController, animated: true)
+//        LoginManager.shared.requestCode()
     }
 }
 
@@ -73,7 +83,7 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        let nextViewController = SearchViewController()
+        let nextViewController = LoginViewController()
         navigationController?.pushViewController(nextViewController, animated: true)
     }
 }

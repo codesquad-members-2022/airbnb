@@ -16,7 +16,7 @@ function Personnel() {
 }
 
 const Container = styled(ModalContainer)`
-  margin-left: auto;
+  right: 0;
   width: 400px;
 `;
 

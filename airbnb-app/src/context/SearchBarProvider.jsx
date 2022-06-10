@@ -4,15 +4,16 @@ const SearchBarContext = createContext({});
 
 function SearchBarProvider({ children }) {
   const [currentInput, setCurrentInput] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
   
-  const isFocus = currentInput === null ? false : true;
-
   const resetFocusState = () => {
     setCurrentInput(null);
+    setIsFocus(false);
   };
 
   const updateFocusState = label => {
     setCurrentInput(label);
+    setIsFocus(true);
   };
 
   return (

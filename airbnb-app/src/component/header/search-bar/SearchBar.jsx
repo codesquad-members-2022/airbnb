@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import SEARCH_INPUT_TEXT from '@/constants/searchBarText';
 import SearchInput from '@/component/header/search-bar/SearchInput';
@@ -11,10 +11,26 @@ import { PriceContext } from '@/context/PriceProvider';
 const searchInputText = Object.entries(SEARCH_INPUT_TEXT);
 
 function SearchBar() {
-  const { isFocus } = useContext(SearchBarContext);
+  const { isFocus, resetFocusState } = useContext(SearchBarContext);
   const { checkInValue, checkOutValue, resetCurDate, resetCalenderInfos } = useContext(CalenderDateContext);
   const { personnelValue, resetPersonnel } = useContext(PersonnelContext);
   const { priceValue, resetPrice } = useContext(PriceContext);
+
+  const searchBarRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickedOutside = ({ target }) => {
+      if (isFocus && searchBarRef && !searchBarRef.current.contains(target)) {
+        resetFocusState();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickedOutside);
+
+    return () => {
+      document.removeEventListener('mouseDown', handleClickedOutside);
+    };
+  }, [isFocus]);
 
   const inputProps = {
     체크인: {
@@ -35,13 +51,9 @@ function SearchBar() {
     },
   };
 
-  function handleBlur() {
-    resetCurDate();
-  }
-
   return (
-    <Container>
-      <Form method="POST" bgColor={isFocus ? 'grey6' : 'white'} onBlur={handleBlur}>
+    <Container ref={searchBarRef}>
+      <Form method="POST" bgColor={isFocus ? 'grey6' : 'white'} onBlur={resetCurDate}>
         {searchInputText.map(([key, { label, placeholder }], index) => (
           <SearchInput
             {...inputProps[label]}
@@ -57,6 +69,7 @@ function SearchBar() {
   );
 }
 const Container = styled.div`
+  position: relative;
   max-width: 1070px;
   margin: 0 auto;
 `;

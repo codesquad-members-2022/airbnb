@@ -27,7 +27,6 @@ function Calender({ page = 1 }) {
 }
 
 const StyledContainer = styled(ModalContainer)`
-  position: relative;
   ${({ page }) =>
     `width: ${page === 1 ? 370 : 818}px;
     height: ${382 * Math.ceil(page / 2)}px;

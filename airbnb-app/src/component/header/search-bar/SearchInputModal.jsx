@@ -1,5 +1,4 @@
 import { useMemo, useContext } from 'react';
-import styled from 'styled-components';
 import { SearchBarContext } from '@/context/SearchBarProvider';
 import SEARCH_INPUT_TEXT from '@/constants/searchBarText';
 import Calender from '@calender/Calender';
@@ -7,13 +6,7 @@ import Personnel from '@personnel/Personnel';
 import Price from '@price/Price';
 
 function SearchInputModal() {
-  const { currentInput, resetFocusState } = useContext(SearchBarContext);
-
-  const handleContainerClick = e => {
-    if (e.target.classList.contains('dim')) {
-      resetFocusState();
-    }
-  };
+  const { currentInput } = useContext(SearchBarContext);
 
   const modal = useMemo(() => {
     switch (currentInput) {
@@ -30,33 +23,7 @@ function SearchInputModal() {
     }
   }, [currentInput]);
 
-  return (
-    <>
-      {modal ? (
-        <DimLayer>
-          <Container className="dim" onClick={handleContainerClick}>
-            {modal}
-          </Container>
-        </DimLayer>
-      ) : null}
-    </>
-  );
+  return <>{modal}</>;
 }
-
-const DimLayer = styled.div`
-  position: fixed;
-  z-index: -1;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100%;
-`;
-
-const Container = styled.div`
-  max-width: 1070px;
-  min-width: 900px;
-  margin: 0 auto;
-  padding: 0 30px;
-`;
 
 export default SearchInputModal;

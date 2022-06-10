@@ -61,7 +61,7 @@ function Price() {
 }
 
 const Container = styled(ModalContainer)`
-  margin-left: 37%;
+  left: 37%;
   width: 400px;
   font-weight: ${({ theme }) => theme.fontWeight.regular};
 `;

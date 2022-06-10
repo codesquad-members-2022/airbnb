@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.util.toRange
 import androidx.navigation.NavController
-import com.example.todo.airbnb.domain.model.Search
 import com.example.todo.airbnb.presentation.main.components.Destinations
 import com.example.todo.airbnb.presentation.search.SearchViewModel
 import com.example.todo.airbnb.presentation.search.components.common.BottomScreen
@@ -91,13 +90,10 @@ private fun FareTopAppBar(
 
             IconButton(
                 onClick = {
-                    val reservation = viewModel.search.value
-                    val priceReservation = reservation?.copy(
-                        minPrice = lowerThumb * 1000000,
-                        maxPrice = upperThumb * 1000000
-                    ) ?: Search(
-                        minPrice = lowerThumb * 1000000,
-                        maxPrice = upperThumb * 1000000
+                    val reservation = viewModel.searchUiState.value
+                    val priceReservation = reservation.copy(
+                        minPrice = (lowerThumb * 1000000).toInt(),
+                        maxPrice = (upperThumb * 1000000).toInt()
                     )
                     viewModel.addReservation(priceReservation)
                     navController.navigate(Destinations.personnel)
@@ -110,26 +106,26 @@ private fun FareTopAppBar(
                 )
             }
         }
-        MakeFareText(lowerThumb, upperThumb)
+        FareTopAppBarText(lowerThumb, upperThumb)
     }
 }
 
 @Composable
-private fun MakeFareText(lowerThumb: Float, upperThumb: Float) {
-    Column() {
+private fun FareTopAppBarText(lowerThumb: Float, upperThumb: Float) {
+    Column {
         Text(
             text = "가격 범위",
             fontSize = 10.sp
         )
         val changeMoney = DecimalFormat("#,###")
-        if ((upperThumb * 1000000) >= 1000000f) {
+        if ((lowerThumb * 1000000 <= 1000000f) && (upperThumb * 1000000 >= 1000000f)) {
             Text(
                 text = "${changeMoney.format(lowerThumb * 1000000)}원 - " +
                         "${changeMoney.format(1000000)}원+",
             )
         } else if ((lowerThumb * 1000000 > 1000000f) && (upperThumb * 1000000 > 1000000f)) {
             Text(
-                text = "${changeMoney.format(1000000)}원+" +
+                text = "${changeMoney.format(1000000)}원+ - " +
                         "${changeMoney.format(1000000)}원+",
             )
         } else {

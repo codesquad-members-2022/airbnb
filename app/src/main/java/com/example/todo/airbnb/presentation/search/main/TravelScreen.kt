@@ -42,7 +42,21 @@ fun TravelScreen(viewModel: SearchViewModel, navController: NavController) {
 
         LazyRow(state = scrollState) {
             itemsIndexed(travelLocations) { index, location ->
-                MakeColumn(index, location, travelLocations, viewModel, navController)
+                MakeColumn(
+                    index,
+                    location,
+                    travelLocations,
+                    navController,
+                    onAddReservation = { locationName ->
+                        viewModel.addReservation(
+                            Search
+                                .defaultOf()
+                                .copy(
+                                    location = locationName
+                                )
+                        )
+                    }
+                )
             }
         }
     }
@@ -53,8 +67,8 @@ private fun MakeColumn(
     index: Int,
     location: Travel,
     travelLocations: List<Travel>,
-    viewModel: SearchViewModel,
     navController: NavController,
+    onAddReservation: (String) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -63,14 +77,14 @@ private fun MakeColumn(
         if (index % 2 == 0) {
             Row(
                 modifier = Modifier.clickable {
-                    viewModel.addReservation(Search(location = location.name))
+                    onAddReservation(location.name)
                     navController.navigate(Destinations.calendar)
                 }
             ) { MakeItem(location) }
             if (index + 1 < travelLocations.size) {
                 Row(
                     modifier = Modifier.clickable {
-                        viewModel.addReservation(Search(location = location.name))
+                        onAddReservation(location.name)
                         navController.navigate(Destinations.calendar)
                     }
                 ) { MakeItem(travelLocations[index + 1]) }

@@ -5,15 +5,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
+import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import com.example.todo.airbnb.R
 import com.example.todo.airbnb.presentation.main.components.Destinations.searchResult
+import com.example.todo.airbnb.presentation.reservation.ReservationViewModel
 import com.example.todo.airbnb.presentation.reservation.components.ReservationScreen
 import com.example.todo.airbnb.presentation.search.SearchViewModel
 import com.example.todo.airbnb.presentation.search.date.components.DateScreen
@@ -21,11 +20,13 @@ import com.example.todo.airbnb.presentation.search.detail.DetailScreen
 import com.example.todo.airbnb.presentation.search.fare.components.FareScreen
 import com.example.todo.airbnb.presentation.search.main.SearchScreen
 import com.example.todo.airbnb.presentation.search.personnel.components.PersonnelScreen
-import com.example.todo.airbnb.presentation.search.searchmap.SearchMapScreen
+import com.example.todo.airbnb.presentation.search.searchmap.components.SearchMapScreen
+import com.example.todo.airbnb.presentation.search.searchresult.ResultViewModel
 import com.example.todo.airbnb.presentation.search.searchresult.components.SearchResultScreen
 import com.example.todo.airbnb.presentation.search.serachcondition.SearchConditionScreen
 import com.example.todo.airbnb.presentation.wishlist.components.WishListScreen
 import com.example.todo.airbnb.ui.theme.Gray
+import com.google.accompanist.pager.ExperimentalPagerApi
 
 object Destinations {
     const val search = "search"
@@ -71,7 +72,7 @@ fun BottomBar(
                     val backStackEntry = navController.previousBackStackEntry
                     val route = backStackEntry?.destination?.route
                     if (item.route == "검색" && route == searchResult) {
-                        navController.navigate(route ?: item.route) {
+                        navController.navigate(route) {
                             launchSingleTop = true
                             restoreState = true
                         }
@@ -87,50 +88,89 @@ fun BottomBar(
     }
 }
 
+@ExperimentalPagerApi
 @ExperimentalMaterialApi
 @Composable
-fun BottomNavGraph(navController: NavHostController, viewModel: SearchViewModel) {
+fun BottomNavGraph(
+    navController: NavHostController,
+    searchViewModel: SearchViewModel,
+    reservationViewModel: ReservationViewModel,
+    searchResultViewModel: ResultViewModel
+) {
     NavHost(
         navController = navController,
         startDestination = Destinations.search
     ) {
         airbnbNavGraph(
             navController = navController,
-            viewModel = viewModel
+            searchViewModel = searchViewModel,
+            reservationViewModel = reservationViewModel,
+            searchResultViewModel = searchResultViewModel
         )
     }
 }
 
+@ExperimentalPagerApi
 @ExperimentalMaterialApi
 private fun NavGraphBuilder.airbnbNavGraph(
     navController: NavController,
-    viewModel: SearchViewModel,
+    searchViewModel: SearchViewModel,
+    reservationViewModel: ReservationViewModel,
+    searchResultViewModel: ResultViewModel,
 ) {
     navigation(
         route = Destinations.search,
         startDestination = HomeSections.Search.route
     ) {
-        composable(HomeSections.Search.route) { SearchScreen(viewModel, navController) }
-        composable(HomeSections.WishList.route) { WishListScreen() }
-        composable(HomeSections.Reservation.route) { ReservationScreen() }
+        composable(HomeSections.Search.route) { SearchScreen(searchViewModel, navController) }
+        composable(HomeSections.WishList.route) {
+            WishListScreen(
+                searchResultViewModel,
+                navController
+            )
+        }
+        composable(HomeSections.Reservation.route) {
+            ReservationScreen(
+                navController,
+                reservationViewModel
+            )
+        }
     }
 
     composable(route = Destinations.calendar) {
-        DateScreen(navController = navController, viewModel)
+        DateScreen(navController = navController, searchViewModel)
     }
-    composable(route = Destinations.fare) { FareScreen(navController = navController, viewModel) }
-    composable(route = Destinations.personnel) {
-        PersonnelScreen(navController = navController, viewModel)
-    }
-    composable(route = Destinations.searchResult) {
-        SearchResultScreen(
+    composable(route = Destinations.fare) {
+        FareScreen(
             navController = navController,
-            viewModel
+            searchViewModel
         )
     }
-    composable(route = Destinations.searchMap) { SearchMapScreen(navController = navController) }
-    composable(route = Destinations.searchCondition) { SearchConditionScreen(navController = navController) }
-    composable(route = Destinations.detail) { DetailScreen(navController = navController) }
+    composable(route = Destinations.personnel) {
+        PersonnelScreen(navController = navController, searchViewModel)
+    }
+    composable(route = Destinations.searchResult) {
+        SearchResultScreen(navController = navController, searchViewModel, searchResultViewModel)
+    }
+    composable(route = Destinations.searchMap) { SearchMapScreen() }
+    composable(route = Destinations.searchCondition) {
+        SearchConditionScreen(navController = navController, searchViewModel)
+    }
+    composable(
+        route = "${Destinations.detail}/{id}",
+        arguments = listOf(navArgument("id") { type = NavType.IntType })
+    ) { entry ->
+        val id = entry.arguments?.getInt("id")
+        id?.let {
+            DetailScreen(
+                navController = navController,
+                searchViewModel = searchViewModel,
+                searchResultViewModel = searchResultViewModel,
+                reservationViewModel = reservationViewModel,
+                id = id
+            )
+        }
+    }
 }
 
 private fun selectNavigation(

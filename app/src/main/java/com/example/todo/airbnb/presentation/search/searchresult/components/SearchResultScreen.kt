@@ -1,18 +1,19 @@
 package com.example.todo.airbnb.presentation.search.searchresult.components
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Place
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,32 +27,55 @@ import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.todo.airbnb.R
 import com.example.todo.airbnb.common.components.HandleImageResult
+import com.example.todo.airbnb.domain.model.AccommodationResult
+import com.example.todo.airbnb.domain.model.Search
 import com.example.todo.airbnb.presentation.main.components.Destinations
 import com.example.todo.airbnb.presentation.main.components.HomeSections
 import com.example.todo.airbnb.presentation.search.SearchViewModel
+import com.example.todo.airbnb.presentation.search.searchresult.ResultViewModel
+import java.text.DecimalFormat
 
 @Composable
-fun SearchResultScreen(navController: NavController, viewModel: SearchViewModel) {
-
+fun SearchResultScreen(
+    navController: NavController,
+    searchViewModel: SearchViewModel,
+    resultViewModel: ResultViewModel
+) {
     Scaffold(
         topBar = {
-            ResultTopBar(navController, viewModel)
+            ResultTopBar(
+                onNavigateCondition = { navController.navigate(Destinations.searchCondition) },
+                onNavigateSearch = {
+                    navController.navigate(HomeSections.Search.route) {
+                        popUpTo(HomeSections.Search.route) { inclusive = true }
+                    }
+                },
+                search = searchViewModel.searchUiState.value
+            )
         }
     ) {
-        ResultContent(navController, viewModel)
+        ResultContent(
+            onNavigateDetail = { id -> navController.navigate("${Destinations.detail}/${id}") },
+            onNavigateMap = { navController.navigate(Destinations.searchMap) },
+            accommodations = resultViewModel.result.value,
+            onButtonClickFavorite = { resultViewModel.onClickFavorite(it) }
+        )
     }
 }
 
 @Composable
-fun ResultTopBar(navController: NavController, viewModel: SearchViewModel) {
-    val search = viewModel.search.value
+fun ResultTopBar(
+    onNavigateCondition: () -> Unit,
+    onNavigateSearch: () -> Unit,
+    search: Search,
+) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(
-            onClick = { navController.navigateUp() }
+            onClick = { onNavigateCondition() }
         ) {
             Icon(
                 imageVector = Icons.Default.Menu,
@@ -61,16 +85,12 @@ fun ResultTopBar(navController: NavController, viewModel: SearchViewModel) {
         }
 
         Text(
-            text = "${search?.location ?: ""} ${search?.checkIn ?: ""} ${search?.checkOut ?: ""} 게스트 ${search?.guest ?: ""}"
+            text = "${if (search.location == Search.DEFAULT_LOCATION) "" else search.location} ${
+                if (search.checkIn == Search.DEFAULT_CHECKIN) "" else search.checkIn.substring(6)
+            } ${if (search.checkOut == Search.DEFAULT_CHECKOUT) "" else search.checkOut.substring(6)} 게스트 ${if (search.guest.isDefault()) "" else search.guest.toString()}"
         )
 
-        IconButton(
-            onClick = {
-                navController.navigate(HomeSections.Search.route) {
-                    popUpTo(HomeSections.Search.route) { inclusive = true }
-                }
-            }
-        ) {
+        IconButton(onClick = { onNavigateSearch() }) {
             Icon(
                 imageVector = Icons.Default.Close,
                 contentDescription = "Check Icon",
@@ -81,10 +101,12 @@ fun ResultTopBar(navController: NavController, viewModel: SearchViewModel) {
 }
 
 @Composable
-private fun ResultContent(navController: NavController, viewModel: SearchViewModel) {
-    val search = viewModel.search.value
-    Log.d("test", "ResultContent: $search")
-
+private fun ResultContent(
+    onNavigateDetail: (Int) -> Unit,
+    onNavigateMap: () -> Unit,
+    accommodations: List<AccommodationResult>,
+    onButtonClickFavorite: (Int) -> Unit
+) {
     Box {
         LazyColumn(
             modifier = Modifier
@@ -93,17 +115,28 @@ private fun ResultContent(navController: NavController, viewModel: SearchViewMod
         ) {
             item {
                 Text(
-                    text = "300개 이상의 숙소",
+                    text = if (accommodations.size < 10) "10개 이하의 숙소" else "${accommodations.size / 10 * 10}개 이상의 숙소",
                     style = MaterialTheme.typography.h5
                 )
                 Spacer(modifier = Modifier.height(16.dp))
             }
-            items(3) {
-                AccommodationItem()
+            itemsIndexed(accommodations) { _, it ->
+                AccommodationItem(
+                    it,
+                    onNavigate = { onNavigateDetail(it.id) },
+                    onButtonClickFavorite = { accommodation ->
+                        val findAccommodation = accommodations.find { it == accommodation }
+                        if (findAccommodation != null) {
+                            val index = accommodations.indexOf(findAccommodation)
+                            onButtonClickFavorite(index)
+                        }
+                    }
+                )
             }
         }
+
         Button(
-            onClick = { navController.navigate(Destinations.searchMap) },
+            onClick = { onNavigateMap() },
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color.Black,
                 contentColor = Color.White
@@ -124,19 +157,24 @@ private fun ResultContent(navController: NavController, viewModel: SearchViewMod
 }
 
 @Composable
-private fun AccommodationItem() {
-    val isClick = remember { mutableStateOf(false) }
-    val dummyImage =
-        "https://a0.muscache.com/im/pictures/2f13349d-879d-43c6-83e3-8e5679291d53.jpg?im_w=480"
-
-    Column {
-        Box() {
-            LoadImage(imageURL = dummyImage)
-            Box(modifier = Modifier
-                .padding(top = 15.dp, start = 8.36.dp)
-                .clip(RoundedCornerShape(size = 10.dp))
-                .align(Alignment.TopStart)
-                .background(Color.White)
+private fun AccommodationItem(
+    accommodation: AccommodationResult,
+    onNavigate: () -> Unit,
+    onButtonClickFavorite: (AccommodationResult) -> Unit,
+) {
+    val decimalFormat = DecimalFormat("#,###")
+    Column(
+        modifier = Modifier
+            .clickable { onNavigate() }
+    ) {
+        Box {
+            LoadImage(imageURL = accommodation.image)
+            Box(
+                modifier = Modifier
+                    .padding(top = 15.dp, start = 8.36.dp)
+                    .clip(RoundedCornerShape(size = 10.dp))
+                    .align(Alignment.TopStart)
+                    .background(Color.White)
             ) {
                 Text(
                     text = "슈퍼 호스트",
@@ -144,45 +182,46 @@ private fun AccommodationItem() {
                 )
             }
             Image(
-                painter = if (isClick.value) painterResource(id = R.drawable.ic_favorite_selected) else painterResource(
-                    id = R.drawable.ic_favorite),
+                painter =
+                if (accommodation.isFavorite.value) {
+                    painterResource(id = R.drawable.ic_favorite_selected)
+                } else {
+                    painterResource(id = R.drawable.ic_favorite)
+                },
                 contentDescription = "favorite",
                 modifier = Modifier
                     .padding(top = 15.dp, end = 8.36.dp)
                     .align(Alignment.TopEnd)
-                    .clickable {
-                        isClick.value = !isClick.value
-                    }
+                    .clickable { onButtonClickFavorite(accommodation) }
             )
         }
-
-        Spacer(modifier = Modifier.height(8.5.dp))
-
-        Row {
-            Image(
-                imageVector = Icons.Default.Star,
-                contentDescription = "star image",
-                colorFilter = ColorFilter.tint(Color.Red)
-            )
-            Spacer(modifier = Modifier.width(5.5.dp))
-            Text(text = "4.80")
-            Spacer(modifier = Modifier.width(4.dp))
-            Text(text = "후기 127개")
-        }
-        Spacer(modifier = Modifier.height(8.5.dp))
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = "Spacious and Comfortable Cozy",
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "W82,953 / 박")
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "총액 W1,493,154")
     }
-}
 
+    Spacer(modifier = Modifier.height(8.5.dp))
+
+    Row {
+        Image(
+            imageVector = Icons.Default.Star,
+            contentDescription = "star image",
+            colorFilter = ColorFilter.tint(Color.Red)
+        )
+        Spacer(modifier = Modifier.width(5.5.dp))
+        Text(text = accommodation.starRate.toString())
+        Spacer(modifier = Modifier.width(4.dp))
+        Text(text = "후기 ${accommodation.reviewCount}개")
+    }
+    Spacer(modifier = Modifier.height(8.5.dp))
+    Text(
+        modifier = Modifier.fillMaxWidth(),
+        text = accommodation.name,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
+    )
+    Spacer(modifier = Modifier.height(8.dp))
+    Text(text = "W${decimalFormat.format(accommodation.fee)} / 박")
+    Spacer(modifier = Modifier.height(8.dp))
+    Text(text = "총액 W${decimalFormat.format(accommodation.total)}")
+}
 
 @Composable
 private fun LoadImage(imageURL: String?) {

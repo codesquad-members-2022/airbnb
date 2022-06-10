@@ -241,8 +241,6 @@ private fun DaySelectedStatus.color(theme: Colors): Color = when (this) {
 
 @Composable
 private fun getLeftRightWeekColors(week: CalendarWeek, month: CalendarMonth): Pair<Color, Color> {
-    val materialColors = MaterialTheme.colors
-
     val firstDayOfTheWeek = week[0].value
     val leftFillColor = if (firstDayOfTheWeek.isNotEmpty()) {
         val lastDayPreviousWeek = month.getPreviousDay(firstDayOfTheWeek.toInt())

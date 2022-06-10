@@ -4,11 +4,11 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.example.todo.airbnb.data.model.date.DaySelected
+import com.example.todo.airbnb.data.model.date.DaySelected.Companion.DaySelectedEmpty
 import com.example.todo.airbnb.data.repository.DateRepositoryImpl
 import com.example.todo.airbnb.domain.repository.DateRepository
 import com.example.todo.airbnb.presentation.search.date.components.DatesSelectedState
-import com.example.todo.airbnb.presentation.search.date.components.DaySelected
-import com.example.todo.airbnb.presentation.search.date.components.DaySelected.Companion.DaySelectedEmpty
 import com.example.todo.airbnb.presentation.search.date.components.DaySelectedStatus
 
 class DateViewModel(private val datesRepository: DateRepository = DateRepositoryImpl()) :

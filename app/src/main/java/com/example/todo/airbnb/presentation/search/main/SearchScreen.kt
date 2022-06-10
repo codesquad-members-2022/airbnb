@@ -63,9 +63,29 @@ fun SearchMainScreen(navController: NavController, viewModel: SearchViewModel) {
                     searchTextState.isEmpty() -> SearchList(
                         navController,
                         travelLocations,
-                        viewModel
+                        onAddReservation = { locationName ->
+                            viewModel.addReservation(
+                                Search
+                                    .defaultOf()
+                                    .copy(
+                                        location = locationName
+                                    )
+                            )
+                        }
                     )
-                    else -> SearchList(navController, searchLocations, viewModel)
+                    else -> SearchList(
+                        navController,
+                        searchLocations,
+                        onAddReservation = { locationName ->
+                            viewModel.addReservation(
+                                Search
+                                    .defaultOf()
+                                    .copy(
+                                        location = locationName
+                                    )
+                            )
+                        }
+                    )
                 }
                 BackHandler {
                     viewModel.updateSearchWidgetState(SearchWidgetState.CLOSED)
@@ -81,7 +101,7 @@ fun SearchMainScreen(navController: NavController, viewModel: SearchViewModel) {
 private fun SearchList(
     navController: NavController,
     travelLocations: List<Travel>,
-    viewModel: SearchViewModel
+    onAddReservation: (String) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -101,7 +121,7 @@ private fun SearchList(
                 Row(
                     modifier = Modifier
                         .clickable {
-                            viewModel.addReservation(Search(location = location.name))
+                            onAddReservation(location.name)
                             navController.navigate(Destinations.calendar)
                         }
                         .fillMaxWidth()

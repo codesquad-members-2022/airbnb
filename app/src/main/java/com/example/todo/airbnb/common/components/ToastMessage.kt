@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.compose.runtime.Composable
 
 @Composable
-fun ToastMessage(context: Context, text: String) {
-    Toast.makeText(context, text, Toast.LENGTH_SHORT)
-        .show()
+fun ToastMessage(context: Context, text: String, onShow: (() -> Unit)? = null) {
+    Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+    onShow?.invoke()
 }

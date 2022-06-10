@@ -7,6 +7,9 @@ interface ButtonType extends FlexType {
   currentState?: string | number;
 }
 
+const MINIMUM_HEADCOUNT = 0;
+const MAXIMUM_HEADCOUNT = 8;
+
 export const TicketContainer = styled.div<FlexType>`
   ${({ flex, justify }) => applyFlex({ flex, justify })};
   padding: 24px 0;
@@ -60,10 +63,10 @@ export const Count = styled.div`
 `;
 
 const applyButtonActive = ({ buttonType, currentState }: ButtonType) => {
-  if (buttonType === "MINUS" && Number(currentState) === 0) {
+  if (buttonType === "MINUS" && Number(currentState) === MINIMUM_HEADCOUNT) {
     return `color:#bdbdbd`;
   }
-  if (buttonType === "PLUS" && Number(currentState) === 8) {
+  if (buttonType === "PLUS" && Number(currentState) === MAXIMUM_HEADCOUNT) {
     return `color:#bdbdbd`;
   }
 };

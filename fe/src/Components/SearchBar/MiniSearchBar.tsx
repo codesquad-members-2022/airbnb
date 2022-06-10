@@ -39,8 +39,8 @@ export default function MiniSearchBar({ searchBarStyle, handleClick }: MiniSearc
   const { month: checkOutMonth, day: checkOutDay } = checkOut;
 
   return (
-    <Container flex={true} justify="space-between" searchBarStyle={searchBarStyle} onClick={handleClick}>
-      <DateArea flex={true} justify="space-between" align="center">
+    <Container flex justify="space-between" searchBarStyle={searchBarStyle} onClick={handleClick}>
+      <DateArea flex justify="space-between" align="center">
         <ContentContainer>
           {checkInDay > 0 ? (
             <ActiveContent>{`${checkInMonth}월 ${checkInDay}일`}</ActiveContent>
@@ -56,7 +56,7 @@ export default function MiniSearchBar({ searchBarStyle, handleClick }: MiniSearc
           )}
         </ContentContainer>
       </DateArea>
-      <PriceArea flex={true} justify="space-between" align="center">
+      <PriceArea flex justify="space-between" align="center">
         <ContentContainer>
           {isAlreadySetPrice ? (
             <ActiveContent>{priceTemplate}</ActiveContent>
@@ -65,7 +65,7 @@ export default function MiniSearchBar({ searchBarStyle, handleClick }: MiniSearc
           )}
         </ContentContainer>
       </PriceArea>
-      <HeadCountArea flex={true} justify="space-between" align="center">
+      <HeadCountArea flex justify="space-between" align="center">
         <ContentContainer width="140px">
           {guestCount > 0 ? (
             <ActiveContent>{headCountTemplate}</ActiveContent>

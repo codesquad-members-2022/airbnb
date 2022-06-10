@@ -44,7 +44,7 @@ export default function Month({
 
   return (
     <Monthly>
-      <YearMonthArea flex={true} justify="center">
+      <YearMonthArea flex justify="center">
         {button.prev && (
           <Button type="prev" onClick={handlePrevButton}>
             {"<"}

@@ -64,9 +64,20 @@ const Days = ({ year, month, day, index }: DayTypes) => {
   const isCheckOut = isClickedDay(checkOut, clickedDate);
   const isClicked: boolean = isCheckIn || isCheckOut;
 
-  //리턴
+  const checkInDate = getDaySize(checkIn);
+  const checkOutDate = getDaySize(checkOut);
+  const isBetweenDays =
+    checkInDate <= new Date(year, month + 1, day).getTime() &&
+    new Date(year, month + 1, day).getTime() <= checkOutDate;
+
   return day ? (
-    <S.Day key={index} onClick={handleCalendar} disabled={isDisabledDay} isClicked={isClicked}>
+    <S.Day
+      key={index}
+      onClick={handleCalendar}
+      disabled={isDisabledDay}
+      isClicked={isClicked}
+      isBetweenDays={isBetweenDays}
+    >
       {day}
     </S.Day>
   ) : (

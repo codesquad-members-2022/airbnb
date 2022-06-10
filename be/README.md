@@ -129,3 +129,67 @@
 > 일정(Schedule): 해당 숙소별 투숙 일자와 해당 일자에 수용 가능한 인원 정보를 가집니다. 
 > ``` 
 > ![image](https://user-images.githubusercontent.com/82401504/171779598-ffd07a5d-2568-4843-8b3d-92326490e782.png)
+
+## 3주차 수요일 리뷰 요청
+
+### 진행 내용
+#### 애플리케이션
++ 숙소 예약 API 기능 구현(완료)
++ 깃허브 OAuth를 통한 로그인 인증, JWT을 통한 `로그인 검증`, `로그아웃`, `액세스 토큰 재발행` 기능 구현(완료)
+  + 로그인 완료 후 클라이언트에 access(응답 헤더로) 및 refresh(쿠키로) 토큰 발급
+    + refresh 토큰은 레디스(redis)에 저장
+  + 로그아웃 요청 시 레디스에 저장된 refresh 토큰을 삭제하고 기존 access 토큰은 레디스에 블랙리스트로 지정(추후 로그인 검증 시 활용)
+  + 액세스 토큰 재발행 요청 시 refresh 토큰 만료 시간 검증 
++ <a href="https://near-snipe-0de.notion.site/API-Description-094e9cd17eaa4c3d89e8c9966fd6d8a5">API 명세서 확인하기(클릭)</a><br/>
+
+#### 로그인 및 로그인 검증 흐름 예시
+```
+1. 클라이언트 -> 서버 : Github OAuth 연동 로그인 요청(with 인증 코드)
+
+2. 서버 -> 클라이언트 : access token 및 refresh token 응답
+ - 응답 헤더 access_token에 access token 값 할당
+ - 쿠키 refresh_token에 refresh token 값 할당
+  ※ 서버는 refresh token을 레디스(redis)에 별도 저장
+
+3. 클라이언트 -> 서버 : 숙소 예약 요청
+ - 요청 헤더 Authorization에 "Bearer {access token 값}" 할당
+
+4. (서버가 검증한 결과 access token이 만료된 경우) 서버 -> 클라이언트 : access token 만료 메시지 응답
+ ※ (access token이 만료되지 않은 경우) 서버 -> 클라이언트 : 숙소 예약 정상 처리 메시지 응답
+
+5. 클라이언트 -> 서버 : access token 갱신 요청
+ - 쿠키 refresh_token에 refresh token 값 할당
+ ※ 리액트 단에서 보유하고 있는 access token 만료 기한 자체 검증 후 서버에 갱신 요청
+  - 참고자료 1 : https://www.bezkoder.com/react-logout-token-expired/
+  - 참고자료 2 : http://naver.me/FCLUz6ZE
+
+6. 서버 -> 클라이언트 : 갱신된 access token 응답
+ - 응답 헤더 access_token에 access token 값 할당
+
+7. 클라이언트 -> 서버 : 로그아웃 요청
+
+8. 서버 -> 클라이언트 : 로그아웃 정상 처리 메시지 응답
+ - 클라이언트가 보낸 refresh token에 대한 정보를 레디스에서 삭제
+ - 클라이언트가 보낸 access token에 대한 정보를 레디스에 저장(블랙 리스트)하는데, 이때 해당 데이터의 만료 시간은 해당 access token의 남은 만료 시간으로 설정
+```
+
+#### 인프라 아키텍처
+> ![image](https://user-images.githubusercontent.com/82401504/172468079-244b8df4-3464-49f1-8649-b454028d9101.png)
+
+#### 도메인 모델과 테이블 설계
+> ```
+> 객체별 연관관계
+> Member : Reservation = 1 : N
+> Reservation : Accommodation = 1 : 1
+> Reservation : ReservationPrice = 1 : 1
+> Accommodation : Facility = 1 : 1
+> Accommodation : Schedule = 1 : N
+> 
+> 회원(Member): 회원은 이름과 이메일 그리고 예약(reservations) 리스트를 가집니다.
+> 예약(Reservation): 한 번 예약 시 여러 개의 숙박을 예약할 수는 없으므로 예약과 숙소(Accommodation)는 일대일 관계입니다. 이때 예약은 예약한 회원(member)과 기타 예약 정보를 가집니다.
+> 예약가격(ReservationPrice): 예약가격은 예약과 일대일 관계로서 예약과 관련된 가격 정보(숙박 가격, 청소비, 서비스 수수료, 최종 예약 가격 등)를 가집니다.
+> 숙소(Accommodation): 숙소 관련 정보(가격, 위치, 이미지 파일경로 등)를 가집니다. 숙소 관련 시설 정보(Facility)와 일대일 관계이며 일정 정보(Schedule)와 일대다 관계입니다.
+> 시설(Facility): 숙소 관련 시설에 대한 정보(욕실의 개수, 인터넷 사용 가능유무 등)를 가집니다.
+> 일정(Schedule): 해당 숙소별 투숙 일자와 해당 일자에 수용 가능한 인원 정보를 가집니다. 
+> ``` 
+> ![image](https://user-images.githubusercontent.com/82401504/172059828-e07aebf7-4094-4cfa-9e52-cf9aade52492.png)

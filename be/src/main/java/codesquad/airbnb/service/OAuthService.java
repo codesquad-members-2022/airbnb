@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -18,7 +19,6 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class OAuthService {
 
-    private static final String CLIENT_ID = "bc6ce8b1d104602ca988";
     private static final String GITHUB_AUTHORIZATION_SERVER_URL = "https://github.com/login/oauth/access_token";
     private static final String SCOPE = "user/emails";
     private static final String GITHUB_EMAIL_API_ACCEPT_HEADER = "application/vnd.github.v3+json";
@@ -26,12 +26,13 @@ public class OAuthService {
 
     private final MemberRepository memberRepository;
 
-    public String authorizeForThirdParty(String code) {
+    @Transactional
+    public Long authorizeForThirdParty(String code) {
         OAuthAccessToken OAuthAccessToken = getAccessTokenFromAuthServer(code);
         String email = getUserEmailFromResourceServer(OAuthAccessToken);
-        saveUserEmail(email);
+        Long memberId = saveUserEmail(email);
 
-        return email;
+        return memberId;
     }
 
     private OAuthAccessToken getAccessTokenFromAuthServer(String code) {
@@ -45,18 +46,18 @@ public class OAuthService {
         return (OAuthAccessToken) response.getBody();
     }
 
-    private MultiValueMap<String, String> getRequestPayload(String code) {
-        MultiValueMap<String, String> requestPayload = new LinkedMultiValueMap<>();
-        requestPayload.set("client_id", CLIENT_ID);
-        requestPayload.set("client_secret", System.getenv("CLIENT_SECRET"));
-        requestPayload.set("code", code);
-        return requestPayload;
-    }
-
     private MultiValueMap<String, String> getRequestHeader() {
         MultiValueMap<String, String> requestHeader = new LinkedMultiValueMap<>();
         requestHeader.set("Accept", "application/json");
         return requestHeader;
+    }
+
+    private MultiValueMap<String, String> getRequestPayload(String code) {
+        MultiValueMap<String, String> requestPayload = new LinkedMultiValueMap<>();
+        requestPayload.set("client_id", System.getenv("CLIENT_ID"));
+        requestPayload.set("client_secret", System.getenv("CLIENT_SECRET"));
+        requestPayload.set("code", code);
+        return requestPayload;
     }
 
     private String getUserEmailFromResourceServer(OAuthAccessToken OAuthAccessToken) {
@@ -77,10 +78,12 @@ public class OAuthService {
         return (String) ((LinkedHashMap) userEmails[0]).get("email");
     }
 
-    private void saveUserEmail(String email) {
-        Long userId = memberRepository.findByEmail(email);
-        if (userId == null) {
-            memberRepository.save(new Member(null, email));
+    private Long saveUserEmail(String email) {
+        Member member = memberRepository.findByEmail(email);
+        if (member == null) {
+            member = memberRepository.save(new Member(null, email));
         }
+
+        return member.getId();
     }
 }

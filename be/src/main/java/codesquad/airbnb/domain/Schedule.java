@@ -27,4 +27,12 @@ public class Schedule {
     private Accommodation accommodation;
     private LocalDate stayDate;
     private Integer vacantRoomQuantity;
+
+    public void removeVacantRoomQuantity() {
+        int restVacantRoomQuantity = this.vacantRoomQuantity - 1;
+        if (vacantRoomQuantity < 0) {
+            throw new IllegalStateException("해당 일정으로는 에약이 불가능합니다.");
+        }
+        this.vacantRoomQuantity = restVacantRoomQuantity;
+    }
 }

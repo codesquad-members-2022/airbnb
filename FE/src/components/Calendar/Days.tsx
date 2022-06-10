@@ -53,9 +53,20 @@ const Days = ({ year, month, day, index }: DayTypes) => {
     return strDaySize;
   };
 
+  const isClickedDay = (checkIn: string, clickedDate: DateTypes) => {
+    const strDay = checkIn.split('-');
+    if (+strDay[0] !== clickedDate.year) return false;
+    if (+strDay[1] !== clickedDate.month + 1) return false;
+    if (+strDay[2] !== clickedDate.day) return false;
+    return true;
+  };
+  const isCheckIn = isClickedDay(checkIn, clickedDate);
+  const isCheckOut = isClickedDay(checkOut, clickedDate);
+  const isClicked: boolean = isCheckIn || isCheckOut;
+
   //리턴
   return day ? (
-    <S.Day key={index} onClick={handleCalendar} disabled={isDisabledDay}>
+    <S.Day key={index} onClick={handleCalendar} disabled={isDisabledDay} isClicked={isClicked}>
       {day}
     </S.Day>
   ) : (

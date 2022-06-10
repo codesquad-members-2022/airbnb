@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.airbnb.data.CityInfo
 import com.example.airbnb.model.City
 import com.example.airbnb.network.TmapRequest
-import com.example.airbnb.repository.HomeRepository
+import com.example.airbnb.repository.AirbnbRepository
 import com.example.airbnb.repository.TmapRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val homeRepository: HomeRepository,
+    private val airbnbRepository: AirbnbRepository,
     private val tmapRepository: TmapRepository
 ) : ViewModel() {
 
@@ -29,9 +29,13 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(mutableListOf())
     val cityInfo = _cityInfo.asStateFlow()
 
+    init {
+        setMyLocation(DEFAULT_LOCATION_LATITUDE, DEFAULT_LOCATION_LONGITUDE)
+    }
+
     fun loadContents() {
         viewModelScope.launch {
-            val cityList = homeRepository.loadHomeContents()
+            val cityList = airbnbRepository.loadHomeContents()
             getTimeToCity(_myLongitude.value, _myLatitude.value, cityList)
             Log.d("viewModel", "mylongitude ${_myLongitude.value} my latitude ${_myLatitude.value}")
         }
@@ -45,6 +49,7 @@ class HomeViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             val start = System.currentTimeMillis()
+
             cityList.asFlow().flatMapMerge { city ->
                 delay(500)
                 tmapRepository.getTime(
@@ -55,7 +60,7 @@ class HomeViewModel @Inject constructor(
                         city.currentCoordinate.longitude
                     )
                 )
-            }.collectIndexed { index, tmap ->
+            }.buffer().collectIndexed { index, tmap ->
                 _cityInfo.setList(
                     CityInfo(
                         cityList[index],
@@ -68,7 +73,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-
     //helper function
     fun setMyLocation(latitude: Double, longitude: Double) {
         _myLatitude.value = latitude
@@ -76,6 +80,9 @@ class HomeViewModel @Inject constructor(
     }
 
     companion object {
+        private const val DEFAULT_LOCATION_LATITUDE = 37.37599
+        private const val DEFAULT_LOCATION_LONGITUDE = 127.132685
+
         private fun <E> MutableStateFlow<MutableList<E>>.setList(element: E?) {
             val tempList: MutableList<E> = mutableListOf()
             this.value.let { tempList.addAll(it) }
@@ -85,4 +92,5 @@ class HomeViewModel @Inject constructor(
             this.value = tempList
         }
     }
+
 }

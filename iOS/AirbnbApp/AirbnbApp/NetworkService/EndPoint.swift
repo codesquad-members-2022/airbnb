@@ -65,6 +65,7 @@ struct Endpoint: Endpointable {
 
 enum EndPointCase {
     case getHousesPirce
+    case getMainViewInfo
     case getHousesInfo
     case getDetail(id: String)
     
@@ -87,6 +88,11 @@ enum EndPointCase {
                             baseURL: .main,
                             path: .getDetail(id: hash),
                             body: nil)
+        case .getMainViewInfo:
+            return Endpoint(httpMethod: .get,
+                            baseURL: .main,
+                            path: .getHousesPirce,
+                            body: nil)
         }
     }
 }
@@ -106,6 +112,7 @@ enum Path {
     case getHousesPirce
     case getHousesInfo
     case getDetail(id: String)
+    case getMainViewInfo
     
     var pathString: String {
         switch self {
@@ -115,6 +122,8 @@ enum Path {
             return "/api/houses/11"
         case .getDetail(let id):
             return "api/houses/\(id)"
+        case .getMainViewInfo:
+            return "www"
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  MainHeaderView.swift
+//  NearSpotHeaderView.swift
 //  AirbnbApp
 //
 //  Created by 박진섭 on 2022/06/03.
@@ -10,7 +10,7 @@ import SnapKit
 
 final class MainHeaderView: UICollectionReusableView {
     
-    static let ID = "mainViewHeaderID"
+    static let ID = "MainHeaderViewID"
     
     private var headerLabel: UILabel = {
         let label = UILabel()

@@ -19,7 +19,7 @@
 		005AF798283B775300546D5B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 005AF797283B775300546D5B /* Assets.xcassets */; };
 		005AF7A6283B775300546D5B /* AirbnbTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005AF7A5283B775300546D5B /* AirbnbTests.swift */; };
 		00863C4D284609DD004E5954 /* CalendarHearderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00863C4C284609DD004E5954 /* CalendarHearderView.swift */; };
-		00863C4F2847452F004E5954 /* CalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00863C4E2847452F004E5954 /* CalendarModel.swift */; };
+		00863C4F2847452F004E5954 /* CalendarAYearModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00863C4E2847452F004E5954 /* CalendarAYearModel.swift */; };
 		00863C5128474614004E5954 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00863C5028474614004E5954 /* Day.swift */; };
 		00863C5328474792004E5954 /* MonthMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00863C5228474792004E5954 /* MonthMetadata.swift */; };
 		008A2062283F4E220095F7BC /* BackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008A2061283F4E220095F7BC /* BackgroundViewController.swift */; };
@@ -109,7 +109,7 @@
 		005AF7A5283B775300546D5B /* AirbnbTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirbnbTests.swift; sourceTree = "<group>"; };
 		005AF7AB283B775300546D5B /* AirbnbUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirbnbUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00863C4C284609DD004E5954 /* CalendarHearderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHearderView.swift; sourceTree = "<group>"; };
-		00863C4E2847452F004E5954 /* CalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarModel.swift; sourceTree = "<group>"; };
+		00863C4E2847452F004E5954 /* CalendarAYearModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAYearModel.swift; sourceTree = "<group>"; };
 		00863C5028474614004E5954 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		00863C5228474792004E5954 /* MonthMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthMetadata.swift; sourceTree = "<group>"; };
 		008A2061283F4E220095F7BC /* BackgroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewController.swift; sourceTree = "<group>"; };
@@ -281,7 +281,7 @@
 			children = (
 				00863C5028474614004E5954 /* Day.swift */,
 				009764A52850885800BA70A7 /* Month.swift */,
-				00863C4E2847452F004E5954 /* CalendarModel.swift */,
+				00863C4E2847452F004E5954 /* CalendarAYearModel.swift */,
 				00863C5228474792004E5954 /* MonthMetadata.swift */,
 			);
 			path = Model;
@@ -638,7 +638,7 @@
 				1B27E233283CA14900FCB990 /* SearchOneInARowCollectionViewCell.swift in Sources */,
 				1B18F7EF28488456005B1CAF /* CustomRangeSliderThumbLayer.swift in Sources */,
 				0029729628445B8D0033437E /* LocationModel.swift in Sources */,
-				00863C4F2847452F004E5954 /* CalendarModel.swift in Sources */,
+				00863C4F2847452F004E5954 /* CalendarAYearModel.swift in Sources */,
 				1B27E231283CA14200FCB990 /* SearchTwoInARowCollectionViewCell.swift in Sources */,
 				00A85F35283B872800EA32E0 /* ReservationModel.swift in Sources */,
 				1B6E8D102850543E00F165B8 /* HeadCountThreePersonModel.swift in Sources */,

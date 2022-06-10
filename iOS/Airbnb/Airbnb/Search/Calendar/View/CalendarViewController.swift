@@ -11,7 +11,7 @@ import UIKit
 class CalendarViewController: SearchInfoTrackingViewController, CommonViewControllerProtocol {
     
     let reservationModel: ReservationModel
-    let calendarModel: CalendarModel = CalendarModel(baseDate: Date())
+    var calendarModel: CalenderModelProtocol
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -28,17 +28,9 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
     
     private let weekdayView: UIView = WeekdayView()
     
-    // MARK: - setUpToolBar 와 비교 하면서 백이랑 토론
-//    private let spacing: UIBarButtonItem = { UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil) }()
-//    private let skipButton: UIBarButtonItem = {
-//        let buttonItem = UIBarButtonItem(title: "건너뛰기", style: .plain, target: self, action: #selector(pushNextVC))
-//        return buttonItem
-//    }()
-//    private let nextButton: UIBarButtonItem = { UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(pushNextVC)) }()
-//    private let clearButton: UIBarButtonItem = { UIBarButtonItem(title: "지우기", style: .plain, target: self, action: #selector(clearReservationField)) }()
-    
-    init(reservationModel: ReservationModel) {
+    init(reservationModel: ReservationModel, calendarModel: CalenderModelProtocol) {
         self.reservationModel = reservationModel
+        self.calendarModel = calendarModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -58,8 +50,10 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
         collectionView.delegate = self
         let cellRegistration = UICollectionView.CellRegistration<CalendarViewCell, Day> {
             [weak self] (cell, indexPath, identifier) in
-            guard let day = self?.calendarModel.getADay(at: indexPath) else { return }
-            cell.day = day
+            DispatchQueue.main.async {
+                guard let day = self?.calendarModel.getADay(at: indexPath) else { return }
+                cell.day = day
+            }
         }
         
         let headerRegister = UICollectionView.SupplementaryRegistration<CalendarHearderView>(
@@ -161,8 +155,6 @@ class CalendarViewController: SearchInfoTrackingViewController, CommonViewContro
     @objc func clearReservationField() {
         calendarModel.checkinDayIndex = nil
         calendarModel.checkoutDayIndex = nil
-        //TODO: 여기서 Value 값에 쓰일 타입이 뭔지 몰라도 값만 넘기면 알아서 타입이 생성되게끔 하는 로직 고민
-        /// 현재 CheckInOutRange 라는 타입을 개발자가 알고 있어야 하는데 그냥 Date 만 두개 넘기면 되게끔 수정하면 좋을까? 백과 상의 해보자
         reloadTableView(dict: [.date: CheckInOutRange(checkIn: nil, checkOut: nil)])
         self.toolbarItems = setUpToolBarItems(isEmpty: true)
     }

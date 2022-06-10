@@ -160,7 +160,10 @@ extension LocationViewController: UICollectionViewDelegateFlowLayout, UICollecti
                 as? LocationCollectionViewCell else { return }
         let reservationModel = ReservationModel()
         reservationModel.location = cell.cityName.text
-        let nextVC = CalendarViewController(reservationModel: reservationModel)
+        let nextVC = CalendarViewController(
+            reservationModel: reservationModel,
+            calendarModel: CalendarAYearModel(baseDate: Date())
+        )
         let model = SearchInfoTrackingModel()
         model.setModelData(using: [.location: cell.cityName.text ?? ""])
         nextVC.setModel(model)

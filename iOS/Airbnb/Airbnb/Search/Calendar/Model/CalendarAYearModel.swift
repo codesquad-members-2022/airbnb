@@ -7,7 +7,19 @@
 
 import Foundation
 
-class CalendarModel {
+protocol CalenderModelProtocol {
+    var checkinDayIndex: IndexPath? { get set }
+    var checkoutDayIndex: IndexPath? { get set }
+    var month: [Month] { get }
+    var onUpdate: ([Day]) -> Void { get set }
+    var onUpdateBeforeDays: ([Day]) -> Void { get set }
+    var numberOfWeeksInBaseDate: Int { get }
+    func validateCheckDate(at indexPath: IndexPath)
+    func getLastDate(at path: IndexPath) -> Date?
+    func getADay(at path: IndexPath) -> Day
+}
+
+class CalendarAYearModel: CalenderModelProtocol {
     
     var checkinDayIndex: IndexPath? {
         didSet {
@@ -31,7 +43,7 @@ class CalendarModel {
             self.beforeDays = currentDays
         }
     }
-
+    
     private var beforeDays: [Day]? {
         willSet {
             guard let beforeDays = beforeDays else { return }
@@ -53,7 +65,7 @@ class CalendarModel {
             self.onUpdate(beforeDays)
         }
     }
-
+    
     
     private var baseDate: Date {
         didSet {
@@ -70,7 +82,7 @@ class CalendarModel {
     var onUpdate: ([Day]) -> Void = { _ in }
     var onUpdateBeforeDays: ([Day]) -> Void = { _ in }
     
-    let calendar: Calendar = Calendar.current
+    private let calendar: Calendar = Calendar.current
     
     private lazy var dateFormatter = DateFormatter.formatting(from: "d")
     
@@ -140,7 +152,7 @@ enum CalendarDateError: Error {
     case monthMetadataError
 }
 
-extension CalendarModel {
+extension CalendarAYearModel {
     func validateCheckDate(at indexPath: IndexPath) {
         if let checkinDayIndex = checkinDayIndex {
             if checkinDayIndex <= indexPath {
@@ -160,13 +172,13 @@ extension CalendarModel {
     }
 }
 
-private extension CalendarModel {
+private extension CalendarAYearModel {
     func getDays(fromIndex: IndexPath, toIndex: IndexPath? = nil) -> [Day] {
         let indexes = generateIndexes(fromIndex: fromIndex, toIndex: toIndex)
         let days = indexes.compactMap {
             month[$0.section].result[$0.row]
         }
-
+        
         return drawingDays(days: days)
     }
     
@@ -179,7 +191,7 @@ private extension CalendarModel {
             } else {
                 let sections = Array(fromIndex.section...toIndex.section)
                 var result: [IndexPath] = []
-
+                
                 sections.enumerated().forEach { offset, value in
                     let numberOfDays = month[value].count
                     switch offset {
@@ -223,13 +235,15 @@ private extension CalendarModel {
     }
 }
 
-extension CalendarModel {
+extension CalendarAYearModel {
     func getLastDate(at path: IndexPath) -> Date? {
         return month[path.section].result.last?.date
     }
     
     func getADay(at path: IndexPath) -> Day {
-        return month[path.section].result[path.row]
+        let month = self.month[path.section].result
+        let day = month[path.row]
+        return day
     }
 }
 

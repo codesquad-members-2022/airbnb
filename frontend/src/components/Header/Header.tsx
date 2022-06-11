@@ -1,47 +1,46 @@
-import { Grid } from "@mui/material";
+import { useContext } from "react";
+
 import Box from "@mui/material/Box";
 
-import MENUS from "mockData/menus";
+import { SearchBarStateContext } from "contexts/contexts";
+import RouterContext from "router/Contexts";
 
-import GNB from "./GNB/GNB";
-import { indexHeaderStyle, HeaderContainer } from "./Header.style";
-import SearchBar from "./SearchBar/SearchBar";
-import UserMenu from "./UserMenu/UserMenu";
+import ChildNodes from "./ChildNodes";
+import {
+  indexHeaderStyle,
+  HeaderContainer,
+  miniHeaderStyle,
+  miniHeaderWithFullSizeSearchBar,
+  HeaderLayer,
+} from "./Header.style";
 
-const LogoArea = () => {
+const Header = (): JSX.Element => {
+  const { isSearchBarFullSize, setIsSearchBarFullSize } = useContext(
+    SearchBarStateContext
+  )!;
+  const { page } = useContext(RouterContext)!;
+
+  const fullSizeHeaderStyle =
+    page === "index" ? indexHeaderStyle : miniHeaderWithFullSizeSearchBar;
+
   return (
-    <Grid container item xs={2} justifyContent="left">
-      <h1 style={{ margin: "auto 0" }}>
-        <a href="/" title="첫 화면으로 이동">
-          LOGO
-        </a>
-      </h1>
-    </Grid>
-  );
-};
-
-const Header = () => {
-  return (
-    <Box component="header" sx={indexHeaderStyle}>
+    <Box
+      component="header"
+      sx={
+        isSearchBarFullSize || page === "index"
+          ? fullSizeHeaderStyle
+          : miniHeaderStyle
+      }
+    >
+      {page !== "index" && isSearchBarFullSize && (
+        <HeaderLayer
+          onClick={() => setIsSearchBarFullSize(false)}
+          onKeyUp={() => setIsSearchBarFullSize(false)}
+          aria-hidden
+        />
+      )}
       <HeaderContainer maxWidth="xl">
-        <Grid
-          container
-          spacing={2}
-          columns={12}
-          sx={{ height: ({ elementSize }) => elementSize.fullSize }}
-        >
-          <LogoArea />
-          <GNB
-            menuData={MENUS}
-            container
-            rowSpacing={2}
-            item
-            xs={8}
-            justifyContent="center"
-          />
-          <UserMenu />
-        </Grid>
-        <SearchBar />
+        <ChildNodes />
       </HeaderContainer>
     </Box>
   );

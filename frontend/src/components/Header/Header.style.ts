@@ -1,24 +1,54 @@
-import { Container, ContainerProps } from "@mui/material";
+import emotionStyled from "@emotion/styled";
+import { Container, ContainerProps, Theme } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 import heroImage from "assets/hero-img.png";
+import theme from "styles/theme";
 
-// TODO: 검색결과 화면으로 변경시 다른 스타일이 적용되어야 함
-const indexHeaderStyle = {
+const defaultHeaderStyle = {
   maxwidth: "1440px",
-  height: "640px",
+};
+
+const indexHeaderStyle = {
+  ...defaultHeaderStyle,
+  height: theme.elementSize.header.index.height,
   backgroundImage: `url(${heroImage})`,
   backgroundRepeat: "no-repeat",
   backgroundPosition: "center bottom",
   backgroundSize: "cover",
 };
 
+const miniHeaderStyle = {
+  ...defaultHeaderStyle,
+  height: theme.elementSize.header.others.height,
+  backgroundColor: ({ palette }: Theme) => palette.white.main,
+  boxShadow: `0px 9px 15px -3px rgba(0,0,0,0.1)`,
+};
+
+const miniHeaderWithFullSizeSearchBar = {
+  ...miniHeaderStyle,
+  height: "190px",
+};
+
+const HeaderLayer = emotionStyled.div`
+  position: absolute;
+  top: ${theme.elementSize.header.others.height};
+  width: 100vw;
+  height: calc(100vh - ${theme.elementSize.header.others.height});
+`;
+
 const HeaderContainer = styled(Container)<ContainerProps>(
   ({ theme: { elementSize, style, whiteSpace } }) => `
-  height: ${elementSize.navBarHeight};
+  height: ${elementSize.header.others.height};
   margin: ${style.alignCenter.margin};
-  padding: 0 ${whiteSpace.inner} !important;
+padding: 0 ${whiteSpace.inner} !important;
 `
 );
 
-export { indexHeaderStyle, HeaderContainer };
+export {
+  indexHeaderStyle,
+  HeaderContainer,
+  miniHeaderStyle,
+  miniHeaderWithFullSizeSearchBar,
+  HeaderLayer,
+};

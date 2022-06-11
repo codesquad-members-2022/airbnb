@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { Box } from "@mui/material";
 
 import { PriceRangeContext } from "contexts/contexts";
-import numToWon from "utils/utils";
+import { numToWon } from "utils/utils";
 
 import PriceChart from "./PriceChart";
 import RangeSlider from "./RangeSlider";

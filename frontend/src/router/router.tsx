@@ -1,31 +1,64 @@
 import { useMemo, useState } from "react";
 
-import RouterContext from "./Contexts";
-import { pages } from "./pages";
+import { LinkPath } from "router";
 
-const { location } = window;
+import RouterContext /* , LocationContext */ from "./Contexts";
+import pages from "./pages";
 
 const FIRST_INDEX = 0;
-const FIRST_SLASH_COUNT = 1;
+const FIRST_CHAR_COUNT = 1;
 
-const getCurrentPath = () => {
-  return (
-    location.pathname.slice(FIRST_SLASH_COUNT).split("/")[FIRST_INDEX] ||
-    "index"
+// const queryKeysForSearchBarFilter = [
+//   "checkIn",
+//   "checkOut",
+//   "maxPrice",
+//   "minPrice",
+//   "numAdult",
+//   "numChild",
+// ];
+
+const parseQueryStringToObject = (
+  queryString: string
+): { [key: string]: string } | null => {
+  if (!queryString.length) {
+    return null;
+  }
+  return Object.fromEntries(
+    queryString
+      .slice(FIRST_CHAR_COUNT)
+      .split("&")
+      .map((s) => s.split("="))
   );
 };
 
-const Router = ({ children }: RouterProps): React.ReactElement => {
-  const currentPath = getCurrentPath();
+const Router = (): React.ReactElement => {
+  const { location } = window;
 
-  const [page, setPage] = useState(pages[currentPath] ? "index" : "notFound");
+  const getCurrentPath = (): LinkPath => {
+    const currentPath =
+      location.pathname.slice(FIRST_CHAR_COUNT).split("/")[FIRST_INDEX] ||
+      "index";
 
-  onpopstate = (/* e: PopStateEvent */) => {
-    const poppedPath = getCurrentPath();
-    // TODO: e.state 이용하여 뒤로가기 시 검색결과
+    return currentPath as LinkPath;
+  };
+
+  const currentPath: LinkPath = getCurrentPath();
+
+  const { search: queryString } = location;
+
+  let queryData = parseQueryStringToObject(queryString);
+
+  const [page, setPage] = useState<LinkPath>(
+    pages[currentPath] ? currentPath : "notFound"
+  );
+
+  onpopstate = () => {
+    const poppedPath: LinkPath = getCurrentPath();
+    queryData = parseQueryStringToObject(queryString);
 
     if (!pages[poppedPath]) {
       setPage("notFound");
+
       return;
     }
 
@@ -34,14 +67,14 @@ const Router = ({ children }: RouterProps): React.ReactElement => {
 
   return (
     <RouterContext.Provider
-      value={useMemo(() => ({ page, setPage }), [page, setPage])}
+      value={useMemo(
+        () => ({ queryData, page, setPage }),
+        [queryData, page, setPage]
+      )}
     >
-      {children}
+      <div style={{ position: "relative" }}>{pages[page]}</div>
     </RouterContext.Provider>
   );
 };
-interface RouterProps {
-  children: React.ReactNode;
-}
 
 export default Router;

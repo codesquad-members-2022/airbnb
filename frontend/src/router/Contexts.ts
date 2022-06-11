@@ -1,11 +1,11 @@
 import { createContext } from "react";
 
-export default createContext<RouterContextType>({
+import { /* LocationContextType, */ RouterContextType } from "router";
+
+const RouterContext = createContext<RouterContextType>({
+  queryData: null,
   page: "index",
   setPage: () => {},
 });
 
-interface RouterContextType {
-  page: string;
-  setPage: React.Dispatch<React.SetStateAction<string>>;
-}
+export default RouterContext;

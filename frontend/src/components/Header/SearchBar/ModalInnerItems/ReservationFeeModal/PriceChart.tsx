@@ -6,7 +6,6 @@ import theme from "styles/theme";
 import { PriceChartCanvas } from "./ReservationFeeModal.style";
 
 // TODO: 실제 API 데이터로 수정, 테마 분리
-
 const EXCLUDE_RANGE_COUNT = 1;
 
 const canvasSize = theme.elementSize.searchBar.priceChart;
@@ -124,7 +123,7 @@ const PriceChart = () => {
   useEffect(() => {
     drawChart();
     fillChart(percentage.min, percentage.max);
-  }, [percentage]);
+  }, [percentage.min, percentage.max]);
 
   return (
     <PriceChartCanvas

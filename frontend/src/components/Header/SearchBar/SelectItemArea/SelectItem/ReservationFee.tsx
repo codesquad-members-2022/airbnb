@@ -1,12 +1,16 @@
 import { useState, useContext, useMemo } from "react";
 
-import { QueryContexts } from "contexts/QueryContexts";
-import { PriceRangeContext } from "contexts/contexts";
-import numToWon from "utils/utils";
+import { PriceRangeContext, SearchBarStateContext } from "contexts/contexts";
+import RouterContext from "router/Contexts";
+import { numToWon } from "utils/utils";
 
 import PriceSelectArea from "../../ModalInnerItems/ReservationFeeModal/PriceSelectArea";
 import ButtonArea from "../ButtonArea/ButtonArea";
-import SelectItem, { WhiteSpace, SelectItemProps } from "./SelectItem";
+import SelectItem, {
+  WhiteSpace,
+  SelectItemProps,
+  RangeType,
+} from "./SelectItem";
 
 const buttonId = "reservation-fee-button";
 
@@ -22,25 +26,40 @@ const ReservationFee = ({
   stateData,
   initialPrice,
 }: ReservationFeeProps): JSX.Element => {
-  const { state: price, setState: setPrice } = stateData!;
-  const queryData = useContext(QueryContexts);
+  const { queryData, page } = { ...useContext(RouterContext) };
+  const { isSearchBarFullSize, setIsSearchBarFullSize } = useContext(
+    SearchBarStateContext
+  )!;
 
   const [percentage, setPercentage] = useState({
     min: INITIAL_PRICE_PERCENTAGE.min,
     max: INITIAL_PRICE_PERCENTAGE.max,
   });
 
+  const { state: price, setState: setPrice } = stateData as {
+    state: RangeType;
+    setState: React.Dispatch<React.SetStateAction<RangeType>>;
+  };
+
   const isQueryDataIncludesPriceRange =
-    queryData.minPrice || queryData.maxPrice;
+    !!queryData?.minPrice || !!queryData?.maxPrice;
+
+  const isReservationFeeFiltered =
+    percentage.min !== INITIAL_PRICE_PERCENTAGE.min ||
+    percentage.max !== INITIAL_PRICE_PERCENTAGE.max;
+
+  const isDiscriptionFiltered =
+    !!isQueryDataIncludesPriceRange || !!isReservationFeeFiltered;
 
   const description =
-    !isQueryDataIncludesPriceRange &&
-    percentage.min === INITIAL_PRICE_PERCENTAGE.min &&
-    percentage.max === INITIAL_PRICE_PERCENTAGE.max
-      ? "금액대 설정"
-      : `${numToWon(price.min)}~${numToWon(price.max)}`;
+    isDiscriptionFiltered && page !== "index"
+      ? `₩${numToWon(Number(queryData?.minPrice) || price.min)} - ₩${numToWon(
+          Number(queryData?.maxPrice) || price.max
+        )}`
+      : "금액 설정";
 
   const isOpen = anchorEl?.id === buttonId;
+
   return (
     <PriceRangeContext.Provider
       value={useMemo(
@@ -59,16 +78,28 @@ const ReservationFee = ({
       )}
     >
       <SelectItem
-        gridStyle={{
-          xs: 2,
-          pl: 2,
-        }}
+        gridStyle={
+          isSearchBarFullSize || page === "index"
+            ? {
+                xs: 2,
+                pl: 2,
+              }
+            : { xs: 3, pl: 1 }
+        }
+        isDiscriptionFiltered={isDiscriptionFiltered}
         buttonId={buttonId}
         buttonAreaLabel="숙박요금 설정"
         title="요금"
         desc={description}
         open={isOpen}
-        handleClick={onClick}
+        handleClick={
+          isSearchBarFullSize || page === "index"
+            ? onClick
+            : () => {
+                setIsSearchBarFullSize(true);
+                // NOTE: reservationFee모달도 open상태로 되면 좋음.
+              }
+        }
         handleClose={onClose}
         createNewPopup
         anchorEl={anchorEl}

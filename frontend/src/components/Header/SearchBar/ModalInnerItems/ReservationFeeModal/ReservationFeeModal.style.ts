@@ -57,6 +57,7 @@ const RangeSliderWrapper = styled.div`
       width: 22px;
       height: 22px;
       border-radius: 50%;
+      background-color: #4f4f4f;
       background: url(${pauseCircle}) no-repeat center;
       -webkit-appearance: none;
       cursor: pointer;

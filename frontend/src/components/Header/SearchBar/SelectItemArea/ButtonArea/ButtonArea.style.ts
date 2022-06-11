@@ -2,13 +2,15 @@ import { IconButton, IconButtonProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const RoundButton = styled(IconButton, {
-  shouldForwardProp: (prop) => prop !== "icon" && prop !== "isFocused",
+  shouldForwardProp: (prop) =>
+    prop !== "icon" && prop !== "isFocused" && prop !== "isSearchBarFullSize",
   name: "MyThemeComponent",
   slot: "Root",
 })<RoundButtonProps>((props) => {
   const {
     icon,
     isFocused,
+    isSearchBarFullSize,
     theme: { palette, elementSize },
   } = props;
 
@@ -18,9 +20,15 @@ const RoundButton = styled(IconButton, {
   const bgColor = isCloseIcon ? "grey4" : "primary";
   const svgColor = isCloseIcon ? "grey1" : "white";
 
+  const smallRoundButtonSize = `
+    width: ${elementSize.smallRoundButton.width};
+    height: ${elementSize.smallRoundButton.width};
+  `;
+
   const buttonSize = `
     width: ${elementSize.searchBar[buttonKeyName].width};
     height: ${elementSize.searchBar[buttonKeyName].height};
+    ${!isSearchBarFullSize && smallRoundButtonSize}
     `;
 
   const focusedButtonStyle = `
@@ -33,6 +41,16 @@ const RoundButton = styled(IconButton, {
     overflow: hidden;
     `;
 
+  const iconSize = isSearchBarFullSize
+    ? `
+  width: ${elementSize.searchBar[buttonKeyName].icon.width};
+  height: ${elementSize.searchBar[buttonKeyName].icon.height};
+  `
+    : `
+  
+  width: ${elementSize.searchBar.icon.miniSize};
+  height: ${elementSize.searchBar.icon.miniSize};`;
+
   return `
     ${isFocused ? focusedButtonStyle : buttonSize};
     transition: all ease-out 0.2s 0s;
@@ -43,8 +61,7 @@ const RoundButton = styled(IconButton, {
     margin-right: ${isCloseIcon && elementSize.searchBar.closeButton.width};
 
     .MuiSvgIcon-root {
-      width: ${elementSize.searchBar[buttonKeyName].icon.width};
-      height: ${elementSize.searchBar[buttonKeyName].icon.height};
+      ${iconSize}
       color: ${palette[svgColor].main};
     };
   `;
@@ -55,4 +72,5 @@ export default RoundButton;
 export interface RoundButtonProps extends IconButtonProps {
   icon: "close" | "search";
   isFocused?: boolean | undefined;
+  isSearchBarFullSize?: boolean;
 }

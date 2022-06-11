@@ -40,12 +40,21 @@ const theme = createTheme({
   elementSize: {
     fullSize: "100%",
     navBarHeight: "100px",
-    userMenuButton: {
+    header: {
+      index: {
+        height: "640px",
+      },
+      others: {
+        height: "94px",
+      },
+    },
+    smallRoundButton: {
       width: `32px`,
       height: `32px`,
     },
     searchBar: {
       height: 60,
+      icon: { miniSize: "16px" },
       closeButton: {
         width: "20px",
         height: "20px",
@@ -71,6 +80,11 @@ const theme = createTheme({
         height: `76px`,
         padding: `16px 16px 16px 40px !important`,
       },
+      miniSize: {
+        width: "450px",
+        height: "48px",
+        padding: "8px 8px 8px 24px !important",
+      },
       priceChart: {
         width: 365,
         height: 100,
@@ -87,9 +101,13 @@ const theme = createTheme({
     `,
       margin: "0 auto",
     },
+    miniSearchButton: {
+      fontWeight: 400,
+      fontSize: "12px",
+    },
   },
   whiteSpace: {
-    inner: "80px",
+    inner: "40px",
     searchBarPadding: "64px",
   },
   components: {
@@ -174,12 +192,21 @@ declare module "@mui/material/styles" {
     elementSize: {
       fullSize: string;
       navBarHeight: string;
-      userMenuButton: {
+      header: {
+        index: {
+          height: string;
+        };
+        others: {
+          height: string;
+        };
+      };
+      smallRoundButton: {
         width: string;
         height: string;
       };
       searchBar: {
         height: number;
+        icon: { miniSize: string };
         closeButton: {
           width: string;
           height: string;
@@ -205,6 +232,11 @@ declare module "@mui/material/styles" {
           height: string;
           padding: string;
         };
+        miniSize: {
+          width: string;
+          height: string;
+          padding: string;
+        };
         priceChart: {
           width: number;
           height: number;
@@ -215,6 +247,10 @@ declare module "@mui/material/styles" {
       alignCenter: {
         flex: string;
         margin: string;
+      };
+      miniSearchButton: {
+        fontWeight: number;
+        fontSize: string;
       };
       circularBorder: string;
     };
@@ -227,12 +263,21 @@ declare module "@mui/material/styles" {
     elementSize?: {
       fullSize?: string;
       navBarHeight?: string;
-      userMenuButton?: {
+      smallRoundButton?: {
         width?: string;
         height?: string;
       };
+      header?: {
+        index?: {
+          height?: string;
+        };
+        others?: {
+          height?: string;
+        };
+      };
       searchBar?: {
         height?: number;
+        icon?: { miniSize?: string };
         closeButton?: {
           width?: string;
           height?: string;
@@ -258,6 +303,11 @@ declare module "@mui/material/styles" {
           height?: string;
           padding?: string;
         };
+        miniSize?: {
+          width?: string;
+          height?: string;
+          padding?: string;
+        };
         priceChart?: {
           width?: number;
           height?: number;
@@ -268,6 +318,10 @@ declare module "@mui/material/styles" {
       alignCenter?: {
         flex?: string;
         margin?: string;
+      };
+      miniSearchButton?: {
+        fontWeight?: number;
+        fontSize?: string;
       };
       circularBorder?: string;
     };
@@ -303,6 +357,12 @@ declare module "@mui/material/Button" {
     black: true;
     white: true;
     grey4: true;
+  }
+}
+
+declare module "@mui/material/Checkbox" {
+  interface CheckboxPropsColorOverrides {
+    grey2: true;
   }
 }
 

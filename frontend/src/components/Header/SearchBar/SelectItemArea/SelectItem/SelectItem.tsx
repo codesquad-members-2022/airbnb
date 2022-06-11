@@ -1,4 +1,4 @@
-import { SetStateAction } from "react";
+import { SetStateAction, useContext } from "react";
 
 import {
   Button,
@@ -7,6 +7,10 @@ import {
   PopoverProps,
   Typography,
 } from "@mui/material";
+
+import { SearchBarStateContext } from "contexts/contexts";
+import RouterContext from "router/Contexts";
+import theme from "styles/theme";
 
 import {
   ModalTemplate,
@@ -29,7 +33,11 @@ const SelectItem = ({ ...props }: SelectItemDataProps): JSX.Element => {
     anchorEl,
     children,
     createNewPopup,
+    isDiscriptionFiltered,
   } = props;
+
+  const { isSearchBarFullSize } = { ...useContext(SearchBarStateContext) };
+  const { page } = { ...useContext(RouterContext) };
 
   return (
     <SelectItemTemplate xs={xs} pl={pl}>
@@ -42,8 +50,19 @@ const SelectItem = ({ ...props }: SelectItemDataProps): JSX.Element => {
         onClick={handleClick}
         sx={itemStyles.button}
       >
-        <Typography sx={itemStyles.title}>{title}</Typography>
-        <Typography sx={itemStyles.desc}>{desc}</Typography>
+        {(isSearchBarFullSize || page === "index") && (
+          <Typography sx={itemStyles.title}>{title}</Typography>
+        )}
+        <Typography
+          sx={{
+            ...(isSearchBarFullSize || page === "index"
+              ? itemStyles.desc
+              : itemStyles.miniSizeDesc),
+            ...(isDiscriptionFiltered && { color: theme.palette.black.main }),
+          }}
+        >
+          {desc}
+        </Typography>
       </Button>
       {(createNewPopup && (
         <ModalTemplate
@@ -76,7 +95,7 @@ export interface SelectItemDataProps extends PopoverProps {
   };
   buttonId: string;
   buttonAreaLabel: string;
-  title: string;
+  title?: string;
   desc: string;
   modalAnchorStyle?: {
     horizontal: "center" | "left" | "right" | number;
@@ -86,6 +105,7 @@ export interface SelectItemDataProps extends PopoverProps {
   handleClick?: (event: React.MouseEvent<HTMLElement>) => void;
   handleClose?: () => void;
   createNewPopup?: boolean;
+  isDiscriptionFiltered?: boolean;
 }
 
 export interface SelectItemProps {
@@ -101,7 +121,7 @@ export interface SelectItemProps {
 
 export type AnchorEl = null | HTMLDivElement | (EventTarget & HTMLElement);
 
-interface RangeType {
+export interface RangeType {
   min: number;
   max: number;
 }

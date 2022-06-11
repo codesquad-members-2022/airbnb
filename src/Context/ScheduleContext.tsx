@@ -1,7 +1,6 @@
 import { createContext, ReactNode, Dispatch, useReducer } from "react";
 import { getLateDay } from "util/util";
-
-type dayType = { year: number; month: number; date: number };
+import type { dayType } from "util/util";
 
 type scheduleType = {
 	checkin: dayType;

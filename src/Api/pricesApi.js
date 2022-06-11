@@ -3,8 +3,8 @@ import axios from "axios";
 const baseURL = "/api/prices";
 const client = axios.create({ baseURL });
 
-const hotelsPricesApi = {
-	getHotelsPrices: async () => {
+const pricesApi = {
+	getPrices: async () => {
 		try {
 			const response = await client.get("/");
 			return response.data;
@@ -14,4 +14,4 @@ const hotelsPricesApi = {
 	},
 };
 
-export default hotelsPricesApi;
+export default pricesApi;

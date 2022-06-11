@@ -16,6 +16,7 @@ const StyledPriceHover = styled.div`
 			}
 		}
 	`}
+	z-index: 10;
 `;
 
 const StyledPrice = styled.div`

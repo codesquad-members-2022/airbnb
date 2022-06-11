@@ -19,7 +19,7 @@ const Schedule = () => {
 
 	return (
 		<>
-			<StyledCheckin>
+			<StyledCheckin onClick={(event) => event.stopPropagation()}>
 				<StyledSearchBarChild onClick={() => checkModal(modalStateCheckin)} name={name}>
 					<div>체크인</div>
 					<div>
@@ -37,7 +37,7 @@ const Schedule = () => {
 					/>
 				)}
 			</StyledCheckin>
-			<StyledCheckout>
+			<StyledCheckout onClick={(event) => event.stopPropagation()}>
 				<StyledSearchBarChild onClick={() => checkModal(modalStateCheckout)} name={name}>
 					<div>체크아웃</div>
 					<div>

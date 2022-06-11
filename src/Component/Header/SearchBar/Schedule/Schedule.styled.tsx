@@ -17,6 +17,7 @@ const StyledCheckin = styled.div`
 			box-shadow: ${shadow.main};
 		}
 	`}
+	z-index: 10;
 `;
 
 const StyledCheckout = styled.div`
@@ -36,6 +37,7 @@ const StyledCheckout = styled.div`
 			}
 		}
 	`}
+	z-index: 10;
 `;
 
 export { StyledCheckout, StyledCheckin };

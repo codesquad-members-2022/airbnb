@@ -5,13 +5,19 @@ interface IStyledSearchBarChild {
 }
 
 interface IStyledSearchBar {
-	searchBarIsHidden: boolean;
+	selectedSearchBar: string;
 	miniBarIsClicked: boolean;
+	isLocationSearch: boolean;
 }
 
+const SearchBarWrapper = styled.div`
+	width: 100%;
+	margin: 0 auto;
+`;
+
 const StyledSearchBar = styled.div<IStyledSearchBar>`
-	${({ searchBarIsHidden }) =>
-		searchBarIsHidden
+	${({ selectedSearchBar }) =>
+		selectedSearchBar === "miniSearchBar"
 			? css`
 					visibility: hidden;
 			  `
@@ -31,29 +37,53 @@ const StyledSearchBar = styled.div<IStyledSearchBar>`
 		background-color: ${colors.white};
 	`}
 
-	${({ miniBarIsClicked }) =>
+	${({ miniBarIsClicked, isLocationSearch }) =>
 		miniBarIsClicked &&
+		isLocationSearch &&
 		css`
-			position: absolute;
-			top: 30px;
-			left: 26%;
+			margin: 0 auto;
+			margin-top: 130px;
 			animation-duration: 1s;
-			animation-name: slide;
+			animation-name: slide-out;
 			animation-fill-mode: forwards;
 			transition-timing-function: ease-out;
-		`}}
+		`}
 
-		@keyframes slide {
-			from {
-				margin-top: 23px;
-				transform: scale(0.5);
-			}
-			to {
-				margin-top: 90px;
-				transform: scale(1.0);
-			}
+		${({ miniBarIsClicked, isLocationSearch }) =>
+		!miniBarIsClicked &&
+		isLocationSearch &&
+		css`
+			margin: 0 auto;
+			margin-top: 130px;
+			animation-duration: 0.6s;
+			animation-name: slide-in;
+			animation-fill-mode: forwards;
+			transition-timing-function: ease-out;
+		`}
+
+		@keyframes slide-out {
+		from {
+			margin-top: 23px;
+			transform: scale(0.5);
 		}
-	
+		to {
+			margin-top: 90px;
+			transform: scale(1);
+		}
+	}
+
+	@keyframes slide-in {
+		from {
+			margin-top: 90px;
+			transform: scale(1);
+		}
+		to {
+			margin-top: 17px;
+			transform: scale(0.5);
+		}
+	}
+
+	z-index: 10;
 `;
 
 const StyledSearchBarChild = styled.div<IStyledSearchBarChild>`
@@ -97,6 +127,8 @@ const SearchIcon = styled.div`
 		justify-content: space-evenly;
 		color: ${colors.white};
 	`}
+	position: relative;
+	z-index: 10;
 `;
 
-export { StyledSearchBar, StyledSearchBarChild, SearchIcon };
+export { StyledSearchBar, StyledSearchBarChild, SearchIcon, SearchBarWrapper };

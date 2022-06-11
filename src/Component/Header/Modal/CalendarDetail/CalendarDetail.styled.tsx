@@ -4,6 +4,7 @@ const CalendarsWrapper = styled.div`
 	display: flex;
 	width: 800px;
 	overflow: hidden;
+	z-index: 10;
 `;
 
 const StyledCalendars = styled.div<{ sliderState: string }>`

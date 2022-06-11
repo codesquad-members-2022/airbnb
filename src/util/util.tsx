@@ -24,6 +24,17 @@ const getLateDay = (originDay: dayType, comparedDay: dayType) => {
 
 const getShowedMonth = (month: number) => (month >= 12 ? 1 : month + 1);
 
+const getDateType = ({ year, month, date }: dayType) => new Date(year, month, date);
+
+const getDateDiff = (firstDay: dayType, secondDay: dayType) => {
+	const firstDate = getDateType(firstDay);
+	const secondDate = getDateType(secondDay);
+
+	const differentDate = firstDate.getTime() - secondDate.getTime();
+
+	return Math.abs(differentDate / (1000 * 3600 * 24));
+};
+
 export {
 	PRICE_UNIT,
 	DISTANCE_MIN_MAX,
@@ -32,4 +43,6 @@ export {
 	getPriceType,
 	getLateDay,
 	getShowedMonth,
+	getDateDiff,
 };
+export type { dayType };

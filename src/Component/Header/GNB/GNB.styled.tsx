@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import logoSrc from "util/logo.png";
+import logoSrc from "img/logo.png";
 
 interface IStyledGNBNav {
 	isLocationSearch: boolean;
@@ -16,6 +16,8 @@ const StyledGNB = styled.div`
 	justify-content: space-between;
 	display: flex;
 	padding: 10px;
+	position: relative;
+	z-index: 10;
 `;
 
 const StyledNavList = styled.ul`

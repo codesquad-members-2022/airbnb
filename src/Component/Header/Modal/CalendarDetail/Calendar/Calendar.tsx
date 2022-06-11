@@ -12,7 +12,7 @@ const Calendar = ({
 	title: string;
 	year: number;
 	month: number;
-	changeDates: any;
+	changeDates: (direction: "prev" | "next") => void;
 }) => {
 	return (
 		<StyledCalendar>

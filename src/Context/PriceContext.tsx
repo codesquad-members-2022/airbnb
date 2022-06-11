@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useReducer, useEffect, Dispatch } from "react";
-import hotelsPricesApi from "Api/hotelsPricesApi";
+import pricesApi from "Api/pricesApi";
 import { MAX_PRICE, MIN_PRICE } from "util/util";
 
 type pricesType = {
@@ -74,8 +74,8 @@ const priceReducer = (price: priceType, action: priceDispatchAction) => {
 const PriceProvider = ({ children }: { children: ReactNode }) => {
 	const [price, priceDispatch] = useReducer(priceReducer, priceDefault);
 
-	const fetchhotelsPrices = async () => {
-		const hotelsPrices = await hotelsPricesApi.getHotelsPrices();
+	const fetchPrices = async () => {
+		const hotelsPrices = await pricesApi.getPrices();
 		const { avg, prices } = hotelsPrices;
 		priceDefault.avg = avg;
 		priceDefault.prices = prices;
@@ -83,7 +83,7 @@ const PriceProvider = ({ children }: { children: ReactNode }) => {
 	};
 
 	useEffect(() => {
-		fetchhotelsPrices();
+		fetchPrices();
 	}, []);
 
 	return (

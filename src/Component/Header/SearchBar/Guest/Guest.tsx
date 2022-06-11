@@ -17,7 +17,7 @@ const Guest = () => {
 	const reset = () => guestsDispatch({ guest: "adult", type: "reset" });
 
 	return (
-		<StyledGuestHover>
+		<StyledGuestHover onClick={(event) => event.stopPropagation()}>
 			<StyledGuest>
 				<StyledSearchBarChild onClick={() => checkModal(modalState)} name={modalState}>
 					<div>인원</div>

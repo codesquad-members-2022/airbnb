@@ -17,7 +17,7 @@ const Price = () => {
 	const isDefault = max === 1000000 && min === 0;
 
 	return (
-		<StyledPriceHover>
+		<StyledPriceHover onClick={(event) => event.stopPropagation()}>
 			<StyledPrice>
 				<StyledSearchBarChild onClick={() => checkModal(modalState)} name={modalState}>
 					<div>{PRICE}</div>

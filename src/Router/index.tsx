@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NotFound from "Component/NotFound";
 import MainDesc from "Component/MainDesc";
-import SearchDesc from "Component/SearchDesc";
+import SearchDesc from "Component/SearchDesc/SearchDesc";
 import Main from "Component/Main";
 
 const Router = () => {

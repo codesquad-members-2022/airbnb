@@ -34,21 +34,26 @@ const width = {
 	miniScheduleChild: "133px",
 	miniPriceChild: "149px",
 	miniGuestChild: "86px",
+	searchLists: "590px",
+	searchMap: "580px",
+	searchListChild: "280px",
+	hotelInfo: "230px",
 };
 
 const height = {
 	GNB: "100px",
 	header1: "640px",
 	searchbar: "76px",
-	checkinModal: "512px",
-	checkoutModal: "512px",
-	calendar: "390px",
-	calendarDayBox: "340px",
+	checkinModal: "530px",
+	checkoutModal: "530px",
+	calendar: "420px",
+	calendarDayBox: "350px",
 	calendarDay: "48px",
 	calendarLabel: "24px",
 	calendarTitle: "23px",
 	guestModal: "355px",
 	priceModal: "360px",
+	searchList: "230px",
 };
 
 const fontMain = {

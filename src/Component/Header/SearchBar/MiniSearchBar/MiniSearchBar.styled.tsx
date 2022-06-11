@@ -1,16 +1,16 @@
 import styled, { css } from "styled-components";
 
 interface IStyledMiniSearchBarChild {
-	name: string;
+	name: "miniPrice" | "miniSchedule" | "miniGuest";
 }
 
 interface IStyledMiniSearchBar {
-	miniSearchBarIsHidden: boolean;
+	selectedSearchBar: string;
 }
 
 const StyledMiniSearchBar = styled.div<IStyledMiniSearchBar>`
-	${({ miniSearchBarIsHidden }) =>
-		miniSearchBarIsHidden
+	${({ selectedSearchBar }) =>
+		selectedSearchBar === "searchBar"
 			? css`
 					visibility: hidden;
 			  `
@@ -20,15 +20,12 @@ const StyledMiniSearchBar = styled.div<IStyledMiniSearchBar>`
 
 	width: 410px;
 	height: 48px;
-	margin: 0 auto;
-	position: absolute;
-	top: 30px;
-	left: 36%;
 	text-align: center;
 	background: #ffffff;
 	border: 1px solid #bdbdbd;
 	border-radius: 30px;
 	display: flex;
+	z-index: 10;
 `;
 
 const SearchIcon = styled.div`

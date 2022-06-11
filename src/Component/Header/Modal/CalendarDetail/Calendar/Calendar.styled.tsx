@@ -59,6 +59,12 @@ const VisibleDay = styled.div<IVisibleDay>`
 	cursor: pointer;
 
 	${({ isChecked, theme: { colors } }) => css`
+		:hover {
+			background: ${colors.grey2};
+			border-radius: 30px;
+			color: ${colors.white};
+		}
+
 		${isChecked &&
 		css`
 			background: ${colors.grey1};

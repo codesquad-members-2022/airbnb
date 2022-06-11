@@ -1,19 +1,18 @@
 import React from "react";
 import { SearchButton } from "util/Icons";
 import { StyledMiniSearchBar, SearchIcon } from "./MiniSearchBar.styled";
-
 import MiniSchedule from "./MiniSchedule/MiniSchedule";
 import MiniPrice from "./MiniPrice/MiniPrice";
 import MiniGuest from "./MiniGuest/MiniGuest";
 
 interface IMiniSearchBarProps {
-	miniSearchBarIsHidden: boolean;
+	selectedSearchBar: string;
 	miniBarIsClicked: boolean;
 	setMiniBarIsClicked: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const MiniSearchBar = ({
-	miniSearchBarIsHidden,
+	selectedSearchBar,
 	miniBarIsClicked,
 	setMiniBarIsClicked,
 }: IMiniSearchBarProps) => {
@@ -22,10 +21,7 @@ const MiniSearchBar = ({
 	};
 
 	return (
-		<StyledMiniSearchBar
-			miniSearchBarIsHidden={miniSearchBarIsHidden}
-			onClick={handleMiniBarIsClicked}
-		>
+		<StyledMiniSearchBar selectedSearchBar={selectedSearchBar} onClick={handleMiniBarIsClicked}>
 			<MiniSchedule />
 			<MiniPrice />
 			<MiniGuest />

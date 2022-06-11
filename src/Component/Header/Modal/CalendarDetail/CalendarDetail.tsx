@@ -3,7 +3,7 @@ import { StyledCalendars, CalendarsWrapper } from "./CalendarDetail.styled";
 import Calendar from "./Calendar/Calendar";
 
 type TCalendar = {
-	title: string;
+	title: "" | "prev" | "next";
 	gap: number;
 };
 
@@ -41,13 +41,15 @@ const getMonthAndYearByGap = (month: number, year: number, gap: number) => {
 	if (month + gap < 0) {
 		nextMonth = NUM_DECEMBER + month + gap;
 		nextYear -= 1;
-	} else if (month + gap > NUM_DECEMBER) {
+		return { nextMonth, nextYear };
+	}
+	if (month + gap > NUM_DECEMBER) {
 		nextMonth = month + gap - NUM_DECEMBER;
 		nextYear += 1;
-	} else {
-		nextMonth += gap;
+		return { nextMonth, nextYear };
 	}
 
+	nextMonth += gap;
 	return { nextMonth, nextYear };
 };
 

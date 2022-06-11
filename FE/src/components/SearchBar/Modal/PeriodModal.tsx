@@ -9,10 +9,6 @@ interface PriceModalTypes {
   modalRef: RefObject<HTMLDivElement>;
 }
 
-export interface CalendarTypes {
-  year: number;
-  month: number;
-}
 const PeriodModal = ({ modalRef }: PriceModalTypes) => {
   const date = new Date();
   const year = date.getFullYear();

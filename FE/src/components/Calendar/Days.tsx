@@ -27,8 +27,7 @@ const Days = ({ year, month, day, index }: DayTypes) => {
   const getPrevDay = (today: Date, comparedDay: string) => {
     const daysInMonth = new Date(today);
     const prevDaysInMonth = new Date(comparedDay);
-    if (daysInMonth >= prevDaysInMonth) return true;
-    else return false;
+    return daysInMonth >= prevDaysInMonth;
   };
   const isDisabledDay = getPrevDay(today, comparedDay);
 

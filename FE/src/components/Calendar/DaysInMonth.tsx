@@ -21,7 +21,7 @@ const DaysInMonth = ({ year, month }: CalendarTypes) => {
   return (
     <>
       {days.map((day, index) => (
-        <Days year={year} month={month} day={day} index={index} />
+        <Days key={index} year={year} month={month} day={day} index={index} />
       ))}
     </>
   );

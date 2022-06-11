@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 import PeriodModal from '@components/SearchBar/Modal/PeriodModal';
 import { AreaPropsTypes } from '@components/SearchBar/PriceArea';
@@ -9,10 +9,11 @@ import { CalendarProvider } from '@context/calendar/Provider';
 import { defaultPeriod } from '@data';
 import WithProvider from '@hoc/WithProvider';
 import { useCalendarState } from '@lib/hooks/useContext';
+import useModal from '@lib/hooks/useModal';
 
 const PeriodArea = ({ size }: AreaPropsTypes) => {
-  const [isPeriodModalOpen, setIsPeriodModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
+  const [isPeriodModalOpen, setIsPeriodModalOpen] = useModal({ modalRef });
   const { checkIn, setCheckIn, checkOut, setCheckOut } = useCalendarState();
 
   const isCheckInExist = checkIn !== defaultPeriod.checkIn;
@@ -26,7 +27,6 @@ const PeriodArea = ({ size }: AreaPropsTypes) => {
 
   const toggleIsPeriodModalOpen = () => setIsPeriodModalOpen(() => !isPeriodModalOpen);
   const isResetCheckInOut = () => {
-    setIsPeriodModalOpen(() => !isPeriodModalOpen);
     setCheckIn('');
     setCheckOut('');
   };

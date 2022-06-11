@@ -1,13 +1,10 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 916px;
   height: auto;
-  background: ${({ theme }) => theme.color.white};
-  border-radius: 40px;
   padding-top: 30px;
   padding-bottom: 30px;
-  box-shadow: 0px 4px 10px rgba(51, 51, 51, 0.1), 0px 0px 4px rgba(51, 51, 51, 0.05);
 `;
 
 export const Wrapper = styled.div`

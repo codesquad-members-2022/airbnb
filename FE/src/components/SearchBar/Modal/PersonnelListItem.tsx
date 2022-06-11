@@ -7,12 +7,14 @@ interface PersonnelListItemPropsTypes {
   description: string;
 }
 
+const MAX_COUNT = 8;
+
 const PersonnelListItem = ({ type, description }: PersonnelListItemPropsTypes) => {
 
   const [personnelCount, setPersonnelCount] = usePersonnelState(type) as PersonnelStateWithType;
 
   const increaseCount = () => {
-    if (personnelCount === 8) return;
+    if (personnelCount === MAX_COUNT) return;
     setPersonnelCount((prevPersonnelCount) => prevPersonnelCount + 1)
   };
   const decreaseCount = () => {

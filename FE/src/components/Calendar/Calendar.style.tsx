@@ -99,7 +99,6 @@ export const Day = styled.button<{
   ${({ isBetweenDays }) =>
     isBetweenDays &&
     `
-    color: #fff;
     background: #ddd;
   `};
   ${({ isClicked }) =>

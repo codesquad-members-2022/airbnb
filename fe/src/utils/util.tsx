@@ -26,11 +26,21 @@ export function keyMaker() {
 
 export function makeDateString(date: Date | string): string {
   let dateString: string = '';
+
   if (typeof date !== 'string') {
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
-    dateString = `${year}-${month}-${day}`;
+
+    const monthDayCheck = (date: number) => {
+      if (date < 10) {
+        return `0${String(date)}`;
+      }
+
+      return date;
+    };
+
+    dateString = `${year}-${monthDayCheck(month)}-${monthDayCheck(day)}`;
   }
   return dateString;
 }

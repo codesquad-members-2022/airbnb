@@ -1,20 +1,38 @@
 import styled from 'styled-components';
 import { Checkbox } from '@mui/material';
+
+import { InfoProps } from 'components/HotelList/';
 import { ReactComponent as StarIcon } from 'images/FE_숙소예약서비스/Property 1=star.svg';
 import { ReactComponent as HeartIcon } from 'images/FE_숙소예약서비스/Property 1=heart.svg';
 
-function Hotel({ onClickEvent }: any) {
+import { usePeriodState } from 'hooks/usePeriod';
+import { toLocalString } from 'utils/helper';
+
+type HotelProps = {
+  onClickEvent: (e: React.MouseEvent<HTMLDivElement>) => void;
+  info: InfoProps;
+};
+
+function Hotel({ onClickEvent, info }: HotelProps) {
+  const { checkIn, checkOut } = usePeriodState();
+  const diffDate = checkIn.getTime() - checkOut.getTime();
+  const reserveDays = Math.abs(diffDate / (1000 * 3600 * 24));
+
+  const { id, imgUrl, name, maxPeople, feePerOneNight } = info;
+
+  const TotlaCost = toLocalString(feePerOneNight * reserveDays);
+
+  const altText = `${name}의 숙소 이미지`;
+
   return (
-    <HotelWrap>
-      <HotelImg onClick={onClickEvent} />
+    <HotelWrap data-id={id}>
+      <HotelImg onClick={onClickEvent} src={imgUrl} alt={altText} />
       <HotelInfo>
         <HotelInfoTop>
           <RocationAndTitle>
-            <Rocation>어쩌구의 아파트 전체</Rocation>
-            <Title onClick={onClickEvent}>
-              Lorem ipsum dolor sit amet conse ctetur adipisicing elit.
-            </Title>
-            <span className="maximum_people">최대 인원 4명</span>
+            <Rocation>충청남도 보령시</Rocation>
+            <Title onClick={onClickEvent}>{name}</Title>
+            <span className="maximum_people">최대 인원 {maxPeople}명</span>
           </RocationAndTitle>
           <Checkbox icon={<Heart />} checkedIcon={<FillHeart />} style={{ padding: 0 }} />
         </HotelInfoTop>
@@ -26,9 +44,9 @@ function Hotel({ onClickEvent }: any) {
           </Point>
           <Fee>
             <OneDayFee>
-              <strong>₩10,000</strong> / 박
+              <strong>₩{toLocalString(feePerOneNight)}</strong> / 박
             </OneDayFee>
-            <TotalFee>총액 ₩39,800</TotalFee>
+            <TotalFee>총액 ₩{diffDate ? TotlaCost : toLocalString(feePerOneNight)}</TotalFee>
           </Fee>
         </HotelInfoBottom>
       </HotelInfo>

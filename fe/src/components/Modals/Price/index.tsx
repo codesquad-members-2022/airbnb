@@ -1,18 +1,51 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
+
 import { ModalWrap } from 'components/Modals/styled';
+import Chart from 'components/Modals/Price/RangeChart';
+import RangeSlider from 'components/Modals/Price/RangeSlider';
+import LoadingSpinner from 'components/Skeleton/LoadingSpinners';
 
-import { toLocalString } from 'utils/helper';
+import { useGetFetch } from 'hooks/useFetch';
 import { usePriceState } from 'hooks/usePrice';
+import { toLocalString } from 'utils/helper';
 
-import Chart from './RangeChart';
-import RangeSlider from './RangeSlider';
+const priceInfo = (priceData: Array<number>) => {
+  const minPrice = Math.floor(Math.min(...priceData) / 10000) * 10000;
+  const maxPrice = Math.ceil(Math.max(...priceData) / 1000) * 1000;
+  const avgPrice = Math.floor(
+    priceData.reduce((prev: number, curr: number) => prev + curr) / priceData.length,
+  );
 
-function PriceModal() {
-  const { priceData, priceRange, dataPriceInfo, initSliderRange, setSliderRange } = usePriceState();
+  return { minPrice, maxPrice, avgPrice };
+};
 
-  const { min: minSliderValue, max: maxSliderValue } = initSliderRange;
+function SetPriceModal() {
+  const URL = `/accommodations/prices`;
+  const { fetchedData } = useGetFetch(URL);
+
+  return fetchedData ? (
+    <PriceModal priceData={fetchedData} />
+  ) : (
+    <PriceModalWrap>
+      <LoadingSpinner size={50} />
+    </PriceModalWrap>
+  );
+}
+
+function PriceModal({ priceData }: { priceData: Array<number> }) {
+  const { priceRange } = usePriceState();
+
+  const sortData = priceData.sort((a: number, b: number) => a - b);
+  const { minPrice, maxPrice, avgPrice } = priceInfo(sortData);
+
+  const [minSliderValue, setMinSliderValue] = useState<number>(minPrice);
+  const [maxSliderValue, setMaxSliderValue] = useState<number>(maxPrice);
+
+  const dataPriceInfo = { min: minPrice, max: maxPrice, avg: avgPrice };
+  const initSliderRange = { min: minSliderValue, max: maxSliderValue };
+  const setSliderRange = { min: setMinSliderValue, max: setMaxSliderValue };
 
   const minValue = priceRange.min === 0 ? minSliderValue : priceRange.min;
   const maxValue = priceRange.max === 0 ? maxSliderValue : priceRange.max;
@@ -83,4 +116,4 @@ const SliderWrap = styled.div`
   height: 110px;
 `;
 
-export default PriceModal;
+export default SetPriceModal;

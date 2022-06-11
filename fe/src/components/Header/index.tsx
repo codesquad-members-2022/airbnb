@@ -46,7 +46,7 @@ function Header() {
 }
 
 const HeaderContainer = styled.div<Position>`
-  z-index: 4;
+  z-index: 6;
   position: fixed;
   top: 0;
   left: 50%;
@@ -74,7 +74,7 @@ const HeaderWrap = styled.header<Position>`
 `;
 
 const HeaderOutSide = styled.div`
-  z-index: 3;
+  z-index: 5;
   width: 100%;
   height: 100vh;
   position: fixed;

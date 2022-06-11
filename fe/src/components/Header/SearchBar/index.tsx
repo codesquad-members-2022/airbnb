@@ -14,7 +14,7 @@ import SearchButton from 'components/Header/SearchBar/SearchButton';
 
 import PeriodModal from 'components/Modals/PeriodModal';
 import PersonnelModal from 'components/Modals/Personnel';
-import PriceModal from 'components/Modals/Price';
+import SetPriceModal from 'components/Modals/Price';
 
 export type ClickModal = {
   onClickEvent?: (e: React.MouseEvent<HTMLElement>) => void;
@@ -78,7 +78,7 @@ function FocusModal({ focus }: Focus) {
     case 'PERSONNEL':
       return <PersonnelModal />;
     case 'PRICE':
-      return <PriceModal />;
+      return <SetPriceModal />;
     default:
       throw Error();
   }

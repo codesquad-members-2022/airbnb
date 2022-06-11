@@ -5,13 +5,17 @@ import {
 
 import { useModal } from 'hooks/useModal';
 import { usePeriodDispatch, usePeriodState } from 'hooks/usePeriod';
+import { usePersonnelState } from 'hooks/usePersonnel';
+import { usePriceState } from 'hooks/usePrice';
 
-import { mockDate } from 'utils/util';
+import { makeDateString, mockDate } from 'utils/util';
 
 function SearchButton() {
   const { searchBarFocusModal, closeModal } = useModal();
   const { checkIn, checkOut } = usePeriodState();
   const { setCheckIn, setCheckOut } = usePeriodDispatch();
+  const { counter } = usePersonnelState();
+  const { priceRange } = usePriceState();
 
   const isCheckInState = checkIn.getTime() === mockDate.getTime();
   const isCheckOutState = checkOut.getTime() === mockDate.getTime();
@@ -29,12 +33,17 @@ function SearchButton() {
     closeModal();
   };
 
+  const setCheckInDataString = isCheckInState ? '' : makeDateString(checkIn);
+  const setCheckOutDataString = isCheckOutState ? '' : makeDateString(checkOut);
+
+  const URL = `/result?checkinDate=${setCheckInDataString}&checkoutDate=${setCheckOutDataString}&minimumPrice=${
+    priceRange.min
+  }&maximumPrice=${priceRange.max === 0 ? 2147000000 : priceRange.max}&adultCount=${
+    counter.adult
+  }&childCount=${counter.child}&infantCount=${counter.toddler}`;
+
   return (
-    <SearchButtonContainer
-      to="/result"
-      aria-label="결과 찾기 버튼"
-      onClick={handleClickResultButton}
-    >
+    <SearchButtonContainer to={URL} aria-label="결과 찾기 버튼" onClick={handleClickResultButton}>
       <StyledSearchIcon />
       {searchBarFocusModal !== '' && <span>검색</span>}
     </SearchButtonContainer>

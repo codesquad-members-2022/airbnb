@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import styled from 'styled-components';
 import { ObjType, PriceInfoType, DataInfo } from './types';
 
 const getRangeInfo = ({ data, sections, maxPrice, minPrice }: DataInfo) => {

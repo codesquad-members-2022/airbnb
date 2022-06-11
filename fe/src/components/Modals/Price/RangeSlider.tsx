@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import PauseIcon from 'images/FE_숙소예약서비스/pause-circle.svg';
 
 import { usePriceDispatch, usePriceState } from 'hooks/usePrice';
+import { toLocalString } from 'utils/helper';
 
 type PriceInfoType = {
   dataPriceInfo: { [key: string]: number };
@@ -17,9 +18,16 @@ const thumbPercent = (target: HTMLInputElement) => {
   return percent;
 };
 
+const makePriceText = (min: number, max: number) => {
+  const minPrice = toLocalString(min);
+  const maxPrice = toLocalString(max);
+
+  return `₩${minPrice}~${maxPrice}`;
+};
+
 function RangeSlider({ dataPriceInfo, initSliderRange, setSliderRange }: PriceInfoType) {
   const { priceRange } = usePriceState();
-  const { setRange } = usePriceDispatch();
+  const { setRange, setPriceText } = usePriceDispatch();
 
   const STEP = 1000;
   const THUMB_GAP = 6;
@@ -32,8 +40,14 @@ function RangeSlider({ dataPriceInfo, initSliderRange, setSliderRange }: PriceIn
 
     if (thumbPercent(e.target) > thumbPercent(rightInput.current) - THUMB_GAP) return;
 
-    setSliderRange.min(Number(e.target.value));
-    setRange({ min: Number(e.target.value), max: Number(rightInput.current.value) });
+    const minValue = Number(e.target.value);
+    const maxValue = Number(rightInput.current.value);
+
+    setSliderRange.min(minValue);
+    setRange({ min: minValue, max: maxValue });
+
+    const priceText = makePriceText(minValue, maxValue);
+    setPriceText(priceText);
   };
 
   const RightChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,8 +55,14 @@ function RangeSlider({ dataPriceInfo, initSliderRange, setSliderRange }: PriceIn
 
     if (thumbPercent(e.target) < thumbPercent(leftInput.current) + THUMB_GAP) return;
 
-    setSliderRange.max(Number(e.target.value));
-    setRange({ min: Number(leftInput.current.value), max: Number(e.target.value) });
+    const minValue = Number(leftInput.current.value);
+    const maxValue = Number(e.target.value);
+
+    setSliderRange.max(maxValue);
+    setRange({ min: minValue, max: maxValue });
+
+    const priceText = makePriceText(minValue, maxValue);
+    setPriceText(priceText);
   };
 
   return (

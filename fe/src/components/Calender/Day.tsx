@@ -13,23 +13,21 @@ type DayProps = {
 function Day({ date, isThisMonth }: DayProps) {
   const { setCheckIn, setCheckOut } = usePeriodDispatch();
   const isOver = new Date().getTime() > date.getTime();
-  const state = usePeriodState();
+  const { checkIn, checkOut } = usePeriodState();
   const [isClicked, setIsClicked] = useState(false);
   function showCirle() {
-    state.checkIn.getTime() === date.getTime() || state.checkOut.getTime() === date.getTime()
-      ? setIsClicked(true)
-      : setIsClicked(false);
+    setIsClicked(checkIn.getTime() === date.getTime() || checkOut.getTime() === date.getTime());
   }
   useEffect(() => {
     showCirle();
   }, []);
   function makingCheckInOut() {
-    if (state.checkIn.getTime() === mockDate.getTime()) {
+    if (checkIn.getTime() === mockDate.getTime()) {
       setCheckIn(date);
-    } else if (state.checkIn > date) {
-      setCheckOut(state.checkIn);
+    } else if (checkIn > date) {
+      setCheckOut(checkIn);
       setCheckIn(date);
-    } else if (state.checkIn < date) {
+    } else if (checkIn < date) {
       setCheckOut(date);
     }
   }

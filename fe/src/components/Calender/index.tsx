@@ -6,6 +6,7 @@ import { ReactComponent as RightIcon } from 'images/FE_숙소예약서비스/Pro
 
 import { usePeriodDispatch } from 'hooks/usePeriod';
 import { getDays, keyMaker } from 'utils/util';
+import { useMemo } from 'react';
 
 type CalendarProps = {
   date: Date;
@@ -27,6 +28,9 @@ function Calendar({ date }: CalendarProps) {
   const { DAYS, month, thisMonth, nextMonth, thisYear, nextYear, nextDate, monthAfterNext } =
     CalendarData(date);
 
+  const daysComp = useMemo(() => {
+    return DAYS.map((day: string) => <WeekDay key={day}>{day}</WeekDay>);
+  }, [DAYS]);
   const { setDate } = usePeriodDispatch();
   function increaseMonth() {
     setDate(new Date(thisYear, month + monthAfterNext));
@@ -34,7 +38,7 @@ function Calendar({ date }: CalendarProps) {
   function decreaseMonth() {
     if (date > new Date()) setDate(new Date(thisYear, month - monthAfterNext));
   }
-  const daysComp = DAYS.map((day: string) => <WeekDay key={day}>{day}</WeekDay>); // useMemo 사용시 오류 발생, 타입스크립트문제? airbnb 디자인 페턴 문제?
+
   const thisCalendarDays = getDays(month).map((day) => {
     const key: string = keyMaker();
     const dateInfo: Date = day.date;

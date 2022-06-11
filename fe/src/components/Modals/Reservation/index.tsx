@@ -43,7 +43,7 @@ const Background = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   background: #333333b3;
 `;
 

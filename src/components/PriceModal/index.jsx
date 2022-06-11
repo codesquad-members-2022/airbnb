@@ -11,14 +11,15 @@ import Canvas from './Canvas';
 import RangeSliderController from './RangeSliderController';
 
 function PriceModal() {
+  const lowInput = useRef(null);
+  const highInput = useRef(null);
+
   const accommodationPrice = ACCOMMODATIONS.map((item) => item.price);
   const averagePrice = getAverage(accommodationPrice);
   const { priceSlider } = useContext(FilterContext);
   const { price } = priceSlider;
   const convertPriceText = getConvertPriceText({ lowPrice: price.low, highPrice: price.high });
   const convertAveragePrice = convertPriceToLocaleString(averagePrice);
-  const lowInput = useRef(null);
-  const highInput = useRef(null);
 
   return (
     <SearchBarModal padding="52px 64px 66px" borderRadius="40px">

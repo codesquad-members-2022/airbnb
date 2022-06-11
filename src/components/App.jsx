@@ -5,19 +5,22 @@ import SearchResult from 'pages/SearchResult';
 import ReservationSuccess from 'pages/ReservationSuccess';
 import NoMatch from 'pages/NoMatch';
 import { AccommodationProvider } from 'store/AccommodationContext';
+import { ReservationProvider } from 'store/ReservationContext';
 
 function App() {
   return (
     <FilterProvider>
       <AccommodationProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route index path="/" element={<Home />} />
-            <Route path="/searchResult" element={<SearchResult />} />
-            <Route path="/reservationSuccess" element={<ReservationSuccess />} />
-            <Route path="*" element={<NoMatch />} />
-          </Routes>
-        </BrowserRouter>
+        <ReservationProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route index path="/" element={<Home />} />
+              <Route path="/searchResult" element={<SearchResult />} />
+              <Route path="/reservationSuccess" element={<ReservationSuccess />} />
+              <Route path="*" element={<NoMatch />} />
+            </Routes>
+          </BrowserRouter>
+        </ReservationProvider>
       </AccommodationProvider>
     </FilterProvider>
   );

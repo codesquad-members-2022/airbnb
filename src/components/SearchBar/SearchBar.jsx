@@ -10,7 +10,7 @@ import Schedule from './Schedule';
 import Price from './Price';
 import Guest from './Guest';
 
-function SearchBar() {
+function SearchBar({ setSpreadSearchBar }) {
   const { activeModalName } = useContext(FilterContext);
 
   return (
@@ -18,7 +18,7 @@ function SearchBar() {
       <Schedule />
       <Price />
       <Guest />
-      <SearchButton />
+      <SearchButton setSpreadSearchBar={setSpreadSearchBar} />
       <ActiveModal activeModalName={activeModalName} />
     </LargeContainer>
   );

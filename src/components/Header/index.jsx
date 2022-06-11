@@ -6,7 +6,7 @@ import { BOX_SHADOW } from 'styles/utils';
 import MiniSearchBar from 'components/SearchBar/MiniSearchBar';
 import SearchBar from 'components/SearchBar/SearchBar';
 import Z_INDEX from 'styles/zIndex';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import GNB from './GNB';
 import AccountMenu from './AccountMenu';
 
@@ -25,7 +25,7 @@ function Header() {
     <HeaderContainer pathname={pathname}>
       <Inner pathname={pathname}>
         {isSpreadSearchBar ? (
-          <DefaultSearchBarContainer />
+          <DefaultSearchBarContainer setSpreadSearchBar={setSpreadSearchBar} />
         ) : (
           <MiniSearchBarContainer setSpreadSearchBar={setSpreadSearchBar} />
         )}
@@ -34,15 +34,17 @@ function Header() {
   );
 }
 
-function DefaultSearchBarContainer() {
+function DefaultSearchBarContainer({ setSpreadSearchBar }) {
   return (
     <>
       <MainBar>
-        <Logo>LOGO</Logo>
+        <Link to="/">
+          <Logo>LOGO</Logo>
+        </Link>
         <GNB />
         <AccountMenu />
       </MainBar>
-      <SearchBar />
+      <SearchBar setSpreadSearchBar={setSpreadSearchBar} />
     </>
   );
 }
@@ -50,7 +52,9 @@ function DefaultSearchBarContainer() {
 function MiniSearchBarContainer({ setSpreadSearchBar }) {
   return (
     <MainBar>
-      <Logo>LOGO</Logo>
+      <Link to="/">
+        <Logo>LOGO</Logo>
+      </Link>
       <MiniSearchBar setSpreadSearchBar={setSpreadSearchBar} />
       <AccountMenu />
     </MainBar>

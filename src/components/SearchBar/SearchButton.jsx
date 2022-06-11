@@ -6,9 +6,11 @@ import Z_INDEX from 'styles/zIndex';
 import { useContext } from 'react';
 import { FilterContext } from 'store/FilterContext';
 import { Link } from 'react-router-dom';
+import { AccommodationContext } from 'store/AccommodationContext';
 
-function SearchButton({ searchBarType }) {
+function SearchButton({ searchBarType, setSpreadSearchBar }) {
   const { activeModalName, modalDispatch } = useContext(FilterContext);
+  const { filterAccommodations } = useContext(AccommodationContext);
   const isOpenModal = activeModalName !== 'NOTHING';
   return (
     <Link to="/searchResult">
@@ -16,6 +18,8 @@ function SearchButton({ searchBarType }) {
         searchBarType={searchBarType}
         onClick={() => {
           modalDispatch({ type: 'CLOSE' });
+          filterAccommodations();
+          setSpreadSearchBar(false);
         }}
       >
         <IconButton

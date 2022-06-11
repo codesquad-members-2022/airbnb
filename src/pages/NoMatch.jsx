@@ -1,7 +1,8 @@
-// TODO: 404 페이지 레이아웃 완성
+import notFound from 'assets/404.PNG';
+import Notice from 'components/Notice';
 
 function NoMatch() {
-  return <div>404 page.</div>;
+  return <Notice imageURL={notFound} imageAlt="404" content="찾으시는 페이지가 없습니다." />;
 }
 
 export default NoMatch;

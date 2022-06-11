@@ -4,11 +4,13 @@ import { getConvertPriceText, getGuestText, getScheduleText } from 'utils/fromSt
 import styled from 'styled-components';
 import COLOR from 'styles/colors';
 import FONT from 'styles/font';
+import { AccommodationContext } from 'store/AccommodationContext';
 import SearchButton from './SearchButton';
 
 function MiniSearchBar({ setSpreadSearchBar }) {
   const { modalDispatch, schedule, scheduleDispatch, priceSlider, guest, guestDispatch } =
     useContext(FilterContext);
+  const { filterAccommodations } = useContext(AccommodationContext);
   const { checkIn, checkOut } = schedule;
   const { low, high } = priceSlider.price;
   const { adult, child, infant } = guest;
@@ -21,6 +23,8 @@ function MiniSearchBar({ setSpreadSearchBar }) {
     setDefaultSchedule();
     setDefaultGuest();
   }, []);
+
+  useEffect(filterAccommodations, [schedule, guest]);
 
   return (
     <Container
@@ -43,9 +47,10 @@ function MiniSearchBar({ setSpreadSearchBar }) {
 
   function setDefaultSchedule() {
     if (checkIn && checkOut) return;
-    const TODAY_YEAR = new Date().getFullYear();
-    const TODAY_MONTH = new Date().getMonth() + 1;
-    const TODAY_DATE = new Date().getDate();
+    const date = new Date();
+    const TODAY_YEAR = date.getFullYear();
+    const TODAY_MONTH = date.getMonth() + 1;
+    const TODAY_DATE = date.getDate();
 
     scheduleDispatch({
       type: 'SET_CHECK_IN',

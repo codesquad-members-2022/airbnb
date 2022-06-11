@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class NaviRequest {
+
     private static final String DELIMITER = ",";
 
     private String origin;

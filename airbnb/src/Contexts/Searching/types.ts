@@ -33,8 +33,8 @@ export interface PriceState {
 
 export interface CustomerState {
   adultCount: number;
-  kidsCount: number;
-  smallChildCount: number;
+  childrenCount: number;
+  infantsCount: number;
 }
 
 // TODO: type을 interface로 바꾸려면?
@@ -51,6 +51,6 @@ export type PriceAction =
 
 export type CustomerAction =
   | { type: 'SET_ADULT_COUNT'; income: number }
-  | { type: 'SET_KIDS_COUNT'; income: number }
-  | { type: 'SET_SMALL_KIDS_COUNT'; income: number }
+  | { type: 'SET_CHILDREN_COUNT'; income: number }
+  | { type: 'SET_INFANTS_COUNT'; income: number }
   | { type: 'RESET' };

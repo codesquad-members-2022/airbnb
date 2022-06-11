@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-export const Range = styled.input`
+type RangeProps = {
+  higherPriceRange: number;
+  lowerPriceRange: number;
+};
+
+export const Range = styled.input<RangeProps>`
   width: 380px;
   height: 0;
   -webkit-appearance: none;
@@ -10,14 +15,15 @@ export const Range = styled.input`
   background: none;
   left: 0;
   bottom: 70;
+  z-index: 2;
+  pointer-events: none;
   &::-webkit-slider-thumb {
     -webkit-appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
-    appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
-    width: 20px; /* 슬라이더 핸들 길이 */
-    height: 20px; /* 슬라이더 핸들 높이 */
-    border-radius: 50%; /* 핸들 모양을 원모양으로 만들기 위함 */
-    background: #000; /* 슬라이더 핸들 색상 */
-    cursor: pointer; /* 슬라이더 핸들에 마우스를 갖다대면 포인터로 변경 */
+    pointer-events: all;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
   }
 `;
 
@@ -27,4 +33,43 @@ export const Canvas = styled.canvas`
 
 export const RangeSliderWrapper = styled.div`
   position: relative;
+  width: 365px;
+`;
+
+export const LowerPriceRangeSliderButton = styled.button`
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: black;
+  border-radius: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+`;
+
+export const HigherPriceRangeSliderButton = styled.button`
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: black;
+  border-radius: 50%;
+  right: 0;
+  transform: translate(50%, -50%);
+`;
+
+export const Title = styled.h4`
+  font-weight: 700;
+  margin-bottom: 16px;
+`;
+
+export const Price = styled.span`
+  display: block;
+  font-weight: 400;
+  font-size: 18px;
+  color: #333333;
+`;
+
+export const AveragePrice = styled.span`
+  display: block;
+  font-size: 14px;
+  color: #828282;
 `;

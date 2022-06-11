@@ -1,6 +1,6 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { Router, Routes, Route, Link } from 'geon-react-router';
-import { Home } from '@/Pages/Home';
+import { Home, Search } from '@/Pages';
 import { theme, GlobalStyle } from '@/styles';
 import { ModalProvider } from '@/Contexts/Modal';
 
@@ -12,7 +12,7 @@ function App() {
         <ModalProvider>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/dd" element={<div>테스트</div>} />
+            <Route path="/search" element={<Search />} />
           </Routes>
         </ModalProvider>
       </ThemeProvider>

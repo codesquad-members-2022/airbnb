@@ -1,4 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { useNullGuard } from '@/Hooks/useNullguard';
+import { SearchingDispatchContext } from '@/Contexts/Searching';
 import * as S from './priceGraph.style';
 
 const CANVAS_WIDTH = 365;
@@ -54,6 +56,8 @@ function drawGraph(
   accomodationDatas: { price: number; count: number }[],
   getCoord: (lastX: number, lastY: number, currentAmount: number) => number[],
   canvasCtx: CanvasRenderingContext2D | null | undefined,
+  lowerPriceRange: number,
+  higherPriceRange: number,
 ) {
   if (!canvasCtx) return;
   canvasCtx.beginPath();
@@ -76,29 +80,133 @@ function drawGraph(
 
   const lingrad = canvasCtx.createLinearGradient(0, 100, 365, 100);
   canvasCtx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-  lingrad.addColorStop(0, 'red');
-  lingrad.addColorStop(0.3, 'red');
-  lingrad.addColorStop(0.3, 'black');
-  lingrad.addColorStop(0.7, 'black');
-  lingrad.addColorStop(0.7, 'green');
-  lingrad.addColorStop(1, 'green');
+  lingrad.addColorStop(0, '#E5E5E5');
+  lingrad.addColorStop(lowerPriceRange * 0.01, '#E5E5E5');
+  lingrad.addColorStop(lowerPriceRange * 0.01, '#333333');
+  lingrad.addColorStop(higherPriceRange * 0.01, '#333333');
+  lingrad.addColorStop(higherPriceRange * 0.01, '#E5E5E5');
+  lingrad.addColorStop(1, '#E5E5E5');
   canvasCtx.fillStyle = lingrad;
   canvasCtx.fill();
 }
 
+function setLowerButtonPosition(
+  percentage: number,
+  button: React.RefObject<HTMLButtonElement>,
+) {
+  if (button.current) {
+    button.current.style.left = `${percentage}%`;
+  }
+}
+
+function setHigherButtonPosition(
+  percentage: number,
+  button: React.RefObject<HTMLButtonElement>,
+) {
+  if (button.current) {
+    button.current.style.right = `${100 - percentage}%`;
+  }
+}
+
 export function PriceGraph() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const higherButtonRef = useRef<HTMLButtonElement>(null);
+  const lowerButtonRef = useRef<HTMLButtonElement>(null);
+  const [lowerPriceRange, setLowerPriceRange] = useState(0);
+  const [higherPriceRange, setHigherPriceRange] = useState(100);
+  const { priceDispatch } = useNullGuard(SearchingDispatchContext);
+
   useEffect(() => {
     const ctx = canvasRef.current?.getContext('2d');
-    drawGraph(STANDARD_PRICES, getCurveLength, ctx);
-  }, []);
+    drawGraph(
+      STANDARD_PRICES,
+      getCurveLength,
+      ctx,
+      lowerPriceRange,
+      higherPriceRange,
+    );
+  }, [lowerPriceRange, higherPriceRange]);
+
+  function handleLowerPriceButton(e: React.ChangeEvent<HTMLInputElement>) {
+    let val = +e.target.value;
+    if (val >= higherPriceRange - 5) {
+      val = higherPriceRange - 5;
+    }
+
+    if (lowerButtonRef.current) {
+      setLowerButtonPosition(val, lowerButtonRef);
+    }
+
+    e.target.value = String(val); // 투명슬라이더 버튼 위치 고정
+    setLowerPriceRange(val);
+    priceDispatch({
+      type: 'SET_MINIMUM_PRICE',
+      income: Math.floor(
+        Math.min(...ACCOMODATION_DATAS) * ((100 + val) * 0.01),
+      ),
+    });
+  }
+
+  function handleHigherPriceButton(e: React.ChangeEvent<HTMLInputElement>) {
+    let val = +e.target.value;
+    if (val <= lowerPriceRange + 5) {
+      val = lowerPriceRange + 5;
+    }
+
+    if (higherButtonRef.current) {
+      setHigherButtonPosition(val, higherButtonRef);
+    }
+    e.target.value = String(val);
+    setHigherPriceRange(val);
+    priceDispatch({
+      type: 'SET_MAXIMUM_PRICE',
+      income: Math.floor(Math.max(...ACCOMODATION_DATAS) * (val * 0.01)),
+    });
+  }
 
   return (
     <>
+      <S.Title>가격 범위</S.Title>
+      <S.Price>
+        {Math.floor(
+          Math.min(...ACCOMODATION_DATAS) * ((100 + lowerPriceRange) * 0.01),
+        )}{' '}
+        -{' '}
+        {Math.floor(
+          Math.max(...ACCOMODATION_DATAS) * (higherPriceRange * 0.01),
+        )}
+      </S.Price>
+      <S.AveragePrice>
+        평균 1박 요금은{' '}
+        {Math.min(...ACCOMODATION_DATAS) + Math.max(...ACCOMODATION_DATAS) / 2}
+        원 입니다.
+      </S.AveragePrice>
       <S.Canvas ref={canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
       <S.RangeSliderWrapper>
-        <S.Range type="range" min={0} max={100} defaultValue={0} />
-        <S.Range type="range" min={0} max={100} defaultValue={100} />
+        <S.Range
+          type="range"
+          min={0}
+          max={100}
+          defaultValue={0}
+          onChange={e => {
+            handleLowerPriceButton(e);
+          }}
+          lowerPriceRange={lowerPriceRange}
+          higherPriceRange={higherPriceRange}
+        />
+        <S.Range
+          type="range"
+          min={0}
+          max={100}
+          defaultValue={100}
+          onChange={e => {
+            handleHigherPriceButton(e);
+          }}
+          lowerPriceRange={lowerPriceRange}
+          higherPriceRange={higherPriceRange}
+        />
+        <S.LowerPriceRangeSliderButton ref={lowerButtonRef} />
+        <S.HigherPriceRangeSliderButton ref={higherButtonRef} />
       </S.RangeSliderWrapper>
     </>
   );

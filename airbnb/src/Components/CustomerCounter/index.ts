@@ -1,0 +1,1 @@
+export { CustomerCounter } from './CustomerCounter';

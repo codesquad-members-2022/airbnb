@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 import PriceModal from '@components/SearchBar/Modal/PriceModal';
 import * as S from '@components/SearchBar/SearchBar.style';
@@ -7,6 +7,7 @@ import Icon, { ICON_NAME, ICON_SIZE } from '@components/common/Icon';
 import { PriceProvider } from '@context/price/Provider';
 import WithProvider from '@hoc/WithProvider';
 import { usePriceState } from '@lib/hooks/useContext';
+import useModal from '@lib/hooks/useModal';
 import { formatPrice } from '@lib/utils';
 
 export interface AreaPropsTypes {
@@ -14,8 +15,8 @@ export interface AreaPropsTypes {
 }
 
 const PriceArea = ({ size }: AreaPropsTypes) => {
-  const [isPriceModalOpen, setIsPriceModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
+  const [isPriceModalOpen, setIsPriceModalOpen] = useModal({ modalRef });
 
   const { minPrice, maxPrice, defaultMinPrice, defaultMaxPrice, setMinPrice, setMaxPrice } =
     usePriceState();
@@ -25,7 +26,7 @@ const PriceArea = ({ size }: AreaPropsTypes) => {
     ? `${formatPrice(minPrice)} ~ ${formatPrice(maxPrice)}`
     : NO_CONTENT[AREA_TYPE.PRICE];
 
-  const toggleIsPriceModalOpen = () => setIsPriceModalOpen(() => true);
+  const openPriceModal = () => setIsPriceModalOpen(true);
 
   const setDefaultPrice = () => {
     setMinPrice(defaultMinPrice);
@@ -34,7 +35,7 @@ const PriceArea = ({ size }: AreaPropsTypes) => {
 
   return (
     <>
-      <S.PriceArea onClick={toggleIsPriceModalOpen}>
+      <S.PriceArea onClick={openPriceModal}>
         {size === SEARCH_BAR_SIZE.LARGE ? (
           <>
             <S.ContentContainer>

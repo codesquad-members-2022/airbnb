@@ -35,9 +35,9 @@ const PriceModal = ({ modalRef }: PriceModalPropsTypes) => {
       <S.PriceModal ref={modalRef}>
         <S.Title>가격 범위</S.Title>
         <S.PriceRange>{priceContent}</S.PriceRange>
-        <S.AverageDescription>
+        <S.Description>
           평균 1박 요금은 {formatPrice(getAveragePrice())}입니다.
-        </S.AverageDescription>
+        </S.Description>
         <RangeSlider />
       </S.PriceModal>
     </Modal>

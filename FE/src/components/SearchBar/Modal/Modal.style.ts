@@ -17,8 +17,51 @@ export const PriceRange = styled.p`
   margin-bottom: 4px;
 `;
 
-export const AverageDescription = styled.p`
+export const Description = styled.p`
   color: ${({ theme }) => theme.color.grey3};
   font-size: ${({ theme }) => theme.fontSize.small};
   margin-bottom: 37px;
+`;
+
+export const PersonnelModal = styled.div`
+  width: 400px;
+  height: 355px;
+  padding: 40px 64px;
+`;
+
+export const PersonnelListItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+
+  &:not(:last-of-type) {
+    margin-bottom: 1px solid ${({ theme }) => theme.color.grey5};
+  }
+
+  ${Title}, ${Description} {
+    margin-bottom: 0;
+  }
+`;
+
+export const TextArea = styled.div``;
+
+export const CountArea = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 116px;
+`;
+
+export const PersonnelCount = styled.span`
+  position: relative;
+  top: 2px;
+  font-size: ${({ theme }) => theme.fontSize.large};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  line-height: 1.5rem;
+`;
+
+export const CountButton = styled.button`
+  width: 36px;
+  height: 36px;
 `;

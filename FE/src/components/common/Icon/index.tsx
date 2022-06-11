@@ -11,12 +11,15 @@ export const ICON_NAME: { [key: string]: string } = {
   CLOSE_BTN: 'CloseBtn',
   PREV: 'Prev',
   NEXT: 'Next',
+  PLUS: 'Plus',
+  MINUS: 'Minus',
 };
 
 export const ICON_SIZE: { [key: string]: string } = {
+  SMALL: 'SMALL',
   MEDIUM: 'MEDIUM',
   LARGE: 'LARGE',
-  SMALL: 'SMALL',
+  X_LARGE: 'X_LARGE',
 };
 
 export interface IconPropsTypes {

@@ -11,3 +11,5 @@ export type { FooterContentTypes, CompanyInfoTypes } from '@data/footerData';
 export { mainContentData } from '@data/MainContentData';
 export type { MainContentDataType } from '@data/MainContentData';
 export { rangeData } from '@data/rangeData';
+export { personnelData } from '@data/personnelData';
+export type { PersonnelDataTypes } from '@data/personnelData';

@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "target": "es2016",
+        "jsx": "react",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "typeRoots": ["node_modules/@types", "src/@type"],
+        "noResolve": false,
+        "allowJs": false,
+        "sourceMap": true,
+        "removeComments": false,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "noImplicitAny": false,
+        "skipLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "@Helper/*": ["src/helper/*"]
+        }
+    },
+    "exclude": ["node_modules"],
+    "include": ["src/**/*"]
+}

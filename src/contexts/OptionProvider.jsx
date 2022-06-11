@@ -8,7 +8,9 @@ const OptionProvider = ({children}) => {
     const [guestCount, setGuestCount] = useState(initialGuestState);
     const guestCountProps = {guestCount, setGuestCount};
 
-    return <OptionContext.Provider value={guestCountProps}>{children}</OptionContext.Provider>;
+    const optionProps = {guestCountProps};
+
+    return <OptionContext.Provider value={optionProps}>{children}</OptionContext.Provider>;
 };
 
 const initialGuestState = {

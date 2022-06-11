@@ -3,11 +3,11 @@ import styled from "styled-components";
 import Modal from "./Modal";
 import GuestTab from "./GuestTab";
 import Boundary from "../../Boundary";
-import {getRandomKey} from "../../../helper/util";
+import {getRandomKey, stopPropagation} from "../../../helper/util";
 
 const GuestModal = ({isClicked}) => {
     return (
-        <GuestModalBox isClicked={isClicked}>
+        <GuestModalBox isClicked={isClicked} onClick={stopPropagation}>
             {guestType
                 .map((guest) => (
                     <GuestTab key={guest.id} typeName={guest.name} detail={guest.detail} type={guest.type} />
@@ -38,7 +38,6 @@ const GuestModalBox = styled(Modal)`
     padding: 64px;
     transform: translate(-50%, -50%);
     gap: 24px;
-    box-shadow: 0px 4px 10px rgba(51, 51, 51, 0.1);
 `;
 
 const boundaryCondition = {

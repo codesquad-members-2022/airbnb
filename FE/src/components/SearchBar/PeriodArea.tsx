@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 
-import Calendar from '@components/Calendar';
 import PeriodModal from '@components/SearchBar/Modal/PeriodModal';
 import * as S from '@components/SearchBar/SearchBar.style';
 import { AREA_TYPE, NO_CONTENT, SEARCH_BAR_SIZE } from '@components/SearchBar/constants';
@@ -18,7 +17,7 @@ export interface PeriodAreaTypes {
 const PeriodArea = ({ size, element }: PeriodAreaTypes) => {
   const [isPeriodModalOpen, setIsPeriodModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
-  const { checkIn, checkOut } = useCalendarState();
+  const { checkIn, setCheckIn, checkOut, setCheckOut } = useCalendarState();
 
   const isCheckInExist = checkIn !== defaultPeriod.checkIn;
   const isCheckOutExist = checkOut !== defaultPeriod.checkOut;
@@ -28,7 +27,13 @@ const PeriodArea = ({ size, element }: PeriodAreaTypes) => {
 
   const periodContent =
     isCheckInExist && isCheckOutExist ? `${checkIn} ~ ${checkOut}` : NO_CONTENT[AREA_TYPE.PERIOD];
-  const toggleIsPeriodModalOpen = () => setIsPeriodModalOpen(() => true);
+
+  const toggleIsPeriodModalOpen = () => setIsPeriodModalOpen(() => !isPeriodModalOpen);
+  const isResetCheckInOut = () => {
+    setIsPeriodModalOpen(() => !isPeriodModalOpen);
+    setCheckIn('');
+    setCheckOut('');
+  };
   return (
     <>
       <S.PeriodArea onClick={toggleIsPeriodModalOpen}>
@@ -43,7 +48,7 @@ const PeriodArea = ({ size, element }: PeriodAreaTypes) => {
               <S.Content isContentExist={isCheckOutExist}>{checkOutContent}</S.Content>
             </S.ContentContainer>
             {isCheckInExist && isCheckOutExist && (
-              <S.CloseButton>
+              <S.CloseButton onClick={isResetCheckInOut}>
                 <Icon iconName={ICON_NAME.CLOSE_BTN} iconSize={ICON_SIZE.LARGE} />
               </S.CloseButton>
             )}

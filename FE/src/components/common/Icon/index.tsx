@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Icons from '@assets/icons';
 import * as S from '@components/common/Icon/Icon.style';
 

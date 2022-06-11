@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { CalendarTypes } from '@components/Calendar';
 import Days from '@components/Calendar/Days';
 

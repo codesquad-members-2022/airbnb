@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Modal, { MODAL_POSITION, ModalPropsTypes } from '@components/common/Modal';
 import * as S from '@components/common/Modal/Modal.style';
 

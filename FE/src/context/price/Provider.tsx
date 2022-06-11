@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, Dispatch, SetStateAction, createContext } from 'react';
 
 import { API } from '@constants';
 import useAxios from '@lib/hooks/useAxios';
 
 export interface PriceContextTypes {
   minPrice: number;
-  setMinPrice: React.Dispatch<React.SetStateAction<number>>;
+  setMinPrice: Dispatch<SetStateAction<number>>;
   maxPrice: number;
-  setMaxPrice: React.Dispatch<React.SetStateAction<number>>;
+  setMaxPrice: Dispatch<SetStateAction<number>>;
   defaultMinPrice: number;
   defaultMaxPrice: number;
   avgPrice: number;
@@ -31,7 +31,7 @@ interface PriceInfoTypes {
   countOfCategorizedPricePerNight: CategorizedPriceTypes[];
 }
 
-export const PriceContext = React.createContext<PriceContextTypes | null>(null);
+export const PriceContext = createContext<PriceContextTypes | null>(null);
 
 export const PriceProvider = ({ children }: PriceProviderPropsTypes) => {
   const [minPrice, setMinPrice] = useState(0);

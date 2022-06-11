@@ -1,4 +1,4 @@
-import React, { RefObject, useState } from 'react';
+import { RefObject, useState } from 'react';
 
 import * as S from '@components/Calendar/Calendar.style';
 import RenderCalendar from '@components/Calendar/RenderCalendar';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import PeriodArea from '@components/SearchBar/PeriodArea';
 import PersonnelArea from '@components/SearchBar/PersonnelArea';

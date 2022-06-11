@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import Icon, { IconPropsTypes, ICON_NAME, ICON_SIZE } from '@components/common/Icon';

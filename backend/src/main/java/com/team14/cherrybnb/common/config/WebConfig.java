@@ -1,55 +1,51 @@
 package com.team14.cherrybnb.common.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.team14.cherrybnb.auth.ui.AuthInterceptor;
 import com.team14.cherrybnb.auth.ui.LoginFilter;
-import io.netty.resolver.DefaultAddressResolverGroup;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.boot.web.client.RootUriTemplateHandler;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.client.reactive.ReactorClientHttpConnector;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import reactor.netty.http.client.HttpClient;
 
 import javax.servlet.Filter;
-import java.util.List;
 
 @Configuration
-@RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-    private final LoginFilter loginFilter;
 
+    private final String kakaoKey;
     private final AuthInterceptor authInterceptor;
 
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplateBuilder()
-                .uriTemplateHandler(new RootUriTemplateHandler("https://apis-navi.kakaomobility.com/v1"))
+    public WebConfig(@Value("${kakao.rest.api.key}") String kakaoKey, AuthInterceptor authInterceptor) {
+        this.kakaoKey = kakaoKey;
+        this.authInterceptor = authInterceptor;
+    }
+    //    @Bean(name = "kakao")
+//    public RestTemplate restTemplate() {
+//        return new RestTemplateBuilder()
+//                .uriTemplateHandler(new RootUriTemplateHandler("https://apis-navi.kakaomobility.com/v1"))
+//                .build();
+//    }
+
+    @Bean(name = "kakao-navi")
+    public WebClient kakaoWebClient() {
+        return WebClient.builder()
+                .baseUrl("https://apis-navi.kakaomobility.com/v1")
+                .defaultHeader(HttpHeaders.HOST, "apis-navi.kakaomobility.com")
+                .defaultHeader(HttpHeaders.AUTHORIZATION, "KakaoAK " + kakaoKey)
                 .build();
     }
 
-    @Bean
-    public HttpClient httpClient() {
-        return HttpClient.create()
-                .resolver(DefaultAddressResolverGroup.INSTANCE);
-    }
-
-    @Bean
-    public WebClient webClient(HttpClient httpClient) {
+    @Bean(name = "github")
+    public WebClient githubWebClient() {
         return WebClient.builder()
                 .baseUrl("https://api.github.com")
-                .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .build();
 
     }
@@ -57,7 +53,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public FilterRegistrationBean<Filter> loginFilter() {
         FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
-        filterRegistrationBean.setFilter(loginFilter);
+        filterRegistrationBean.setFilter(new LoginFilter());
         filterRegistrationBean.setOrder(1);
         filterRegistrationBean.addUrlPatterns("/*");
         return filterRegistrationBean;

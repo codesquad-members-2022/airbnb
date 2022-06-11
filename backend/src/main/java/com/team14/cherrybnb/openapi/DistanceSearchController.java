@@ -26,7 +26,7 @@ public class DistanceSearchController {
     public ResponseEntity<List<DistanceInfoResponse>> getDurations(Position position) throws JsonProcessingException {
         log.info("position={}, {}", position.getX(), position.getY());
         List<DistanceInfoResponse> distanceInfoResponses = distanceSearchService.searchDistrictInfo(position);
-
+        log.info("distanceinfo={}", distanceInfoResponses);
         return ResponseEntity.ok(distanceInfoResponses);
     }
 

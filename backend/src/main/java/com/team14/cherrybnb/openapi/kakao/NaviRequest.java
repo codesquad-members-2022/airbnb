@@ -2,7 +2,12 @@ package com.team14.cherrybnb.openapi.kakao;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.geolatte.geom.M;
+import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 @AllArgsConstructor
@@ -20,13 +25,12 @@ public class NaviRequest {
         return new NaviRequest(origin, destination, true);
     }
 
-    public String getUrl() {
-
-        return UriComponentsBuilder.fromHttpUrl(REQUEST_URL)
-                .queryParam("origin", this.getOrigin())
-                .queryParam("destination", this.getDestination())
-                .queryParam("summary", this.isSummary())
-                .encode()
-                .toUriString();
-    }
+//    public UriBuilder getUrl() {
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("origin", this.getOrigin());
+//        params.put("destination", this.getDestination());
+//        params.put("summary", this.isSummary());
+//        return params;
+//
+//    }
 }

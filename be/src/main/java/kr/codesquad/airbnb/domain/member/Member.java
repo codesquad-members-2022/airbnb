@@ -1,5 +1,7 @@
 package kr.codesquad.airbnb.domain.member;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -8,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @NoArgsConstructor
+@Getter
 @Entity
 public class Member {
 
@@ -16,4 +19,8 @@ public class Member {
     private Long id;
     private String name;
     private String refreshToken;
+
+    public Member(String name) {
+        this.name = name;
+    }
 }

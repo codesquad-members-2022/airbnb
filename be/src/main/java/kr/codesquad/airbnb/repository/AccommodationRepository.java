@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface AccommodationRepository extends JpaRepository<Accommodation, Long> {
 
-    @Query(value = "SELECT AC FROM Accommodation AS AC LEFT JOIN Reservation AS RS on AC = RS.accommodation "
+    @Query(value = "SELECT DISTINCT AC FROM Accommodation AS AC LEFT JOIN Reservation AS RS on AC = RS.accommodation "
         + "WHERE (:minPrice <= AC.feePerOneNight AND AC.feePerOneNight <= :maxPrice) AND (:adultChildCount <= AC.adultChildCapacity AND :infantCount <= AC.infantCapacity) AND "
         + "( (:checkinDate IS NULL AND :checkoutDate IS NULL) OR ( RS.checkinDate IS NULL AND RS.checkoutDate IS NULL) OR RS.checkoutDate <= :checkinDate OR :checkoutDate <= RS.checkinDate)"
     )
@@ -24,7 +24,6 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, Lo
         @Param("adultChildCount") int adultChildCount,
         @Param("infantCount") int infantCount
         );
-
     @Query(value = "SELECT fee_per_one_night FROM accommodation", nativeQuery = true)
     List<Integer> findAllprices();
 }

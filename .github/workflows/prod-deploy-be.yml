@@ -40,7 +40,7 @@ jobs:
 
       - name: Docker Environmet Variable file
         run:
-          echo -e "AIRBNB_URL=${{secrets.AIRBNB_URL}}\nAIRBNB_USER=${{secrets.AIRBNB_USER}}\nAIRBNB_PW=${{secrets.AIRBNB_PW}}\nLOG_FILE_PATH=${{secrets.LOG_FILE_PATH}}" > ./env
+          echo -e "AIRBNB_URL=${{secrets.AIRBNB_URL}}\nAIRBNB_USER=${{secrets.AIRBNB_USER}}\nAIRBNB_PW=${{secrets.AIRBNB_PW}}\nLOG_FILE_PATH=${{secrets.LOG_FILE_PATH}}\nAUTH_SECRET=${{secrets.AUTH_SECRET}}\nJWT_SECRET=${{secrets.JWT_SECRET}}" > ./env
         working-directory: ${{ env.WORKING_DIR }}
 
       - name: Set up Docker Buildx

@@ -10,6 +10,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class SearchQueryResponseDto {
 
+    private Long id;
     private String name;
     private String imgUrl;
     private int maxPeople;
@@ -19,6 +20,7 @@ public class SearchQueryResponseDto {
 
     public static SearchQueryResponseDto of(Accommodation accommodation) {
         return SearchQueryResponseDto.builder()
+                .id(accommodation.getId())
                 .name(accommodation.getName())
                 .imgUrl(accommodation.getImgUrl())
                 .maxPeople(accommodation.getSumOfPeopleCapacity())

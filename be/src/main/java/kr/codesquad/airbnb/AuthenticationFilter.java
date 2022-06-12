@@ -14,25 +14,39 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @WebFilter(urlPatterns = "/api/*")
 @Slf4j
 public class AuthenticationFilter extends GenericFilterBean {
 
+    public static final String AUTHORIZED_MEMBER = "member1";
+    private boolean rejectRequest = false;
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
-        String token = req.getHeader("token");
+        Optional<String> token = Optional.ofNullable(req.getHeader("token"));
 
-        if (!token.equals("member1")) {
-            sendForbiddenResponse((HttpServletResponse) response);
+        token.ifPresentOrElse(tokenString -> verifyAuthorizedMember(tokenString, response),
+                () -> setTokenIsRequiredResponse((HttpServletResponse) response));
+
+        if (rejectRequest) {
+            rejectRequest = false;
             return;
         }
 
         chain.doFilter(request, response);
     }
 
-    public void sendForbiddenResponse(HttpServletResponse response) throws IOException {
+    private void verifyAuthorizedMember(String tokenString, ServletResponse response) {
+        if(!tokenString.equals(AUTHORIZED_MEMBER)) {
+            setForbiddenResponse((HttpServletResponse) response);
+        }
+    }
+
+    public void setForbiddenResponse(HttpServletResponse response) {
+        rejectRequest = true;
         ErrorCode errorCode = ErrorCode.FORBIDDEN_USER;
         ErrorResponse errorResponse = new ErrorResponse(errorCode);
         log.error("AuthenticationFilter reject request to server. cause = {}", errorCode.getDetail());
@@ -46,7 +60,24 @@ public class AuthenticationFilter extends GenericFilterBean {
             response.getWriter().write(json);
         } catch (IOException e) {
             log.warn("server error. cause = {}", e.getMessage());
-            response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+        }
+    }
+
+    public void setTokenIsRequiredResponse(HttpServletResponse response) {
+        rejectRequest = true;
+        ErrorCode errorCode = ErrorCode.TOKEN_IS_REQUIRED;
+        ErrorResponse errorResponse = new ErrorResponse(errorCode);
+        log.error("AuthenticationFilter reject request to server. cause = {}", errorCode.getDetail());
+
+        response.setStatus(errorCode.getHttpStatus().value());
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        try {
+            String json = errorResponse.convertToJson();
+            response.getWriter().write(json);
+        } catch (IOException e) {
+            log.warn("server error. cause = {}", e.getMessage());
         }
     }
 }

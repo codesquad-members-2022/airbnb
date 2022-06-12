@@ -25,7 +25,7 @@ public class CustomRoomRepositoryImpl implements CustomRoomRepository {
     @Override
     public List<Room> findPossibleBookingRooms(LocalDate checkIn, LocalDate checkOut) {
         return jpaQueryFactory.selectFrom(room)
-                .leftJoin(room.bookings, booking)
+                .leftJoin(room.bookings, booking).fetchJoin()
                 .where(booking.isNull()
                         .orAllOf(checkInAndCheckOutIsNotBetweenBookingPeriod(checkIn, checkOut)))
                 .fetch();

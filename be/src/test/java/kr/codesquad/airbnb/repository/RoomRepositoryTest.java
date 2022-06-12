@@ -1,28 +1,26 @@
 package kr.codesquad.airbnb.repository;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
+import kr.codesquad.airbnb.config.TestConfig;
 import kr.codesquad.airbnb.domain.Room;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.List;
 
 @DataJpaTest
+@Import(TestConfig.class)
 class RoomRepositoryTest {
 
     @Autowired
     private EntityManager em;
-    private CustomRoomRepositoryImpl customRoomRepositoryImpl;
 
-    @BeforeEach
-    public void init() {
-        customRoomRepositoryImpl = new CustomRoomRepositoryImpl(new JPAQueryFactory(em));
-    }
+    @Autowired
+    private RoomRepository roomRepository;
 
     @Test
     @DisplayName("예약 가능한 숙소 조회")
@@ -32,7 +30,7 @@ class RoomRepositoryTest {
         LocalDate checkOut = LocalDate.now().plusDays(1L);
 
         //when
-        List<Room> possibleBookingRooms = customRoomRepositoryImpl.findPossibleBookingRooms(checkIn, checkOut);
+        List<Room> possibleBookingRooms = roomRepository.findPossibleBookingRooms(checkIn, checkOut);
 
         //then
 

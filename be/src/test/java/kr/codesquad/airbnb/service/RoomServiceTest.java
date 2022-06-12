@@ -5,6 +5,7 @@ import kr.codesquad.airbnb.domain.Room;
 import kr.codesquad.airbnb.dto.RoomPriceStatisticDto;
 import kr.codesquad.airbnb.dto.RoomPriceStatisticRequest;
 import kr.codesquad.airbnb.repository.CustomRoomRepositoryImpl;
+import kr.codesquad.airbnb.repository.RoomRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +24,7 @@ import static org.mockito.Mockito.when;
 class RoomServiceTest {
 
     @Mock
-    private CustomRoomRepositoryImpl roomRepository;
+    private RoomRepository roomRepository;
 
     @InjectMocks
     private RoomService roomService;
@@ -50,8 +51,6 @@ class RoomServiceTest {
         assertThat(statisticOfRoomPrice.getMinPricePerNight()).isEqualTo(58929);
         assertThat(statisticOfRoomPrice.getMaxPricePerNight()).isEqualTo(158929);
         assertThat(statisticOfRoomPrice.getAvgPricePerNight()).isEqualTo(98929);
-        assertThat(statisticOfRoomPrice.getCountOfCategorizedPricePerNight().get(0).getEndOfRange()).isEqualTo(59999);
-        assertThat(statisticOfRoomPrice.getCountOfCategorizedPricePerNight().get(4).getEndOfRange()).isEqualTo(159999);
     }
 
     private List<Room> getStubPossibleBookingRooms() {

@@ -1,7 +1,8 @@
 package kr.codesquad.airbnb.dto;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
@@ -11,35 +12,36 @@ import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
 
 @Getter
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookingRoomRequest {
 
     @NotNull(message = "roomId 가 입력되지 않았습니다.")
     @Positive(message = "유효하지 않은 roomId 입력 되었습니다.")
-    private final Long roomId;
+    private Long roomId;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "checkIn 날짜가 입력되지 않았습니다.")
 //    @FutureOrPresent  checkIn 날짜 과거 설정 검증 개발 편의를 위해 주석처리
-    private final LocalDate checkIn;
+    private LocalDate checkIn;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "checkOut 날짜가 입력되지 않았습니다.")
-    private final LocalDate checkOut;
+    private LocalDate checkOut;
 
     @NotNull(message = "성인 인원수가 입력되지 않았습니다.")
     @Min(value = 1, message = "최소 1명 이상의 성인이 입력되어야 합니다.")
-    private final Integer adults;
+    private Integer adults;
 
     @NotNull(message = "어린이 인원수가 입력되지 않았습니다.")
     @PositiveOrZero(message = "유효하지 않은 children 입력되었습니다.")
-    private final Integer children;
+    private Integer children;
 
     @NotNull(message = "유아 인원수가 입력되지 않았습니다.")
     @PositiveOrZero(message = "유효하지 않은 infants 입력되었습니다.")
-    private final Integer infants;
+    private Integer infants;
 
     @NotNull(message = "숙박 요금이 입력되지 않았습니다.")
     @PositiveOrZero(message = "유효하지 않은 totalPrice 입력되었습니다.")
-    private final Integer totalPrice;
+    private Integer totalPrice;
 }

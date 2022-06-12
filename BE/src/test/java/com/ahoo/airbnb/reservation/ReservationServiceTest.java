@@ -15,9 +15,13 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -35,7 +39,9 @@ class ReservationServiceTest {
     @Test
     @DisplayName("존재하는 roomId에 해당하는 숙소의 1박당 요금, 총 요금, 상세 요금 항목들을 계산하여 리턴한다.")
     @Transactional
-    void roomId에_해당하는_숙소의_요금계산_성공() {
+    @ParameterizedTest
+    @MethodSource("initTestData")
+    void roomId에_해당하는_숙소의_요금계산_성공(LocalDateTime checkIn, LocalDateTime checkOut, int headcount) {
         // given
         Long roomId = 1L;
         LocalDateTime checkIn = DateUtils.stringToLocalDateTime("2022-02-02T10:15:30");
@@ -84,5 +90,11 @@ class ReservationServiceTest {
         assertThatThrownBy(() -> reservationService.calculateRoomCharge(roomId, checkIn, checkOut, headcount))
             .isInstanceOf(NoSuchElementException.class)
             .hasMessage(ExceptionMessage.NO_ROOM_ID);
+    }
+
+    static Stream<Arguments> initTestData() {
+        return Stream.of(
+            Arguments.of(DateUtils.stringToLocalDateTime("2022-02-02T10:15:30"), DateUtils.stringToLocalDateTime("2022-02-10T10:15:30"), 1)
+        );
     }
 }

@@ -30,7 +30,7 @@ public class RoomResponse {
             null,
             room.getAverageRate(),
             room.getReviewCount(),
-            room.getMainImageUrl().orElse(""),
+            room.getMainImageUrl(),
             true,
             room.getCoordinate().toStringWithComma()
         );
@@ -44,7 +44,7 @@ public class RoomResponse {
             totalCharge,
             room.getAverageRate(),
             room.getReviewCount(),
-            room.getMainImageUrl().orElse(""),
+            room.getMainImageUrl(),
             isWish,
             room.getCoordinate().toStringWithComma()
         );

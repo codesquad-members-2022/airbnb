@@ -3,7 +3,6 @@ package com.ahoo.airbnb.entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -59,11 +58,12 @@ public class Room extends BaseEntity {
     @OneToMany(mappedBy = "room", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<RoomChargePolicy> roomChargePolicies = new ArrayList<>();
 
-    public Optional<String> getMainImageUrl() {
+    public String getMainImageUrl() {
         return images.stream()
             .filter(RoomImage::getIsMainImage)
             .map(RoomImage::getUrl)
-            .findAny();
+            .findAny()
+            .orElse(null);
     }
 
     @Override

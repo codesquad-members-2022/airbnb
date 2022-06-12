@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import PersonnelController from '@personnel/PersonnelController';
+import { Title } from '@/styled-component/Title';
 
 function PersonnelSelectBox({ title, explanation }) {
   return (
@@ -23,13 +24,6 @@ const Container = styled.div`
     margin-bottom: 30px;
     border-bottom: 1px solid #c4c4c4;
   }
-`;
-
-const Title = styled.div`
-  margin-bottom: 10px;
-  font-weight: ${({ theme }) => theme.fontWeight.bold};
-  font-size: ${({ theme }) => theme.fontSize.large};
-  color: ${({ theme }) => theme.color.black};
 `;
 
 const Explanation = styled.div`

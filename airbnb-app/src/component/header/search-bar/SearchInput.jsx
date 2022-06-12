@@ -28,8 +28,6 @@ function SearchInput({ value, resetBtnHandler, label, placeholder, isLastElement
 
 const Container = styled.div`
   display: flex;
-  box-sizing: border-box;
-  position: relative;
   align-items: center;
   flex-grow: ${({ flexGrow }) => flexGrow};
   padding: 20px 30px;

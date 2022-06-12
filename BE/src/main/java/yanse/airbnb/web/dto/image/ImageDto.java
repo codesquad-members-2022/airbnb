@@ -1,4 +1,4 @@
-package yanse.airbnb.web.dto;
+package yanse.airbnb.web.dto.image;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

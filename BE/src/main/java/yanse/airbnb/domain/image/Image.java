@@ -10,7 +10,7 @@ import javax.persistence.Id;
 
 import lombok.Getter;
 import yanse.airbnb.type.ImageType;
-import yanse.airbnb.web.dto.ImageDto;
+import yanse.airbnb.web.dto.image.ImageDto;
 
 @Entity
 @Getter

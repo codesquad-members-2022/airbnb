@@ -3,7 +3,7 @@ package yanse.airbnb.domain.room.repository;
 import java.util.List;
 import org.springframework.data.repository.query.Param;
 import yanse.airbnb.domain.room.Room;
-import yanse.airbnb.web.dto.RequestRoomSearchDto;
+import yanse.airbnb.web.dto.room.RequestRoomSearchDto;
 
 
 public interface RoomRepositoryCustom {

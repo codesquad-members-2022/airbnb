@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 import yanse.airbnb.domain.image.RoomImage;
 import yanse.airbnb.domain.member.Members;
 import yanse.airbnb.domain.reservation.Reservation;
+import yanse.airbnb.web.dto.reservation.RequestReservationDto;
 
 @Getter
 @Builder
@@ -63,4 +64,15 @@ public class Room {
 
 	@OneToMany(mappedBy = "room")
 	private List<Reservation> reservationList = new ArrayList<>();
+
+	public Reservation createReservation(Members findMember, RequestReservationDto info) {
+		return Reservation.builder()
+			.members(findMember)
+			.room(this)
+			.totalGuest(info.getTotalGuest())
+			.reservationPrice(info.getTotalPrice())
+			.checkInDateTime(info.getCheckIn())
+			.checkOutDateTime(info.getCheckOut())
+			.build();
+	}
 }

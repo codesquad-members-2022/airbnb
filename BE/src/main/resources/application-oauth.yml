@@ -1,0 +1,15 @@
+oauth2:
+  user:
+    github:
+      client-id: ${CLIENT_ID}
+      client-secret: ${CLIENT_SECRETS}
+      redirect-uri: http://localhost:8080/redirect/oauth
+  provider:
+    github:
+      token-uri: https://github.com/login/oauth/access_token
+      user-info-uri: https://api.github.com/user
+
+jwt:
+  issuer: ${ISSUER}
+  secret-key: ${SECRET_KEY}
+

@@ -11,9 +11,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
-import yanse.airbnb.domain.image.QRoomImage;
 import yanse.airbnb.domain.room.Room;
-import yanse.airbnb.web.dto.RequestRoomSearchDto;
+import yanse.airbnb.web.dto.room.RequestRoomSearchDto;
 
 public class RoomRepositoryImpl implements RoomRepositoryCustom {
 
@@ -57,8 +56,8 @@ public class RoomRepositoryImpl implements RoomRepositoryCustom {
 
 	private BooleanExpression validCheckInOutTime(LocalDate checkIn, LocalDate checkOut) {
 		return room.reservationList.isEmpty()
-			.or(reservation.checkOutDateTime.loe(checkIn.atStartOfDay())
-				.or(reservation.checkInDateTime.goe(checkOut.atStartOfDay())));
+			.or(reservation.checkOutDateTime.loe(checkIn)
+				.or(reservation.checkInDateTime.goe(checkOut)));
 	}
 
 	private BooleanExpression getAddressContains(String address) {

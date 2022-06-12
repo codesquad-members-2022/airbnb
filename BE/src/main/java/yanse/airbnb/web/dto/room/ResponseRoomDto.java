@@ -1,4 +1,4 @@
-package yanse.airbnb.web.dto;
+package yanse.airbnb.web.dto.room;
 
 import java.util.List;
 import java.util.stream.Collectors;

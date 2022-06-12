@@ -1,4 +1,4 @@
-package yanse.airbnb.web.dto;
+package yanse.airbnb.web.dto.room;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,11 +8,12 @@ import yanse.airbnb.domain.room.Room;
 import yanse.airbnb.domain.room.RoomInfo;
 
 import java.util.List;
+import yanse.airbnb.web.dto.image.RoomImageDto;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoomDto {
+public class RoomDetailDto {
 
 	private String roomName;
 	private List<RoomImageDto> roomImage;
@@ -22,7 +23,7 @@ public class RoomDto {
 	private RoomInfo roomInfo;
 	private String roomDescription;
 
-	public RoomDto(Room room, List<RoomImageDto> roomImages) {
+	public RoomDetailDto(Room room, List<RoomImageDto> roomImages) {
 		this.roomName = room.getRoomName();
 		this.roomImage = roomImages;
 		this.rating = room.getRating();

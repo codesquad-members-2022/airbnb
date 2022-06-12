@@ -1,4 +1,4 @@
-package yanse.airbnb.web.dto;
+package yanse.airbnb.web.dto.room;
 
 import java.time.LocalDate;
 import java.time.Month;

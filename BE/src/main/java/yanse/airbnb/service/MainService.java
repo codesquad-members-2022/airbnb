@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import yanse.airbnb.domain.image.Image;
 import yanse.airbnb.domain.image.repository.ImageRepository;
 import yanse.airbnb.type.ImageType;
-import yanse.airbnb.web.dto.ImageDto;
+import yanse.airbnb.web.dto.image.ImageDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

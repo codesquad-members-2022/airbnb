@@ -75,23 +75,12 @@ public class Room extends BaseEntity {
             return false;
         }
         Room room = (Room) o;
-        return Objects.equals(id, room.id) && Objects.equals(host, room.host)
-            && Objects.equals(coordinate, room.coordinate) && Objects.equals(address, room.address)
-            && Objects.equals(title, room.title) && Objects.equals(description, room.description)
-            && Objects.equals(roomType, room.roomType) && Objects.equals(maxCapacity, room.maxCapacity)
-            && Objects.equals(bedroomCount, room.bedroomCount) && Objects.equals(bedCount,
-            room.bedCount) && Objects.equals(bathroomCount, room.bathroomCount) && Objects.equals(
-            charge, room.charge) && Objects.equals(cleaningCharge, room.cleaningCharge)
-            && Objects.equals(reviewCount, room.reviewCount) && Objects.equals(averageRate,
-            room.averageRate) && Objects.equals(isDeleted, room.isDeleted) && Objects.equals(images,
-            room.images) && Objects.equals(roomChargePolicies, room.roomChargePolicies);
+        return id.equals(room.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, host, coordinate, address, title, description, roomType, maxCapacity, bedroomCount,
-            bedCount, bathroomCount, charge, cleaningCharge, reviewCount, averageRate, isDeleted, images,
-            roomChargePolicies);
+        return Objects.hash(id);
     }
 }
 

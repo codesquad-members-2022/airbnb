@@ -2,8 +2,6 @@ package com.team14.cherrybnb.common.config;
 
 import com.team14.cherrybnb.auth.ui.AuthInterceptor;
 import com.team14.cherrybnb.auth.ui.LoginFilter;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -26,12 +24,6 @@ public class WebConfig implements WebMvcConfigurer {
         this.kakaoKey = kakaoKey;
         this.authInterceptor = authInterceptor;
     }
-    //    @Bean(name = "kakao")
-//    public RestTemplate restTemplate() {
-//        return new RestTemplateBuilder()
-//                .uriTemplateHandler(new RootUriTemplateHandler("https://apis-navi.kakaomobility.com/v1"))
-//                .build();
-//    }
 
     @Bean(name = "kakao-navi")
     public WebClient kakaoWebClient() {

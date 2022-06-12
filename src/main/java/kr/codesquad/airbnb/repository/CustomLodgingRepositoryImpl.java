@@ -10,12 +10,13 @@ import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static kr.codesquad.airbnb.domain.QLodging.lodging;
 import static kr.codesquad.airbnb.domain.QReservation.reservation;
 
 @RequiredArgsConstructor
-public class CustomLodgingRepositoryImpl implements CustomLodgingRepository{
+public class CustomLodgingRepositoryImpl implements CustomLodgingRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
@@ -24,21 +25,12 @@ public class CustomLodgingRepositoryImpl implements CustomLodgingRepository{
         return jpaQueryFactory
                 .select(lodging)
                 .from(lodging)
-                .leftJoin(lodging.reservationList)
+                .leftJoin(lodging.reservationList, reservation)
                 .where(
+                        checkAddress(searchLodgingRequest.getRegion()),
                         checkPrice(searchLodgingRequest.getMinPrice(), searchLodgingRequest.getMaxPrice()),
                         checkGuests(searchLodgingRequest.getGuests()),
-                        lodging.id.notIn(
-                                JPAExpressions
-                                        .select(lodging.id)
-                                        .from(lodging)
-                                        .join(lodging.reservationList, reservation)
-                                        .on(reservation.checkIn.between(searchLodgingRequest.getCheckIn(),searchLodgingRequest.getCheckOut())
-                                                        .or(reservation.checkOut.between(searchLodgingRequest.getCheckIn(), searchLodgingRequest.getCheckOut()))
-                                                        .or(reservation.checkIn.between(searchLodgingRequest.getCheckIn(), searchLodgingRequest.getCheckOut())
-                                                                .and(reservation.checkOut.between(searchLodgingRequest.getCheckIn(), searchLodgingRequest.getCheckOut())))
-                            )
-                        )
+                        checkInout(searchLodgingRequest.getCheckIn(), searchLodgingRequest.getCheckOut())
                 ).fetch();
     }
 
@@ -48,23 +40,20 @@ public class CustomLodgingRepositoryImpl implements CustomLodgingRepository{
                 lodging.price.loe(maxPrice).and(lodging.price.goe(minPrice)) : null;
     }
 
-    private BooleanExpression priceGoe(Long minPrice) {
-        return minPrice == null ? null : lodging.price.goe(minPrice);
-    }
-
-    private BooleanExpression priceLoe(Long maxPrice) {
-        return maxPrice == null ? null : lodging.price.loe(maxPrice);
-    }
-
-    private BooleanExpression checkGuests (Integer guests) {
+    private BooleanExpression checkGuests(Integer guests) {
         return guests == null ? null : lodging.maxGuest.goe(guests);
     }
 
-    private BooleanExpression dateLoe (LocalDate checkIn) {
-        return checkIn != null ? reservation.checkIn.loe(checkIn) : null;
+    private BooleanExpression checkInout(LocalDate checkIn, LocalDate checkOut) {
+        return ((checkIn != null) && (checkOut != null)) ?
+                lodging.reservationList.isEmpty().or(reservation.checkOut.loe(checkIn).or(reservation.checkIn.goe(checkOut))): null;
     }
 
-    private BooleanExpression dateGoe (LocalDate checkOut) {
-        return checkOut != null ? reservation.checkOut.goe(checkOut) : null;
+    private BooleanExpression checkAddress(String region) {
+        return lodging.address.country.contains(region).or(
+                lodging.address.city.contains(region).or(
+                        lodging.address.town.contains(region).or(
+                                lodging.address.village.contains(region))));
     }
+
 }

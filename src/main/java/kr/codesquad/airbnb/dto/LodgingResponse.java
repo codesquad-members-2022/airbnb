@@ -2,13 +2,17 @@ package kr.codesquad.airbnb.dto;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import kr.codesquad.airbnb.domain.Images;
 import kr.codesquad.airbnb.domain.Lodging;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+
 
 @Getter
 @AllArgsConstructor
+@Builder
 public class LodgingResponse {
 
     private Long id;
@@ -16,11 +20,12 @@ public class LodgingResponse {
     private Double rating;
     private int review;
     private Long price;
-    private Long totalPrice;
+    private int totalPrice;
     private String imageUrl;
     private boolean wish;
     private double latitude;
     private double longitude;
+    private List<String> imageUrls;
 
     public LodgingResponse(Lodging lodging) {
         this.id = lodging.getId();
@@ -28,19 +33,18 @@ public class LodgingResponse {
         this.rating = lodging.getRating();
         this.review = lodging.getReview();
         this.price = lodging.getPrice();
-//        this.totalPrice = totalPrice;
-        this.imageUrl = initMainImageUrl(lodging);
 //        this.wish = lodging.get
         this.latitude = lodging.getLatitude();
         this.longitude = lodging.getLongitude();
+        this.imageUrls = initMainImageUrl(lodging);
     }
 
-    private String initMainImageUrl(Lodging lodging) {
+
+    private List<String> initMainImageUrl(Lodging lodging) {
+        List<String> imageUrls = new ArrayList<>();
         for (Images image : lodging.getImages()) {
-            if (image.isMainImage() == true) {
-                return image.getImageUrl();
+               imageUrls.add(image.getImageUrl());
             }
-        }
-        return null;
+        return this.imageUrls = imageUrls;
     }
 }

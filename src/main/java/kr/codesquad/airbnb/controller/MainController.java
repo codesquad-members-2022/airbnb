@@ -1,6 +1,6 @@
 package kr.codesquad.airbnb.controller;
 
-import kr.codesquad.airbnb.dto.EventResponseDto;
+import kr.codesquad.airbnb.dto.EventResponse;
 import kr.codesquad.airbnb.dto.RegionResponse;
 import kr.codesquad.airbnb.service.MainService;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +15,12 @@ public class MainController {
 
     private final MainService mainService;
 
-    @GetMapping("/main/event")
-    public EventResponseDto getEvent() {
+    @GetMapping("/event")
+    public EventResponse getEvent() {
         return mainService.getEvent();
     }
 
-    @GetMapping("/main/nearby")
+    @GetMapping("/nearby")
     public List<RegionResponse> getNearRegions() {
         return mainService.getNearRegions();
     }

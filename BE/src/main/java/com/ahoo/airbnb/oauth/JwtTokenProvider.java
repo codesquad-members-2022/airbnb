@@ -1,5 +1,6 @@
 package com.ahoo.airbnb.oauth;
 
+import com.ahoo.airbnb.exception.InValidTokenException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Random;
@@ -48,7 +49,7 @@ public class JwtTokenProvider {
 		} catch (ExpiredJwtException e) {
 			return e.getClaims().getSubject();
 		} catch (JwtException e) {
-			throw new RuntimeException("유효하지 않은 토큰입니다.");
+			throw new InValidTokenException("유효하지 않은 토큰입니다.");
 		}
 	}
 

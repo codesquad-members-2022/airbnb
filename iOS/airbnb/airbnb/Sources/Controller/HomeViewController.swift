@@ -12,11 +12,7 @@ final class HomeViewController: UIViewController {
 
     private let dataSource = HomeCollectionViewDataSource()
     
-    private let backButton: UIBarButtonItem = {
-        let buttonItem = UIBarButtonItem(title: "뒤로", style: .plain, target: nil, action: nil)
-        buttonItem.tintColor = .black
-        return buttonItem
-    }()
+    private lazy var loginButton = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: self, action: #selector(didTabLoginButton))
 
     private let searchBarController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -52,8 +48,10 @@ final class HomeViewController: UIViewController {
         
         navigationItem.searchController = searchBarController
         navigationItem.titleView = logoImageView
-        navigationItem.backBarButtonItem = backButton
+        navigationItem.backBarButtonItem = UIComponents.backButton
+        navigationItem.rightBarButtonItem = loginButton
         navigationItem.hidesSearchBarWhenScrolling = false
+        loginButton.tintColor = .black
         
         searchBarController.searchBar.delegate = self
     }
@@ -68,10 +66,15 @@ final class HomeViewController: UIViewController {
     
     private func layout() {
         view.addSubview(collectionView)
-
+        
         collectionView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+    
+    @objc func didTabLoginButton(_ sender: Any) {
+        let nextViewController = LoginViewController()
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
 }
 
@@ -79,7 +82,7 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        let searchViewController = SearchViewController()
-        navigationController?.pushViewController(searchViewController, animated: true)
+        let nextViewController = SearchViewController()
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
 }

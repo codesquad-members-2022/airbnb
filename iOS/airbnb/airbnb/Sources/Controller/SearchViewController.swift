@@ -10,22 +10,13 @@ import SnapKit
 import MapKit
 
 final class SearchViewController: UIViewController {
-    
-    private let cityData = CityData.dataList
 
     private let tableView = UITableView(frame: .zero, style: .plain)
     private var searchCompleter = MKLocalSearchCompleter() // 자동완성 도와주는 객체
-    private var searchResult = [MKLocalSearchCompletion]() // 자동완성한 결과를 담는 객체
-    private var isSearching = false
+    private var dataSource = SearchTableViewDataSource()
     
     private lazy var rightButton = UIBarButtonItem(title: "지우기", style: .plain, target: self, action: #selector(didTabRemoveButton))
 
-    private let navigationBarUnderLineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .line
-        return view
-    }()
-    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 21, weight: .bold)
@@ -49,6 +40,7 @@ final class SearchViewController: UIViewController {
         title = "숙소 찾기"
         view.backgroundColor = .white
         
+        navigationItem.backBarButtonItem = UIComponents.backButton
         navigationItem.rightBarButtonItem = rightButton
         navigationItem.searchController = searchController
         navigationItem.searchController?.searchBar.becomeFirstResponder() // First Responder 로 지정
@@ -62,17 +54,18 @@ final class SearchViewController: UIViewController {
         
         tableView.register(CityViewCell.self, forCellReuseIdentifier: CityViewCell.identifier)
         tableView.register(LocationTableViewCell.self, forCellReuseIdentifier: LocationTableViewCell.identifier)
-        tableView.dataSource = self
+        tableView.dataSource = dataSource
+        tableView.delegate = self
         
         searchCompleter.delegate = self
     }
     
     private func layout() {
-        view.addSubview(navigationBarUnderLineView)
+        view.addSubview(UIComponents.navigationBarUnderLineView)
         view.addSubview(titleLabel)
         view.addSubview(tableView)
         
-        navigationBarUnderLineView.snp.makeConstraints {
+        UIComponents.navigationBarUnderLineView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(1)
         }
@@ -87,25 +80,32 @@ final class SearchViewController: UIViewController {
             $0.bottom.leading.trailing.equalToSuperview()
         }
     }
-    
-    @objc func didTabRemoveButton(_ sender: Any) {
-        searchController.searchBar.text = ""
-        isSearching = false
-        tableView.reloadData()
-    }
 }
 
 // MARK: - extension
 
+extension SearchViewController {
+    @objc func didTabRemoveButton(_ sender: Any) {
+        searchController.searchBar.text = ""
+        dataSource.didStartSearch(isSearching: false)
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+}
+
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText == "" {
-            isSearching = false
-            tableView.reloadData()
-        } else {
-            isSearching = true
-            searchCompleter.queryFragment = searchText
+        if searchText.isEmpty {
+            dataSource.didStartSearch(isSearching: false)
             
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        } else {
+            dataSource.didStartSearch(isSearching: true)
+            searchCompleter.queryFragment = searchText
         }
     }
 }
@@ -113,46 +113,21 @@ extension SearchViewController: UISearchBarDelegate {
 extension SearchViewController: MKLocalSearchCompleterDelegate {
     // 자동완성 시 결과를 받는 함수
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-        searchResult = completer.results
-        tableView.reloadData()
+        let result = completer.results
+        dataSource.didGetTheResults(result: result)
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }
 
-extension SearchViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        isSearching ? 1 : cityData.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        isSearching ? searchResult.count : 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if isSearching {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: LocationTableViewCell.identifier, for: indexPath) as? LocationTableViewCell else {
-                return UITableViewCell()
-            }
-            return makeLocationCell(cell: cell, indexPath: indexPath)
-        } else {
-            tableView.separatorColor = .clear
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CityViewCell.identifier, for: indexPath) as? CityViewCell else {
-                return UITableViewCell()
-            }
-            return makeCityCell(cell: cell, indexPath: indexPath)
-        }
-    }
-    
-    private func makeLocationCell(cell: LocationTableViewCell, indexPath: IndexPath) -> LocationTableViewCell {
-        let target = searchResult[indexPath.row]
-        
-        cell.setData(title: target.title)
-        return cell
-    }
-    
-    private func makeCityCell(cell: CityViewCell, indexPath: IndexPath) -> CityViewCell {
-        let target = cityData[indexPath.section]
-        
-        cell.setData(image: target.image, city: target.city, distance: target.distance)
-        return cell
+extension SearchViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.selectionStyle = .none
+
+        let nextViewController = CalendarViewController()
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
 }

@@ -32,6 +32,7 @@ enum Title {
 }
 
 enum Size {
+    static let barHeight = CGFloat(95)
     static let heroImageCell = CGSize(width: 250, height: 500)
 }
 
@@ -61,6 +62,16 @@ enum Layout {
         return section
     }()
     
+    static let calendarLayout: UICollectionViewCompositionalLayout = {
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1.3)))
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.5)), subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets.bottom = 150
+        return UICollectionViewCompositionalLayout(section: section)
+    }()
+    
     static func createLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
             if sectionNumber == 0 {
@@ -68,4 +79,18 @@ enum Layout {
             } else { return travelDestinationLayout }
         }
     }
+}
+
+enum UIComponents {
+    static let navigationBarUnderLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .line
+        return view
+    }()
+    
+    static let backButton: UIBarButtonItem = {
+        let buttonItem = UIBarButtonItem(title: "뒤로", style: .plain, target: nil, action: nil)
+        buttonItem.tintColor = .black
+        return buttonItem
+    }()
 }

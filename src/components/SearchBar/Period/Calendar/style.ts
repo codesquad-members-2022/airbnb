@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-import { DirectionType } from "@utils/calendar";
+import { DirectionType } from "_types/calendar";
 
 export const Calendar = styled.div`
   position: relative;
@@ -8,7 +8,7 @@ export const Calendar = styled.div`
   display: flex;
 `;
 
-export const SlideList = styled.div<{ direction: DirectionType; translateX: number }>`
+export const SlideList = styled.div<{ direction: DirectionType; movePoint: number }>`
   position: relative;
   display: flex;
   width: 100%;
@@ -20,5 +20,5 @@ export const SlideList = styled.div<{ direction: DirectionType; translateX: numb
       transition-duration: 0.3s;
     `}
 
-  transform: translateX(${({ translateX }) => `${translateX}%`});
+  transform: translateX(${({ movePoint }) => `${movePoint}%`});
 `;

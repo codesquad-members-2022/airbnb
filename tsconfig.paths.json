@@ -9,7 +9,8 @@
       "@pages/*": ["pages/*"],
       "@assets/*": ["assets/*"],
       "@utils/*": ["utils/*"],
-      "@hooks/*": ["hooks/*"]
+      "@hooks/*": ["hooks/*"],
+      "_types/*": ["types/*"]
     }
   }
 }

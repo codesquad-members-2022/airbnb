@@ -289,6 +289,296 @@
         "freeParkingLot": true,
         "hairDryer": true
       }
+    },
+    {
+      "id": 11,
+      "maxGuest": 10,
+      "name": "4BR Urban Green Penthouse with stunning views",
+      "address": "서울특별시 강남구 삼성동",
+      "detailAddress": "",
+      "latitude": 37.5144082,
+      "longitude": 127.0590375,
+      "roomType": "집 전체",
+      "roomCount": 1,
+      "bedCount": 1,
+      "bathroomCount": 1,
+      "rating": 4.3,
+      "reviewCount": 453,
+      "originalPrice": 487670,
+      "salePrice": 420000,
+      "badge": "슈퍼호스트",
+      "thumbnails": [
+        "https://a0.muscache.com/im/pictures/b767bd10-0e77-4591-b207-faf0b3239bb6.jpg?im_w=720",
+        "https://a0.muscache.com/im/pictures/b5247a15-4cb9-4b55-8a09-acbc892d37fe.jpg?im_w=720"
+      ],
+      "options": {
+        "kitchen": true,
+        "wifi": true,
+        "airConditioner": true,
+        "freeParkingLot": true,
+        "hairDryer": true
+      }
+    },
+    {
+      "id": 12,
+      "maxGuest": 10,
+      "name": "Cosy & Private Room E@Gangnam STN(1min)",
+      "address": "서울특별시 강남구 역삼동",
+      "detailAddress": "",
+      "latitude": 37.5001558,
+      "longitude": 127.0398494,
+      "roomType": "집 전체",
+      "roomCount": 1,
+      "bedCount": 1,
+      "bathroomCount": 1,
+      "rating": 4.3,
+      "reviewCount": 453,
+      "originalPrice": 162000,
+      "salePrice": 66600,
+      "badge": "슈퍼호스트",
+      "thumbnails": [
+        "https://a0.muscache.com/im/pictures/4e0da465-12fe-473d-9673-7b6284b53a39.jpg?im_w=720",
+        "https://a0.muscache.com/im/pictures/276e48da-8878-4e83-9dda-7ce57fec5623.jpg?im_w=720"
+      ],
+      "options": {
+        "kitchen": true,
+        "wifi": true,
+        "airConditioner": true,
+        "freeParkingLot": true,
+        "hairDryer": true
+      }
+    },
+    {
+      "id": 13,
+      "maxGuest": 10,
+      "name": "Free portable WiFi! 30sec Gangnam subway station#5",
+      "address": "서울특별시 서초구",
+      "detailAddress": "",
+      "latitude": 37.4974506,
+      "longitude": 127.0292995,
+      "roomType": "집 전체",
+      "roomCount": 1,
+      "bedCount": 1,
+      "bathroomCount": 1,
+      "rating": 4.7,
+      "reviewCount": 24,
+      "originalPrice": 122200,
+      "salePrice": 100000,
+      "badge": "슈퍼호스트",
+      "thumbnails": [
+        "https://a0.muscache.com/im/pictures/069a082f-db39-46bb-8b58-4f20334ef383.jpg?im_w=720",
+        "https://a0.muscache.com/im/pictures/37cf5718-02a2-4d2f-a79e-0e9904cfab6f.jpg?im_w=720"
+      ],
+      "options": {
+        "kitchen": true,
+        "wifi": true,
+        "airConditioner": true,
+        "freeParkingLot": true,
+        "hairDryer": true
+      }
+    },
+    {
+      "id": 14,
+      "maxGuest": 10,
+      "name": "섬버키마 힐 리트리트의 빌라 루나",
+      "address": "서울특별시 강남구 역삼동",
+      "detailAddress": "",
+      "latitude": 37.4956545,
+      "longitude": 127.027835,
+      "roomType": "집 전체",
+      "roomCount": 1,
+      "bedCount": 1,
+      "bathroomCount": 1,
+      "rating": 4.7,
+      "reviewCount": 24,
+      "originalPrice": 184000,
+      "salePrice": 150000,
+      "badge": "슈퍼호스트",
+      "thumbnails": [
+        "https://a0.muscache.com/im/pictures/miso/Hosting-41015249/original/61dfe221-64e4-4275-a9b7-078acc8544d8.jpeg?im_w=720",
+        "https://a0.muscache.com/im/pictures/miso/Hosting-41015249/original/187bf8a7-465c-436d-b751-47da4c20217b.jpeg?im_w=720"
+      ],
+      "options": {
+        "kitchen": true,
+        "wifi": true,
+        "airConditioner": true,
+        "freeParkingLot": true,
+        "hairDryer": true
+      }
+    },
+    {
+      "id": 15,
+      "maxGuest": 10,
+      "name": "[바다앞 독채] 프라이빗 실내 온수풀 '게으른오후-노을'",
+      "address": "서울특별시 강남구 역삼동",
+      "detailAddress": "",
+      "latitude": 37.4956843,
+      "longitude": 127.0366218,
+      "roomType": "집 전체",
+      "roomCount": 1,
+      "bedCount": 1,
+      "bathroomCount": 1,
+      "rating": 4.7,
+      "reviewCount": 24,
+      "originalPrice": 650000,
+      "salePrice": 550000,
+      "badge": "슈퍼호스트",
+      "thumbnails": [
+        "https://a0.muscache.com/im/pictures/miso/Hosting-50838196/original/2098cf48-0707-43c6-8d22-d78351190e1d.jpeg?im_w=720",
+        "https://a0.muscache.com/im/pictures/miso/Hosting-50838196/original/f3414b58-02e5-4e14-b5c3-92489fca63b9.jpeg?im_w=720"
+      ],
+      "options": {
+        "kitchen": true,
+        "wifi": true,
+        "airConditioner": true,
+        "freeParkingLot": true,
+        "hairDryer": true
+      }
+    },
+    {
+      "id": 16,
+      "maxGuest": 10,
+      "name": "KANT HAUS_조용하고 아늑한 제주 가옥",
+      "address": "서울특별시 강남구 역삼동",
+      "detailAddress": "",
+      "latitude": 37.4952,
+      "longitude": 127.036155,
+      "roomType": "집 전체",
+      "roomCount": 1,
+      "bedCount": 1,
+      "bathroomCount": 1,
+      "rating": 4.9,
+      "reviewCount": 36,
+      "originalPrice": 220000,
+      "salePrice": 200000,
+      "badge": "슈퍼호스트",
+      "thumbnails": [
+        "https://a0.muscache.com/im/pictures/2436086f-7ed7-4347-bfca-dff6f4ae3bc5.jpg?im_w=720",
+        "https://a0.muscache.com/im/pictures/252038e3-ed2e-49a7-b3c2-944299128ca1.jpg?im_w=720"
+      ],
+      "options": {
+        "kitchen": true,
+        "wifi": true,
+        "airConditioner": true,
+        "freeParkingLot": true,
+        "hairDryer": true
+      }
+    },
+    {
+      "id": 17,
+      "maxGuest": 10,
+      "name": "중심가와 가까운 친환경, 가족 친화적인 저택",
+      "address": "서울특별시 강남구 역삼동",
+      "detailAddress": "",
+      "latitude": 37.5000425,
+      "longitude": 127.030839,
+      "roomType": "집 전체",
+      "roomCount": 1,
+      "bedCount": 1,
+      "bathroomCount": 1,
+      "rating": 4.3,
+      "reviewCount": 36,
+      "originalPrice": 660000,
+      "salePrice": 6100000,
+      "badge": "슈퍼호스트",
+      "thumbnails": [
+        "https://a0.muscache.com/im/pictures/d34d2229-74d1-4231-8c80-40b7daed4e4e.jpg?im_w=720",
+        "https://a0.muscache.com/im/pictures/27216532/e83fe76f_original.jpg?im_w=720"
+      ],
+      "options": {
+        "kitchen": true,
+        "wifi": true,
+        "airConditioner": true,
+        "freeParkingLot": true,
+        "hairDryer": true
+      }
+    },
+    {
+      "id": 18,
+      "maxGuest": 10,
+      "name": "저렴한 가격 좀티엔 풀 빌라 8 PX | 자구치",
+      "address": "서울특별시 강남구 역삼동",
+      "detailAddress": "",
+      "latitude": 37.5102,
+      "longitude": 127.030111,
+      "roomType": "집 전체",
+      "roomCount": 1,
+      "bedCount": 1,
+      "bathroomCount": 1,
+      "rating": 4.3,
+      "reviewCount": 36,
+      "originalPrice": 230000,
+      "salePrice": 210000,
+      "badge": "",
+      "thumbnails": [
+        "https://a0.muscache.com/im/pictures/258a5670-ee2f-465f-a117-68c0b03dcb73.jpg?im_w=720",
+        "https://a0.muscache.com/im/pictures/bcc89471-e091-4d01-befd-d58f9021f026.jpg?im_w=720"
+      ],
+      "options": {
+        "kitchen": true,
+        "wifi": true,
+        "airConditioner": true,
+        "freeParkingLot": true,
+        "hairDryer": true
+      }
+    },
+    {
+      "id": 19,
+      "maxGuest": 10,
+      "name": "북층101/바다, 인천대교 전망야경맛집/단독바베큐/넷플릭스/픽업<SEASIDE HOUSE>",
+      "address": "서울특별시 강남구 역삼동",
+      "detailAddress": "",
+      "latitude": 37.4959298,
+      "longitude": 127.0382964,
+      "roomType": "집 전체",
+      "roomCount": 1,
+      "bedCount": 1,
+      "bathroomCount": 1,
+      "rating": 4.9,
+      "reviewCount": 25,
+      "originalPrice": 23000,
+      "salePrice": 21000,
+      "badge": "",
+      "thumbnails": [
+        "https://a0.muscache.com/im/pictures/b3d2fc8f-93c1-4c40-9026-67724daeb21d.jpg?im_w=720",
+        "https://a0.muscache.com/im/pictures/a1b2af4e-7812-44c9-aeca-2c1f92ed8b74.jpg?im_w=720"
+      ],
+      "options": {
+        "kitchen": true,
+        "wifi": true,
+        "airConditioner": true,
+        "freeParkingLot": true,
+        "hairDryer": true
+      }
+    },
+    {
+      "id": 20,
+      "maxGuest": 10,
+      "name": "소나무로 지어진 통나무집에서 반려견과 함께 즐거운 추억을 남길 수 있는 숙소의 마한 객실",
+      "address": "서울특별시 강남구 역삼동",
+      "detailAddress": "",
+      "latitude": 37.4928593,
+      "longitude": 127.0405033,
+      "roomType": "집 전체",
+      "roomCount": 1,
+      "bedCount": 1,
+      "bathroomCount": 1,
+      "rating": 4.9,
+      "reviewCount": 252,
+      "originalPrice": 76000,
+      "salePrice": 50000,
+      "badge": "",
+      "thumbnails": [
+        "https://a0.muscache.com/im/pictures/prohost-api/Hosting-49538744/original/76c8963a-4062-49cb-bb15-5dbcf2e8e5c6.jpeg?im_w=720",
+        "https://a0.muscache.com/im/pictures/prohost-api/Hosting-49538744/original/7b18cb18-e751-43d3-9689-869513cb571d.jpeg?im_w=720"
+      ],
+      "options": {
+        "kitchen": true,
+        "wifi": true,
+        "airConditioner": true,
+        "freeParkingLot": true,
+        "hairDryer": true
+      }
     }
   ]
 }

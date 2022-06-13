@@ -1,7 +1,6 @@
-import { createContext, useContext, useMemo, useReducer, useCallback } from "react";
+import useEffect, { createContext, useContext, useMemo, useReducer, useCallback } from "react";
 
-import { CalendarTypes } from "@constants/calendar";
-import { CalendarActionType, CalendarDispatches, CalendarState } from "@utils/calendar";
+import { CalendarState, CalendarActionType, CalendarDispatches, CalendarTypes } from "_types/calendar";
 
 const reducer = (state: CalendarState, action: CalendarActionType): CalendarState => {
   switch (action.type) {
@@ -10,6 +9,9 @@ const reducer = (state: CalendarState, action: CalendarActionType): CalendarStat
 
     case CalendarTypes.CHECK_OUT:
       return { ...state, checkOut: action.data };
+
+    case CalendarTypes.CHECK_HOVER:
+      return { ...state, checkHover: action.data };
 
     case CalendarTypes.ALL_REMOVE:
       return initialState;
@@ -25,6 +27,7 @@ const CalendarDispatchContext = createContext<CalendarDispatches | null>(null);
 const initialState = {
   checkIn: null,
   checkOut: null,
+  checkHover: null,
 };
 
 const CalendarProvider = ({ children }: { children?: React.ReactNode }) => {
@@ -38,6 +41,10 @@ const CalendarProvider = ({ children }: { children?: React.ReactNode }) => {
     dispatch({ type: CalendarTypes.CHECK_OUT, data: date });
   }, []);
 
+  const onCheckHover = useCallback((date: Date) => {
+    dispatch({ type: CalendarTypes.CHECK_HOVER, data: date });
+  }, []);
+
   const onCheckRemove = useCallback(() => {
     dispatch({ type: CalendarTypes.ALL_REMOVE });
   }, []);
@@ -46,9 +53,10 @@ const CalendarProvider = ({ children }: { children?: React.ReactNode }) => {
     () => ({
       onCheckIn,
       onCheckOut,
+      onCheckHover,
       onCheckRemove,
     }),
-    [onCheckIn, onCheckOut, onCheckRemove],
+    [onCheckIn, onCheckOut, onCheckHover, onCheckRemove],
   );
 
   return (
@@ -60,13 +68,13 @@ const CalendarProvider = ({ children }: { children?: React.ReactNode }) => {
 
 export const useCalendarState = () => {
   const state = useContext(CalendarStateContext);
-  if (!state) throw new Error("Cannot find CalendarProvider"); //
+  if (!state) throw new Error("Cannot find CalendarProvider");
   return state;
 };
 
 export const useCalendarDispatch = () => {
   const state = useContext(CalendarDispatchContext);
-  if (!state) throw new Error("Cannot find CalendarProvider"); //
+  if (!state) throw new Error("Cannot find CalendarProvider");
   return state;
 };
 

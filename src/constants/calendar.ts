@@ -12,9 +12,6 @@ export enum CalendarTypes {
   ALL_REMOVE,
 }
 
-export enum ModalList {
-  NONE,
-  PERIOD,
-  PRICE,
-  PERSONNEL,
-}
+// Calendar
+export const CALENDAR_PAGE = 4;
+export const HALF_MOVE_POINT = 50;

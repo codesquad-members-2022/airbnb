@@ -1,31 +1,35 @@
-import { useState } from "react";
+import React from "react";
 
-import styled from "styled-components";
-
-import { ModalList } from "@constants/calendar";
+import Modal from "@components/common/Modal";
+import Calendar from "@components/SearchBar/Period/Calendar";
+import InputGuest from "@components/SearchBar/Personnel/InputGuest";
+import { useSearchModalState } from "@contexts/SearchModalProvider";
 
 import Period from "./Period";
 import Personnel from "./Personnel";
 import Price from "./Price";
+import { PriceRangeGraph } from "./Price/PriceRangeGraph";
 import * as S from "./style";
 
+const SEARCH_BAR = {
+  PERIOD: <Calendar />,
+  PRICE: <PriceRangeGraph />,
+  PERSONNEL: <InputGuest />,
+};
+
 const SearchBar = () => {
-  const [modalOpen, setModalOpen] = useState(ModalList.NONE);
+  const { openedModal } = useSearchModalState();
+
   return (
-    <S.SearchBar>
-      <Period modalOpen={modalOpen} setModalOpen={setModalOpen} />
-      <Block />
-      <Price modalOpen={modalOpen} setModalOpen={setModalOpen} />
-      <Block />
-      <Personnel modalOpen={modalOpen} setModalOpen={setModalOpen} />
+    <S.SearchBar openedModal={openedModal}>
+      <Period />
+      <S.Block />
+      <Price />
+      <S.Block />
+      <Personnel />
+      {openedModal && <Modal>{SEARCH_BAR[openedModal]}</Modal>}
     </S.SearchBar>
   );
 };
 
-const Block = styled.div`
-  width: 1px;
-  height: 44px;
-  border-right: 1px solid ${({ theme }) => theme.color.gray5};
-`;
-
-export default SearchBar;
+export default React.memo(SearchBar);

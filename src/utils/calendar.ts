@@ -1,38 +1,4 @@
-import { ReactNode } from "react";
-
-import { CalendarTypes, ModalList } from "@constants/calendar";
-
-// ModalList가 enum인데 받지 못해 object로 적용
-export type ModalOpenType = {
-  modalOpen: number;
-  setModalOpen: React.Dispatch<React.SetStateAction<number>>;
-};
-
-export type CalendarState = {
-  checkIn: Date | null;
-  checkOut: Date | null;
-};
-
-export type CalendarActionType =
-  | { type: CalendarTypes.CHECK_IN; data: Date }
-  | { type: CalendarTypes.CHECK_OUT; data: Date }
-  | {
-      type: CalendarTypes.ALL_REMOVE;
-    };
-
-export type CalendarDispatches = {
-  onCheckIn(date: Date): void;
-  onCheckOut(date: Date): void;
-  onCheckRemove(): void;
-};
-
-export type DirectionType = "FORWARD" | "BACKWARD" | null;
-
-export type CalendarInfoType = {
-  calendarArray: number[];
-  year: number;
-  month: number;
-};
+import { DirectionType } from "_types/calendar";
 
 export const getDate = (year: number, month: number, date: number | undefined): Date => {
   return new Date(year, month, date);
@@ -81,4 +47,50 @@ export const getCheckInTemplate = (date: Date | null): string | null => {
   const month = Number(date?.getMonth()) + 1;
   const year = Number(date?.getDate());
   return `${month}월${year}일`;
+};
+
+export const isSameTime = (DATE_1: Date | null, DATE_2: Date | null): boolean => {
+  return DATE_1?.getTime() === DATE_2?.getTime();
+};
+
+type IsBetweenTimeType = {
+  min: Date | null;
+  currDate: Date | null;
+  max: Date | null;
+};
+
+export const isBetweenTime = ({ min, currDate, max }: IsBetweenTimeType) => {
+  if (!min || !currDate || !max) {
+    return false;
+  }
+
+  return min < currDate && max > currDate;
+};
+
+export const getStyleDateTarget = ({ min, currDate, max }: IsBetweenTimeType) => {
+  if (isSameTime(currDate, min) || isSameTime(currDate, max)) {
+    return "CHECK";
+  }
+
+  if (min && max && isBetweenTime({ min, currDate, max })) {
+    return "BETWEEN";
+  }
+
+  return null;
+};
+
+export const getMonthDifference = (startDate: Date, endDate: Date | null) => {
+  if (!endDate) {
+    return 0;
+  }
+  return endDate?.getMonth() - startDate?.getMonth() + 12 * (endDate?.getFullYear() - startDate?.getFullYear());
+};
+
+export const isPast = (dateData: number | Date): boolean => {
+  const today = new Date();
+  return dateData < today;
+};
+
+export const isSunday = (date: Date): boolean => {
+  return !date.getDay() ? true : false;
 };

@@ -1,4 +1,6 @@
-import CalendarDate from "@components/Calendar/CalendarDate";
+import React from "react";
+
+import CalendarDate from "@components/SearchBar/Period/Calendar/CalendarDate";
 import { DAY_OF_WEEK } from "@constants/calendar";
 import { getCalendarArray } from "@utils/calendar";
 
@@ -8,19 +10,15 @@ const CalendarPage = ({ currDate }: { currDate: Date }) => {
   const currYear = currDate.getFullYear();
   const currMonth = currDate.getMonth();
 
-  const calendarTitle = `${currYear}년 ${currMonth + 1}월`;
-
-  const calendarArray = getCalendarArray(currYear, currMonth);
-
   const calendarInfo = {
-    calendarArray: calendarArray,
+    calendarArray: getCalendarArray(currYear, currMonth),
     year: currYear,
     month: currMonth,
   };
 
   return (
     <S.CalendarPage>
-      <h2>{calendarTitle}</h2>
+      <h2>{`${currYear}년 ${currMonth + 1}월`}</h2>
       <S.CalendarContent>
         <CalendarDay />
         <CalendarDate calendarInfo={calendarInfo} />
@@ -33,10 +31,12 @@ const CalendarDay = () => {
   return (
     <S.CalendarDay>
       {DAY_OF_WEEK.map((day, index) => (
-        <S.DayItem key={index}>{day}</S.DayItem>
+        <S.DayItem key={day + index} day={day}>
+          {day}
+        </S.DayItem>
       ))}
     </S.CalendarDay>
   );
 };
 
-export default CalendarPage;
+export default React.memo(CalendarPage);

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public class ServiceChargePolicy implements ChargePolicy{
 
-    private static final ServiceChargePolicy instance = new ServiceChargePolicy();
+    private static final ServiceChargePolicy policy = new ServiceChargePolicy();
 
     private final double calculateRatio = 0.05;
 
@@ -14,7 +14,7 @@ public class ServiceChargePolicy implements ChargePolicy{
     }
 
     public static ServiceChargePolicy getInstance() {
-        return instance;
+        return policy;
     }
 
     @Override

@@ -8,15 +8,20 @@ import static org.mockito.BDDMockito.given;
 import com.ahoo.airbnb.data.TestData;
 import com.ahoo.airbnb.exception.ExceptionMessage;
 import com.ahoo.airbnb.reservation.dtos.ChargesResponse;
-import com.ahoo.airbnb.reservation.dtos.RoomChargeRequest;
 import com.ahoo.airbnb.reservation.dtos.RoomChargeResponse;
 import com.ahoo.airbnb.room.RoomRepository;
+import com.ahoo.airbnb.utils.DateUtils;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -34,14 +39,15 @@ class ReservationServiceTest {
     @Test
     @DisplayName("존재하는 roomId에 해당하는 숙소의 1박당 요금, 총 요금, 상세 요금 항목들을 계산하여 리턴한다.")
     @Transactional
-    void roomId에_해당하는_숙소의_요금계산_성공() {
+    @ParameterizedTest
+    @MethodSource("initTestData")
+    void roomId에_해당하는_숙소의_요금계산_성공(LocalDateTime checkIn, LocalDateTime checkOut, int headcount) {
         // given
         Long roomId = 1L;
-        RoomChargeRequest requestParam = new RoomChargeRequest(
-            "2022-02-02T10:15:30",
-            "2022-02-10T10:15:30",
-            1
-        );
+        LocalDateTime checkIn = DateUtils.stringToLocalDateTime("2022-02-02T10:15:30");
+        LocalDateTime checkOut = DateUtils.stringToLocalDateTime("2022-02-10T10:15:30");
+        int headcount = 1;
+
         RoomChargeResponse expected = RoomChargeResponse.of(
             53347,
             426778,
@@ -57,7 +63,7 @@ class ReservationServiceTest {
         given(roomRepository.findActiveChargePolicyTypeById(roomId)).willReturn(TestData.chargePolicyTypes);
 
         // when
-        RoomChargeResponse roomChargeResponse = reservationService.calculateRoomCharge(roomId, requestParam);
+        RoomChargeResponse roomChargeResponse = reservationService.calculateRoomCharge(roomId, checkIn, checkOut, headcount);
 
         // then
         assertAll(
@@ -73,18 +79,22 @@ class ReservationServiceTest {
     void roomId에_해당하는_숙소의_요금계산_실패() {
         // given
         Long roomId = 8L;
-        RoomChargeRequest requestParam = new RoomChargeRequest(
-            "2022-02-02T10:15:30",
-            "2022-02-10T10:15:30",
-            1
-        );
+        LocalDateTime checkIn = DateUtils.stringToLocalDateTime("2022-02-02T10:15:30");
+        LocalDateTime checkOut = DateUtils.stringToLocalDateTime("2022-02-10T10:15:30");
+        int headcount = 1;
 
         given(roomRepository.findById(roomId)).willThrow(new NoSuchElementException(ExceptionMessage.NO_ROOM_ID));
 
         // when
         // then
-        assertThatThrownBy(() -> reservationService.calculateRoomCharge(roomId, requestParam))
+        assertThatThrownBy(() -> reservationService.calculateRoomCharge(roomId, checkIn, checkOut, headcount))
             .isInstanceOf(NoSuchElementException.class)
             .hasMessage(ExceptionMessage.NO_ROOM_ID);
+    }
+
+    static Stream<Arguments> initTestData() {
+        return Stream.of(
+            Arguments.of(DateUtils.stringToLocalDateTime("2022-02-02T10:15:30"), DateUtils.stringToLocalDateTime("2022-02-10T10:15:30"), 1)
+        );
     }
 }

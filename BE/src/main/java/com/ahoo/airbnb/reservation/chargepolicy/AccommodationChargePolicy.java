@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public class AccommodationChargePolicy implements ChargePolicy {
 
-    private static final AccommodationChargePolicy instance = new AccommodationChargePolicy();
+    private static final AccommodationChargePolicy policy = new AccommodationChargePolicy();
 
     private final double weekdayCalculateRatio = 1;
     private final double weekendCalculateRatio = 1.3;
@@ -16,7 +16,7 @@ public class AccommodationChargePolicy implements ChargePolicy {
     }
 
     public static AccommodationChargePolicy getInstance() {
-        return instance;
+        return policy;
     }
 
     @Override

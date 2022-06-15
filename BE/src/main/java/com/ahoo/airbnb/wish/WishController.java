@@ -1,5 +1,6 @@
 package com.ahoo.airbnb.wish;
 
+import com.ahoo.airbnb.exception.ErrorResponse;
 import com.ahoo.airbnb.room.dtos.RoomResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "wishes", description = "위시 API")
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/wish")
 public class WishController {
 
-    private final MockWishService wishService;
+    private final WishService wishService;
 
     @Operation(summary = "위시 리스트 조회",
         description = "모든 위시를 조회합니다.",
@@ -38,7 +38,16 @@ public class WishController {
                         mediaType = "application/json",
                         array = @ArraySchema(schema = @Schema(implementation = RoomResponse.class))
                     )
-                })
+                }),
+            @ApiResponse(responseCode = "400",
+                description = "위시 리스트 조회 실패",
+                content = {
+                    @Content(
+                        mediaType = "application/json",
+                        schema = @Schema(implementation = ErrorResponse.class)
+                    )
+                }
+            )
         }
     )
     @GetMapping
@@ -53,14 +62,17 @@ public class WishController {
         responses = {
             @ApiResponse(responseCode = "204",
                 description = "위시 등록 성공"
+            ),
+            @ApiResponse(responseCode = "400",
+                description = "위시 등록 실패"
             )
         }
     )
     @PostMapping("/{roomId}")
-    public ResponseEntity<Void> create(@PathVariable Long roomId, @RequestParam Long wishId) {
+    public ResponseEntity<Void> create(@PathVariable Long roomId) {
 
-        log.info("create roomId={}, wishId={}", roomId, wishId);
-        wishService.registration(wishId, roomId);
+        log.info("create roomId={}", roomId);
+        wishService.registration(roomId);
         return ResponseEntity.noContent().build();
     }
 
@@ -69,6 +81,9 @@ public class WishController {
         responses = {
             @ApiResponse(responseCode = "204",
                 description = "위시 삭제 성공"
+            ),
+            @ApiResponse(responseCode = "400",
+                description = "위시 삭제 실패"
             )
         }
     )

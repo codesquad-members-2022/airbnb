@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public class WeeklyDiscountChargePolicy implements ChargePolicy {
 
-    private static final WeeklyDiscountChargePolicy instance = new WeeklyDiscountChargePolicy();
+    private static final WeeklyDiscountChargePolicy policy = new WeeklyDiscountChargePolicy();
 
     private static final int dayCountOfWeek = 7;
     private static final double calculateRatio = -0.04;
@@ -16,7 +16,7 @@ public class WeeklyDiscountChargePolicy implements ChargePolicy {
     }
 
     public static WeeklyDiscountChargePolicy getInstance() {
-        return instance;
+        return policy;
     }
 
     private int calculateWeekCount(LocalDateTime checkIn, LocalDateTime checkOut) {

@@ -23,7 +23,8 @@ import java.util.List;
 @RequestMapping("/api")
 public class RoomController {
 
-    private final MockRoomService roomService;
+    private final MockRoomService mockRoomService;
+    private final RoomService roomService;
 
     @Operation(summary = "숙소 리스트 조회",
         description = "모든 숙소를 조회합니다.",
@@ -62,6 +63,6 @@ public class RoomController {
     public ResponseEntity<RoomDetailResponse> getRoomDetails(@PathVariable Long id) {
 
         log.info("rooms Get Request : {}", id);
-        return ResponseEntity.ok().body(roomService.findById(id));
+        return ResponseEntity.ok().body(mockRoomService.findById(id));
     }
 }

@@ -9,18 +9,35 @@ DROP TABLE IF EXISTS room_image;
 DROP TABLE IF EXISTS charge_policy;
 DROP TABLE IF EXISTS room;
 DROP TABLE IF EXISTS member;
+DROP TABLE IF EXISTS oauth;
 SET
     FOREIGN_KEY_CHECKS = 1;
+
+-- oauth Table Create SQL
+CREATE TABLE oauth
+(
+    `id`                      VARCHAR(200)    NOT NULL,
+    `user_client_id`          VARCHAR(200)    NOT NULL,
+    `user_client_secret`      VARCHAR(200)    NOT NULL,
+    `user_redirect_uri`       VARCHAR(200)    NOT NULL,
+    `provider_token_uri`      VARCHAR(200)    NOT NULL,
+    `provider_user_info_uri`  VARCHAR(200)    NOT NULL,
+    PRIMARY KEY (id)
+);
 
 -- member Table Create SQL
 CREATE TABLE member
 (
     `id`                BIGINT       NOT NULL AUTO_INCREMENT COMMENT '회원 ID',
-    `name`              VARCHAR(20)  NOT NULL COMMENT '이름',
-    `email`             VARCHAR(50)  NOT NULL COMMENT '이메일',
-    `password`          VARCHAR(20)  NOT NULL COMMENT '비밀번호',
+    `name`              VARCHAR(20)  NULL     COMMENT '이름',
+    `email`             VARCHAR(50)  NULL     COMMENT '이메일',
+    `password`          VARCHAR(20)  NULL     COMMENT '비밀번호',
     `type`              VARCHAR(5)   NOT NULL COMMENT '회원타입(G: 일반, H: 호스트)',
-    `profile_image_url` VARCHAR(255) NULL COMMENT '회원 프로필 사진 URL',
+    `profile_image_url` VARCHAR(255) NULL     COMMENT '회원 프로필 사진 URL',
+    `provider_name`     VARCHAR(20)  NULL     COMMENT 'oAuth 리소스 서버 이름',
+    `oauth_id`          VARCHAR(20)  NULL     COMMENT 'oAuth 리소스 오너 식별자',
+    `access_token`      VARCHAR(255) NULL     COMMENT '접근 토큰',
+    `refresh_token`     VARCHAR(255) NULL     COMMENT '갱신 토큰',
     `created_at`        TIMESTAMP    NOT NULL DEFAULT NOW() COMMENT '생성일시',
     `updated_at`        TIMESTAMP    NOT NULL DEFAULT NOW() COMMENT '수정일시',
     PRIMARY KEY (id)

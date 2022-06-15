@@ -1,4 +1,4 @@
-package org.team4.airbnb.wish;
+package org.team4.airbnb.customer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.team4.airbnb.wish.dto.WishRequest;
-import org.team4.airbnb.wish.dto.WishResponse;
+import org.team4.airbnb.customer.dto.WishRequest;
+import org.team4.airbnb.customer.dto.WishResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +25,7 @@ public class WishController {
 	 * @param wishRequest
 	 * @return
 	 */
-	@PostMapping("/wishlist")
+	@PostMapping("/api/wishlist")
 	public ResponseEntity<WishResponse> addWishList(@RequestBody WishRequest wishRequest) {
 		WishResponse response = wishService.addWishList(wishRequest);
 
@@ -37,7 +37,7 @@ public class WishController {
 	 * @param params
 	 * @return
 	 */
-	@DeleteMapping("/wishlist")
+	@DeleteMapping("/api/wishlist")
 	public ResponseEntity<WishResponse> deleteWishInSearchList(@RequestParam Map<String, String> params) {
 		ObjectMapper mapper = new ObjectMapper();
 		WishRequest wishRequest = mapper.convertValue(params, WishRequest.class);
@@ -53,7 +53,7 @@ public class WishController {
 	 * @param params
 	 * @return
 	 */
-	@DeleteMapping("/wishlist/{wishId}")
+	@DeleteMapping("/api/wishlist/{wishId}")
 	public ResponseEntity<WishResponse> deleteWishInWishList(@PathVariable Long wishId, @RequestParam Map<String, String> params) {
 		ObjectMapper mapper = new ObjectMapper();
 		WishRequest wishRequest = mapper.convertValue(params, WishRequest.class);

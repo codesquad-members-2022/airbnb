@@ -47,7 +47,7 @@ const GraphSlider = ({
   };
 
   useEffect(() => {
-    if (!(minPrice && maxPrice)) return;
+    if (minPrice === null || maxPrice === null) return;
     if (minPriceRef.current && maxPriceRef.current) {
       minPriceRef.current.value = String(minPrice / ONE_PER_UNIT);
       maxPriceRef.current.value = String(maxPrice / ONE_PER_UNIT);

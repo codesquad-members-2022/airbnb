@@ -1,22 +1,22 @@
 import React from 'react';
-import Header from '../components/Header/Header';
-import SearchBar from '../components/SerachBar/SearchBar';
+import MainPageHeader from '../components/Header/MainPageHeader';
+import SearchBar from '../components/SearchBar/SearchBar';
+import Container from '../UI/Container';
 import CalendarProvider from '../store/calendarStore/CalendarProvider';
 import PersonnelProvider from '../store/personnelStore/PersonnelProvider';
 import PriceProvider from '../store/priceStore/PriceProvider';
-import Container from '../UI/Container';
 
 const MainPage = () => (
-  <Container flexInfo={['column', 'center', 'center', 'no-wrap']}>
-    <Header />
-    <CalendarProvider>
+  <CalendarProvider>
+    <PriceProvider>
       <PersonnelProvider>
-        <PriceProvider>
-          <SearchBar />
-        </PriceProvider>
+        <Container flexInfo={['column', 'center', 'center', 'no-wrap']}>
+          <MainPageHeader />
+          <SearchBar pageType="MAIN" />
+        </Container>
       </PersonnelProvider>
-    </CalendarProvider>
-  </Container>
+    </PriceProvider>
+  </CalendarProvider>
 );
 
 export default MainPage;

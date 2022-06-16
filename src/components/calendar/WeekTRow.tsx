@@ -4,11 +4,15 @@ import {
   useCalendarStateContext,
   useCalendarDispatchContext,
 } from '../../store/calendarStore/CalendarContext';
+import { calendarActions } from '../../store/calendarStore/calendarReducer';
 import { isTwoDateSame, getIsPastDate } from '../../util/calenderUtil';
 
-type WeekRowInfoType = {
+type CalendarYearMonthType = {
   year: number;
   month: number;
+};
+
+type WeekRowInfoType = CalendarYearMonthType & {
   week: number[];
 };
 
@@ -16,21 +20,23 @@ type DateStyleType = 'CHECK_IN' | 'CHECK_OUT' | 'BETWEEN' | null;
 
 const WeekTableRow = ({ year, month, week }: WeekRowInfoType) => {
   const calendarState = useCalendarStateContext();
+  const {
+    checkInActionCreator,
+    checkOutActionCreator,
+    hoverActionCreator,
+    deleteActionCreator,
+  } = calendarActions;
+
   const dispatchCalendar = useCalendarDispatchContext();
   const onClickHandler = (event: React.MouseEvent) => {
     const clicked = (event.target as HTMLDivElement).dataset.date;
     if (!clicked) return;
     const clickedDate = new Date(clicked);
     if (!calendarState.checkIn || calendarState.checkIn > clickedDate) {
-      dispatchCalendar({
-        type: 'CHECK_IN',
-        payload: clickedDate,
-      });
+      dispatchCalendar(deleteActionCreator());
+      dispatchCalendar(checkInActionCreator(clickedDate));
     } else {
-      dispatchCalendar({
-        type: 'CHECK_OUT',
-        payload: clickedDate,
-      });
+      dispatchCalendar(checkOutActionCreator(clickedDate));
     }
   };
 
@@ -39,19 +45,13 @@ const WeekTableRow = ({ year, month, week }: WeekRowInfoType) => {
     if (!checkIn) return;
 
     if (!checkOut) {
-      const currHovered = (event.target as HTMLDivElement).dataset.date;
-      if (!currHovered) return;
-      dispatchCalendar({
-        type: 'HOVER',
-        payload: new Date(currHovered),
-      });
+      const currHoveredString = (event.target as HTMLDivElement).dataset.date;
+      if (!currHoveredString) return;
+      const currHoveredDate = new Date(currHoveredString);
+      dispatchCalendar(hoverActionCreator(new Date(currHoveredDate)));
       return;
     }
-
-    dispatchCalendar({
-      type: 'HOVER',
-      payload: checkOut,
-    });
+    dispatchCalendar(hoverActionCreator(checkOut));
   };
 
   const decideStyleType = (date: Date): DateStyleType => {
@@ -101,7 +101,7 @@ const DateBox = styled.td<{ date: number; boxStyle: DateStyleType }>`
   visibility: ${({ date }) => (date <= 0 ? 'hidden' : 'visible')};
   width: 48px;
   height: 48px;
-  background: ${({ boxStyle, theme }) => (boxStyle ? theme.colors.grey : theme.colors.white)};
+  background: ${({ boxStyle, theme }) => (boxStyle ? theme.colors.lightGrey2 : theme.colors.white)};
   border-radius: ${({ boxStyle }) => {
     if (boxStyle === 'CHECK_IN') return '50% 0 0 50%';
     if (boxStyle === 'CHECK_OUT') return '0 50% 50% 0';

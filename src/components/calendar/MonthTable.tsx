@@ -1,19 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
-import MonthTHead from './MonthTHead';
-import MonthTBody from './MonthTBody';
 import {
   useCalendarStateContext,
   useCalendarDispatchContext,
 } from '../../store/calendarStore/CalendarContext';
+import { calendarActions } from '../../store/calendarStore/calendarReducer';
+import MonthTHead from './MonthTHead';
+import MonthTBody from './MonthTBody';
 
 const MonthTable = ({ year, month }: { year: number; month: number }) => {
-  const calendarState = useCalendarStateContext();
+  const { checkOut } = useCalendarStateContext();
   const dispatchCalendar = useCalendarDispatchContext();
+  const { hoverActionCreator } = calendarActions;
 
   const onMouseLeaveHandler = () => {
-    if (calendarState.checkOut) return;
-    dispatchCalendar({ type: 'HOVER', payload: null });
+    if (checkOut) return;
+    dispatchCalendar(hoverActionCreator(null));
   };
 
   return (

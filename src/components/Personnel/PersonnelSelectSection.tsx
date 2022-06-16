@@ -9,6 +9,7 @@ import {
 import Container from '../../UI/Container';
 import { PersonnelSelectOptionType } from '../../store/personnelStore/personnelTypes';
 import { personnelRange } from '../../constants/constants';
+import { personnelActions } from '../../store/personnelStore/personnelReducer';
 
 const PersonnelSelectSection = ({
   isLast,
@@ -20,6 +21,7 @@ const PersonnelSelectSection = ({
   const { target, title, description } = selectOption;
   const personnelState = usePersonnelStateContext();
   const dispatchPersonnel = usePersonnelDispatchContext();
+  const { increaseActionCreator, decreaseActionCreator } = personnelActions;
 
   const getMinimumPersonnel = () => {
     if (target === 'ADULT' && (personnelState.CHILD || personnelState.INFANT)) {
@@ -28,20 +30,20 @@ const PersonnelSelectSection = ({
     return personnelRange.minPersonnel;
   };
 
-  const isDecreaseButtonActive = () => {
-    const minimum = getMinimumPersonnel();
-    return personnelState[target] > minimum;
-  };
-  const isIncreaseButtonActive = () => personnelState[target] < personnelRange.maxPersonnel;
+  const isMaxValid = personnelState[target] < personnelRange.maxPersonnel;
+  const isMinValid = personnelState[target] > getMinimumPersonnel();
 
   const handleDecreaseButtonClick = () => {
-    if (!isDecreaseButtonActive()) return;
-    dispatchPersonnel({ type: 'DECREASE', payload: target });
+    if (!isMinValid) return;
+    dispatchPersonnel(decreaseActionCreator(target));
   };
 
   const handleIncreaseButtonClick = () => {
-    if (!isIncreaseButtonActive()) return;
-    dispatchPersonnel({ type: 'INCREASE', payload: target });
+    if (!isMaxValid) return;
+    if (!personnelState.ADULT && target !== 'ADULT') {
+      dispatchPersonnel(increaseActionCreator('ADULT'));
+    }
+    dispatchPersonnel(increaseActionCreator(target));
   };
 
   return (
@@ -52,14 +54,14 @@ const PersonnelSelectSection = ({
       </Container>
       <Container flexInfo={['row', 'center', 'space-between', 'wrap']}>
         <RemoveCircleOutlineIcon
-          fontSize='large'
-          color={isDecreaseButtonActive() ? 'primary' : 'disabled'}
+          fontSize="large"
+          color={isMinValid ? 'primary' : 'disabled'}
           onClick={handleDecreaseButtonClick}
         />
         <SelectionNumber>{personnelState[target]}</SelectionNumber>
         <AddCircleOutlineOutlinedIcon
-          fontSize='large'
-          color={isIncreaseButtonActive() ? 'primary' : 'disabled'}
+          fontSize="large"
+          color={isMaxValid ? 'primary' : 'disabled'}
           onClick={handleIncreaseButtonClick}
         />
       </Container>
@@ -71,8 +73,10 @@ export default PersonnelSelectSection;
 const SelectSectionContainer = styled.div<{ isLast: boolean }>`
   width: 250px;
   height: calc(100% - 128px);
-  ${({ theme }) => theme.mixin.flexMixin('row', 'space-between', 'space-between')};
-  ${({ isLast, theme }) => !isLast && `border-bottom: 1px solid ${theme.colors.lightGrey}`};
+  ${({ theme }) =>
+    theme.mixin.flexMixin('row', 'space-between', 'space-between')};
+  ${({ isLast, theme }) =>
+    !isLast && `border-bottom: 1px solid ${theme.colors.lightGrey}`};
 `;
 
 const Title = styled.span`

@@ -10,7 +10,13 @@ import CustomModal from '../../UI/Modal';
 import PriceModal from '../Price/PriceModal';
 import { ModalType } from '../../types/types';
 
-const SearchBar = () => {
+const SearchBar = ({
+  pageType,
+  buttonClickHandler,
+}: {
+  pageType: 'MAIN' | 'SEARCH';
+  buttonClickHandler: () => void | undefined;
+}) => {
   const [openedModal, setOpenedModal] = useState<ModalType>(null);
 
   const closeModal = () => {
@@ -30,21 +36,25 @@ const SearchBar = () => {
   };
 
   return (
-    <SearchBarContainer>
-      <Period setOpenedModal={setOpenedModal} />
-      <Price setOpenedModal={setOpenedModal} />
-      <Personnel setOpenedModal={setOpenedModal} />
-      <SearchButton />
+    <SearchBarContainer pageType={pageType}>
       {openedModal && (
-        <CustomModal style={ModalStyles[openedModal]} closeModal={closeModal}>
+        <CustomModal
+          style={ModalStyles[openedModal]}
+          closeModal={closeModal}
+          backdropStyle={backdropStyle}
+        >
           {ModalContents[openedModal]}
         </CustomModal>
       )}
+      <Period setOpenedModal={setOpenedModal} />
+      <Price setOpenedModal={setOpenedModal} />
+      <Personnel setOpenedModal={setOpenedModal} />
+      <SearchButton pageType={pageType} onClick={buttonClickHandler} />
     </SearchBarContainer>
   );
 };
 
-const SearchBarContainer = styled.form`
+const SearchBarContainer = styled.form<{ pageType: string }>`
   ${({ theme }) => theme.mixin.flexMixin('row', 'center', 'flex-start')};
   width: 916px;
   height: 76px;
@@ -52,7 +62,15 @@ const SearchBarContainer = styled.form`
   border-radius: 60px;
   background: ${({ theme }) => theme.colors.white};
   -webkit-user-select: none;
-  box-shadow: ${({ theme }) => theme.boxShadow.normal};
+  ${({ pageType, theme }) =>
+    pageType === 'MAIN'
+      ? css`
+          box-shadow: ${theme.boxShadow.normal};
+        `
+      : css`
+          border: 1px solid ${theme.colors.grey};
+          margin: 0 auto;
+        `};
 `;
 
 const CommonModalStyle = css`
@@ -78,6 +96,10 @@ const PriceModalStyle = css`
   top: 182px;
   left: 500px;
   ${CommonModalStyle};
+`;
+
+const backdropStyle = css`
+  display: transparent;
 `;
 
 export default SearchBar;

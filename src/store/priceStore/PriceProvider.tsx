@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
 import { PriceStateContext, PriceDispatchContext } from './PriceContext';
-import { useSearchDataStateContext } from '../searchDataStore/SearchDataContext';
+import { PriceStateType } from './priceTypes';
+import { getSearchParams } from '../../util/urlUtil';
+
+const makeCurrPagePriceState = () => {
+  const minPriceString = getSearchParams('minPrice');
+  const maxPriceString = getSearchParams('maxPrice');
+  const priceState: PriceStateType = {
+    minPrice: Number(minPriceString) || null,
+    maxPrice: Number(maxPriceString) || null,
+  };
+  return priceState;
+};
 
 const PriceProvider = ({ children }: { children: React.ReactNode }) => {
-  const initialPriceState = useSearchDataStateContext().price;
-  const [priceState, setPriceState] = useState(initialPriceState);
+  const currPageInitialPriceState = makeCurrPagePriceState();
+  const [priceState, setPriceState] = useState(currPageInitialPriceState);
 
   return (
     <PriceStateContext.Provider value={priceState}>

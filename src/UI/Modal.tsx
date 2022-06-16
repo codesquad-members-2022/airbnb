@@ -5,29 +5,33 @@ const CustomModal = ({
   children,
   style,
   closeModal,
+  backdropStyle,
 }: {
   children: React.ReactNode;
   style: CSSProp;
+  backdropStyle: CSSProp;
   closeModal: () => void;
 }) => (
-  <StyledModal modalStyle={style}>
-    {children}
-    <ModalBackground onClick={closeModal} />
-  </StyledModal>
+  <>
+    <ModalBackground backdropStyle={backdropStyle} onClick={closeModal} />
+    <StyledModal modalStyle={style}>{children}</StyledModal>
+  </>
 );
 
 export default CustomModal;
 
 const StyledModal = styled.div<{ modalStyle: CSSProp }>`
   position: absolute;
-  ${({ theme }) => theme.mixin.flexMixin('row', 'center')};
+  z-index: 101;
   ${({ modalStyle }) => modalStyle};
 `;
 
-const ModalBackground = styled.div`
+const ModalBackground = styled.div<{ backdropStyle: CSSProp }>`
   position: absolute;
-  width: 100vw;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100vh;
-  background: transparent;
-  z-index: -1;
+  z-index: 1;
+  ${({ backdropStyle }) => backdropStyle};
 `;

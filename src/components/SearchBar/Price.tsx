@@ -16,8 +16,10 @@ const Price = ({
   const dispatchPrice = usePriceDispatchContext();
 
   const priceValue =
-    priceState.minPrice !== null && priceState.maxPrice !== null
-      ? `${priceState.minPrice.toLocaleString()}~${priceState.maxPrice.toLocaleString()}`
+    priceState.minPrice !== null || priceState.maxPrice !== null
+      ? `${priceState.minPrice?.toLocaleString() || ''}~${
+          priceState.maxPrice?.toLocaleString() || ''
+        }`
       : undefined;
   return (
     <Container onClick={() => setOpenedModal('PRICE')}>

@@ -1,35 +1,60 @@
-import { PersonnelStateType, PersonnelType, PersonnelActionType } from './personnelTypes';
-import { initialPersonnelState } from '../initialValues';
+import {
+  PersonnelStateType,
+  PersonnelTargetType,
+  PersonnelActionType,
+} from './personnelTypes';
+
+const initialPersonnelState: PersonnelStateType = {
+  ADULT: 0,
+  CHILD: 0,
+  INFANT: 0,
+};
+
+const INCREASE = 'personnel/INCREASE';
+const DECREASE = 'personnel/DECREASE';
+const DELETE = 'personnel/DELETE';
+
+const increaseActionCreator = (target: PersonnelTargetType) => ({
+  type: INCREASE,
+  target,
+});
+
+const decreaseActionCreator = (target: PersonnelTargetType) => ({
+  type: DECREASE,
+  target,
+});
+
+const deleteActionCreator = (target: PersonnelTargetType) => ({
+  type: DELETE,
+  target,
+});
 
 const personnelReducer = (
-  state: PersonnelStateType,
-  action: PersonnelActionType,
-): PersonnelStateType => {
-  if (action.type === 'INCREASE') {
-    return handleIncreseAction(state, action.payload);
+  state = initialPersonnelState,
+  { type, target }: PersonnelActionType,
+) => {
+  switch (type) {
+    case INCREASE: {
+      const newState = (state[target] += 1);
+      return { ...state, newState };
+    }
+    case DECREASE: {
+      const newState = (state[target] -= 1);
+      return { ...state, newState };
+    }
+    case DELETE: {
+      return initialPersonnelState;
+    }
+    default: {
+      return state;
+    }
   }
-  if (action.type === 'DECREASE') {
-    return handleDecreaseAction(state, action.payload);
-  }
-  if (action.type === 'DELETE') {
-    return initialPersonnelState;
-  }
-  throw new Error('invalid action');
 };
 
-const handleIncreseAction = (state: PersonnelStateType, target: PersonnelType) => {
-  const newState = { ...state };
-  if (['CHILD', 'INFANT'].includes(target) && state.ADULT === 0) {
-    newState.ADULT = 1;
-  }
-  newState[target] = Math.min(state[target] + 1, 8);
-  return newState;
-};
-
-const handleDecreaseAction = (state: PersonnelStateType, target: PersonnelType) => {
-  const newState = { ...state };
-  newState[target] = Math.max(state[target] - 1, 0);
-  return newState;
+export const personnelActions = {
+  increaseActionCreator,
+  decreaseActionCreator,
+  deleteActionCreator,
 };
 
 export default personnelReducer;

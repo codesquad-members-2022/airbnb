@@ -1,15 +1,15 @@
 import { Dispatch } from 'react';
 
+export type DateType = Date | null;
 export type CalendarStateType = {
-  checkIn: Date | null;
-  checkOut: Date | null;
-  hoveredDate: Date | null;
+  checkIn: DateType;
+  checkOut: DateType;
+  hoveredDate: DateType;
 };
 
-export type CalendarActionType =
-  | { type: 'CHECK_IN'; payload: Date }
-  | { type: 'CHECK_OUT'; payload: Date }
-  | { type: 'HOVER'; payload: Date | null }
-  | { type: 'DELETE' };
+export type CalendarActionType = {
+  type: string;
+  payload: Date | null;
+};
 
 export type CalendarDispatchType = Dispatch<CalendarActionType>;

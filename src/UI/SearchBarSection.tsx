@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 type SearchBarSectionTypes = {
   name: string;
   placeholder: string;
-  value: string | undefined;
+  value: string | null;
 };
 
 const SearchBarSection = ({
@@ -17,9 +17,7 @@ const SearchBarSection = ({
   isLast: boolean;
   initSection: () => void;
 }) => {
-  const isAnyValueInputted = () => {
-    return searchBarSectionInfo.some(({ value }) => value);
-  };
+  const isAnyValueInputted = () => searchBarSectionInfo.some(({ value }) => value);
 
   const handleInitButtonClick = (e: React.MouseEvent<SVGSVGElement>) => {
     e.stopPropagation();
@@ -31,14 +29,10 @@ const SearchBarSection = ({
       {searchBarSectionInfo.map(({ name, placeholder, value }) => (
         <SearchBarSectionItemContainer key={name}>
           <SearchBarName>{name}</SearchBarName>
-          <SearchBarValue data-placeholder={placeholder}>
-            {value}
-          </SearchBarValue>
+          <SearchBarValue data-placeholder={placeholder}>{value}</SearchBarValue>
         </SearchBarSectionItemContainer>
       ))}
-      {isAnyValueInputted() && (
-        <InitButton fontSize="small" onClick={handleInitButtonClick} />
-      )}
+      {isAnyValueInputted() && <InitButton fontSize='small' onClick={handleInitButtonClick} />}
     </SearchBarSectionContainer>
   );
 };

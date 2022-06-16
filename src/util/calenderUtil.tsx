@@ -52,6 +52,11 @@ const calYearMonth = (baseYearMonth: YearMonthType) => (changedMonth: number) =>
 
 const getIsPastDate = (now: Date, target: Date) => target < now && !isTwoDateSame(target, now);
 
+const getMonthDateString = (date: Date) => `${date.getMonth() + 1}월 ${date.getDate()}일`;
+
+const calDifferenceDate = (date1: Date, date2: Date) => {
+  return Math.abs((date1 - date2) / (1000 * 3600 * 24));
+};
 export {
   getCurrentYearMonth,
   getFirstDayIdx,
@@ -60,4 +65,6 @@ export {
   calYearMonth,
   isTwoDateSame,
   getIsPastDate,
+  getMonthDateString,
+  calDifferenceDate,
 };

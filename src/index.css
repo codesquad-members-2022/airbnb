@@ -1,0 +1,7 @@
+.kakao_overlay {
+  background: #fff;
+  height: 30px;
+  width: 100px;
+  display: grid;
+  place-content: center;
+}

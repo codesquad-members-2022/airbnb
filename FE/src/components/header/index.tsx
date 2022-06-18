@@ -2,6 +2,7 @@ import React from 'react';
 
 import GNB from 'components/header/gnb';
 import * as Styled from 'components/header/header.style';
+
 import SearchBar from './searchBar';
 
 function Header() {
@@ -9,7 +10,7 @@ function Header() {
     <Styled.Header>
       <Styled.HeaderWrapper>
         <GNB />
-        <SearchBar />
+        <SearchBar isSmallSize={false} />
       </Styled.HeaderWrapper>
     </Styled.Header>
   );

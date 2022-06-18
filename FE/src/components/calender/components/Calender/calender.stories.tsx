@@ -14,10 +14,7 @@ const today = getTodayDateInfo();
 
 export const Current = Template.bind({});
 Current.args = {
-  year: today.year,
-  month: today.month,
-  week: today.week,
-  day: today.day,
+  count: 1,
 };
 Current.storyName = 'Current Calender';
 
@@ -25,8 +22,7 @@ export const Next = Template.bind({});
 Next.args = {
   year: today.year,
   month: today.month + 1,
-  week: today.week,
-  day: today.day,
+  count: 2,
 };
 Next.storyName = 'Next Calender';
 
@@ -34,7 +30,6 @@ export const Prev = Template.bind({});
 Prev.args = {
   year: today.year,
   month: today.month - 1,
-  week: today.week,
-  day: today.day,
+  count: 3,
 };
 Prev.storyName = 'Prev Calender';

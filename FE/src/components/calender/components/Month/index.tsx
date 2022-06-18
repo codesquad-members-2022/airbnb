@@ -1,20 +1,15 @@
-import * as React from 'react';
+import React, { useContext, useEffect } from 'react';
 import * as Styled from 'components/calender/components/Month/month.style';
 import Day from 'components/calender/components/Day';
+import { DateContext } from 'components/calender/context';
 
 export interface MonthProps {
   year: number;
   month: number;
   lastDay: number;
   startDayOfWeek: number;
+  filter: Set<number>;
 }
-
-const calcGridRowCount = (lastDay: number, startDayOfWeek: number) => {
-  const allItemCount = lastDay + startDayOfWeek + 1;
-  const rowCount = Math.floor(allItemCount / 7);
-  const isOverflow = allItemCount % 7 !== 0;
-  return isOverflow ? rowCount : rowCount + 1;
-};
 
 const getDayInfo = (index: number, year: number, month: number, startDayOfWeek: number) => {
   return {
@@ -29,13 +24,30 @@ const getKey = (length: number, index: number) => {
   return length - (length - index);
 };
 
-function Month({ year, month, lastDay, startDayOfWeek }: MonthProps) {
+const getDayState = (today: Date, period, filter: Set<number>) => {
+  const { checkIn, checkOut } = period || {};
+
+  return {
+    isCheckIn: +checkIn === +today,
+    isCheckOut: +checkOut === +today,
+    isIncluded: checkIn <= today && checkOut >= today,
+    isDisabled: filter?.has(today.getDate()) || false,
+  };
+};
+
+function Month({ year, month, lastDay, startDayOfWeek, filter }: MonthProps) {
+  const {
+    state: { period },
+  } = useContext(DateContext);
   return (
-    <Styled.MonthContainer rowCount={calcGridRowCount(lastDay, startDayOfWeek)}>
+    <Styled.MonthContainer>
       {startDayOfWeek > 0 && <Styled.MonthItem startDayOfWeek={startDayOfWeek} />}
       {[...new Array(lastDay)].map((_, index) => (
-        <Styled.MonthItem>
-          <Day key={getKey(startDayOfWeek, index)} info={getDayInfo(index, year, month, startDayOfWeek)} />
+        <Styled.MonthItem key={getKey(startDayOfWeek, index)}>
+          <Day
+            info={getDayInfo(index, year, month, startDayOfWeek)}
+            {...getDayState(new Date(year, month - 1, index + 1), period, filter)}
+          />
         </Styled.MonthItem>
       ))}
     </Styled.MonthContainer>

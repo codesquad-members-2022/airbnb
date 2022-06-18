@@ -31,7 +31,7 @@ type DateUnitType = {
   };
 };
 
-const dateUnit: DateUnitType = {
+const DATE_UNIT: DateUnitType = {
   [Language.KOR]: {
     year: '년도',
     month: '월',
@@ -46,4 +46,4 @@ const dateUnit: DateUnitType = {
   },
 };
 
-export { Language, Week, weekData, dateUnit };
+export { Language, Week, weekData, DATE_UNIT };

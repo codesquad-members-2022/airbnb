@@ -2,15 +2,16 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 interface MonthContainerPros {
-  rowCount: number;
   width?: string;
 }
 
 const MonthContainer = styled.div<MonthContainerPros>`
   display: grid;
   width: ${({ width }) => width};
+  height: 290px;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: ${(rowCount) => `repeat(${rowCount}, 1fr)`};
+  grid-template-rows: repeat(6, 1fr);
+  grid-row-gap: 5px;
   place-content: stretch stretch;
 `;
 

@@ -1,6 +1,8 @@
 import React from 'react';
 
 import styled from 'styled-components';
+import BarChart from './BarChart';
+import RangeButton from './RangeButton';
 
 const ModalInfo = styled.div`
   width: 100%;
@@ -55,11 +57,6 @@ const Average = styled.div`
   margin-bottom: 10px;
 `;
 
-const Graph = styled.div`
-  width: 365px;
-  height: 100px;
-`;
-
 const customStyles = {
   overlay: {
     margin: '0px auto',
@@ -80,18 +77,17 @@ const customStyles = {
   },
 };
 
-function Graphs({ coordinate }) {
+const GraphWrapper = styled.div`
+  position: relative;
+`;
+
+function Graph({ coordinate }) {
   return (
-    <svg width="366" height="114" viewBox="0 0 366 114" xmlns="http://www.w3.org/2000/svg">
-      {coordinate.yCoordinate.map((yCoor, idx) => (
-        <path
-          d={`M ${idx * coordinate.xRange} 114 H${idx * coordinate.xRange + 6} V${114 - yCoor} H${
-            idx * coordinate.xRange
-          } Z`}
-          fill="black"
-        />
-      ))}
-    </svg>
+    <GraphWrapper>
+      <BarChart coordinate={coordinate} />
+      <RangeButton />
+    </GraphWrapper>
   );
 }
-export { Graphs, customStyles, ModalInfo, Title, PriceWrapper, Price, RowLine, Average, Graph };
+
+export { Graph, customStyles, ModalInfo, Title, PriceWrapper, Price, RowLine, Average };

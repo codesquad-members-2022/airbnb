@@ -7,14 +7,19 @@ const Item = styled.div`
   cursor: pointer;
 `;
 
-const ItemTitle = styled.h4`
+interface IItemProps {
+  isSmallSize: boolean;
+}
+
+const ItemTitle = styled.h4<IItemProps>`
   font-size: ${({ theme: { fontSize } }) => fontSize.xSmall};
   font-weight: ${({ theme: { fontWeight } }) => fontWeight.bold};
   color: ${({ theme: { colors } }) => colors.black};
+  display: ${({ isSmallSize }) => (isSmallSize ? 'none' : 'block')};
 `;
 
-const ItemContents = styled.p`
-  font-size: ${({ theme: { fontSize } }) => fontSize.medium};
+const ItemContents = styled.p<IItemProps>`
+  font-size: ${({ isSmallSize }) => (isSmallSize ? '12px' : '16px')};
   font-weight: ${({ theme: { fontWeight } }) => fontWeight.normal};
   color: ${({ theme: { colors } }) => colors.grey2};
   white-space: nowrap;

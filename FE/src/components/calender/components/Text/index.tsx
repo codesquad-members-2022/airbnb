@@ -9,9 +9,9 @@ export interface TextProps {
   children?: React.ReactNode;
 }
 
-const Text = ({ children, ...props }: TextProps) => {
+function Text({ children, ...props }: TextProps) {
   return <Styled.Text {...props}>{children}</Styled.Text>;
-};
+}
 
 Text.defaultProps = {
   fontSize: 12,

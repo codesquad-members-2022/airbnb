@@ -18,60 +18,60 @@ const testInfoData = {
 
 export const DefaultDay = Template.bind({});
 DefaultDay.args = {
-  isChecked: false,
+  isCheckIn: false,
   isIncluded: false,
   isDisabled: false,
-  isStart: false,
+  isCheckOut: false,
   info: testInfoData,
 };
 DefaultDay.storyName = 'Day(Default)';
 
 export const Disabled = Template.bind({});
 Disabled.args = {
-  isChecked: false,
+  isCheckIn: false,
   isIncluded: false,
   isDisabled: true,
-  isStart: false,
+  isCheckOut: false,
   info: testInfoData,
 };
 Disabled.storyName = 'Day(Disabled)';
 
 export const CheckedStart = Template.bind({});
 CheckedStart.args = {
-  isChecked: true,
+  isCheckIn: true,
   isIncluded: true,
   isDisabled: false,
-  isStart: true,
+  isCheckOut: true,
   info: testInfoData,
 };
 CheckedStart.storyName = 'Day(CheckIn)';
 
 export const CheckedEnd = Template.bind({});
 CheckedEnd.args = {
-  isChecked: true,
+  isCheckIn: true,
   isIncluded: true,
   isDisabled: false,
-  isStart: false,
+  isCheckOut: false,
   info: testInfoData,
 };
 CheckedEnd.storyName = 'Day(CheckOut)';
 
 export const Included = Template.bind({});
 Included.args = {
-  isChecked: false,
+  isCheckIn: false,
   isIncluded: true,
   isDisabled: false,
-  isStart: false,
+  isCheckOut: false,
   info: testInfoData,
 };
 Included.storyName = 'Included(Default)';
 
 export const IncludedSun = Template.bind({});
 IncludedSun.args = {
-  isChecked: false,
+  isCheckIn: false,
   isIncluded: true,
   isDisabled: false,
-  isStart: false,
+  isCheckOut: false,
   info: {
     ...testInfoData,
     week: Week.Sunday,
@@ -81,10 +81,10 @@ IncludedSun.storyName = 'Included(Sunday)';
 
 export const IncludedSat = Template.bind({});
 IncludedSat.args = {
-  isChecked: false,
+  isCheckIn: false,
   isIncluded: true,
   isDisabled: false,
-  isStart: false,
+  isCheckOut: false,
   info: {
     ...testInfoData,
     week: Week.Saturday,

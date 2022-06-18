@@ -1,17 +1,17 @@
 import styled from 'styled-components';
-
-const CalenderWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 360px;
-  height: 393px;
-`;
+import { CALENDER_HEIGHT } from 'components/calender/constants/size';
 
 const ContentsWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-export { CalenderWrapper, ContentsWrapper };
+const Calender = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: ${`${CALENDER_HEIGHT}px`};
+`;
+
+export { ContentsWrapper, Calender };

@@ -1,44 +1,94 @@
-import React, { useReducer, useState } from 'react';
+import React, { useContext } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import * as Styled from 'components/header/searchBar/searchBar.style';
 import Line from 'components/Icons/Line';
 import SearchBarItem from 'components/header/searchBar/searchBarItem';
 import SearchIcon from 'components/Icons/SearchIcon';
-import { ActionType, reducer } from 'components/header/searchBar/contentReducer';
-import priceData from 'components/mock/priceData';
-import PriceModal from './priceModal';
-import { customStyles } from './priceModal/PriceModalInfo.style';
 
-const initState = { checkIn: '날짜 입력', checkOut: '날짜 입력', price: '금액대 설정', guest: '게스트 추가' };
+import roomListApis from 'apis/roomListApi';
+import { moneyToWon } from 'utils/utils';
+import { Context } from 'components/context/ModalContext';
+import PriceModal from 'components/header/searchBar/priceModal';
+import GuestModal from 'components/header/searchBar/guestModal';
+import DateModal from 'components/header/searchBar/dateModal';
+import { GuestContext } from 'components/context/GuestModalContext';
 
-function SearchBar() {
-  const [state, dispatch] = useReducer(reducer, initState);
-  const [clickTitle, setClickTitle] = useState('');
+function SearchBar({ isSmallSize }) {
+  const {
+    infantCounts,
+    guestCounts,
+    setIsDateOpen,
+    setIsPriceOpen,
+    setIsGuestOpen,
+    highPrice = 0,
+    lowPrice = 0,
+    checkInDate,
+    checkOutDate,
+    setFilteredData,
+    setIsClickSearch,
+  } = useContext(Context);
+  const { adultCount, childrenCount } = useContext(GuestContext);
 
-  const clickItem = (keyData, valueData) => () => {
-    setClickTitle(keyData);
-    dispatch({
-      type: ActionType.SET_CONTENTS,
-      payload: { key: keyData, value: valueData },
-    });
+  const modalOpenInfo = {
+    date: setIsDateOpen,
+    price: setIsPriceOpen,
+    guest: setIsGuestOpen,
+  };
+  const onClickModal = (title: string) => () => {
+    modalOpenInfo[title](true);
+  };
+  const onClickSearch = () => {
+    const filteredDatas = {
+      checkInDate: '2022-06-23',
+      checkOutDate: '2022-06-30',
+      minRoomCharge: lowPrice,
+      maxRoomCharge: highPrice,
+      numOfGuests: guestCounts,
+      numOfAdults: adultCount,
+      numOfChildren: childrenCount,
+      numOfInfants: infantCounts,
+      page: 1,
+    };
+    const fetchRoomList = async () => {
+      const roomList = await roomListApis.getFilteredRooms({ filteredDatas });
+      setFilteredData(roomList);
+    };
+    fetchRoomList();
+    setIsClickSearch(true);
   };
 
+  const parsedDateToString = (date: Date | undefined) =>
+    date ? `${date.getMonth() + 1}월 ${date.getDate()}일` : '날짜 입력';
+
   return (
-    <Styled.SearchBarWrapper>
-      <Styled.ItemWrapper>
-        <SearchBarItem title="체크인" contents={state.checkIn} onClick={clickItem('checkIn', '6월 5일')} />
-        <SearchBarItem title="체크아웃" contents={state.checkOut} onClick={clickItem('checkOut', '6월 5일')} />
+    <Styled.SearchBarWrapper isSmallSize={isSmallSize}>
+      <DateModal />
+      <Styled.ItemWrapper onClick={onClickModal('date')}>
+        <SearchBarItem isSmallSize={isSmallSize} title="체크인" contents={parsedDateToString(checkInDate)} />
+        <SearchBarItem isSmallSize={isSmallSize} title="체크아웃" contents={parsedDateToString(checkOutDate)} />
       </Styled.ItemWrapper>
-      <Line />
-      <Styled.ItemWrapper>
-        <SearchBarItem title="요금" contents={state.price} onClick={clickItem('price', '100,000 ~ 1,000,000')} />
+      <Line size={{ width: '1', height: isSmallSize ? '26' : '44' }} />
+      <Styled.ItemWrapper onClick={onClickModal('price')}>
+        <SearchBarItem
+          isSmallSize={isSmallSize}
+          title="요금"
+          contents={`${moneyToWon(Math.floor(lowPrice))} - ${moneyToWon(Math.floor(highPrice))}`}
+        />
       </Styled.ItemWrapper>
-      <PriceModal style={customStyles} isClick={clickTitle} priceData={priceData} />
-      <Line />
-      <Styled.ItemWrapper>
-        <SearchBarItem title="인원" contents={state.guest} onClick={clickItem('guest', '게스트 3명, 유아 2명')} />
+      <PriceModal />
+      <Line size={{ width: '1', height: isSmallSize ? '26' : '44' }} />
+      <Styled.ItemWrapper onClick={onClickModal('guest')}>
+        <SearchBarItem
+          isSmallSize={isSmallSize}
+          title="인원"
+          contents={`게스트${guestCounts}명, 유아${infantCounts}명`}
+        />
       </Styled.ItemWrapper>
-      <SearchIcon size={{ width: '40', height: '40' }} />
+      <GuestModal />
+      <NavLink onClick={onClickSearch} to="/searchResult">
+        <SearchIcon size={{ width: isSmallSize ? '29' : '40', height: isSmallSize ? '29' : '40' }} />
+      </NavLink>
     </Styled.SearchBarWrapper>
   );
 }

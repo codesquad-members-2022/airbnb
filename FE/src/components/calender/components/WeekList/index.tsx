@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Styled from 'components/calender/components/WeekList/weekList.style';
 import { Language, weekData } from 'components/calender/constants/dateData';
-import Text, { TextProps } from 'components/calender/components//Text';
+import Text, { TextProps } from 'components/calender/components/Text';
 
 export interface WeekListProps {
   width?: string;
@@ -15,20 +15,20 @@ const textProps: TextProps = {
   fontWeight: 'bold',
 };
 
-const WeekList = ({ data, ...props }: WeekListProps) => {
+function WeekList({ data, ...props }: WeekListProps) {
   return (
     <Styled.WeekList {...props}>
       {data &&
         data.map((value) => {
           return (
-            <Styled.WeekListItem>
+            <Styled.WeekListItem key={value}>
               <Text {...textProps}>{value}</Text>
             </Styled.WeekListItem>
           );
         })}
     </Styled.WeekList>
   );
-};
+}
 
 WeekList.defaultProps = {
   width: '336px',

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 import PriceModal from '@components/SearchBar/Modal/PriceModal';
 import * as S from '@components/SearchBar/SearchBar.style';
@@ -7,16 +7,16 @@ import Icon, { ICON_NAME, ICON_SIZE } from '@components/common/Icon';
 import { PriceProvider } from '@context/price/Provider';
 import WithProvider from '@hoc/WithProvider';
 import { usePriceState } from '@lib/hooks/useContext';
+import useModal from '@lib/hooks/useModal';
 import { formatPrice } from '@lib/utils';
 
-export interface PriceAreaTypes {
-  size: string;
-  element: HTMLElement;
+export interface AreaPropsTypes {
+  size?: string;
 }
 
-const PriceArea = ({ size, element }: PriceAreaTypes) => {
-  const [isPriceModalOpen, setIsPriceModalOpen] = useState(false);
+const PriceArea = ({ size }: AreaPropsTypes) => {
   const modalRef = useRef<HTMLDivElement>(null);
+  const [isPriceModalOpen, setIsPriceModalOpen] = useModal({ modalRef });
 
   const { minPrice, maxPrice, defaultMinPrice, defaultMaxPrice, setMinPrice, setMaxPrice } =
     usePriceState();
@@ -26,7 +26,7 @@ const PriceArea = ({ size, element }: PriceAreaTypes) => {
     ? `${formatPrice(minPrice)} ~ ${formatPrice(maxPrice)}`
     : NO_CONTENT[AREA_TYPE.PRICE];
 
-  const toggleIsPriceModalOpen = () => setIsPriceModalOpen(() => true);
+  const openPriceModal = () => setIsPriceModalOpen(true);
 
   const setDefaultPrice = () => {
     setMinPrice(defaultMinPrice);
@@ -35,7 +35,7 @@ const PriceArea = ({ size, element }: PriceAreaTypes) => {
 
   return (
     <>
-      <S.PriceArea onClick={toggleIsPriceModalOpen}>
+      <S.PriceArea onClick={openPriceModal}>
         {size === SEARCH_BAR_SIZE.LARGE ? (
           <>
             <S.ContentContainer>
@@ -52,7 +52,7 @@ const PriceArea = ({ size, element }: PriceAreaTypes) => {
           <S.Content isContentExist={isPriceExist}>{priceContent}</S.Content>
         )}
       </S.PriceArea>
-      {isPriceModalOpen && <PriceModal element={element} modalRef={modalRef} />}
+      {isPriceModalOpen && <PriceModal modalRef={modalRef} />}
     </>
   );
 };

@@ -1,6 +1,6 @@
 import { CalendarTypes } from '@components/Calendar';
 import * as S from '@components/Calendar/Calendar.style';
-import Day from '@components/Calendar/Day';
+import DaysInMonth from '@components/Calendar/DaysInMonth';
 import Month from '@components/Calendar/Month';
 import Week from '@components/Calendar/Week';
 
@@ -13,7 +13,7 @@ const RenderCalendar = ({ year, month }: CalendarTypes) => {
         </S.Calendar>
         <Week />
         <S.Days>
-          <Day year={year} month={month} />
+          <DaysInMonth year={year} month={month} />
         </S.Days>
       </S.CalendarWrapper>
     </>

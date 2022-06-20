@@ -1,15 +1,32 @@
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, RefObject, SetStateAction, useEffect, useState } from 'react';
 
-const useModal = <T extends HTMLElement>() => {
+interface useModalPropsTypes<T> {
+  modalRef: RefObject<T>;
+}
 
-  const ref = useRef<T>(null);
-  const [element, setElement] = useState<T | null>(null);
+type useModalReturnTypes = [boolean, Dispatch<SetStateAction<boolean>>];
+
+const useModal = <T extends HTMLElement>({
+  modalRef,
+}: useModalPropsTypes<T>): useModalReturnTypes => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalClick = (event: MouseEvent) => {
+    for (const element of event.composedPath()) {
+      if (element === modalRef.current) return;
+    }
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
-    setElement(ref.current);
-  }, []);
+    window.addEventListener('click', handleModalClick, true);
 
-  return [ref, element];
-}
+    return () => {
+      window.removeEventListener('click', handleModalClick, true);
+    };
+  }, [modalRef]);
+
+  return [isModalOpen, setIsModalOpen];
+};
 
 export default useModal;

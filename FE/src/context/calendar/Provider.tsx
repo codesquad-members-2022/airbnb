@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import { useState, Dispatch, SetStateAction, createContext } from 'react';
 
 export interface CalendarContextTypes {
   checkIn: string;
-  setCheckIn: React.Dispatch<React.SetStateAction<string>>;
+  setCheckIn: Dispatch<SetStateAction<string>>;
   checkOut: string;
-  setCheckOut: React.Dispatch<React.SetStateAction<string>>;
+  setCheckOut: Dispatch<SetStateAction<string>>;
 }
 
 interface CalendarProviderTypes {
   children: JSX.Element;
 }
 
-export const CalendarContext = React.createContext<CalendarContextTypes | null>(null);
+export const CalendarContext = createContext<CalendarContextTypes | null>(null);
 
 export const CalendarProvider = ({ children }: CalendarProviderTypes) => {
   const [checkIn, setCheckIn] = useState('');

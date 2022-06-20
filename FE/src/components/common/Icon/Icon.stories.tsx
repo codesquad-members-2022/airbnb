@@ -1,8 +1,6 @@
-import React from 'react';
-
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import Icon, { IconTypes, ICON_NAME, ICON_SIZE } from '@components/common/Icon';
+import Icon, { IconPropsTypes, ICON_NAME, ICON_SIZE } from '@components/common/Icon';
 
 export default {
   title: 'Common/Icon',
@@ -27,4 +25,4 @@ export default {
   },
 } as ComponentMeta<typeof Icon>;
 
-export const Default: ComponentStory<typeof Icon> = (args: IconTypes) => <Icon {...args} />;
+export const Default: ComponentStory<typeof Icon> = (args: IconPropsTypes) => <Icon {...args} />;

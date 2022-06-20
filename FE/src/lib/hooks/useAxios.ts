@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react';
 
 import axios, { AxiosRequestConfig } from 'axios';
 
-import { BASE_URL } from '@constants';
-
 export interface AxiosTypes {
-  method: 'get' | 'post' | 'put' | 'delete';
+  method: 'get' | 'post' | 'put' | 'delete' | 'patch';
   url: string;
   config?: AxiosRequestConfig;
 }
 
 const instance = axios.create({
-  baseURL: BASE_URL,
+  headers: {
+    token: 'member1',
+  },
 });
 
 const useAxios = <T>({
@@ -34,7 +34,7 @@ const useAxios = <T>({
     setIsLoading(true);
 
     instance[method](url, config)
-      .then((res) => setResponse(res.data))
+      .then((res) => setResponse(res.data.data)) // API 데이터 구조 상 불가피하게 변경
       .catch((err) => setError(err))
       .finally(() => setIsLoading(false));
   };

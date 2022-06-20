@@ -1,20 +1,22 @@
+import { useCallback, useMemo } from 'react';
+
 import * as S from '@components/ChartSlider/Chart/Chart.style';
 import { CHART_TYPE } from '@components/SearchBar/constants';
 import useCanvas from '@lib/hooks/useCanvas';
 import { usePriceState } from '@lib/hooks/useContext';
 
-export interface ChartTypes {
+export interface ChartPropsTypes {
   type: string;
   rangeData: number[];
   canvasWidth: number;
   canvasHeight: number;
 }
 
-const Chart = ({ type, rangeData, canvasWidth, canvasHeight }: ChartTypes) => {
+const Chart = ({ type, rangeData, canvasWidth, canvasHeight }: ChartPropsTypes) => {
 
   const { minPrice, maxPrice, defaultMaxPrice, defaultMinPrice } = usePriceState();
 
-  const getCoordinates = () => {
+  const coordinates = useMemo(() => {
     const divider = type === CHART_TYPE.LINE ? rangeData.length + 1 : rangeData.length;
     const intervalX = canvasWidth / divider;
     const max = Math.max(...rangeData);
@@ -25,11 +27,9 @@ const Chart = ({ type, rangeData, canvasWidth, canvasHeight }: ChartTypes) => {
     ]);
 
     return coordinates;
-  };
+  }, [rangeData]);
 
-  const coordinates = getCoordinates();
-
-  const drawLineChart = (ctx: CanvasRenderingContext2D) => {
+  const drawLineChart = useCallback((ctx: CanvasRenderingContext2D) => {
     if (ctx) {
       ctx.beginPath();
       ctx.moveTo(0, canvasHeight);
@@ -49,9 +49,9 @@ const Chart = ({ type, rangeData, canvasWidth, canvasHeight }: ChartTypes) => {
       ctx.fill();
       ctx.stroke();
     }
-  };
+  }, [rangeData]);
 
-  const drawBarChart = (ctx: CanvasRenderingContext2D) => {
+  const drawBarChart = useCallback((ctx: CanvasRenderingContext2D) => {
     const chartWidth = canvasWidth * 0.9;
     const separationWidth = canvasWidth * 0.1;
     const barWidth = chartWidth / coordinates.length;
@@ -72,9 +72,9 @@ const Chart = ({ type, rangeData, canvasWidth, canvasHeight }: ChartTypes) => {
       ctx.fillStyle = '#333';
       ctx.fill();
     }
-  };
+  }, [rangeData]);
 
-  const drawUnselectedArea = (ctx: CanvasRenderingContext2D) => {
+  const drawUnselectedArea = useCallback((ctx: CanvasRenderingContext2D) => {
     const minWidth = ((minPrice - defaultMinPrice) / defaultMaxPrice) * canvasWidth;
     const maxWidth = ((defaultMaxPrice - maxPrice - defaultMinPrice) / defaultMaxPrice) * canvasWidth;
     const maxPosX = canvasWidth - maxWidth;
@@ -85,7 +85,7 @@ const Chart = ({ type, rangeData, canvasWidth, canvasHeight }: ChartTypes) => {
       ctx.fillRect(0, 0, minWidth, canvasHeight);
       ctx.fillRect(maxPosX, 0, maxWidth, canvasHeight);
     }
-  }
+  }, [minPrice, maxPrice]);
 
   const animate = (ctx: CanvasRenderingContext2D) => {
     type === CHART_TYPE.LINE ? drawLineChart(ctx) : drawBarChart(ctx);

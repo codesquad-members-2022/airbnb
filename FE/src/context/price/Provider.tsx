@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, Dispatch, SetStateAction, createContext } from 'react';
 
 import { API } from '@constants';
 import useAxios from '@lib/hooks/useAxios';
 
 export interface PriceContextTypes {
   minPrice: number;
-  setMinPrice: React.Dispatch<React.SetStateAction<number>>;
+  setMinPrice: Dispatch<SetStateAction<number>>;
   maxPrice: number;
-  setMaxPrice: React.Dispatch<React.SetStateAction<number>>;
+  setMaxPrice: Dispatch<SetStateAction<number>>;
   defaultMinPrice: number;
   defaultMaxPrice: number;
   avgPrice: number;
   priceRange: number[];
 }
 
-interface PriceProviderTypes {
+interface PriceProviderPropsTypes {
   children: JSX.Element;
 }
 
@@ -31,9 +31,9 @@ interface PriceInfoTypes {
   countOfCategorizedPricePerNight: CategorizedPriceTypes[];
 }
 
-export const PriceContext = React.createContext<PriceContextTypes | null>(null);
+export const PriceContext = createContext<PriceContextTypes | null>(null);
 
-export const PriceProvider = ({ children }: PriceProviderTypes) => {
+export const PriceProvider = ({ children }: PriceProviderPropsTypes) => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
   const [avgPrice, setAvgPrice] = useState(0);
@@ -47,8 +47,8 @@ export const PriceProvider = ({ children }: PriceProviderTypes) => {
     url: API.PRICE_INFO,
     config: {
       params: {
-        checkIn: new Date(),
-        checkOut: new Date(),
+        checkIn: '2022-06-10',
+        checkOut: '2022-06-11',
       },
     },
   });
@@ -84,5 +84,5 @@ export const PriceProvider = ({ children }: PriceProviderTypes) => {
     priceRange,
   };
 
-  return <PriceContext.Provider value={value}>{children}</PriceContext.Provider>;
+  return <PriceContext.Provider {...{value}}>{children}</PriceContext.Provider>;
 };

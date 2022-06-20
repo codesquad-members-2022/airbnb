@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { RefObject, useState } from 'react';
 
 import * as S from '@components/Calendar/Calendar.style';
 import RenderCalendar from '@components/Calendar/RenderCalendar';
 import Icon, { ICON_NAME, ICON_SIZE } from '@components/common/Icon';
+import Modal, { MODAL_POSITION } from '@components/common/Modal';
 
-export interface CalendarTypes {
-  year: number;
-  month: number;
+interface PriceModalTypes {
+  modalRef: RefObject<HTMLDivElement>;
 }
 
-const Calendar = () => {
+const PeriodModal = ({ modalRef }: PriceModalTypes) => {
   const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth();
@@ -34,21 +34,22 @@ const Calendar = () => {
       setCurrentMonth(currentMonth + 1);
     }
   };
-
   return (
-    <S.Container>
-      <S.Wrapper>
-        <S.Btn onClick={prevBtn}>
-          <Icon iconName={ICON_NAME.PREV} iconSize={ICON_SIZE.SMALL} />
-        </S.Btn>
-        <RenderCalendar year={currentYear} month={currentMonth} />
-        <RenderCalendar year={currentYear} month={currentMonth + 1} />
-        <S.Btn onClick={nextBtn}>
-          <Icon iconName={ICON_NAME.NEXT} iconSize={ICON_SIZE.SMALL} />
-        </S.Btn>
-      </S.Wrapper>
-    </S.Container>
+    <Modal position={MODAL_POSITION.LEFT}>
+      <S.Container ref={modalRef}>
+        <S.Wrapper>
+          <S.Btn onClick={prevBtn}>
+            <Icon iconName={ICON_NAME.PREV} iconSize={ICON_SIZE.SMALL} />
+          </S.Btn>
+          <RenderCalendar year={currentYear} month={currentMonth} />
+          <RenderCalendar year={currentYear} month={currentMonth + 1} />
+          <S.Btn onClick={nextBtn}>
+            <Icon iconName={ICON_NAME.NEXT} iconSize={ICON_SIZE.SMALL} />
+          </S.Btn>
+        </S.Wrapper>
+      </S.Container>
+    </Modal>
   );
 };
 
-export default Calendar;
+export default PeriodModal;

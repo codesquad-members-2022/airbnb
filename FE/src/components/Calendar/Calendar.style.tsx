@@ -1,17 +1,10 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 916px;
   height: auto;
-  background: ${({ theme }) => theme.color.white};
-  border-radius: 40px;
   padding-top: 30px;
   padding-bottom: 30px;
-  box-shadow: 0px 4px 10px rgba(51, 51, 51, 0.1), 0px 0px 4px rgba(51, 51, 51, 0.05);
-
-  // 모달창 positon 추후 삭제 예정
-  position: absolute;
-  top: 200%;
 `;
 
 export const Wrapper = styled.div`
@@ -78,7 +71,6 @@ export const Days = styled.div`
   display: flex;
   flex-wrap: wrap;
   padding: 0.1rem;
-
   button {
     font-size: ${({ theme }) => theme.fontSize.xSmall};
     width: calc(22.5rem / 7);
@@ -86,18 +78,38 @@ export const Days = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    color: ${({ theme }) => theme.color.grey1};
     font-weight: ${({ theme }) => theme.fontWeight.bold};
-    &:active {
-      background:#000;
-      color:#fff;
-      border-radius:50%;
-    }
+  }
 `;
 
 export const Btn = styled.div`
   width: 6px;
   height: 12px;
   margin-top: 20px;
+`;
+
+export const Day = styled.button<{
+  isClicked: boolean;
+  disabled: boolean;
+  isBetweenDays: boolean;
+}>`
+  ${({ isBetweenDays }) =>
+    isBetweenDays &&
+    `
+    background: #ddd;
+  `};
+  ${({ isClicked }) =>
+    isClicked &&
+    `
+      color: #fff;
+      background: #333;
+      border-radius: 50%;
+    `};
+  &:disabled {
+    color: ${({ disabled, theme }) => disabled && theme.color.grey4};
+  }
+`;
+
+export const PrevDay = styled.button`
+  display: none;
 `;

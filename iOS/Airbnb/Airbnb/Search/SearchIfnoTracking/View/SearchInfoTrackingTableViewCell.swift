@@ -93,9 +93,7 @@ class SearchInfoTrackingTableViewCell: UITableViewCell {
             contents += dto.maximumPricePerDayFormatted ?? ""
             
         case .headCount:
-            if let headCount = dto.headCount, headCount > 0 {
-                contents = "게스트 \(headCount)명"
-            }
+            contents = dto.headCountFormatted ?? ""
         }
         
         titleLabel.text = infoType.rawValue

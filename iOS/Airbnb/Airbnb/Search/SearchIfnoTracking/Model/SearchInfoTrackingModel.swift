@@ -22,7 +22,7 @@ class SearchInfoTrackingModel: SearchInfoModel {
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_kr")
-        formatter.dateFormat = "MM dd"
+        formatter.dateFormat = "M월 dd일"
         return formatter
     }()
     
@@ -43,14 +43,25 @@ class SearchInfoTrackingModel: SearchInfoModel {
                 }
             case .date:
                 if let dateRange = value as? CheckInOutRange {
-                    searchInfo.checkInDate = dateRange.checkIn
                     if let checkInDate = dateRange.checkIn {
+                        if let existentCheckinDate = self.searchInfo.checkInDate,
+                           existentCheckinDate == dateRange.checkIn {
+                            searchInfo.checkOutFormatted = dateFormatter.string(from: checkInDate)
+                            searchInfo.checkOutDate = checkInDate
+                        }
                         searchInfo.checkInFormatted = dateFormatter.string(from: checkInDate)
+                    } else {
+                        /// checkin nil 들어왔을 때 처리
+                        searchInfo.checkInDate = nil
+                        searchInfo.checkInDate = nil
+                        searchInfo.checkInFormatted = nil
+                        searchInfo.checkOutFormatted = nil
                     }
-                    self.searchInfo.checkOutDate = dateRange.checkOut
+                    searchInfo.checkInDate = dateRange.checkIn
                     if let checkOutDate = dateRange.checkOut {
                         searchInfo.checkOutFormatted = dateFormatter.string(from: checkOutDate)
                     }
+                    self.searchInfo.checkOutDate = dateRange.checkOut
                 }
             case .price:
                 guard highestPrice != 0 else { return }
@@ -68,8 +79,9 @@ class SearchInfoTrackingModel: SearchInfoModel {
                     searchInfo.maximumPricePerDayFormatted = numberFormatter.string(for: (maximumPricePerDay / 1000) * 1000)
                 }
             case .headCount:
-                if let count = dict[key] as? Int {
-                    self.searchInfo.headCount = UInt(count)
+                if let count = dict[key] as? HeadCountModel { 
+                    searchInfo.headCount = UInt(count.currentHeadCount.allCount)
+                    searchInfo.headCountFormatted = count.descriptionHeadCount
                 }
             }
         }

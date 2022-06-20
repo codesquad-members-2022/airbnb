@@ -19,7 +19,8 @@ class CalendarViewCell: UICollectionViewCell {
                 updateSelectionStatus()
             } else {
                 selectionBackgroundView.isHidden = true
-                fadeStateView.isHidden = true
+                leftFadeBackgroundView.isHidden = true
+                rightFadeBackgroundView.isHidden = true
             }
         }
     }
@@ -33,7 +34,15 @@ class CalendarViewCell: UICollectionViewCell {
         return view
     }()
     
-    private var fadeStateView: UIView = {
+    private lazy var leftFadeBackgroundView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.clipsToBounds = true
+        view.backgroundColor = UIColor.getGrayScale(.Grey6)
+        return view
+    }()
+    
+    private lazy var rightFadeBackgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
@@ -62,7 +71,8 @@ class CalendarViewCell: UICollectionViewCell {
         
         isAccessibilityElement = true
         accessibilityTraits = .button
-        contentView.addSubview(fadeStateView)
+        contentView.addSubview(leftFadeBackgroundView)
+        contentView.addSubview(rightFadeBackgroundView)
         contentView.addSubview(selectionBackgroundView)
         contentView.addSubview(numberLabel)
         
@@ -80,21 +90,26 @@ class CalendarViewCell: UICollectionViewCell {
         let size = traitCollection.horizontalSizeClass == .compact ?
         min(min(frame.width, frame.height) - 10, 60) : 45
         
-        NSLayoutConstraint.activate([
-            numberLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            numberLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            
-            selectionBackgroundView.centerYAnchor
-                .constraint(equalTo: numberLabel.centerYAnchor),
-            selectionBackgroundView.centerXAnchor
-                .constraint(equalTo: numberLabel.centerXAnchor),
-            selectionBackgroundView.widthAnchor.constraint(equalToConstant: size),
-            selectionBackgroundView.heightAnchor
-                .constraint(equalTo: selectionBackgroundView.widthAnchor)
-        ])
+        numberLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
         
-        fadeStateView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(-1)
+        selectionBackgroundView.snp.makeConstraints {
+            $0.center.equalTo(numberLabel)
+            $0.width.equalTo(size)
+            $0.height.equalTo(selectionBackgroundView.snp.width)
+        }
+        
+        leftFadeBackgroundView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(3)
+            $0.trailing.equalToSuperview()
+            $0.width.equalToSuperview().dividedBy(2)
+        }
+        
+        rightFadeBackgroundView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(3)
+            $0.leading.equalToSuperview()
+            $0.width.equalToSuperview().dividedBy(2)
         }
         
         selectionBackgroundView.layer.cornerRadius = size / 2
@@ -105,19 +120,20 @@ class CalendarViewCell: UICollectionViewCell {
         super.prepareForReuse()
         numberLabel.text = nil
         selectionBackgroundView.isHidden = true
-        fadeStateView.isHidden = true
+        leftFadeBackgroundView.isHidden = true
+        rightFadeBackgroundView.isHidden = true
     }
     
     func tabGenerated(for day: Day) {
-        if !day.isBeforeToday {
-            prepareForReuse()
-            self.day = day
-        }
+        guard !day.isBeforeToday else { return }
+        prepareForReuse()
+        self.day = day
     }
-
+    
 }
 
 // MARK: - Appearance
+// TODO: - Refactorying으로 중복되는 코드를 줄일 수 있으면 줄이자.
 private extension CalendarViewCell {
     
     func updateSelectionStatus() {
@@ -125,9 +141,9 @@ private extension CalendarViewCell {
         
         switch day.fadeState {
         case .left:
-            fallthrough
+            applyLeftSelectedStyle()
         case .right:
-            applySelectedStyle()
+            applyRightSelectedStyle()
         case .fill:
             applyFadeStyle()
         case .none:
@@ -144,13 +160,24 @@ private extension CalendarViewCell {
         return isCompact && (smallWidth || widthGreaterThanHeight)
     }
     
-    private func applySelectedStyle() {
+    private func applyLeftSelectedStyle() {
         accessibilityTraits.insert(.selected)
         accessibilityHint = nil
         
         numberLabel.textColor = isSmallScreenSize ? .systemRed : .white
         selectionBackgroundView.isHidden = isSmallScreenSize
-        fadeStateView.isHidden = true
+        rightFadeBackgroundView.isHidden = true
+        leftFadeBackgroundView.isHidden = false
+    }
+    
+    private func applyRightSelectedStyle() {
+        accessibilityTraits.insert(.selected)
+        accessibilityHint = nil
+        
+        numberLabel.textColor = isSmallScreenSize ? .systemRed : .white
+        selectionBackgroundView.isHidden = isSmallScreenSize
+        rightFadeBackgroundView.isHidden = false
+        leftFadeBackgroundView.isHidden = true
     }
     
     private func applyDefaultStyle() {
@@ -160,12 +187,14 @@ private extension CalendarViewCell {
         
         numberLabel.textColor = day.isBeforeToday ? .secondaryLabel : .label
         selectionBackgroundView.isHidden = true
-        fadeStateView.isHidden = true
+        leftFadeBackgroundView.isHidden = true
+        rightFadeBackgroundView.isHidden = true
     }
     
     private func applyFadeStyle() {
-        fadeStateView.isHidden = false
         numberLabel.textColor = .label
         selectionBackgroundView.isHidden = true
+        leftFadeBackgroundView.isHidden = false
+        rightFadeBackgroundView.isHidden = false
     }
 }

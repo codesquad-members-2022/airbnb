@@ -19,11 +19,7 @@ class CalendarHearderView: UICollectionReusableView {
         }
     }
     
-    private lazy var dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy년 M월"
-        return dateFormatter
-    }()
+    private lazy var dateFormatter = DateFormatter.formatting(from: "yyyy년 M월")
     
     private let yearMonthLabel: UILabel = {
         let label = UILabel()
